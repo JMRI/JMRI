@@ -11,8 +11,8 @@
 
 <body>
  <!--#include virtual="/Header.shtml" -->
- <div class="no-sidebar" id="mBody">
-   <div id="mainContent">
+ <div id="mBody">
+   <div id="mainContent" class="no-sidebar">
 
    <h1>JMRI: OperationsPro&trade;</h1>
    The JMRI Operations program allows you to create computer generated train Manifests for your
@@ -212,7 +212,7 @@
          </ul></li>
 
         <li><a href="#RoadOptions">Road Options</a></li>
-        
+
         <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
         <li><a href="#Pools">Track Pools</a></li>
@@ -226,7 +226,7 @@
         <li><a href="#ChangeTrackType">Change Track Type</a></li>
 
         <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
-        
+
         <li><a href="#ShowCars">Show Cars</a></li>
        </ul></li>
 
@@ -282,9 +282,9 @@
 
        <ul>
        <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</a></li>
-       
+
        <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
-       
+
         <li><a href="#SetCars">Set Cars</a></li>
        </ul></li>
      </ul></li>
@@ -298,7 +298,7 @@
 
        <ul>
         <li><a href="#LocomotiveModels">Locomotive Models</a></li>
-        
+
         <li><a href="#LocomotiveConsists">Locomotive Consists</a></li>
        </ul></li>
 
@@ -326,7 +326,7 @@
 
        <ul>
        <li><a href="#RouteBlockingOrder">Blocking Order</a></li>
-       
+
         <li><a href="#CopyRoute">Copy Route</a></li>
 
         <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
@@ -484,7 +484,7 @@
     train using the "departure" track, car pulls directly into the train rather than to a specific
     departure track makes the operations run more smoothly. By not specifying the A/D tracks, you're
     letting your crew, and not the program, decide which tracks to use when servicing a train.</p>
-    
+
    <a name="Display" id="Display"></a>
 
    <h3>Display and Help</h3>
@@ -514,8 +514,8 @@
     href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each layout
    that you want to manage. The database for each layout is unique and not shared with the other
    layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt;
-   operations. 
-   
+   operations.
+
   <a name="OperationFiles" id="OperationFiles"></a>
    <h3>Operations Files</h3>
    <p>
@@ -530,7 +530,7 @@
    OperationsPro&trade;. The back up files are created when you make a change to one of the
    operation files.
    </p>
-   
+
    <table>
     <tr>
      <td>File Name</td>
@@ -576,7 +576,7 @@
 
    </table>
 
-   <a name="demo" id="demo"></a> 
+   <a name="demo" id="demo"></a>
    <h3>Operations Demo Files</h3>
 
    The operations program provides a set of demo files to help introduce you to the some of the
@@ -774,9 +774,9 @@
    </p>
 
    <p>
-   To understand which car types a train can service, and which tracks will accept those car types, use the 
+   To understand which car types a train can service, and which tracks will accept those car types, use the
    <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> tool.</p>
-   
+
    <p>
    If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a>
    tool can show you which car types and loads will be serviced by your spurs.</p>
@@ -1066,7 +1066,7 @@
     help distinguish the correct Backup Set.</p>
 
    <p>You must quit and restart JMRI to complete the restoration of the operation files.</p>
-   
+
    <a name="SettingsTools" id="SettingsTools"></a>
    <h3>Settings Tools</h3>
 
@@ -1209,7 +1209,7 @@
    would select the track with the least amount of use when determining the track to arrive on. Note
    that the program will only prompt you if there are two or more tracks available in staging that
    meet the train's requirements. <a name="CarRouting" id="CarRouting"></a>
-   
+
    <a name="TryNormalMode" id="TryNormalMode"></a>
    <h4>Try Normal Mode if Build Failure from Staging</h4>
 
@@ -1299,8 +1299,8 @@
    program like Excel to create a Manifest to your liking. There's also a Java based program written
    by Tim Mann called
    <a href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
-   create custom Manifests and switch lists for you using the CSV files. 
-   
+   create custom Manifests and switch lists for you using the CSV files.
+
    <p>You can find the CSV Manifest files created by OperationsPro&trade; in the
    operations directory in a directory called "csvManifests". Each line of the file starts with a
    two to five letter code, followed by the code's description, and then any parameters associated
@@ -1319,7 +1319,7 @@
      <td>AH</td>
 
      <td><a href="#OptionalTrainRequirements">Add Helpers</a></td>
-     
+
      <td></td>
     </tr>
 
@@ -1335,7 +1335,7 @@
      <td>CC</td>
 
      <td><a href="#OptionalTrainRequirements">Change Caboose</a></td>
-          
+
      <td></td>
     </tr>
 
@@ -1343,7 +1343,7 @@
      <td>CL</td>
 
      <td><a href="#OptionalTrainRequirements">Change Locos</a></td>
-          
+
      <td></td>
     </tr>
 
@@ -1399,7 +1399,7 @@
      <td>NW</td>
 
      <td>No Work</td>
-          
+
      <td></td>
     </tr>
 
@@ -1447,7 +1447,7 @@
      <td>RH</td>
 
      <td><a href="#OptionalTrainRequirements">Remove Helpers</a></td>
-          
+
      <td></td>
     </tr>
 
@@ -1629,7 +1629,7 @@
      <td>SWL</td>
 
      <td>Switch List</td>
-          
+
      <td></td>
     </tr>
 
@@ -1669,7 +1669,7 @@
      <td>NCPU</td>
 
      <td>No Car Pick Up</td>
-          
+
      <td></td>
     </tr>
 
@@ -1677,7 +1677,7 @@
      <td>NCSO</td>
 
      <td>No Car Set Out</td>
-          
+
      <td></td>
     </tr>
 
@@ -1701,7 +1701,7 @@
      <td>TIR</td>
 
      <td>Train En Route</td>
-          
+
      <td></td>
     </tr>
 
@@ -1709,7 +1709,7 @@
      <td>TDONE</td>
 
      <td>Train has already serviced this location</td>
-          
+
      <td></td>
     </tr>
 
@@ -1725,7 +1725,7 @@
      <td>END</td>
 
      <td>End Switch List</td>
-          
+
      <td></td>
     </tr>
    </table>
@@ -1752,7 +1752,7 @@
    <h4>Enable Value Fields</h4>
    You can use the value field to enter the value or cost of your rolling stock. You can rename the
    value field if you wish and use it for other purposes.
-   
+
    <a name="EnableIdentificationTagFields" id="EnableIdentificationTagFields"></a>
    <h4>Enable Identification Tag Fields</h4>
    You can enable the assignment of reporters and tags for your locations and rolling stock.
@@ -1762,13 +1762,13 @@
    <a href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI. The
    edit location and track windows allow you to select
    <a href="../../../../html/tools/Reporters.shtml">Reporters</a> that you want to associate with
-   them. You can rename the RFID field if you wish and use it for other purposes. 
-   
+   them. You can rename the RFID field if you wish and use it for other purposes.
+
    <a name="EnableVirtualSoundDecoder" id="EnableVirtualSoundDecoder"></a>
    <h4>Enable physical locations for Virtual Sound Decoder</h4>
    If you're using Virtual Sound Decoder, you can enter the physical coordinates of your locations
-   by enabling this option. 
-   
+   by enabling this option.
+
    <a name="PrintOptions" id="PrintOptions"></a>
    <h2>Manifest Print Options</h2>
    You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
@@ -1837,8 +1837,8 @@
    <h3>Local Move Text Color</h3>
    You can select the text color of your Manifest when the operation is to move a car from one track
    to another at the same location. The car in this case is not added to the train. Select the
-   desired color from the drop down box. 
-   
+   desired color from the drop down box.
+
    <a name="MessageFormats" id="MessageFormats"></a>
    <h3>Message Formats</h3>
    You can customize the pick up, set out, and local move messages for your Manifests and switch
@@ -1863,8 +1863,8 @@
    <h3>Switch List Format</h3>
    You can use the same format for Manifest and switch lists, or you can customize the switch lists
    to your liking. Deselect the "Same as Manifest" if you want a different format for your switch
-   lists. 
-   
+   lists.
+
    <a name="ManifestComments" id="ManifestComments"></a>
 
    <h3>Manifests and Switch List Options</h3>
@@ -1965,15 +1965,15 @@
    image file extensions are .gif, .png, .jpg, plus others. You can also have a
    different logo for every train in your roster, see <a href="#TrainManifestOptions">Train
     Manifest Options</a> for details.
-    
+
    <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
 
    <h3>Misplaced Cars Comment</h3>
    OperationsPro&trade; provides a comment for your crew to search for <a href="#CarsSet">misplaced</a>
    cars. You can modify the comment to your liking. Full scale railroads unfortunately misplace cars
    as part of their operations, so having a few cars in the wrong place on your railroad is very
-   prototypical. Save time and effort and let your operators find those misplaced cars for you. 
-   
+   prototypical. Save time and effort and let your operators find those misplaced cars for you.
+
    <a name="HazardousComment" id="HazardousComment"></a>
 
    <h3>Hazardous Comment</h3>
@@ -1998,7 +1998,7 @@
    <p>Some of the text messages allow substitutions using the format "{number}". The program
     provides a tool tip when hovering over the text box which shows the available substitutions for
     that particular message.</p>
-    
+
     <p>You can also modify the color of the text by adding the color control text &lt;FONT color="red"&gt; at the
     start of the line, where "red" is the color text you want. Complete the color change by placing &lt;/FONT&gt; at the
     end of the line.</p>
@@ -2144,7 +2144,7 @@
    trains can access the location select "East" and deselect the other directions. This can be
    useful if you want to only support trailing point switching for a given location. If a location
    can support multiple directions then select the ones that are appropriate.</p>
-   
+
    <a name="LocationDivision" id="LocationDivision"></a>
    <h4>Railroad Division</h4>
    <p>
@@ -2188,7 +2188,7 @@
     You can enter an optional comment for your location. If you want the comment to print on your
     Manifests you must select the print location comments <a href="#ManifestComments">option</a>.
    </p>
-   
+
    <a name="Yardmaster" id="Yardmaster"></a>
    <h3>Yardmaster</h3>
 
@@ -2201,7 +2201,7 @@
 
    <a name="LocationTools" id="LocationTools"></a>
    <h3>Location Tools</h3>
-   
+
    From the "Tools" menu found in "Edit Location" window you can access several useful functions.
    The first is "Copy Track".
 
@@ -2275,7 +2275,7 @@
     alphabetical listing of tracks at a location. The "Set Order" button gives each track a unique
     order number, and will also reorder existing order numbers if there are any that aren't unique.
     The "Up" and "Down" buttons in the table require unique track blocking numbers for them to work.</p>
-    
+
     <p>This feature is disabled if the option to show <a href="#SortByTrack">Sort by Track</a> is enabled.</p>
 
    <a name="ShowTrainsServicingThisLocation" id="ShowTrainsServicingThisLocation"></a>
@@ -2456,7 +2456,7 @@
     the car types serviced for the <a href="#RollingStockServiced">spur</a> and <a
      href="#LocationRollingStock">location</a>.
    </p>
-   
+
     <h4>Schedule Sequential or Match Mode</h4>
 
    <p>Schedules can operate in one of two modes, "Sequential" where the order in which car types and loads arrive is
@@ -2736,7 +2736,7 @@
    <p>If you want a list of custom car loads for each of your car types, you can use the "Print
     Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car
     type and load" window.</p>
-    
+
    <a name="Interchange" id="Interchange"></a>
 
    <h3>Classification/Interchange Tracks</h3>
@@ -2835,8 +2835,8 @@
    tracks would print as "Yard" on Manifests and switch lists. And finally to facilitate the
    exchange of cars from the spur tracks to the through freight, create another C/I track that only
    accepts set outs from the local switcher. The other solution is to use the
-   <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur tracks. 
-   
+   <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur tracks.
+
    <a name="Staging" id="Staging"></a>
    <h3>Staging Tracks</h3>
    Staging tracks are normally used to represent locations that generate traffic to and from your
@@ -2960,7 +2960,7 @@
     your liking. You can also control which types of loads the program will place in your cars by restricting the types
     of loads the train departing from staging is allowed to service. To control which loads a train will service, select
     under the "Edit Train" window menu "Tools" then <a href="#TrainLoadOptions">Train Load Options</a>.
-   
+
    <p>
     You can also control which loads your staging tracks will accept. Again use the <a href="#LoadOptions">Load
      Options</a> for a staging track, and adjust the "Select loads serviced by this track" to control which car loads are
@@ -3098,8 +3098,8 @@
    You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
    pickup and set out occurs to a track. Only one of the three messages will be added to your
    paperwork when there's work for the selected track. The checkboxes at the bottom of the window
-   allow you to decide which paperwork gets the comment. 
-   
+   allow you to decide which paperwork gets the comment.
+
    <a name="Pools" id="Pools"></a>
    <h4>Track Pools</h4>
    OperationsPro&trade; allows you to "pool" a set of tracks at a location. Tracks in a pool share
@@ -3286,7 +3286,7 @@
     location's tracks, select the checkbox "Move Rolling Stock to New Track". You can also delete
     all of the tracks at the location being copied, but you must also select the "Move Rolling Stock
     to New Track" option.</p>
-    
+
     <h4>Copy Track</h4>
     See <a href="#CopyTrack">Copy Track</a> under Location tools.
 
@@ -3328,7 +3328,7 @@
 
    <h4>Show Cars</h4>
    <p>To only see cars that have a location assigned to them, select "Show Cars" from the "Tools" menu.</p>
-   
+
    <a name="PrintLocation" id="PrintLocation"></a>
    <h4>Print or Preview</h4>
    This tool provides several options with regards to printing or previewing your locations.
@@ -3647,7 +3647,7 @@
    front of the menu box. The count is the number of'cars that have this particular attribute name.
    The delete option will prompt you to delete any attribute name that hasn't been assigned to a
    car.
-   
+
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
    To add a custom load or edit a car's load, press the Load "Edit" button in the
@@ -4001,9 +4001,9 @@
     across from "Consist" in the "Edit Locomotive" window. Now enter a consist name and press "Add"
     in the "Edit Locomotive Consist" window. Finally select the consist name from the menu box in
     the "Edit Locomotive" window and press save.</p>
-    
+
     <p>Consists are shown on Manifests and switch lists in the order they are entered, with the lead
-    locomotive being the first one entered. The lead locomotive in a consist will have an asterisk 
+    locomotive being the first one entered. The lead locomotive in a consist will have an asterisk
     appended to the consist name in the <a href="#Locomotives">Locomotives</a> window.</p>
 
    <a name="SynchronizeWithNCEConsists" id="SynchronizeWithNCEConsists"></a>
@@ -4411,7 +4411,7 @@
    select the option to build a consist from single locos. See <a href="#BuildlocoConsist">Build
     loco consist from single locos</a> under the <a href="#TrainBuildOptions">Train Build Options</a>
    for more information.
-   
+
    <p>The maximum number of locomotives that you can assign to a train is controlled by the <a href="#Settings">Settings</a>
    window <a href="#MaximumNumberLocos">Maximum Number of Locomotives</a>.</p>
 
@@ -4928,7 +4928,7 @@
       car's type, load, and road.
      </td>
     </tr>
-    
+
         <tr>
      <td>X (Division)</td>
 
@@ -4968,7 +4968,7 @@
     from the train.</p>
 
    <a name="TrainsTools" id="TrainsTools"></a>
-   
+
    <h3>Trains Tools</h3>
    <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
 
@@ -5212,7 +5212,7 @@
    One use is to control which trains are displayed in the "Trains" window. See the "Show All"
    checkbox in the <a href="#Trains">Trains</a> window. You must choose a train using the "Train"
    menu.
-   
+
    <h5>Deselect Train (Build)</h5>
    Deselect the "Build" checkbox for the specified train in the <a href="#Trains">Trains</a> window.
 
@@ -5301,12 +5301,12 @@
    <h4>Copy Train</h4>
    This tool allows you to copy an existing train. Enter a new name for the train you wish to copy,
    then select the train you want to copy, then press the "Copy" button.
-   
+
    <a name="TrainScripts" id="TrainScripts"></a>
    <h4>Train Scripts</h4>
    You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script" buttons to
-   select the scripts you want to run. 
-   
+   select the scripts you want to run.
+
    <a name="PrintSavedTrainManifests" id="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
    <p>
@@ -5338,7 +5338,7 @@
     Creator)". You must also enable the creation of CSV switch list files, see <a
      href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
    </p>
-   
+
    <a name="ExportTrains" id="ExportTrains"></a>
    <h4>Export Trains</h4>
    The export Trains tool produces a comma separated values (.csv) file for the trains selected in the "Build" column.
@@ -5348,8 +5348,8 @@
    The export Timetable tool produces a comma separated values (.csv) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
    OperationsPro&trade; export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
-   you create a route named "Timetable", produces a segment of locations based on the route's location order. 
-   
+   you create a route named "Timetable", produces a segment of locations based on the route's location order.
+
    <p>During the export, the program will calculate the maximum work times at each train's location based on the move
    counts in the train's route for trains that aren't built, and the actual work time for built trains.  The work time
    is referred to as "Duration" in the Timetable application stop sequence.</p>
@@ -5363,8 +5363,8 @@
    <a name="ExportTrainLineups" id="ExportTrainLineups"></a>
    <h4>Export Train Lineups</h4>
    The export Trains Lineups tool produces a comma separated values (.csv) file for built trains
-   that are also selected in the "Build" column. 
-   
+   that are also selected in the "Build" column.
+
    <a name="SwitcherService" id="SwitcherService"></a>
    <h3>Switcher Service (Local)</h3>
    Many operators assign a locomotive to a location to do the local switching. Using the location's
@@ -5451,7 +5451,7 @@
 
    <p>You can also find a copy of the train build report file in the "operations" directory in a
     subdirectory called "buildstatus". Each train build report has its own file with the .txt
-    extension and the name of the train as part of the file name. You can if you wish use a 
+    extension and the name of the train as part of the file name. You can if you wish use a
     <a href="#BuildReportDetails">text editor</a> to view the train build report file.</p>
 
    <p>

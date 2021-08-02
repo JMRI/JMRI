@@ -1,11 +1,12 @@
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
@@ -81,12 +82,10 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(4) ? 0x08 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
+                    NceMessage.LOCO_CMD_FG1, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
-
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
+            
         } else {
             byte[] result = jmri.NmraPacket.function0Through4Packet(address
                     .getNumber(), address.isLongAddress(), getF0(), getF1(),
@@ -119,12 +118,10 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(5) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG2, (byte) data);
+                    NceMessage.LOCO_CMD_FG2, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function5Through8Packet(address
                     .getNumber(), address.isLongAddress(), getF5(), getF6(),
@@ -157,12 +154,10 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(9) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG3, (byte) data);
+                    NceMessage.LOCO_CMD_FG3, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function9Through12Packet(address
                     .getNumber(), address.isLongAddress(), getF9(), getF10(),
@@ -200,7 +195,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(13) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG4, (byte) data);
+                    NceMessage.LOCO_CMD_FG4, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
@@ -242,7 +237,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(21) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG5, (byte) data);
+                    NceMessage.LOCO_CMD_FG5, (byte) data);
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
@@ -287,26 +282,25 @@ public class NceThrottle extends AbstractThrottle {
             if (value < 0) {
 
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_ESTOP
-                                : NceBinaryCommand.LOCO_CMD_REV_ESTOP),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_ESTOP
+                                : NceMessage.LOCO_CMD_REV_ESTOP),
                         (byte) 0);
 
             } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_128SPEED
-                                : NceBinaryCommand.LOCO_CMD_REV_128SPEED),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_128SPEED
+                                : NceMessage.LOCO_CMD_REV_128SPEED),
                         (byte) value);
             } else {
                 // 28 speed step mode
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_28SPEED
-                                : NceBinaryCommand.LOCO_CMD_REV_28SPEED),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_28SPEED
+                                : NceMessage.LOCO_CMD_REV_28SPEED),
                         (byte) value);
             }
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2 commands work properly
         } else {
             byte[] bl;
             int value;

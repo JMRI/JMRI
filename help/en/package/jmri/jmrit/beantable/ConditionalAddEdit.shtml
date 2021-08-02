@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Logix Conditionals</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Adding/Editing Logix Conditionals</h1>
 
@@ -38,7 +35,7 @@
       statements of the form:</p>
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
-      
+
       <p>A Conditional has two distinct parts: its "logical
       expression" and its "action". The pane has separate
       sections for the set up of each.</p>
@@ -104,7 +101,7 @@
       R2, R3 for the 1st three variables, you can use the operators
       "and", "or" and "not" in addition to parentheses. Some
       examples:</p>
-      
+
       <div style="margin-left: 2em;"><p><code>
       R1 and R2<br>
       R1 or (R2 and R3)<br>
@@ -128,7 +125,7 @@
       will depend on the conditional name selection method setting.
       See <a href="LogixTable.shtml#selectMethod">
       Conditional Name Selection Method</a>.</p>
-      
+
       <p>For Conditional Variables, the text input field is replaced
       by two drop down combo boxes.  The first box is used to
       select the Logix, the second box is used to select a
@@ -139,7 +136,7 @@
       alt="Logix/Conditional Combo Boxes" height="148" width="558">
       </a>
       </p>
-      
+
       <p>After the name is entered, select the required state from the
       <strong>Variable State</strong> drop down box.  Depending on the selected
       variable type and state, additional fields may be displayed.
@@ -368,7 +365,7 @@
             </ul></li>
 
             <li>Occupancy Block<ul>
-              <li><strong>Occupied</strong>: Evaluates to true when the 
+              <li><strong>Occupied</strong>: Evaluates to true when the
               block is occupied.</li>
               <li><strong>Power Error</strong>: Evaluates to true when a
               power error has occurred.</li>
@@ -378,7 +375,7 @@
               to dark.</li>
               <li><strong>Path Occupied</strong>: Evaluates to true when a
               path is occupied</li>
-              <li><strong>Unoccupied</strong>: Evaluates to true when a 
+              <li><strong>Unoccupied</strong>: Evaluates to true when a
               path is not occupied.</li>
               <li><strong>Allocated</strong>: Evaluates to true when the
               block is allocated.</li>
@@ -650,7 +647,7 @@
               block. Specify the OBlock by entering its System Name or
               User Name.</li>
 
-              <li><strong>Set Block Value</strong>: Set a value for the 
+              <li><strong>Set Block Value</strong>: Set a value for the
               selected block.</li>
 
               <li><strong>Set Block Error</strong>: Set the selected
@@ -689,7 +686,7 @@
               dialog to copy it (including its path) to the
               field.</li>
 
-              <li><strong>Script: Execute Jython Command</strong>: Enter the 
+              <li><strong>Script: Execute Jython Command</strong>: Enter the
               command in the Script Command field.</li>
             </ul></li>
 

@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: DispatcherPro Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: DispatcherPro</h1>
 
@@ -1313,10 +1310,10 @@
         "https://jmri.org/community/clinics/NMRA2012/index.shtml">Running
         Trains with JMRI's Dispatcher</a>.
         </li>
-        <li><a href="../../../../html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System: a way of 
+        <li><a href="../../../../html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System: a way of
         automatically setting up a Dispatcher system</a>
         </li>
-        
+
       </ul>
 
       <!--#include virtual="/Footer.shtml" -->

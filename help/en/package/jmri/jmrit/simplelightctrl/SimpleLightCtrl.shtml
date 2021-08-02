@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Light Control</title>
   <meta name="author" content="Ken Cameron">
   <meta name="keywords" content="JMRI help Light Control transition time status tool">
@@ -13,28 +10,28 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Light Control</h1>
       <p>Enter the light system name for the
       light you wish to control in the box to right of "light:".</p>
-      
+
       <p>For example, entering 678 and by pressing either the On or
       Off button, you should be able to change the state of light
-      number 678 on the layout.</p> 
-      
+      number 678 on the layout.</p>
+
       <p>Another example, a valid light
       system name for PowerLine devices could be PL9. Then by
       pressing either the On or Off button, you should be able to
-      change the state of light on the layout.</p> 
-      
+      change the state of light on the layout.</p>
+
       <p>Another example, a
       valid light system name could be IL123 which is internal
       light number 123. Pressing On or Off will only change the
       state of the internal light and will not change a light on
-      the layout.</p> 
-      
+      the layout.</p>
+
       <p>See <a href=
       "../../../../html/doc/Technical/Names.shtml">Names</a>
       under general help for more information.</p>
@@ -159,18 +156,18 @@
       </dl>
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      
+
       <h2>Other Light Reading</h2>
-      
+
         <p><a href="../../../../html/tools/Lights.shtml" >Lights General Documentation</a></p>
-        
+
         <p><a title="JMRI Light Table" href="../beantable/LightTable.shtml">Light Table</a></p>
-        
+
         <p><a href="../beantable/LightAddEdit.shtml#addLight"> Add / </a>
         <a href="../beantable/LightAddEdit.shtml#editLight">
         Edit Light</a> (including automated <a href="../beantable/LightAddEdit.shtml#lightcontrol">
         Light Controls</a>)</p>
-      
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->

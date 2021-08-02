@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Virtual Sound Decoder Decoder Window</title>
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI Virtual Sound Decoder Decoder Window</h1>
       This is the quick reference page for the Decoder window
@@ -31,7 +28,7 @@
       an error message could occur. In this case please report
       about the error via
       <a href="https://groups.io/g/jmriusers/topics">JMRI users</a>
-      or via 
+      or via
       <a href="https://github.com/JMRI/JMRI/issues">Github</a>.
       Thank you.
       <br>
@@ -81,7 +78,7 @@
 
       <h4>Profile Selection</h4>To select a profile, you must first
       load a "VSD File". An example VSD file is included with the
-      package, 
+      package,
       more examples are available for download
       <a href="https://github.com/JMRI/vsdecoder">on the web</a>,
       and you can make (and share!) your own. Choose
@@ -227,7 +224,7 @@
       <hr>
       <br>
       <a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.VSDecoderFrame old GUI help page) 
+      jmri.jmrit.vsdecoder.VSDecoderFrame old GUI help page)
       <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div><!-- close #mBody -->

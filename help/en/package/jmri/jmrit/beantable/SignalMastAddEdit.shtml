@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding Signal Masts</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20191212">
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Adding Signal Masts</h1><a href=
       "images/VirtMastPanelApply.png"><img src=
@@ -35,9 +32,9 @@
       On".<br>
       The third pop-up menu on the Add Signal Mast panel lets you
       select one of six different Signal Mast Driver types
-      depending upon the hardware being used. 
+      depending upon the hardware being used.
       More on those in the next section.</p>
-      
+
       <p>Options common to (nearly) all Driver types include:</p>
 
       <ul>
@@ -71,7 +68,7 @@
         <li><a href="#matrixCtl">Output Matrix</a></li>
         <li><a href="#virtual">Virtual</a></li>
       </ul>
-      
+
       <dl>
         <dt><a name="headCtl" id="headCtl">Signal Head
         Controlled</a></dt>
@@ -104,7 +101,7 @@
         the setting of one or more <a href="../../../../html/tools/Turnouts.shtml"
         title="JMRI Turnouts">Turnouts</a>.
 		<br>Each aspect can be configured to send the Thrown or Closed Turnout state.
-		<br>Leave the <q>Reset Previous Aspect</q> unchecked if the Turnout event 
+		<br>Leave the <q>Reset Previous Aspect</q> unchecked if the Turnout event
 		also clears previous aspects on a remote module.</dd>
 
         <dt><a name="virtual" id="virtual">Virtual</a></dt>
@@ -165,7 +162,7 @@
           driver was developed to connect decoders configured to
           connect and drive signals, like a <a href=
           "../../../../html/hardware/digirails/index.shtml#dr4018">Digirails
-          DR4018</a> with built in aspect mapping set to match your JMRI 
+          DR4018</a> with built in aspect mapping set to match your JMRI
           signal system and mapping.<br>
           When selected from the Driver drop down list, the panel
           lets you:
@@ -187,8 +184,8 @@
               delay that is applied between every output command
             </li>
           </ol>
-          
-          For now, only turnouts can be configured as outputs. 
+
+          For now, only turnouts can be configured as outputs.
 		  Your decoder documentation will
           have to explain which Aspects are available and which
           output states the decoder expects for each Aspect.<br>
@@ -200,8 +197,8 @@
       </dl>
 
       <p>Click <b>Create new</b> to add the new Mast and return to
-      the Signal Mast Table.</p> 
-          
+      the Signal Mast Table.</p>
+
       <p>Back to the <a href="SignalMastTable.shtml">Signal Mast
       Table help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->

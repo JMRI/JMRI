@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.clockmon;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,26 +8,17 @@ import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.Timer;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
-import jmri.jmrix.nce.NceListener;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.nce.*;
 
 /**
  * Frame displaying and programming a NCE clock monitor.
@@ -519,7 +509,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
                 return;
             } else {
                 waitingForCmdTime = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE set clock replied: {}", r.getElement(0));
                 }
                 callStateMachines();
@@ -532,7 +522,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         } else {
             if (waitingForCmd1224) {
                 waitingForCmd1224 = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE set clock 12/24 replied:{}", r.getElement(0));
                 }
                 callStateMachines();
@@ -540,7 +530,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             }
             if (waitingForCmdRatio) {
                 waitingForCmdRatio = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE clock ratio cmd replied:{}", r.getElement(0));
                 }
                 callStateMachines();
@@ -548,7 +538,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             }
             if (waitingForCmdStop) {
                 waitingForCmdStop = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE clock stop cmd replied:{}", r.getElement(0));
                 }
                 callStateMachines();
@@ -556,7 +546,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             }
             if (waitingForCmdStart) {
                 waitingForCmdStart = false;
-                if (r.getElement(0) != '!') {
+                if (r.getElement(0) != NceMessage.NCE_OKAY) {
                     log.error("NCE clock start cmd replied:{}", r.getElement(0));
                 }
                 callStateMachines();
