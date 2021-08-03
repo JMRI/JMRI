@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Layout Editor Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
@@ -25,8 +22,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The Layout Editor</h1><a name="contents" id=
       "contents"></a>
@@ -783,9 +780,9 @@
 
             <li><strong>Hide Track Construction Lines</strong> - Some track
             objects create construction lines.  This mainly applies to curved
-            track.  If this option is enabled, then those lines are not displayed. Note: 
+            track.  If this option is enabled, then those lines are not displayed. Note:
             This state remains in effect ONLY during the current PanelPro session and WILL NOT
-            be stored to the PanelPro file if the panel file is stored.  To store the state of the 
+            be stored to the PanelPro file if the panel file is stored.  To store the state of the
             given track segment in the PanelPro file, right click on the given track segment, select
             hide construction lines from the resulting pop up menu, and store the panel.</li>
 

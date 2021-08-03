@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit Track Segment Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Edit Track Segment</h1>
 
@@ -77,7 +74,7 @@
       Edit Track Segment dialog also allows an Edit Block dialog to
       be requested, so information for the track segment's block
       may be entered or changed. Blocks are discussed more fully in
-      the help page of the Create/Edit Block dialog. 
+      the help page of the Create/Edit Block dialog.
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

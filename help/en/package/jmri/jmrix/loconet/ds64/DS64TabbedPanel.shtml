@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Configure Digitrax DS64</title>
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI help configure loconet DS64">
@@ -13,12 +10,12 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
     <a href="../../../../../html/hardware/loconet/images/DS64TabbedPanel.png">
     <img src="../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"
-         style="float:right; margin: 5px;" height="408" width="438" 
+         style="float:right; margin: 5px;" height="408" width="438"
          alt="Configure DS64 panel image"></a>
-    <div id="mainContent">
 
       <h1>Configure Digitrax DS64</h1>
 
@@ -28,88 +25,88 @@
 
       <p>To open this tool select "Configure DS64" from the LocoNet
       menu for the connection this DS64 is attached to.</p>
-      
+
       <h2>Selecting the DS64 board</h2>
       <p>Each DS64 present on LocoNet is identified uniquely by its <a href=
           "http://www.digitrax.com/tsd/KB805/ds64-setting-board-id-for-additional-ds64s/">
           "Board ID"</a>.  This tool may access a particular DS64 by entering the
           Board ID number in the selection box at the top of the window.</p>
-      <p>Upon start-up, this tool queries LocoNet to create a list of DS64s.  Each 
+      <p>Upon start-up, this tool queries LocoNet to create a list of DS64s.  Each
           DS64 Board Id is listed in the pull-down selector.  New Board Id numbers
           may be typed into the box and will be added to the list.</p>
       <p>While it is possible to change the Board ID number using JMRI, it cannot
-          be done using this tool due to limitations of the DS64 design.  Instead, 
+          be done using this tool due to limitations of the DS64 design.  Instead,
           follow the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
           here</a>, but you must consult the DS64 manual and modify the JMRI-based process
           to suit the DS64's buttons, button press time, and lamp flashes.</p>
 
       <h2>Configuring the basic operating modes</h2>
-      <p>The basic operations are configured on the "Basic Settings" tab.  This tab 
-          gives human-readable descriptions of the various options.  Changes made 
-          here are immediately reflected on the "OpSw Values" tab, but are not 
-          written to the addressed DS64 until the "Write full sheet" button is 
+      <p>The basic operations are configured on the "Basic Settings" tab.  This tab
+          gives human-readable descriptions of the various options.  Changes made
+          here are immediately reflected on the "OpSw Values" tab, but are not
+          written to the addressed DS64 until the "Write full sheet" button is
           pressed.</p>
       <p>The "Read full Sheet" button may be used to read the OpSw settings from the DS64.</p>
-          
+
       <h2>Configuring the OpSws</h2>
       <p>The "OpSw Values" tab displays the individual "OpSw" settings which correspond to
           the settings found on the "Basic Settings" tab.  Changes made on this tab will
           immediately reflected on the "Basic Settings" tab.</p>
-      <p>The "Read full Sheet" pushbutton may be used to read the OpSws from the 
-          addressed DS64.  The "Write Full Sheet" pushbutton may be used to write 
+      <p>The "Read full Sheet" pushbutton may be used to read the OpSws from the
+          addressed DS64.  The "Write Full Sheet" pushbutton may be used to write
           the OpSw values to the addressed DS64.</p>
 
       <h2>Configuring the Output Addresses</h2>
-      <p>The "Output Addresses" tab allows reading and writing the DS64 output 
-          addresses.  The addresses need not be sequential.  
-      <p>The "Read full Sheet" pushbutton may be used to read the Output addresses from the 
-          addressed DS64.  The "Write Full Sheet" pushbutton may be used to write 
+      <p>The "Output Addresses" tab allows reading and writing the DS64 output
+          addresses.  The addresses need not be sequential.
+      <p>The "Read full Sheet" pushbutton may be used to read the Output addresses from the
+          addressed DS64.  The "Write Full Sheet" pushbutton may be used to write
           the Output addresses to the addressed DS64.</p>
 
       <h2>Configuring Routes</h2>
       <p>Each DS64 may be programmed to hold up to 8 "Routes".  Each route consists
           of a "Top" (or "trigger") switch command, plus up to seven additional switch commands.
-          When the "Top" ("trigger") switch command is seen by the DS64 on LocoNet, the 
+          When the "Top" ("trigger") switch command is seen by the DS64 on LocoNet, the
           DS64 will send the other switch commands to LocoNet.</p>
       <p>When the proper OpSw settings are made, the DS64 A* and S* input signals may
           each be used to trigger one of the programmed routes.</p>
       <p>This tool allows configuring each of the 8 "Routes" via the "Routes" tab.
-          Once the "Routes" tab is selected, an individual "Route" is selected on 
+          Once the "Routes" tab is selected, an individual "Route" is selected on
           the left side by selecting one of the tabs.</p>
-      <p>Within each individual Route, the "Top" turnout command is the command 
+      <p>Within each individual Route, the "Top" turnout command is the command
           which begins the sequence.  The received LocoNet command must match the "Top" turnout
-          command exactly - both in address and direction, in order to trigger the 
-          route via a LocoNet command.  Once triggered, the DS64 will transmit the 
-          subsequent turnout messages to LocoNet, until it finds an entry marked as 
+          command exactly - both in address and direction, in order to trigger the
+          route via a LocoNet command.  Once triggered, the DS64 will transmit the
+          subsequent turnout messages to LocoNet, until it finds an entry marked as
           "unused", or until it has sent the 8th entry, which ever comes first.</p>
-      <p>When a DS64 input is used to trigger the route, and the route has a "Top" entry 
+      <p>When a DS64 input is used to trigger the route, and the route has a "Top" entry
           which is something other than "Unused", the DS64 will transmit (on LocoNet) the
-          "Top" switch command, as well as any subsequent commands, until the 8th entry 
-          of the route has been sent or until it reaches an entry marked as "Unused", 
+          "Top" switch command, as well as any subsequent commands, until the 8th entry
+          of the route has been sent or until it reaches an entry marked as "Unused",
           whichever happens first.
-      <p>If the topmost entry of a route is marked as "unused", the whole route is 
+      <p>If the topmost entry of a route is marked as "unused", the whole route is
           considered invalid.</p>
-      <p>Note that it is not necessary to enter a duplicate turnout command to terminate 
-          the route before the end of the list.  Simply configure a turnout as "Unused" 
+      <p>Note that it is not necessary to enter a duplicate turnout command to terminate
+          the route before the end of the list.  Simply configure a turnout as "Unused"
           to terminate the route.  For example, if there are five turnouts in the route,
           including the top-most turnout, then set the sixth turnout entry as "Unused".
           The DS64 will then ignore the sixth, seventh and eighth entries for the route.</p>
       <h3>Clearing a Route</h3>
-      <p>When the "Routes" tab has been selected, the tool provides an additional 
-          button for "clearing" the route.  This button is found at the top of the 
-          window.  When this button is pressed, the tool will ask for confirmation 
+      <p>When the "Routes" tab has been selected, the tool provides an additional
+          button for "clearing" the route.  This button is found at the top of the
+          window.  When this button is pressed, the tool will ask for confirmation
           before making any changes to the DS64.  Upon user confirmation, the tool
           updates the DS64 to clear the route which is selected.</p>
-      <p>Only the selected route will be cleared; other routes remain unmodified.</p>   
+      <p>Only the selected route will be cleared; other routes remain unmodified.</p>
 
       <h2>Limitations</h2>
       <ul>
-          <li>Because of the way the DS64 board works, this tool can't change the 
-              basic address (the "Board ID") of the unit.  It is possible to change 
-              the Board ID number using JMRI by following the instructions found 
+          <li>Because of the way the DS64 board works, this tool can't change the
+              basic address (the "Board ID") of the unit.  It is possible to change
+              the Board ID number using JMRI by following the instructions found
               <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-              here</a>. Note that it is necessary to consult the DS64 manual and 
-              modify the JMRI-based process shown at the link above to suit the 
+              here</a>. Note that it is necessary to consult the DS64 manual and
+              modify the JMRI-based process shown at the link above to suit the
               DS64's buttons, button press time, and lamp flashes.</li>
           <li>This tool does not have the capability to save the DS64 configuration.</li>
           <li>The "Output Addresses" tab shows the state of the output <i>at the time
@@ -117,8 +114,8 @@
               to track any ongoing turnout control messages, so it cannot provide real-time
               updates of the DS64 output state.</li>
           <li>When a route is "cleared", the tool will simply update the DS64 with
-              the information that the top-most entry is "Unused", and then clear 
-              the route display.  The remaining information from the route remains 
+              the information that the top-most entry is "Unused", and then clear
+              the route display.  The remaining information from the route remains
               un-modified in the DS64.  It cannot be executed as a route.
               A "Read full sheet" operation, for the route, will display the remaining
               "orphaned" route information.

@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Conditional List Editor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Conditional List Editor</h1>
 
@@ -45,7 +42,7 @@
       names may be any useful text, provided the new user name is
       not used by another Conditional belonging to this Logix. It
       may be the same as the user name of another Logix's
-      Conditional. <em>When editing the user name (or any item in    
+      Conditional. <em>When editing the user name (or any item in
       any JMRI table) please remember to move to another cell in
       the table so that the program is notified that you have
       finished your entry, otherwise the entry may not take
@@ -114,7 +111,7 @@
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then
       (action)</code></p></div>
-      
+
       <p>A Conditional has two distinct parts: its "logical
       expression" and its "action". The window has separate
       sections for the set up of each.</p>
@@ -170,7 +167,7 @@
       <p>The <strong>Reorder</strong> button is used to changed the order of the
       conditional variables.  This button is disabled if the Logic Operator is set
       to <strong>Mixed</strong>.<span class="since">since 4.9.2</span></p>
-      
+
       <p>The default <strong>Logic Operator</strong> is "AND". In this case
       the Conditional will test if all variable tests are true,
       after taking the "NOT" negations into account. Using the
@@ -184,7 +181,7 @@
       R2, R3 for the 1st three variables, you can use the operators
       "and", "or" and "not" in addition to parentheses. Some
       examples:</p>
-      
+
       <div style="margin-left: 2em;"><p><code>
       R1 and R2<br>
       R1 or (R2 and R3)<br>
@@ -285,15 +282,15 @@
 
       <p class="important">Note:
          <br>As an advanced feature, the name of an entity can be entered as
-         an "indirect reference" to a memory location.  By that we mean, 
-         rather than naming the action directly, the value of a memory  
-         location is used for the name of the action. To do this you enter  
+         an "indirect reference" to a memory location.  By that we mean,
+         rather than naming the action directly, the value of a memory
+         location is used for the name of the action. To do this you enter
            the name of the memory entity preceded with the "@" symbol.
         <br>
          For example, suppose an Input Memory icon or a ComboBox Memory
-         icon sets the value of memory <em>MyMemory10</em> to a turnout name. 
-         Also let an action entity of type turnout be named <em>@MyMemory10</em>. 
-         Also let its action type be "Set Turnout Position Thrown" when 
+         icon sets the value of memory <em>MyMemory10</em> to a turnout name.
+         Also let an action entity of type turnout be named <em>@MyMemory10</em>.
+         Also let its action type be "Set Turnout Position Thrown" when
          the change option is "On Change to True".
          When the logical expression changes to true, the turnout named
           in the current value of memory MyMemory10 will be thrown.
@@ -354,7 +351,7 @@
 
       <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">
       main Logix documentation</a>.</p>
-      
+
       <h2>Logix Documentation Pages Logically Listed</h2>
 
       <!--#include virtual="LogixDocList.shtml" -->
