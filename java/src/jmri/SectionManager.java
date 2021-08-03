@@ -110,48 +110,6 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
     
     /**
-     * Return an existing Section or
-     * Create a new Section if the Section does not exist.
-     *
-     * @param systemName the desired system name
-     * @param userName   the desired user name
-     * @return existing section, by UserName search then SystemName, or creates new Section.
-     * @throws IllegalArgumentException if there is trouble creating a new Section.
-     */
-    @Nonnull
-    public Section provideSection(@CheckForNull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
-        // Check that Section does not already exist
-        Section y;
-        if (userName != null && !userName.isEmpty()) {
-            y = getByUserName(userName);
-            if (y != null) {
-                return y;
-            }
-        }
-        if ( systemName==null || systemName.isEmpty()) {
-            throw new IllegalArgumentException("Section System Name Empty, username " + userName + " not found");
-        }
-        
-        String sysName = systemName;
-        if (!sysName.startsWith(getSystemNamePrefix())) {
-            sysName = makeSystemName(sysName);
-        }
-        
-        y = getBySystemName(sysName);
-        if (y != null) {
-            return y;
-        }
-        // Section does not exist, create a new Section
-        y = new Section(sysName, userName);
-        // save in the maps
-        register(y);
-        
-        // Keep track of the last created auto system name
-        updateAutoNumber(systemName);
-        return y;
-    }
-
-    /**
      * Create a New Section with Auto System Name.
      * @param userName UserName for new Section
      * @return new Section with Auto System Name.
