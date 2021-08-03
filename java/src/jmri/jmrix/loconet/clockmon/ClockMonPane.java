@@ -3,16 +3,11 @@ package jmri.jmrix.loconet.clockmon;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.ClockControl;
-import jmri.jmrix.loconet.LnClockControl;
-import jmri.jmrix.loconet.LnCommandStationType.CommandStationFracType;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -55,17 +50,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     public void initComponents(final LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
-        List<ClockControl> listClocks = jmri.InstanceManager.getList(jmri.ClockControl.class);
-        for (ClockControl item : listClocks) {
-            if (item.getClass().getName().equals("jmri.jmrix.loconet.LnClockControl")) {
-                loconetClock = (LnClockControl) item;
-            }
-        }
-        if (loconetClock == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoLoconetClock"), "",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add GUI items
@@ -80,12 +64,8 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         panel1.add(new JLabel(":"));
         panel1.add(minutes);
         minutes.setPreferredSize(spacer.getPreferredSize());
-        panel1.add(new JLabel(":"));
-        panel1.add(seconds);
-        seconds.setMinimumSize(seconds.getSize());
-        panel1.add(new JLabel(":"));
+        panel1.add(new JLabel("."));
         panel1.add(frac_mins);
-        frac_mins.setMinimumSize(frac_mins.getSize());
         add(panel1);
 
         JPanel panel2 = new JPanel();
@@ -97,26 +77,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new FlowLayout());
         panel3.add(readButton);
-        panel3.setLayout(new FlowLayout());
-        panel3.add(forceCalibrateButton);
-        panel3.add(setBaseZeroHexButton);
-        panel3.add(setBaseZeroDecButton);
-
         add(panel3);
-
-        JPanel panelSubMinute = new JPanel();
-        panelSubMinute.setLayout(new FlowLayout());
-        panelSubMinute.add(new JLabel(Bundle.getMessage("CSFracType")));
-        panelSubMinute.add(commandStationType);
-        //commandStationType.setPreferredSize(commandStationType.getSize());
-        panelSubMinute.add(new JLabel(Bundle.getMessage("CSBaseZeroDec")));
-        panelSubMinute.add(commandStationZeroDec);
-        //commandStationZeroDec.setPreferredSize(commandStationZeroDec.getSize());
-        panelSubMinute.add(new JLabel(Bundle.getMessage("CSBaseZeroHex")));
-        panelSubMinute.add(commandStationZeroHex);
-        //commandStationZeroHex.setPreferredSize(commandStationZeroHex.getSize());
-        add(panelSubMinute);
-
         // Load GUI element contents with current slot contents
         notifyChangedSlot(memo.getSlotManager().slot(LnConstants.FC_SLOT));
 
@@ -128,16 +89,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
             }
         }
         );
-        setBaseZeroHexButton.addActionListener((ActionEvent e) -> {
-            setBaseZeroHex();
-        });
-        setBaseZeroDecButton.addActionListener((ActionEvent e) -> {
-            setBaseZeroDec();
-        });
-        forceCalibrateButton.addActionListener((ActionEvent e) -> {
-            setForceCalibrate();
-        });
-
         // listen for updated slot contents
         if (memo.getSlotManager() != null) {
             memo.getSlotManager().addSlotListener(this);
@@ -163,54 +114,8 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         days.setText("" + s.getFcDays());
         hours.setText("" + s.getFcHours());
         minutes.setText("" + s.getFcMinutes());
-        seconds.setText(String.format("%.3f", (loconetClock.convertFcFracMinToMilliSeconds(s.getFcFracMins()))/1000.0F));
         rate.setText("" + s.getFcRate());
-        frac_mins.setText(Integer.toHexString(s.getFcFracMins()));
-
-        if (loconetClock.getCommandStationFracType() == CommandStationFracType.CLOCK13BIT) {
-            commandStationType.setText("14bit");
-        } else {
-            commandStationType.setText("16bit");
-        }
-        commandStationZeroHex.setText(Integer.toHexString(loconetClock.getCommandStationZeroSecond()));
-        commandStationZeroDec.setText(Integer.toString(loconetClock.getCommandStationZeroSecond()));
-    }
-
-    private void setBaseZeroDec() {
-        int temp = 0;
-        try {
-            temp = Integer.parseInt(commandStationZeroDec.getText());
-            if (temp > -1 && temp < 0x8000) {
-                loconetClock.setCommandStationZeroSecond(temp);
-            } else {
-                JOptionPane.showMessageDialog(commandStationZeroDec, Bundle.getMessage("InvalidZeroDecRange"), "",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException Ex) {
-            JOptionPane.showMessageDialog(commandStationZeroDec, Bundle.getMessage("InvalidZeroDecFormat"), "",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void setBaseZeroHex() {
-        int temp = 0;
-        try {
-            temp = Integer.parseInt(commandStationZeroDec.getText());
-            if (temp > -1 && temp < 0x8000) {
-                loconetClock.setCommandStationZeroSecond(temp);
-            } else {
-                JOptionPane.showMessageDialog(commandStationZeroHex, Bundle.getMessage("InvalidZeroHexRange"), "",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException Ex) {
-            JOptionPane.showMessageDialog(commandStationZeroHex, Bundle.getMessage("InvalidZeroHexFormat"), "",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-   private void setForceCalibrate() {
-       loconetClock.startCalibrate();
-       JOptionPane.showMessageDialog(forceCalibrateButton, Bundle.getMessage("ForceCalibrateNextUpdate"), "",
-               JOptionPane.PLAIN_MESSAGE);
+        frac_mins.setText("" + s.getFcFracMins());
     }
 
     @Override
@@ -227,22 +132,12 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     JTextField days = new JTextField("00"); // NOI18N
     JTextField hours = new JTextField("00"); // NOI18N
     JTextField minutes = new JTextField("00"); // NOI18N
-    JTextField seconds = new JTextField("00.000"); // NOI18N
-    JTextField frac_mins = new JTextField("0x0000 (0x0000)"); // NOI18N
-
-    JTextField commandStationType = new JTextField("1-14bit"); // NOI18N
-    JTextField commandStationZeroHex = new JTextField("0x0000 (0x0000)"); // NOI18N
-    JTextField commandStationZeroDec = new JTextField("0000000"); // NOI18N
-    JButton setBaseZeroHexButton = new JButton(Bundle.getMessage("CSForceBaseZeroHex")); // NOI18N
-    JButton setBaseZeroDecButton = new JButton(Bundle.getMessage("CSForceBaseZeroDec")); // NOI18N
-    JButton forceCalibrateButton = new JButton(Bundle.getMessage("CSForceCalibration")); // NOI18N
+    JTextField frac_mins = new JTextField("00"); // NOI18N
 
     JTextField rate = new JTextField(4);
 
     JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
-    final static JTextField spacer = new JTextField("1234");
-
-    private LnClockControl loconetClock = null;
+    final static JTextField spacer = new JTextField("123");
 
     /**
      * Nested class to create one of these using old-style defaults.
