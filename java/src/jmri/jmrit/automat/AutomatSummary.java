@@ -27,7 +27,7 @@ public class AutomatSummary {
         return self;
     }
 
-    public final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
+    private final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
 
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
 
