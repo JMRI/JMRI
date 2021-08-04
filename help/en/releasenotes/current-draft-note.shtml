@@ -483,6 +483,7 @@
 
             <li>Added ThreadingExample.py script to show how to defer work to the GUI/Layout
                 script from an AbstractAutomat or other threaded script.
+            <li>Added a new LnSendToolwithNCE script.
         </ul>
 
     <h3>Signals</h3>

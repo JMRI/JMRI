@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: User Message Preferences</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="User Message Preferences">
@@ -13,13 +10,13 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>User Message Preferences</h1>This allows you to change
       the way that information and warning messages are displayed
       in JMRI. It will also allow you to configure a default
-      responses and the question being displayed. 
+      responses and the question being displayed.
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

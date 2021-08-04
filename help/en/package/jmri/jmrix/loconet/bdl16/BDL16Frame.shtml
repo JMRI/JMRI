@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Configure Digitrax BDL168</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="B. Milhaupt">
@@ -14,57 +11,57 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
     <a href="BDL16xConfigTool.png"><img src="BDL16xConfigTool.png"
-    alt="BDL16x Configuration Tool Screen" width="386" height="423" 
+    alt="BDL16x Configuration Tool Screen" width="386" height="423"
     style="float:right; margin: 5px;"></a>
 
-    <div id="mainContent">
 
       <h1>Configure Digitrax BDL16x</h1>
       <p>The JMRI BDL16x programming tool lets you configure the
       internal options of a BDL16, BDL162, or BDL168 directly from
-      your computer, when the board is connected to a JMRI LocoNet 
+      your computer, when the board is connected to a JMRI LocoNet
       connection.</p>
 
       <p>To open this tool select "Configure BDL16/BDL162/BDL168" from the LocoNet
       menu.</p>
-      
+
       <h2>Selecting the BDL16x board</h2>
-      
+
       <p>Each BDL16x device present on the LocoNet connection is identified by its "Board ID".
-      This tool may access a particular BDL16x device by entering the "Board ID" number in 
+      This tool may access a particular BDL16x device by entering the "Board ID" number in
       the selection box at the upper left of the tool window.</p>
-      
-      <p>Upon start-up, this tool queries the LocoNet connection to create a list 
+
+      <p>Upon start-up, this tool queries the LocoNet connection to create a list
       of BDL16x devices.  Each BDL16x Board ID is added to the list in the pull-down
-      selector, accessed by selecting the downward-pointing triangle which is just 
+      selector, accessed by selecting the downward-pointing triangle which is just
       to the right of the Board ID text entry space.</p>
-      
+
       <p>Any time that a Board ID number is typed into the Board ID text entry space,
       the number will be added to the list if it is not already present in the list.</p>
-      
+
       <p>While it is possible to change the Board ID number using JMRI, it cannot
-          be done using this tool due to limitations of the BDL16x design.  Instead, 
+          be done using this tool due to limitations of the BDL16x design.  Instead,
           follow the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-          here</a>.  Those instructions are for programming a BDL168 board, but 
+          here</a>.  Those instructions are for programming a BDL168 board, but
           they are believed to apply also to BDL16 and BDL162 boards.</p>
-      
+
       <h2>Reading and writing the OpSw settings</h2>
-       
-      <p>This tool only accesses the board's OpSw values when the "Read Full Sheet" 
+
+      <p>This tool only accesses the board's OpSw values when the "Read Full Sheet"
           or "Write Full Sheet" button is pressed.</p>
-      
-      <p>The "Read Full Sheet" button may be used to read the OpSw settings from 
+
+      <p>The "Read Full Sheet" button may be used to read the OpSw settings from
       the BDL16x.  Performing the "Read Full Sheet" operation reads all OpSw values from the
-      board selected by the "Board ID" field and updates each of the tool's 
+      board selected by the "Board ID" field and updates each of the tool's
       selections.</p>
-      
-      <p>The "Write Full Sheet" button may be used to write the OpSw settings 
+
+      <p>The "Write Full Sheet" button may be used to write the OpSw settings
           currently shown in the tool to the BDL16x device specified by the "Board ID"
-          number shown at the top of the window.  Performing the "Write Full Sheet" 
+          number shown at the top of the window.  Performing the "Write Full Sheet"
           operation writes all OpSw values to the board.</p>
-      
+
       <h2>The configurable options</h2>
 
       <p>The basic operating settings are shown grouped into three sections:
@@ -74,16 +71,16 @@
         and BDL168.</li>
         <li>Below this are the basic operating settings which apply only to the BDL168.</li>
       </ul>
-      
+
       <p>Each setting may be changed by selecting one of the options from the pull-down
       list of values.</p>
 
-      <p>When performing a "Write Full Sheet" operation to a BDL16 or BDL162 device, 
+      <p>When performing a "Write Full Sheet" operation to a BDL16 or BDL162 device,
           this tool will write all of the OpSw values, not just the OpSw values which
           are defined for the BDL16 or BDL162 device.  This is thought to be safe, as
           it is thought that these OpSw values will be ignored by the hardware.  If
-          you are concerned that this may not be acceptable, then select the "default" 
-          value for the OpSw values which do not apply to the board type which you 
+          you are concerned that this may not be acceptable, then select the "default"
+          value for the OpSw values which do not apply to the board type which you
           are configuring. </p>
 
       <h2>Limitations</h2>
@@ -91,7 +88,7 @@
       <ul>
         <li>This tool is not able to detect the difference between
         a BDL16, a BDL162, and a BDL168. As such, it always shows
-        all OpSw values and descriptions for the BDL168, and the "Write 
+        all OpSw values and descriptions for the BDL168, and the "Write
         Full Sheet" operation will write all OpSw values.</li>
 
         <li>This tool is able to access BDL16x boards with
@@ -104,9 +101,9 @@
         <li>Because of the way the BDL16x board works, this tool
         can't change the basic address of the unit. The BDL16x
         documentation describes how to change the board
-        address.  It is possible to change the Board ID number using JMRI by 
+        address.  It is possible to change the Board ID number using JMRI by
         following the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-        here</a>. Those instructions are for programming a BDL168 board, but 
+        here</a>. Those instructions are for programming a BDL168 board, but
         they are believed to apply also to BDL16 and BDL162 boards.</li>
       </ul>
 

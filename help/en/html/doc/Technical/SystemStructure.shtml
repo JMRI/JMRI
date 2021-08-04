@@ -413,7 +413,7 @@
       be linked from here.)
       <p>
       Any particular system connection is included in the preferences by
-      being listed in the <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
+      being listed in the <code>target/classes/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
       generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code> class-level annotations.
       <pre>
 # Providers of System Connections type lists in Preferences

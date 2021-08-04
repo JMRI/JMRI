@@ -11,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Discover LocoNet SV2 Devices</h1>
       <p>The "Send Discover SV2 Devices" tool lets you list all connected

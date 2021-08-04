@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
   <title>JMRI: Lenz Z21 Configuration Tool</title>
   <!--#include virtual="/Style.shtml" -->
@@ -11,11 +9,11 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
      <h1>JMRI: Lenz Z21 Configuration Tool</h1>
-     
+
         Help is on the way.
 
       <!--#include virtual="/Footer.shtml" -->

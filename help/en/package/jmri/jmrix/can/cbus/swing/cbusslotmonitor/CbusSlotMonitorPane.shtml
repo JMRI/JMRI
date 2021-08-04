@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
@@ -13,27 +10,27 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
      <h1>JMRI : CBUS Command Station Monitor</h1>
         <p>Main Table - Monitoring train sessions.</p>
 
-    <h3>Top Menu Items</h3>    
-        <p>Stop All Button - This is different to the JMRI throttle stop all in that this sends 
+    <h3>Top Menu Items</h3>
+        <p>Stop All Button - This is different to the JMRI throttle stop all in that this sends
         a system-wide stop, not just to JMRI throttles.</p>
         <p>Track Power Button - On / Off / Unknown</p>
         <p>Signal data Button - On / Off - Experimental</p>
         <p>Session Columns Dropdown - Choose which columns to display in table</p>
-        
+
     <h2>Main Table - Train List</h2>
-        <p> Every train heard on the network will be added to the table, 
+        <p> Every train heard on the network will be added to the table,
         there is one row per loco.</p>
-        <p>Train speed and direction, function status etc. are updated in real time 
-        according to the latest instruction by 
-        a JMRI throttle, MERG CANCAB throttle controller, 
+        <p>Train speed and direction, function status etc. are updated in real time
+        according to the latest instruction by
+        a JMRI throttle, MERG CANCAB throttle controller,
         or CBUS connected Command Station.</p>
-        
+
         <h3>Train Session columns : </h3>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
         width="626" height="179" alt="CBUS Command Station Monitor Session Columns">
@@ -48,13 +45,13 @@
         <li>Speed Steps ( System defaults to 128 )</li>
         <li>Consist ID</li>
         <li>Flags</li>
-        
+
         </ul>
-        
+
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
 
     <p>Sent by the Command Station Monitor</p>
-    
+
         <ul>
         <li>QLOC </li>
         <li>RSTAT </li>
@@ -65,7 +62,7 @@
 
 
       <p>Listeners for message sent, either by JMRI itself or external to JMRI</p>
-    
+
         <ul>
         <li>PLOC </li>
         <li>RLOC </li>
@@ -90,21 +87,21 @@
         </ul>
 
     <h3>JMRI Help</h3>
-        
+
         <p>The Cab Signalling tool <a name="cabdata" id="cabdata"></a>previously within this monitor
         has been relocated to the dedicated
         JMRI Cab Signal.</p>
-        
-        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
+
+        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the
         CBUS Command Station Monitor.</p>
-      
+
         <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
-        
-        <p>View debug information for the Command station Monitor by adding 
-        log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG 
+
+        <p>View debug information for the Command station Monitor by adding
+        log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG
         to your default.lcf file.</p>
-        
-        
+
+
         <h2></h2>
         <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
