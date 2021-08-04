@@ -49,8 +49,8 @@
 
               <dt>Tools</dt>
               <dd>Most of the PanelPro features are included in the Tools menu items and
-              sub-menus.  For an overview of PanelPro tools, see <a href="../../tools">
-              PanelPro Tools</a></dd>
+              sub-menus. See <a href="ToolsMenu.shtml">Tools Menu</a>.  For an overview of
+              the PanelPro tools, see <a href="../../tools">PanelPro Tools</a>.</dd>
 
               <dt>Roster</dt>
               <dd>The Roster entry opens the DecoderPro roster window.  The other entries
@@ -71,7 +71,7 @@
               specific menus.</dd>
 
               <dt>Debug</dt>
-              <dd>See <a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debug Menu</a>
+              <dd>See <a href="DebugMenu.shtml">Debug Menu</a>
               for details.</dd>
 
               <dt>Window</dt>
@@ -79,7 +79,7 @@
               show a hidden or minimized window, or make it the top window on the display.</dd>
 
               <dt>Help</dt>
-              <dd>See <a href="../../../package/jmri/jmrit/HelpMenu.shtml">Help Menu</a>
+              <dd>See <a href="HelpMenu.shtml">Help Menu</a>
               for details.</dd>
 
             </dl>

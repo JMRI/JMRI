@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Conditional State Variables and Actions List</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Conditional State Variables and Actions List</h1>
 
@@ -156,7 +153,7 @@
             </ul></li>
 
             <li>Occupancy Block<ul>
-              <li><strong>Occupied</strong>: Evaluates to true when the 
+              <li><strong>Occupied</strong>: Evaluates to true when the
               block is occupied.</li>
               <li><strong>Power Error</strong>: Evaluates to true when a
               power error has occurred.</li>
@@ -166,7 +163,7 @@
               to dark.</li>
               <li><strong>Path Occupied</strong>: Evaluates to true when a
               path is occupied</li>
-              <li><strong>Unoccupied</strong>: Evaluates to true when a 
+              <li><strong>Unoccupied</strong>: Evaluates to true when a
               path is not occupied.</li>
               <li><strong>Allocated</strong>: Evaluates to true when the
               block is allocated.</li>
@@ -453,7 +450,7 @@
               block. Specify the OBlock by entering its System Name or
               User Name.</li>
 
-              <li><strong>Set Block Value</strong>: Set a value for the 
+              <li><strong>Set Block Value</strong>: Set a value for the
               selected block.</li>
 
               <li><strong>Set Block Error</strong>: Set the selected
@@ -492,7 +489,7 @@
               dialog to copy it (including its path) to the
               field.</li>
 
-              <li><strong>Script: Execute Jython Command</strong>: Enter the 
+              <li><strong>Script: Execute Jython Command</strong>: Enter the
               command in the Script Command field.</li>
             </ul></li>
 
@@ -503,13 +500,13 @@
           </ul>
         </dd>
       </dl>
-      
+
             <h2>Logix Documentation Pages Logically Listed</h2>
 
       <!--#include virtual="LogixDocList.shtml" -->
 
 
-      
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -155,7 +155,7 @@
         <p><em><strong>Note</strong>:  LogixNG execution can be stopped using
         <strong>Tools &rArr; LogixNG &rArr; Stop LogixNG</strong>.</em></p>
 
-      <h2>LogixNG Tools</h2>
+      <h2 id="tools">LogixNG Tools</h2>
 
       <p>LogixNG has four system level tools at Tools &rArr; LogixNG.</p>
 

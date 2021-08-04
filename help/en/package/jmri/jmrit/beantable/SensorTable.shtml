@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Sensor Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Jerry Grochow">
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The Sensor Table</h1>
 
@@ -33,12 +30,12 @@
       You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
       between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
       </p>
-       
-      <p>The Sensor Table window will display two types of columns: sensor information (information about an individual sensor)
-      and button columns (clickable buttons to affect the sensor or the sensor table entry). 
 
-      <h3>Sensor Information</h3>      
-       
+      <p>The Sensor Table window will display two types of columns: sensor information (information about an individual sensor)
+      and button columns (clickable buttons to affect the sensor or the sensor table entry).
+
+      <h3>Sensor Information</h3>
+
       <dl>
         <dt><strong>System Name</strong></dt>
 
@@ -51,7 +48,7 @@
         <dd>
         You can directly enter or change the "User Name" for an existing Sensor (double click in the cell).
         </dd>
-        
+
         <dt><strong>State</strong></dt>
 
         <dd>
@@ -104,7 +101,7 @@
 
 
       <h3>Button Columns</h3>
-       
+
       <dl>
         <dt><strong>Delete</strong></dt>
 
@@ -131,8 +128,8 @@
         <dt><strong>Query</strong></dt>
 
         <dd>
-          Pushing the "Query" button will query the hardware "known state" and put that in the 
-          Sensor state column.         
+          Pushing the "Query" button will query the hardware "known state" and put that in the
+          Sensor state column.
         </dd>
 
         <dt><strong>Forget</strong></dt>
@@ -143,19 +140,19 @@
 
 
 
-      </dl>  
+      </dl>
 
-      
+
       <h3>Sensor Table Display Controls</h3>
       <p>Along the bottom of the Sensor Table pane are buttons and checkboxes that control the display of
-      the indicated columns.  Note that the display of these columns can also be changed by right-clicking 
+      the indicated columns.  Note that the display of these columns can also be changed by right-clicking
       on the column headers and selecting or deselecting columns.
       </p>
 
       <dl>
         <dt><strong>Add...</strong></dt>
 
-        <dd>A window to add a new Sensor will open when you press this button. For more information see 
+        <dd>A window to add a new Sensor will open when you press this button. For more information see
         <a href="SensorAddEdit.shtml">Adding/Editing Sensors</a>.</dd>
 
         <dt><strong>Show Debounce Delay Information</strong></dt>
@@ -170,37 +167,37 @@
         <dt><strong>Show State Query actions</strong></dt>
 
         <dd>When checked, an optional Sensor State "Query" and "Forget" button is shown for each Sensor.</dd>
-        
+
        </dl>
 
-       <p>The word <strong>Defaults</Strong> appears on the window's menu bar.  Clicking it brings up two options:       
+       <p>The word <strong>Defaults</Strong> appears on the window's menu bar.  Clicking it brings up two options:
 
       <dl>
-      <dt><strong>Global Debouce</strong><dt> 
+      <dt><strong>Global Debouce</strong><dt>
 
        <dd>The "<a href="#Debounce">Global Debounce Delays...</a>" menu
         lets item you configure default values for both delays.  See below.</dd>
-        
+
        <dt><strong>Initial Sensor State</strong> (for Internal Sensors ONLY)
        <dd>The "Initial Sensor State" menu item lets you choose what state Internal Sensors (system name beginning with
-       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI, 
+       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI,
        although you can use a <a href="../../../../html/tools/scripting/index.shtml">script</a> to set them.
        </dd>
       </dl>
-      
+
       <p>There is another sensor table display default available from the <strong>Edit&rArr;Preferences&rArr;Display</strong>
       available on the main window. Check to display icons for sensor state instead of text.
-      
+
 
       <h2><a name="Debounce" id="Debounce">Sensor Debounce Delays</a></h2>
 
       <a href="images/SensorGlobalDelayPane.png"><img
       src="images/SensorGlobalDelayPane.png" height="100" width="317"
       align="right" alt="Sensor Global Debounce Delays edit pane"></a>
-      
+
       <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
       triggering other events in the system.</p>
-        
+
       <p>Debounce Delays, activated from the Sensor Table "Defaults
       &gt; Global Debounce Delays..."
       menu, allows you to assign a period in milliseconds

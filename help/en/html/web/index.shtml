@@ -26,8 +26,8 @@
       Check that you can properly communicate with and operate your
       layout.</p>
 
-      <p>Start web access by selecting "Start JMRI Web Server"
-      under the "Tools" menu.</p>
+      <p>Start web access by selecting <strong>Tools &rArr; Servers &rArr; Start JMRI Web
+      Server</strong>.</p>
 
       <p>Test the connection:</p>
 
@@ -145,9 +145,9 @@
       <p>The example links below assume you are using a web
       browser on the same computer you are running JMRI on and that
       JMRI is using the default port 12080.<br />
-      To access the web 
+      To access the web
       server from another device on your network,
-      determine the IP address of the JMRI computer and use it 
+      determine the IP address of the JMRI computer and use it
       instead of "localhost". Example: "http://192.168.1.7:12080"</p>
 
       <p>JMRI Web Access home page at <a href=
@@ -175,7 +175,7 @@
       "http://localhost:12080/roster">http://localhost:12080/roster</a>
       provides a list of roster entries. Clicking on an entry will
       open the web throttle for that entry. The Roster page also includes
-      an "Upload Roster Files" button. 
+      an "Upload Roster Files" button.
       <a href="/help/en/html/web/RosterServlet.shtml">(More details)</a></p>
 
       <h3><a id="throttle" name="throttle">Throttles</a></h3>
@@ -261,8 +261,8 @@
       directory of the JMRI distribution directory will override
       the default file used for that purpose. This provides the
       custom content.</p>
-      
-      <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code> 
+
+      <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code>
       are provided for convenience to make simple appearance and
       javascript additions and overrides. These files are automatically included
       in all JMRI web pages, and include instructions for usage.

@@ -2,17 +2,14 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Signal Group Table</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-  <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Signal Logic Source Frame</h1>
       <p>From this window you

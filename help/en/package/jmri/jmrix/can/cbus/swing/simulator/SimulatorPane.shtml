@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="keywords" content="JMRI help CBUS Simulator simulate offline command station emulate emulator">
   <title>JMRI: CBUS&reg; Simulator</title>
   <!--#include virtual="/Style.shtml" -->
@@ -11,11 +9,11 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
      <h1>JMRI: CBUS Network Simulation Tool</h1>
-      
+
       <ul class="snav">
       <li><a href="#direction">Direction</a></li>
       <li><a href="#cs">Command stations</a></li>
@@ -23,19 +21,19 @@
       <li><a href="#nodes">Nodes</a></li>
       <li><a href="#opc">OPCs</a></li>
       </ul>
-      
+
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/simulator/cbus-network-simulation-pane-315x322.png"
        alt="CBUS Network Simulator screenshot" width="315" height="322" align="right">
-       
+
       <p>The tool will start in the background of a CAN Simulation MERG Hardware Connection.</p>
-      
+
       <p>You can also start the simulator manually for all connections by opening via the main MERG menu.</p>
-      
+
       <p>Default options are shown on the right.</p>
-      
+
       <p>You can add extra command stations, nodes or event responders by selecting Add in the top menu.</p>
 
-      
+
      <h2><a name="direction" id="direction">Direction and Delay</a></h2>
      <p>Direction and delay are unique to each simulated object.</p>
       <ul>
@@ -49,11 +47,11 @@
 
      <h2><a name="cs" id="cs">Command Stations</a></h2>
       <p>You can select between a standard command station, along with disabling the command station.</p>
-      
+
       <p>disabling the command station will cancel any current sessions.</p>
-      
+
       <p>The number to the right of the dropdown indicates the current number of sessions it is handling.</p>
-      
+
       <p>The reset button is equivalent to switching the command station off and on ( hard reset ).</p>
 
 
@@ -61,9 +59,9 @@
      <h2><a name="ev" id="ev" >Response Events</a></h2>
       <p>The tool can issue on or off response events to any requests that it hears on the network.
         </p>
-        
+
         <p>Event Response: </p>
-        
+
         <ul>
         <li>Disabled</li>
         <li>Random on / off</li>
@@ -71,9 +69,9 @@
         <li>On</li>
         <li>Off</li>
         </ul>
-        
+
         <p>The requests can also be filtered by node.</p>
-        
+
         <ul>
         <li> -1 : No filter</li>
         <li> 0 : Just short events</li>
@@ -83,13 +81,13 @@
 
      <h2><a name="nodes" id="nodes" >Nodes</a></h2>
         <p>No nodes are simulated by default.</p>
-        <p>When selecting a node, in enters in SLiM mode, you'll need to 
+        <p>When selecting a node, in enters in SLiM mode, you'll need to
         press the FLiM button to introduce it to the network.</p>
         <p>When selecting a new node ( or disabling by selecting SLiM ),
         any existing events or node variables will be reset.</p>
         <p>Simulated nodes currently provide node admin operations,
         however do not support actual incoming or outgoing events.</p>
-        
+
         <p>Current simulated nodes include : </p>
         <ul>
         <li>SLiM ( simulation disabled )</li>
@@ -113,16 +111,16 @@
         <li>DKEEP</li>
         <li>KLOC</li>
         </ul>
-        
+
         <p>Event Status Requests</p>
-        
+
         <ul>
-        <li>ASRQ - Sent when user clicks status button, node number 0</li>      
+        <li>ASRQ - Sent when user clicks status button, node number 0</li>
         <li>AREQ - Sent when user clicks status button, node number > 0</li>
         </ul>
-        
+
         <p>Node Simulation</p>
-        
+
         <ul>
         <li>RQMN - Setup Mode only</li>
         <li>RQNP - Setup Mode only</li>
@@ -174,13 +172,13 @@
         <li>NEVAL</li>
         <li>ENRSP</li>
         <li>NUMEV</li>
-        
+
         </ul>
 
     <h3>JMRI Help</h3>
-      
+
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the CBUS Event Capture window.</p>
-      
+
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
 
         <h2></h2>

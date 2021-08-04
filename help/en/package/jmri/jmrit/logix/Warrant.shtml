@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Warrants Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI Warrant Help">
@@ -14,8 +11,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Warrants</h1>
       <p>A Warrant in JMRI is a collection of information
@@ -100,7 +97,7 @@
       "../display/CircuitBuilder.shtml">Circuit Builder</a> Help.</p>
 
       <h3>Compatibility with Layout Editor</h3>
-      <p>Layout Editor panel Blocks are created and stored independently from OBlocks, although they can 
+      <p>Layout Editor panel Blocks are created and stored independently from OBlocks, although they can
       share use of the same Sensors for determining block occupancy.  OBlocks, Portals and OPaths can be created manually
       (without using Circuit Builder in a CPE panel) and imported from Layout Editor Blocks (see the command under
       <strong>Options</strong> in the <a href="OBlockTable.shtml">Occupancy Block Table.</a>
@@ -138,7 +135,7 @@
 
         <li><b>Train Trackers</b> - Opens the Tracker Table window.
         The <a href="Tracker.shtml">Train Trackers</a> help page
-        discusses how the movements of a train can be displayed 
+        discusses how the movements of a train can be displayed
         as they move from one occupancy block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create a
@@ -150,9 +147,9 @@
         the Warrant and train tracking status messages.</li>
 
         <li><b>Open Circuit builder</b> - Opens a window for
-        the circuit Builder to present its options for 
-        interactively editing and creating OBlocks, Portals, 
-        Paths. Also configures Signals and Indicator Track 
+        the circuit Builder to present its options for
+        interactively editing and creating OBlocks, Portals,
+        Paths. Also configures Signals and Indicator Track
         icons. <a href="../display/CircuitBuilder.shtml">
         Circuit Builder</a> has details.</li>
       </ul>
@@ -179,7 +176,7 @@
       set and verify that the route is properly set on the layout itself.
       Again, the train will proceed according to the <i>elapsed times</i>
       and <i>throttle settings</i> that were recorded.</p>
-	    
+
       <h3>The Importance of Block Path Lengths</h3>
       <p>A Warrant detects a position of its train when it enters
       a block having occupancy detection.  All other positional
@@ -195,11 +192,11 @@
       See <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
       for what track conditions require speed changes, they are detected
       and how Warrants make gradual changes of speed.
-	    
+
       <h3>Warrant Types</h3>
       <p>There are three types of Warrants available:</p>
       <ul>
-        <li>A <b>Recorded Script Warrant</b>, where throttle commands 
+        <li>A <b>Recorded Script Warrant</b>, where throttle commands
         are recorded from a throttle you use to drive a train over
         preselected route. The Warrant then replicates all the
         commands when played back. To create a Recorded Script
@@ -210,7 +207,7 @@
         <li>An <b>NX Warrant</b> (eNtry/eXit), where throttle commands
         are generated automatically to move a train between Blocks
         chosen by you "on the fly". A dialog allows you to choose
-        start and destination distances and to set the maximum 
+        start and destination distances and to set the maximum
         Throttle settings. To create an NX Warrant,
         select the <b>Warrants &rArr; Tables &rArr; Create NX Warrant</b>
         menu item. More on <a href="NXWarrant.shtml">NX Warrants</a></li>
@@ -298,7 +295,7 @@
       rogue train or even intervention by you to halt the train.<br>
       Warrants are able to deal with these
       restrictions and will modify their <i>"Normal"</i> speeds as needed
-      to comply with the restrictions. 
+      to comply with the restrictions.
       <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
       explains this relationship.</p>
 
@@ -308,12 +305,12 @@
       commands you make when driving the train over the route. The
       script can then be replayed to drive the train automatically.
       All possible throttle functions can be recorded and played
-      back. <a href="CreateEditWarrant.shtml">Creating and 
+      back. <a href="CreateEditWarrant.shtml">Creating and
       Editing Warrants</a> details how to do this.</p>
 
       <p>With LocoNet you may steal the address and manual
       LocoNet throttle. For other command systems, a WiFi
-      throttle may take the same address as the screen throttle 
+      throttle may take the same address as the screen throttle
       and be used to record a walk around script.</p>
 
       <h4>Generated Scripts</h4>
@@ -326,7 +323,7 @@
 
       <h4>"Normal" Track Speeds</h4>
       When recording a Warrant throttle command script, the train
-      should be run with all track conditions set to "Clear". 
+      should be run with all track conditions set to "Clear".
       NX Warrant script are generated using "Clear" track conditions also.
       This is reported in status messages as the "<b>Normal</b>"
       speed.  However, when running the Warrant, the train may

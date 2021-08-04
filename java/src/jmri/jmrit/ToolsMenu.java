@@ -145,10 +145,20 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.cabsignals.CabSignalAction());
 
         add(new JSeparator());
-        // add start web server menu item (immediate action)
-        add(new jmri.web.server.WebServerAction());
-        // add the server menu
-        add(new jmri.jmris.ServerMenu());
+        JMenu serverMenu = new JMenu("Servers");
+        serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        serverMenu.add(new jmri.web.server.WebServerAction());
+        serverMenu.add(new JSeparator());
+        serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
+        serverMenu.add(new jmri.jmris.simpleserver.SimpleServerAction());
+        add(serverMenu);
+
+        add(new JSeparator());
+        JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager")));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager")));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
+        add(vsdMenu);
 
         add(new JSeparator());
         // LogixNG menu

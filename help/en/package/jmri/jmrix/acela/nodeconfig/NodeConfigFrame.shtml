@@ -12,8 +12,8 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
 <h1>Acela Node Configuration Tool</h1>
 
@@ -46,7 +46,7 @@ So, if you make a change and SAVE your configuration file (by pressing the SAVE 
 <p>
 This is all fine and dandy until you realize that you were not connected to your layout and just lost your CTI Acela custom configuration (see below).
 <p>
-So, again, make backup copies of your configuration files (i.e. DecoderProConfig2.xml, PanelProConfig2.xml) often and store them in a safe place. 
+So, again, make backup copies of your configuration files (i.e. DecoderProConfig2.xml, PanelProConfig2.xml) often and store them in a safe place.
 
 <h2>Connecting to Your CTI Acela System
 </h2>
@@ -94,7 +94,7 @@ It will look something like (note the second "connection port" line):
 <p>
 &lt;/layout-config&gt;
 
-<h3>Let JMRI discover your CTI Acela network configuration  
+<h3>Let JMRI discover your CTI Acela network configuration
 </h3>
 Restart JMRI (DecoderPro or PanelPro).  If you specified the correct serial port in the previous step then the JMRI software should automatically connect to the CTI Acela network, reset the Acela node and then poll the CTI Acela network and discover which modules (JMRI calls a module a node) you have and in what order.
 <p>
@@ -371,14 +371,14 @@ Remember to save your new configuration by using the Save button in the Preferen
 		<ul>
 		<li>If no control power is applied to the relay then the circuit between the common terminal and the normally closed terminal will be closed, that is, it will behave as if a switch is turned on.
 		<li>When wired in this manner the output circuit will operate opposite of normal -- that is, Off will mean on and On will mean off.
-		<li>This is useful if you want the circuit to behave as if the relay were not there when the module has no power or has not been initialized. 
+		<li>This is useful if you want the circuit to behave as if the relay were not there when the module has no power or has not been initialized.
 		<li>This could switch track power off if wanted, but would default to on if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
 		</ul>
 		<li>As a router
 			<ul>
 			<li>When wired in this manner the signal is connected to the common terminal and then one possible route is connected to the NO terminal and the second possible route is connected to the NC terminal.
-			<li>This is useful if you want the relay to route say DCC current to the rail (say, via the NC terminal) or route say Programming Mode current to the rail (say, via the NO terminal). 
-			<li>Another use for this would be to control a Tortoise Switch Machine by routing either +voltage or -voltage to the stall motor. 
+			<li>This is useful if you want the relay to route say DCC current to the rail (say, via the NC terminal) or route say Programming Mode current to the rail (say, via the NO terminal).
+			<li>Another use for this would be to control a Tortoise Switch Machine by routing either +voltage or -voltage to the stall motor.
 			<li>When used in this mode, set the default to Normally Open or Normally Closed depending upon how you want the circuit to operate if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
 			</ul>
 		</ul>

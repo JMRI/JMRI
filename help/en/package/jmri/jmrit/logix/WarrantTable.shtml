@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Warrant Table Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Warrant Table">
@@ -13,15 +10,15 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Warrants: The Warrant List</h1>
 
       <p>The Warrant List is a table of all Recorded Warrants.
       It also temporarily lists NX Warrants during the time they
       are in effect. The Warrant List window is a dispatchers sheet
-      to run and control warranted trains. 
+      to run and control warranted trains.
       </p>
       <p>You access the Warrant Table by selecting
       <b>Warrant List</b> from the Warrants menu of your
@@ -153,7 +150,7 @@
 
         <li><b>Train Trackers</b> - Opens the Tracker Table window.
         The <a href="Tracker.shtml">Train Trackers</a> help page
-        discusses how the movements of a train can be displayed 
+        discusses how the movements of a train can be displayed
         as they move from one occupancy block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create an
@@ -184,25 +181,25 @@
       to run the train, but additional control of the train can be
       done through the choices provided by the <b>Control/Status</b>
       down down combobox. Note there are two ways to stop the
-      train: <b>Emergency Stop</b> an immediate stop or <b>Halt</b> 
+      train: <b>Emergency Stop</b> an immediate stop or <b>Halt</b>
       that slows the train to a stop smoothly. Once stopped, the
       <b>Resume</b>command will restart it, keeping the Warrant in effect.
        <b>Move into Next Block</b> is "repair" command
       should the train overrun a block and become "Lost". This
       command aligns the Warrant to the next block and restarts the
-      train. The <b>Abort</b> command does an emergency stop and 
+      train. The <b>Abort</b> command does an emergency stop and
       annuls the Warrant.
 
       <p>There are separate operations in the Warrant List
-      table to reserve a Warrant route; the safer <b>Allocate</b> 
+      table to reserve a Warrant route; the safer <b>Allocate</b>
       will not throw turnouts in blocks possibly occupied by
       trains or the
-      <b>Set</b> (allocate and set turnouts). These operations 
+      <b>Set</b> (allocate and set turnouts). These operations
       do not have to be done before running an automated train. They are
       used to preview the route. An <b>AutoRun</b> operation
       can begin without them. The train will seek allocation and
       set turnouts as it proceeds on the route.</p>
-      
+
       <h3>Automatic control of trains</h3>
       Whenever a warranted train has
       permission to enter the next Block, the turnouts are reset
@@ -211,7 +208,7 @@
       have permission the enter a block, no turnouts for the
       route are thrown in the block or in the blocks beyond it.
 
-      <p>"Stop" aspects of Signals, detection of occupancy or 
+      <p>"Stop" aspects of Signals, detection of occupancy or
       allocation to another warrant will deny permission for
       a warranted train to enter a block. Also, signals may
       prescribe speed restrictions. Whenever the train
@@ -221,7 +218,7 @@
       throttle commands and issue throttle commands it calculates
       to ramp the train's speed smoothly to meet the required
 	  speed or stop just before entering the block.</p>
-      
+
       <p>When permission to enter a block is denied, a warranted
       train will not move. Clearing these conditions causing
       the a denial is cleared, the
@@ -235,7 +232,7 @@
       with Signal Heads or Signal Masts protecting the blocks they
       join, the train will modify the speed according to the
       appearance or aspect of the signal. <a href="SpeedChanges.shtml">
-      When Warrant Speeds Are Modified</a> has details about 
+      When Warrant Speeds Are Modified</a> has details about
       how Warrants modifyrecorded speeds.</p>
 
       <h3>When the Starting block is Unoccupied</h3>

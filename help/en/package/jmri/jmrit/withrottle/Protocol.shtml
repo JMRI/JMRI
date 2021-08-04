@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
 
   <title>JMRI: WiThrottle Protocol</title>
@@ -32,7 +30,7 @@
       font-size: 0.8em;
       font-variant: small-caps;
     }
-    h3 { 
+    h3 {
       font-style: italic;
       background-color: #f0f0f0;
     }
@@ -43,14 +41,14 @@
     table.data, table.data th, table.data td {
  		border: 0.5px solid black;
  		font-size: 90%;
-	}	
+	}
   </style>
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
 	  <a name="top" id="top"></a>
       <h1>JMRI: WiThrottle Protocol</h1>
@@ -510,27 +508,27 @@ PFT1550681224&lt;;&gt;0.0
     return a value near the calendar date. Since the JMRI fast clock does not
     really support calendar dates, only the hour, minute and second are useful.
     The Digitrax LNWI returns values within the range 0-86400, which translates
-    to times on January 1st, 1970, when the day, month and year are 
+    to times on January 1st, 1970, when the day, month and year are
     calculated.<br/>
     To give an example: A JMRI instance started on Dec 13, 2020 with a fast clock
     time set to 10:23:45 am will return 1607855025, which can be converted back
     to hours, minutes and seconds by "modulo dividing" by 86400
     (number of seconds in a day) and calculating further as follows:<br/>
     1607855025 mod 86400 = 37425 seconds since midnight.<br/>
-    37425 seconds since midnight = 10 hours 1425 seconds since midnight = 
+    37425 seconds since midnight = 10 hours 1425 seconds since midnight =
     10 hours 23 minutes 45 seconds since midnight = 10:23:45 am.<br/>
     The second number is the current fast time ratio.  It
     may be an integer value (4) or a floating point value (4.0).  If this
     value is 0 (or 0.0), the clock is stopped.<br/>
-    Updates are sent on each change in time or rate, and when clock stopped 
+    Updates are sent on each change in time or rate, and when clock stopped
     or started, so expect one message every fast clock minute.</p>
 
     <a name="AlertandInfoMessage" id="AlertandInfoMessage"></a>
     <h3>Alert and Info Message</h3>
 
-    <p>The server can send a message string that the client can display. These cannot have 
+    <p>The server can send a message string that the client can display. These cannot have
       newlines in message. Two types:<br />
-      Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br /> 
+      Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br />
       Info message: 'Hm' + message text. Same as HM, but informational only.
       </p>
     <p>Example returned after client requests invalid address (say <code>M0+L23&lt;;&gt;L23</code>) the
@@ -543,7 +541,7 @@ HMJMRI: address 'L23' not allowed as Long
     <h3>Server Type Message</h3>
 
     <p>The server can send a "type" to identify itself to clients, useful to enable specific behaviors. Two types:<br />
-      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br /> 
+      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br />
       'Ht' + description. Longer informational text string, cannot contain newlines</p>
 
     <pre class="code">
@@ -974,19 +972,19 @@ MTA*&lt;;&gt;f112
       keep F12 active if it was on before. If Function 12 is
       a momentary function, it will still be activated by this
       command and stay active.</p>
-      
+
       <p>The server will respond with a property change
       notification only if this command changes the function state.
       </p>
 
       <h3>'m' momentary: Set Function to momentary or locking</h3>
-      
+
       <p>A function can either be momentary, i.e. active as long as
       the function key is pushed, or locking, i.e. active until the
       function key is pushed a second time. By default, JMRI uses the
       roster information to determine whether a function is momentary
       or locking for each loco.</p>
-      
+
       <p>This command allows a wiThrottle client to override the
       setting from the roster. For example:</p>
       <pre class="code">
@@ -997,12 +995,12 @@ MTA*&lt;;&gt;m112
 MTA*&lt;;&gt;m012
 </pre>
       <p>will set function 12 to be locking from now on. Actually, any
-      value other than '1' will set the function to locking. Although 
+      value other than '1' will set the function to locking. Although
       this example sets/resets the function to momentary on all 'T'
       throttles, you can set this individually on a per-engine basis
       by providing the key you used when you added an engine.</p>
-      
-      <p class="note">The global wiThrottle preference "F2 always 
+
+      <p class="note">The global wiThrottle preference "F2 always
       momentary" will override this setting for F2</p>
 
       <h3>'R' Set Direction</h3>
@@ -1094,7 +1092,7 @@ MTA*&lt;;&gt;V30
 M0A*&lt;;&gt;qV
 M0A*&lt;;&gt;qR
 </pre>
-	<p>The server responds with the Throttle Change Notification as described <a href="#ThrottleChangeNotification">[here]</a>. 
+	<p>The server responds with the Throttle Change Notification as described <a href="#ThrottleChangeNotification">[here]</a>.
 	Example responses for address 3(S) on throttle '0':
       <pre class="code">
 M0AS3&lt;;&gt;V25
@@ -1201,8 +1199,8 @@ RCR&lt;;&gt;S74
     </h2>
     <p>There are three types of turnout commands:</p>
     <p><a href="#TurnoutList">Turnout List</a> sent when a client connects. This was described <a href="#TurnoutList">[here]</a></p>
-    <p><b>Turnout Request</b> sent from client to server, requesting a new state for a turnout. Can (optionally) create the 
-    turnout in JMRI if "Turnout Creation" is allowed in WiThrottle Preferences. Will return 
+    <p><b>Turnout Request</b> sent from client to server, requesting a new state for a turnout. Can (optionally) create the
+    turnout in JMRI if "Turnout Creation" is allowed in WiThrottle Preferences. Will return
     <a href="#AlertandInfoMessage">HM alert message</a> if error setting
     requested state.</p>
 
@@ -1227,7 +1225,7 @@ PTACLT92
       </tr>
     </table>
 
-    <p><b>Turnout Notification</b> sent from server to client, advising the new state of a turnout. This is 
+    <p><b>Turnout Notification</b> sent from server to client, advising the new state of a turnout. This is
     sent for all changes to known turnouts, whether requested by this client or elsewhere.</p>
 
 <pre class="code">
@@ -1250,14 +1248,14 @@ PTA2LT92
         <td>Always returns system name of turnout.</td>
       </tr>
     </table>
-   
+
     <a name="RouteCommands" id="RouteCommands"></a>
     <h2>Route Commands
 	    <a class="to-top" href="#top">^Top</a>
     </h2>
     <p>There are three types of Route commands:</p>
     <p><a href="#RouteList">Route List</a> sent when a client connects. This was described <a href="#RouteList">[here]</a></p>
-    <p><b>Route Request</b> sent from client to server, requesting the route be "set". Will return 
+    <p><b>Route Request</b> sent from client to server, requesting the route be "set". Will return
     <a href="#AlertandInfoMessage">HM alert message</a> if error setting route.</p>
 
 <pre class="code">
@@ -1281,7 +1279,7 @@ PRA2IO_RESET_LAYOUT
       </tr>
     </table>
 
-    <p><b>Route Notification</b> sent from server to client, advising the new state of a route. This is 
+    <p><b>Route Notification</b> sent from server to client, advising the new state of a route. This is
     sent for all changes to known routes, whether requested by this client or elsewhere.</p>
 
 <pre class="code">
@@ -1304,7 +1302,7 @@ PRA2IO_RESET_LAYOUT
         <td>System name of route.</td>
       </tr>
     </table>
-   
+
     <a name="UnknownCommands" id="UnknownCommands"></a>
     <h2>Unknown Commands
 	    <a class="to-top" href="#top">^Top</a>
@@ -1312,17 +1310,17 @@ PRA2IO_RESET_LAYOUT
 
     <p>Any command that is not recognized by a client should be ignored,
     with processing continuing after the next newlines.</p>
-    
+
     <a name="Observations" id="Observations"></a>
     <h2>Observations
 	    <a class="to-top" href="#top">^Top</a>
     </h2>
-    
+
     <p>The LnWI sends a <code>PFC</code> command after connecting.  Its purpose is
     unknown at this time.</p>
 
 	<hr>
-	
+
     <p>This is the package/jmri/jmrit/withrottle/Protocol help
       page</p><!--#include virtual="/Footer.shtml" -->
     </div>

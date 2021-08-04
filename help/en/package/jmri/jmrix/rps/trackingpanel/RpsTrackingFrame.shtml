@@ -2,8 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: RPS Tracking Frame</title>
@@ -12,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: RPS Tracking Frame</h1><a href=
       "../../../../../html/hardware/rps/images/RpsTracker.jpg"><img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"

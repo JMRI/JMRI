@@ -2,20 +2,17 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: System Info Tool</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h2>JMRI: System Info Tool</h2>This is the
-      jmri.jmrix.lenxz.systeminfo.SystemInfoFrame help page. 
+      jmri.jmrix.lenxz.systeminfo.SystemInfoFrame help page.
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

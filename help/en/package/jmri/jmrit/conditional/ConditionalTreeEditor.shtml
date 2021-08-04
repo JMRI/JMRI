@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Conditional Tree Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content=
@@ -18,8 +15,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Conditional Tree Editor</h1>
 
@@ -156,7 +153,7 @@
       this expression, each variable is referred to by number, e.g. R1, R2, R3
       for the first three variables, you can use the operators "and", "or" and
       "not" in addition to parentheses. Some examples:</p>
-      
+
       <div style="margin-left: 2em;"><p><code>
       R1 and R2<br>
       R1 or (R2 and R3)<br>
@@ -177,7 +174,7 @@
       on the conditional name selection method setting. See
       <a href="../beantable/LogixTable.shtml#logixOptions">
       Conditional Name Selection Method</a>.</p>
-      
+
       <p>For Conditional Variables, the text input field is replaced by two
       drop down combo boxes.  The first box is used to select the Logix, the
       second box is used to select a Conditional that belongs to the selected
@@ -232,7 +229,7 @@
       will depend on the conditional name selection method setting.
       See <a href="../beantable/LogixTable.shtml#logixOptions">
       Conditional Name Selection Method</a>.</p>
-      
+
       <p>The data items needed to completely specify the
       action will appear in the detail pane. If you don't
       know what needs to be entered in a data field, hover your
