@@ -39,12 +39,14 @@
         <label>
             <text>Hardware testing required</text>
             <text xml:lang="de">Zu Überprüfen mit Decoder</text>
+            <text xml:lang="cs">Požadováno testování hardware (dekodéru)</text>
         </label>
         <label><text>      </text></label>
         <label>
             <text>Decoder Programming Lock</text>
             <text xml:lang="de">Decoder Programmierschloss</text>
             <text xml:lang="nl">Decoder Programmeerslot</text>
+            <text xml:lang="cs">Zámek programování dekodéru</text>
         </label>
         <display item="Decoder Lock ID"/>
         <display item="Decoder Lock Index"/>
@@ -67,6 +69,7 @@
             <text>Motor Management Settings</text>
             <text xml:lang="de">Motorregelung</text>
             <text xml:lang="nl">Motorregeling</text>
+            <text xml:lang="cs">Správa nastavení motoru</text>
         </label>
         <display item="Motor Management 1"/>
         <display item="Motor Management 2"/>
@@ -76,6 +79,7 @@
             <text>Accel/Decel Delays</text>
             <text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
             <text xml:lang="nl">Wegrij-/Remvertraging</text>
+            <text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
         </label>
         <grid gridy="2" weightx="1" ipadx="4">
             <griditem gridx="0" gridy="0" anchor="LINE_END">
@@ -118,6 +122,7 @@
                             <label>Activate Function in SUSI:</label>
                             <label xml:lang="de">Funktion aktivieren in SUSI:</label>
                             <label xml:lang="nl">Activeer functie in SUSI:</label>
+                            <label xml:lang="cs">Aktivujte funkci v SUSI:</label>
                         </display>
                     </griditem>
                     <griditem gridx="1" gridy="4" anchor="CENTER">
@@ -149,6 +154,7 @@
             <text>Switching Tango</text>
             <text xml:lang="de">Rangiertango</text>
             <text xml:lang="nl">Rangeertango</text>
+            <text xml:lang="cs">Posunovací Tango</text>
         </label>
         <display item="Rangiertango Step"/>
         <display item="Rangiertango Pushtime"/>
@@ -158,6 +164,7 @@
         <label><text>      </text></label>
         <label>
             <text>Special Light Effects</text>
+            <text xml:lang="cs">Zvláštní světelné efekty</text>
         </label>
         <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
         <grid gridy="5" weightx="1" ipadx="4">
@@ -173,6 +180,7 @@
                     <label>Blend In/Blend Out on:</label>
                     <label xml:lang="de">Eind- u. Ausblenden an:</label>
                     <label xml:lang="nl">In/-Uitfaden op:</label>
+                    <label xml:lang="cs">Rozsvěcení/Zhasínání na:</label>
                 </display>
             </griditem>
             <griditem gridx="1" gridy="1" anchor="CENTER">
@@ -187,6 +195,7 @@
                     <label>Flicker Effect on:</label>
                     <label xml:lang="de">Feuerbuchsenflackern an:</label>
                     <label xml:lang="nl">Flakkereffect op:</label>
+                    <label xml:lang="cs">Efekt blikání na:</label>
                 </display>
             </griditem>
             <griditem gridx="1" gridy="2" anchor="CENTER">
@@ -201,6 +210,7 @@
                     <label>Energy Save Effect on:</label>
                     <label xml:lang="de">Energiesparlampeneffekt an:</label>
                     <label xml:lang="nl">Spaarlampeffect op:</label>
+                    <label xml:lang="cs">Efekt úspory energie na:</label>
                 </display>
             </griditem>
             <griditem gridx="1" gridy="3" anchor="CENTER">
@@ -215,6 +225,7 @@
                     <label>Neon Light Start Effect on:</label>
                     <label xml:lang="de">Neonröhren Einschalteffekt an:</label>
                     <label xml:lang="nl">TL-buis inschakeleffect op:</label>
+                    <label xml:lang="cs">Efekt startu zářivky na:</label>
                 </display>
             </griditem>
             <griditem gridx="1" gridy="4" anchor="CENTER">

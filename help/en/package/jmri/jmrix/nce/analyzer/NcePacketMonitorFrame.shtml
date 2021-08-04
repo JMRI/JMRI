@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: NCE DCC Packet Analyzer</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help DCC Analyzer">
@@ -13,8 +10,8 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>NCE DCC Packet Analyzer</h1>
 
@@ -167,7 +164,7 @@
       Same as H6 mode except spaces will delimit each pair of hex
       characters<br>
       Example: P 03 68 6B<br>
-      Three byte packet following with bytes of 0x03, 0x68, 0x6B 
+      Three byte packet following with bytes of 0x03, 0x68, 0x6B
       </p>
 
       <h2>Verbose mode displays:</h2>Verbose mode displays are

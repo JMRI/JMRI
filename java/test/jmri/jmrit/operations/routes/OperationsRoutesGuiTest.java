@@ -115,7 +115,7 @@ public class OperationsRoutesGuiTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteRouteButton);
         // click "Yes" in the confirm popup
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
         JUnitUtil.dispose(f);

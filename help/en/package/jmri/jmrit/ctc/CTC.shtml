@@ -2,17 +2,14 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: CTC</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: CTC</h1>
 
@@ -146,8 +143,7 @@
         <li><a href="#ctcDefinitions">Definitions</a></li>
       </ol>
 
-    <a name="editor" id="editor"></a>
-    <h2>CTC Editor</h2>
+    <h2 id="editor">CTC Editor</h2>
 
     <p>
     The CTC Editor consists of a menu bar, a section containing a list of the
@@ -167,8 +163,7 @@
 
       <h3>Editor Menus</h3>
 
-      <a name="menuFile" id="menuFile"></a>
-      <h4>File menu</h4>
+      <h4 id="menuFile">File menu</h4>
       <p>
       The <strong>New</strong> menu item deletes the current configuration in
       the editor.
@@ -181,17 +176,14 @@
       import is done, the orignal file name will be <strong>V1_Save_CTCSystem.xml</strong>.
       </p>
 
-      <a name="menuEditFind" id="menuEditFind"></a>
-      <h4>Edit menu</h4>
-        <a name="menuEditFix" id="menuEditFix"></a>
-        <h5>Fix Error(s)...</h5>
+      <h4 id="menuEditFind">Edit menu</h4>
+        <h5 id="menuEditFix">Fix Error(s)...</h5>
         <p>If an attempt is made to close the editor window and the
         <strong>***ERROR***</strong> indicator appears anywhere in the Columns
         listing, the close will not occur.  A dialog will suggest doing this menu item.
         Please read carefully the information in this menu item.</p>
 
-      <a name="menuCfgDeb" id="menuCfgDeb"></a>
-      <h4>Configure menu</h4>
+      <h4 id="menuCfgDeb">Configure menu</h4>
         <h5>Debugging</h5>
         <p>The defaults here are good enough, but may be modified if desired.</p>
 
@@ -211,8 +203,7 @@
         select <strong>Help &rArr; System Console...</strong>  It's the "Green Screen".
         </p>
 
-        <a name="menuCfgDef" id="menuCfgDef"></a>
-        <h5>Defaults</h5>
+        <h5 id="menuCfgDef">Defaults</h5>
         <p><strong>Signal System Type</strong>: Select either Signal Heads or Signal Masts.</p>
 
         <p><strong>Turnout locks enabled at startup</strong> and <strong>Seconds
@@ -261,16 +252,14 @@
         A reasonable value in this case might be 5000 (5 seconds).  Some towers
         had virtually no delay, so enter a value such as 10 milliseconds.</p>
 
-        <a name="menuCfgFlt" id="menuCfgFlt"></a>
-        <h5>Fleeting</h5>
+        <h5 id="menuCfgFlt">Fleeting</h5>
         <p><strong>Fleeting toggle sensor</strong>: The sensor used to
         enable/disable fleeting.</p>
 
         <p><strong>Fleeting enabled at start</strong>: Default is to not enable
         fleeting during startup.</p>
 
-        <a name="menuCfgPat" id="menuCfgPat"></a>
-        <h5>Patterns</h5>
+        <h5 id="menuCfgPat">Patterns</h5>
         <p>
         Since there will probably be 100's if not 1,000's of JMRI internal
         sensor objects (Prefix "IS:") that need to be created to support all
@@ -329,8 +318,7 @@
         pattern in the edit boxes of that screen.
         </p>
 
-        <a name="menuCfgGui" id="menuCfgGui"></a>
-        <h5>GUI Design</h5>
+        <h5 id="menuCfgGui">GUI Design</h5>
 
           <p>
           <strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
@@ -415,8 +403,7 @@
           </p>
 
 
-      <a name="osList" id="osList"></a>
-      <h3>OS Section List</h3>
+      <h3 id="osList">OS Section List</h3>
 
       <h4>The Prototype CTC machine and this program</h4>
       <p>
@@ -494,8 +481,7 @@
       CTC implementations using a JMRI panel, these are the preferred names.  If a physical CTC
       panel is being used, use the combo box to select the hardware sensor.</p>
 
-        <a name="frmCB" id="frmCB"></a>
-        <h4>Code Button</h4>
+        <h4 id="frmCB">Code Button</h4>
         <p>
         This provides the major information for a single O.S. Section. It is enabled as soon as an item is selected in
         the list.
@@ -530,8 +516,7 @@
         and when the action actually occurs.
         </p>
 
-        <a name="frmSIDI" id="frmSIDI"></a>
-        <h4>Signal direction indicators</h4>
+        <h4 id="frmSIDI">Signal direction indicators</h4>
         <p>
         Defines all of the information required for displaying the signal direction indicators on the CTC panel, and which
         signal(s) in the field control them.
@@ -558,8 +543,7 @@
         There must be at least one entry in each, <strong>unless</strong> it is a uni-directional (Left or Right) O.S. Section.
         </p>
 
-        <a name="frmSIDL" id="frmSIDL"></a>
-        <h4>Signal direction lever</h4>
+        <h4 id="frmSIDL">Signal direction lever</h4>
         <p>
         Defines all of the sensors required for the JMRI MultiSensor object in order to select a signal direction.
         </p>
@@ -570,8 +554,7 @@
         Direction Indicators section will determine which sensors are used to create the multi-sensor icon.
         </p>
 
-        <a name="frmSWDI" id="frmSWDI"></a>
-        <h4>Switch direction indicators</h4>
+        <h4 id="frmSWDI">Switch direction indicators</h4>
         <p>
         Defines all of the information for displaying the switch direction indicators on the CTC panel, and
         which switch in the field controls them.
@@ -603,8 +586,7 @@
         if "Crossover" is selected, then check "Other turnout also left handed" if so.
         </p>
 
-        <a name="frmSWDL" id="frmSWDL"></a>
-        <h4>Switch direction lever</h4>
+        <h4 id="frmSWDL">Switch direction lever</h4>
         <p>
         Defines the one sensor associated with the Sensor icon lever.
         </p>
@@ -613,8 +595,7 @@
         <strong>Lever sensor</strong>: Required.  This name is automatically generated by the patterns system.
         </p>
 
-        <a name="frmCO" id="frmCO"></a>
-        <h4>Call On</h4>
+        <h4 id="frmCO">Call On</h4>
         <p>
         Defines all of the information for controlling (allowing) call on aspect(s) to be displayed in the
         field.
@@ -664,8 +645,7 @@
         route from the O.S. Section to the called on block (Signal Masts) or sensor associated with the block (Signal Heads).
         </p>
 
-        <a name="frmTRL" id="frmTRL"></a>
-        <h4>Traffic Locking</h4>
+        <h4 id="frmTRL">Traffic Locking</h4>
         <p>
         Defines all of the allowed non conflicting routes from the selected O.S. Section in either direction from it.
         This is the beating heart of the CTC system.  As such, it is the most complex part of CTC you will encounter.
@@ -771,8 +751,7 @@
         has fully transited this whole rule, and the dispatcher may select these routes (rules) safely.
         </p>
 
-        <a name="frmTUL" id="frmTUL"></a>
-        <h4>Turnout locking</h4>
+        <h4 id="frmTUL">Turnout locking</h4>
         <p>There are 3 types of turnouts on a layout</p>
         <dl>
           <dt>Controlled</dt>
@@ -1075,8 +1054,7 @@
         </table>
  -->
 
-        <a name="frmIL" id="frmIL"></a>
-        <h4>Indication locking</h4>
+        <h4 id="frmIL">Indication locking</h4>
         <p>
         Defines any additional locking  of an O.S. Section above and beyond what is normally expected
         by this system.
@@ -1087,8 +1065,7 @@
         this way, the turnout and turnout lock/unlock functions are disabled so long as any of these are non-red.
         </p>
 
-    <a name="ctcFiles" id="ctcFiles"></a>
-    <h2>Files</h2>
+    <h2 id="ctcFiles">Files</h2>
     <p>
     All files for the CTC system are stored in the "ctc" directory under the User Files Location.
     In order to access this directory, on the main JMRI screen, press "Help", then
@@ -1177,8 +1154,7 @@
     (i.e. CTC Editor, write files, etc.).
     </p>
 
-    <a name="ctcMain" id="ctcMain"></a>
-    <h2>CTCMain</h2>
+    <h2 id="ctcMain">CTCMain</h2>
     <h3>Starting it up</h3>
     <p>
     After defining the CTC system using the CTC Editor, you will need to start it up.
@@ -1258,8 +1234,7 @@
     "speed" of the layout's status changing.
     </p>
 
-    <a name="ctcDefinitions" id="ctcDefinitions"></a>
-    <h2>Definitions</h2>
+    <h2 id="ctcDefinitions">Definitions</h2>
     <dl>
       <dt>Running time</dt>
       <dd>

@@ -19,8 +19,8 @@
 
     <body>
         <!--#include virtual="/Header.shtml" -->
-        <div class="nomenu" id="mBody">
-            <div id="mainContent">
+        <div id="mBody">
+            <div id="mainContent" class="no-sidebar">
 
                 <h1>XML Error Handling</h1>
                 <p>JMRI will sometimes encounter errors loading XML files including layout

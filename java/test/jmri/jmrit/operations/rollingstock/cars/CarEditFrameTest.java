@@ -62,7 +62,8 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // test number too long
         StringBuffer sb = new StringBuffer("A");
         for (int i = 0; i < Control.max_len_string_road_number; i++) {
@@ -73,7 +74,8 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // confirm that delete and save buttons are disabled
         Assert.assertFalse(f.saveButton.isEnabled());
         Assert.assertFalse(f.deleteButton.isEnabled());
@@ -103,13 +105,15 @@ public class CarEditFrameTest extends OperationsTestCase {
         // new dialog warning car weight
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("carActualWeight"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         f.weightTextField.setText("1.5"); // good oz weight
         f.weightTonsTextField.setText("Bogus Weight");
         // new dialog warning car weight
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("WeightTonError"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // this will load the weight fields
         f.lengthComboBox.setSelectedIndex(4);
 
@@ -263,7 +267,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.locationBox.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         car = cm.getByRoadAndNumber("SP", "10345");
         Assert.assertNotNull(car);
 
@@ -271,9 +276,9 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         f.trackLocationBox.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-
         // car already exists
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("carCanNotAdd"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("car location", null, car.getLocation());
 
         JemmyUtil.enterClickAndLeave(f.saveButton);
@@ -300,25 +305,23 @@ public class CarEditFrameTest extends OperationsTestCase {
         // try to set car to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-
         // get response message
         String status = car.setLocation(loc2, testSpur);
         Assert.assertFalse(status.equals(Track.OKAY));
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[] { status }),
                 Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
+        
         // confirm car location and track didn't change
         Assert.assertNotEquals("track", testSpur, car.getTrack());
 
         // do it again, but say yes
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[] { status }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         // confirm car location and track changed
         Assert.assertEquals("track", testSpur, car.getTrack());
 
@@ -387,7 +390,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         // need to push the "No" button in the dialog window to close
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                 new Object[] { Bundle.getMessage("Caboose") }), Bundle.getMessage("ButtonNo"));
-
+        
+        JemmyUtil.waitFor(f);
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
 
@@ -398,6 +402,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         // need to push the "No" button in the dialog window to close
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                 new Object[] { Bundle.getMessage("Caboose") }), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
         Assert.assertFalse("not hazardous 3", c6.isHazardous());
@@ -408,6 +413,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         // need to push the "No" button in the dialog window to close
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                 new Object[] { Bundle.getMessage("Caboose") }), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("now hazardous", c6.isHazardous());
@@ -418,6 +424,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         // need to push the "No" button in the dialog window to close
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                 new Object[] { Bundle.getMessage("Caboose") }), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
@@ -506,10 +513,10 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.roadNumberTextField.setText("X20002");
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carCanNotUpdate"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         JUnitUtil.dispose(f);
 
@@ -550,7 +557,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(car.isPassenger());
         Assert.assertFalse(car2.isPassenger());
         Assert.assertEquals("blocking order", 23, car.getBlocking());
@@ -558,11 +565,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertFalse(car.isPassenger());
         Assert.assertFalse(car2.isPassenger());
         Assert.assertEquals("blocking order", 23, car.getBlocking());
@@ -570,11 +577,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertTrue(car.isPassenger());
         Assert.assertTrue(car2.isPassenger());
         Assert.assertEquals("blocking order", 23, car.getBlocking());
@@ -582,18 +589,17 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         f.blockingTextField.setText("99"); // random number for blocking order
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertTrue(car.isPassenger());
         Assert.assertTrue(car2.isPassenger());
         Assert.assertEquals("blocking order", 99, car.getBlocking());
         Assert.assertEquals("blocking order", 99, car2.getBlocking());
 
         JUnitUtil.dispose(f);
-
     }
 
     @Test
@@ -617,11 +623,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog, make all Boxcar Caboose?
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertTrue(car.isCaboose());
         Assert.assertFalse(car2.isCaboose());
@@ -696,31 +702,31 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog, make all Boxcar utility?
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertTrue(car.isUtility());
         Assert.assertFalse(car2.isUtility());
 
         JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertFalse(car.isUtility());
         Assert.assertFalse(car2.isUtility());
 
         JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertTrue(car.isUtility());
         Assert.assertTrue(car2.isUtility());
@@ -750,21 +756,21 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog, make all Boxcar Caboose?
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertTrue(car.isHazardous());
         Assert.assertFalse(car2.isHazardous());
 
         JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertFalse(car.isHazardous());
         Assert.assertFalse(car2.isHazardous());
@@ -775,7 +781,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(car.isHazardous());
         Assert.assertTrue(car2.isHazardous());
 
@@ -810,13 +816,13 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         f.groupComboBox.setSelectedItem("Test_Kernel");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog requesting to make all cars in kernel to have the same location and
         // track
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carPartKernel"), new Object[] { car2.getKernelName() }),
                 Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertFalse(car.getKernel().isLead(car));
@@ -832,13 +838,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.groupComboBox.setSelectedItem("Test_Kernel");
         JemmyUtil.enterClickAndLeave(f.fredCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog requesting to make all cars in kernel to have the same location and
         // track
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carPartKernel"), new Object[] { car2.getKernelName() }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertTrue(car.getKernel().isLead(car));
@@ -847,11 +853,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         // change the car's load
         f.loadComboBox.setSelectedItem("L");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-
         // dialog requesting to make all cars in kernel have the same load
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carPartKernel"), new Object[] { car2.getKernelName() }),
                 Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertEquals("Load", "L", car.getLoadName());
         Assert.assertEquals("Load", "L", car2.getLoadName());

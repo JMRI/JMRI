@@ -61,10 +61,9 @@ public class YardmasterFrameTest extends OperationsTestCase {
 
         // press "Modify"
         JemmyUtil.enterClickAndLeaveThreadSafe(ymPanel.modifyButton);
-
         // clear dialog window
         JemmyUtil.pressDialogButton(ymFrame, Bundle.getMessage("AddCarsToTrain?"), Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(ymFrame);
         // press "Done"
         JemmyUtil.enterClickAndLeave(ymPanel.modifyButton);
 

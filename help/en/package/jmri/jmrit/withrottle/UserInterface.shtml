@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator"
-	  content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: WiFi Throttle</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
@@ -13,8 +10,8 @@
 
 <body>
 	<!--#include virtual="/Header.shtml" -->
-	<div class="nomenu" id="mBody">
-		<div id="mainContent">
+	<div id="mBody">
+		<div id="mainContent" class="no-sidebar">
 
 			<h1>JMRI: WiFi Connected Throttle</h1>
 			The WiThrottle window controls the connection between WiFi throttles,
@@ -53,8 +50,8 @@
 			</p>
 
 			<p>
-				The <a href="Protocol.shtml">WiThrottle protocol</a> is described on a 
-					<a href="Protocol.shtml">separate page</a>. For more on JMRI networking, 
+				The <a href="Protocol.shtml">WiThrottle protocol</a> is described on a
+					<a href="Protocol.shtml">separate page</a>. For more on JMRI networking,
 					see the <a href="../../../../html/doc/Technical/Networking.shtml">networking
 					technical page</a>.
 			</p>
@@ -74,7 +71,7 @@
 					<td>An easy-to-use interface to allow iPhone, iPad, and iPod
 						touch users to link to JMRI roster and tables and also web pages.
 						Will download function key labels stored in JMRI.
-						Available in a free version (control a 
+						Available in a free version (control a
 						single locomotive) and a purchased version (control up to four locomotives at once).
 					</td>
 					<td><a target="_blank" href="https://withrottle.com"><img
@@ -95,7 +92,7 @@
 						and windows.</td>
 					<td></td>
 					<td><a target="_blank" href="https://enginedriver.mstevetodd.com"><img
-							src="images/EngineDriverScreen.png" height="125" 
+							src="images/EngineDriverScreen.png" height="125"
 							alt="EngineDriver for Android devices"
 							title="EngineDriver for Android devices"></a></td>
 					<td></td>
@@ -166,7 +163,7 @@
 					<td></td>
 					<td><a target="_blank"
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
-							<img src="/resources/logo.gif" height="100" 
+							<img src="/resources/logo.gif" height="100"
 							alt="WebThrottle for browsers" title="WebThrottle for browsers">
 					</a></td>
 				</tr>

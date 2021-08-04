@@ -13,6 +13,7 @@
       <text>Piko configuration</text>
       <text xml:lang="de">Piko Konfiguration</text>
       <text xml:lang="nl">Piko Configuratie</text>
+      <text xml:lang="cs">Konfigurace Piko</text>
     </label>
     <label>
       <text> </text>
@@ -37,6 +38,7 @@
       <text>Braking parameters</text>
       <text xml:lang="de">Bremsparameter</text>
       <text xml:lang="nl">Remparameters</text>
+      <text xml:lang="cs">Parametry brždění</text>
     </label>
     <label>
       <text> </text>
@@ -83,6 +85,7 @@
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
         <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
         <text xml:lang="nl">Fouten of Informatie (Alleen Lezen)</text>
+        <text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
       </label>
     <label>
       <text> </text>

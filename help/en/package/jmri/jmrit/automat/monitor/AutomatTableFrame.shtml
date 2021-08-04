@@ -2,9 +2,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Automat Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Automat Thread Table">
@@ -13,20 +10,20 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>The Automat (Thread) Table</h1>
-      
+
       The Thread Table lets you see the threads used by
       scripts that are implementing the "AbstractAutomat" class.
       <p>
       Each time the class execute's it's "handle" routine,
       the count will be incremented.  You can stop the thread
       with the button.
-      
+
       <p>
-      Note that the name column won't be particularly 
+      Note that the name column won't be particularly
       useful unless your script sets a distinct name:
 <pre><code>
 # create one of these
@@ -36,12 +33,12 @@ a = AutomatExample()
 a.setName("Automat example script")
 </code></pre>
       <p>
-      See the 
+      See the
       <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
       for more information on writing scripts.
-      
+
       <p>This is the
-      help/jmri/jmrit/automat/monitor/AutomatTable help page 
+      help/jmri/jmrit/automat/monitor/AutomatTable help page
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div><!-- close #mBody -->

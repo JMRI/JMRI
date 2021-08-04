@@ -40,7 +40,7 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
 
         // abort find file
         JemmyUtil.pressDialogButton(Bundle.getMessage("FindDesiredExcelFile"), "Cancel");
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -56,10 +56,9 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.isShowing());
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.testButton);
-
         // kill dialog
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

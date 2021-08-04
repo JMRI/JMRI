@@ -2,8 +2,7 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
   <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: Multi-Decoder Control</title>
   <!--#include virtual="/Style.shtml" -->
@@ -11,9 +10,9 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
 
-    <div id="mainContent">
+    <div id="mainContent" class="no-sidebar">
 
       <h2>JMRI: Multi-Decoder Control</h2>
       Originally, DCC did not

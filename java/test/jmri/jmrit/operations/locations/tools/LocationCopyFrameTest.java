@@ -35,37 +35,39 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         JUnitOperationsUtil.initOperationsData();
-        LocationCopyFrame t = new LocationCopyFrame();
-        Assert.assertNotNull("exists",t);
-        t.setVisible(true);
+        LocationCopyFrame f = new LocationCopyFrame();
+        Assert.assertNotNull("exists",f);
+        f.setVisible(true);
         
-        JemmyUtil.enterClickAndLeaveThreadSafe(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
         
         // enter a name for the new track
-        t.loctionNameTextField.setText("Test location name");
+        f.loctionNameTextField.setText("Test location name");
         
-        JemmyUtil.enterClickAndLeaveThreadSafe(t.copyButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
         
-        // select a location to copy
-        t.locationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(t.moveRollingStockCheckBox);
-        JemmyUtil.enterClickAndLeave(t.deleteTrackCheckBox);
+        JemmyUtil.waitFor(f);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        // select a location to copy
+        f.locationBox.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.moveRollingStockCheckBox);
+        JemmyUtil.enterClickAndLeave(f.deleteTrackCheckBox);
+        
+        JemmyUtil.enterClickAndLeave(f.copyButton);
         
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lmanager.getLocationByName("Test location name");
         Assert.assertNotNull("exists", loc);
 
-        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(f);
 
     }
 
