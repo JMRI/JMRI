@@ -131,9 +131,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
         if (automat != null) {
             switch (col) {
                 case NAMECOL:
-                    return automats.get(row).getName();
+                    return automat.getName();
                 case TURNSCOL:
-                    return automats.get(row).getCount();
+                    return automat.getCount();
                 case KILLCOL: // return button text here
                     return Bundle.getMessage("ButtonKill");
                 default:
