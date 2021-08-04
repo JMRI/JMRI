@@ -27,7 +27,7 @@ public class AutomatSummary {
         return self;
     }
 
-    private final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
+    public final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
 
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
 
@@ -70,6 +70,10 @@ public class AutomatSummary {
 
         //notify length changed
         notify("Remove", null, index);
+    }
+    
+    public ArrayList<AbstractAutomaton> getAutomats() {
+        return new ArrayList<>(automats);
     }
 
     public int length() {
