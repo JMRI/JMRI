@@ -1,23 +1,26 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
+
 import jmri.Block;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Block Object.
  * <p>
- * This is the same name as display.BlockContentsIcon, it follows
- * on from the MemoryIcon
+ * This is the same name as display.BlockContentsIcon, it follows on from the
+ * MemoryIcon
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
-
-    //TODO: unused - dead-code strip
-    //private final String defaultText = " ";
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
@@ -39,6 +42,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     /**
      * add a roster to this icon
+     *
      * @param roster to add
      */
     @Override
@@ -95,6 +99,15 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
+        }
+    }
+
+    @Override
+    public void setBackground(Color bg) {
+        super.setBackground(bg);
+        Editor e = getEditor();
+        if (e != null) {
+            e.repaint();
         }
     }
 
