@@ -313,6 +313,7 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
             // Throttle windows
             case "nextThrottleWindow"     : keys = getNextThrottleWindowKeys(); break;
             case "previousThrottleWindow" : keys = getPrevThrottleWindowKeys(); break;
+            default:
         }
         // function buttons
         if (evtString.matches("fn_.*_.*")) {

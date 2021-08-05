@@ -41,6 +41,4 @@ public class ThrottleWindowInputsListener extends ThrottleWindowActions implemen
             incrementSpeed(throttle, throttle.getSpeedIncrement() * multiplier);
         }        
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ThrottleWindowInputsListener.class);    
 }

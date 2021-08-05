@@ -214,6 +214,4 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
             if (throttle!=null) throttle.setFunction(fn, ! throttle.getFunction(fn));
         }                
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ThrottleWindowActionsFactory.class);        
 }
