@@ -536,6 +536,7 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Several bug fix on function panel (related to xml store/load)</li>
+            <li>Moved the keyboard shortcut implementation from KeyListeners to Input and Action Maps, should work better</li>
         </ul>
 
     <h3>Timetable</h3>
