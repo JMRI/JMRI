@@ -1,12 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.Color;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.Reportable;
+import jmri.jmrit.display.Editor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -229,6 +235,15 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
+        }
+    }
+
+    @Override
+    public void setBackground(Color bg) {
+        super.setBackground(bg);
+        Editor e = getEditor();
+        if (e != null) {
+            e.repaint();
         }
     }
 
