@@ -318,14 +318,14 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         // function buttons
         if (evtString.matches("fn_.*_.*")) {
             String[]tokens = evtString.split("_");
-            keys = functionsKeys[Integer.valueOf(tokens[1])];
+            keys = functionsKeys[Integer.parseInt(tokens[1])];
             if("Pressed".equals(tokens[2])) {
                 onKeyRelease = false;
             } 
         }
         if (keys == null) {       
-            return null;
-        }
+            return new KeyStroke[0];
+        }        
         KeyStroke[] ks = new KeyStroke[keys.length];
         for (int i = 0 ; i < ks.length; i++) {
             ks[i] = KeyStroke.getKeyStroke(keys[i][1], keys[i][0], onKeyRelease);

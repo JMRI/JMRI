@@ -9,8 +9,6 @@ import javax.swing.ActionMap;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -108,8 +106,8 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         
         // function buttons
         for (int i=0; i < tpwkc.getNbFunctionsKeys(); i++) {
-            ret.put("fn_"+i+"_Pressed", new fnActionPressed(i));
-            ret.put("fn_"+i+"_Released", new fnActionReleased(i));
+            ret.put("fn_"+i+"_Pressed", new FnActionPressed(i));
+            ret.put("fn_"+i+"_Released", new FnActionReleased(i));
         }
         
         // Throttle inner window cycling
@@ -185,10 +183,10 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         return ret;        
     }
     
-    private class fnActionPressed extends AbstractAction {
+    private class FnActionPressed extends AbstractAction {
         private final int fn;
 
-        fnActionPressed(int fn) {
+        FnActionPressed(int fn) {
             this.fn = fn;
         }
         
@@ -201,10 +199,10 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         }                
     }
     
-    private class fnActionReleased extends AbstractAction {
+    private class FnActionReleased extends AbstractAction {
         private final int fn;
 
-        fnActionReleased(int fn) {
+        FnActionReleased(int fn) {
             this.fn = fn;
         }
         
