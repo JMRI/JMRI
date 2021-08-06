@@ -1,94 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Using a PDA</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
-  <meta name="keywords" content="model railroad JMRI PDA">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="model railroad JMRI PDA"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Using a PDA to access JMRI (deprecated)</h1>
 
-      <h1>Hardware Support: Using a PDA to access JMRI
-      (deprecated)</h1>
+      <p>This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws
+      and is deprecated.</p>
 
-      <p>This page describes an early attempt to connect an Axim
-      PDA to JMRI, which has some flaws and is deprecated. <a name=
-      "limitations" id="limitations"></a></p>
+      <h2 id="limitations">Limitations</h2>
 
-      <h2>Limitations</h2>
+      <p>For a supported approach, involving running a specific program on your Smartphone, see the
+      <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.</p>
 
-      <p>For a supported approach, involving running a specific
-      program on your Smartphone, see the <a href=
-      "../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>
-      page. <a name="connecting" id="connecting"></a></p>
+      <h2 id="connecting">Connecting</h2>
 
-      <h2>Connecting</h2>
+      <p>Daryl Kruse has been experimenting with a Dell Axim PDA for use as a true 2-way Digitrax
+      throttle. He's provided the following information on how he set it up:</p>
 
-      <p>Daryl Kruse has been experimenting with a Dell Axim PDA
-      for use as a true 2-way Digitrax throttle. He's provided the
-      following information on how he set it up:</p>
+      <p>1. Our home has a wireless LAN set up for household members to access our cable internet
+      service.</p>
 
-      <p>1. Our home has a wireless LAN set up for household
-      members to access our cable internet service.</p>
+      <p>2. My train computer is connected to our LAN and, of course, is connected to JMRI and the
+      LocoNet via an interface.</p>
 
-      <p>2. My train computer is connected to our LAN and, of
-      course, is connected to JMRI and the LocoNet via an
-      interface.</p>
+      <p>3. My Dell Axim has wireless and terminal services client.</p>
 
-      <p>3. My Dell Axim has wireless and terminal services
-      client.</p>
-
-      <p>4. After staring up JMRI Throttles and turnout control, I
-      use the terminal services client of the Axim to access
-      the computer screen.</p>
+      <p>4. After staring up JMRI Throttles and turnout control, I use the terminal services client
+      of the Axim to access the computer screen.</p>
 
       <p>5. I can then control the layout with the Axim.</p>
 
-      <p>I am using the Terminal Services Client that came
-      installed on my Axim x50v which came with windows mobile 2003
-      SE installed as the operating system. On the computer I check
-      the box "allow users to connect remotely to this computer" in
-      the control panel/systems/remote tab.</p>
+      <p>I am using the Terminal Services Client that came installed on my Axim x50v which came
+      with windows mobile 2003 SE installed as the operating system. On the computer I check the
+      box "allow users to connect remotely to this computer" in the control panel/systems/remote
+      tab.</p>
 
-      <p>The main, four way button of the Axim can be used to
-      increase (left) and decrease (right) speed and set the
-      direction of the train (up- forward, down-reverse). I use the
-      blunt end of my home made uncoupling pic to address the
-      screen in order to select and dispatch locos, operate
-      functions and set turnouts. All this can be done without ever
-      plugging into the LocoNet.</p>
+      <p>The main, four way button of the Axim can be used to increase (left) and decrease (right)
+      speed and set the direction of the train (up- forward, down-reverse). I use the blunt end of
+      my home made uncoupling pic to address the screen in order to select and dispatch locos,
+      operate functions and set turnouts. All this can be done without ever plugging into the
+      LocoNet.</p>
 
-      <p>One thing that is a little bit cumbersome is entering the
-      turnout numbers into the turnout control. For this I have to
-      use the Axim keyboard. I would like to use the turnout table,
-      but every accessory switch that is used shows up
-      automatically on the table. As I use Route control, a lot of
-      unneeded accessory switch numbers show up that I don't need.
-      Is there any way to set up a table that is set with just the
-      accessory switches you want? <a name="documentation" id=
-      "documentation"></a></p>
+      <p>One thing that is a little bit cumbersome is entering the turnout numbers into the turnout
+      control. For this I have to use the Axim keyboard. I would like to use the turnout table, but
+      every accessory switch that is used shows up automatically on the table. As I use Route
+      control, a lot of unneeded accessory switch numbers show up that I don't need. Is there any
+      way to set up a table that is set with just the accessory switches you want?</p>
 
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
-      <p>For the currently supported approach, involving running a
-      specific program on your Smartphone, see the <a href=
-      "../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>
-      page.</p>
+      <p>For the currently supported approach, involving running a specific program on your
+      Smartphone, see the <a href=
+      "../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
