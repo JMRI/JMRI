@@ -1,119 +1,104 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Power Line - System Names</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: Powerline - System Names</h1>
-
-      Individual inputs (Sensors) and outputs (Turnouts and
-      Lights) in JMRI are accessed via System Names.<br>
+      Individual inputs (Sensors) and outputs (Turnouts and Lights) in JMRI are accessed via System
+      Names.<br>
       For information on the general scheme, please see <a href=
-      "../../doc/Technical/Names.shtml">JMRI Naming</a> in the
-      <a href="../../doc/Technical/index.shtml">Technical
-      documentation</a>. <a name="hardware" id="hardware"></a>
-
-      <h2>Supported Hardware</h2>
+      "../../doc/Technical/Names.shtml">JMRI Naming</a> in the <a href=
+      "../../doc/Technical/index.shtml">Technical documentation</a>.
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>X10</h3>
-      X10 devices are addressed via a "House Code" of A
-      through P, and a "Device Code" of 1 through 16.
-
-      <p>Outputs (Lights or Turnouts) in each House Code are
-      numbered with their Device Code, e.g.</p>
+      X10 devices are addressed via a "House Code" of A through P, and a "Device Code" of 1 through
+      16.
+      <p>Outputs (Lights or Turnouts) in each House Code are numbered with their Device Code,
+      e.g.</p>
 
       <ul>
-        <li>PTA1 is a JMRI Turnout that talks to device 1 on
-        housecode A</li>
+        <li>PTA1 is a JMRI Turnout that talks to device 1 on housecode A</li>
 
         <li>PTB3 is a JMRA Turnout for device 3 on housecode B</li>
 
         <li>PLP16 is a JMRI Light for device 16 on housecode P</li>
       </ul>
 
-      <p>If an output is called as a Turnout (name starts with
-      PT-), you only get On and Off as output options.</p>
+      <p>If an output is called as a Turnout (name starts with PT-), you only get On and Off as
+      output options.</p>
 
-      <p>An output that is used as a Light (name starts with PL-)
-      will take variable intensities. However, some physical X10
-      devices may not support dimming.</p>
+      <p>An output that is used as a Light (name starts with PL-) will take variable intensities.
+      However, some physical X10 devices may not support dimming.</p>
 
-      <p>Inputs (Sensors) are identified by the house code and
-      device number that was reported by some other X10 device like
-      a motion sensor or light control pad.<br>
-      NOTE: Due to a large number of false codes experienced by X10
-      users, Sensors are not automatically generated. They must be
-      manually entered in the Sensor Table by the user.</p>
+      <p>Inputs (Sensors) are identified by the house code and device number that was reported by
+      some other X10 device like a motion sensor or light control pad.<br>
+      NOTE: Due to a large number of false codes experienced by X10 users, Sensors are not
+      automatically generated. They must be manually entered in the Sensor Table by the user.</p>
 
-      <p>JMRI configures the adapter to use House Code "A" now.
-      We'll eventually make that configurable, but for now that
-      means that input messages will only be received from devices
-      set to House Code A, so only sensors "PSA1" through "PSA16"
-      will work.<br>
-      (Early versions of JMRI X10 support used an all-numeric
-      address like PT12, with no House Code letters; this is no
-      longer available, because it caused way too much
-      confusion)</p>
+      <p>JMRI configures the adapter to use House Code "A" now. We'll eventually make that
+      configurable, but for now that means that input messages will only be received from devices
+      set to House Code A, so only sensors "PSA1" through "PSA16" will work.<br>
+      (Early versions of JMRI X10 support used an all-numeric address like PT12, with no House Code
+      letters; this is no longer available, because it caused way too much confusion)</p>
 
       <h3>Insteon</h3>
-      Insteon Adapters are labelled with a
-      three-part number that looks like "01.2A.B4". These are just
-      random strings as far as the user and the program is
-      concerned, and we don't make any effort to subdivide them.
-      You should enter these exactly as they appear on the device
-      you want to address. Do not delete or add leading zeros, etc.
+      Insteon Adapters are labelled with a three-part number that looks like "01.2A.B4". These are
+      just random strings as far as the user and the program is concerned, and we don't make any
+      effort to subdivide them. You should enter these exactly as they appear on the device you
+      want to address. Do not delete or add leading zeros, etc.
+      <p>For example, if the device is labelled "01.2A.B4", the corresponding JMRI Light System
+      Name is "PL01.2A.B4".</p>
 
-      <p>For example, if the device is labelled "01.2A.B4", the
-      corresponding JMRI Light System Name is "PL01.2A.B4".
-      <a name="documentation" id="documentation"></a></p>
+      <h3 id="documentation">Adding an item to the table</h3>
 
-      <h3>Adding an item to the table</h3>
-      <p>When you add an item to one of the tables, many times you only
-        have to fill in the numbers to have JMRI construct
-        the complete system name.<br>
-        Here's a summary, split up for
-        outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+      <p>When you add an item to one of the tables, many times you only have to fill in the numbers
+      to have JMRI construct the complete system name.<br>
+      Here's a summary, split up for outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
 
       <table>
-        <tbody><tr>
-          <th>In/Out</th>
-          <th>Entry</th>
-          <th>Meaning</th>
-          <th>makes System Name</th>
-          <th>Mask</th>
-          <th>Minimum</th>
-          <th>Maximum</th>
-        </tr>
-        <tr>
-          <td>i/o</td>
-          <td>A3</td>
-          <td>House code A + num device code</td>
-          <td>PTA3</td>
-          <td>caps letter + num</td>
-          <td>house code: A; device: 1</td>
-          <td>house code: P; device: 16</td>
-        </tr>
-        <tr>
-          <td>i/o</td>
-          <td>01.2A.B4</td>
-          <td>Light (module) PL01.2A.B4</td>
-          <td>PL01.2A.B4</td>
-          <td>3 x 2 chars</td>
-          <td>not documented</td>
-          <td> </td>
-        </tr>
-        </tbody></table>
+        <tbody>
+          <tr>
+            <th>In/Out</th>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+          </tr>
+
+          <tr>
+            <td>i/o</td>
+            <td>A3</td>
+            <td>House code A + num device code</td>
+            <td>PTA3</td>
+            <td>caps letter + num</td>
+            <td>house code: A; device: 1</td>
+            <td>house code: P; device: 16</td>
+          </tr>
+
+          <tr>
+            <td>i/o</td>
+            <td>01.2A.B4</td>
+            <td>Light (module) PL01.2A.B4</td>
+            <td>PL01.2A.B4</td>
+            <td>3 x 2 chars</td>
+            <td>not documented</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
       by Egbert Broerse @silverailscolo July 2017 -->
@@ -122,20 +107,19 @@
 
       <h3>Third Party info</h3>
 
-      <p>More information on the X10 hardware can be found on the
-      (admittedly obnoxious) <a href="http://www.x10.com">X10.com
-      web site</a>.</p>
+      <p>More information on the X10 hardware can be found on the (admittedly obnoxious) <a href=
+      "http://www.x10.com">X10.com web site</a>.</p>
 
-      <p>More information on Insteon hardware can be found on the
-      <a href="http://www.insteon.com">insteon.com web
-      site</a>.</p>
+      <p>More information on Insteon hardware can be found on the <a href=
+      "http://www.insteon.com">insteon.com web site</a>.</p>
 
       <h3>JMRI Help</h3>
 
       <p>Back to the <a href="index.shtml">Powerline Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

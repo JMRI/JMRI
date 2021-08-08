@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright ($Author$) 2016 -->
 
-  <title>JMRI: Timetable Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Timetable Tool</title><!--#include virtual="/Style.shtml" -->
+
   <style type="text/css">
     td,
     th {
@@ -45,7 +43,7 @@
         font-size: .8rem;
     }
   </style>
-<style type="text/css">
+  <style type="text/css">
     span.since {
         color: #fff;
         float: right;
@@ -55,383 +53,541 @@
         margin: 2px 2px 2px 2px;
         padding: .2em .3em;
     }
-</style>
-
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <span class="since">since 4.13.4</span>
       <h1>Timetable</h1>
 
-      <p>A timetable describes the timing of trains running on a railroad.  This
-      information is used by train crews and dispatchers to prevent collisions.
-      This also applies to model railroads, especially those using timetable and
-      train order dispatching.</p>
-
-      This tool provides the ability to collect the required data and generate
-      a timetable graph that can be used to optimize train timing, such scheduling
-      meets.
-
+      <p>A timetable describes the timing of trains running on a railroad. This information is used
+      by train crews and dispatchers to prevent collisions. This also applies to model railroads,
+      especially those using timetable and train order dispatching.</p>
+      This tool provides the ability to collect the required data and generate a timetable graph
+      that can be used to optimize train timing, such scheduling meets.
       <ul>
-        <li><a href="#data">Timetable Data Management</a></li>
-        <li><a href="#details">Detail descriptions</a>
+        <li>
+          <a href="#data">Timetable Data Management</a>
+        </li>
+
+        <li>
+          <a href="#details">Detail descriptions</a>
           <ul>
-            <li><a href="#layout">Layout</a></li>
-            <li><a href="#type">Train Type</a></li>
-            <li><a href="#segment">Segment</a></li>
-            <li><a href="#station">Station</a></li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#train">Train</a></li>
-            <li><a href="#stop">Stop</a></li>
+            <li>
+              <a href="#layout">Layout</a>
+            </li>
+
+            <li>
+              <a href="#type">Train Type</a>
+            </li>
+
+            <li>
+              <a href="#segment">Segment</a>
+            </li>
+
+            <li>
+              <a href="#station">Station</a>
+            </li>
+
+            <li>
+              <a href="#schedule">Schedule</a>
+            </li>
+
+            <li>
+              <a href="#train">Train</a>
+            </li>
+
+            <li>
+              <a href="#stop">Stop</a>
+            </li>
           </ul>
         </li>
-        <li><a href="#graph">Timetable Graph</a></li>
-        <li><a href="#csvimport">CSV Import</a></li>
-        <li><a href="#opsimport">Operations Import</a></li>
-        <li><a href="#csvexport">CSV Export</a></li>
-        <li><a href="#structure">Data Structure</a></li>
-        <li><a href="#technical">Technical</a></li>
+
+        <li>
+          <a href="#graph">Timetable Graph</a>
+        </li>
+
+        <li>
+          <a href="#csvimport">CSV Import</a>
+        </li>
+
+        <li>
+          <a href="#opsimport">Operations Import</a>
+        </li>
+
+        <li>
+          <a href="#csvexport">CSV Export</a>
+        </li>
+
+        <li>
+          <a href="#structure">Data Structure</a>
+        </li>
+
+        <li>
+          <a href="#technical">Technical</a>
+        </li>
       </ul>
 
-
-      <a name="data" id="data"></a>
-      <h2>Manage Timetable Data</h2>
+      <h2 id="data">Manage Timetable Data</h2>
 
       <p>The data for a Timetable is represented in a tree structure.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/TimeTable.png">
-      <img src="images/TimeTable.png"
-      alt="Timetable Editor" height="406" width="856">
-      </a>
+        <a href="images/TimeTable.png"><img src="images/TimeTable.png" alt="Timetable Editor"
+        height="406" width="856"></a>
       </div>
 
       <p>The window is divided into 3 sections.</p>
+
       <ul>
-      <li>The left side of the main section contains the tree structure for
-      all of the layouts and the related data.  The tree can
-      expand and collapse to control the amount of detail being displayed.</li>
-      <li>The right side of the main section contains the detail information,
-      if any, about the currently selected tree row.</li>
-      <li>The right side of bottom section contains the <strong>Save</strong>
-      and <strong>Done</strong> buttons.  The left side contains the
-      <strong>Action</strong> buttons.  These buttons vary depending on the
-      selected tree row.</li>
+        <li>The left side of the main section contains the tree structure for all of the layouts
+        and the related data. The tree can expand and collapse to control the amount of detail
+        being displayed.</li>
+
+        <li>The right side of the main section contains the detail information, if any, about the
+        currently selected tree row.</li>
+
+        <li>The right side of bottom section contains the <strong>Save</strong> and
+        <strong>Done</strong> buttons. The left side contains the <strong>Action</strong> buttons.
+        These buttons vary depending on the selected tree row.</li>
       </ul>
 
       <h3>Action Buttons</h3>
+
       <div style="margin-left: 2em;">
-      <table style="display: inline-block;  border: thin solid; border-collapse: collapse;">
-      <tr> <th>Item</th>        <th>Level</th></tr>
-      <tr> <th>Layout</th>      <td>1</td>     <td>New Layout</td><td>Delete Layout</td></tr>
-      <tr> <th>Train Types</th> <td>2</td>     <td>Add Train Type</td></tr>
-      <tr> <th>Train Type</th>  <td>3</td>     <td>Delete Train Type</td></tr>
-      <tr> <th>Segments</th>    <td>2</td>     <td>Add Segment</td></tr>
-      <tr> <th>Segment</th>     <td>3</td>     <td>Add Station</td><td>Delete Segment</td><td>Graph: Display | Print</td></tr>
-      <tr> <th>Station</th>     <td>4</td>     <td>Delete Station</td></tr>
-      <tr> <th>Schedules</th>   <td>2</td>     <td>Add Schedule</td></tr>
-      <tr> <th>Schedule</th>    <td>3</td>     <td>Add Train</td><td>Delete Schedule</td></tr>
-      <tr> <th>Train</th>       <td>4</td>     <td>Add Stop</td><td>Delete Train</td></tr>
-      <tr> <th>Stop</th>        <td>5</td>     <td>Delete Stop</td><td>Up</td><td>Down</td></tr>
-      </table>
+        <table style="display: inline-block; border: thin solid; border-collapse: collapse;">
+          <tr>
+            <th>Item</th>
+            <th>Level</th>
+          </tr>
+
+          <tr>
+            <th>Layout</th>
+            <td>1</td>
+            <td>New Layout</td>
+            <td>Delete Layout</td>
+          </tr>
+
+          <tr>
+            <th>Train Types</th>
+            <td>2</td>
+            <td>Add Train Type</td>
+          </tr>
+
+          <tr>
+            <th>Train Type</th>
+            <td>3</td>
+            <td>Delete Train Type</td>
+          </tr>
+
+          <tr>
+            <th>Segments</th>
+            <td>2</td>
+            <td>Add Segment</td>
+          </tr>
+
+          <tr>
+            <th>Segment</th>
+            <td>3</td>
+            <td>Add Station</td>
+            <td>Delete Segment</td>
+            <td>Graph: Display | Print</td>
+          </tr>
+
+          <tr>
+            <th>Station</th>
+            <td>4</td>
+            <td>Delete Station</td>
+          </tr>
+
+          <tr>
+            <th>Schedules</th>
+            <td>2</td>
+            <td>Add Schedule</td>
+          </tr>
+
+          <tr>
+            <th>Schedule</th>
+            <td>3</td>
+            <td>Add Train</td>
+            <td>Delete Schedule</td>
+          </tr>
+
+          <tr>
+            <th>Train</th>
+            <td>4</td>
+            <td>Add Stop</td>
+            <td>Delete Train</td>
+          </tr>
+
+          <tr>
+            <th>Stop</th>
+            <td>5</td>
+            <td>Delete Stop</td>
+            <td>Up</td>
+            <td>Down</td>
+          </tr>
+        </table>
       </div>
 
       <h3>The Edit Process</h3>
-      <p>When the Timetable tool is selected from the PanelPro Tools menu,
-      the timetable data is loaded from the <strong>TimeTableData.xml</strong>
-      file.  The file is located in the <strong>timetable</strong> directory in the
-      user files location.  If the file does not exist, a <strong>Sample</strong>
-      timetable is copied from the JMRI install location.</p>
 
-      <p>When a new node is added, it is created with default values, and the
-      new node is automatically selected.  The default name should be changed
-      and the other default values should be reviewed.</p>
+      <p>When the Timetable tool is selected from the PanelPro Tools menu, the timetable data is
+      loaded from the <strong>TimeTableData.xml</strong> file. The file is located in the
+      <strong>timetable</strong> directory in the user files location. If the file does not exist,
+      a <strong>Sample</strong> timetable is copied from the JMRI install location.</p>
 
-      <p>When a tree node is selected, the detail section shows the current
-      detail information.  The field labels include tooltips.  When a field is
-      clicked on or changed, the <strong>Cancel</strong> and <strong>Update</strong>
-      buttons become active and the Action buttons become inactive.  When edit
-      mode is enabled, selecting a different tree node is disabled until Cancel or
-      Update is selected.  A dialog will be displayed as a reminder.</p>
+      <p>When a new node is added, it is created with default values, and the new node is
+      automatically selected. The default name should be changed and the other default values
+      should be reviewed.</p>
+
+      <p>When a tree node is selected, the detail section shows the current detail information. The
+      field labels include tooltips. When a field is clicked on or changed, the
+      <strong>Cancel</strong> and <strong>Update</strong> buttons become active and the Action
+      buttons become inactive. When edit mode is enabled, selecting a different tree node is
+      disabled until Cancel or Update is selected. A dialog will be displayed as a reminder.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/TimeTableNodeEditMsg.png">
-      <img src="images/TimeTableNodeEditMsg.png"
-      alt="Timetable Editor" height="167" width="768">
-      </a>
+        <a href="images/TimeTableNodeEditMsg.png"><img src="images/TimeTableNodeEditMsg.png" alt=
+        "Timetable Editor" height="167" width="768"></a>
       </div>
 
-      <p>If the <strong>Save</strong> button is active, there are changes that
-      have not been saved.  Select the button to save the changes.  Four backup
-      files are retained in the timetable directory.</p>
+      <p>If the <strong>Save</strong> button is active, there are changes that have not been saved.
+      Select the button to save the changes. Four backup files are retained in the timetable
+      directory.</p>
 
-      <p>Select the <strong>Done</strong> button to close the Timetable window. If
-      there are pending changes to be saved, a dialog will be displayed.</p>
+      <p>Select the <strong>Done</strong> button to close the Timetable window. If there are
+      pending changes to be saved, a dialog will be displayed.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/TimeTableSaveWarning.png">
-      <img src="images/TimeTableSaveWarning.png"
-      alt="Timetable Editor" height="167" width="393">
-      </a>
+        <a href="images/TimeTableSaveWarning.png"><img src="images/TimeTableSaveWarning.png" alt=
+        "Timetable Editor" height="167" width="393"></a>
       </div>
 
       <h3>Timetable Menu</h3>
+
       <div style="margin-left: 2em">
-      <dl>
-        <dt><strong>Display train times</strong></dt>
-        <dd>When enabled, the minutes portion of the train time is included in the graph.</dd>
-        <dt><strong>Print train graph using two pages</strong></dt>
-        <dd>When enabled, the graph will use two pages instead of one.</dd>
-        <dt><strong>Import SGN file...</strong></dt>
-        <dd>Import a legacy SGN (SchedGen) file.</dd>
-        <dt><strong>Import CSV file...</strong></dt>
-        <dd>Import a CSV file that contains data to create or extend timetable data.</dd>
-        <dt><strong>Import from OperationsPro...</strong></dt>
-        <dd>Import the locations and trains from the current Operations configuration.</dd>
-        <dt><strong>Export CSV file...</strong></dt>
-        <dd>Export a CSV file that can be imported into a spreadsheet to produce a timetable.</dd>
-      </dl>
+        <dl>
+          <dt><strong>Display train times</strong>
+          </dt>
+
+          <dd>When enabled, the minutes portion of the train time is included in the graph.</dd>
+
+          <dt><strong>Print train graph using two pages</strong>
+          </dt>
+
+          <dd>When enabled, the graph will use two pages instead of one.</dd>
+
+          <dt><strong>Import SGN file...</strong>
+          </dt>
+
+          <dd>Import a legacy SGN (SchedGen) file.</dd>
+
+          <dt><strong>Import CSV file...</strong>
+          </dt>
+
+          <dd>Import a CSV file that contains data to create or extend timetable data.</dd>
+
+          <dt><strong>Import from OperationsPro...</strong>
+          </dt>
+
+          <dd>Import the locations and trains from the current Operations configuration.</dd>
+
+          <dt><strong>Export CSV file...</strong>
+          </dt>
+
+          <dd>Export a CSV file that can be imported into a spreadsheet to produce a
+          timetable.</dd>
+        </dl>
       </div>
 
-      <a name="details" id="details"></a>
-      <h2>Detail descriptions</h2>
-        <a name="layout" id="layout"></a>
-        <h3>Layout</h3>
-        <p>The Layout item contains global information.</p>
-          <ul>
-            <li>Layout name &mdash; The layout name.</li>
-            <li>Scale &mdash; The layout scale.  The default is HO</li>
-            <li>Fast clock speed &mdash; The speed of the fast clock, e.g. 4:1,
-            is entered as 4.</li>
-            <li>Throttles &mdash; The number of the throttles for the throttle
-            section of the graph. Optional.</li>
-            <li>Metric &mdash; Indicate if distances are metric based.</li>
-          </ul>
-        <p>The scale is combined with the fast clock speed and the metric
-        indication to calculate the scale mile or scale kilometer.  The
-        resulting "smile/skm" is displayed at the bottom.</p>
+      <h2 id="details">Detail descriptions</h2>
 
-        <a name="type" id="type"></a>
-        <h3>Train Type</h3>
-        <p>The train type contains a color that will be used for the train graph.</p>
-          <ul>
-            <li>Type name &mdash; The train type name, such as Passenger, Thru
-            Freight, etc.</li>
-            <li>Color &mdash; The color is selected using a split selector.
-            Click on the color swatch to get the full color chooser or the
-            arrow to get a list of current and standard colors.</li>
-          </ul>
-        <p>The colors help differentiate types or classes of trains.
-        </p>
+      <h3 id="layout">Layout</h3>
 
-        <a name="segment" id="segment"></a>
-        <h3>Segment</h3>
-        <p>Each layout requires at least one segment.  Large layouts may have
-        sub-divisions with each sub-division using its own segment.</p>
-        <p>When a segment is selected, the Graph <strong>Display</strong> and
-        <strong>Print</strong> action buttons are added.  Select the Display or
-        Print button to display the train <a href="#graph">graph</a>.
-        If more than one schedule is defined, a dialog will request the schedule name.</p>
+      <p>The Layout item contains global information.</p>
 
-        <a name="station" id="station"></a>
-        <h3>Station</h3>
-        <p>A "station" occurs any place a train can stop or an arrival/departure
-        time is desired.  The first station in a segment will have a distance of zero.
-        The remaining stations will have the cumulative distance.  The distance
-        is measured in feet or meters depending on the layout metric setting.  When
-        multiple segments are being used, the first station of a secondary segment
-        will have the <strong>SAME</strong> station name as the mainline station.</p>
-          <ul>
-            <li>Station name &mdash; The name of the station.</li>
-            <li>Distance &mdash; The cumulative distance in feet or meters from
-            the beginning of the segment.</li>
-            <li>Double track &mdash; Set if a double (or more) track line.</li>
-            <li>Sidings &mdash; The number of siding tracks at this station.</li>
-            <li>Staging &mdash; The number of staging tracks when the station is
-            a staging yard.</li>
-          </ul>
-        <p>The double track, sidings and staging fields provide documentation that
-        may be useful.
-        </p>
+      <ul>
+        <li>Layout name — The layout name.</li>
 
-        <a name="schedule" id="schedule"></a>
-        <h3>Schedule</h3>
-        <p>The schedule defines time frame for the timetable.</p>
-          <ul>
-           <li>Schedule name &mdash; The name of the schedule, such as #28.</li>
-           <li>Effective date &mdash; The date the schedule takes effect.  This
-           is a free format field and is only used on the graph.</li>
-           <li>Start hour &mdash; The start hour is limited to 0 thru 23.</li>
-           <li>Duration &mdash; The duration can be from 1 to 24 hours.</li>
-          </ul>
-          <p>if the duration is less than 24 hours, then trains will be restricted to
-          running within the specified time frame.
-        </p>
+        <li>Scale — The layout scale. The default is HO</li>
 
-        <a name="train" id="train"></a>
-        <h3>Train</h3>
-        <p>The train item provides required information for the timetable and
-        optional descriptive data.</p>
-          <ul>
-           <li>Train name &mdash; This is usually a short name, or symbol,
-           for the train.</li>
-           <li>Description &mdash; This is a more descriptive name for the train.</li>
-           <li>Type &mdash; The train type is selected from the train type list
-           defined earlier.</li>
-           <li>Default speed &mdash; The default speed is used when the next
-           speed for a stop is set to zero.</li>
-           <li>Start time &mdash; The start time using hh:mm.</li>
-           <li>Throttle &mdash; The assigned throttle if using the throttles
-           feature.</li>
-           <li>Notes &mdash; Additional information about the train, such as
-           special handling.</li>
-          </ul>
-        <p>The calculated duration for the train is also displayed.
-        </p>
+        <li>Fast clock speed — The speed of the fast clock, e.g. 4:1, is entered as 4.</li>
 
-        <a name="stop" id="stop"></a>
-        <h3>Stop</h3>
-        <p>A stop occurs whenever a train has to perform some action or the
-        timetable needs to display the time a train passes a location.</p>
-          <ul>
-           <li>Station &mdash; The selected station for this Stop.  The
-           station selection drop down displays both the segment name and
-           the station name.</li>
-           <li>Duration &mdash; The number of minutes that the train will
-           be at the station.  When set to zero, the arrival and departure
-           times are the same.</li>
-           <li>Next speed &mdash; When set to zero, the train's default speed
-           will be used.  If not zero, the next speed will be used to
-           calculate the time to the next station.  </li>
-           <li>Staging track &mdash; The assigned staging track.</li>
-           <li>Notes &mdash; Additional information about the stop for train.</li>
-          </ul>
-        <p>The series of stops define the route for the train.  The assigned
-        sequence number and the calculated
-        arrival and departure times are displayed.</p>
-        <p>After the stops have been added for a train, the order of the stops
-        can be changed by selecting a stop and using the <strong>Up</strong> or
-        <strong>Down</strong> action buttons.
-        <p>The route for a train can include station stops in more than one
-        segment.  For example, segment Mainline has stations A, B, C, D and E, and
-        segment Branch has stations C, X, Y, Z.  Station C is the junction point.
-        A train running from A to Z would be assigned Mainline stops A, B and C.
-        The Branch stops would be X, Y and Z.  The rule for segment changes is
-        that the first station on the next segment is not a Stop.  Z to A would be
-        Branch Z, Y, X and C and Mainline would be B and A.</p>
+        <li>Throttles — The number of the throttles for the throttle section of the graph.
+        Optional.</li>
 
-      <a name="graph" id="graph"></a>
-      <h2>Timetable Graph</h2>
+        <li>Metric — Indicate if distances are metric based.</li>
+      </ul>
+
+      <p>The scale is combined with the fast clock speed and the metric indication to calculate the
+      scale mile or scale kilometer. The resulting "smile/skm" is displayed at the bottom.</p>
+
+      <h3 id="type">Train Type</h3>
+
+      <p>The train type contains a color that will be used for the train graph.</p>
+
+      <ul>
+        <li>Type name — The train type name, such as Passenger, Thru Freight, etc.</li>
+
+        <li>Color — The color is selected using a split selector. Click on the color swatch to get
+        the full color chooser or the arrow to get a list of current and standard colors.</li>
+      </ul>
+
+      <p>The colors help differentiate types or classes of trains.</p>
+
+      <h3 id="segment">Segment</h3>
+
+      <p>Each layout requires at least one segment. Large layouts may have sub-divisions with each
+      sub-division using its own segment.</p>
+
+      <p>When a segment is selected, the Graph <strong>Display</strong> and <strong>Print</strong>
+      action buttons are added. Select the Display or Print button to display the train <a href=
+      "#graph">graph</a>. If more than one schedule is defined, a dialog will request the schedule
+      name.</p>
+
+      <h3 id="station">Station</h3>
+
+      <p>A "station" occurs any place a train can stop or an arrival/departure time is desired. The
+      first station in a segment will have a distance of zero. The remaining stations will have the
+      cumulative distance. The distance is measured in feet or meters depending on the layout
+      metric setting. When multiple segments are being used, the first station of a secondary
+      segment will have the <strong>SAME</strong> station name as the mainline station.</p>
+
+      <ul>
+        <li>Station name — The name of the station.</li>
+
+        <li>Distance — The cumulative distance in feet or meters from the beginning of the
+        segment.</li>
+
+        <li>Double track — Set if a double (or more) track line.</li>
+
+        <li>Sidings — The number of siding tracks at this station.</li>
+
+        <li>Staging — The number of staging tracks when the station is a staging yard.</li>
+      </ul>
+
+      <p>The double track, sidings and staging fields provide documentation that may be useful.</p>
+
+      <h3 id="schedule">Schedule</h3>
+
+      <p>The schedule defines time frame for the timetable.</p>
+
+      <ul>
+        <li>Schedule name — The name of the schedule, such as #28.</li>
+
+        <li>Effective date — The date the schedule takes effect. This is a free format field and is
+        only used on the graph.</li>
+
+        <li>Start hour — The start hour is limited to 0 thru 23.</li>
+
+        <li>Duration — The duration can be from 1 to 24 hours.</li>
+      </ul>
+
+      <p>if the duration is less than 24 hours, then trains will be restricted to running within
+      the specified time frame.</p>
+
+      <h3 id="train">Train</h3>
+
+      <p>The train item provides required information for the timetable and optional descriptive
+      data.</p>
+
+      <ul>
+        <li>Train name — This is usually a short name, or symbol, for the train.</li>
+
+        <li>Description — This is a more descriptive name for the train.</li>
+
+        <li>Type — The train type is selected from the train type list defined earlier.</li>
+
+        <li>Default speed — The default speed is used when the next speed for a stop is set to
+        zero.</li>
+
+        <li>Start time — The start time using hh:mm.</li>
+
+        <li>Throttle — The assigned throttle if using the throttles feature.</li>
+
+        <li>Notes — Additional information about the train, such as special handling.</li>
+      </ul>
+
+      <p>The calculated duration for the train is also displayed.</p>
+
+      <h3 id="stop">Stop</h3>
+
+      <p>A stop occurs whenever a train has to perform some action or the timetable needs to
+      display the time a train passes a location.</p>
+
+      <ul>
+        <li>Station — The selected station for this Stop. The station selection drop down displays
+        both the segment name and the station name.</li>
+
+        <li>Duration — The number of minutes that the train will be at the station. When set to
+        zero, the arrival and departure times are the same.</li>
+
+        <li>Next speed — When set to zero, the train's default speed will be used. If not zero, the
+        next speed will be used to calculate the time to the next station.</li>
+
+        <li>Staging track — The assigned staging track.</li>
+
+        <li>Notes — Additional information about the stop for train.</li>
+      </ul>
+
+      <p>The series of stops define the route for the train. The assigned sequence number and the
+      calculated arrival and departure times are displayed.</p>
+
+      <p>After the stops have been added for a train, the order of the stops can be changed by
+      selecting a stop and using the <strong>Up</strong> or <strong>Down</strong> action
+      buttons.</p>
+
+      <p>The route for a train can include station stops in more than one segment. For example,
+      segment Mainline has stations A, B, C, D and E, and segment Branch has stations C, X, Y, Z.
+      Station C is the junction point. A train running from A to Z would be assigned Mainline stops
+      A, B and C. The Branch stops would be X, Y and Z. The rule for segment changes is that the
+      first station on the next segment is not a Stop. Z to A would be Branch Z, Y, X and C and
+      Mainline would be B and A.</p>
+
+      <h2 id="graph">Timetable Graph</h2>
+
       <p>The graph provides a graphical view of the data for a Timetable segment and schedule.</p>
+
       <p>Select which <a href="#segment">Segment</a> you want to graph from the Segments list.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/TimeTableGraph.png">
-      <img src="images/TimeTableGraph.png"
-      alt="Timetable Editor" height="357" width="809">
-      </a>
+        <a href="images/TimeTableGraph.png"><img src="images/TimeTableGraph.png" alt=
+        "Timetable Editor" height="357" width="809"></a>
       </div>
 
       <p>The window is divided into 4 sections.</p>
+
       <ul>
-      <li>The upper left section displays the layout, segment and schedule
-      information.</li>
-      <li>The station names are listed along the left side.  They are positioned
-      relative to the distance from the initial station.</li>
-      <li>The top section contains the throttle rows and assignments.  If the
-      layout throttle count is zero, this section is blank.</li>
-      <li>The body of the graph is in the 4th section.  There is a horizontal
-      grid line for each station and a vertical grid line for each hour in the
-      timetable.  The trains are represented by colored lines based on the
-      assigned train type.  The train name (symbol) is printed at the beginning
-      and end points.  The minute values are included based on the main
-      timetable menu selection.</li>
+        <li>The upper left section displays the layout, segment and schedule information.</li>
+
+        <li>The station names are listed along the left side. They are positioned relative to the
+        distance from the initial station.</li>
+
+        <li>The top section contains the throttle rows and assignments. If the layout throttle
+        count is zero, this section is blank.</li>
+
+        <li>The body of the graph is in the 4th section. There is a horizontal grid line for each
+        station and a vertical grid line for each hour in the timetable. The trains are represented
+        by colored lines based on the assigned train type. The train name (symbol) is printed at
+        the beginning and end points. The minute values are included based on the main timetable
+        menu selection.</li>
       </ul>
 
-        <p>If the schedule duration is 24 hours, a train can wrap around the end
-        of the day as long as the wrap occurs during a station stop duration
-        period. If it occurs while the train is "running", the train diagram
-        gets really goofy.</p>
+      <p>If the schedule duration is 24 hours, a train can wrap around the end of the day as long
+      as the wrap occurs during a station stop duration period. If it occurs while the train is
+      "running", the train diagram gets really goofy.</p>
 
-        <p>For trains that span segments, only the activity in the active segment
-        is displayed.</p>
+      <p>For trains that span segments, only the activity in the active segment is displayed.</p>
 
-      <a name="csvimport" id="csvimport"></a>
-      <h2>CSV Import</h2>
-        <p>The CSV Import menu item can be used to create and extend the data for a timetable
-        by using additional data from other sources.  The input file has the following format.</p>
-        <p>CSV Record Types. The first field is the record type keyword (not I18N).
-        Most fields are optional.</p>
-        <ul>
-          <li>
-            "Layout", "layout name", "scale", fastClock, throttles, "metric"
-            <ul>
-              <li>Defaults:  "New Layout", "HO", 4, 0, "No"</li>
-              <li>Occurs:  Must be first record, occurs once</li>
-            </ul>
-            </li><li>
-            "TrainType", "type name", color number
-            <ul>
-              <li>Defaults: "New Type", #000000</li>
-              <li>Occurs:  Follows Layout record, occurs 0 to n times.  If none,
-              a default train type is created which will be used for all trains.</li>
-              <li>Note 1:  #000000 is black.</li>
-              <li>Note 2: If the type name is <strong>UseLayoutTypes</strong>,
-              the train types for the current layout will be used.</li>
-            </ul>
-          </li><li>
-            "Segment", "segment name"
-            <ul>
-              <li>Default: "New Segment"</li>
-              <li>Occurs: Follows last TrainType, if any.  Occurs 1 to n times.</li>
-            </ul>
-          </li><li>
-            "Station", "station name", distance, doubleTrack, sidings, staging
-            <ul>
-              <li>Defaults: "New Station", 1.0, No, 0, 0</li>
-              <li>Occurs:  Follows parent segment, occurs 1 to n times.</li>
-              <li>Note:  If the station name is <strong>UseSegmentStations</strong>,
-              the stations for the current segment will be used.</li>
-            </ul>
-          </li><li>
-            "Schedule", "schedule name", "effective date", startHour, duration
-            <ul>
-              <li>Defaults:  "New Schedule", "Today", 0, 24</li>
-              <li>Occurs: Follows last station, occurs 1 to n times.</li>
-            </ul>
-          </li><li>
-            "Train", "train name", "train description", type, defaultSpeed, starttime, throttle, notes
-            <ul>
-              <li>Defaults:  "NT", "New Train", 0, 1, 0, 0, ""</li>
-              <li>Occurs:  Follows parent schedule, occurs 1 to n times.</li>
-              <li>Note1:  The type is the relative number of the train type listed
-              above starting with 1 for the first train type.</li>
-              <li>Note2:  The start time is an integer between 0 and 1439,
-              subject to the schedule start time and duration.</li>
-            </ul>
-          </li><li>
-            "Stop", station, duration, nextSpeed, stagingTrack, notes
-              <ul>
-                <li>Defaults:  0, 0, 0, 0, ""</li>
-                <li>Required: station number.</li>
-                <li>Occurs: Follows parent train in the proper sequence.  Occurs 1 to n times.</li>
-                <li>Note 1: The station is the relative number of the station listed above starting with 1 for the first station.</li>
-                <li>Note 2: If more that one segment is used, the station number is cumulative.</li>
-              </ul>
-          </li>
-        </ul>
-        <p>Except for Stops, each record can have one of three actions:</p>
-        <ol>
-          <li>If no name is supplied, a default object will be created.</li>
-          <li>If the name matches an existing name, the existing object will be used.</li>
-          <li>A new object will be created with the supplied name.  The remaining
-          fields, if any, will replace the default values.</li>
-        </ol>
-        <p>Minimal file using defaults except for station names and distances:</p>
-        <pre>
+      <h2 id="csvimport">CSV Import</h2>
+
+      <p>The CSV Import menu item can be used to create and extend the data for a timetable by
+      using additional data from other sources. The input file has the following format.</p>
+
+      <p>CSV Record Types. The first field is the record type keyword (not I18N). Most fields are
+      optional.</p>
+
+      <ul>
+        <li>"Layout", "layout name", "scale", fastClock, throttles, "metric"
+          <ul>
+            <li>Defaults: "New Layout", "HO", 4, 0, "No"</li>
+
+            <li>Occurs: Must be first record, occurs once</li>
+          </ul>
+        </li>
+
+        <li>"TrainType", "type name", color number
+          <ul>
+            <li>Defaults: "New Type", #000000</li>
+
+            <li>Occurs: Follows Layout record, occurs 0 to n times. If none, a default train type
+            is created which will be used for all trains.</li>
+
+            <li>Note 1: #000000 is black.</li>
+
+            <li>Note 2: If the type name is <strong>UseLayoutTypes</strong>, the train types for
+            the current layout will be used.</li>
+          </ul>
+        </li>
+
+        <li>"Segment", "segment name"
+          <ul>
+            <li>Default: "New Segment"</li>
+
+            <li>Occurs: Follows last TrainType, if any. Occurs 1 to n times.</li>
+          </ul>
+        </li>
+
+        <li>"Station", "station name", distance, doubleTrack, sidings, staging
+          <ul>
+            <li>Defaults: "New Station", 1.0, No, 0, 0</li>
+
+            <li>Occurs: Follows parent segment, occurs 1 to n times.</li>
+
+            <li>Note: If the station name is <strong>UseSegmentStations</strong>, the stations for
+            the current segment will be used.</li>
+          </ul>
+        </li>
+
+        <li>"Schedule", "schedule name", "effective date", startHour, duration
+          <ul>
+            <li>Defaults: "New Schedule", "Today", 0, 24</li>
+
+            <li>Occurs: Follows last station, occurs 1 to n times.</li>
+          </ul>
+        </li>
+
+        <li>"Train", "train name", "train description", type, defaultSpeed, starttime, throttle,
+        notes
+          <ul>
+            <li>Defaults: "NT", "New Train", 0, 1, 0, 0, ""</li>
+
+            <li>Occurs: Follows parent schedule, occurs 1 to n times.</li>
+
+            <li>Note1: The type is the relative number of the train type listed above starting with
+            1 for the first train type.</li>
+
+            <li>Note2: The start time is an integer between 0 and 1439, subject to the schedule
+            start time and duration.</li>
+          </ul>
+        </li>
+
+        <li>"Stop", station, duration, nextSpeed, stagingTrack, notes
+          <ul>
+            <li>Defaults: 0, 0, 0, 0, ""</li>
+
+            <li>Required: station number.</li>
+
+            <li>Occurs: Follows parent train in the proper sequence. Occurs 1 to n times.</li>
+
+            <li>Note 1: The station is the relative number of the station listed above starting
+            with 1 for the first station.</li>
+
+            <li>Note 2: If more that one segment is used, the station number is cumulative.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <p>Except for Stops, each record can have one of three actions:</p>
+
+      <ol>
+        <li>If no name is supplied, a default object will be created.</li>
+
+        <li>If the name matches an existing name, the existing object will be used.</li>
+
+        <li>A new object will be created with the supplied name. The remaining fields, if any, will
+        replace the default values.</li>
+      </ol>
+
+      <p>Minimal file using defaults except for station names and distances:</p>
+
+      <pre>
   "Layout"
   "Segment"
   "Station", "Station 1", 0.0
@@ -441,106 +597,106 @@
   "Stop", 1
   "Stop", 2
         </pre>
-        <p>
-        The import applies the changes to the data in memory.  At the end of the
-        import a dialog is displayed with the option to save the changes to the
-        timetable data file.
-        </p>
+      <p>The import applies the changes to the data in memory. At the end of the import a dialog is
+      displayed with the option to save the changes to the timetable data file.</p>
 
-      <a name="opsimport" id="opsimport"></a>
-      <h2>Operations Import</h2>
-        <p>OperationsPro has the ability to export a CSV file that can be imported into
-        the Timetable tool.  The <strong>Import from OperationsPro...</strong> menu item
-        combines the export and import steps.</p>
+      <h2 id="opsimport">Operations Import</h2>
 
-        <p>Due to the differences in data between the two systems, the resulting data
-        will need to be reviewed and changed as necessary.</p>
+      <p>OperationsPro has the ability to export a CSV file that can be imported into the Timetable
+      tool. The <strong>Import from OperationsPro...</strong> menu item combines the export and
+      import steps.</p>
 
-        <ul>
-          <li>Train types &mdash; Four train types are created with different colors.</li>
-          <li>Segment &mdash; A single segment is created with the name <strong>Locations</strong>.</li>
-          <li>Stations &mdash; If an Operations route with the name <strong>Timetable</strong>
-          exists it will be used to build the station list.  Otherwise the station list
-          will be the Operations' locations sorted by name.  In either case, the
-          distance between stations will be one foot.  The distances will need to be
-          changed to the actual values which will also get the station names in the correct
-          sequence.</li>
-          <li>Schedules &mdash; A schedule is created with the current date and time as
-          the name.  The schedule starts at midnight and runs for 24 hours.</li>
-          <li>Trains &mdash; Each train has a default speed of 4 and will be assigned to
-          one of the 4 train types.</li>
-          <li>Stops &mdash; The duration of each stop is based on the move counts in Operations.
-        </ul>
+      <p>Due to the differences in data between the two systems, the resulting data will need to be
+      reviewed and changed as necessary.</p>
 
-      <a name="csvexport" id="csvexport"></a>
-      <h2>CSV Export</h2>
-        <p>The CSV Export menu item is used to create a CSV file that can imported
-        into a spreadsheet program.  The timetable data will be for the selected
-        layout, segment and schedule.  The train names will be sorted by name and
-        grouped by direction of travel.  The stations will be in order based on
-        distance.</p>
+      <ul>
+        <li>Train types — Four train types are created with different colors.</li>
 
-        <p>While turns are supported by the graphing process, they don't work for
-        a timetable since they have both up and down directions.  For these cases
-        use two trains, one for going out and a second one for returning.  In the
-        sample below, BT and GT are turns that highlight this issue.
-        </p>
+        <li>Segment — A single segment is created with the name <strong>Locations</strong>.</li>
 
-        <p>CSV Content:</p>
-        <ul>
-          <li>Line 1 - Layout name, segment name and schedule name.</li>
-          <li>Line 2 - Train names sorted by name and grouped by down or up direction.</li>
-          <li>Line 3 to end - Station row with the arrival and departure times for each train.</li>
-        </ul>
+        <li>Stations — If an Operations route with the name <strong>Timetable</strong> exists it
+        will be used to build the station list. Otherwise the station list will be the Operations'
+        locations sorted by name. In either case, the distance between stations will be one foot.
+        The distances will need to be changed to the actual values which will also get the station
+        names in the correct sequence.</li>
 
-        <p>Sample spreadsheet using the CSV export file:</p>
-        <div style="margin-left: 2em">
-        <a href="images/SampleTimetable.png">
-        <img src="images/SampleTimetable.png"
-        alt="Sample Spreadsheet Timetable" height="224" width="873">
-        </a>
-        </div>
+        <li>Schedules — A schedule is created with the current date and time as the name. The
+        schedule starts at midnight and runs for 24 hours.</li>
 
-      <a name="structure" id="structure"></a>
-      <h2>Data Structure</h2>
-      <p>The following diagram shows the data relationships.</p>
+        <li>Trains — Each train has a default speed of 4 and will be assigned to one of the 4 train
+        types.</li>
+
+        <li>Stops — The duration of each stop is based on the move counts in Operations.</li>
+      </ul>
+
+      <h2 id="csvexport">CSV Export</h2>
+
+      <p>The CSV Export menu item is used to create a CSV file that can imported into a spreadsheet
+      program. The timetable data will be for the selected layout, segment and schedule. The train
+      names will be sorted by name and grouped by direction of travel. The stations will be in
+      order based on distance.</p>
+
+      <p>While turns are supported by the graphing process, they don't work for a timetable since
+      they have both up and down directions. For these cases use two trains, one for going out and
+      a second one for returning. In the sample below, BT and GT are turns that highlight this
+      issue.</p>
+
+      <p>CSV Content:</p>
+
+      <ul>
+        <li>Line 1 - Layout name, segment name and schedule name.</li>
+
+        <li>Line 2 - Train names sorted by name and grouped by down or up direction.</li>
+
+        <li>Line 3 to end - Station row with the arrival and departure times for each train.</li>
+      </ul>
+
+      <p>Sample spreadsheet using the CSV export file:</p>
+
       <div style="margin-left: 2em">
-      <a href="images/TimeTableSchema.png">
-      <img src="images/TimeTableSchema.png"
-      alt="Timetable Editor" height="213" width="383">
-      </a>
+        <a href="images/SampleTimetable.png"><img src="images/SampleTimetable.png" alt=
+        "Sample Spreadsheet Timetable" height="224" width="873"></a>
       </div>
-      <p>Each record (Java class) has a primary key.  This is assigned by the
-      timetable data manager.  Foreign keys create the data structure.</p>
 
-      <a name="technical" id="technical"></a>
-      <h2>Technical</h2>
+      <h2 id="structure">Data Structure</h2>
+
+      <p>The following diagram shows the data relationships.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/TimeTableSchema.png"><img src="images/TimeTableSchema.png" alt=
+        "Timetable Editor" height="213" width="383"></a>
+      </div>
+
+      <p>Each record (Java class) has a primary key. This is assigned by the timetable data
+      manager. Foreign keys create the data structure.</p>
+
+      <h2 id="technical">Technical</h2>
+
       <p>The Timetable data is stored in a fixed xml file located at
-      <strong>preference:timetable/TimeTableData.xml</strong>.  The first time
-      the tool is used, the directory is created and a sample data file is
-      copied from <strong>program:xml/demoTimeTable/TimeTableData.xml</strong>.</p>
+      <strong>preference:timetable/TimeTableData.xml</strong>. The first time the tool is used, the
+      directory is created and a sample data file is copied from
+      <strong>program:xml/demoTimeTable/TimeTableData.xml</strong>.</p>
 
-      <p>Access to the data is handled by the TimeTableDataManager.  The
-      data manager is obtained by calling <strong>TimeTableDataManager.getDataManager()</strong>.
-      This is a static method that returns the current manager or creates a new
-      one.  If a new data manager is created, the data is loaded from the
-      data file.  The can only be one occurance, and therefore data, at the same
+      <p>Access to the data is handled by the TimeTableDataManager. The data manager is obtained by
+      calling <strong>TimeTableDataManager.getDataManager()</strong>. This is a static method that
+      returns the current manager or creates a new one. If a new data manager is created, the data
+      is loaded from the data file. The can only be one occurance, and therefore data, at the same
       time.</p>
 
-      <p>The data manager provides data access methods for the TimeTable
-      application as well as any other JMRI components, such as Jython.  The data
-      manager and the data classes perform extensive integrity checking.  The
-      <strong>IllegalArgumentException</strong> will the thrown for any errors.
-      The exception includes a keyword describing the problem.  Some exceptions
-      have additional supporting data.</p>
+      <p>The data manager provides data access methods for the TimeTable application as well as any
+      other JMRI components, such as Jython. The data manager and the data classes perform
+      extensive integrity checking. The <strong>IllegalArgumentException</strong> will the thrown
+      for any errors. The exception includes a keyword describing the problem. Some exceptions have
+      additional supporting data.</p>
 
-      <p>A sample Jython program, <strong>TimeTable.py</strong>, is included in
-      the JMRI distribution.  The program shows how to establish the data
-      manager connection and navigate the timetable data structure.</p>
-
+      <p>A sample Jython program, <strong>TimeTable.py</strong>, is included in the JMRI
+      distribution. The program shows how to establish the data manager connection and navigate the
+      timetable data structure.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

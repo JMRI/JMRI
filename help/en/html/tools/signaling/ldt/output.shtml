@@ -1,78 +1,74 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Examples of LDT Signaling</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Examples of LDT Signaling</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <!-- Page Body -->
 
       <h1>JMRI: Examples of LDT Signaling</h1>
 
-      <p>This file contains a few configuration examples for the
-      LDT LS-DEC signal head. There are examples of signals from
-      several prototype signaling systems:</p>
+      <p>This file contains a few configuration examples for the LDT LS-DEC signal head. There are
+      examples of signals from several prototype signaling systems:</p>
 
       <ul>
-        <li><a href="output1.shtml">SBB (Swiss Federal Railways)
-        type L signals</a></li>
+        <li>
+          <a href="output1.shtml">SBB (Swiss Federal Railways) type L signals</a>
+        </li>
 
-        <li><a href="output2.shtml">DB (German Federal Railways )
-        signals</a></li>
+        <li>
+          <a href="output2.shtml">DB (German Federal Railways ) signals</a>
+        </li>
 
-        <li><a href="output3.shtml">DR (German National Railways)
-        signals</a></li>
+        <li>
+          <a href="output3.shtml">DR (German National Railways) signals</a>
+        </li>
 
-        <li><a href="output4.shtml">NS (Nederlandse Spoorwegen,
-        Dutch National Railways) signals</a></li>
+        <li>
+          <a href="output4.shtml">NS (Nederlandse Spoorwegen, Dutch National Railways) signals</a>
+        </li>
 
-        <li><a href="output5.shtml">OEBB (Austrian Federal
-        Railways) signals</a></li>
+        <li>
+          <a href="output5.shtml">OEBB (Austrian Federal Railways) signals</a>
+        </li>
 
-        <li><a href="output6.shtml">CSD/CD/ZSR signals</a></li>
-      </ul>Examples are based on connection examples published on
-      manufacturer's website.
-
-      <h3>JMRI Configuration</h3><a href="Panel.png"><img src=
-      "Panel.png" align="right" height="708" width="331" alt=
+        <li>
+          <a href="output6.shtml">CSD/CD/ZSR signals</a>
+        </li>
+      </ul>
+      Examples are based on connection examples published on manufacturer's website.
+      <h3>JMRI Configuration</h3>
+      <a href="Panel.png"><img src="Panel.png" class="floatRight" height="708" width="331" alt=
       "LDT add panel"></a>
-
       <p>You have to add each LDT signal using the <a href=
-      "../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">
-      Signal Head Add/Edit panel</a> from the <a href=
-      "../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
-      Signal Head Table</a>. Select "LDT LS-DEC" for the Signal
-      Connection type, and the window will show seven lines for
-      configuring which turnout command JMRI sends to the decoder
-      for each of the JMRI Signal Appearances.</p>
+      "../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Head Add/Edit panel</a>
+      from the <a href="../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head
+      Table</a>. Select "LDT LS-DEC" for the Signal Connection type, and the window will show seven
+      lines for configuring which turnout command JMRI sends to the decoder for each of the JMRI
+      Signal Appearances.</p>
 
-      <p>The LDT decoders present a particular set of output lights
-      depending on what turnout command is received, so this panel
-      lets you connect what JMRI wants (e.g. "Green", indicating
-      clear to proceed) with the railway-specific appearance on the
-      LDT decoder ("1 thrown", which lights the "1-proceed" aspect
-      for SBB 7-lamp signals, for example).</p>
+      <p>The LDT decoders present a particular set of output lights depending on what turnout
+      command is received, so this panel lets you connect what JMRI wants (e.g. "Green", indicating
+      clear to proceed) with the railway-specific appearance on the LDT decoder ("1 thrown", which
+      lights the "1-proceed" aspect for SBB 7-lamp signals, for example).</p>
 
-      <p>The example links at the top of the page give you examples
-      of how to fill out this form to get the right appearances for
-      various railroads.</p>
+      <p>The example links at the top of the page give you examples of how to fill out this form to
+      get the right appearances for various railroads.</p>
 
       <h3>Supported Decoders</h3>
 
-      <p>The JMRI LDT LS-DEC signal head can be configured for
-      following decoders.</p>
+      <p>The JMRI LDT LS-DEC signal head can be configured for following decoders.</p>
 
-      <h4>Littfinski DatenTechnik (LDT)</h4>For more information,
-      please see <a href=
+      <h4>Littfinski DatenTechnik (LDT)</h4>
+      For more information, please see <a href=
       "http://www.ldt-infocenter.com/">http://www.ldt-infocenter.com/</a>
-
       <p>LS-DEC-DB 8 addresses 4 signal heads</p>
 
       <p>LS-DEC-DR 8 addresses 2 - 4 signal heads</p>
@@ -83,15 +79,14 @@
 
       <p>LS-DEC-NS 8 addresses 4 signal heads</p>
 
-      <h4>Marathon Model</h4>For more information, please see
-      <a href=
+      <h4>Marathon Model</h4>
+      For more information, please see <a href=
       "http://www.marathonmodel.cz/">http://www.marathonmodel.cz/</a>
-
       <p>DP2N 8 addresses 2 - 8 signal heads</p>
-
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>
