@@ -124,6 +124,7 @@ public class LocoNetMenu extends JMenu {
         if (moreToAdd) {
             add(new javax.swing.JSeparator());
             lastWasSeparator = true;
+            log.debug("Adding menu item(s) from SPI extension(s)");
         }
 
         for (LnMenuItem item : panelItems) {
