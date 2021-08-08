@@ -159,9 +159,13 @@ public class CheckPropertyFilesTest {
          * @param lang the language
          * @return true if success, false if an error
          */
-        public boolean checkProperties(String lang, FolderProperties folderProperties) {
+        public boolean checkProperties(String lang, FolderProperties folderProperties, Map<String, String> foundKeys) {
             boolean result = true;
-            Map<String, String> foundKeys = new HashMap<>();
+            boolean origTest = false;
+            if (foundKeys == null) {
+                foundKeys = new HashMap<>();
+                origTest = true;
+            }
 //            System.out.format("Aaaaa lang: '%s'%n", lang);
             if (!_properties.containsKey(lang)) {
                 System.out.format("ERROR: The lang '%s' is missing%n", lang);
@@ -182,8 +186,12 @@ public class CheckPropertyFilesTest {
                     result = false;
                 }
                 
+                if (!lang.isEmpty()) {
+                    result = result && checkProperties("", folderProperties, foundKeys);
+                }
+                
                 if (folderProperties._parent != null) {
-                    result = result && checkProperties(lang, folderProperties._parent);
+                    result = result && checkProperties(lang, folderProperties._parent, foundKeys);
                 }
                 
                 foundKeys.put(key, value);
@@ -200,12 +208,12 @@ public class CheckPropertyFilesTest {
             
             // Check base language first
             if (_properties.containsKey("")) {
-                result = result && checkProperties("", this);
+                result = result && checkProperties("", this, null);
             }
             
             for (String lang : _properties.keySet()) {
                 if (lang.isEmpty()) continue;
-                result = result && checkProperties(lang, this);
+                result = result && checkProperties(lang, this, null);
             }
             return result;
         }
