@@ -1,14 +1,15 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
+
+import java.awt.Color;
+
+import javax.swing.*;
+
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.Reportable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Memory.
@@ -57,7 +58,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             return;
         }
         if (re != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
+            InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
             re = null;
         }
         Object key = getMemory().getValue();
@@ -66,8 +67,8 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             if (map == null) {
                 // no map, attempt to show object directly
                 Object val = key;
-                if (val instanceof jmri.jmrit.roster.RosterEntry) {
-                    jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
+                if (val instanceof RosterEntry) {
+                    RosterEntry roster = (RosterEntry) val;
                     val = updateIconFromRosterVal(roster);
                     flipRosterIcon = false;
                     if (val == null) {
@@ -85,8 +86,8 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
                     setAttributes(getPopupUtility(), this);
                     updateSize();
-                } else if (val instanceof javax.swing.ImageIcon) {
-                    setIcon((javax.swing.ImageIcon) val);
+                } else if (val instanceof ImageIcon) {
+                    setIcon((ImageIcon) val);
                     setText(null);
                     _text = false;
                     _icon = true;
@@ -97,10 +98,10 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _text = true;
                     _icon = false;
                     updateSize();
-                } else if (val instanceof jmri.IdTag){
+                } else if (val instanceof IdTag){
                     // most IdTags are Reportable objects, so 
                     // this needs to be before Reportable
-                    setText(((jmri.IdTag)val).getDisplayName());
+                    setText(((IdTag)val).getDisplayName());
                     setIcon(null);
                     _text = true;
                     _icon = false;
@@ -158,7 +159,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     @Override
     public void setMemory(String pName) {
         super.setMemory(pName);
-        lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
+        lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
     }
 
     @Override
@@ -173,14 +174,14 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     @Override
     protected void addRosterToIcon(RosterEntry roster) {
-        if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
             super.addRosterToIcon(roster);
             return;
         }
 
         int paths = lBlock.getNumberOfThroughPaths();
-        jmri.Block srcBlock = null;
-        jmri.Block desBlock = null;
+        Block srcBlock = null;
+        Block desBlock = null;
         for (int i = 0; i < paths; i++) {
             if (lBlock.isThroughPathActive(i)) {
                 srcBlock = lBlock.getThroughPathSource(i);
@@ -194,12 +195,12 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             dirA = lBlock.getNeighbourDirection(srcBlock);
             dirB = lBlock.getNeighbourDirection(desBlock);
         } else {
-            dirA = jmri.Path.EAST;
-            dirB = jmri.Path.WEST;
+            dirA = Path.EAST;
+            dirB = Path.WEST;
         }
 
-        Object[] options = {"Facing " + jmri.Path.decodeDirection(dirB),
-            "Facing " + jmri.Path.decodeDirection(dirA),
+        Object[] options = {"Facing " + Path.decodeDirection(dirB),
+            "Facing " + Path.decodeDirection(dirA),
             "Do Not Add"};
         int n = JOptionPane.showOptionDialog(this,
                 "Would you like to assign loco "
@@ -229,6 +230,15 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
+        }
+    }
+
+    @Override
+    public void setBackground(Color bg) {
+        super.setBackground(bg);
+        Editor e = getEditor();
+        if (e != null) {
+            e.repaint();
         }
     }
 

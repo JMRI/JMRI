@@ -1,24 +1,26 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
-import jmri.Block;
+
+import jmri.*;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Block Object.
  * <p>
- * This is the same name as display.BlockContentsIcon, it follows
- * on from the MemoryIcon
+ * This is the same name as display.BlockContentsIcon, it follows on from the
+ * MemoryIcon
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     //TODO: unused - dead-code strip
     //private final String defaultText = " ";
-
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
         log.debug("BlockContentsIcon ctor= {}", BlockContentsIcon.class.getName());
@@ -30,27 +32,28 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
      * {@inheritDoc}
      */
     @Override
-    public void setBlock(jmri.NamedBeanHandle<Block> m) {
+    public void setBlock(NamedBeanHandle<Block> m) {
         super.setBlock(m);
         if (getBlock() != null) {
-            lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(getBlock());
+            lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(getBlock());
         }
     }
 
     /**
      * add a roster to this icon
+     *
      * @param roster to add
      */
     @Override
     protected void addRosterToIcon(RosterEntry roster) {
-        if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
             super.addRosterToIcon(roster);
             return;
         }
 
         int paths = lBlock.getNumberOfThroughPaths();
-        jmri.Block srcBlock = null;
-        jmri.Block desBlock = null;
+        Block srcBlock = null;
+        Block desBlock = null;
         for (int i = 0; i < paths; i++) {
             if (lBlock.isThroughPathActive(i)) {
                 srcBlock = lBlock.getThroughPathSource(i);
@@ -64,12 +67,12 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
             dirA = lBlock.getNeighbourDirection(srcBlock);
             dirB = lBlock.getNeighbourDirection(desBlock);
         } else {
-            dirA = jmri.Path.EAST;
-            dirB = jmri.Path.WEST;
+            dirA = Path.EAST;
+            dirB = Path.WEST;
         }
 
-        Object[] options = {"Facing " + jmri.Path.decodeDirection(dirB),
-            "Facing " + jmri.Path.decodeDirection(dirA),
+        Object[] options = {"Facing " + Path.decodeDirection(dirB),
+            "Facing " + Path.decodeDirection(dirA),
             "Do Not Add"};
         int n = JOptionPane.showOptionDialog(this,
                 "Would you like to assign loco "
@@ -95,6 +98,15 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
+        }
+    }
+
+    @Override
+    public void setBackground(Color bg) {
+        super.setBackground(bg);
+        Editor e = getEditor();
+        if (e != null) {
+            e.repaint();
         }
     }
 
