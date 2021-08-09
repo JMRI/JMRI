@@ -170,6 +170,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
+    public Dimension mydim = null;
     /**
       * Reset frame location and size to stored preference value
       */
@@ -193,11 +194,11 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 if ((reuseFrameSavedSized)
                         && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
                         windowFrameRef).getHeight() == 0.0)))) {
-                    log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
-                    log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+//                    log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+//                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
+//                    log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
                     window.setSize(prefsMgr.getWindowSize(windowFrameRef));
-                    log.debug("window now set to location: {}", window);
+//                    log.debug("window now set to location: {}", window);
                 }
 
                 //
@@ -234,7 +235,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 //
                 if (isVisible) {
                     this.setLocation(window.getLocation());
-                    this.setSize(window.getSize());
+                    this.mydim = prefsMgr.getWindowSize(windowFrameRef);
                     log.debug("Set \"{}\" location to {} and size to {}", getTitle(), window.getLocation(), window.getSize());
                 }
             }
@@ -344,6 +345,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             this.setPreferredSize(null); // try without the preferred size
         }
         super.pack();
+        if (this.mydim != null) {
+            this.setSize(this.mydim);
+        }
         reSizeToFitOnScreen();
     }
 
@@ -380,8 +384,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * the origin up and left as needed, then to make the window smaller
      */
     void reSizeToFitOnScreen() {
-        int width = this.getPreferredSize().width;
-        int height = this.getPreferredSize().height;
+        int width = this.getSize().width;
+        int height = this.getSize().height;
         log.trace("reSizeToFitOnScreen of \"{}\" starts with maximum size {}", getTitle(), maxSizeDimension);
         log.trace("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
         log.trace("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
@@ -655,7 +659,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                     if (SystemType.isLinux()) {
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
-                        heightInset = 70;
+//                        heightInset = 70;
                     } // Windows generally has values, but not always,
                     // so we provide observed values just in case
                     else if (osName.equals("Windows XP") || osName.equals("Windows 98")
@@ -1025,7 +1029,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * for this kludge.
      */
     private void saveWindowSize(jmri.UserPreferencesManager p) {
-        if (SystemType.isLinux()) {
+/*        if (SystemType.isLinux()) {
             // try to determine if user has resized the window
             log.debug("getSize() width: {}, height: {}", super.getSize().getWidth(), super.getSize().getHeight());
             log.debug("getPreferredSize() width: {}, height: {}", super.getPreferredSize().getWidth(), super.getPreferredSize().getHeight());
@@ -1038,9 +1042,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             } else {
                 p.setWindowSize(windowFrameRef, super.getPreferredSize());
             }
-        } else {
+        } else { */
             p.setWindowSize(windowFrameRef, super.getSize());
-        }
+ //       }
     }
 
     /*
