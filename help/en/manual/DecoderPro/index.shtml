@@ -895,6 +895,13 @@
             <td>Dale A. Tripp</td>
             <td>Updated from JMRI® 3.4</td>
           </tr>
+
+          <tr>
+            <td>3.6</td>
+            <td>8/10/2021</td>
+            <td>Dave Sand</td>
+            <td>Convert to HTML 5</td>
+          </tr>
         </tbody>
       </table>
 

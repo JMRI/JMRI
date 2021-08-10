@@ -1,55 +1,68 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Comprehensive Programmer - Advanced Features Pane</title>
   <!--#include virtual="/Style.shtml" -->
-</head>
+  <!-- DecoderPro Styles -->
 
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Main Window</h1>
 
       <h2>EasyDCC Menu</h2>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "Main_Menu.shtml#System"></a></p>
+      <div class="dp-right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p><strong>Command Monitor</strong></p>
+      <p><strong>Command Monitor</strong>
+      </p>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> and
+      automatically displays the information that is being sent and received on the communications
+      link between your computer and your DCC system.</p>
 
-      <p><strong>Send Command</strong></p>
+      <p><strong>Send Command</strong>
+      </p>
 
-      <p>Opens the Send EasyDcc command prompt, which is used to
-      send commands using DecoderPro.</p>
+      <p>Opens the Send EasyDcc command prompt, which is used to send commands using
+      DecoderPro.</p>
 
-      <p align="center"><img src="images/Main_EasyDCC_01.png" alt=
-      "Send Command" width="263" height="99" border="4"></p>
+      <p class="dp-center"><img src="images/Main_EasyDCC_01.png" alt="Send Command" width="263"
+      height="99">
+      </p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "Main_Menu.shtml#System"></a></p>
+      <div class="dp-right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
