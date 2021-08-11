@@ -310,9 +310,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "B0 14 10 00"); // THROWN/ON
-                                                                                                          // loconet
-                                                                                                          // message
+        // THROWN/ON loconet message
+        Assert.assertEquals("B0 14 10 00", lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
@@ -330,9 +329,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "B0 14 10 00"); // THROWN/ON
-                                                                                                          // loconet
-                                                                                                          // message
+        // THROWN/ON loconet message
+        Assert.assertEquals("B0 14 10 00", lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
@@ -341,18 +339,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testPropertySet1() throws InterruptedException {
         t.setBinaryOutput(false);
         t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
-        t.setCommandedState(THROWN);
-
-        // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
-
-        // check for messages
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "B0 14 00 00"); // THROWN/OFF
-                                                                                                          // loconet
-                                                                                                          // message
+        t.setCommandedState(THROWN);        
+        checkThrownMsgSent();
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
@@ -362,18 +350,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testPropertySet2() throws InterruptedException {
         t.setBinaryOutput(true);
         t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
-        t.setCommandedState(THROWN);
-
-        // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
-
-        // check for messages
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "B0 14 00 00"); // THROWN/OFF
-                                                                                                          // loconet
-                                                                                                          // message
+        t.setCommandedState(THROWN);      
+        checkThrownMsgSent();
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
