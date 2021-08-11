@@ -36,6 +36,7 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         l = new PropertyChangeListenerScaffold();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         tif.dispose();
@@ -60,9 +61,20 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060709;");
     }
-
+    
+    @Override
     @Test
-    public void testDirectFeedback() throws jmri.JmriException {
+    public void testDirectFeedbackClosed() throws jmri.JmriException{
+        testDirectFeedback();
+    }
+    
+    @Override
+    @Test
+    public void testDirectFeedbackThrown() throws jmri.JmriException{
+        testDirectFeedback();
+    }
+
+    private void testDirectFeedback() throws jmri.JmriException {
         t.setFeedbackMode(Turnout.DIRECT);
         //t.finishLoad();
 

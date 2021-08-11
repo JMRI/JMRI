@@ -173,8 +173,19 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
-
+    
+    @Override
     @Test
+    public void testDirectFeedbackClosed() {
+        testDirectFeedback();
+    }
+    
+    @Override
+    @Test
+    public void testDirectFeedbackThrown() {
+        testDirectFeedback();
+    }
+
     public void testDirectFeedback() {
         t.setFeedbackMode(Turnout.DIRECT);
         Assert.assertEquals("Feedback Mode after set", Turnout.DIRECT, t.getFeedbackMode());
@@ -256,6 +267,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         lnis.terminateThreads();
