@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -79,8 +78,8 @@
 
       <p><strong>Report Issue...</strong></p>
 
-      <p style="margin-left: 40px;">Opens the <strong>Report 
-      Issue...</strong> Window you so that can 
+      <p style="margin-left: 40px;">Opens the <strong>Report
+      Issue...</strong> Window you so that can
       submit a bug report or feature request.</p>
 
       <p style="margin-left: 40px; text-align: center;"><img src=
