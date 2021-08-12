@@ -432,8 +432,8 @@
             covered in this manual)</li>
 
             <li>
-              <a href="../JMRI_OPS_UsersGuide/Ops_Start.shtml">Operations</a><img src="images/arrow.gif" alt="arrow"
-              height="9" width="20">
+              <a href="../JMRI_OPS_UsersGuide/Ops_Start.shtml">Operations</a><img src=
+              "images/arrow.gif" alt="arrow" height="9" width="20">
               <ul>
                 <li>Settings</li>
 
@@ -548,7 +548,7 @@
 
             <li>Run Script...</li>
 
-            <li>Thread Monitor</a></li>
+            <li>Thread Monitor</li>
 
             <li>Script Output</li>
 

@@ -1,110 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Help Menu</title><!--#include virtual="/Style.shtml" -->
 
-  <title>Help Menu</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Main Window</h1>
 
       <h2>Help Menu</h2>
 
-      <div align="right">
-        <p><a href="Main_Window.shtml">Previous</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Window.shtml">Previous</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p><strong>Window Help...</strong></p>
+      <p><strong>Window Help...</strong>
+      </p>
 
       <blockquote>
         <p>Displays help that for the current window.</p>
       </blockquote>
 
-      <p><strong>General Help...</strong></p>
+      <p><strong>General Help...</strong>
+      </p>
 
       <blockquote>
-        <p>Displays general information about DecoderPro and other
-        JMRI programs.</p>
+        <p>Displays general information about DecoderPro and other JMRI programs.</p>
       </blockquote>
 
-      <p><strong>License...</strong></p>
+      <p><strong>License...</strong>
+      </p>
 
       <blockquote>
-        <p>Displays the License agreement under which JMRI
-        operates.</p>
+        <p>Displays the License agreement under which JMRI operates.</p>
       </blockquote>
 
-      <p><strong>Locations...</strong></p>
+      <p><strong>Locations...</strong>
+      </p>
 
       <blockquote>
-        <p>Opens an information box showing the location of JMRI
-        programs and files related to DecoderPro.</p>
+        <p>Opens an information box showing the location of JMRI programs and files related to
+        DecoderPro.</p>
 
-        <p align="center"><img style="width: 861px; height: 201px;"
-        alt="Location" src="images/Main_Help_01.png"><br></p>
+        <p class="dp-center"><img style="width: 861px; height: 201px;" alt="Location" src=
+        "images/Main_Help_01.png"><br>
+        </p>
       </blockquote>
 
-      <p><strong>Context...</strong></p>
+      <p><strong>Context...</strong>
+      </p>
 
-      <p style="margin-left: 40px;">Opens the <strong>JMRI
-      Context</strong> window that shows the configuration setting
-      for your DecoderPro installation.</p>
+      <p style="margin-left: 40px;">Opens the <strong>JMRI Context</strong> window that shows the
+      configuration setting for your DecoderPro installation.</p>
 
-      <p align="center"><img src="images/Main_Help_03.png" alt=
-      "Context" height="321" width="778"></p>
+      <p class="dp-center"><img src="images/Main_Help_03.png" alt="Context" height="321" width=
+      "778">
+      </p>
 
-      <p align="left"><strong>System Console...</strong></p>
+      <p><strong>System Console...</strong>
+      </p>
 
-      <p style="margin-left: 40px;" align="left">Opens the JMRI
-      System Console window that displays the Java Execution
-      activity. Now Right Click Context menu to copy to clipboard,
-      wrap messages, change color scheme.</p>
+      <p style="margin-left: 40px;">Opens the JMRI System Console window that displays the Java
+      Execution activity. Now Right Click Context menu to copy to clipboard, wrap messages, change
+      color scheme.</p>
 
-      <p style="margin-left: 40px;"><img src=
-      "images/Main_Help_02.png" alt="console" height="382" width=
-      "800"></p>
+      <p style="margin-left: 40px;"><img src="images/Main_Help_02.png" alt="console" height="382"
+      width="800">
+      </p>
 
-      <p><strong>Report Issue...</strong></p>
+      <p><strong>Report Issue...</strong>
+      </p>
 
-      <p style="margin-left: 40px;">Opens the <strong>Report
-      Issue...</strong> Window you so that can
-      submit a bug report or feature request.</p>
+      <p style="margin-left: 40px;">Opens the <strong>Report Issue...</strong> Window you so that
+      can submit a bug report or feature request.</p>
 
-      <p style="margin-left: 40px; text-align: center;"><img src=
-      "images/Main_Help_04.png" alt="help" height="311" width=
-      "577"></p>
+      <p style="margin-left: 40px; text-align: center;"><img src="images/Main_Help_04.png" alt=
+      "help" height="311" width="577">
+      </p>
+
       <hr>
 
-      <p><strong>About DecoderPro</strong></p>
+      <p><strong>About DecoderPro</strong>
+      </p>
 
-      <p style="margin-left: 40px;">Opens the Credits and Version
-      Window.</p>
+      <p style="margin-left: 40px;">Opens the Credits and Version Window.</p>
 
-      <p style="margin-left: 40px; text-align: center;"><img style=
-      "width: 255px; height: 315px;" alt="about" src=
-      "images/Main_Help_05.png"><br></p>
+      <p style="margin-left: 40px; text-align: center;"><img style="width: 255px; height: 315px;"
+      alt="about" src="images/Main_Help_05.png"><br>
+      </p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Main_Window.shtml">Previous</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Window.shtml">Previous</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

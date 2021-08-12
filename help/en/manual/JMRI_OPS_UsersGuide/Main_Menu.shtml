@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>OperationsPro Menus</title><!--#include virtual="/Style.shtml" -->
 
-  <title>OperationsPro Menus</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top"></a>
 
-      <h1>OperationsPro Main Window</h1>
+    <div id="mainContent">
+      <h1 id="Top">OperationsPro Main Window</h1>
 
       <h2>Menu Overview</h2>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+      <div class="ops-right">
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>All of the JMRI functions can be accessed via the
-      menu bar on either the DecoderPro&#174; or PanelPro main
-      window. We are only concerned with OperationsPro in this
-      Manual.</p>
+      <p>All of the JMRI functions can be accessed via the menu bar on either the DecoderPro® or
+      PanelPro main window. We are only concerned with OperationsPro in this Manual.</p>
 
-      <p><img src="images/Main_05_MenuBar.png" alt="menu bar"
-      height="100" width="505"></p>
+      <p><img src="images/Main_05_MenuBar.png" alt="menu bar" height="100" width="505">
+      </p>
 
       <h4>File</h4>
 
@@ -40,23 +41,33 @@
 
       <ul>
         <li>
-          <strong><a href="Ops_Start.shtml">Operations</a>
-          <img src="images/arrow.gif" alt="aroww" height="9" width=
-          "20"></strong> (only displayed on menu bar if checked in
-          the Operations Settings)
-
+          <strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" alt="aroww"
+          height="9" width="20"></strong> (only displayed on menu bar if checked in the Operations
+          Settings)
           <ul>
-            <li><a href="Ops_Settings.shtml">Settings</a></li>
+            <li>
+              <a href="Ops_Settings.shtml">Settings</a>
+            </li>
 
-            <li><a href="Ops_Locations.shtml">Locations</a></li>
+            <li>
+              <a href="Ops_Locations.shtml">Locations</a>
+            </li>
 
-            <li><a href="Ops_Cars.shtml">Cars</a></li>
+            <li>
+              <a href="Ops_Cars.shtml">Cars</a>
+            </li>
 
-            <li><a href="Ops_Engines.shtml">Locomotives</a></li>
+            <li>
+              <a href="Ops_Engines.shtml">Locomotives</a>
+            </li>
 
-            <li><a href="Ops_Routes.shtml">Routes</a></li>
+            <li>
+              <a href="Ops_Routes.shtml">Routes</a>
+            </li>
 
-            <li><a href="Ops_Trains.shtml">Trains</a></li>
+            <li>
+              <a href="Ops_Trains.shtml">Trains</a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -65,46 +76,50 @@
 
       <h4>Panels</h4>
 
-      <p><strong><a href="Ops_Start.shtml">Operations</a><img src=
-      "images/arrow.gif" alt="aroww" height="9" width=
-      "20"></strong>(on menu bar only if checked in the Operations
-      Settings)</p>
+      <p><strong><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" alt="aroww"
+      height="9" width="20"></strong>(on menu bar only if checked in the Operations Settings)</p>
 
       <blockquote>
-        <p><a href="Ops_Settings.shtml">Settings</a></p>
+        <p><a href="Ops_Settings.shtml">Settings</a>
+        </p>
 
-        <p><a href="Ops_Locations.shtml">Locations</a></p>
+        <p><a href="Ops_Locations.shtml">Locations</a>
+        </p>
 
-        <p><a href="Ops_Cars.shtml">Cars</a></p>
+        <p><a href="Ops_Cars.shtml">Cars</a>
+        </p>
 
-        <p><a href="Ops_Engines.shtml">Locomotives</a></p>
+        <p><a href="Ops_Engines.shtml">Locomotives</a>
+        </p>
 
-        <p><a href="Ops_Routes.shtml">Routes</a></p>
+        <p><a href="Ops_Routes.shtml">Routes</a>
+        </p>
 
-        <p><a href="Ops_Trains.shtml">Trains</a></p>
+        <p><a href="Ops_Trains.shtml">Trains</a>
+        </p>
       </blockquote>
 
-      <h4><span class="style1"><a name=
-      "System"></a>[System]</span></h4>
+      <h4 id="System">[System]</h4>
 
-      <p>(This menu name will depend upon the System Connection(s)
-      that you selected in JMRI Preferences. The options are
-      listed. If (<em>None</em>) is selected in Preferences, a
-      System menu will not be displayed.)</p>
+      <p>(This menu name will depend upon the System Connection(s) that you selected in JMRI
+      Preferences. The options are listed. If (<em>None</em>) is selected in Preferences, a System
+      menu will not be displayed.)</p>
 
       <h4>Debug</h4>
 
       <h4>Window</h4>
 
       <h4>Help</h4>
+
       <hr>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+      <div class="ops-right">
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent -->
+    </div>
+    <!-- closes #mainContent -->
   </div>
 </body>
 </html>
