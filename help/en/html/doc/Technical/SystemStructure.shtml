@@ -400,6 +400,15 @@ finally, <code>register()</code> does:
       normally generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code>
       class-level annotations.</p>
 
+      See <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
+      for links to configuration elements.
+      (Is there another place that the configuration process and preferences support is described? If so, it should
+      be linked from here.)
+      <p>
+      Any particular system connection is included in the preferences by
+      being listed in the <code>target/classes/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
+      generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code> class-level annotations.
+
       <pre>
 # Providers of System Connections type lists in Preferences
 # Order is Insignificant

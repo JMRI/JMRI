@@ -54,6 +54,7 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
 
     @AfterEach
     public void tearDown() {
+        l.dispose();
         l = null;
         JUnitUtil.tearDown();
     }
