@@ -2782,7 +2782,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int ISAUTO_COLUMN = 13;
         public static final int CURRENTSIGNAL_COLUMN = 14;
         public static final int CURRENTSIGNAL_COLUMN_U = 15;
-        public static final int MAX_COLUMN = 15;
+        public static final int DCC_ADDRESS = 16;
+        public static final int MAX_COLUMN = 16;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2865,6 +2866,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return(Bundle.getMessage("CurrentSignalSysColumnTitle"));
                 case CURRENTSIGNAL_COLUMN_U:
                     return(Bundle.getMessage("CurrentSignalColumnTitle"));
+                case DCC_ADDRESS:
+                    return(Bundle.getMessage("DccColumnTitleColumnTitle"));
                 default:
                     return "";
             }
@@ -2896,6 +2899,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ISAUTO_COLUMN:
                 case CURRENTSIGNAL_COLUMN:
                 case CURRENTSIGNAL_COLUMN_U:
+                case DCC_ADDRESS:
                     return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
@@ -2969,6 +2973,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case CURRENTSIGNAL_COLUMN_U:
                     if (at.getAutoRun()) {
                         return(at.getAutoActiveTrain().getCurrentSignalUserName());
+                    } else {
+                        return("NA");
+                    }
+                case DCC_ADDRESS:
+                    if (at.getDccAddress() != null) {
+                        return(at.getDccAddress());
                     } else {
                         return("NA");
                     }
