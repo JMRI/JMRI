@@ -1,14 +1,12 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
+import jmri.Turnout;
+
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.Turnout;
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
@@ -173,19 +171,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
-    
-    @Override
-    @Test
-    public void testDirectFeedbackClosed() {
-        testDirectFeedback();
-    }
-    
-    @Override
-    @Test
-    public void testDirectFeedbackThrown() {
-        testDirectFeedback();
-    }
 
+    @Test
+    @Override
     public void testDirectFeedback() {
         t.setFeedbackMode(Turnout.DIRECT);
         Assert.assertEquals("Feedback Mode after set", Turnout.DIRECT, t.getFeedbackMode());
@@ -267,7 +255,6 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @Override
     @AfterEach
     public void tearDown() {
         lnis.terminateThreads();

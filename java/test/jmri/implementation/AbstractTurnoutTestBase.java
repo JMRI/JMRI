@@ -4,16 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeListener;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -437,26 +433,7 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     @Test
-    public void testDirectFeedbackClosed() throws Exception {
-
-        // DIRECT mode is implemented in the AbstractTurnout class, so
-        // it is possible on all systems.
-        if (t.getFeedbackMode() != Turnout.DIRECT) {
-            t.setFeedbackMode(Turnout.DIRECT);
-        }
-        Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
-
-        listenStatus = Turnout.UNKNOWN;
-        t.addPropertyChangeListener(new Listen());
-        
-        t.setCommandedState(Turnout.CLOSED);
-        checkClosedMsgSent();
-        Assert.assertEquals(Turnout.CLOSED, t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
-    }
-    
-    @Test
-    public void testDirectFeedbackThrown() throws Exception {
+    public void testDirectFeedback() throws Exception {
 
         // DIRECT mode is implemented in the AbstractTurnout class, so
         // it is possible on all systems.
@@ -473,6 +450,11 @@ public abstract class AbstractTurnoutTestBase {
         checkThrownMsgSent();
         Assert.assertEquals(Turnout.THROWN, t.getState());
         Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+
+        t.setCommandedState(Turnout.CLOSED);
+        checkClosedMsgSent();
+        Assert.assertEquals(Turnout.CLOSED, t.getState());
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 
     @Test

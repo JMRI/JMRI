@@ -1,15 +1,13 @@
 package jmri.jmrix.openlcb;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import jmri.Turnout;
-import jmri.implementation.AbstractTurnoutTestBase;
-import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
 import jmri.util.PropertyChangeListenerScaffold;
+import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.Turnout;
+import jmri.jmrix.can.CanMessage;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests inherited from the abstract turnout test base, specialized for the OlcbTurnout. This is
@@ -36,7 +34,6 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         l = new PropertyChangeListenerScaffold();
     }
 
-    @Override
     @AfterEach
     public void tearDown() {
         tif.dispose();
@@ -61,20 +58,10 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060709;");
     }
-    
-    @Override
-    @Test
-    public void testDirectFeedbackClosed() throws jmri.JmriException{
-        testDirectFeedback();
-    }
-    
-    @Override
-    @Test
-    public void testDirectFeedbackThrown() throws jmri.JmriException{
-        testDirectFeedback();
-    }
 
-    private void testDirectFeedback() throws jmri.JmriException {
+    @Test
+    @Override
+    public void testDirectFeedback() throws jmri.JmriException {
         t.setFeedbackMode(Turnout.DIRECT);
         //t.finishLoad();
 

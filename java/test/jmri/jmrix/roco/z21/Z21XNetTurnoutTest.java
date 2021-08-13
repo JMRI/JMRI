@@ -1,17 +1,15 @@
 package jmri.jmrix.roco.z21;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTurnout;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
@@ -134,7 +132,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         // check to see if the turnout state changes.
         Assert.assertEquals(Turnout.THROWN, t.getKnownState());
     }
-
+    @Test
     @Override
     public void testDirectFeedback() {
         t.setFeedbackMode(Turnout.DIRECT);
