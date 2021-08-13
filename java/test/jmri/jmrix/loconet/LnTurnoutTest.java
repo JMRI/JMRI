@@ -36,12 +36,9 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     @Override
     public void checkClosedMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
                 "B0 14 30 00");  // CLOSED/ON loconet message
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
@@ -56,11 +53,9 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     @Override
     public void checkThrownMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
-        // check for messages
+        // check results
         Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
                 "B0 14 10 00");  // THROWN/ON loconet message
