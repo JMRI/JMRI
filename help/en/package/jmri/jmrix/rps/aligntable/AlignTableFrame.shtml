@@ -1,60 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: RPS Receiver Control</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: RPS Receiver Control</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: RPS Receiver Control</h1>
+      <a href="../../../../../html/hardware/rps/images/ReceiverControl.gif"><img src=
+      "../../../../../html/hardware/rps/images/ReceiverControl.gif" height="120" width="292" alt=
+      "RPS Receiver Control window" class="floatRight"></a><br>
+      The RPS Receiver Control window lets you update and examine the <a href=
+      "../../../../../html/hardware/rps/index.shtml">RPS system</a>'s information about where its
+      receivers are located.
+      <p>Usually the RPS system will detect how many receivers it has and set up the table with the
+      right number of rows. You can change that by changing the number of receivers in the text bus
+      and clicking "Set".</p>
 
-      <h1>JMRI: RPS Receiver Control</h1><a href=
-      "../../../../../html/hardware/rps/images/ReceiverControl.gif"><img src="../../../../../html/hardware/rps/images/ReceiverControl.gif"
-      height="120" width="292" alt="RPS Receiver Control window"
-      align="right"></a><br>
-      The RPS Receiver Control window lets you update and examine
-      the <a href=
-      "../../../../../html/hardware/rps/index.shtml">RPS
-      system</a>'s information about where its receivers are
-      located.
+      <p>Once you have the right number of receivers defined, enter each one's X, Y and Z
+      coordinates in the table.</p>
 
-      <p>Usually the RPS system will detect how many receivers it
-      has and set up the table with the right number of rows. You
-      can change that by changing the number of receivers in the
-      text bus and clicking "Set".</p>
+      <p>There's also a checkbox for each receiver that controls whether it will be used in
+      position calculations (if checked) or ignored (not checked).</p>
 
-      <p>Once you have the right number of receivers defined, enter
-      each one's X, Y and Z coordinates in the table.</p>
+      <p>The values "Min Time" and "Max Time" columns are used to decide if the receivers time
+      measurement should be used in a particular calculation. These can usually be left at their
+      default values of -1 and 99999 respectively, in which case the program will always attempt to
+      use the receivers measurement. If you're having trouble, for example with echoes that make
+      very long measurements (high time values) inaccurate, you can set a high limit, above which
+      the measurement won't be used. You can similarly set a low limit if very small time
+      measurements (short distances or certain forms of interference) turn out to be
+      inaccurate.</p>
 
-      <p>There's also a checkbox for each receiver that controls
-      whether it will be used in position calculations (if checked)
-      or ignored (not checked).</p>
+      <p>To help determine those limits, the most recent time measurement for each receiver is
+      shown in the "Last Time" column of the table.</p>
 
-      <p>The values "Min Time" and "Max Time" columns are used to
-      decide if the receivers time measurement should be used in a
-      particular calculation. These can usually be left at their
-      default values of -1 and 99999 respectively, in which case
-      the program will always attempt to use the receivers
-      measurement. If you're having trouble, for example with
-      echoes that make very long measurements (high time values)
-      inaccurate, you can set a high limit, above which the
-      measurement won't be used. You can similarly set a low limit
-      if very small time measurements (short distances or certain
-      forms of interference) turn out to be inaccurate.</p>
-
-      <p>To help determine those limits, the most recent time
-      measurement for each receiver is shown in the "Last Time"
-      column of the table.</p>
-
-      <p>By default, the RPS system measures position in inches and
-      time in microseconds. If you'd prefer to use some other
-      distance unit, such as meters or feet, you change the number
-      used for the speed of sound. Typical values are:</p>
+      <p>By default, the RPS system measures position in inches and time in microseconds. If you'd
+      prefer to use some other distance unit, such as meters or feet, you change the number used
+      for the speed of sound. Typical values are:</p>
 
       <dl>
         <dt>Inches</dt>
@@ -72,25 +60,22 @@
         <dt>cm</dt>
 
         <dd>0.0345</dd>
-      </dl>If you change this value, be sure to click the "Set"
-      box.
-
+      </dl>
+      If you change this value, be sure to click the "Set" box.
       <p>The "offset" value should usually be left unchanged.</p>
 
-      <p>To save the values as the new defaults, which will be used
-      the next time the program is started, click the "Set
-      Defaults" button.</p>
+      <p>To save the values as the new defaults, which will be used the next time the program is
+      started, click the "Set Defaults" button.</p>
 
-      <p>To save the values in a separate file, click "Store...",
-      then select where you want to put the file and what you want
-      to call it.</p>
+      <p>To save the values in a separate file, click "Store...", then select where you want to put
+      the file and what you want to call it.</p>
 
-      <p>To load values from a previously stored file, click
-      "Load..." and select the file.</p>
-
+      <p>To load values from a previously stored file, click "Load..." and select the file.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,75 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecodePro Main window</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecodePro Main window</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Main Window</h1>
 
       <h2>Main Window Overview</h2>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+      <div class="dp-right">
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p align="left">When you start DecoderPro, the DecoderPro
-      window is displayed. All of the JMRI functions can be
-      accessed via the menu bar on the DecoderPro window.</p>
+      <p>When you start DecoderPro, the DecoderPro window is displayed. All of the JMRI functions
+      can be accessed via the menu bar on the DecoderPro window.</p>
 
-      <p align="center"><img src="images/start_dp_main01.png" alt=
-      "main" height="493" width="1107"></p>
+      <p class="dp-center"><img src="images/start_dp_main01.png" alt="main" height="493" width=
+      "1107">
+      </p>
 
       <ol>
         <li>
-          <h3 align="left"><a href="dp3_menubar.shtml">Menu
-          Bar</a></h3>
+          <h3><a href="dp3_menubar.shtml">Menu Bar</a>
+          </h3>
         </li>
 
         <li>
-          <h3 align="left"><strong><a href="dp3_toobar.shtml">Tool
-          Bar</a></strong></h3>
+          <h3><strong><a href="dp3_toobar.shtml">Tool Bar</a></strong>
+          </h3>
         </li>
 
         <li>
-          <h3 align="left"><a href="dp3_rosterTable.shtml">Roster
-          Table</a></h3>
+          <h3><a href="dp3_rosterTable.shtml">Roster Table</a>
+          </h3>
         </li>
 
         <li>
-          <h3><strong><a href="dp3_decoderInfo.shtml">Decoder
-          Information Area</a></strong></h3>
+          <h3><strong><a href="dp3_decoderInfo.shtml">Decoder Information Area</a></strong>
+          </h3>
         </li>
 
-        <li><span style="font-weight: bold;">Status
-        Bar</span><a style="font-weight: bold;" name="status" id=
-        "status"></a></li>
+        <li>
+          <span style="font-weight: bold;">Status Bar</span><a style="font-weight: bold;" id=
+          "status"></a>
+        </li>
       </ol>
 
-      <h3><img style="width: 1317px; height: 59px;" alt=
-      "status bar" src="images/status_bar.png"><br></h3>
+      <h3><img style="width: 1317px; height: 59px;" alt="status bar" src=
+      "images/status_bar.png"><br>
+      </h3>
 
-      <p>Displays message, so that you can determine the state of
-      DecoderPro during operation.</p>
+      <p>Displays message, so that you can determine the state of DecoderPro during operation.</p>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+      <div class="dp-right">
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

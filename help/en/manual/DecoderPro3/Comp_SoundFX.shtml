@@ -1,88 +1,90 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Comprehensive Programmer - Sound FX Pane</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>Comprehensive Programmer - Sound FX Pane</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-    <a name="Top" id="Top"></a>
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
-    <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h2>Sound FX Pane</h2>
 
-    <h2>Sound FX Pane</h2>
+      <div class="dp-right">
+        <p><a href="Comp_Analog.shtml">Previous |</a> <a href="Comp_SoundLevels.shtml">Next</a></p>
 
-    <div align="right">
-      <p><a href="Comp_Analog.shtml">Previous |</a> <a href=
-      "Comp_SoundLevels.shtml">Next</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
+      </div>
 
-      <p><a href="index.shtml#Advanced%20Programmer">Back to
-      Index</a></p>
+      <hr>
+
+      <p>This pane will only be displayed for Sound decoders.</p>
+
+      <p>Several manufacturers now offer decoders that include sound functions. This pane is
+      designed to control those CVs. The screen shot below is from a programmer for Tsunami OEM
+      FP-45 sound decoder. There are also steam sound decoders available.</p>
+
+      <p>These sounds can be coordinated with the mechanism of the locomotive, and appropriate
+      sounds can be triggered from the function keys of the throttle. Others can be set to be
+      triggered at startup or to run in the background.</p>
+
+      <p>This pane allows for the selection of sound effects from sound decoders, and the <a href=
+      "Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a> allows for setting the
+      loudness levels of those sounds when they play back.</p>
+
+      <h1><img src="images/Comp_09_Sound.png" width="852" height="503" alt="sound pane">
+      </h1>
+
+      <p>For specific function options, see your decoder documentation and the programmer for the
+      specific decoder. Sometimes (depending on the volunteer that wrote the decoder definition
+      file) there are "tool tips" that appear if you hover over a selection entry box.</p>
+
+      <p>Here are is a sampling of sound functions on some other decoders:</p>
+
+      <p><strong>Athearn N Scale Big Boy and Challenger</strong>
+      </p>
+
+      <h1><img src="images/Comp_09a_Sound.png" alt="Athearn Sound" width="798" height="178">
+      </h1>
+
+      <p><strong>Digitrax F40PH</strong>
+      </p>
+
+      <h1><img src="images/Comp_09b_Sound.png" alt="Digitrax Sound">
+      </h1>
+
+      <hr>
+
+      <div class="dp-right">
+        <p><a href="Comp_SoundLevels.shtml"></a> <a href="Comp_Analog.shtml">Previous |</a>
+        <a href="Comp_SoundLevels.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-    <hr>
-
-    <p>This pane will only be displayed for Sound decoders.</p>
-
-    <p>Several manufacturers now offer decoders that include sound
-    functions. This pane is designed to control those CVs. The
-    screen shot below is from a programmer for Tsunami OEM FP-45
-    sound decoder. There are also steam sound decoders
-    available.</p>
-
-    <p>These sounds can be coordinated with the mechanism of the
-    locomotive, and appropriate sounds can be triggered from the
-    function keys of the throttle. Others can be set to be
-    triggered at startup or to run in the background.</p>
-
-    <p>This pane allows for the selection of sound effects from
-    sound decoders, and the <a href=
-    "Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a>
-    allows for setting the loudness levels of those sounds when
-    they play back.</p>
-
-    <h1><img src="images/Comp_09_Sound.png" width="852" height=
-    "503" alt="sound pane"></h1>
-
-    <p>For specific function options, see your decoder
-    documentation and the programmer for the specific decoder.
-    Sometimes (depending on the volunteer that wrote the decoder
-    definition file) there are "tool tips" that appear if you hover
-    over a selection entry box.</p>
-
-    <p>Here are is a sampling of sound functions on some other
-    decoders:</p>
-
-    <p><strong>Athearn N Scale Big Boy and Challenger</strong></p>
-
-    <h1><img src="images/Comp_09a_Sound.png" alt="Athearn Sound"
-    width="798" height="178" border="5"></h1>
-
-    <p><strong>Digitrax F40PH</strong></p>
-
-    <h1><img src="images/Comp_09b_Sound.png" alt="Digitrax Sound"
-    border="5"></h1>
-    <hr>
-
-    <div align="right">
-      <p><a href="Comp_SoundLevels.shtml"></a> <a href=
-      "Comp_Analog.shtml">Previous |</a> <a href=
-      "Comp_SoundLevels.shtml">Next</a></p>
-
-      <p><a href="index.shtml#Advanced%20Programmer">Back to
-      Index</a></p>
-    </div>
-
-    <!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,38 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-10-01-->
 
-  <title>JMRI: Using the serial port for block sensors</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <title>JMRI: Using the serial port for block sensors</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
-<h2>Utiliser le port s&eacute;rie pour les capteurs de
-      canton</h2>
-    <p>Jim Scorse a fourni un sch&eacute;ma pour le
-      raccordement d'un d&eacute;tecteur de canton NCE au port
-      s&eacute;rie.</p>
+      <!-- Page Body -->
 
-      <img src="images/speed0.jpg" width="400" height="300">
+      <h2>Utiliser le port série pour les capteurs de canton</h2>
 
+      <p>Jim Scorse a fourni un schéma pour le raccordement d'un détecteur de canton NCE au port
+      série.</p>
+      <img src="images/speed0.jpg" width="400" height="300" alt="">
       <h3>DB9 et DB25 connexions</h3>
+
       <pre>
        DB9 pin      DB25 pin
        -------      --------
@@ -47,9 +43,7 @@ RTS      7             4
 CTS      8             5
 RI       9            22
 
-</pre>
-
-    <!--#include virtual="/Footer.shtml" -->
+</pre><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

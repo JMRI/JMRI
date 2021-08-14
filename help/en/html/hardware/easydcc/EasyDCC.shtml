@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - EasyDCC</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "EasyDCC CVP Products java model railroad JMRI install windows">
+  <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: CVP Products EasyDCC</h1>
 
-      <h1>Hardware Support: CVP Products EasyDCC</h1><a name="hardware" id=
-      "hardware"></a>
-
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
@@ -31,153 +26,142 @@
         <li>#EDCSA - EasyDCC Assembled Command Station</li>
 
         <li>#EDCSB - EasyDCC "board alone" Command Station</li>
-      </ul><a name="limitations" id="limitations"></a>
+      </ul>
 
-      <h2>Limitations</h2>
+      <h2 id="limitations">Limitations</h2>
 
-      <p>Some older EasyDCC systems may need an update to their
-      built in program. This is done by replacing the "PROM" chips in the
-      command station with a newer version. Version 207 is known to
-      work well, but version 022 is known to have some problems
-      communicating with a computer. Later EasyDCC command
-      stations will connect OK.</p>
+      <p>Some older EasyDCC systems may need an update to their built in program. This is done by
+      replacing the "PROM" chips in the command station with a newer version. Version 207 is known
+      to work well, but version 022 is known to have some problems communicating with a computer.
+      Later EasyDCC command stations will connect OK.</p>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
       <ol>
-        <li>To connect your computer to an EasyDCC system, you need
-        to connect the Command Station to the computer's serial
-        port using a special cable.
-        This is not an item that computer stores generally stock, due to the
-        special RJ11 connector needed at the command station end of
-        the cable. You'll probably have to make this cable
-        yourself, or have another CVP user make it for you.
+        <li>To connect your computer to an EasyDCC system, you need to connect the Command Station
+        to the computer's serial port using a special cable. This is not an item that computer
+        stores generally stock, due to the special RJ11 connector needed at the command station end
+        of the cable. You'll probably have to make this cable yourself, or have another CVP user
+        make it for you.
+          <p>For more information on how the cable is wired, see page 134 of the EasyDCC V4 command
+          station manual or page 143 of the V6 manual (a <a href=
+          "http://www.cvpusa.com/doc_center/r1_CS2B_User_Guide_web.pdf">version in PDF</a> is
+          available on the web).</p>
 
-          <p>For more information on how the cable is wired, see
-          page 134 of the EasyDCC V4 command station manual or page
-          143 of the V6 manual (a <a href=
-          "http://www.cvpusa.com/doc_center/r1_CS2B_User_Guide_web.pdf">
-          version in PDF</a> is available on the web).</p>
+          <p>One easy way to connect the system to your computer is to buy a 9-pin serial cable and
+          a phone cable, then cut them and splice them together.<br>
+          With computers without a dedicated serial port, use a USB-to-Serial adapter.</p>
 
-          <p>One easy way to connect the system to your computer is
-          to buy a 9-pin serial cable and a phone cable, then cut
-          them and splice them together.<br>
-          With computers without a dedicated serial port, use a
-          USB-to-Serial adapter.</p>
-          <p>Alternatively, you can connect your EasyDCC command station
-          to your computer running JMRI over a networked
-          serial box as (see <a href="#network">below</a>).</p>
+          <p>Alternatively, you can connect your EasyDCC command station to your computer running
+          JMRI over a networked serial box as (see <a href="#network">below</a>).</p>
         </li>
       </ol>
 
       <h3>Settings</h3>
 
       <ul>
-        <li>Next, go to the Preferences panel of a JMRI-based
-        program. This opens automatically the first time a program
-        is run, or you can select it from the "Edit" menu.</li>
+        <li>Next, go to the Preferences panel of a JMRI-based program. This opens automatically the
+        first time a program is run, or you can select it from the "Edit" menu.</li>
 
-        <li>Open the <strong>Connections</strong> tab, select "Easy
-        DCC" from the System Manufacturer selection box and choose
-        from the following setups.</li>
+        <li>Open the <strong>Connections</strong> tab, select "Easy DCC" from the System
+        Manufacturer selection box and choose from the following setups.</li>
       </ul>
 
       <h4>Serial</h4>
 
       <ul>
-        <li>Select "EasyDCC via Serial" as the System Connection.
-        You can then select the proper serial port from the
-        drop-down list under Settings.</li>
-        <li>Accept the suggested Connection Prefix and Name,
-        or replace it with a more fitting one. Make sure it is unique.</li>
-        <li>Under Additional Connection Settings, the baud rate box
-        will be fixed at 9,600 bps.</li>
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit; click "Yes".</li>
+        <li>Select "EasyDCC via Serial" as the System Connection. You can then select the proper
+        serial port from the drop-down list under Settings.</li>
+
+        <li>Accept the suggested Connection Prefix and Name, or replace it with a more fitting one.
+        Make sure it is unique.</li>
+
+        <li>Under Additional Connection Settings, the baud rate box will be fixed at 9,600
+        bps.</li>
+
+        <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
       </ul>
 
-      <a name="network" id="network"></a>
-      <h4>Network</h4>
-      <p>Connect to a networked serial box such as the
-      <a href="https://www.lantronix.com/products/eds8pr16pr32pr/">Lantronix
-      EDS8PR/16PR/32PR</a> as a virtualized EasyDCC over Serial
-      connection in JMRI, as demonstrated by david zuhn.
-      </p>
+      <h4 id="network">Network</h4>
+
+      <p>Connect to a networked serial box such as the <a href=
+      "https://www.lantronix.com/products/eds8pr16pr32pr/">Lantronix EDS8PR/16PR/32PR</a> as a
+      virtualized EasyDCC over Serial connection in JMRI, as demonstrated by david zuhn.</p>
+
       <ul>
-        <li>Select "EasyDCC via Network" as the System
-        Connection.</li>
+        <li>Select "EasyDCC via Network" as the System Connection.</li>
+
         <li>Review the suggested Connection Name and prefix.</li>
-        <li>Under Settings, enter the IP Address (optional for
-        zeroConfig/mDNS) and Port number
-        (on Lantronix boxes, the port number is calculated as
-        2000 + the physical port number on the back of the box).<br>
-        On the Lantronix box, set up the serial communications as described
-        above under "Serial".</li>
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit; click "Yes".</li>
+
+        <li>Under Settings, enter the IP Address (optional for zeroConfig/mDNS) and Port number (on
+        Lantronix boxes, the port number is calculated as 2000 + the physical port number on the
+        back of the box).<br>
+        On the Lantronix box, set up the serial communications as described above under
+        "Serial".</li>
+
+        <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
       </ul>
 
       <h4>Simulator</h4>
 
       <ul>
-        <li>If no hardware is attached, select "EasyDCC Simulator"
-        as System Connection.</li>
+        <li>If no hardware is attached, select "EasyDCC Simulator" as System Connection.</li>
+
         <li>Review the suggested Connection Name and prefix.</li>
+
         <li>No other settings are needed.</li>
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit; click "Yes".</li>
+
+        <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
       </ul>
 
-        <p>To complete the configuration, restart JMRI.
-        You should now be up and running.<br>
-        Notice the EasyDCC menu on the main JMRI screen.</p>
+      <p>To complete the configuration, restart JMRI. You should now be up and running.<br>
+      Notice the EasyDCC menu on the main JMRI screen.</p>
 
       <h3>Debugging</h3>
 
-      <p>Please refer to the <a href=
-      "http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC
-      Manuals</a>.</p><a name="tools" id="tools"></a>
+      <p>Please refer to the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC
+      Manuals</a>.</p>
 
-      <h2>JMRI EasyDCC Tools</h2><img src="images/EasyDCCMenu.png"
-      width="187" height="72" align="right" alt="Menu">
-
-      <h4><a href=
-      "../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">
-      Command Monitor</a></h4><img src="images/EasyDCCMonitor.png"
-      width="364" height="99" alt="Monitor pane">
-
-      <h4><a href=
-      "../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">
-      Send Command</a></h4><img src="images/EasyDCCSendCmd.png"
-      width="230" height="95" alt="Send Command pane"> <a name=
-      "documentation" id="documentation"></a>
-
-      <h2>Documentation</h2>
+      <h2 id="tools">JMRI EasyDCC Tools</h2>
+      <img src="images/EasyDCCMenu.png" width="187" height="72" class="floatRight" alt="Menu">
+      <h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Command
+      Monitor</a>
+      </h4>
+      <img src="images/EasyDCCMonitor.png" width="364" height="99" alt="Monitor pane">
+      <h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send
+      Command</a>
+      </h4>
+      <img src="images/EasyDCCSendCmd.png" width="230" height="95" alt="Send Command pane">
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
       With connected EasyDCC command stations, JMRI supports:
       <ul>
-        <li>Control <a
-                href="../../tools/Turnouts.shtml">Turnouts</a></li>
-        <li>Send <a
-                href="../../tools/throttle/ThrottleMain.shtml">Throttle</a> commands</li>
-        <li><a
-                href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></li>
-        <li><a
-                href="../../apps/DecoderPro/index.shtml">Programming</a></li>
+        <li>Control <a href="../../tools/Turnouts.shtml">Turnouts</a>
+        </li>
+
+        <li>Send <a href="../../tools/throttle/ThrottleMain.shtml">Throttle</a> commands
+        </li>
+
+        <li>
+          <a href="../../tools/consisttool/ConsistTool.shtml">Consisting</a>
+        </li>
+
+        <li>
+          <a href="../../apps/DecoderPro/index.shtml">Programming</a>
+        </li>
       </ul>
 
       <h3>Third Party info</h3>
 
-      <p>The <a href="http://www.cvpusa.com/easydcc_system.php">CVP
-      EasyDCC Manuals</a></p>
-
+      <p>The <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

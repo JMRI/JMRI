@@ -1,210 +1,207 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Logix Table Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Logix Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Logix Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Logix Table</h1>
 
-      <p>A Logix is a small group of Conditionals focused on a single task
-      on the layout. Each Conditional may be viewed as a statement of the form:</p>
+      <p>A Logix is a small group of Conditionals focused on a single task on the layout. Each
+      Conditional may be viewed as a statement of the form:</p>
 
-      <div style="margin-left: 2em;"><p><code>if (logical expression) then
-      (action).</code></p></div>
-
-      The "logical expression" part of a Conditional tests the state of a group
-      of user-specified conditions on the layout, for example, whether certain
-      turnouts are closed or thrown, or whether a block is occupied. The
-      "action" part of the Conditional specifies what action is to be taken if
-      the state of the logical expression changes.
-
-      <p>The Logix Table lists all currently defined Logix by their
-      System Name and User Name.</p>
+      <div style="margin-left: 2em;">
+        <p><code>if (logical expression) then (action).</code>
+        </p>
+      </div>
+      The "logical expression" part of a Conditional tests the state of a group of user-specified
+      conditions on the layout, for example, whether certain turnouts are closed or thrown, or
+      whether a block is occupied. The "action" part of the Conditional specifies what action is to
+      be taken if the state of the logical expression changes.
+      <p>The Logix Table lists all currently defined Logix by their System Name and User Name.</p>
 
       <h2>Columns in the Logix Table</h2>
-      <p>You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a
-      column title.</p>
-      <p>The last column of the table provides four things you can
-      do with a Logix: Edit it, Browse it, Duplicate it, or Delete
-      it. Simply clicking <strong>Select</strong> will drop down a menu with the
-      choices: <strong>Edit</strong>, <strong>Browse</strong>,
-      <strong>Copy</strong>, <strong>Delete</strong>.</p>
+
+      <p>You may change the order of the columns by dragging their titles, and sort the rows by
+      clicking one of the sort triangles next to a column title.</p>
+
+      <p>The last column of the table provides four things you can do with a Logix: Edit it, Browse
+      it, Duplicate it, or Delete it. Simply clicking <strong>Select</strong> will drop down a menu
+      with the choices: <strong>Edit</strong>, <strong>Browse</strong>, <strong>Copy</strong>,
+      <strong>Delete</strong>.</p>
+
       <ul>
-        <li>
-        Selecting <strong>Edit</strong> will bring up the Edit Logix window
-        which provides a way to edit a Logix and its Conditionals. See
-        <a href="../conditional/ConditionalListEditor.shtml">List Editor</a> or
-        <a href="../conditional/ConditionalTreeEditor.shtml">Tree Editor</a>
-        help pages for more information on creating and editing Logix
-        Conditionals.</li>
-        <li>
-        Selecting <strong>Browse</strong> will bring up the Conditional Browser
-        window. The window provides a summary view of the Conditionals
-        and their definitions in the Logix.  The values in brackets indicate
-        the current state and for conditional variables, whether it acts as
-        a trigger.
-        When you are done, close the window.
-        <span class="since">since 4.7.3</span><br>
-        <a href="images/ConditionalBrowser.png">
-        <img src="images/ConditionalBrowser.png"
-        alt="Logix Browser Window" height="296" width="562">
-        </a>
+        <li>Selecting <strong>Edit</strong> will bring up the Edit Logix window which provides a
+        way to edit a Logix and its Conditionals. See <a href=
+        "../conditional/ConditionalListEditor.shtml">List Editor</a> or <a href=
+        "../conditional/ConditionalTreeEditor.shtml">Tree Editor</a> help pages for more
+        information on creating and editing Logix Conditionals.
         </li>
-        <li>
-        Selecting <strong>Copy</strong> will bring up windows that allow you to
-        make a new copy of Logix and its Conditionals or to copy its
-        Conditionals into an existing Logix. See the
-        <a href="../conditional/ConditionalCopy.shtml">Conditional Copy</a>
-        help page for information on copying Logix Conditionals.</li>
-        <li>
-        Selecting <strong>Delete</strong> will delete the Logix and its
-        Conditionals.</li>
+
+        <li>Selecting <strong>Browse</strong> will bring up the Conditional Browser window. The
+        window provides a summary view of the Conditionals and their definitions in the Logix. The
+        values in brackets indicate the current state and for conditional variables, whether it
+        acts as a trigger. When you are done, close the window. <span class="since">since
+        4.7.3</span><br>
+          <a href="images/ConditionalBrowser.png"><img src="images/ConditionalBrowser.png" alt=
+          "Logix Browser Window" height="296" width="562"></a>
+        </li>
+
+        <li>Selecting <strong>Copy</strong> will bring up windows that allow you to make a new copy
+        of Logix and its Conditionals or to copy its Conditionals into an existing Logix. See the
+        <a href="../conditional/ConditionalCopy.shtml">Conditional Copy</a> help page for
+        information on copying Logix Conditionals.
+        </li>
+
+        <li>Selecting <strong>Delete</strong> will delete the Logix and its Conditionals.</li>
       </ul>
 
-      <p>The <strong>Enabled</strong> column allows you to enable (checked)
-      or disable (unchecked) a Logix. A Logix does not have a state as many
-      JMRI entities do. A Logix does have the capability of being "enabled" or
-      "disabled". When a Logix is not enabled, the logical expressions of
-      its Conditionals are still evaluated, but the actions specified in the
-      Conditionals are not taken. When a Logix is enabled after having been
-      disabled, its Conditionals are recalculated and appropriate
-      actions taken.</p>
+      <p>The <strong>Enabled</strong> column allows you to enable (checked) or disable (unchecked)
+      a Logix. A Logix does not have a state as many JMRI entities do. A Logix does have the
+      capability of being "enabled" or "disabled". When a Logix is not enabled, the logical
+      expressions of its Conditionals are still evaluated, but the actions specified in the
+      Conditionals are not taken. When a Logix is enabled after having been disabled, its
+      Conditionals are recalculated and appropriate actions taken.</p>
 
       <h2>Creating a Logix</h2>
 
-      <p>To create a new Logix, click the <strong>Add...</strong> button at
-      the bottom of the Logix Table. This will bring up a "Create
-      Logix" pane. Entering a System Name and optionally a User
-      Name, then clicking <strong>Create Logix</strong>, will create the
-      Logix, and bring up the Edit Logix window. Once a Logix is
-      created, its System Name cannot be changed. Its User Name,
-      however, may be changed in either the Logix Table or the Edit
-      Logix window. A new User Name may be any useful text,
-      provided the new User Name was not already assigned to
-      another Logix. (See also the <a href=
-      "LogixAddEdit.shtml">separate help page on adding Logix</a>
-      and a <a href=
-      "../../../../html/tools/Logix.shtml#start">step-by-step
-      guide</a>.)</p>
+      <p>To create a new Logix, click the <strong>Add...</strong> button at the bottom of the Logix
+      Table. This will bring up a "Create Logix" pane. Entering a System Name and optionally a User
+      Name, then clicking <strong>Create Logix</strong>, will create the Logix, and bring up the
+      Edit Logix window. Once a Logix is created, its System Name cannot be changed. Its User Name,
+      however, may be changed in either the Logix Table or the Edit Logix window. A new User Name
+      may be any useful text, provided the new User Name was not already assigned to another Logix.
+      (See also the <a href="LogixAddEdit.shtml">separate help page on adding Logix</a> and a
+      <a href="../../../../html/tools/Logix.shtml#start">step-by-step guide</a>.)</p>
 
       <h2>Logix Table Menu</h2>
 
-      <p>The <strong>File</strong> menu at the top of the Logix Table
-      provides for printing this table and for storing the Logixs
-      and their Conditionals in a layout configuration file.
-      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
-      Loading and Storing Your Work</a>.</p>
+      <p>The <strong>File</strong> menu at the top of the Logix Table provides for printing this
+      table and for storing the Logixs and their Conditionals in a layout configuration file. For
+      details, see <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your
+      Work</a>.</p>
+      <a id="logixOptions"></a>
+      <p>The <strong>Options</strong> menu has 3 sections.<br></p>
 
-      <a name="logixOptions" id="logixOptions"></a>
-      <p>The <strong>Options</strong> menu has 3 sections.<br>
       <div style="margin-left: 2em">
-      <a href="images/LogixOptions.png">
-      <img src="images/LogixOptions.png"
-      alt="Logix Options Menu" height="186" width="262">
-      </a>
+        <a href="images/LogixOptions.png"><img src="images/LogixOptions.png" alt=
+        "Logix Options Menu" height="186" width="262"></a>
       </div>
-      <p>The first section is used to <strong>Enable</strong> or
-      <strong>Disable</strong> all of the Logix definitions.<br>
-      <span class="since">since 4.7.3</span> The second section is used
-      to select one of three methods for entering item names for the Logix
-      Conditional Variables and Actions:</p>
+
+      <p>The first section is used to <strong>Enable</strong> or <strong>Disable</strong> all of
+      the Logix definitions.<br>
+      <span class="since">since 4.7.3</span> The second section is used to select one of three
+      methods for entering item names for the Logix Conditional Variables and Actions:</p>
+
       <ul>
-        <li>Traditional Pick Lists, the default method, uses a text
-          field where the system or user name is entered, such as a
-          turnout or sensor.  This method also provides a Pick List window
-          with tabs for each type of object.  When an object is selected,
-          such as a sensor, the appropriate Pick List tab is automatically selected.<br>
-          Drag a name from the pick list and drop it on the name field.</li>
-        <li>The Single Pick Lists method also uses a text field, but the Pick
-          List only displays the names for the current object, such
-          as sensors.  Clicking on a name in the Pick List will
-          automatically copy the name to the text field.</li>
-        <li>The Combo Name Box method changes the text field to a drop
-          down combo box. Click and select an item from the list.</li>
+        <li>Traditional Pick Lists, the default method, uses a text field where the system or user
+        name is entered, such as a turnout or sensor. This method also provides a Pick List window
+        with tabs for each type of object. When an object is selected, such as a sensor, the
+        appropriate Pick List tab is automatically selected.<br>
+        Drag a name from the pick list and drop it on the name field.</li>
+
+        <li>The Single Pick Lists method also uses a text field, but the Pick List only displays
+        the names for the current object, such as sensors. Clicking on a name in the Pick List will
+        automatically copy the name to the text field.</li>
+
+        <li>The Combo Name Box method changes the text field to a drop down combo box. Click and
+        select an item from the list.</li>
       </ul>
-      <p><span class="since">since 4.9.2</span> The third section is used to select
-      the Conditional Editor.</p>
+
+      <p><span class="since">since 4.9.2</span> The third section is used to select the Conditional
+      Editor.</p>
+
       <ul>
-        <li>List Conditional Editor - This is the traditional editor that opens
-        multiple windows depending on the current activity.  This is the default
-        selection. See
-        <a href="../conditional/ConditionalListEditor.shtml"> List Editor</a>
-        for detail information.</li>
-        <li>Tree Conditional Editor -This is a single window editor that uses
-        a tree structure to navigate the Conditional data for a Logix.  See
-        <a href="../conditional/ConditionalTreeEditor.shtml"> Tree Editor</a>
-        for detail information.
-          <a href="images/TreeEditor.png">
-          <img src="images/TreeEditor.png"
-          alt="Conditional Tree Editor" height="241" width="576">
-          </a></li>
+        <li>List Conditional Editor - This is the traditional editor that opens multiple windows
+        depending on the current activity. This is the default selection. See <a href=
+        "../conditional/ConditionalListEditor.shtml">List Editor</a> for detail information.
+        </li>
+
+        <li>Tree Conditional Editor -This is a single window editor that uses a tree structure to
+        navigate the Conditional data for a Logix. See <a href=
+        "../conditional/ConditionalTreeEditor.shtml">Tree Editor</a> for detail information.
+        <a href="images/TreeEditor.png"><img src="images/TreeEditor.png" alt=
+        "Conditional Tree Editor" height="241" width="576"></a>
+        </li>
       </ul>
 
       <p>The <strong>Tools</strong> menu has 5 items:</p>
+
       <ul>
-        <li>Open PickList Tables - Opens the tabbed Pick List tables
-          as described above for the first method.</li>
-        <li>Find Orphaned Items - Identify standard items, such as turnouts,
-          that have been defined but never used.
-        </li>
+        <li>Open PickList Tables - Opens the tabbed Pick List tables as described above for the
+        first method.</li>
+
+        <li>Find Orphaned Items - Identify standard items, such as turnouts, that have been defined
+        but never used.</li>
+
         <li>Find Empty Conditionals</li>
-        <li>Find Cross References - Create a list of places where an
-          item, such as a sensor, are used.
-        </li>
-        <li>Conditional Variable References - Create a list of conditionals
-          that are referenced by other conditonals. <span class="since">since 4.7.4</span><br>
-          <a href="images/VariableReferences.png">
-          <img src="images/VariableReferences.png"
-          alt="Variable Reference Window" height="320" width="339">
-          </a>
+
+        <li>Find Cross References - Create a list of places where an item, such as a sensor, are
+        used.</li>
+
+        <li>Conditional Variable References - Create a list of conditionals that are referenced by
+        other conditonals. <span class="since">since 4.7.4</span><br>
+          <a href="images/VariableReferences.png"><img src="images/VariableReferences.png" alt=
+          "Variable Reference Window" height="320" width="339"></a>
         </li>
       </ul>
 
-      <p>For more information, consult the <a href=
-      "../../../../html/tools/Logix.shtml">main Logix
+      <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">main Logix
       documentation</a>.</p>
 
       <h2>Logix Documentation Pages Logically Listed</h2>
 
-      <p>
-        Logix documentation is divided into eight different help pages.  While these are referenced via links in various places,
-        not all are easy to find (perhaps three links down).  They are additionally listed here for convenience.
-      </p>
+      <p>Logix documentation is divided into eight different help pages. While these are referenced
+      via links in various places, not all are easy to find (perhaps three links down). They are
+      additionally listed here for convenience.</p>
 
       <ul>
-        <li><a href="../../../../html/tools/Logix.shtml">Main Logix description and explanation</a></li>
+        <li>
+          <a href="../../../../html/tools/Logix.shtml">Main Logix description and explanation</a>
+        </li>
 
-        <li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+        <li>
+          <a href="../../../../html/tools/Logix.shtml#notes">FAQ</a>
+        </li>
 
-        <li><a href="LogixTable.shtml">Description of Logix Table contents and usage</a> [this page]</li>
+        <li>
+          <a href="LogixTable.shtml">Description of Logix Table contents and usage</a> [this page]
+        </li>
 
-        <li><a href="LogixAddEdit.shtml">Logix Table add and edit action description</a></li>
+        <li>
+          <a href="LogixAddEdit.shtml">Logix Table add and edit action description</a>
+        </li>
 
-        <li><a href="../conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals state variables and actions</a></li>
+        <li>
+          <a href="../conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals
+          state variables and actions</a>
+        </li>
 
-        <li><a href="../conditional/ConditionalListEditor.shtml">Logix conditionals list editor instructions</a></li>
+        <li>
+          <a href="../conditional/ConditionalListEditor.shtml">Logix conditionals list editor
+          instructions</a>
+        </li>
 
-        <li><a href="../conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor instructions</a></li>
+        <li>
+          <a href="../conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor
+          instructions</a>
+        </li>
 
-        <li><a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a></li>
-
+        <li>
+          <a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a>
+        </li>
       </ul>
-
-
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -3,110 +3,76 @@
 <!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <title>JMRI: Outil Moniteur M&Atilde;&copy;moire</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Outil Moniteur MÃ©moire</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-  Memory Monitor Tool
-   Memory Monitor Tool <!--#include virtual="/Header.shtml" -->
+  Memory Monitor Tool Memory Monitor Tool <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>JMRI: Outil Moniteur de M&Atilde;&copy;moire</h1><a href=
-      "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
-      width="194" height="56" align="right"></a> L'Outil Moniteur
-      de M&Atilde;&copy;moire vous permet de voir combien de
-      m&Atilde;&copy;moire JMRI utilise dans votre ordinateur.
-
-      <p>Il ya trois colonnes &Atilde; l'&Atilde;&copy;cran en
-      haut:</p>
+      <h1>JMRI: Outil Moniteur de MÃ©moire</h1>
+      <a href="MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg" width="194" height="56"
+      align="right" alt=""></a> L'Outil Moniteur de MÃ©moire vous permet de voir combien de
+      mÃ©moire JMRI utilise dans votre ordinateur.
+      <p>Il ya trois colonnes Ã l'Ã©cran en haut:</p>
 
       <ul>
-        <li>"Mise &Atilde; Jour" - : met une nouvelle
-        s&Atilde;&copy;rie de valeurs dans l'affichage</li>
+        <li>"Mise Ã Jour" - : met une nouvelle sÃ©rie de valeurs dans l'affichage</li>
 
-        <li>&Acirc;&laquo;Recueillir la
-        m&Atilde;&copy;moire&Acirc;&raquo; - r&Atilde;&copy;duire
-        la quantit&Atilde;&copy; de m&Atilde;&copy;moire
-        utilis&Atilde;&copy;e au minimum possible en demandant
-        &Atilde; Java d'ex&Atilde;&copy;cuter un nettoyage de
-        cMemory Monitor Toolollection</li>
+        <li>Â«Recueillir la mÃ©moireÂ» - rÃ©duire la quantitÃ© de mÃ©moire utilisÃ©e au minimum
+        possible en demandant Ã Java d'exÃ©cuter un nettoyage de cMemory Monitor Toolollection</li>
 
-        <li>"Test" - Ex&Atilde;&copy;cuter un test de l'allocation
-        de m&Atilde;&copy;moire et processus de collecte (pas
-        n&Atilde;&copy;cessaire pour les utilisateurs
-        r&Atilde;&copy;guliers)</li>
+        <li>"Test" - ExÃ©cuter un test de l'allocation de mÃ©moire et processus de collecte (pas
+        nÃ©cessaire pour les utilisateurs rÃ©guliers)</li>
       </ul>
 
-      <p>La partie sup&Atilde;&copy;rieure affiche des informations
-      sur la m&Atilde;&copy;moire. Chaque fois que vous appuyez sur
-      le bouton "Mise &Atilde; Jour", la ligne de fond obtient de
-      nouvelles valeurs et les valeurs anciennes sont
-      d&Atilde;&copy;plac&Atilde;&copy;s vers le haut.</p>
+      <p>La partie supÃ©rieure affiche des informations sur la mÃ©moire. Chaque fois que vous
+      appuyez sur le bouton "Mise Ã Jour", la ligne de fond obtient de nouvelles valeurs et les
+      valeurs anciennes sont dÃ©placÃ©s vers le haut.</p>
 
       <p>Memory Monitor Tool</p>
 
       <ul>
-        <li>La colonne de gauche est la quantit&Atilde;&copy; de
-        m&Atilde;&copy;moire actuellement en usage.</li>
+        <li>La colonne de gauche est la quantitÃ© de mÃ©moire actuellement en usage.</li>
 
-        <li>La colonne du milieu montre la quantit&Atilde;&copy; de
-        m&Atilde;&copy;moire actuellement affect&Atilde;&copy;es
-        &Atilde; JMRI, mais que vous n'utilisez pas. Celle-ci est
-        libre pour une utilisation ult&Atilde;&copy;rieure.</li>
+        <li>La colonne du milieu montre la quantitÃ© de mÃ©moire actuellement affectÃ©es Ã JMRI,
+        mais que vous n'utilisez pas. Celle-ci est libre pour une utilisation ultÃ©rieure.</li>
 
-        <li>La colonne de droite est la quantit&Atilde;&copy;
-        totale de m&Atilde;&copy;moire disponible pour JMRI.</li>
-      </ul>Au sommet de la colonne de gauche, la
-      m&Atilde;&copy;moire maximum qui peut &Atilde;&ordf;tre
-      disponible pour JMRI est affich&Atilde;&copy;e.The Memory
-      Monitor Tool lets you see how much memory JMRI is using in
-      your computer.
-
+        <li>La colonne de droite est la quantitÃ© totale de mÃ©moire disponible pour JMRI.</li>
+      </ul>
+      Au sommet de la colonne de gauche, la mÃ©moire maximum qui peut Ãªtre disponible pour JMRI
+      est affichÃ©e.The Memory Monitor Tool lets you see how much memory JMRI is using in your
+      computer.
       <p>There are three columns in the display at the top:</p>
 
       <ul>
-        <li>"Update" - puts a new series of values in the
-        display</li>
+        <li>"Update" - puts a new series of values in the display</li>
 
-        <li>"Collect Memory" - reduce the amount of used memory to
-        the minimum possible by asking Java to run a garbage
-        collection</li>
+        <li>"Collect Memory" - reduce the amount of used memory to the minimum possible by asking
+        Java to run a garbage collection</li>
 
-        <li>"Test" - Run a test of the memory allocation and
-        collection process (not needed by regular users)</li>
+        <li>"Test" - Run a test of the memory allocation and collection process (not needed by
+        regular users)</li>
       </ul>
 
-      <p>The upper part displays information about memory. Each
-      time you press the "Update" button, the bottom line gets new
-      values and the older values are moved up.</p>
+      <p>The upper part displays information about memory. Each time you press the "Update" button,
+      the bottom line gets new values and the older values are moved up.</p>
 
       <ul>
-        <li>The left column is the amount of memory currently in
-        use.</li>
+        <li>The left column is the amount of memory currently in use.</li>
 
-        <li>The middle column shows the amount of memory currently
-        allocated to JMRI, but not in use. This is free for later
-        use.</li>
+        <li>The middle column shows the amount of memory currently allocated to JMRI, but not in
+        use. This is free for later use.</li>
 
-        <li>The right column is the total memory available to
-        JMRI.</li>
+        <li>The right column is the total memory available to JMRI.</li>
       </ul>
-      At the top of the left column, the maximum memory that
-      can be available to JMRI is displayed.
-
+      At the top of the left column, the maximum memory that can be available to JMRI is displayed.
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

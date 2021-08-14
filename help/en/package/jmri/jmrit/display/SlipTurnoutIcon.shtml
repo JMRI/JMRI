@@ -1,23 +1,20 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SlipTurnout Icon Editor Help</title>
   <meta name="author" content="Kevin Dickerson">
-  <meta name="keywords" content="JMRI help Panel Editor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Panel Editor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-    <div id="mainContent class="no-sidebar"">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Slip Turnout Editor</h1>
 
-      <p>The slip turnout editor handles turnouts that require more
-      than one accessory (turnout) address and have more than two
-      routes through the turnout.</p>
+      <p>The slip turnout editor handles turnouts that require more than one accessory (turnout)
+      address and have more than two routes through the turnout.</p>
 
       <p>This includes ..</p>
 
@@ -31,94 +28,78 @@
         <li>Scissor or Double Crossings</li>
       </ul>
 
-      <p>The way icons are changed in the SlipTurnout Icon Editor
-      is the same as they are changed in the other Icon Editors.
-      The <b>Change Icon...</b>button and the Catalog function
-      identically with other Icon Editors. The <b>Find Icons</b>
-      menu and its items are also identical.</p>
+      <p>The way icons are changed in the SlipTurnout Icon Editor is the same as they are changed
+      in the other Icon Editors. The <strong>Change Icon...</strong>button and the Catalog function
+      identically with other Icon Editors. The <strong>Find Icons</strong> menu and its items are
+      also identical.</p>
 
-      <p>See the <a href="IconAdder.shtml">Icon Editors page</a>
-      and the <a href="../catalog/ImageIndex.shtml">Image Index
-      Editor page</a> for details on their use.</p>
+      <p>See the <a href="IconAdder.shtml">Icon Editors page</a> and the <a href=
+      "../catalog/ImageIndex.shtml">Image Index Editor page</a> for details on their use.</p>
 
       <h2>Contents of the SlipTurnout Icon Editor</h2>
 
-      <p>Each type of "Slip" uses a fixed number of turnouts and
-      routes. Typically each "Slip" uses two turnouts and has
-      between three and four different routes.</p>
+      <p>Each type of "Slip" uses a fixed number of turnouts and routes. Typically each "Slip" uses
+      two turnouts and has between three and four different routes.</p>
 
-      <p>Each slip must have all the turnouts required added, when
-      all the turnouts are assigned, the <b>Add to Panel</b> button
-      will become active and it can be pressed to install the Slip
-      into the Panel.</p>
+      <p>Each slip must have all the turnouts required added, when all the turnouts are assigned,
+      the <strong>Add to Panel</strong> button will become active and it can be pressed to install
+      the Slip into the Panel.</p>
 
-      <p>To select the type of Slip complex that is being used, use
-      the radio buttons at the top of the window.</p>
+      <p>To select the type of Slip complex that is being used, use the radio buttons at the top of
+      the window.</p>
 
-      <p><img src="images/SlipOptions.png"></p>
+      <p><img src="images/SlipOptions.png" alt="double slip options">
+      </p>
 
-      <p>Details about how each type of slip should be configured
-      and operate can be found below.</p>
+      <p>Details about how each type of slip should be configured and operate can be found
+      below.</p>
 
-      <h3>Double Slip</h3><img src="images/DoubleSlip.png" align=
-      "right">
+      <h3>Double Slip</h3>
+      <img src="images/DoubleSlip.png" class="floatRight" alt="double slip">
+      <p>The Double Slip, uses a pair of turnouts to set the four possible routes that are
+      available. Simply drag a row from the Turnout table to place into the corresponding West or
+      East undefined position on the slip. When the turnout is dropped on to the label, it will
+      display the turnout name.</p>
 
-      <p>The Double Slip, uses a pair of turnouts to set the four
-      possible routes that are available. Simply drag a row from
-      the Turnout table to place into the corresponding West or
-      East undefined position on the slip. When the turnout is
-      dropped on to the label, it will display the turnout
-      name.</p>
+      <h3>Single Slip</h3>
+      <img src="images/SingleSlip.png" class="floatRight" alt="single slip">
+      <p>The Single Slip works in very much the same way as the Double Slip in that it requires a
+      pair of turnouts to be selected for the West and East side of the Slip. However it has a
+      further option, which is to select which way the slip routes.</p>
+      <img src="images/SingleOptions.png" alt="single slip options">
+      <p>Use the radio button to select if the slip takes the upper or lower route, making the
+      change will automatically change the icon in the slip position to suit.</p>
 
-      <h3>Single Slip</h3><img src="images/SingleSlip.png" align=
-      "right">
-
-      <p>The Single Slip works in very much the same way as the
-      Double Slip in that it requires a pair of turnouts to be
-      selected for the West and East side of the Slip. However it
-      has a further option, which is to select which way the slip
-      routes.</p><img src="images/SingleOptions.png">
-
-      <p>Use the radio button to select if the slip takes the upper
-      or lower route, making the change will automatically change
-      the icon in the slip position to suit.</p>
-
-      <h3>Three Way Turnout</h3><img src="images/ThreeWay.png"
-      align="right">
-
-      <p>With the Three Way Turnout, you require a pair of
-      turnouts, one for the first throat, then another for the
-      second.</p><img src="images/ThreeWayOptions.png">
-
-      <p>You also need to determine which exit the first throat
-      turnout relates to.</p>
+      <h3>Three Way Turnout</h3>
+      <img src="images/ThreeWay.png" class="floatRight" alt="three way turnout">
+      <p>With the Three Way Turnout, you require a pair of turnouts, one for the first throat, then
+      another for the second.</p>
+      <img src="images/ThreeWayOptions.png" alt="three way options">
+      <p>You also need to determine which exit the first throat turnout relates to.</p>
 
       <h3>Scissor (Double) Crossing</h3>
 
-      <p>The Scissor crossing can use either a pair of turnout
-      address with diagonally opposite turnouts being wired
-      together as one. Or it can use four turnout addresses, one
-      for each corner of the scissor.</p>
+      <p>The Scissor crossing can use either a pair of turnout address with diagonally opposite
+      turnouts being wired together as one. Or it can use four turnout addresses, one for each
+      corner of the scissor.</p>
 
-      <p><b>Note :</b> The Scissor Crossing Icon does not allow for
-      all routes to be set as crossing, this mainly due to the fact
-      that in many instance setting a scissor crossing to this
-      state will cause a short circuit. <img src=
-      "images/ScissorBy2.png" align="right"></p>
+      <p><strong>Note :</strong> The Scissor Crossing Icon does not allow for all routes to be set
+      as crossing, this mainly due to the fact that in many instance setting a scissor crossing to
+      this state will cause a short circuit. <img src="images/ScissorBy2.png" class="floatRight"
+      alt="crossover"></p>
 
-      <p>When a pair of turnouts is used, you place the turnout
-      that is controlling the Upper West to Lower East route into
-      the Right Hand Crossing panel, and the turnout address
-      controlling the Lower West to Upper East route into the Left
-      Hand Crossing Panel. <img src="images/ScissorBy4.png" align=
-      "right"></p>
+      <p>When a pair of turnouts is used, you place the turnout that is controlling the Upper West
+      to Lower East route into the Right Hand Crossing panel, and the turnout address controlling
+      the Lower West to Upper East route into the Left Hand Crossing Panel. <img src=
+      "images/ScissorBy4.png" class="floatRight" alt="double crossover"></p>
 
-      <p>When four turnouts are used, you need to place the four
-      turnouts from the turnout table to the corresponding
-      locations in the panel.</p>
+      <p>When four turnouts are used, you need to place the four turnouts from the turnout table to
+      the corresponding locations in the panel.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

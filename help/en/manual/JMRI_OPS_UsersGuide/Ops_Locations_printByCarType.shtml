@@ -1,48 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Operations-Locations Print by Car</title><!--#include virtual="/Style.shtml" -->
+  <!-- OperationsPro Styles -->
 
-  <title>Operations-Locations Print by Car</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    <div id="mainContent">
+      <h1 id="Top">Using JMRI® to Operate Trains</h1>
 
       <h2>Print Locations Servicing Car Types Window</h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_Locations_byCar.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>The Modify Locations by Car Type Tool menu, opens the
-      Print Locations Servicing Car Types open your system printer
-      dialog and prints output as shown. Locations are places on
-      your railroad that trains visit to pickup or drop off cars
-      and engines.</p>
+      <p>The Modify Locations by Car Type Tool menu, opens the Print Locations Servicing Car Types
+      open your system printer dialog and prints output as shown. Locations are places on your
+      railroad that trains visit to pickup or drop off cars and engines.</p>
 
-      <div style="margin-left: 40px;">
-        <img src="images/Ops_Location_Print_carsByType.png" alt=
-        "print" height="777" width="710">
+      <div style="margin-left: 40px;"><img src="images/Ops_Location_Print_carsByType.png" alt=
+      "print" height="777" width="710">
       </div>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_Locations_byCar.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

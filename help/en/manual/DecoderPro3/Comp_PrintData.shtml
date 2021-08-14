@@ -1,75 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Comprehensive Programmer</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Comprehensive Programmer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Printing Decoder Data</h2>
 
-      <div align="right">
-        <p><a href="Comp_ManfSpecific.shtml">Previous</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_ManfSpecific.shtml">Previous</a>
+        </p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p><strong>Print Data:</strong> DecoderPro provides the
-      capability to print out a full list of the decoder CV data or
-      selected data. To print, select the <strong>File</strong>
-      menu of any Comprehensive Programmer Pane, then select the
-      Print or Print Preview options.</p>
+      <p><strong>Print Data:</strong> DecoderPro provides the capability to print out a full list
+      of the decoder CV data or selected data. To print, select the <strong>File</strong> menu of
+      any Comprehensive Programmer Pane, then select the Print or Print Preview options.</p>
 
       <ul>
-        <li><strong>Print all..., Preview all...</strong> Displays
-        <strong>Select Items to Print</strong> dialog box</li>
+        <li><strong>Print all..., Preview all...</strong> Displays <strong>Select Items to
+        Print</strong> dialog box</li>
 
         <li style="list-style: none">
-          <p><img src="images/Comp_09d_PrintData.png" width="254"
-          height="459" alt="print items"><br>
-          Select each or all of the decoder items that you want to
-          print</p>
+          <p><img src="images/Comp_09d_PrintData.png" width="254" height="459" alt=
+          "print items"><br>
+          Select each or all of the decoder items that you want to print</p>
 
-          <p>Click <input type="button" name="button" id="button"
-          value="Okay"> to print then Print dialog for your
-          computer system is displayed.</p>
+          <p>Click <input type="button" name="button" id="button" value="Okay"> to print then Print
+          dialog for your computer system is displayed.</p>
         </li>
 
-        <li><strong>Print CVs...,Preview CVs..</strong>.Displays
-        <strong>Select Items to Print</strong> Dialog box or
-        Preview screen</li>
+        <li><strong>Print CVs...,Preview CVs..</strong>.Displays <strong>Select Items to
+        Print</strong> Dialog box or Preview screen</li>
       </ul>
 
-      <p>These printouts show the variables by name in each
-      category that is selectected.(as shown on the DecoderPro
-      panes) along with their CV number and Value. A handy
-      reference for the future.</p>
+      <p>These printouts show the variables by name in each category that is selectected.(as shown
+      on the DecoderPro panes) along with their CV number and Value. A handy reference for the
+      future.</p>
 
-      <p>Print preview will look like it's about to print the list,
-      and ask for which printer to use. Don't panic!, that's only
-      to get the preview to work. Go ahead and select the printer
+      <p>Print preview will look like it's about to print the list, and ask for which printer to
+      use. Don't panic!, that's only to get the preview to work. Go ahead and select the printer
       and you'll only get the preview.</p>
 
-      <p><strong>Import Data:</strong> You may import the list from
-      another computer in the PR1 file format. Thus, the Export and
-      Import capability allows you to take the data from one
+      <p><strong>Import Data:</strong> You may import the list from another computer in the PR1
+      file format. Thus, the Export and Import capability allows you to take the data from one
       computer system to another.</p>
 
-      <p><strong>Export Data:</strong> you may export the list as
-      one of several file types :</p>
+      <p><strong>Export Data:</strong> you may export the list as one of several file types :</p>
 
       <ul>
         <li>CSV file... (Comma separated variables)</li>
@@ -79,47 +80,42 @@
         <li>PR1WIN file...</li>
       </ul>
 
-      <p>All are two columns, CV#, and Value in Decimal and
-      Hexadecimal <img src="images/Comp_09_Print_Data.png" width=
-      "333" height="206" alt="print data"><img src=
-      "images/Comp_09_Print_Data01.png" width="673" height="526"
-      alt="print"></p>
+      <p>All are two columns, CV#, and Value in Decimal and Hexadecimal <img src=
+      "images/Comp_09_Print_Data.png" width="333" height="206" alt="print data"><img src=
+      "images/Comp_09_Print_Data01.png" width="673" height="526" alt="print"></p>
 
-      <p>The three images below are samples of the "<b>All</b>"
-      printout from the SD40-2 that has been used as an example in
-      many places in this manual. Click on the page to see a larger
-      image in a new window.</p>
+      <p>The three images below are samples of the "<strong>All</strong>" printout from the SD40-2
+      that has been used as an example in many places in this manual. Click on the page to see a
+      larger image in a new window.</p>
 
-      <div align="center">
-        <a name="Print" id="Print"></a><a href=
-        "Comp_PrintData_a.shtml" target="_blank"><img src=
-        "images/Comp_09a_PrintData.png" alt=
-        "Comprehensive Programmer - Advanced Features" border="5"
-        height="63%" width="25%"></a><a href=
-        "Comp_PrintData_b.shtml" target="_blank"><img src=
-        "images/Comp_09b_PrintData.png" alt=
-        "Comprehensive Programmer - Advanced Features" border="5"
-        height="63%" width="25%"></a><a href=
-        "Comp_PrintData_c.shtml" target="_blank"><img src=
-        "images/Comp_09c_PrintData.png" alt=
-        "Comprehensive Programmer - Advanced Features" border="5"
-        height="63%" width="25%"></a>
+      <div id="Print" class="dp-center">
+        <a href="Comp_PrintData_a.shtml" target="_blank"><img src="images/Comp_09a_PrintData.png"
+        alt="Comprehensive Programmer - Advanced Features" style="border: 2px solid" height="63%"
+        width="25%"></a> <a href="Comp_PrintData_b.shtml" target="_blank"><img src=
+        "images/Comp_09b_PrintData.png" alt="Comprehensive Programmer - Advanced Features" style=
+        "border: 2px solid" height="63%" width="25%"></a> <a href="Comp_PrintData_c.shtml" target=
+        "_blank"><img src="images/Comp_09c_PrintData.png" alt=
+        "Comprehensive Programmer - Advanced Features" style="border: 2px solid" height="63%"
+        width="25%"></a>
       </div>
 
-      <p>OK! That's it! You now know how to use DecoderPro to
-      program your decoders, and document the results.. Now let's
-      run trains!</p>
+      <p>OK! That's it! You now know how to use DecoderPro to program your decoders, and document
+      the results.. Now let's run trains!</p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_ManfSpecific.shtml">Previous</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_ManfSpecific.shtml">Previous</a>
+        </p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

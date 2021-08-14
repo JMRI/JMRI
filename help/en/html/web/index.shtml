@@ -1,68 +1,55 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Web Access</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Web Access</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI Web Access</h1>
 
       <p>JMRI can provide web access to your model railroad.</p>
 
-      <h2><a id="Start" name="Start">Starting Web Access</a></h2>
+      <h2 id="Start">Starting Web Access</h2>
 
-      <p>Before attempting to use web access, please make sure that
-      the basic configuration of your JMRI application is working.
-      Check that you can properly communicate with and operate your
+      <p>Before attempting to use web access, please make sure that the basic configuration of your
+      JMRI application is working. Check that you can properly communicate with and operate your
       layout.</p>
 
-      <p>Start web access by selecting <strong>Tools &rArr; Servers &rArr; Start JMRI Web
+      <p>Start web access by selecting <strong>Tools ⇒ Servers ⇒ Start JMRI Web
       Server</strong>.</p>
 
       <p>Test the connection:</p>
 
       <ul>
-        <li>If you're using a Bonjour/Zeroconf-enabled web browser
-        like Safari you should see a "My JMRI Railroad" web site in
-        the "Bonjour" tab.</li>
+        <li>If you're using a Bonjour/Zeroconf-enabled web browser like Safari you should see a "My
+        JMRI Railroad" web site in the "Bonjour" tab.</li>
 
-        <li>Otherwise, enter the starting URL, which will be
-        something like "http://192.168.1.7:12080" (or if you're
-        browsing on the same computer right now, <a href=
-        "http://localhost:12080">click here</a>. The default port
-        is 12080, but this can be changed in Web Server
-        Preferences. You should see a welcome screen, which serves
-        as the home page for the JMRI web server. This page (by
-        default) contains a number of useful examples and
-        links.</li>
+        <li>Otherwise, enter the starting URL, which will be something like
+        "http://192.168.1.7:12080" (or if you're browsing on the same computer right now,
+          <a href="http://localhost:12080">click here</a>. The default port is 12080, but this can
+          be changed in Web Server Preferences. You should see a welcome screen, which serves as
+          the home page for the JMRI web server. This page (by default) contains a number of useful
+          examples and links.
+        </li>
       </ul>
 
-      <h2><a id="Configure" name="Configure">Configure Web
-      Access</a></h2>
+      <h2 id="Configure">Configure Web Access</h2>
 
       <h3>Automatically start</h3>
 
-      <p>JMRI can automatically start the web server when
-      launched.</p>
+      <p>JMRI can automatically start the web server when launched.</p>
 
-      <p>Open the <a href=
-      "../../package/apps/TabbedPreferences.shtml">Preferences
-      Window</a> to configure JMRI to start the server each time
-      you start the program.</p>
+      <p>Open the <a href="../../package/apps/TabbedPreferences.shtml">Preferences Window</a> to
+      configure JMRI to start the server each time you start the program.</p>
 
-      <p>Select the "Start Up" tab, click "Add &#9662;", and select
-      "Perform action...". In the new selection box that appears,
-      select "Start JMRI Web Server". Don't forget to save your
+      <p>Select the "Start Up" tab, click "Add ▾", and select "Perform action...". In the new
+      selection box that appears, select "Start JMRI Web Server". Don't forget to save your
       changes!</p>
 
       <h2>Web Server Preferences</h2>
@@ -76,276 +63,250 @@
           <dl>
             <dt>Port#</dt>
 
-            <dd>The port the web server listens for HTTP requests.
-            This defaults to 12080. You may need to change this
-            value if another program expects to be listening on
-            this port as well. Some Anti-Virus services use this
-            port.</dd>
+            <dd>The port the web server listens for HTTP requests. This defaults to 12080. You may
+            need to change this value if another program expects to be listening on this port as
+            well. Some Anti-Virus services use this port.</dd>
 
             <dt>Disable power control in menus</dt>
 
-            <dd>The menus on many of the JMRI web pages include a
-            layout power button. You can disable this button to
-            ensure that users of the web site can see the power
-            status, but cannot turn off or turn on layout
-            power.</dd>
+            <dd>The menus on many of the JMRI web pages include a layout power button. You can
+            disable this button to ensure that users of the web site can see the power status, but
+            cannot turn off or turn on layout power.</dd>
 
             <dt>Start automatically with application</dt>
 
-            <dd>This will add the action "Start JMRI Web Server"
-            to your Start Up Preferences.</dd>
+            <dd>This will add the action "Start JMRI Web Server" to your Start Up Preferences.</dd>
           </dl>
         </dd>
 
-        <dt><a href="FrameServlet.shtml">Frame Server</a></dt>
+        <dt>
+          <a href="FrameServlet.shtml">Frame Server</a>
+        </dt>
 
         <dd>
           <dl>
             <dt>Disable Frames</dt>
 
-            <dd>Disable the frame server. Disabling the frame
-            server disables most other preferences. The frame server
-            is disabled by default.</dd>
+            <dd>Disable the frame server. Disabling the frame server disables most other
+            preferences. The frame server is disabled by default.</dd>
 
             <dt>Use Panels Instead</dt>
 
-            <dd>If the frame server is disabled, requests for
-            frames can be redirected to <a href=
-            "PanelServlet.shtml">panels</a>.
-            Redirection to panels is enabled by default.</dd>
+            <dd>
+              If the frame server is disabled, requests for frames can be redirected to <a href=
+              "PanelServlet.shtml">panels</a>. Redirection to panels is enabled by default.
+            </dd>
 
             <dt>Click Delay</dt>
 
-            <dd>Wait the specified number of seconds after a click
-            on the window (frame) image before refreshing the
-            image.</dd>
+            <dd>Wait the specified number of seconds after a click on the window (frame) image
+            before refreshing the image.</dd>
 
             <dt>Refresh Delay</dt>
 
-            <dd>The number of seconds before the window image is
-            automatically refreshed.</dd>
+            <dd>The number of seconds before the window image is automatically refreshed.</dd>
 
             <dt>Use Ajax?</dt>
 
-            <dd>Use features that improve performance on modern
-            browsers. Turn off to support obsolete browsers.</dd>
+            <dd>Use features that improve performance on modern browsers. Turn off to support
+            obsolete browsers.</dd>
 
             <dt>Disallowed Frames</dt>
 
-            <dd>A list of windows that will NOT be allowed in the
-            browser.</dd>
+            <dd>A list of windows that will NOT be allowed in the browser.</dd>
           </dl>
         </dd>
       </dl>
 
-      <h2><a id="services" name="services">Services</a></h2>
+      <h2 id="services">Services</h2>
 
       <p>JMRI Web Access provides a number of web services.</p>
 
-      <p>The example links below assume you are using a web
-      browser on the same computer you are running JMRI on and that
-      JMRI is using the default port 12080.<br />
-      To access the web
-      server from another device on your network,
-      determine the IP address of the JMRI computer and use it
-      instead of "localhost". Example: "http://192.168.1.7:12080"</p>
+      <p>The example links below assume you are using a web browser on the same computer you are
+      running JMRI on and that JMRI is using the default port 12080.<br>
+      To access the web server from another device on your network, determine the IP address of the
+      JMRI computer and use it instead of "localhost". Example: "http://192.168.1.7:12080"</p>
 
-      <p>JMRI Web Access home page at <a href=
-      "http://localhost:12080">http://localhost:12080</a> provides
-      direct access to all of the web services. Most JMRI web
-      access pages provide direct access to the <a href=
-      "#panels">panels</a>, <a href="#roster">roster</a>, and
-      <a href="#operations">operations</a> services.</p>
+      <p>JMRI Web Access home page at <a href="http://localhost:12080">http://localhost:12080</a>
+      provides direct access to all of the web services. Most JMRI web access pages provide direct
+      access to the <a href="#panels">panels</a>, <a href="#roster">roster</a>, and <a href=
+      "#operations">operations</a> services.</p>
       <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
 
-      <h3><a id="panels" name="panels"
-      href="PanelServlet.shtml">Panels</a></h3>
+      <h3><a id="panels" href="PanelServlet.shtml">Panels</a>
+      </h3>
       <!-- panelServlet intro -->
 
-      <p>Loaded JMRI panels can be used in a modern web browser on
-      computers, smart phones, and tablets. A list of the loaded
-      panels is at <a href=
-      "http://localhost:12080/panel">http://localhost:12080/panel</a>.
-      <a href="/help/en/html/web/PanelServlet.shtml">(More details)</a></p>
+      <p>Loaded JMRI panels can be used in a modern web browser on computers, smart phones, and
+      tablets. A list of the loaded panels is at <a href=
+      "http://localhost:12080/panel">http://localhost:12080/panel</a>. <a href=
+      "/help/en/html/web/PanelServlet.shtml">(More details)</a></p>
 
-      <h3><a id="roster" name="roster">Roster</a></h3>
+      <h3 id="roster">Roster</h3>
       <!-- rosterServlet intro -->
 
       <p>The web roster at <a href=
-      "http://localhost:12080/roster">http://localhost:12080/roster</a>
-      provides a list of roster entries. Clicking on an entry will
-      open the web throttle for that entry. The Roster page also includes
-      an "Upload Roster Files" button.
-      <a href="/help/en/html/web/RosterServlet.shtml">(More details)</a></p>
+      "http://localhost:12080/roster">http://localhost:12080/roster</a> provides a list of roster
+      entries. Clicking on an entry will open the web throttle for that entry. The Roster page also
+      includes an "Upload Roster Files" button. <a href=
+      "/help/en/html/web/RosterServlet.shtml">(More details)</a></p>
 
-      <h3><a id="throttle" name="throttle">Throttles</a></h3>
+      <h3 id="throttle">Throttles</h3>
       <!-- webThrottle intro -->
 
-      <p>JMRI supports using a modern browser on a smart phone,
-      tablet, or other computer as a throttle device at <a href=
-      "http://localhost:12080/web/webThrottle.html">
-      http://localhost:12080/web/webThrottle.html</a>
-      (see <a href=
-      "../../package/jmri/jmrit/webThrottle/webThrottle.shtml">Web
-      Throttle Help</a>).</p>
+      <p>JMRI supports using a modern browser on a smart phone, tablet, or other computer as a
+      throttle device at <a href=
+      "http://localhost:12080/web/webThrottle.html">http://localhost:12080/web/webThrottle.html</a>
+      (see <a href="../../package/jmri/jmrit/webThrottle/webThrottle.shtml">Web Throttle
+      Help</a>).</p>
 
-      <h3><a id="operations" href="Operations.shtml" name=
-      "operations">Operations</a></h3>
+      <h3><a id="operations" href="Operations.shtml">Operations</a>
+      </h3>
       <!-- operationsServlet intro -->
 
       <p>Operations services at <a href=
-      "http://localhost:12080/operations">http://localhost:12080/operations</a>
-      include Trains, Conductor and Manifest functions.
-      <a href="/help/en/html/web/Operations.shtml">(More details)</a></p>
+      "http://localhost:12080/operations">http://localhost:12080/operations</a> include Trains,
+      Conductor and Manifest functions. <a href="/help/en/html/web/Operations.shtml">(More
+      details)</a></p>
 
-      <h3><a id="tables" name="tables">Tables</a></h3>
+      <h3 id="tables">Tables</h3>
       <!-- operationsServlet intro -->
 
-      <p>Tables services at <a href=
-      "http://localhost:12080/panel">http://localhost:12080/table</a>
-      include Turnouts, Sensors, Routes etc.
-      See <a href="TablesServlet.shtml">Tables Servlet</a> for more information.</p>
+      <p>Tables services at <a href="http://localhost:12080/panel">http://localhost:12080/table</a>
+      include Turnouts, Sensors, Routes etc. See <a href="TablesServlet.shtml">Tables Servlet</a>
+      for more information.</p>
 
-      <h3><a id="frames" name="frames" href="FrameServlet.shtml">Windows</a></h3>
+      <h3><a id="frames" href="FrameServlet.shtml">Windows</a>
+      </h3>
       <!-- frameServlet intro -->
 
-      <p>JMRI can display most <em>already open</em> windows as a
-      somewhat usable image to allow partial remote control of
-      JMRI.</p>
+      <p>JMRI can display most <em>already open</em> windows as a somewhat usable image to allow
+      partial remote control of JMRI.</p>
 
       <p>The list of viewable windows is at <a href=
-      "http://localhost:12080/frame">http://localhost:12080/frame</a>.
-      Please note that not all open windows are viewable. See
-      <a href="FrameServlet.shtml">Window Services</a> for more
+      "http://localhost:12080/frame">http://localhost:12080/frame</a>. Please note that not all
+      open windows are viewable. See <a href="FrameServlet.shtml">Window Services</a> for more
       information.</p>
 
-      <h3><a id="files" name="files">File System</a></h3>
+      <h3 id="files">File System</h3>
       <!-- fileServlet intro -->
 
-      <p>A local web page (HTML file), graphic or text file, or
-      directory listing can be displayed using the appropriate
-      URL.</p>
+      <p>A local web page (HTML file), graphic or text file, or directory listing can be displayed
+      using the appropriate URL.</p>
 
-      <p>Files in your JMRI preferences directory can be accessed
-        via a URL path that starts with "<code>/prefs/</code>": <a href=
+      <p>Files in your JMRI preferences directory can be accessed via a URL path that starts with
+      "<code>/prefs/</code>": <a href=
       "http://localhost:12080/prefs/">http://localhost:12080/prefs/</a></p>
 
-      <p>Files in certain directories in the JMRI program directory
-        can be accessed via a URL path that starts with "<code>/dist/</code>":
-      <a href=
+      <p>Files in certain directories in the JMRI program directory can be accessed via a URL path
+      that starts with "<code>/dist/</code>": <a href=
       "http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
       will reference the index to the help system, while <a href=
       "http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
-      will load a JMRI logo graphic from the resources directory.
-        "<code>/dist/web/</code>" and "<code>/dist/xml/</code>" also work as prefixes.</p>
+      will load a JMRI logo graphic from the resources directory. "<code>/dist/web/</code>" and
+      "<code>/dist/xml/</code>" also work as prefixes.</p>
 
-      <p>Note that if a directory contains a file named
-      <code>index.html</code> it will display the contents of the index.html file
-      instead of listing the directory contents.</p>
+      <p>Note that if a directory contains a file named <code>index.html</code> it will display the
+      contents of the index.html file instead of listing the directory contents.</p>
 
-      <h3><a id="json" href="JsonServlet.shtml" name="json">JSON
-      Protocol</a></h3><!-- JsonServlet intro -->
+      <h3><a id="json" href="JsonServlet.shtml">JSON Protocol</a>
+      </h3>
+      <!-- JsonServlet intro -->
 
-      <p>JMRI provides a JSON Protocol to access and manipulate for
-      a number of JMRI-defined entities. See the <a href=
-      "JsonServlet.shtml">JMRI JSON Protocol</a> for more
+      <p>JMRI provides a JSON Protocol to access and manipulate for a number of JMRI-defined
+      entities. See the <a href="JsonServlet.shtml">JMRI JSON Protocol</a> for more
       information.</p>
 
-      <h2><a id="custom" name="custom">Customizing Web
-      Access</a></h2>
+      <h2 id="custom">Customizing Web Access</h2>
 
-      <p>If you create a directory <code>web</code> in your User
-      Files directory, configuration profile root directory, or
-      settings directory, any file in that directory that has the same
-      name and directory hierarchy as a file in the <code>web</code>
-      directory of the JMRI distribution directory will override
-      the default file used for that purpose. This provides the
-      custom content.</p>
+      <p>If you create a directory <code>web</code> in your User Files directory, configuration
+      profile root directory, or settings directory, any file in that directory that has the same
+      name and directory hierarchy as a file in the <code>web</code> directory of the JMRI
+      distribution directory will override the default file used for that purpose. This provides
+      the custom content.</p>
 
-      <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code>
-      are provided for convenience to make simple appearance and
-      javascript additions and overrides. These files are automatically included
-      in all JMRI web pages, and include instructions for usage.
-      </p>
+      <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code> are provided for
+      convenience to make simple appearance and javascript additions and overrides. These files are
+      automatically included in all JMRI web pages, and include instructions for usage.</p>
 
-      <p>The standard web services use templates in the <code>web/servlet</code>
-      directory. Note that these templates are tightly linked with
-      JMRI. While modifying these templates is the recommended way
-      to customize the web access, care must be taken to ensure
-      modifications do not cause the templates to break entirely.
-      If web access does not work as expected after modifying a
-      template, check the JMRI logs for the cause.</p>
+      <p>The standard web services use templates in the <code>web/servlet</code> directory. Note
+      that these templates are tightly linked with JMRI. While modifying these templates is the
+      recommended way to customize the web access, care must be taken to ensure modifications do
+      not cause the templates to break entirely. If web access does not work as expected after
+      modifying a template, check the JMRI logs for the cause.</p>
 
-      <p>A technical description about the Web Server Package <code>jmri.web.server</code> can be found in the
-        <a href="https://www.jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">Web Server Javadoc</a>.</p>
+      <p>A technical description about the Web Server Package <code>jmri.web.server</code> can be
+      found in the <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">Web Server
+      Javadoc</a>.</p>
 
-      <p>An overview of how Web Server works between JMRI and the web browser, using web.servlet.panel as an example,
-        can be found on <a href="PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
+      <p>An overview of how Web Server works between JMRI and the web browser, using
+      web.servlet.panel as an example, can be found on <a href=
+      "PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
 
-      <h2><a name="redirection" id="redirection">Request
-      Redirection</a></h2>
+      <h2 id="redirection">Request Redirection</h2>
 
-      <p>Some requests are automatically redirected by one of the JMRI web
-          services to ensure that old bookmarks or software can still be used:</p>
+      <p>Some requests are automatically redirected by one of the JMRI web services to ensure that
+      old bookmarks or software can still be used:</p>
 
       <dl>
         <dt>/index.html</dt>
 
-        <dd>Redirects to <code>/</code> since the static HTML root
-        was replaced with a dynamic HTML root.</dd>
+        <dd>Redirects to <code>/</code> since the static HTML root was replaced with a dynamic HTML
+        root.</dd>
 
         <dt>/prefs/index.html</dt>
 
-        <dd>Redirects to <code>/</code> since the static HTML root
-        was replaced with a dynamic HTML root. Some WiThrottle
-        clients refuse to allow access to the web server if a
-        request to <code>/prefs/index.html</code> returns an
-        error.</dd>
+        <dd>Redirects to <code>/</code> since the static HTML root was replaced with a dynamic HTML
+        root. Some WiThrottle clients refuse to allow access to the web server if a request to
+        <code>/prefs/index.html</code> returns an error.</dd>
 
         <dt>/prefs/roster.xml</dt>
 
-        <dd>Redirects to <code>/roster?format=xml</code> since
-        users can opt to have the roster outside the normal
-        preferences file location, and the <a href=
-        "RosterServlet.shtml">roster servlet</a> can load the
-        roster from any location.</dd>
+        <dd>
+          Redirects to <code>/roster?format=xml</code> since users can opt to have the roster
+          outside the normal preferences file location, and the <a href=
+          "RosterServlet.shtml">roster servlet</a> can load the roster from any location.
+        </dd>
 
         <dt>/web/operationsConductor.html</dt>
 
-        <dd>Redirects to <code>/operations</code> since this page
-        was replaced with the <a href="Operations.shtml">operations
-        servlet</a>.</dd>
+        <dd>
+          Redirects to <code>/operations</code> since this page was replaced with the <a href=
+          "Operations.shtml">operations servlet</a>.
+        </dd>
 
         <dt>/web/operationsManifest.html</dt>
 
-        <dd>Redirects to <code>/operations</code> since this page
-        was replaced with the <a href="Operations.shtml">operations
-        servlet</a>.</dd>
+        <dd>
+          Redirects to <code>/operations</code> since this page was replaced with the <a href=
+          "Operations.shtml">operations servlet</a>.
+        </dd>
 
         <dt>/web/operationsTrains.html</dt>
 
-        <dd>Redirects to <code>/operations</code> since this page
-        was replaced with the <a href="Operations.shtml">operations
-        servlet</a>.</dd>
+        <dd>
+          Redirects to <code>/operations</code> since this page was replaced with the <a href=
+          "Operations.shtml">operations servlet</a>.
+        </dd>
 
         <dt>/web/showPanel.html</dt>
 
         <dd>Redirects to <code>/panel</code>.</dd>
       </dl>
 
-      <h2><a id="security" name="security">Security</a></h2>
+      <h2 id="security">Security</h2>
 
-      <p>By default, JMRI only allows limited access to your
-      computer. Only files that are located within the JMRI
-      distribution directory or the JMRI preferences directory will
-      be provided in response to requests. This is not air-tight
-      security, however, and you should be careful to not put
-      important content in those directories or link them to other
-      parts of your computer.</p>
-
+      <p>By default, JMRI only allows limited access to your computer. Only files that are located
+      within the JMRI distribution directory or the JMRI preferences directory will be provided in
+      response to requests. This is not air-tight security, however, and you should be careful to
+      not put important content in those directories or link them to other parts of your
+      computer.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

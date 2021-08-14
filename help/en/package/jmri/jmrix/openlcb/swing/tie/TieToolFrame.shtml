@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Tie Config Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OpenLCB Tie">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OpenLCB Tie"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>OpenLCB Tie Configuration Tool</h1>
-      <a href="FrameExample.gif"><img src=
-      "FrameExample.gif" width="318" height="259" alt=
-      "Tie Config Frame Tool image" align="right"></a>
-
+      <a href="FrameExample.gif"><img src="FrameExample.gif" width="318" height="259" alt=
+      "Tie Config Frame Tool image" class="floatRight"></a>
       <p>No description available</p>
-
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>
