@@ -1,160 +1,114 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SlipTurnout Icon Editor Help</title>
   <meta name="author" content="Kevin Dickerson">
-  <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>L'Éditeur de Traversée</h1>
 
-      <h1>L'&Eacute;diteur de Travers&eacute;e</h1>
-
-      <p>L'&eacute;diteur manuel de travers&eacute;e
-      n&eacute;cessitent plus d'une adresse accessoire (aiguillage)
-      et avoir plus de deux itin&eacute;raires &agrave; travers les
-      aiguillages.</p>
+      <p>L'éditeur manuel de traversée nécessitent plus d'une adresse accessoire (aiguillage) et
+      avoir plus de deux itinéraires à travers les aiguillages.</p>
 
       <p>Cela comprend:</p>
 
       <ul>
-        <li>Les Travers&eacute;es Jonction Double (TJD)</li>
+        <li>Les Traversées Jonction Double (TJD)</li>
 
-        <li>Les Travers&eacute;es Jonction Simples (TJS)</li>
+        <li>Les Traversées Jonction Simples (TJS)</li>
 
         <li>Aiguillages Triples</li>
 
         <li>Bretelle Doubles</li>
       </ul>
 
-      <p>La fa&ccedil;on dont les ic&ocirc;nes sont
-      modifi&eacute;es dans l'&Eacute;diteur d'Ic&ocirc;nes de
-      Travers&eacute;e Jonction est la m&ecirc;me que celle
-      utilis&eacute;e qui modifie les ic&ocirc;nes dans les autres
-      Editeur d'Ic&ocirc;nes. Les boutons <b>Changer
-      Ic&ocirc;ne...</b> et le Catalogue de fonction sont identique
-      aux autres &Eacute;diteur d'Ic&ocirc;nes. Le menu <b>Trouver
-      des Ic&ocirc;nes</b> et de ses &eacute;l&eacute;ments sont
-      &eacute;galement identiques.</p>
+      <p>La façon dont les icônes sont modifiées dans l'Éditeur d'Icônes de Traversée Jonction est
+      la même que celle utilisée qui modifie les icônes dans les autres Editeur d'Icônes. Les
+      boutons <strong>Changer Icône...</strong> et le Catalogue de fonction sont identique aux
+      autres Éditeur d'Icônes. Le menu <strong>Trouver des Icônes</strong> et de ses éléments sont
+      également identiques.</p>
 
-      <p>Voir les <a href="IconAdder.shtml">pages &Eacute;diteurs
-      d'Ic&ocirc;nes</a> et l'image<a href=
-      "../catalog/ImageIndex.shtml">Page &Eacute;diteur d'index</a>
-      pour plus de d&eacute;tails sur leur utilisation.</p>
+      <p>Voir les <a href="IconAdder.shtml">pages Éditeurs d'Icônes</a> et l'image<a href=
+      "../catalog/ImageIndex.shtml">Page Éditeur d'index</a> pour plus de détails sur leur
+      utilisation.</p>
 
-      <h2>Contenu de l'&eacute;diteur d'Ic&ocirc;nes de
-      Travers&eacute;e Jonction</h2>
+      <h2>Contenu de l'éditeur d'Icônes de Traversée Jonction</h2>
 
-      <p>Chaque type de "Travers&eacute;e" utilise un nombre fixe
-      d'aiguillages et d'itin&eacute;raires. Typiquement, chaque
-      &laquo;Travers&eacute;e&raquo; utilise deux aiguillages et a
-      entre trois et quatre itin&eacute;raires diff&eacute;rents
-      .</p>
+      <p>Chaque type de "Traversée" utilise un nombre fixe d'aiguillages et d'itinéraires.
+      Typiquement, chaque «Traversée» utilise deux aiguillages et a entre trois et quatre
+      itinéraires différents .</p>
 
-      <p>Chaque travers&eacute;e doit avoir tous les aiguillages
-      n&eacute;cessaires ajout&eacute;s, lorsque tous les
-      aiguillages sont affect&eacute;s, le bouton <b>Ajouter au
-      TCO</b> devient actif et il peut &ecirc;tre press&eacute;
-      pour installer la travers&eacute;e sur le TCO.</p>
+      <p>Chaque traversée doit avoir tous les aiguillages nécessaires ajoutés, lorsque tous les
+      aiguillages sont affectés, le bouton <strong>Ajouter au TCO</strong> devient actif et il peut
+      être pressé pour installer la traversée sur le TCO.</p>
 
-      <p>Pour s&eacute;lectionner le type de Travers&eacute;e
-      complexe qui est utilis&eacute;, utilisez les boutons radio
-      dans le haut de la fen&ecirc;tre.</p>
+      <p>Pour sélectionner le type de Traversée complexe qui est utilisé, utilisez les boutons
+      radio dans le haut de la fenêtre.</p>
 
-      <p><img src="images/SlipOptions.png"></p>
+      <p><img src="images/SlipOptions.png" alt="">
+      </p>
 
-      <p>Les d&eacute;tails de configuration et de fonctionnement
-      de chaque type de travers&eacute;e peuvent &ecirc;tre
-      trouv&eacute;s ci-dessous.</p>
+      <p>Les détails de configuration et de fonctionnement de chaque type de traversée peuvent être
+      trouvés ci-dessous.</p>
 
-      <h3>Travers&eacute;e Jonction Double</h3><img src=
-      "images/DoubleSlip.png" align="right">
-
-      <p>La Travers&eacute;e Jonction Double, utilise une paire
-      d'appareils de voie pour obtenir les quatre
-      itin&eacute;raires possibles qui sont disponibles. Il suffit
-      de glisser une ligne depuis la table Aiguillage pour la
-      placer placer dans le position correspondante Ouest ou l'Est
-      sur la Travers&eacute;e. Lorsque l'aiguillage est
-      lach&eacute; sur le label, il affichera le nom de
+      <h3>Traversée Jonction Double</h3>
+      <img src="images/DoubleSlip.png" align="right" alt="">
+      <p>La Traversée Jonction Double, utilise une paire d'appareils de voie pour obtenir les
+      quatre itinéraires possibles qui sont disponibles. Il suffit de glisser une ligne depuis la
+      table Aiguillage pour la placer placer dans le position correspondante Ouest ou l'Est sur la
+      Traversée. Lorsque l'aiguillage est laché sur le label, il affichera le nom de
       l'aiguillage.</p>
 
-      <h3>Travers&eacute;e Jonction Simple</h3><img src=
-      "images/SingleSlip.png" align="right">
+      <h3>Traversée Jonction Simple</h3>
+      <img src="images/SingleSlip.png" align="right" alt="">
+      <p>la Traversée Jonction Simple fonctionne à peu près de la même manière que la traversée
+      jonction double en ce qu'elle nécessite une paire d'appareils de voie pour sélectionner le
+      coté Ouest et côté Est de la traversée. Toutefois, il a une autre option, qui consiste à
+      choisir dans quel sens la traversée route les voies.</p>
+      <img src="images/SingleOptions.png" alt="">
+      <p>Utilisez le bouton radio pour sélectionner si la traversée prend la route supérieure ou
+      inférieure, ce qui rend automatique le changement de l'icône en fonction de la position de la
+      traversée.</p>
 
-      <p>la Travers&eacute;e Jonction Simple fonctionne &agrave;
-      peu pr&egrave;s de la m&ecirc;me mani&egrave;re que la
-      travers&eacute;e jonction double en ce qu'elle
-      n&eacute;cessite une paire d'appareils de voie pour
-      s&eacute;lectionner le cot&eacute; Ouest et c&ocirc;t&eacute;
-      Est de la travers&eacute;e. Toutefois, il a une autre option,
-      qui consiste &agrave; choisir dans quel sens la
-      travers&eacute;e route les voies.</p><img src=
-      "images/SingleOptions.png">
-
-      <p>Utilisez le bouton radio pour s&eacute;lectionner si la
-      travers&eacute;e prend la route sup&eacute;rieure ou
-      inf&eacute;rieure, ce qui rend automatique le changement de
-      l'ic&ocirc;ne en fonction de la position de la
-      travers&eacute;e.</p>
-
-      <h3>Aiguillage Triple</h3><img src="images/ThreeWay.png"
-      align="right">
-
-      <p>Avec l'Aiguillage Triple, vous avez besoin d'une paire
-      d'aiguillages, un pour la premi&egrave;re pointe, puis un
-      autre pour la seconde.</p><img src=
-      "images/ThreeWayOptions.png">
-
-      <p>Vous devez &eacute;galement d&eacute;terminer quelle
-      sortie du premier aiguillage va &agrave; la pointe du
+      <h3>Aiguillage Triple</h3>
+      <img src="images/ThreeWay.png" align="right" alt="">
+      <p>Avec l'Aiguillage Triple, vous avez besoin d'une paire d'aiguillages, un pour la première
+      pointe, puis un autre pour la seconde.</p>
+      <img src="images/ThreeWayOptions.png" alt="">
+      <p>Vous devez également déterminer quelle sortie du premier aiguillage va à la pointe du
       second.</p>
 
       <h3>Bretelles Doubles</h3>
 
-      <p>La Bretelle Double peut utiliser soit une paire d'adresse
-      d'aiguillage , les aiguillages oppos&eacute;s en diagonale
-      &eacute;tant c&acirc;bl&eacute;s ensemble comme un seul. Ou
-      elle peut utiliser quatre adresses d'aiguillages , une pour
-      chaque coin de la bretelle double.</p>
+      <p>La Bretelle Double peut utiliser soit une paire d'adresse d'aiguillage , les aiguillages
+      opposés en diagonale étant câblés ensemble comme un seul. Ou elle peut utiliser quatre
+      adresses d'aiguillages , une pour chaque coin de la bretelle double.</p>
 
-      <p><b>Remarque :</b> L'ic&ocirc;ne de bretelle double ne
-      permet pas de mettre tous les itin&eacute;raires en place
-      comme la travers&eacute;e, ce principalement d&ucirc; au fait
-      que dans de nombreux cas la configuration d'une bretelle dans
-      cet &eacute;tat va provoquer un court-circuit. <img src=
-      "images/ScissorBy2.png" align="right"></p>
+      <p><strong>Remarque :</strong> L'icône de bretelle double ne permet pas de mettre tous les
+      itinéraires en place comme la traversée, ce principalement dû au fait que dans de nombreux
+      cas la configuration d'une bretelle dans cet état va provoquer un court-circuit. <img src=
+      "images/ScissorBy2.png" align="right" alt=""></p>
 
-      <p>Quand une paire d'appareils de voie est utilis&eacute;e,
-      vous placez l'aiguillage qui commande le Trajet Haut Ouest
-      avec Bas Est dans la partie Droite du Panneau Bretelle
-      Double, et l'Adresse de l'aiguillage qui commande le Bas
-      Ouest avec le Haut Est dans la partie Gauche du Panneau
-      Bretelle Double. <img src="images/ScissorBy4.png" align=
-      "right"></p>
+      <p>Quand une paire d'appareils de voie est utilisée, vous placez l'aiguillage qui commande le
+      Trajet Haut Ouest avec Bas Est dans la partie Droite du Panneau Bretelle Double, et l'Adresse
+      de l'aiguillage qui commande le Bas Ouest avec le Haut Est dans la partie Gauche du Panneau
+      Bretelle Double. <img src="images/ScissorBy4.png" align="right" alt=""></p>
 
-      <p>Lorsque les quatre aiguillages sont utilis&eacute;s, vous
-      devez placer les quatre aiguillages de la Table aiguillage
-      aux emplacements correspondants dans le TCO.</p>
+      <p>Lorsque les quatre aiguillages sont utilisés, vous devez placer les quatre aiguillages de
+      la Table aiguillage aux emplacements correspondants dans le TCO.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

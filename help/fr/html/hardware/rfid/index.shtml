@@ -1,135 +1,138 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
 <head>
-<!-- Updated by Herv&#233; Blorec  2017-02-06-->
-<title>JMRI: RFID Reader Support</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Updated by Herv&#233; Blorec  2017-02-06-->
 
-<!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: RFID Reader Support</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1> Documentation Mat&#233;riel: Lecteurs RFID</h1>
+      <h1>Documentation Matériel: Lecteurs RFID</h1>
+      <em>La documentation sur cette page est en rapide évolution; le code actuel peut être en
+      avance ou en retard sur la documentation pour un jour donné.</em>
+      <p>JMRI fournit une prise en charge pour les <a href=
+      "../../../html/tools/Sensors.shtml">Capteurs</a> JMRI en général et <a href=
+      "../../../html/tools/Reporters.shtml">Rapports</a> en termes "d'évènements" du Lecteur RFID.
+      <a name="hardware" id="hardware"></a></p>
 
-<em>La documentation sur cette page est en rapide &#233;volution; le code actuel peut &#234;tre en avance ou en retard sur la documentation pour un jour donn&#233;.</em><p>
+      <h2>Matériel pris en</h2>
 
-JMRI fournit une prise en charge pour les 
-<a href="../../../html/tools/Sensors.shtml"> Capteurs</a>
-JMRI en g&#233;n&#233;ral et<a href="../../../html/tools/Reporters.shtml"> Rapports</a>
-en termes "d'&#233;v&#232;nements" du Lecteur RFID. 
+      <h3>Protocoles</h3>
+      JMRI prend en charge plusieurs protocoles de lecture RFID :
+      <ul>
+        <li>CORE-ID / ID-Innovations - depuis la 2.11.4</li>
 
-<a name="hardware"></a><h2>Mat&#233;riel pris en </h2>
-<h3>Protocoles</h3>
-JMRI prend en charge plusieurs protocoles de lecture RFID :
-<ul>
-    <li>CORE-ID / ID-Innovations - depuis la  2.11.4</li>
-    <li>Olimex - depuis v 3.9.2</li>
-    <li>Parallax - depuis v 3.9.2</li>
-</ul>
-<p>Choisir le protocole appropri&#233; lors du r&#233;glage des Pr&#233;f&#233;rences.
+        <li>Olimex - depuis v 3.9.2</li>
 
-<p>
-JMRI prend &#233;galement en charge jusqu'&#224; 8 lecteurs individuels connect&#233;s via un Concentrateur.
-&#192; l'heure actuelle, le seul concentrateur pris en charge est celui de MERG, et seulement 
-pour les lecteurs utilisant le protocole CORE-ID.
-S&#233;lectionnez "Concentrateur MERG" pour "Adaptateur" dans l'onglet 
-Connexions dans les Pr&#233;f&#233;rences JMRI.
+        <li>Parallax - depuis v 3.9.2</li>
+      </ul>
 
-<a name="connecting"></a><h2>Connexion</h2>
-<h3>C&#226;blage</h3>
-<ul>
-		<li>Les connexionx s&#233;rie directes ont &#233;t&#233; prises en charge depuis JMRI 2.11.4
-		<li>Les connexions r&#233;seauxsont cibl&#233;es pour la s&#233;rie JMRI 4.1
-</ul>
+      <p>Choisir le protocole approprié lors du réglage des Préférences.</p>
 
-<h3>R&#233;glages</h3>
-<a href="RFID_Preferences.png"><img src="RFID_Preferences.png" align="right" height="220" width="430"/></a>
-<p> Vous configurez votre connexion JMRI &#224; votre mat&#233;riel RFID dans les Pr&#233;f&#233;rences JMRI<br>
-Elle apparait comme "RFID" dans le menu d&#233;roulant Fabricant Syst&#232;me.</p>
+      <p>JMRI prend également en charge jusqu'à 8 lecteurs individuels connectés via un
+      Concentrateur. À l'heure actuelle, le seul concentrateur pris en charge est celui de MERG, et
+      seulement pour les lecteurs utilisant le protocole CORE-ID. Sélectionnez "Concentrateur MERG"
+      pour "Adaptateur" dans l'onglet Connexions dans les Préférences JMRI. <a name="connecting"
+      id="connecting"></a></p>
 
-<h2>D&#233;signation</h2>
+      <h2>Connexion</h2>
 
-La <a href="../../../html/doc/Technical/Names.shtml"> lettre syst&#232;me</a>
-pour les connexions RFID est "F". Les d&#233;tails des &#233;v&#233;nement, des noms, des objets RFID 
-sont d&#233;crits ci-dessous.
-<!-- , avec les d&#233;tails techniques sur une <a href="Names.shtml">page s&#233;par&#233;e</a> -->
+      <h3>Câblage</h3>
 
-<p>
-JMRI associe les &#233;v&#233;nements RFID avec des Objets individuels
-JMRI (Capteurs, Rapports, etc) via le
-Noms syst&#232;me JMRI. Un Nom Syst&#232;me comme le
-"<code>FSA</code>"
-d&#233;finit un Capteur qui suit le lecteur "A" , tandis qu'un Nom Syst&#232;me comme "<code> FRB </code>"
-d&#233;finit un Rapport qui suit le lecteur "B" .
+      <ul>
+        <li>Les connexionx série directes ont été prises en charge depuis JMRI 2.11.4</li>
 
-<h3>Capteurs</h3>
-<p>
-Les lectures RFID dans les applications &#224; venir de JMRI peuvent &#234;tre accessibles 
-via des objets Capteur JMRI. Le <!-- <a href="Names.shtml">system name</a> -->Nom Syst&#232;me du Capteur d&#233;termine &#224; quel lecteur RFID il correspond.
+        <li>Les connexions réseauxsont ciblées pour la série JMRI 4.1</li>
+      </ul>
 
-<p>
-Un capteur est d&#233;fini par deux &#233;v&#233;nements: Celui qui l'ACTIVE, et 
-celui qui le D&#201;SACTIVE. Quand une &#233;tiquette RFID se trouve &#224; proximit&#233; d'un
-Lecteur RFID, le capteur associ&#233; est ACTIF; en dehors de ces moments, il est INACTIF.
-Vous cr&#233;ez les capteurs en utilisant le bouton 
-<a href="../../../../fr/package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
-sur le
-<a href="../../../../fr/package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>.
+      <h3>Réglages</h3>
+      <a href="RFID_Preferences.png"><img src="RFID_Preferences.png" align="right" height="220"
+      width="430" alt=""></a>
+      <p>Vous configurez votre connexion JMRI à votre matériel RFID dans les Préférences JMRI<br>
+      Elle apparait comme "RFID" dans le menu déroulant Fabricant Système.</p>
 
-<h3>Rapports</h3>
-Les lectures RFID &#224; venir dans les applications JMRI sont &#233;galement accessibles via les
-Objets Rapports JMRI. Le Nom Syst&#232;me
-<!-- <a href="Names.shtml"> du Rapport </a> --> du Rapport
-d&#233;termine &#224; quel lecteur RFID il correspond.
+      <h2>Désignation</h2>
+      La <a href="../../../html/doc/Technical/Names.shtml">lettre système</a> pour les connexions
+      RFID est "F". Les détails des événement, des noms, des objets RFID sont décrits ci-dessous. 
+      <!-- , avec les d&#233;tails techniques sur une <a href="Names.shtml">page s&#233;par&#233;e</a> -->
 
-<p>
-Un Rapport peut contenir des informations arbitraires, contrairement &#224; un capteur qui n'est qu'actif ou inactif. Chaque Rapport est associ&#233; &#224; une source d'information sp&#233;cifique
-sur le r&#233;seau, et fait que les informations sur les appareils sont disponibles dans le reste de JMRI.
+      <p>JMRI associe les événements RFID avec des Objets individuels JMRI (Capteurs, Rapports,
+      etc) via le Noms système JMRI. Un Nom Système comme le "<code>FSA</code>" définit un Capteur
+      qui suit le lecteur "A" , tandis qu'un Nom Système comme " <code>FRB</code> " définit un
+      Rapport qui suit le lecteur "B" .</p>
 
+      <h3>Capteurs</h3>
 
-<p>
-Quand un Lecteur RFID rapporte qu'une &#233;tiquette sp&#233;cifique a &#233;t&#233; vue, le Rapport correspondant 
-contiendra des informations sur l' 
-<a href="../../tools/IdTags.shtml"> IdTag</a> sp&#233;cifique vue. Ceci permet alors &#224; d'autres outils JMRI de r&#233;agir &#224; cette information 
+      <p>Les lectures RFID dans les applications à venir de JMRI peuvent être accessibles via des
+      objets Capteur JMRI. Le <!-- <a href="Names.shtml">system name</a> -->Nom Système du Capteur
+      détermine à quel lecteur RFID il correspond.</p>
 
-<h4>Tableau Rapport</h4>
-Le
-<a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml"> tableau Rapport</a>
-offre un acc&#232;s facile au contenu de tous les Rapports que JMRI conna&#238;t.
-Il ya aussi une touche
-<a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml"> "Ajouter ..." </a>
-pour cr&#233;er vos propres Rapports internes; JMRI cr&#233;e automatiquement des
-Objets Rapport pour les p&#233;riph&#233;riques d&#233;couvert sur le r&#233;seau.
+      <p>Un capteur est défini par deux événements: Celui qui l'ACTIVE, et celui qui le DÉSACTIVE.
+      Quand une étiquette RFID se trouve à proximité d'un Lecteur RFID, le capteur associé est
+      ACTIF; en dehors de ces moments, il est INACTIF. Vous créez les capteurs en utilisant le
+      bouton <a href=
+      "../../../../fr/package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a> sur le
+      <a href="../../../../fr/package/jmri/jmrit/beantable/SensorTable.shtml">Tableau
+      Capteur</a>.</p>
 
-<h4> Affichage des Valeurs du Rapport sur des Panneaux</h4>
-<p>La valeur d'un Rapport peut &#234;tre affich&#233;e sur un panneau par l'interm&#233;diaire d'une ic&#244;ne.
-Pour ce faire:
-<ul>
-	<li> Sur la fen&#234;tre de l'&#201;diteur du Panneau pour votre panneau, trouver le bouton "Ajouter Rapport".
-	<li> Dans la zone de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou le nom syst&#232;me du
-	Rapport d&#233;sir&#233;.
-	<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
-	Si elle n'est pas visible, cela pourrait &#234;tre parce que la valeur est actuellement vide;
-	utiliser le tableau de Rapport pour changer la valeur &#224; quelque chose qui sera visible.
-	<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez de la mani&#232;re habituelle.
-	<li> Le menu contextuel sur l'ic&#244;ne vous permettra de changer la mise en forme.
-</ul>
+      <h3>Rapports</h3>
+      Les lectures RFID à venir dans les applications JMRI sont également accessibles via les
+      Objets Rapports JMRI. Le Nom Système <!-- <a href="Names.shtml"> du Rapport </a> --> du
+      Rapport détermine à quel lecteur RFID il correspond.
+      <p>Un Rapport peut contenir des informations arbitraires, contrairement à un capteur qui
+      n'est qu'actif ou inactif. Chaque Rapport est associé à une source d'information spécifique
+      sur le réseau, et fait que les informations sur les appareils sont disponibles dans le reste
+      de JMRI.</p>
 
-<<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Quand un Lecteur RFID rapporte qu'une étiquette spécifique a été vue, le Rapport
+      correspondant contiendra des informations sur l' <a href="../../tools/IdTags.shtml">IdTag</a>
+      spécifique vue. Ceci permet alors à d'autres outils JMRI de réagir à cette information</p>
+
+      <h4>Tableau Rapport</h4>
+      Le <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">tableau Rapport</a>
+      offre un accès facile au contenu de tous les Rapports que JMRI connaît. Il ya aussi une
+      touche <a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Ajouter
+      ..."</a> pour créer vos propres Rapports internes; JMRI crée automatiquement des Objets
+      Rapport pour les périphériques découvert sur le réseau.
+      <h4>Affichage des Valeurs du Rapport sur des Panneaux</h4>
+
+      <p>La valeur d'un Rapport peut être affichée sur un panneau par l'intermédiaire d'une icône.
+      Pour ce faire:</p>
+
+      <ul>
+        <li>Sur la fenêtre de l'Éditeur du Panneau pour votre panneau, trouver le bouton "Ajouter
+        Rapport".</li>
+
+        <li>Dans la zone de texte à côté de ce bouton, tapez le nom utilisateur ou le nom système
+        du Rapport désiré.</li>
+
+        <li>Cliquez sur le bouton. L'icône Rapport sera placée sur le panneau. Si elle n'est pas
+        visible, cela pourrait être parce que la valeur est actuellement vide; utiliser le tableau
+        de Rapport pour changer la valeur à quelque chose qui sera visible.</li>
+
+        <li>Vous pouvez faire glisser l'icône à l'endroit où vous voulez de la manière
+        habituelle.</li>
+
+        <li>Le menu contextuel sur l'icône vous permettra de changer la mise en forme.</li>
+      </ul>
+      &lt;<!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>
