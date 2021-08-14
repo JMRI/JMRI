@@ -231,14 +231,6 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameReporter");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(ReporterTableDataModel.class);
     
 }

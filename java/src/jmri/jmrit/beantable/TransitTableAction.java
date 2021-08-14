@@ -232,11 +232,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
 
             @Override
-            protected String getBeanType() {
-                return "Transit";
-            }
-
-            @Override
             public void configureTable(JTable table) {
                 InstanceManager.getDefault(SensorManager.class).addPropertyChangeListener(this);
                 super.configureTable(table);

@@ -215,11 +215,6 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
         //Title of Set button in Route table
     }
 
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameRoute");
-    }
-
     private static final Logger log = LoggerFactory.getLogger(RouteTableDataModel.class);
 
 }
