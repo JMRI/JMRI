@@ -1,248 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>
-    JMRI Manual: Index
-  </title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Manual: Index</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>JMRI&reg; Manuals</h1>
+    <div id="mainContent">
+      <h1 id="Top">JMRI® Manuals</h1>
 
       <table>
         <tbody>
           <tr>
-            <td>Version:<br>
-             </td>
-
-            <td>Applications with Online Manual:<br>
-             </td>
-
-            <td> <br>
-             </td>
+            <td>Version:<br></td>
+            <td>Applications with Online Manual:<br></td>
+            <td><br>
+            </td>
           </tr>
 
           <tr>
-            <td><span style="font-weight: bold;">JMRI&reg;
-            current</span></td>
-
-            <td style="font-weight: bold;"><a href=
-            "../html/apps/DecoderPro/index.shtml">DecoderPro
-            v4.x</a></td>
-
-            <td></td>
+            <td><span style="font-weight: bold;">JMRI® current</span>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "../html/apps/PanelPro/index.shtml">PanelPro&trade;
-            v4.x</a></td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="../html/apps/PanelPro/index.shtml">PanelPro™ v4.x</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;
-            v4.x</a></td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™ v4.x</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade;
-            v4.x</a></td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro™ v4.x</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "../html/setup/index.shtml">General Set Up v4.x</a><br>
-             </td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="../html/setup/index.shtml">General Set Up v4.x</a><br>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td><span style="font-weight: bold;">JMRI&reg;
-            v3.10</span></td>
-
-            <td style="font-weight: bold;"><a href=
-            "DecoderPro3/index.shtml">DecoderPro3 v3.6</a></td>
-
-            <td><br></td>
+            <td><span style="font-weight: bold;">JMRI® v3.10</span>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="DecoderPro3/index.shtml">DecoderPro3 v3.6</a>
+            </td>
+            <td><br>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="DecoderPro/index.shtml">DecoderPro® v3.6</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td></td>
-
-            <td style="font-weight: bold;"><a href=
-            "JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade;
-            v3.6-3.10</a></td>
-
-            <td></td>
+            <td>
+            </td>
+            <td style="font-weight: bold;">
+              <a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro™ v3.6-3.10</a>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td><strong>JMRI&reg; v2.14</strong></td>
-
-            <td> </td>
-
-            <td> </td>
+            <td><strong>JMRI® v2.14</strong>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td> </td>
-
-            <td><strong><a href=
-            "https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg;
-            v2.14.1</a></strong></td>
-
-            <td> </td>
+            <td>
+            </td>
+            <td><strong><a href="https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI®
+            v2.14.1</a></strong>
+            </td>
+            <td>
+            </td>
           </tr>
 
           <tr>
-            <td> </td>
-
-            <td><strong><a href=
-            "https://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro
-            3 v2.14</a></strong></td>
-
-            <td><strong><a href=
-            "https://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target=
-            "_blank">Printable PDF (6.7MB)</a></strong></td>
+            <td>
+            </td>
+            <td><strong><a href="https://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro 3
+            v2.14</a></strong>
+            </td>
+            <td><strong><a href="https://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target=
+            "_blank">Printable PDF (6.7MB)</a></strong>
+            </td>
           </tr>
-
         </tbody>
       </table>
 
-      <h2>JMRI&reg; Applications</h2>
+      <h2>JMRI® Applications</h2>
 
-      <p><strong>JMRI is a Java-based cross-platform program suite
-      for model railroaders.</strong><br>
-      It contains <a href="../html/apps/index.shtml">modular
-      applications</a> for:</p>
+      <p><strong>JMRI is a Java-based cross-platform program suite for model
+      railroaders.</strong><br>
+      It contains <a href="../html/apps/index.shtml">modular applications</a> for:</p>
 
       <ul>
-        <li>Programming of Digital Command Control (DCC) decoders
-        (<a href=
-        "../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
+        <li>Programming of Digital Command Control (DCC) decoders (<a href=
+        "../html/apps/DecoderPro/index.shtml">DecoderPro®</a>)
+        </li>
 
-        <li>Drawing computer based panels for depicting a model
-        railroad layout (<a href=
-        "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a>
-        and <a href=
-        "../html/apps/PanelPro/index.shtml#le">Layout
-        Editor</a>)</li>
+        <li>Drawing computer based panels for depicting a model railroad layout (<a href=
+        "../html/apps/PanelPro/index.shtml">PanelPro™</a> and <a href=
+        "../html/apps/PanelPro/index.shtml#le">Layout Editor</a>)
+        </li>
 
         <li>Controlling the layout (All modules)</li>
 
-        <li>Creating train manifests for duplicating railroad
-        operations (<a href=
-        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
+        <li>Creating train manifests for duplicating railroad operations (<a href=
+        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro™</a>)
+        </li>
 
-        <li>Controlling the signals on the layout (All
-        modules)</li>
+        <li>Controlling the signals on the layout (All modules)</li>
 
-        <li>Controlling lighting and sound in the room, and so
-        forth (<a href=
-        "../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
+        <li>Controlling lighting and sound in the room, and so forth (<a href=
+        "../html/tools/Audio.shtml">SoundPro™</a>)
+        </li>
       </ul>
 
       <p>All this capability is contained in one <a href=
       "https://jmri.org/download/index.shtml">install</a>.</p>
 
       <h2>Take it Step by Step</h2>
-
       <!-- image by Egbert Broerse @silverailscolo 2018 -->
-      <a href="images/JmriStepByStepDiagram.png"><img
-      src="images/JmriStepByStepDiagram.png" width="421" height="298"
-      alt="JMRI levels" style="float: right"></a>
+      <a href="images/JmriStepByStepDiagram.png"><img src="images/JmriStepByStepDiagram.png" width=
+      "421" height="298" alt="JMRI levels" style="float: right"></a>
+      <p>Our general advice is to start with the basics. For that we suggest you start setting up a
+      simple track connected to your Command Station first.<br>
+      When train(s) run and a turnout responds to your hand held throttle, it's time to open the
+      <a href="../html/hardware/index.shtml">Hardware Help</a> (use the Hardware tab at the top of
+      the page).<br>
+      Next is trying to do basic things with PanelPro, for example using a JMRI Throttle to run a
+      loco.<br>
+      Once that is operating like you expect, comes the time to build a Panel, fill your Roster,
+      etc.<br>
+      Make some notes for yourself, sketch a simple diagram to way you conceive you set up. Often
+      that helps better than words to get things sorted (and remember 2 years later why you chose
+      to type that funny turnout name).</p>
 
-      <p>Our general advice is to start with the basics. For that
-      we suggest you start setting up a simple track
-      connected to your Command Station first.<br>
-      When train(s) run and a turnout responds to your
-      hand held throttle, it's time to open the <a href=
-      "../html/hardware/index.shtml">Hardware Help</a>
-      (use the Hardware tab at the top of the page).<br>
-      Next is trying to do basic things with PanelPro,
-      for example using a JMRI Throttle to run a loco.<br>
-      Once that is operating like you expect, comes the time to
-      build a Panel, fill your Roster, etc.<br>
-      Make some notes for yourself, sketch a simple diagram
-      to way you conceive you set up. Often that helps better
-      than words to get things sorted (and remember 2
-      years later why you chose to type that funny turnout name).
-      </p>
+      <p>You're not discouraged to dive in, but by taking on JMRI - or any powerful, but complex
+      thing - one step at a time you sort of build a solid foundation that will pay for itself in
+      due time.<br>
+      Gradually build on you foundation concepts of the program and pick up elements of interest by
+      following some of the links at the bottom of the left sidebar on the JMRI web Help.</p>
 
-      <p>You're not discouraged to dive in, but by taking on
-      JMRI - or any powerful, but complex thing - one step
-      at a time you sort of build a solid foundation that
-      will pay for itself in due time.<br>
-      Gradually build on you foundation concepts of the program
-      and pick up elements of interest by following some of the
-      links at the bottom of the left sidebar on the JMRI web Help.
-      </p>
-
-      <p>If this is your first visit to our manual, we suggest that
-      you take the DecoderPro&reg; tour at <a href=
+      <p>If this is your first visit to our manual, we suggest that you take the DecoderPro® tour
+      at <a href=
       "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+
       to get an overview of what we're about to cover.</p>
 
       <h2>System Requirements</h2>
 
-      <p>JMRI&reg; requires that Java be installed, whether your
-      computer is <a href=
+      <p>JMRI® requires that Java be installed, whether your computer is <a href=
       "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
-      "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or
-      <a href="https://jmri.org/install/Linux.shtml">Linux</a>
-      based.</p>
+      "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href=
+      "https://jmri.org/install/Linux.shtml">Linux</a> based.</p>
 
-      <p>Version 2.12 can run on any computer system that will run
-      Java 1.5 or later.<br>
-      Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag
-      &amp; drop)<br>
+      <p>Version 2.12 can run on any computer system that will run Java 1.5 or later.<br>
+      Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag & drop)<br>
       Version 3.10.1 requires Java 1.7 or later.<br>
       Version 4.2 and up requires Java 1.8.</p>
 
-      <p>More on <a href=
-      "https://www.java.com/en/download/help/sysreq.xml">Java
-      versions and hardware requirements</a>.<br>
-      Get the latest Java as a free download at: <a href=
-      "https://www.java.com/download/" target=
+      <p>More on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and
+      hardware requirements</a>.<br>
+      Get the latest Java as a free download at: <a href="https://www.java.com/download/" target=
       "_blank">java.com/download</a>.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

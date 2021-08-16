@@ -1,6 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Copyright ($Author$) 2021 -->
@@ -13,70 +11,70 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="no-sidebar" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>LocoNet "Bushby" Forwarder</h1>
       <p><span class="since">Since
           <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">
       JMRI 4.25.2</a></span></p>
       <p>The <code>LnBushbyForwarder.py</code> script provides a mechanism to
-          selectively convert the "normal" LocoNet turnout control messages, for 
+          selectively convert the "normal" LocoNet turnout control messages, for
           selected turnout addresses, into "special" LocoNet turnout control
-          messages.  This script may be useful in cases where a Digitrax command 
+          messages.  This script may be useful in cases where a Digitrax command
           station is configured with its "Bushby" feature enabled.
       <p>Such "special" messages can be important if any hardware <strong>gets its
           turnout control messaging from either the DCC track signal <em>or</em>
-          the "RailSync" wires on the LocoNet cable</strong>.  The "Busbhy" 
+          the "RailSync" wires on the LocoNet cable</strong>.  The "Busbhy"
           feature, when enabled, <strong>prevents</strong> the command
-          station from forwarding "normal" LocoNet turnout commands to the DCC 
+          station from forwarding "normal" LocoNet turnout commands to the DCC
           track signal (and the RailSync signals).  The net result is that a LocoNet
-          agent, including throttles, will be _unable_ to control any accessory 
+          agent, including throttles, will be _unable_ to control any accessory
           devices which get their control messages from the DCC track signal (or
-          the Railsync signals), <em>unless</em> they are capable of sending the 
+          the Railsync signals), <em>unless</em> they are capable of sending the
           special LocoNet turnout control messaging.  Since <em>most</em> LocoNet
           devices are not
           able to send the special turnout control messaging, most LocoNet devices
           will <strong>not</strong> be able to control those accessories.
-          <p>This script provides a mechanism which watches for "normal" LocoNet 
+          <p>This script provides a mechanism which watches for "normal" LocoNet
           switch control messages, and, for certain user-configurable LocoNet switch
           addresses, sends the equivalent "special" LocoNet switch control message.
           The command station recognizes those special LocoNet switch control messages
-          and forwards the appropriate DCC packet to the DCC track signal (and 
+          and forwards the appropriate DCC packet to the DCC track signal (and
           RailSync signals).
       <h2>What this script does</h2>
-      The <code>LnBushbyForward.py</code> script, in the <code>jython</code> 
+      The <code>LnBushbyForward.py</code> script, in the <code>jython</code>
       directory of the JMRI program installation, provides a mechanism which will
       monitor LocoNet for "normal" turnout control messages, and, selectively, send
       the corresponding "special" turnout control message, if appropriate.
       <p>In the context of this script, "selectively", and "appropriate", as used
-      above, means a check of the "normal" LocoNet turnout control message's 
+      above, means a check of the "normal" LocoNet turnout control message's
       turnout address, against a list of turnout addresses:
       <ul>
-          <li>if the normal turnout control message is for an address in the 
-          list, then a special turnout control message will be generated and 
+          <li>if the normal turnout control message is for an address in the
+          list, then a special turnout control message will be generated and
           sent to LocoNet, or</li>
-          <li>if the normal turnout control message is for an address which is 
+          <li>if the normal turnout control message is for an address which is
           not in the list, then the script ignores the message.</li>
       </ul>
       <h2>Configuring the script</h2>
-      As written, the script is designed to generate "special" turnout control 
-      messages <em>only for</em> "normal" LocoNet turnout control messages for 
-      addresses <strong>10, 11, 12, 13</strong>.  The list may be updated 
-      to meet the needs of your specific situation by changing the list 
+      As written, the script is designed to generate "special" turnout control
+      messages <em>only for</em> "normal" LocoNet turnout control messages for
+      addresses <strong>10, 11, 12, 13</strong>.  The list may be updated
+      to meet the needs of your specific situation by changing the list
       which is coded in the line:<br>
       <code>toBeForwarded = [10, 11, 12, 13]</code><br>
-      
+
       As an example, if you wish the script to generate "special" turnout control
-      messages for turnout addresses 5, 21, 76, 45, and 33, then the following 
+      messages for turnout addresses 5, 21, 76, 45, and 33, then the following
       line would be appropriate:<br>
       <code>toBeForwarded = [5, 21, 76, 45, 33]</code><br>
-      
+
       <h2>See also</h2>
-      See <a href="../../hardware/loconet/Digitrax.shtml#TurnoutCmdHandling">this 
+      See <a href="../../hardware/loconet/Digitrax.shtml#TurnoutCmdHandling">this
           discussion of turnout control message retries, including Bushby details</a>
       for more information.
-      
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -247,11 +247,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")>=0);
             }
-
-            @Override
-            protected String getBeanType() {
-                return "Section";
-            }
         };
     }
 

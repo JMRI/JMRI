@@ -1,61 +1,67 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Comprehensive Programmer - Advanced Features Pane</title>
   <!--#include virtual="/Style.shtml" -->
-</head>
+  <!-- DecoderPro Styles -->
 
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Analog Controls Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_LightFX.shtml">Previous |</a> <a href=
-        "Comp_Consist.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_LightFX.shtml">Previous |</a> <a href="Comp_Consist.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>As discussed in the <a href=
-      "Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
-      some decoders allow operation on Analog or Conventional DC
-      layouts. At the discretion of the manufacturer, some of the
-      non-motor responses may be changeable by setting CV's in the
-      decoder. This pane is where you would set these values.
-      Typical would be whether any of the various functions (such
-      as lights and bell) would be on or off when in DC mode.
-      Consult your decoders manual for options available.</p>
+      <p>As discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
+      some decoders allow operation on Analog or Conventional DC layouts. At the discretion of the
+      manufacturer, some of the non-motor responses may be changeable by setting CV's in the
+      decoder. This pane is where you would set these values. Typical would be whether any of the
+      various functions (such as lights and bell) would be on or off when in DC mode. Consult your
+      decoders manual for options available.</p>
 
-      <p>Some decoders are Analog Controls pane are simple and
-      others such as the FP-45 are complicated. <img src=
-      "images/AnalogModeFunctions.png" width="935" height="405"
-      alt="analog functions"></p>
+      <p>Some decoders are Analog Controls pane are simple and others such as the FP-45 are
+      complicated. <img src="images/AnalogModeFunctions.png" width="935" height="405" alt=
+      "analog functions"></p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_SoundFX.shtml"></a><a href=
-        "Comp_LightFX.shtml">Previous |</a> <a href=
+      <div class="dp-right">
+        <p><a href="Comp_SoundFX.shtml"></a><a href="Comp_LightFX.shtml">Previous |</a> <a href=
         "Comp_Consist.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

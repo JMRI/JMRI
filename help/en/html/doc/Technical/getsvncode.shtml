@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Getting the OLD SVN Code - no longer
-  supported</title>
-    <meta name="author" content="Bob Jacobsen">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Getting the OLD SVN Code - no longer supported</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code SVN download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -16,111 +12,93 @@
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI Code: Getting the OLD SVN Code (archived)</h1>
 
       <h2>This page is kept for historical purposes only!</h2>
 
-      <p class="important">JMRI has migrated away from <a href=
-      "getcvscode.shtml">CVS</a> for version control to SVN in July
-      2011, and on to Git in September 2015. For access to the
-      current JMRI source code, please see the <a href=
-      "getgitcode.shtml">Git repository</a> information.</p>
+      <p class="important">JMRI has migrated away from <a href="getcvscode.shtml">CVS</a> for
+      version control to SVN in July 2011, and on to Git in September 2015. For access to the
+      current JMRI source code, please see the <a href="getgitcode.shtml">Git repository</a>
+      information.</p>
 
-      <p>JMRI release 4.1.1 (and earlier) were made from SVN, and
-      to access that source code, you should use the detailed
-      instructions below.</p>
+      <p>JMRI release 4.1.1 (and earlier) were made from SVN, and to access that source code, you
+      should use the detailed instructions below.</p>
 
       <h2>Quick Start</h2>
 
-      <p>You can download the JMRI source code from Subversion
-      using:</p>
+      <p>You can download the JMRI source code from Subversion using:</p>
+
       <pre>
 <code>
     svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri
   </code>
 </pre>
-
       <h2>Details</h2>
 
-      <p>Our source code up to JMRI version 4.1.2 was distributed
-      using <a href="http://subversion.apache.org/">Subversion</a>.
-      (Until then we also kept the <a href="WebSite.shtml">web
-      site</a> in Subversion, if you'd like to work with it
-      directly.) If you want to work with the code, a few minutes
-      installing Subversion is well worth it. We're sorry, but we
-      just can't support other methods (sending .zip files, etc),
-      as they're just too error prone.</p>
+      <p>Our source code up to JMRI version 4.1.2 was distributed using <a href=
+      "http://subversion.apache.org/">Subversion</a>. (Until then we also kept the <a href=
+      "WebSite.shtml">web site</a> in Subversion, if you'd like to work with it directly.) If you
+      want to work with the code, a few minutes installing Subversion is well worth it. We're
+      sorry, but we just can't support other methods (sending .zip files, etc), as they're just too
+      error prone.</p>
 
-      <p>A few computers will come with Subversion installed,
-      mostly various Linux systems. If your computer does not have
-      it installed, you will need to locate and install the needed
-      client software. See the <a href=
-      "http://subversion.apache.org/packages.html">Subversion
-      binary downloads</a> page for packages for many operating
-      systems (including Mac OS X, Windows and different Linux
-      flavors).</p>
+      <p>A few computers will come with Subversion installed, mostly various Linux systems. If your
+      computer does not have it installed, you will need to locate and install the needed client
+      software. See the <a href="http://subversion.apache.org/packages.html">Subversion binary
+      downloads</a> page for packages for many operating systems (including Mac OS X, Windows and
+      different Linux flavors).</p>
 
-      <p>Many development environments (e.g., Netbeans or Eclipse)
-      will have support for Subversion, either directly or as an
-      add-on. Check the documentation for your favorite IDE to
+      <p>Many development environments (e.g., Netbeans or Eclipse) will have support for
+      Subversion, either directly or as an add-on. Check the documentation for your favorite IDE to
       check on SVN support.</p>
 
-      <p>The <a href=
-      "https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">
-      Subversion server at SourceForge</a> does not require any
-      user information when you check out a copy of the code.</p>
+      <p>The <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">Subversion
+      server at SourceForge</a> does not require any user information when you check out a copy of
+      the code.</p>
 
-      <p>If you have an existing copy of the code and want to
-      update it to the most recent contents of the Subversion
-      repository, the command is:</p>
+      <p>If you have an existing copy of the code and want to update it to the most recent contents
+      of the Subversion repository, the command is:</p>
+
       <pre>
   svn update
-  
+
 </pre>
+      <p>See also the <a href="SVNFAQ.shtml">Subversion FAQ page</a>.</p>
 
-      <p>See also the <a href="SVNFAQ.shtml">Subversion FAQ
-      page</a>.</p>
+      <p>After the checkout is complete, you'll find a top level directory called
+      <code>java</code>, with subdirectories <code>xml</code>, <code>resources</code>,
+      <code>jython</code>, <code>help</code>, <code>lib</code>, <code>java</code> and others.</p>
 
-      <p>After the checkout is complete, you'll find a top level
-      directory called <tt>java</tt>, with subdirectories
-      <tt>xml</tt>, <tt>resources</tt>, <tt>jython</tt>,
-      <tt>help</tt>, <tt>lib</tt>, <tt>java</tt> and others.</p>
+      <p>Change to the <code>java</code> directory. There, you will find a <code>src</code>
+      directory that contains the source code for JMRI itself, and a <code>tests</code> directory
+      that contains various test routines.</p>
 
-      <p>Change to the <tt>java</tt> directory. There, you will
-      find a <tt>src</tt> directory that contains the source code
-      for JMRI itself, and a <tt>tests</tt> directory that contains
-      various test routines.</p>
+      <p>You can look at the code with your favorite text editor. To compile and run it, you need
+      one of the compilation tools described on the bar at the left: <a href="Ant.shtml">Ant</a>,
+      <a href="Eclipse.shtml">Eclipse</a>, <a href="NetBeans.shtml">NetBeans</a>, etc.</p>
 
-      <p>You can look at the code with your favorite text editor.
-      To compile and run it, you need one of the compilation tools
-      described on the bar at the left: <a href=
-      "Ant.shtml">Ant</a>, <a href="Eclipse.shtml">Eclipse</a>,
-      <a href="NetBeans.shtml">NetBeans</a>, etc.</p>
-
-      <p>Once you're working with the code, you'll probably create
-      some improvements you'd like to contribute back to the
-      project. This is where Subversion has tremendous advantages;
-      with the appropriate permissions and commands, you can merge
-      your changes back into the common source automagically.
-      Contact us when you're ready to do that or see the <a href=
+      <p>Once you're working with the code, you'll probably create some improvements you'd like to
+      contribute back to the project. This is where Subversion has tremendous advantages; with the
+      appropriate permissions and commands, you can merge your changes back into the common source
+      automagically. Contact us when you're ready to do that or see the <a href=
       "index.shtml#contributing">info on contributing</a>.</p>
 
       <h2>Access to Releases 2.12 and older</h2>
 
-      <p>The best way to retrieve the source for releases 2.12 and
-      earlier is from the <a href="getcvscode.shtml">CVS
-      Repository</a>. Please see those instructions for
-      details.</p>
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>The best way to retrieve the source for releases 2.12 and earlier is from the <a href=
+      "getcvscode.shtml">CVS Repository</a>. Please see those instructions for details.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

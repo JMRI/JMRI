@@ -1,162 +1,125 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
 
-  <title>JMRI: DecoderPro Service Mode Programmer</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: DecoderPro Service Mode Programmer</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>JMRI: Op&eacute;rations Programmateur DecoderPro en Mode
-      Service</h1><a name="contents" id="contents"></a>
-
+      <h1>JMRI: Opérations Programmateur DecoderPro en Mode Service</h1>
+      <a name="contents" id="contents"></a>
       <h2>Contenus</h2>
 
-      <p>Ce document explique certains <b>onglets basique du
-      programmateur</b>, et des id&eacute;es sur la mani&egrave;re
-      de les utiliser</p>
+      <p>Ce document explique certains <strong>onglets basique du programmateur</strong>, et des
+      idées sur la manière de les utiliser</p>
 
       <ul>
-        <li><a href="#Roster">Onglet Liste</a></li>
+        <li><a href="#Roster">Onglet Liste</a>
+        </li>
 
-        <li><a href="#Basic">Onglet Basique</a></li>
+        <li><a href="#Basic">Onglet Basique</a>
+        </li>
 
-        <li><a href="#Other%20Tabs">Autres Onglets</a></li>
+        <li><a href="#Other%20Tabs">Autres Onglets</a>
+        </li>
 
-        <li><a href="#Speed%20able">Onglet Table de
-        Vitesse</a></li>
+        <li><a href="#Speed%20able">Onglet Table de Vitesse</a>
+        </li>
       </ul>
 
-      <p><a name="Roster" id="Roster"></a></p>
+      <p><a name="Roster" id="Roster"></a>
+      </p>
 
       <h3>onglet Liste</h3>
 
-      <p>Une liste est une base de donn&eacute;es de toutes les
-      locomotives que votre installation de DecoderPro a
-      programm&eacute;es.Elle inclut les informations vu dans
-      l'&eacute;cran ci-dessous:</p>
+      <p>Une liste est une base de données de toutes les locomotives que votre installation de
+      DecoderPro a programmées.Elle inclut les informations vu dans l'écran ci-dessous:</p>
 
-      <p><img src="RosterTab.png"></p>
+      <p><img src="RosterTab.png" alt="">
+      </p>
 
-      <p>Le premier champ "ID" devient le nom de fichier dans la
-      Liste pour la locomotive que vous programmez.</p>
+      <p>Le premier champ "ID" devient le nom de fichier dans la Liste pour la locomotive que vous
+      programmez.</p>
 
-      <p>Le champ Adresse est l'adresse DCC active pour cet loco,
-      voir le <a href="#Basic">Volet Basique</a> .</p>
+      <p>Le champ Adresse est l'adresse DCC active pour cet loco, voir le <a href="#Basic">Volet
+      Basique</a> .</p>
 
-      <p>La Vitesse Limite R&eacute;gulateur d&eacute;finit le
-      pourcentage du r&eacute;gulateur Maximum autoris&eacute;.</p>
+      <p>La Vitesse Limite Régulateur définit le pourcentage du régulateur Maximum autorisé.</p>
 
-      <p>Vous pouvez mettre tout ce que vous voulez dans les autres
-      domaines.</p>
+      <p>Vous pouvez mettre tout ce que vous voulez dans les autres domaines.</p>
 
-      <p>Le bouton Enregistrer stocke les informations actuelles du
-      d&eacute;codeur dans votre dossier Liste. Le stockage par
-      d&eacute;faut est dans le m&ecirc;me r&eacute;pertoire que
-      celui des pr&eacute;f&eacute;rences.</p>
+      <p>Le bouton Enregistrer stocke les informations actuelles du décodeur dans votre dossier
+      Liste. Le stockage par défaut est dans le même répertoire que celui des préférences.</p>
 
-      <p>Le bouton "R&eacute;initialiser par d&eacute;faut" qui
-      n'est pas un "reset usine", retourne le CV d&eacute;codeur
-      &agrave; la valeur par d&eacute;faut qui a &eacute;t&eacute;
-      programm&eacute;e dans le fichier xml d&eacute;codeur. Elle
-      ne modifie PAS les valeurs dans le fichier liste sur votre
-      disque dur, &agrave; moins que vous y Enregistriez les
-      valeurs qui ne sont pas &eacute;crites dans le
-      d&eacute;codeur jusqu'&agrave; ce que vous
-      s&eacute;lectionniez de les &eacute;crire.</p>
+      <p>Le bouton "Réinitialiser par défaut" qui n'est pas un "reset usine", retourne le CV
+      décodeur à la valeur par défaut qui a été programmée dans le fichier xml décodeur. Elle ne
+      modifie PAS les valeurs dans le fichier liste sur votre disque dur, à moins que vous y
+      Enregistriez les valeurs qui ne sont pas écrites dans le décodeur jusqu'à ce que vous
+      sélectionniez de les écrire.</p>
 
-      <p>La plupart des d&eacute;codeurs vont activer le menu
-      R&eacute;init (&agrave; c&ocirc;&eacute; du menu Fichier en
-      haut de la page). Il s'agit de la "R&eacute;init d'Usine",
-      certaines constructeur ont plusieurs routines de
-      r&eacute;initialisation. Elle le fait en &eacute;crivant
-      directement dans un CV dans le d&eacute;codeur, CV8 dans le
-      cas de Digitrax. Tous les d&eacute;codeurs peuvent ne pas
-      supporter la R&eacute;init d'Usine et comment ils
-      fonctionnent d&eacute;pendent du fabricant et du
-      d&eacute;codeur.</p>
+      <p>La plupart des décodeurs vont activer le menu Réinit (à côé du menu Fichier en haut de la
+      page). Il s'agit de la "Réinit d'Usine", certaines constructeur ont plusieurs routines de
+      réinitialisation. Elle le fait en écrivant directement dans un CV dans le décodeur, CV8 dans
+      le cas de Digitrax. Tous les décodeurs peuvent ne pas supporter la Réinit d'Usine et comment
+      ils fonctionnent dépendent du fabricant et du décodeur.</p>
 
-      <p><a name="Basic" id="Basic"></a></p>
+      <p><a name="Basic" id="Basic"></a>
+      </p>
+
       <h3>Onglet Basique</h3>
 
-      <p><img src="BasicTab.png"></p>
+      <p><img src="BasicTab.png" alt="">
+      </p>
 
-      <p>Le volet Basique est l'endroit o&ugrave; vous
-      d&eacute;finissez l'adresse du D&eacute;codeur, vous pouvez
-      d&eacute;finir une adresse courte et longue , puis
-      s&eacute;lectionnez celle qui est Actif.</p>
+      <p>Le volet Basique est l'endroit où vous définissez l'adresse du Décodeur, vous pouvez
+      définir une adresse courte et longue , puis sélectionnez celle qui est Actif.</p>
 
-      <p>Les &eacute;l&eacute;ments qui s'affichent peuvent
-      &ecirc;tre diff&eacute;rents pour chaque d&eacute;codeur.
-      Cela d&eacute;pend de la fa&ccedil;on dont le fichier de
-      d&eacute;finition de d&eacute;codeur a &eacute;t&eacute;
-      &eacute;crit et quelles sont les options de fabrication
-      incluses dans le d&eacute;codeur.</p>
+      <p>Les éléments qui s'affichent peuvent être différents pour chaque décodeur. Cela dépend de
+      la façon dont le fichier de définition de décodeur a été écrit et quelles sont les options de
+      fabrication incluses dans le décodeur.</p>
 
-      <p>Vous pouvez s&eacute;lectionner la Direction de la
-      Locomotive. Si vous voulez que la loco aille dans l'autre
-      direction s&eacute;lectionner Inverse.</p>
+      <p>Vous pouvez sélectionner la Direction de la Locomotive. Si vous voulez que la loco aille
+      dans l'autre direction sélectionner Inverse.</p>
 
-      <p>Les Crans de Vitesse de la Loco peuvent &ecirc;tre
-      s&eacute;lectionn&eacute;s, g&eacute;n&eacute;ralement 28
-      crans.</p>
+      <p>Les Crans de Vitesse de la Loco peuvent être sélectionnés, généralement 28 crans.</p>
 
-      <p>Vous pouvez s&eacute;lectionner ralentir si la locomotive
-      r&eacute;pond &agrave; la tension DV ou non.</p>
+      <p>Vous pouvez sélectionner ralentir si la locomotive répond à la tension DV ou non.</p>
 
-      <p>Vous pouvez entrer n'importe quel num&eacute;ro que vous
-      voulez dans le "ID Utilisateur"</p>
+      <p>Vous pouvez entrer n'importe quel numéro que vous voulez dans le "ID Utilisateur"</p>
 
-      <p>L'ID Fabricant et l'ID de version Fabricant sont
-      d&eacute;finies dans le d&eacute;codeur par le fabricant.
-      JMRI utilise ceux-ci pour identifier le d&eacute;codeur.</p>
-
+      <p>L'ID Fabricant et l'ID de version Fabricant sont définies dans le décodeur par le
+      fabricant. JMRI utilise ceux-ci pour identifier le décodeur.</p>
       <a name="OtherTabs" id="OtherTabs"></a>
       <h3>Autres Onglets</h3>
-      <p>Les autres onglets d&eacute;pendent de
-      ce que le fabricant a install&eacute; dans le
-      d&eacute;codeur, si les options n'ont pas &eacute;t&eacute;
-      install&eacute;es les volets sont soit gris&eacute;s ou pas
-      activ&eacute;s.</p>
 
+      <p>Les autres onglets dépendent de ce que le fabricant a installé dans le décodeur, si les
+      options n'ont pas été installées les volets sont soit grisés ou pas activés.</p>
       <a name="SpeedTable" id="SpeedTable"></a>
       <h3>Onglet Table de Vitesse</h3>
 
-      <p><img src="SpeedTab.png"></p>
+      <p><img src="SpeedTab.png" alt="">
+      </p>
 
-      <p>Ce panneau peut &ecirc;tre diff&eacute;rent selon la
-      fa&ccedil;on dont le d&eacute;codeur xml a &eacute;t&eacute;
-      construit. Pour utiliser les CVs de la table de vitesse
-      habituellement l'option de vitesse basique doit &ecirc;tre
-      &eacute;teinte. Les petites cases sous chaque curseur sont
-      tr&egrave;s utiles. Pour voir comment ils travaillent cocher
-      une dans le milieu de la table, puis faites glisser le
-      dernier curseur vers le bas . Notez que les valeurs ne
-      changent pas dessous celle que vous avez coch&eacute;e. Ils
-      ne changent pas pour les crans au-dessus, si un cran
-      inf&eacute;rieur est modifi&eacute;.</p>
-
+      <p>Ce panneau peut être différent selon la façon dont le décodeur xml a été construit. Pour
+      utiliser les CVs de la table de vitesse habituellement l'option de vitesse basique doit être
+      éteinte. Les petites cases sous chaque curseur sont très utiles. Pour voir comment ils
+      travaillent cocher une dans le milieu de la table, puis faites glisser le dernier curseur
+      vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils
+      ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

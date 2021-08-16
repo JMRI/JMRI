@@ -1,391 +1,459 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Signal Masts Repeater</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="author" content="B. Milhaupt">
   <meta name="Date.Modified" content="20200107">
   <meta name="keywords" content="JMRI help Signal Mast Repeater">
   <!--#include virtual="/Style.shtml" -->
-</head>
 
+  <style>
+    .ctr {text-align: center;}
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Signal Mast Repeater</h1>
 
-      <p>The Signal Mast Repeater tool allows you to configure one
-      Signal Mast to follow the state of another, or for a change on
-      either Signal Mast to force the other to the same state.</p>
+      <p>The Signal Mast Repeater tool allows you to configure one Signal Mast to follow the state
+      of another, or for a change on either Signal Mast to force the other to the same state.</p>
 
-      <p>Signal Mast Repeaters require that both Signal Masts must be of the same
-      Signal System and the same Mast Type.  Signal Mast Repeaters cannot
-      be configured between masts of differing types or between signaling differing
-      signaling systems.</p>
+      <p>Signal Mast Repeaters require that both Signal Masts must be of the same Signal System and
+      the same Mast Type. Signal Mast Repeaters cannot be configured between masts of differing
+      types or between signaling differing signaling systems.</p>
 
       <h2>Configuring a Repeater</h2>
 
-      <p>The Signal Mast Repeater table is accessed via the "Tools" pull-down
-          menu at the top of the Signal Masts Table window.</p>
+      <p>The Signal Mast Repeater table is accessed via the "Tools" pull-down menu at the top of
+      the Signal Masts Table window.</p>
 
       <h3>Adding a Repeater</h3>
 
-      <p>When creating a new Repeater, and a Master mast is selected from the
-      pull-down list at the bottom of the window, the Slave pull-down list will
-      be populated with Signal Masts of the corresponding signaling system and
-      mast type. If there are no valid masts then the option to select the Slave
-      will remain disabled, with an empty list.</p>
+      <p>When creating a new Repeater, and a Master mast is selected from the pull-down list at the
+      bottom of the window, the Slave pull-down list will be populated with Signal Masts of the
+      corresponding signaling system and mast type. If there are no valid masts then the option to
+      select the Slave will remain disabled, with an empty list.</p>
 
-      <p>Once both a Master mast and a Slave mast have been selected, the "Add" button
-      may be activated to add the Repeater to the list at the top of the window.</p>
+      <p>Once both a Master mast and a Slave mast have been selected, the "Add" button may be
+      activated to add the Repeater to the list at the top of the window.</p>
 
       <h3>Configuring operation of a Repeater</h3>
 
-      <p>The "Repeat" function may operate in any of three modes which define the
-          direction(s) in which the "repeat function" occurs.
-          The direction of repeat for a given Repeater is configured in the upper
-          part of the Signal Mast Repeater tool window using a button in the
-          column named "Update"  This column is typically found between the master
-          and slave name columns.  Activating the button sequences
-          through the three available modes.  Each mode is shown on the button by one or
-          two arrow-like representations of the direction in which repeats are made:</p>
+      <p>The "Repeat" function may operate in any of three modes which define the direction(s) in
+      which the "repeat function" occurs. The direction of repeat for a given Repeater is
+      configured in the upper part of the Signal Mast Repeater tool window using a button in the
+      column named "Update" This column is typically found between the master and slave name
+      columns. Activating the button sequences through the three available modes. Each mode is
+      shown on the button by one or two arrow-like representations of the direction in which
+      repeats are made:</p>
+
       <table border="2">
-          <tr>
-              <td align="center"><img src="images/SignalMastRepeaterMaster-to-SlaveButton.png"
-                   alt="Master to Slave repeat button image" ></td>
-              <td align="center">indicates that Master mast
-          aspect changes are repeated to the Slave mast.</td>
-          </tr>
-          <tr>
-              <td align="center"><img src="images/SignalMastRepeaterSlave-to-MasterButton.png"
-                   alt="Master to Slave repeat button image"></td>
-              <td align="center">indicates that Slave mast
-          aspect changes are repeated to the Master mast.</td>
-          </tr>
-          <tr>
-              <td align="center"><img src="images/SignalMastRepeaterBidirectionalButton.png"
-                   alt="Master to Slave repeat button image"></td>
-              <td align="center">indicates that any Master mast
-          aspect change is repeated to the Slave mast, and any Slave mast aspect change is
-          repeated to the Master mast.</td>
-          </tr>
+        <tr>
+          <td class="ctr"><img src="images/SignalMastRepeaterMaster-to-SlaveButton.png" alt=
+          "Master to Slave repeat button image">
+          </td>
+          <td>indicates that Master mast aspect changes are repeated to the Slave mast.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr"><img src="images/SignalMastRepeaterSlave-to-MasterButton.png" alt=
+          "Master to Slave repeat button image">
+          </td>
+          <td>indicates that Slave mast aspect changes are repeated to the Master mast.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr"><img src="images/SignalMastRepeaterBidirectionalButton.png" alt=
+          "Master to Slave repeat button image">
+          </td>
+          <td>indicates that any Master mast aspect change is repeated to the Slave mast, and any
+          Slave mast aspect change is repeated to the Master mast.</td>
+        </tr>
       </table>
 
-      <p>By default, a Repeater is enabled when it is created.  It is possible to
-          disable an individual Repeater by un-checking the box in the "Enable" column
-          for the particular row containing the Repeater.  This can be useful for
-          debugging your Repeater's effect on the layout.</p>
+      <p>By default, a Repeater is enabled when it is created. It is possible to disable an
+      individual Repeater by un-checking the box in the "Enable" column for the particular row
+      containing the Repeater. This can be useful for debugging your Repeater's effect on the
+      layout.</p>
 
       <h2>A use-case for a Signal Mast Repeater</h2>
-      <p>In those cases where there are multiple routes between a "source"
-      signal mast and a "destination" signal mast, with no intervening
-      signal masts, the regular JMRI Signal Mast Logic "discovery" project
-      will only identify <strong>one</strong> of the valid routes.  JMRI's Signal
-      Mast Logic ignores any other existing routes and does not generate any logic
-      in the Source mast's logic for those un-discovered routes.</p>
-      <p>The Layout Editor panel below shows a track arrangement where this
-      Signal Mast Logic discovery shortcoming can be seen.  For this panel, there
-      are three different routes from signal RA2.</p>
-      <p> JMRI's Signal Mast Logic
-      "discovery" finds only two of the three routes:
+
+      <p>In those cases where there are multiple routes between a "source" signal mast and a
+      "destination" signal mast, with no intervening signal masts, the regular JMRI Signal Mast
+      Logic "discovery" project will only identify <strong>one</strong> of the valid routes. JMRI's
+      Signal Mast Logic ignores any other existing routes and does not generate any logic in the
+      Source mast's logic for those un-discovered routes.</p>
+
+      <p>The Layout Editor panel below shows a track arrangement where this Signal Mast Logic
+      discovery shortcoming can be seen. For this panel, there are three different routes from
+      signal RA2.</p>
+
+      <p>JMRI's Signal Mast Logic "discovery" finds only two of the three routes:</p>
+
       <ul>
-          <li>Route 1 - a route from RA2 to RA173, via switch 1 lined "reverse" (diverging)
-              and switch 5 lined normal; and</li>
-          <li>Route 2 - a route from RA2 to RA171, via switch 1 lined "normal" (straight)</li>
+        <li>Route 1 - a route from RA2 to RA173, via switch 1 lined "reverse" (diverging) and
+        switch 5 lined normal; and</li>
+
+        <li>Route 2 - a route from RA2 to RA171, via switch 1 lined "normal" (straight)</li>
       </ul>
 
-      <p>JMRI Signal Mast Logic Discovery for RA2 fails to automatically discover the
-      last route:
+      <p>JMRI Signal Mast Logic Discovery for RA2 fails to automatically discover the last
+      route:</p>
+
       <ul>
-          <li>Route 3 - a route from RA2 to RA173 via switch 1 normal and Switch 3 reverse and
-      Switch 5 reverse.</li>
+        <li>Route 3 - a route from RA2 to RA173 via switch 1 normal and Switch 3 reverse and Switch
+        5 reverse.</li>
       </ul>
 
       <p>Each of the three routes is separately discussed below.</p>
 
       <h3>Example Route 1</h3>
-      <p>This route is from signal RA2, via switch 1 "reversed" (thrown), and switch 5
-          "normal" (closed), to signal RA173, and is shown below.</p>
-      <img src="images/SignalMastRepeaterRoute1.png" alt="an example showing a properly-discovered route from signal mast RA2 to signal mast RA173.">
-      <p>Route 1 was properly discovered by the Signal Mast Logic and is shown in
-          the top row of the Signal Mast Logic window image, below.  the Route 1
-          logic is enabled (checked).  Under the conditions shown in the image
-          above, Route 1 is currently an active route, as indicated by the
-          associated check marks.  Examination of the conditions shown above shows
-          that RA2 is presenting a "Diverging Clear" aspect (Red over Green over
-          Red).</p>
-      <img src="images/SignalMastRepeaterRoute1SMLogic.png" alt="an example showing the signal mast logic for the properly-discovered route from signal mast RA2 to signal mast RA173.">
 
+      <p>This route is from signal RA2, via switch 1 "reversed" (thrown), and switch 5 "normal"
+      (closed), to signal RA173, and is shown below.</p>
+      <img src="images/SignalMastRepeaterRoute1.png" alt=
+      "an example showing a properly-discovered route from signal mast RA2 to signal mast RA173.">
+      <p>Route 1 was properly discovered by the Signal Mast Logic and is shown in the top row of
+      the Signal Mast Logic window image, below. the Route 1 logic is enabled (checked). Under the
+      conditions shown in the image above, Route 1 is currently an active route, as indicated by
+      the associated check marks. Examination of the conditions shown above shows that RA2 is
+      presenting a "Diverging Clear" aspect (Red over Green over Red).</p>
+      <img src="images/SignalMastRepeaterRoute1SMLogic.png" alt=
+      "an example showing the signal mast logic for the properly-discovered route from signal mast RA2 to signal mast RA173.">
       <h3>Example Route 2</h3>
-      <p>This route is from signal RA2, via switch 1 "normal" (closed), and switch 3
-          "normal" (closed), to signal RA171, and is shown below.</p>
-      <img src="images/SignalMastRepeaterRoute2.png" alt="an example showing a properly-discovered route from signal mast RA2 to signal mast RA171.">
-      <p>Route 2 was properly discovered by the Signal Mast Logic and is shown in
-          the second row of the Signal Mast Logic window image, below.  The Route 2
-          logic is enabled (checked).  Under the conditions shown in the image
-          above, Route 2 is currently an active route, as indicated by the
-          associated check marks.  Examination of the conditions shown above shows
-          that RA2 is presenting a "Clear" aspect (Green over Red over Red).</p>
-      <img src="images/SignalMastRepeaterRoute2SMLogic.png" alt="an example showing the signal mast logic for the properly-discovered route from signal mast RA2 to signal mast RA171.">
 
+      <p>This route is from signal RA2, via switch 1 "normal" (closed), and switch 3 "normal"
+      (closed), to signal RA171, and is shown below.</p>
+      <img src="images/SignalMastRepeaterRoute2.png" alt=
+      "an example showing a properly-discovered route from signal mast RA2 to signal mast RA171.">
+      <p>Route 2 was properly discovered by the Signal Mast Logic and is shown in the second row of
+      the Signal Mast Logic window image, below. The Route 2 logic is enabled (checked). Under the
+      conditions shown in the image above, Route 2 is currently an active route, as indicated by
+      the associated check marks. Examination of the conditions shown above shows that RA2 is
+      presenting a "Clear" aspect (Green over Red over Red).</p>
+      <img src="images/SignalMastRepeaterRoute2SMLogic.png" alt=
+      "an example showing the signal mast logic for the properly-discovered route from signal mast RA2 to signal mast RA171.">
       <h3>Example route 3 (the undiscovered route)</h3>
-      <p>Route 3 is not discovered by the Signal Mast Logic.  This route is from
-      signal RA2, via switch 1 "normal" (closed), switch 3 "reversed" (thrown)
-      and switch 5 "reversed" (thrown) to signal RA173, and is shown below.</p>
-      <img src="images/SignalMastRepeaterRoute3.png" alt="an example showing two different routes from one signal mast to its destination signal mast">
-      <p>Note that signal RA2 does <strong>not</strong> give an indication better
-      than "Stop" under these conditions, because there is no Signal Logic entry
-      which discovered the path from RA2 to RA173 via this route.</p>
-      <img src="images/SignalMastRepeaterRoute3NoSMLogic.png" alt="Signal Mast Logic automatically generated by the 'discovery' process">
-      <p>Note that neither of the two rows of the Signal Mast Logic table shown above
-      are marked as "Active", because the route requirements of these two Signal
-      Mast Logic entries are not met.</p>
+
+      <p>Route 3 is not discovered by the Signal Mast Logic. This route is from signal RA2, via
+      switch 1 "normal" (closed), switch 3 "reversed" (thrown) and switch 5 "reversed" (thrown) to
+      signal RA173, and is shown below.</p>
+      <img src="images/SignalMastRepeaterRoute3.png" alt=
+      "an example showing two different routes from one signal mast to its destination signal mast">
+      <p>Note that signal RA2 does <strong>not</strong> give an indication better than "Stop" under
+      these conditions, because there is no Signal Logic entry which discovered the path from RA2
+      to RA173 via this route.</p>
+      <img src="images/SignalMastRepeaterRoute3NoSMLogic.png" alt=
+      "Signal Mast Logic automatically generated by the 'discovery' process">
+      <p>Note that neither of the two rows of the Signal Mast Logic table shown above are marked as
+      "Active", because the route requirements of these two Signal Mast Logic entries are not
+      met.</p>
 
       <h2>Why Signal Mast Logic discovery misses the third route</h2>
-      <p>When discovering signal mast pairs between which to create Signal
-      Mast Logic, JMRI <strong>finds only one path</strong> between a given signal mast
-      pair.  JMRI's discovery process <strong>then stops looking for other paths between
-      those two signal masts</strong>, and moves on to discovery for another signal mast pair.</p>
-      <p>There are a variety of technical reasons for this
-      behavior, and, at least for the near future, there is no expectation that
-      this behavior will change.  A workaround is needed.</p>
+
+      <p>When discovering signal mast pairs between which to create Signal Mast Logic, JMRI
+      <strong>finds only one path</strong> between a given signal mast pair. JMRI's discovery
+      process <strong>then stops looking for other paths between those two signal masts</strong>,
+      and moves on to discovery for another signal mast pair.</p>
+
+      <p>There are a variety of technical reasons for this behavior, and, at least for the near
+      future, there is no expectation that this behavior will change. A workaround is needed.</p>
 
       <h2>The workaround</h2>
 
-      <p>That explanation of the problem contains a hint on how to resolve the
-      problem - JMRI's Signal Mast Logic works with unique pairs of signals.  This
-      implies that a signal mast which duplicates the behavior of RA173 might
-      allow Signal Mast Logic to be created for the undiscovered route from RA2 to
-      RA173.</p>
+      <p>That explanation of the problem contains a hint on how to resolve the problem - JMRI's
+      Signal Mast Logic works with unique pairs of signals. This implies that a signal mast which
+      duplicates the behavior of RA173 might allow Signal Mast Logic to be created for the
+      undiscovered route from RA2 to RA173.</p>
 
-      <p>The duplicate of signal mast RA173 turns out to be a great idea! And it
-      is the beginning of the solution!</p>
+      <p>The duplicate of signal mast RA173 turns out to be a great idea! And it is the beginning
+      of the solution!</p>
 
-      <p>But a given point on a Layout Editor panel can only have <strong>one</strong>
-      signal mast governing movement in a given direction.  That means that the duplicate
-      signal mast <strong>cannot</strong> be tied to the same spot on the panel.  And, in a roundabout
-      way, it also means that Signal Mast Logic discovery <strong>is unable</strong> to automatically
+      <p>But a given point on a Layout Editor panel can only have <strong>one</strong> signal mast
+      governing movement in a given direction. That means that the duplicate signal mast
+      <strong>cannot</strong> be tied to the same spot on the panel. And, in a roundabout way, it
+      also means that Signal Mast Logic discovery <strong>is unable</strong> to automatically
       identify the alternate path to the the duplicate of RA173.</p>
 
-      <p>Proceeding from this point requires manual work - it is necessary to
-      manually create the Signal Mast Logic entry which we would have preferred
-      that Signal Mast Logic discovery would create.  That's where the "Add Signal Logic"
-      button on the signal's "Signal Mast Logic" window comes into play.</p>
+      <p>Proceeding from this point requires manual work - it is necessary to manually create the
+      Signal Mast Logic entry which we would have preferred that Signal Mast Logic discovery would
+      create. That's where the "Add Signal Logic" button on the signal's "Signal Mast Logic" window
+      comes into play.</p>
 
       <h2>Workaround for the example</h2>
-      <p>The steps to work around the Signal Mast Discovery shortcoming described above
-      are:</p>
+
+      <p>The steps to work around the Signal Mast Discovery shortcoming described above are:</p>
+
       <ol>
-          <li>Create a duplicate "destination" signal mast;</li>
-          <li>Configure the duplicate mast as a Signal Mast Repeater for the
-              primary destination signal mast;</li>
-          <li>Place the virtual signal mast on the Layout Editor panel;</li>
-          <li>Manually create the required Signal Mast Logic;</li>
-          <li>Test the logic.</li>
-      </ol>
-      <p>The steps are detailed here:</p>
-      <ol>
-          <li>Create the duplicate destination Signal Mast
-              <ol>
-                  <li>Open the <a href="SignalMastTable.shtml">Signal Mast Table</a>,
-                  via "Tools"->"Tables"->"Signal Masts".</li>
-                  <li><a href="AddEditSignalingLogic.shtml">Add</a> the dummy
-                  signal mast to be a near-identical of the physical
-                  signal mast, which is RA173 in this case.  For ease of reference,
-                  choose a name that is similar to the mast being mimic'd -
-                  in the case here, "Virtual RA173".<br>
-                  This dummy mast must use the same "signaling system" as
-                  the mast it is to mimic, and it must be of the same "mast type".
-                  The Repeater need not use the same "Mast Driver" type.<br>
-                  If no physical representation of the repeated mast is required,
-                  the Mast Driver type of "Virtual Mast" may be used.  If the chosen Mast
-                  Driver type uses one or more a hardware addresses, be sure to
-                  use address information which is not already in-use by any
-                  other layout hardware or other virtual masts.</li>
-              </ol>
-          </li>
-          <li>Configure the duplicate Signal Mast to repeat the physical Signal Mast
-              <ol>
-                  <li>Select the "Tools" pull-down on the Signal Mast Table's tool
-                  bar.  Select "Repeaters".  This opens the "Signal Mast Repeaters"
-                  window, and pre-populates the "Master" signal list at the bottom
-                  of the window with all available signal masts.</li>
-                  <li>At the bottom of the window, select the "Master" signal -
-                  in this case, mast "RA173".  The tool will
-                  then pre-populate the list of "Slave" signal masts which use the same
-                  signaling system and mast type as the selected Master mast.</li>
-                  <li>Select the "Slave" Signal Mast to act in conjunction with
-                      the selected Master Signal Mast - in this case, mast "Virtual RA173".<p>
-                  <img src="images/SignalMastRepeaterCreation0.png" alt="repeater list"> </li>
-                  <li>Activate the "Add" button.  This will place a new line in the table
-                  of repeaters at in top section of the window.</li>
-                  <li>The arrowhead within the table entry for "RA173" and "Virtual RA173"
-                  determines whether changes to one signal mast will be reflected by
-                  the other mast.  By default, a change on one mast will be reflected
-                  on the other, as shown by the button shown below:"<br>
-                  <img src="images/SignalMastRepeaterBidirectionalButton.png"
-                   alt="Master to Slave repeat button image">
-                  <p>Click on that button to cycle the arrowheads so that there is
-                  only one arrowhead, and it should point towards "Virtual RA173".
-                  This means that changes to RA173's indication will be reflected
-                  upon Virtual RA173, but that changes on Virtual RA173 will not
-                  be reflected upon RA173. This is shown below.<p>
-                  <img src="images/SignalMastRepeaterCreation.png" alt="repeater list with row"> </li>
-                  <li>You may now close the Signal Mast Repeater window.</li>
-              </ol>
-          </li>
-          <li>Optionally, place the duplicate Signal Mast on the Layout Editor panel.<br>
-              (Note that placing the the duplicate Signal Mast on the Layout Editor
-              panel provides no obvious functional advantages for this Repeater
-              use-case, and is done mainly for debugging purposes.)
-              <ol>
-                  <li>Place the new virtual Signal Mast somewhere on the Layout Editor
-                  panel.  It is necessary to select the "Signal Mast Icon" radio
-                  button, and select the newly-created dummy mast in the adjacent
-                  selection box.</li>
-                  <li>Place the icon onto the panel in some location which makes
-                  sense to you.  I chose to place it immediately below RA173, as
-                  shown below.<p>
-                  <img src="images/SignalMastRepeaterIconPlaced.png" alt="Icon Placed"></li>
-                  <li>You might wish to right-click on the virtual Signal Mast and
-                  select the option to "hide" the Signal Mast icon
-                  when not in "edit" mode.  For the purposes of this example, the icon
-                  remains un-hidden.</li>
-              </ol>
-          </li>
-          <li>Create the Signal Mast Logic for the undiscovered route.
-              <ol>
-              <li>Right-click on RA2 and select the "Signal Mast Logic: RA2" selection.
-              This opens up the "Signal Mast Pairs: RA2" window (For further help,
-              see <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a>.)</li>
-              <li>Select the destination mast "Virtual RA173".<p>
-              <img src="images/SignalMastRepeaterCreationSelectDestination.png" alt="Select destination"></li>
-              <li>Add the "Blocks" associated with the route.
-                  <ol>
-                    <li>In the "blocks" section, select all of the blocks between the entering
-                    signal RA2 and the leaving signal (Virtual) RA173 which are on the
-                    "undiscovered" route. In this case, blocks 2, 3, 4, 7, and 8 are on
-                    the "undiscovered" path.  They must be entered as "Unoccupied", since
-                    signal RA2 <strong>must not</strong> indicate anything other
-                    than "Stop" if any of those blocks is occupied. This configuration
-                    is shown below.<p>
-                    <img src="images/SignalMastRepeaterCreationBlocks.png" alt="Create block entires"></li>
-                  </ol>
-              </li>
-              <li>Add the "Turnouts", and their positions, associated with the route.
-                  <ol>
-                    <li>Select the "Turnouts" tab. "Include" each of the turnouts, and each one's
-                    required direction of throw, for those turnouts on the route of the
-                    undiscovered path between the entering signal RA2 and the leaving
-                    signal (Virtual) RA173.
-                    In this case, Turnout 1 must be "closed" (normal), Turnout 3 must
-                    be "thrown" (reversed), and Turnout 5 must be "thrown" (reversed)
-                    on this route.  This configuration is shown below.<p>
-                    <img src="images/SignalMastRepeaterCreationTurnouts.png" alt="Create turnout entries"></li>
-                  </ol>
-              </li>
-              <li>If necessary, add any opposing "Signal Mast(s)" associated with
-                  the route.  This is often a requirement for signals in CTC territory.
-                  <ol>
-                    <li>If you find it necessary to prevent absolute signal RA2
-                    from clearing when opposing absolute signal LA4 displays
-                    anything less-restrictive than "stop", then Signal Mast LA4
-                    must be included in the RA4 Signal Mast Logic's "Signal Mast"
-                    tab.  RA2's Signal Mast Logic entry must require that LA4 is
-                    at "Stop".  This configuration is shown below.<p>
-              <img src="images/SignalMastRepeaterCreationMasts.png" alt="Create mast entries"></li>
-                  </ol>
-              </li>
-              </ol>
-              <p>The resulting Signal Mast Logic list for RA2 appears similar to
-              the image below, although the "Active" logic item may be selected
-              differently, or no "Active" item may be shown, depending on layout
-              conditions.</p>
-              <img src="images/SignalMastRepeaterFinalSignalMastLogic.png" alt="FInal SML list">
-          </li>
-          <li>Select the "Update Signal Logic" button to make the changes to the
-          RA2 Signal Mast Logic.</li>
-          <li>Save your work!  See <a href="../../../../html/apps/LoadStoreWork.shtml">
-          Loading and Storing Your Work</a>.  </li>
-          <li>Exit the Layout Editor "Edit" mode.</li>
+        <li>Create a duplicate "destination" signal mast;</li>
+
+        <li>Configure the duplicate mast as a Signal Mast Repeater for the primary destination
+        signal mast;</li>
+
+        <li>Place the virtual signal mast on the Layout Editor panel;</li>
+
+        <li>Manually create the required Signal Mast Logic;</li>
+
+        <li>Test the logic.</li>
       </ol>
 
+      <p>The steps are detailed here:</p>
+
+      <ol>
+        <li>Create the duplicate destination Signal Mast
+          <ol>
+            <li>Open the <a href="SignalMastTable.shtml">Signal Mast Table</a>, via
+            "Tools"-&gt;"Tables"-&gt;"Signal Masts".
+            </li>
+
+            <li>
+              <a href="AddEditSignalingLogic.shtml">Add</a> the dummy signal mast to be a
+              near-identical of the physical signal mast, which is RA173 in this case. For ease of
+              reference, choose a name that is similar to the mast being mimic'd - in the case
+              here, "Virtual RA173".<br>
+              This dummy mast must use the same "signaling system" as the mast it is to mimic, and
+              it must be of the same "mast type". The Repeater need not use the same "Mast Driver"
+              type.<br>
+              If no physical representation of the repeated mast is required, the Mast Driver type
+              of "Virtual Mast" may be used. If the chosen Mast Driver type uses one or more a
+              hardware addresses, be sure to use address information which is not already in-use by
+              any other layout hardware or other virtual masts.
+            </li>
+          </ol>
+        </li>
+
+        <li>Configure the duplicate Signal Mast to repeat the physical Signal Mast
+          <ol>
+            <li>Select the "Tools" pull-down on the Signal Mast Table's tool bar. Select
+            "Repeaters". This opens the "Signal Mast Repeaters" window, and pre-populates the
+            "Master" signal list at the bottom of the window with all available signal masts.</li>
+
+            <li>At the bottom of the window, select the "Master" signal - in this case, mast
+            "RA173". The tool will then pre-populate the list of "Slave" signal masts which use the
+            same signaling system and mast type as the selected Master mast.</li>
+
+            <li>Select the "Slave" Signal Mast to act in conjunction with the selected Master
+            Signal Mast - in this case, mast "Virtual RA173".
+              <p><img src="images/SignalMastRepeaterCreation0.png" alt="repeater list">
+              </p>
+            </li>
+
+            <li>Activate the "Add" button. This will place a new line in the table of repeaters at
+            in top section of the window.</li>
+
+            <li>The arrowhead within the table entry for "RA173" and "Virtual RA173" determines
+            whether changes to one signal mast will be reflected by the other mast. By default, a
+            change on one mast will be reflected on the other, as shown by the button shown
+            below:"<br>
+              <img src="images/SignalMastRepeaterBidirectionalButton.png" alt=
+              "Master to Slave repeat button image">
+              <p>Click on that button to cycle the arrowheads so that there is only one arrowhead,
+              and it should point towards "Virtual RA173". This means that changes to RA173's
+              indication will be reflected upon Virtual RA173, but that changes on Virtual RA173
+              will not be reflected upon RA173. This is shown below.</p>
+
+              <p><img src="images/SignalMastRepeaterCreation.png" alt="repeater list with row">
+              </p>
+            </li>
+
+            <li>You may now close the Signal Mast Repeater window.</li>
+          </ol>
+        </li>
+
+        <li>Optionally, place the duplicate Signal Mast on the Layout Editor panel.<br>
+          (Note that placing the the duplicate Signal Mast on the Layout Editor panel provides no
+          obvious functional advantages for this Repeater use-case, and is done mainly for
+          debugging purposes.)
+          <ol>
+            <li>Place the new virtual Signal Mast somewhere on the Layout Editor panel. It is
+            necessary to select the "Signal Mast Icon" radio button, and select the newly-created
+            dummy mast in the adjacent selection box.</li>
+
+            <li>Place the icon onto the panel in some location which makes sense to you. I chose to
+            place it immediately below RA173, as shown below.
+              <p><img src="images/SignalMastRepeaterIconPlaced.png" alt="Icon Placed">
+              </p>
+            </li>
+
+            <li>You might wish to right-click on the virtual Signal Mast and select the option to
+            "hide" the Signal Mast icon when not in "edit" mode. For the purposes of this example,
+            the icon remains un-hidden.</li>
+          </ol>
+        </li>
+
+        <li>Create the Signal Mast Logic for the undiscovered route.
+          <ol>
+            <li>Right-click on RA2 and select the "Signal Mast Logic: RA2" selection. This opens up
+            the "Signal Mast Pairs: RA2" window (For further help, see <a href=
+            "AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a>.)
+            </li>
+
+            <li>Select the destination mast "Virtual RA173".
+              <p><img src="images/SignalMastRepeaterCreationSelectDestination.png" alt=
+              "Select destination">
+              </p>
+            </li>
+
+            <li>Add the "Blocks" associated with the route.
+              <ol>
+                <li>In the "blocks" section, select all of the blocks between the entering signal
+                RA2 and the leaving signal (Virtual) RA173 which are on the "undiscovered" route.
+                In this case, blocks 2, 3, 4, 7, and 8 are on the "undiscovered" path. They must be
+                entered as "Unoccupied", since signal RA2 <strong>must not</strong> indicate
+                anything other than "Stop" if any of those blocks is occupied. This configuration
+                is shown below.
+                  <p><img src="images/SignalMastRepeaterCreationBlocks.png" alt=
+                  "Create block entires">
+                  </p>
+                </li>
+              </ol>
+            </li>
+
+            <li>Add the "Turnouts", and their positions, associated with the route.
+              <ol>
+                <li>Select the "Turnouts" tab. "Include" each of the turnouts, and each one's
+                required direction of throw, for those turnouts on the route of the undiscovered
+                path between the entering signal RA2 and the leaving signal (Virtual) RA173. In
+                this case, Turnout 1 must be "closed" (normal), Turnout 3 must be "thrown"
+                (reversed), and Turnout 5 must be "thrown" (reversed) on this route. This
+                configuration is shown below.
+                  <p><img src="images/SignalMastRepeaterCreationTurnouts.png" alt=
+                  "Create turnout entries">
+                  </p>
+                </li>
+              </ol>
+            </li>
+
+            <li>If necessary, add any opposing "Signal Mast(s)" associated with the route. This is
+            often a requirement for signals in CTC territory.
+              <ol>
+                <li>If you find it necessary to prevent absolute signal RA2 from clearing when
+                opposing absolute signal LA4 displays anything less-restrictive than "stop", then
+                Signal Mast LA4 must be included in the RA4 Signal Mast Logic's "Signal Mast" tab.
+                RA2's Signal Mast Logic entry must require that LA4 is at "Stop". This
+                configuration is shown below.
+                  <p><img src="images/SignalMastRepeaterCreationMasts.png" alt=
+                  "Create mast entries">
+                  </p>
+                </li>
+              </ol>
+            </li>
+          </ol>
+
+          <p>The resulting Signal Mast Logic list for RA2 appears similar to the image below,
+          although the "Active" logic item may be selected differently, or no "Active" item may be
+          shown, depending on layout conditions.</p>
+          <img src="images/SignalMastRepeaterFinalSignalMastLogic.png" alt="FInal SML list">
+        </li>
+
+        <li>Select the "Update Signal Logic" button to make the changes to the RA2 Signal Mast
+        Logic.</li>
+
+        <li>Save your work! See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and
+        Storing Your Work</a>.
+        </li>
+
+        <li>Exit the Layout Editor "Edit" mode.</li>
+      </ol>
       That completes the changes!
       <h3>Testing the workaround</h3>
+
       <ul>
-          <li>Click on Turnout 1 until it is "closed" (normal, straight route, ...).
-          Click on Turnout 2 until it is "closed".  Click on signal RA171 until it gives
-          an indication which is less-restrictive than "Stop and Proceed".  You should get
-          an indication greater than "stop" on RA2.  If not, make sure that the
-          sensors associated with the blocks in the path are all "unoccupied" (i.e inactive).</li>
-          <li>Once you get RA2 to automatically upgrade from "Stop", click on RA171 to cycle thru
-              its available indications and watch to see which indications show on RA2. Note that
-          the "Speed" settings for the turnouts and the blocks in the path can all affect the
-          indications seen on RA2.  See below.</li>
-          <li>Line switch 1 to its diverging position, and line switch 5 to its straight
-          position.  Click on signal RA173 until it gives an indication which is
-          less-restrictive than "Stop and Proceed".  You should automatically get
-          an indication greater than "stop" on RA2.  If not, make sure that the
-          sensors associated with the blocks in the path are all "unoccupied" (i.e inactive).</li>
-          <li>Once you get RA2 to automatically upgrade from "Stop" for this path,
-          click on RA173 to cycle thru its available indications and watch
-          to see which indications show on RA2. Note that the "Speed"
-          settings for the turnouts and the blocks in the path can all affect
-          the indications seen on RA2.</li>
-          <li>Then test the route which was not found by the "discover" process.
-          Line Switch 1 "normal", Switch 3 "diverging" and Switch 5 "diverging".
-          This should activate the manually-entered route in the Signal Mast Logic,
-          and should allow changes to RA173 to affect signal RA2.
-          This should allow RA2 to properly display something other than "Stop",
-          as shown here.<p>
-              <img src="images/SignalMastRepeaterRoute3Functioning.png" alt="Show route 3">
-          </li>
+        <li>Click on Turnout 1 until it is "closed" (normal, straight route, ...). Click on Turnout
+        2 until it is "closed". Click on signal RA171 until it gives an indication which is
+        less-restrictive than "Stop and Proceed". You should get an indication greater than "stop"
+        on RA2. If not, make sure that the sensors associated with the blocks in the path are all
+        "unoccupied" (i.e inactive).</li>
+
+        <li>Once you get RA2 to automatically upgrade from "Stop", click on RA171 to cycle thru its
+        available indications and watch to see which indications show on RA2. Note that the "Speed"
+        settings for the turnouts and the blocks in the path can all affect the indications seen on
+        RA2. See below.</li>
+
+        <li>Line switch 1 to its diverging position, and line switch 5 to its straight position.
+        Click on signal RA173 until it gives an indication which is less-restrictive than "Stop and
+        Proceed". You should automatically get an indication greater than "stop" on RA2. If not,
+        make sure that the sensors associated with the blocks in the path are all "unoccupied" (i.e
+        inactive).</li>
+
+        <li>Once you get RA2 to automatically upgrade from "Stop" for this path, click on RA173 to
+        cycle thru its available indications and watch to see which indications show on RA2. Note
+        that the "Speed" settings for the turnouts and the blocks in the path can all affect the
+        indications seen on RA2.</li>
+
+        <li>Then test the route which was not found by the "discover" process. Line Switch 1
+        "normal", Switch 3 "diverging" and Switch 5 "diverging". This should activate the
+        manually-entered route in the Signal Mast Logic, and should allow changes to RA173 to
+        affect signal RA2. This should allow RA2 to properly display something other than "Stop",
+        as shown here.
+          <p><img src="images/SignalMastRepeaterRoute3Functioning.png" alt="Show route 3">
+          </p>
+        </li>
       </ul>
 
-      <p>The speed settings for the turnouts and blocks in a given path all can
-          influence the aspect shown on the signal.  The slowest speed on any part
-          of the route will limit the signal indication to one which allows that
-          speed (or some lower speed, if that specific speed is not available by
-          signal indication).</p>
-      <p><strong>Note:</strong>If the individual turnouts are left at JMRI's
-          "default" values, then any route with a diverging turnout will
-          automatically force the signal to a maximum speed of "restricting" for
-          the route. To achieve the images shown above, it was necessary to
-          change the turnout "diverging" speeds (in the Turnouts table) to be at
-          least "Slow", as shown below.  For the selected signaling system, that
-          was sufficient to allow the signal mast logic to choose "Diverging Clear"
-          (Red-Green-Red) for those routes where a switch required a diverging
-          route.</p>
+      <p>The speed settings for the turnouts and blocks in a given path all can influence the
+      aspect shown on the signal. The slowest speed on any part of the route will limit the signal
+      indication to one which allows that speed (or some lower speed, if that specific speed is not
+      available by signal indication).</p>
+
+      <p><strong>Note:</strong>If the individual turnouts are left at JMRI's "default" values, then
+      any route with a diverging turnout will automatically force the signal to a maximum speed of
+      "restricting" for the route. To achieve the images shown above, it was necessary to change
+      the turnout "diverging" speeds (in the Turnouts table) to be at least "Slow", as shown below.
+      For the selected signaling system, that was sufficient to allow the signal mast logic to
+      choose "Diverging Clear" (Red-Green-Red) for those routes where a switch required a diverging
+      route.</p>
       <img src="images/SignalMastRepeaterTurnoutSettings.png" alt="Turnut settings">
       <h3>A General Note on Signal Repeaters and Multiple Routes</h3>
-      <p>This concept can be extended to situations where "n" routes are available
-      from one signal mast to another signal mast.  With "n" routes, discovery
-      will only find one of those "n" routes.  Using the workaround described above,
-      it is necessary to create "n-1" signal mast repeaters for the destination
-      mast.  And it is necessary to manually create "n-1" Signal Mast Logic entries
-      from the source signal mast to each of the virtual copies of the destination
-      mast.  (The example given above is described the case where the value of "n"
-      was 2.)</p>
+
+      <p>This concept can be extended to situations where "n" routes are available from one signal
+      mast to another signal mast. With "n" routes, discovery will only find one of those "n"
+      routes. Using the workaround described above, it is necessary to create "n-1" signal mast
+      repeaters for the destination mast. And it is necessary to manually create "n-1" Signal Mast
+      Logic entries from the source signal mast to each of the virtual copies of the destination
+      mast. (The example given above is described the case where the value of "n" was 2.)</p>
 
       <h1>See Also</h1>
       For related information, see:
       <ul>
-          <li>The <a href="../../../../html/tools/signaling/index.shtml#tools">Signaling</a> main help page.</li>
-          <li>The <a href="AspectSignaling.shtml">Aspect
-                  Signaling</a> help page.</li>
-          <li>The <a href="../../../../html/tools/signaling/SignalMasts.shtml">Signal Mast</a> documentation.</li>
-          <li>The <a href="SignalMastTable.shtml">The Signal Mast Table</a> help page.</li>
-          <li>The <a href="SignalMastAddEdit.shtml">Adding Signal Masts</a> help page.</li>
-          <li>The <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a> introduction.</li>
-          <li>The <a href="SignalMastLogicTable.shtml">Signal Mast Logic Table</a> help page.</li>
-          <li>The <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a> help page.</li>
+        <li>The <a href="../../../../html/tools/signaling/index.shtml#tools">Signaling</a> main
+        help page.
+        </li>
+
+        <li>The <a href="AspectSignaling.shtml">Aspect Signaling</a> help page.
+        </li>
+
+        <li>The <a href="../../../../html/tools/signaling/SignalMasts.shtml">Signal Mast</a>
+        documentation.
+        </li>
+
+        <li>The <a href="SignalMastTable.shtml">The Signal Mast Table</a> help page.
+        </li>
+
+        <li>The <a href="SignalMastAddEdit.shtml">Adding Signal Masts</a> help page.
+        </li>
+
+        <li>The <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast
+        Logic</a> introduction.
+        </li>
+
+        <li>The <a href="SignalMastLogicTable.shtml">Signal Mast Logic Table</a> help page.
+        </li>
+
+        <li>The <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a> help
+        page.
+        </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
