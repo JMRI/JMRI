@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20210630"/>
   <!-- Version 1 New file from 1.15 manual -->
+  <version author="Michael Mosher" version="1" lastUpdated="20210807"/>
+  <!-- Version 2 bug fix -->
   <decoder>
     <family name="Paragon 4" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="30" connector="9pin">
@@ -62,91 +64,91 @@
       <!-- assigning functions to outputs. Instead, it has -->
       <!-- a much more civilized system of one CV per function -->
       <variable CV="33" default="1" minFn="1" item="F0 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="34" default="2" minFn="1" item="F1 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="35" default="3" minFn="2" item="F2 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="36" default="17" minFn="3" item="F3 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="37" default="5" minFn="4" item="F4 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="38" default="6" minFn="5" item="F5 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="39" default="7" minFn="6" item="F6 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="40" default="21" minFn="7" item="F7 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="41" default="9" minFn="8" item="F8 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="42" default="10" minFn="9" item="F9 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="43" default="11" minFn="10" item="F10 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="44" default="12" minFn="11" item="F11 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="45" default="13" minFn="12" item="F12 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="46" default="30" minFn="13" item="F13 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="47" default="50" minFn="14" item="F14 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="48" default="51" minFn="15" item="F15 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="49" default="52" minFn="16" item="F16 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="50" default="53" minFn="17" item="F17 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="51" default="54" minFn="18" item="F18 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="52" default="55" minFn="19" item="F19 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="53" default="56" minFn="20" item="F20 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="54" default="57" minFn="21" item="F21 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="55" default="19" minFn="22" item="F22 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="56" default="31" minFn="23" item="F23 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="57" default="8" minFn="24" item="F24 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="58" default="20" minFn="25" item="F25 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="59" default="40" minFn="26" item="F26 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="60" default="41" minFn="27" item="F27 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
       </variable>
       <variable CV="154" default="100" item="Sound Setting 25">
         <decVal/>
