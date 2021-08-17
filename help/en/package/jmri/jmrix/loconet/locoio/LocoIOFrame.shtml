@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure LocoIO (deprecated)</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help LocoNet configure LocoIO">
+  <meta name="keywords" content="JMRI help LocoNet configure LocoIO">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Configure LocoIO (deprecated)</h1>
 
-      <p>Users of JMRI version 4.0 and above should configure LocoIO boards
-      using <a href=
-      "../../apps/DecoderPro/index.shtml">DecoderPro</a> and the
-      <a href=
-      "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">
-      Public_Domain_HDL_LocoIO Decoder Definition</a> in the
-      "Public Domain and DIY" category.<br>
-      Supports a wide range of LocoIO devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo hardware
-      since 2020 with JMRI 4.21.2.
-      </p>
+      <p>Users of JMRI version 4.0 and above should configure LocoIO boards using <a href=
+      "../../apps/DecoderPro/index.shtml">DecoderPro</a> and the <a href=
+      "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO
+      Decoder Definition</a> in the "Public Domain and DIY" category.<br>
+      Supports a wide range of LocoIO devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo
+      hardware since 2020 with JMRI 4.21.2.</p>
 
-      <p>The LocoIO programmer tool still found in the LocoNet menubar is no longer
-        supported from JMRI version 3.</p>
-
-      See the <a href="../../../../../html/hardware/loconet/LocoIO.shtml">LocoIO Help</a> for further
-      instructions.
-
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>The LocoIO programmer tool still found in the LocoNet menubar is no longer supported from
+      JMRI version 3.</p>
+      See the <a href="../../../../../html/hardware/loconet/LocoIO.shtml">LocoIO Help</a> for
+      further instructions. <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

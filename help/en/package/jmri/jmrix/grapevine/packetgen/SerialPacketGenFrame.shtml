@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send Grapevine message</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send grapevine message packet">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>Send Grapevine Message</h1>This is the
-      help/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame help
-      page
-
-        <!--#include virtual="/Footer.shtml" -->
+      <h1>Send Grapevine Message</h1>
+      This is the help/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame help page 
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

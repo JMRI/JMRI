@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Documentation</title>
   <meta name="author" content="Daniel Bergqvist">
-  <meta name="keywords" content=
-  "logixng model railroad JMRI LogixNG PanelPro">
-
+  <meta name="keywords" content="logixng model railroad JMRI LogixNG PanelPro">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <div id="container">
     <!--#include virtual="/Header" -->
@@ -22,51 +19,49 @@
 
         <h1>LogixNG - Sockets</h1>
 
-		<h2>Sockets</h2>
+        <h2>Sockets</h2>
 
-		<p>LogixNG is designed to be flexible and easy to extend. A major idea
-		is that tools should not need to know details of expressions and actions.</p>
+        <p>LogixNG is designed to be flexible and easy to extend. A major idea is that tools should
+        not need to know details of expressions and actions.</p>
 
-		<p>A LogixNG has a tree of Actions, Expressions, and more, and these are
-		connected by sockets. The parent has one or more female sockets and every
-		child has a male socket.</p>
+        <p>A LogixNG has a tree of Actions, Expressions, and more, and these are connected by
+        sockets. The parent has one or more female sockets and every child has a male socket.</p>
 
-		<p>When an Action or Expression is created and registered in its manager,
-		it's given a male socket. And it's always thru the male socket that the
-		Action or Expression is handled.</p>
+        <p>When an Action or Expression is created and registered in its manager, it's given a male
+        socket. And it's always thru the male socket that the Action or Expression is handled.</p>
 
-		<p>When a LogixNG editor wants to create an action or expression to put
-		into a female socket, it can ask the LogixNG_Manager which classes that is
-		possible to connect to this female socket and then let the user select one
-		of these.</p>
+        <p>When a LogixNG editor wants to create an action or expression to put into a female
+        socket, it can ask the LogixNG_Manager which classes that is possible to connect to this
+        female socket and then let the user select one of these.</p>
 
-		<p>An action or expression can have any number of female sockets of any
-		type, which means that the structure is very flexible. For example, the
-		ActionIfThen action has a female Expression socket and a female Action
-		socket. And the ActionDoStringAction has a female StringExpression and a
-		female StringAction.</p>
+        <p>An action or expression can have any number of female sockets of any type, which means
+        that the structure is very flexible. For example, the ActionIfThen action has a female
+        Expression socket and a female Action socket. And the ActionDoStringAction has a female
+        StringExpression and a female StringAction.</p>
 
-		<p>The LogixNG toolsm for example the editor, doesn't need to know about
-		the actions, expressions, and others, which means that completely new
-		types can be added without needing to change the LogixNG tools.</p>
+        <p>The LogixNG toolsm for example the editor, doesn't need to know about the actions,
+        expressions, and others, which means that completely new types can be added without needing
+        to change the LogixNG tools.</p>
 
-		<h2>Female sockets</h2>
+        <h2>Female sockets</h2>
 
-		<p>The female sockets tells the LogixNG tools that there is a place to
-		connect something. And the female socket can tell if any given male socket
-		is compatible with this female socket.</p>
+        <p>The female sockets tells the LogixNG tools that there is a place to connect something.
+        And the female socket can tell if any given male socket is compatible with this female
+        socket.</p>
 
-		<h2>Male sockets</h2>
-		
-		<p>The male sockets is used to plug in into a compatible female socket.</p>
+        <h2>Male sockets</h2>
 
-		<p>The male sockets also handles some generic logic for their action or
-		expression, for example debug tools and logging.</p>
+        <p>The male sockets is used to plug in into a compatible female socket.</p>
 
+        <p>The male sockets also handles some generic logic for their action or expression, for
+        example debug tools and logging.</p>
         <!--#include virtual="/Footer" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,275 +1,377 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional Tree Editor</title>
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content=
-  "JMRI help Logix Conditional Add Edit">
+  <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style.shtml" -->
+
   <style type="text/css">
     table th { text-align: left; }
     table td { text-align: center; }
   </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Conditional Tree Editor</h1>
 
-      <p>The tree based Conditional Editor uses a single window to display and edit all
-      of the conditionals for the selected Logix.</p>
+      <p>The tree based Conditional Editor uses a single window to display and edit all of the
+      conditionals for the selected Logix.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/TreeEditor.png">
-      <img src="images/TreeEditor.png"
-      alt="Conditional Tree Editor" height="383" width="886">
-      </a>
+        <a href="images/TreeEditor.png"><img src="images/TreeEditor.png" alt=
+        "Conditional Tree Editor" height="383" width="886"></a>
       </div>
 
       <p>The window is divided into 4 sections.</p>
+
       <ul>
-      <li>The top section contains the Logix system and user names.  The user
-      name can be changed. Enter the name and press Enter.</li>
-      <li>The left pane of the center section contains the tree structure for
-      all of the conditionals for the currently selected Logix.  The tree can
-      expand and collapse to control the amount of detail being displayed.</li>
-      <li>The right pane of the center section contains the detail information,
-      if any, about the currently selected tree row.</li>
-      <li>The right side of bottom section contains the <strong>Done</strong>
-      button which closes the editor window.  The left side contains the
-      <strong>Action</strong> buttons.  These buttons vary depending on the
-      selected tree row.</li>
+        <li>The top section contains the Logix system and user names. The user name can be changed.
+        Enter the name and press Enter.</li>
+
+        <li>The left pane of the center section contains the tree structure for all of the
+        conditionals for the currently selected Logix. The tree can expand and collapse to control
+        the amount of detail being displayed.</li>
+
+        <li>The right pane of the center section contains the detail information, if any, about the
+        currently selected tree row.</li>
+
+        <li>The right side of bottom section contains the <strong>Done</strong> button which closes
+        the editor window. The left side contains the <strong>Action</strong> buttons. These
+        buttons vary depending on the selected tree row.</li>
       </ul>
 
-      <p><strong><em>The workflow for the tree editor is dynamic.  As each
-      change is made, it is applied to the Conditional tables.  As long as the
-      panel xml file has not been updated, it is still possible to recover.
-      </em></strong></p>
+      <p><strong><em>The workflow for the tree editor is dynamic. As each change is made, it is
+      applied to the Conditional tables. As long as the panel xml file has not been updated, it is
+      still possible to recover.</em></strong>
+      </p>
 
-      <p>The tree structure makes it very easy to move around.  The only
-      restriction is that a different tree node cannot be selected if there is
-      an active edit.  To make an active edit apparent, the detail <strong>
-      Cancel</strong> and <strong>Update</strong> buttons become active and the
-      action bar buttons become inactive.  Clicking on any field in the detail
-      pane changes the pane from Display mode to Edit mode</p>
+      <p>The tree structure makes it very easy to move around. The only restriction is that a
+      different tree node cannot be selected if there is an active edit. To make an active edit
+      apparent, the detail <strong>Cancel</strong> and <strong>Update</strong> buttons become
+      active and the action bar buttons become inactive. Clicking on any field in the detail pane
+      changes the pane from Display mode to Edit mode</p>
 
-      <p>The first level of the tree contains the Conditionals that belong to
-      the current Logix. The second level contains the Antecedent field, the
-      Logic Type and Trigger Mode fields along with a Variables and Actions
-      node.  The third level contains the detail rows for Variables and
+      <p>The first level of the tree contains the Conditionals that belong to the current Logix.
+      The second level contains the Antecedent field, the Logic Type and Trigger Mode fields along
+      with a Variables and Actions node. The third level contains the detail rows for Variables and
       Actions.</p>
 
       <h3>Action Bar Button Matrix</h3>
+
       <div style="margin-left: 2em;">
-      <table style="display: inline-block;">
-      <tr> <th></th>             <th>Level</th> <th>Add</th> <th>Check State</th> <th>Delete</th> <th>Move</th> <th>Toggle</th><th>Help</th></tr>
-      <tr> <th>Conditional</th>  <td>1</td>     <td>Y</td>   <td>Y</td>           <td>Y</td>      <td>1</td>    <td></td><td></td></tr>
-      <tr> <th>Antecedent</th>   <td>2</td>     <td></td>    <td></td>            <td></td>       <td></td>     <td></td><td>Y</td></tr>
-      <tr> <th>Variables</th>    <td>2</td>     <td>Y</td>   <td>Y</td>            <td></td>       <td></td>     <td></td><td></td></tr>
-      <tr> <th>Variable</th>     <td>3</td>     <td>Y</td>   <td></td>            <td>Y</td>      <td>1, 2</td>    <td></td><td></td></tr>
-      <tr> <th>Logic Type</th>   <td>2</td>     <td></td>    <td></td>            <td></td>       <td></td>     <td></td><td></td></tr>
-      <tr> <th>Trigger Mode</th> <td>2</td>     <td></td>    <td></td>            <td></td>       <td></td>     <td>Y</td><td></td></tr>
-      <tr> <th>Actions</th>      <td>2</td>     <td>Y</td>   <td></td>            <td></td>       <td></td>     <td></td><td></td></tr>
-      <tr> <th>Action</th>       <td>3</td>     <td>Y</td>   <td></td>            <td>Y</td>      <td>1</td>    <td></td><td></td></tr>
-      </table>
+        <table style="display: inline-block;">
+          <tr>
+            <th>
+            </th>
+            <th>Level</th>
+            <th>Add</th>
+            <th>Check State</th>
+            <th>Delete</th>
+            <th>Move</th>
+            <th>Toggle</th>
+            <th>Help</th>
+          </tr>
+
+          <tr>
+            <th>Conditional</th>
+            <td>1</td>
+            <td>Y</td>
+            <td>Y</td>
+            <td>Y</td>
+            <td>1</td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Antecedent</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>Y</td>
+          </tr>
+
+          <tr>
+            <th>Variables</th>
+            <td>2</td>
+            <td>Y</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Variable</th>
+            <td>3</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>Y</td>
+            <td>1, 2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Logic Type</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Trigger Mode</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>Y</td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Actions</th>
+            <td>2</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Action</th>
+            <td>3</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>Y</td>
+            <td>1</td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </table>
       </div>
-      <p>1 &mdash; Move is actually an <strong>Up</strong> button and a
-      <strong>Down</strong> button.<br>
-      2 &mdash; Move is disabled for Variables if the Logic Type is set to
-      <strong>Mixed</strong>.</p>
+
+      <p>1 — Move is actually an <strong>Up</strong> button and a <strong>Down</strong> button.<br>
+      2 — Move is disabled for Variables if the Logic Type is set to <strong>Mixed</strong>.</p>
 
       <h2>The Edit Process</h2>
-      <p>When the tree editor is started, the conditionals for the selected
-      Logix are displayed.  Each row contains the system name, the user name,
-      and the current state in brackets.  Select a row to change the user name
-      using the detail pane.  When the change is done, press <strong>Update
-      </strong>. The user name may not be the same as the user name of another
-      Conditional in this Logix, but may be the same as the user name of a
-      Conditional in a different Logix.</p>
 
-      <p>To change the order of the Conditionals, select a Conditional row
-      and use the <strong>Up</strong> and <strong>Down</strong> buttons to
-      move the row. Note that the order that Conditionals are listed in the
-      Logix does not determine the order in which they're evaluated, nor does
-      it force evaluation of one Conditional when an earlier or later
-      one is evaluated. For more on this, see the discussion on the
-      <a href="../../../../html/tools/Logix.shtml">Logix main
-      page</a>.</p>
+      <p>When the tree editor is started, the conditionals for the selected Logix are displayed.
+      Each row contains the system name, the user name, and the current state in brackets. Select a
+      row to change the user name using the detail pane. When the change is done, press
+      <strong>Update</strong> . The user name may not be the same as the user name of another
+      Conditional in this Logix, but may be the same as the user name of a Conditional in a
+      different Logix.</p>
+
+      <p>To change the order of the Conditionals, select a Conditional row and use the
+      <strong>Up</strong> and <strong>Down</strong> buttons to move the row. Note that the order
+      that Conditionals are listed in the Logix does not determine the order in which they're
+      evaluated, nor does it force evaluation of one Conditional when an earlier or later one is
+      evaluated. For more on this, see the discussion on the <a href=
+      "../../../../html/tools/Logix.shtml">Logix main page</a>.</p>
 
       <p>Conditionals are statements of the form:</p>
 
-      <div style="margin-left: 2em;"><p><code>if (logical expression) then
-      (action)</code></p></div>
+      <div style="margin-left: 2em;">
+        <p><code>if (logical expression) then (action)</code>
+        </p>
+      </div>
 
-      <p>When a Conditional row is expanded, five rows are displayed.  The
-      Antecedent, Variables and Logix Type rows are used to build the Logical
-      Expression.  The Trigger Mode and Actions rows are used to build the
-      Action.</p>
+      <p>When a Conditional row is expanded, five rows are displayed. The Antecedent, Variables and
+      Logix Type rows are used to build the Logical Expression. The Trigger Mode and Actions rows
+      are used to build the Action.</p>
 
       <h2>Logical Expression</h2>
 
-      <p>Expand the <strong>Variables</strong> row to see the individual
-      <strong>Variable</strong> rows. Each row starts with a row number (Rn)
-      which is used to create manual logic when the Logic Type has been set
-      to <strong>Mixed</strong>.  A description of the statement follows.  The
-      trigger setting and the last calculated state are in bold at the end.</p>
+      <p>Expand the <strong>Variables</strong> row to see the individual <strong>Variable</strong>
+      rows. Each row starts with a row number (Rn) which is used to create manual logic when the
+      Logic Type has been set to <strong>Mixed</strong>. A description of the statement follows.
+      The trigger setting and the last calculated state are in bold at the end.</p>
 
-      <p>When a Variable row is selected, the information will be displayed in
-      the detail section.  The first 4 detail rows are common to all Variable
-      types. The first row is the selected type.  The second one will be set
-      to AND or OR.  This is set automatically by the Logic Type or manually
-      when using MIXED.  The third row can be set to NOT.  If set, that will
-      invert the test.  The fourth row is the Trigger Calculation checkbox.
-      For those cases where a change in a specific entity (sensor, turnout,
-      etc.) should not trigger a calculation result, you should uncheck the
-      checkbox by clicking on it. Unchecking the checkbox tells the program to
-      monitor that entity for state changes and calculate the state of the
-      Conditional, but take no action on the result of the calculation.</p>
+      <p>When a Variable row is selected, the information will be displayed in the detail section.
+      The first 4 detail rows are common to all Variable types. The first row is the selected type.
+      The second one will be set to AND or OR. This is set automatically by the Logic Type or
+      manually when using MIXED. The third row can be set to NOT. If set, that will invert the
+      test. The fourth row is the Trigger Calculation checkbox. For those cases where a change in a
+      specific entity (sensor, turnout, etc.) should not trigger a calculation result, you should
+      uncheck the checkbox by clicking on it. Unchecking the checkbox tells the program to monitor
+      that entity for state changes and calculate the state of the Conditional, but take no action
+      on the result of the calculation.</p>
 
-      <p>The remaining fields in the detail section will vary depending on
-      selected Variable Type. If you don't know what needs to be entered in a
-      data field, hover your cursor over the label, and a hint message will
-      appear. For details, see
-      <a href="StateVariableActionList.shtml#variable">State Variables</a>.</p>
+      <p>The remaining fields in the detail section will vary depending on selected Variable Type.
+      If you don't know what needs to be entered in a data field, hover your cursor over the label,
+      and a hint message will appear. For details, see <a href=
+      "StateVariableActionList.shtml#variable">State Variables</a>.</p>
 
-      <p>The Logic Type can be set to <strong>AND</strong>, <strong>OR</strong>
-      or <strong>MIXED</strong>.  If AND or OR, the descriptive portion of the
-      Variable will display all AND or all OR.  If set to MIXED, each line can
-      have its own value.  See below.</p>
+      <p>The Logic Type can be set to <strong>AND</strong>, <strong>OR</strong> or
+      <strong>MIXED</strong>. If AND or OR, the descriptive portion of the Variable will display
+      all AND or all OR. If set to MIXED, each line can have its own value. See below.</p>
 
-      <p>The default <strong>Logic Type</strong> is "AND". In this case the
-      Conditional will test if all variable tests are true, after taking the
-      "NOT" negations into account. Using the <strong>Logic Type</strong> row,
-      you can change that to "OR" or "Mixed". "OR" means the conditional will
-      be true if any one of the variable tests are true, after accounting for
-      the negations.</p>
+      <p>The default <strong>Logic Type</strong> is "AND". In this case the Conditional will test
+      if all variable tests are true, after taking the "NOT" negations into account. Using the
+      <strong>Logic Type</strong> row, you can change that to "OR" or "Mixed". "OR" means the
+      conditional will be true if any one of the variable tests are true, after accounting for the
+      negations.</p>
 
-      <p>Selecting "Mixed" will enable the Antecedent row.  Select this row to
-      display the antecedent field in the detail pane. This will let you enter
-      a logical expression using AND's, 'OR's and NOT's and the row numbers. In
-      this expression, each variable is referred to by number, e.g. R1, R2, R3
-      for the first three variables, you can use the operators "and", "or" and
-      "not" in addition to parentheses. Some examples:</p>
+      <p>Selecting "Mixed" will enable the Antecedent row. Select this row to display the
+      antecedent field in the detail pane. This will let you enter a logical expression using
+      AND's, 'OR's and NOT's and the row numbers. In this expression, each variable is referred to
+      by number, e.g. R1, R2, R3 for the first three variables, you can use the operators "and",
+      "or" and "not" in addition to parentheses. Some examples:</p>
 
-      <div style="margin-left: 2em;"><p><code>
-      R1 and R2<br>
-      R1 or (R2 and R3)<br>
-      (R2 and R3) or (R3 and R1)
-      </code></p></div>
+      <div style="margin-left: 2em;">
+        <p><code>R1 and R2<br>
+        R1 or (R2 and R3)<br>
+        (R2 and R3) or (R3 and R1)</code>
+        </p>
+      </div>
 
       <h3>Adding a New State Variable</h3>
 
-      <p>Press the <strong>Add</strong> button when either the Variables row or
-      a Variable row is selected to add a state variable. The detail pane will
-      display a choice box for the user to select a state variable type.
-      Available state variables are documented at
-      <a href="StateVariableActionList.shtml#variable">State Variables</a>.
-      When a type is chosen, additional fields will be added to the detail pane.
+      <p>Press the <strong>Add</strong> button when either the Variables row or a Variable row is
+      selected to add a state variable. The detail pane will display a choice box for the user to
+      select a state variable type. Available state variables are documented at <a href=
+      "StateVariableActionList.shtml#variable">State Variables</a>. When a type is chosen,
+      additional fields will be added to the detail pane. The text field for the name must contain
+      an existing entity (sensor, turnout, light, etc.). The actual format for entering names will
+      depend on the conditional name selection method setting. See <a href=
+      "../beantable/LogixTable.shtml#logixOptions">Conditional Name Selection Method</a>.</p>
 
-      The text field for the name must contain an existing entity (sensor,
-      turnout, light, etc.). The actual format for entering names will depend
-      on the conditional name selection method setting. See
-      <a href="../beantable/LogixTable.shtml#logixOptions">
-      Conditional Name Selection Method</a>.</p>
+      <p>For Conditional Variables, the text input field is replaced by two drop down combo boxes.
+      The first box is used to select the Logix, the second box is used to select a Conditional
+      that belongs to the selected Logix. <span class="since">since 4.7.4</span></p>
 
-      <p>For Conditional Variables, the text input field is replaced by two
-      drop down combo boxes.  The first box is used to select the Logix, the
-      second box is used to select a Conditional that belongs to the selected
-      Logix.
-      <span class="since">since 4.7.4</span></p>
       <div style="margin-left: 2em;">
-      <a href="images/SelectConditionalReference.png">
-      <img src="images/SelectConditionalReference.png"
-      alt="Logix/Conditional Combo Boxes" height="148" width="558">
-      </a>
+        <a href="images/SelectConditionalReference.png"><img src=
+        "images/SelectConditionalReference.png" alt="Logix/Conditional Combo Boxes" height="148"
+        width="558"></a>
       </div>
 
-      <p>After the name is entered, select the required state from the
-      <strong>Variable State</strong> drop down box.  Depending on the selected
-      variable type and state, additional fields may be displayed.
+      <p>After the name is entered, select the required state from the <strong>Variable
+      State</strong> drop down box. Depending on the selected variable type and state, additional
+      fields may be displayed.</p>
 
-      <p>After you have completed your updates, you can select the Variables
-      row and use the <strong>Check State</strong> button to evaluate the state
-      variables. When this button is pressed, the checking and evaluation
-      proceeds until the check completes successfully, or an error is detected.
-      If an error is detected, the checking stops for the user to correct the
+      <p>After you have completed your updates, you can select the Variables row and use the
+      <strong>Check State</strong> button to evaluate the state variables. When this button is
+      pressed, the checking and evaluation proceeds until the check completes successfully, or an
+      error is detected. If an error is detected, the checking stops for the user to correct the
       error and click <strong>Check State</strong> again.</p>
 
-      <p>Select <strong>Update</strong> to save the changes or
-      <strong>Cancel</strong> to discard the changes.</p>
+      <p>Select <strong>Update</strong> to save the changes or <strong>Cancel</strong> to discard
+      the changes.</p>
 
       <h2>Action</h2>
 
-      <p>Expand the <strong>Actions</strong> row to see the individual
-      <strong>Action</strong> rows. Each row starts with a phrase that indicates
-      under what conditions it will be invoked.  A description of the Action
-      follows.</p>
+      <p>Expand the <strong>Actions</strong> row to see the individual <strong>Action</strong>
+      rows. Each row starts with a phrase that indicates under what conditions it will be invoked.
+      A description of the Action follows.</p>
 
-      <p>Actions are evaluated in the order listed. To change that
-      order, select an Action row and use the <strong>Up</strong> and
-      <strong>Down</strong> buttons to move the row.</p>
+      <p>Actions are evaluated in the order listed. To change that order, select an Action row and
+      use the <strong>Up</strong> and <strong>Down</strong> buttons to move the row.</p>
+      Select an Action row to display the details in the detail pane. Click on a field to enter
+      edit mode. To create a new Action, select <strong>Add</strong> from either the Actions or
+      Action button list.
+      <p>If a new Action is being created, only the Action Group will be displayed. Once a choice
+      has been made, other fields will be displayed based on the selected type. Available Action
+      types are documented at <a href="StateVariableActionList.shtml#action">Actions</a>.</p>
 
-      Select an Action row to display the details in the detail pane.  Click on
-      a field to enter edit mode.  To create a new Action, select
-      <strong>Add</strong> from either the Actions or Action button list.
+      <p>When a type is chosen, the Edit Action window displays a text field for the name of the
+      entity to be used for the Action. When a name (either system name or user name) is entered,
+      it must correspond to an existing entity (sensor, turnout, light, etc.). The actual method
+      for entering names will depend on the conditional name selection method setting. See <a href=
+      "../beantable/LogixTable.shtml#logixOptions">Conditional Name Selection Method</a>.</p>
 
-      <p>If a new Action is being created, only the Action Group will be
-      displayed. Once a choice has been made, other fields will be displayed
-      based on the selected type. Available Action types are documented at
-      <a href="StateVariableActionList.shtml#action">Actions</a>.</p>
+      <p>The data items needed to completely specify the action will appear in the detail pane. If
+      you don't know what needs to be entered in a data field, hover your cursor over the label,
+      and a hint message will appear.</p>
 
-      <p>When a type is chosen, the Edit Action window displays a text field for
-      the name of the entity to be used for the Action. When a name
-      (either system name or user name) is entered, it must
-      correspond to an existing entity (sensor, turnout, light,
-      etc.). The actual method for entering names
-      will depend on the conditional name selection method setting.
-      See <a href="../beantable/LogixTable.shtml#logixOptions">
-      Conditional Name Selection Method</a>.</p>
+      <p>For each action, three options are available for when to trigger the action:</p>
 
-      <p>The data items needed to completely specify the
-      action will appear in the detail pane. If you don't
-      know what needs to be entered in a data field, hover your
-      cursor over the label, and a hint message will appear.</p>
-
-      <p>For each action, three options are available for when to
-      trigger the action:</p>
       <ul>
         <li>On Change to True</li>
+
         <li>On Change to False</li>
+
         <li>On Change</li>
       </ul>
-      <p>These refer to the calculated state
-      of the Conditional, which is equal to the value of the
-      logical expression as specified in the state variable table.
-      One of these options must be selected.</p>
 
-      <p>If the <strong>Trigger Mode:</strong> row has been changed to
-      <strong>Execute Action whenever triggered</strong>, then the options are:</p>
+      <p>These refer to the calculated state of the Conditional, which is equal to the value of the
+      logical expression as specified in the state variable table. One of these options must be
+      selected.</p>
+
+      <p>If the <strong>Trigger Mode:</strong> row has been changed to <strong>Execute Action
+      whenever triggered</strong>, then the options are:</p>
+
       <ul>
         <li>When Triggered True</li>
+
         <li>When Triggered False</li>
+
         <li>Whenever Triggered</li>
       </ul>
 
-      <p>Select <strong>Update</strong> to save the changes or
-      <strong>Cancel</strong> to discard the changes.</p>
+      <p>Select <strong>Update</strong> to save the changes or <strong>Cancel</strong> to discard
+      the changes.</p>
 
-      <p>For more information, consult the <a href=
-      "../../../../html/tools/Logix.shtml">main Logix documentation</a>.</p>
+      <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">main Logix
+      documentation</a>.</p>
 
       <h2>Logix Documentation Pages Logically Listed</h2>
-
       <!--#include virtual="LogixDocList.shtml" -->
-
-
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

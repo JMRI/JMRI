@@ -1,72 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Logix Import</title>
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="JMRI logixng logix import">
-
-  <!--#include virtual="/Style.shtml" -->
-
+  <meta name="keywords" content="JMRI logixng logix import"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: LogixNG Logix Import</h1>
 
-        <p>The LogixNG import Tool at PanelPro <strong>Tools &rArr; LogixNG &rArr; Import Logix</strong>
-        will import the Logix definitions and convert them to LogixNG/ConditionalNG definitions.
-        </p>
+      <p>The LogixNG import Tool at PanelPro <strong>Tools ⇒ LogixNG ⇒ Import Logix</strong> will
+      import the Logix definitions and convert them to LogixNG/ConditionalNG definitions.</p>
 
-        <div style="margin-left: 2em">
-        <a href="images/ImportLogix.png">
-        <img src="images/ImportLogix.png"
-        alt="Import Logix to LogixNG" width="610" height="586" >
-        </a>
-        </div>
+      <div style="margin-left: 2em">
+        <a href="images/ImportLogix.png"><img src="images/ImportLogix.png" alt=
+        "Import Logix to LogixNG" width="610" height="586"></a>
+      </div>
 
-        <h2>Import Options</h2>
+      <h2>Import Options</h2>
 
-          <p>Most of the options have not been implemented yet.</p>
+      <p>Most of the options have not been implemented yet.</p>
 
-          <h4>Import system Logixs also?</h4>
+      <h4>Import system Logixs also?</h4>
 
-          <p>The <strong>Import system Logixs also?</strong> option controls the import of
-          Logix created by other JMRI tools.</p>
+      <p>The <strong>Import system Logixs also?</strong> option controls the import of Logix
+      created by other JMRI tools.</p>
 
-          <ul>
-            <li><strong>SYS:</strong> The IX:SYS Logix contains the sensor group defintions.</li>
-            <li><strong>RTX:</strong> These are created by LRoutes and the Route <strong>
-            Export to Logix</strong> option.  This includes the RTXINITIALZER.</li>
-            <li><strong>USS CTC:</strong> These are create by the USS CTC OsIndicator tool.</li>
-          </ul>
+      <ul>
+        <li><strong>SYS:</strong> The IX:SYS Logix contains the sensor group defintions.</li>
 
-          <p><strong>SSL</strong> Logixes are created to support complex SSL configurations
-          such as Throat-to-Throat.  Since these do not have descriptive system names,
-          they will be imported.  This can lead to unpredictable SSL behavior.  These
-          should be deleted from LogixNG after doing the import.</p>
+        <li><strong>RTX:</strong> These are created by LRoutes and the Route <strong>Export to
+        Logix</strong> option. This includes the RTXINITIALZER.</li>
 
-          <p>Subsequent changes using these JMRI tools will update the related Logix.
-          LogixNG will not be aware of those changes. It's recommended to leave this option
-          unchecked.</p>
+        <li><strong>USS CTC:</strong> These are create by the USS CTC OsIndicator tool.</li>
+      </ul>
 
-        <h2>Import Actions</h2>
+      <p><strong>SSL</strong> Logixes are created to support complex SSL configurations such as
+      Throat-to-Throat. Since these do not have descriptive system names, they will be imported.
+      This can lead to unpredictable SSL behavior. These should be deleted from LogixNG after doing
+      the import.</p>
 
-          <p>Click on <strong>Import</strong> to start.  The <strong>Cancel</strong>
-          button will change to <strong>Done</strong> when the import has finished.
-          Click on <strong>Cancel</strong> to close the window without doing the import.</p>
+      <p>Subsequent changes using these JMRI tools will update the related Logix. LogixNG will not
+      be aware of those changes. It's recommended to leave this option unchecked.</p>
 
-          <p>The import process will display a message on the JMRI System Console,
-          <strong>Help &rArr; System Console</strong>, for  each Logix Conditional that
-          has been imported.  Any errors will also be listed.</p>
+      <h2>Import Actions</h2>
 
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Click on <strong>Import</strong> to start. The <strong>Cancel</strong> button will change
+      to <strong>Done</strong> when the import has finished. Click on <strong>Cancel</strong> to
+      close the window without doing the import.</p>
+
+      <p>The import process will display a message on the JMRI System Console, <strong>Help ⇒
+      System Console</strong>, for each Logix Conditional that has been imported. Any errors will
+      also be listed.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
