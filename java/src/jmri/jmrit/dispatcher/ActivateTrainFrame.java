@@ -841,7 +841,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 }
                 RosterEntry r = (RosterEntry) rosterComboBox.getSelectedItem();
                 dccAddress = r.getDccAddress();
-                trainName = r.getDisplayName();
+                trainName = r.titleString();
                 if (!isAddressFree(r.getDccLocoAddress().getNumber())) {
                     // DCC address is already in use by an Active Train
                     JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(

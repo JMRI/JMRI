@@ -2,58 +2,46 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Me 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-18-->
-  <title>JMRI: RailDriver Throttle Details</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+
+  <title>JMRI: RailDriver Throttle Details</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h2>JMRI: D&eacute;tails R&eacute;gulateurs RailDriver</h2>
-
-    <img src="../../../images/bangdesk.gif" align=
-      "left"> Cette page est en construction. Le support RailDriver
-      JMRI a d'abord &eacute;t&eacute; disponible en <a href=
-      "https://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>
-      . Il &eacute;volue rapidement, alors revenez ici ou sur le
-      <a href="https://groups.io/g/jmriusers">jmriusers
-      mailing liste</a> pour des changements.<br>
-      <a href="RailDriver.gif"><img align="right" width="389"
-      height="236" src="RailDriver.gif" alt=
-      "RailDriver line drawing"></a>
-
-      <p>Alors que nous d&eacute;veloppons le support RailDriver,
-      il est principalement mis en oeuvre via un script <a href=
-      "https://jmri.org/jython/RailDriver.py">RailDriverThrottle.py</a>.
-      Ceci permet aux utilisateurs de l'&eacute;diter facilement
-      pour le personnaliser suivant leurs d&eacute;sirs tandis que
-      nous trions ce qui est g&eacute;n&eacute;ralement
-      n&eacute;cessaire.</p>
+      <h2>JMRI: Détails Régulateurs RailDriver</h2>
+      <img src="../../../images/bangdesk.gif" align="left" alt=""> Cette page est en construction.
+      Le support RailDriver JMRI a d'abord été disponible en <a href=
+      "https://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a> . Il évolue rapidement, alors
+      revenez ici ou sur le <a href="https://groups.io/g/jmriusers">jmriusers mailing liste</a>
+      pour des changements.<br>
+      <a href="RailDriver.gif"><img align="right" width="389" height="236" src="RailDriver.gif"
+      alt="RailDriver line drawing"></a>
+      <p>Alors que nous développons le support RailDriver, il est principalement mis en oeuvre via
+      un script <a href="https://jmri.org/jython/RailDriver.py">RailDriverThrottle.py</a>. Ceci
+      permet aux utilisateurs de l'éditer facilement pour le personnaliser suivant leurs désirs
+      tandis que nous trions ce qui est généralement nécessaire.</p>
 
       <h2>Structure</h2>
-      <p>Parce jinput et le RailDriver fournissent
-      des noms pour les diff&eacute;rents composants sur Windows,
-      Mac OS X et Linux, le script est organis&eacute; autour du
-      num&eacute;ro (index) de la composante, et non pas de son
-      nom. Les trois plates-formes fournissent les composants dans
-      le m&ecirc;me ordre.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+      <p>Parce jinput et le RailDriver fournissent des noms pour les différents composants sur
+      Windows, Mac OS X et Linux, le script est organisé autour du numéro (index) de la composante,
+      et non pas de son nom. Les trois plates-formes fournissent les composants dans le même
+      ordre.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

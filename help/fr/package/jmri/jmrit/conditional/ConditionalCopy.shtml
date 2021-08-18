@@ -1,109 +1,97 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional State Variables and Actions List</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Pete cressman">
-  <meta name="keywords" content=
-  "JMRI help Logix Conditional Copy">
+  <meta name="keywords" content="JMRI help Logix Conditional Copy">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
       <h1>Liste de copies conditions</h1>
 
       <dl>
         <dd>
-          <h2><a name="logix" id="logix">Copie d'un logix</a></h2>
+          <h2><a name="logix" id="logix">Copie d'un logix</a>
+          </h2>
 
-          <p>Les conditions d'un logix peuvent &#234;tre copi&#233;es dans un autre 
-          logix en s&#233;lectionnant l'&#233;l&#233;ment "Copier" dans le menu <strong>S&#233;lectionner</strong>.
-           La fen&#234;tre <Strong>Copier Logix</strong> s'affiche alors.
-          Cette fen&#234;tre est similaire &#224; la fen&#234;tre <Strong>Ajouter un logix</strong> et
-          les m&#234;mes r&#232;gles doivent &#234;tre suivies lors de la cr&#233;ation d'un nouveau logix.
-          De plus, vous pouvez entrer le nom d'un logix existant et y copier des conditions. 
-          dans celle-ci. Vous pouvez m&#234;me recopier des conditions de logix dans le m&#234;me
-          logix.  Bien entendu, les m&#234;mes restrictions concernant la duplication des Noms Syst&#232;me et Utilisateur des conditions doivent &#234;tre respect&#233;es. 
-          Pour des informations d&#233;taill&#233;es
-          sur l'&#233;dition des conditions, voir la
-          <a href="../../../../html/tools/Logix.shtml">page principale de Logix</a>.</p>
-          <p></P>
+          <p>Les conditions d'un logix peuvent être copiées dans un autre logix en sélectionnant
+          l'élément "Copier" dans le menu <strong>Sélectionner</strong>. La fenêtre <strong>Copier
+          Logix</strong> s'affiche alors. Cette fenêtre est similaire à la fenêtre <strong>Ajouter
+          un logix</strong> et les mêmes règles doivent être suivies lors de la création d'un
+          nouveau logix. De plus, vous pouvez entrer le nom d'un logix existant et y copier des
+          conditions. dans celle-ci. Vous pouvez même recopier des conditions de logix dans le même
+          logix. Bien entendu, les mêmes restrictions concernant la duplication des Noms Système et
+          Utilisateur des conditions doivent être respectées. Pour des informations détaillées sur
+          l'édition des conditions, voir la <a href="../../../../html/tools/Logix.shtml">page
+          principale de Logix</a>.</p>
 
-          <h2><a name="CopyList" id="CopyList">La liste des copies</a></h2>
+          <h2><a name="CopyList" id="CopyList">La liste des copies</a>
+          </h2>
 
-          </p> <p>Apr&#232;s avoir choisi un logix cible et appuy&#233; sur le bouton de copie, la 
-          fen&#234;tre <strong>Liste de copie</strong> affiche la liste des conditions
-          du logix source.  S&#233;lectionnez une condition dans la liste pour la copier.
-          Il y a deux fa&#231;ons d'ajouter la condition au logix cible.
-          L'une ou l'autre se fait par les boutons radio sous la liste des conditions.</p>
-           <p></P>
-           
-          <h3>Le bouton Modifier les &#233;l&#233;ments seulement</h3>
+          <p>Après avoir choisi un logix cible et appuyé sur le bouton de copie, la fenêtre
+          <strong>Liste de copie</strong> affiche la liste des conditions du logix source.
+          Sélectionnez une condition dans la liste pour la copier. Il y a deux façons d'ajouter la
+          condition au logix cible. L'une ou l'autre se fait par les boutons radio sous la liste
+          des conditions.</p>
 
-          <p>Ce choix (par d&#233;faut) affiche une copie de la condition s&#233;lectionn&#233;e.
-          pour une copie rapide o&#249: vous voulez seulement changer les &#233;l&#233;ments test&#233;s ou les
-          les &#233;l&#233;ments &#224; r&#233;agir. Les tests et les actions de l'&#233;l&#233;ment sont affich&#233;s 
-          mais ne peuvent pas &#234;tre modifi&#233;s. L'expression logique ne peut pas non plus &#234;tre chang&#233;e.</p>
-          
-          <p>Les &#233;l&#233;ments sous les colonnes <strong>Nom</strong> des tableaux Variables et
-          Actions sont des bo&#238;tes de dialogue (voir "Choix d'options logiques" ci-dessous). 
-          Celles-ci se d&#233;roulent pour s&#233;lectionner le changement d'&#233;l&#233;ment pour
-          la variable ou l'action. Les actions peuvent &#234;tre supprim&#233;es, mais pas les variables.</p> 
-          
-          <p>Ce choix est destin&#233; pour simplement changer les noms des &#233;l&#233;ments. Fournissez 
-          un nom pour la nouvelle condition et appuyez sur le bouton
-          <strong>Sauvegarder</strong>.  La condition est enregistr&#233;e dans la cible
-          logix et vous &#234;tes renvoy&#233; &#224; la fen&#234;tre de la liste de copie.</p>
-          <p></P>
+          <h3>Le bouton Modifier les éléments seulement</h3>
 
-          <h3>Le bouton Modifier toutes les donn&#233;es</h3>
+          <p>Ce choix (par défaut) affiche une copie de la condition sélectionnée. pour une copie
+          rapide où: vous voulez seulement changer les éléments testés ou les les éléments à
+          réagir. Les tests et les actions de l'élément sont affichés mais ne peuvent pas être
+          modifiés. L'expression logique ne peut pas non plus être changée.</p>
 
-          <p>Ce choix affiche une copie de la condition s&#233;lectionn&#233;e avec 
-          des capacit&#233;s de modification de condition compl&#232;tes. Il n'y a aucune restriction
-          sur la mani&#232;re dont la copie est modifi&#233;e.</p>
-          
-          </p> <p>Donnez un nom &#224; la nouvelle condition et appuyez sur le bouton
-          <strong>Sauvegarder</strong>.  La condition est enregistr&#233;e dans la cible
-          logix et vous &#234;tes renvoy&#233; &#224; la fen&#234;tre de la liste des copies.</p> <p>Il est possible de modifier les conditions d'utilisation.
-          <p></P>
+          <p>Les éléments sous les colonnes <strong>Nom</strong> des tableaux Variables et Actions
+          sont des boîtes de dialogue (voir "Choix d'options logiques" ci-dessous). Celles-ci se
+          déroulent pour sélectionner le changement d'élément pour la variable ou l'action. Les
+          actions peuvent être supprimées, mais pas les variables.</p>
+
+          <p>Ce choix est destiné pour simplement changer les noms des éléments. Fournissez un nom
+          pour la nouvelle condition et appuyez sur le bouton <strong>Sauvegarder</strong>. La
+          condition est enregistrée dans la cible logix et vous êtes renvoyé à la fenêtre de la
+          liste de copie.</p>
+
+          <h3>Le bouton Modifier toutes les données</h3>
+
+          <p>Ce choix affiche une copie de la condition sélectionnée avec des capacités de
+          modification de condition complètes. Il n'y a aucune restriction sur la manière dont la
+          copie est modifiée.</p>
+
+          <p>Donnez un nom à la nouvelle condition et appuyez sur le bouton
+          <strong>Sauvegarder</strong>. La condition est enregistrée dans la cible logix et vous
+          êtes renvoyé à la fenêtre de la liste des copies.</p>
+
+          <p>Il est possible de modifier les conditions d'utilisation.</p>
 
           <h2>Choix des options du logix</h2>
 
-          </p> <p>Les choix effectu&#233;s sous le menu <strong>Options</strong> du logix sont 
-          suivis de la fen&#234;tre condition d'&#233;dition affich&#233;e par le menu
-          <strong>Modification de toutes les donn&#233;es</strong>.</p>
+          <p>Les choix effectués sous le menu <strong>Options</strong> du logix sont suivis de la
+          fenêtre condition d'édition affichée par le menu <strong>Modification de toutes les
+          données</strong>.</p>
 
-          <p>La fen&#234;tre d'&#233;dition rapide affich&#233;e par le bouton <strong>Changement des &#233;l&#233;ments seulement</strong>. 
-          utilise des bo&#238;tes d&#233;roulantes pour l'option "Liste de s&#233;lection traditionnelle".
-          . Si vous pr&#233;f&#233;rez utiliser une liste de s&#233;lection autre que des bo&#238;tes combo, utilisez
-          l'option "Liste de s&#233;lection unique". Pour saisir une r&#233;f&#233;rence indirecte &#224; une
-          m&#233;moire, l'option "Liste de s&#233;lection unique" doit &#234;tre utilis&#233;e.</p>
-          <p></P>
-
-
+          <p>La fenêtre d'édition rapide affichée par le bouton <strong>Changement des éléments
+          seulement</strong>. utilise des boîtes déroulantes pour l'option "Liste de sélection
+          traditionnelle". . Si vous préférez utiliser une liste de sélection autre que des boîtes
+          combo, utilisez l'option "Liste de sélection unique". Pour saisir une référence indirecte
+          à une mémoire, l'option "Liste de sélection unique" doit être utilisée.</p>
         </dd>
       </dl>
 
-      <h2>Les pages de la documentation Logix sont class&#233;es logiquement</h2>.
-<p>Traduction 2021-03-27</p>
+      <h2>Les pages de la documentation Logix sont classées logiquement</h2>
+      .
+      <p>Traduction 2021-03-27</p>
       <!--#include virtual="LogixDocList.shtml" -->
-
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>
-
-    
-

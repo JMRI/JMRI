@@ -31,7 +31,7 @@ def whenSendButtonClicked(event) :
      # Based on user selection, prepare the arg for the specific LocoNet message
      # Loconet message form - opcode,ARG1,ARG2,CHK - the checksum is not calculated here
      lnAddress = int(lAddress.text) - 1    # get address from entry field and adjust for LocoNet
-	 # print lnAddress
+     # print lnAddress
      ARG1 = lnAddress - ((lnAddress / 128) * 128)
      ARG2 = lnAddress / 128
      ARG3 = ARG4 = ARG5 = ARG6 = ARG7 = ARG8 = ARG9 = 0
@@ -365,7 +365,7 @@ radioPanel1.add(fbButton)
 radioPanel1.add(snButton)
 radioPanel1.add(sgButton)
 #radioPanel1.add(skButton)
-radioPanel2 = javax.swing.JPanel() 
+radioPanel2 = javax.swing.JPanel()
 radioPanel2.setLayout(javax.swing.BoxLayout(radioPanel2, javax.swing.BoxLayout.X_AXIS))
 radioPanel2.add(skButton)
 radioPanel2.add(smButton)

@@ -1,286 +1,394 @@
- 
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional Tree Editor</title>
   <meta name="author" content="Dave Sand">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=iso-8859-1">
-  <meta name="keywords" content=
-  "JMRI help Logix Conditional Add Edit">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style.shtml" -->
+
   <style type="text/css">
     table th { text-align: left; }
     table td { text-align: center; }
   </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Éditeur Arborescence Condition</h1>
 
-      <h1>&#201;diteur Arborescence Condition </h1>
+      <p>L'Éditeur arborescence Condition utilise une seule fenêtre pour afficher et modifier
+      toutes les conditions pour le Logix sélectionné.</p>
 
-      <p>L'&#201;diteur arborescence Condition utilise une seule fen&#234;tre pour afficher et modifier toutes les
-      conditions pour le Logix s&#233;lectionn&#233;.</p>
       <div style="margin-left : 2em">
-      <a href="images/TreeEditor.png">
-      <img src="images/TreeEditor.png"
-      alt="&#201;diteur d'arbre condition" height="383" width="886">
-      </a>
+        <a href="images/TreeEditor.png"><img src="images/TreeEditor.png" alt=
+        "Éditeur d'arbre condition" height="383" width="886"></a>
       </div>
 
-      <p>La fen&#234;tre est divis&#233;e en 4 sections.</p>
+      <p>La fenêtre est divisée en 4 sections.</p>
+
       <ul>
-      <li>La section sup&#233;rieure contient le syst&#232me Logix et les noms utilisateurs.  Le 
-        nom utilisateur peut &#234;tre modifi&#233;. Saisissez le nom et appuyez sur la touche Entr&#233;e.</li>
-      <li>Le volet de gauche de la section centrale contient l'arborescence de
-      toutes les conditions pour le Logix actuellement s&#233;lectionn&#233;.  L'arbre peut
-      se d&#233;velopper et se r&#233;duire pour contr&#244ler la quantit&#233; de d&#233;tails affich&#233;s.</li>
-      <li>Le volet de droite de la section centrale contient les informations d&#233;taill&#233;es,
-      le cas &#233;ch&#233;ant, sur la rang&#233;e d'arbre actuellement s&#233;lectionn&#233;e.</li>
-      <li>Le c&#244t&#233; droit de la section inf&#233;rieure contient le bouton <strong>Fait</strong>
-      qui ferme la fen&#234;tre de l'&#233;diteur.  Le c&#244t&#233; gauche contient le bouton
-      <strong>Action</strong>.  Ces boutons varient en fonction de la
-      ligne d'arbre s&#233;lectionn&#233;e.</li>
+        <li>La section supérieure contient le système Logix et les noms utilisateurs. Le nom
+        utilisateur peut être modifié. Saisissez le nom et appuyez sur la touche Entrée.</li>
+
+        <li>Le volet de gauche de la section centrale contient l'arborescence de toutes les
+        conditions pour le Logix actuellement sélectionné. L'arbre peut se développer et se réduire
+        pour contrôler la quantité de détails affichés.</li>
+
+        <li>Le volet de droite de la section centrale contient les informations détaillées, le cas
+        échéant, sur la rangée d'arbre actuellement sélectionnée.</li>
+
+        <li>Le côté droit de la section inférieure contient le bouton <strong>Fait</strong> qui
+        ferme la fenêtre de l'éditeur. Le côté gauche contient le bouton <strong>Action</strong>.
+        Ces boutons varient en fonction de la ligne d'arbre sélectionnée.</li>
       </ul>
 
-      <p><strong><em>Le flux de travail de l'&#233;diteur d'arbre est dynamique.  Au fur et &#224; mesure que chaque
-      modification est effectu&#233;e, elle est appliqu&#233;e aux tableaux conditions.  Tant que le 
-      fichier xml du panneau n'a pas &#233;t&#233; mis &#224; jour, il est toujours possible de r&#233;cup&#233;rer.
-      </em></strong></p>.
-
-      <p>L'arborescence permet de se d&#233;placer tr&#232s facilement.  La seule
-      restriction est qu'un n&#339;ud d'arbre diff&#233;rent ne peut pas &#234;tre s&#233;lectionn&#233; s'il y a
-      une &#233;dition active.  Pour rendre apparente une &#233;dition active, les d&#233;tails <strong>
-      Annuler</strong> et <strong>Mettre &#224; jour</strong> deviennent actifs et les boutons de la barre d'action deviennent inactifs. 
-      Un clic sur n'importe quel champ du volet d&#233;taill&#233;
-      fait passer le volet du mode affichage au mode modification</p>.
-
-      <p>Le premier niveau de l'arborescence contient les Conditions qui appartiennent 
-      au Logix actuel. Le deuxi&#232me niveau contient le champ Ant&#233;c&#233;dent, le champ Type de logique et le champ Mode de d&#233;clenchement, 
-      ainsi qu'un n&#339;ud Variables et actions. Le troisi&#232me niveau contient les lignes de d&#233;tail pour les Variables et les
-      Actions.</p>
+      <p><strong><em>Le flux de travail de l'éditeur d'arbre est dynamique. Au fur et à mesure que
+      chaque modification est effectuée, elle est appliquée aux tableaux conditions. Tant que le
+      fichier xml du panneau n'a pas été mis à jour, il est toujours possible de
+      récupérer.</em></strong>
+      </p>
+      .
+      <p>L'arborescence permet de se déplacer très facilement. La seule restriction est qu'un nœud
+      d'arbre différent ne peut pas être sélectionné s'il y a une édition active. Pour rendre
+      apparente une édition active, les détails <strong>Annuler</strong> et <strong>Mettre à
+      jour</strong> deviennent actifs et les boutons de la barre d'action deviennent inactifs. Un
+      clic sur n'importe quel champ du volet détaillé fait passer le volet du mode affichage au
+      mode modification</p>
+      .
+      <p>Le premier niveau de l'arborescence contient les Conditions qui appartiennent au Logix
+      actuel. Le deuxième niveau contient le champ Antécédent, le champ Type de logique et le champ
+      Mode de déclenchement, ainsi qu'un nœud Variables et actions. Le troisième niveau contient
+      les lignes de détail pour les Variables et les Actions.</p>
 
       <h3>Matrice des boutons de la barre d'action</h3>
+
       <div style="margin-left: 2em;">
-        <table style="display: inline-block;">
-      <tr> <th></th> <th>Niveau</th> <th>Ajouter</th> <th>V&#233;rifier l'&#233;tat</th> <th>Supprimer</th> <th>D&#233;placer</th> <th>Basculer</th><th>Aide</th></tr>.
-      <tr> <th>Condition</th> <td>1</td> <td>Y</td> <td>Y</td> <td>1</td> <td></td><td></td></tr>.
-      <tr> <th>Ant&#233;c&#233;dent</th> <td>2</td> <td></td> <td></td> <td></td> <td></td><td>Y</td></tr>.
-      <tr> <th>Variables</th> <td>2</td> <tdd>Y</td> <td>Y</td> <td></td> <td></td></td></td></tr>
-      <tr> <th>Variable</th> <td>3</td> <tdd>Y</td> <td></td> <td>Y</td> <td>1, 2</td> <td></td><td></td></tr>
-      <tr> <th>Type de logique</th> <td>2</td> <td></td> <td></td> <td></td> <td></td><td></td></td></tr>
-      <tr> <th>Mode de d&#233;clenchement</th> <td>2</td> <td></td> <td></td> <td>Y</td><td></td></tr>.
-      <tr> <th>Actions</th> <td>2</td> <td>Y</td> <td></td> <td></td> <td></td></td></td></td></tr>
-      <tr> <th>Action</th> <td>3</td> <td>Y</td> <td></td> <td>1</td> <td></td></td></tr> <td></td></td>.
-      </table>
+        <table style="display: inline-block;" summary="">
+          <tr>
+            <th>
+            </th>
+            <th>Niveau</th>
+            <th>Ajouter</th>
+            <th>Vérifier l'état</th>
+            <th>Supprimer</th>
+            <th>Déplacer</th>
+            <th>Basculer</th>
+            <th>Aide</th>
+          </tr>
+
+          <tr>
+            <th>Condition</th>
+            <td>1</td>
+            <td>Y</td>
+            <td>Y</td>
+            <td>1</td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Antécédent</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>Y</td>
+          </tr>
+
+          <tr>
+            <th>Variables</th>
+            <td>2</td>
+            <td>Y</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Variable</th>
+            <td>3</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>Y</td>
+            <td>1, 2</td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Type de logique</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Mode de déclenchement</th>
+            <td>2</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>Y</td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Actions</th>
+            <td>2</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Action</th>
+            <td>3</td>
+            <td>Y</td>
+            <td>
+            </td>
+            <td>1</td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </table>
       </div>
-      <p>1 &mdash; D&#233;placer est en fait un bouton <strong>Haut</strong> et un bouton <strong>Bas</strong>.<br>
-      2 &mdash; D&#233;placer est d&#233;sactiv&#233; pour les variables si le type de logique est d&#233;fini sur <strong>Mixte</strong>.</p>
 
-      <h2>Le processus d'&#233;dition</h2>
-      </p> <p>Lorsque l'&#233;diteur d'arbre est lanc&#233;, les conditions du
-      Logix s&#233;lectionn&#233; sont affich&#233;es.  Chaque ligne contient le nom syst&#232me, le nom utilisateur,
-      et l'&#233;tat actuel entre parenth&#232ses.  S&#233;lectionnez une ligne pour modifier le nom utilisateur
-      &#224; l'aide du volet de d&#233;tail.  Lorsque la modification est effectu&#233;e, appuyez sur <strong>Mise &#224; jour</strong>.
-     Le nom utilisateur peut ne pas &#234;tre le m&#234;me que le nom utilisateur d'une autre 
-     Condition dans ce Logix, mais peut &#234;tre le m&#234;me que le nom utilisateur d'une
-      Condition dans un Logix diff&#233;rent.</p>
+      <p>1 — Déplacer est en fait un bouton <strong>Haut</strong> et un bouton
+      <strong>Bas</strong>.<br>
+      2 — Déplacer est désactivé pour les variables si le type de logique est défini sur
+      <strong>Mixte</strong>.</p>
 
-      <p>Pour modifier l'ordre des condition, s&#233;lectionnez une ligne de condition.
-      et utilisez les boutons <strong>Haut</strong> et <strong>Bas</strong> pour
-      d&#233;placer la ligne. Notez que l'ordre dans lequel les Conditions sont r&#233;pertori&#233;s dans la section
-      Logix ne d&#233;termine pas l'ordre dans lequel elles sont &#233;valu&#233;es, ni
-      l'&#233;valuation d'une condition lorsqu'une condition ant&#233;rieure ou post&#233;rieure est &#233;valu&#233;e.
-      est &#233;valu&#233;e. Pour plus d'informations &#224; ce sujet, voir la discussion sur l'article
-      <a href="../../../../html/tools/Logix.shtml">Page principale de Logix
-      </a>.</p>
+      <h2>Le processus d'édition</h2>
 
-      <p>Les conditions sont des &#233;nonc&#233;s de la forme :</p>
+      <p>Lorsque l'éditeur d'arbre est lancé, les conditions du Logix sélectionné sont affichées.
+      Chaque ligne contient le nom système, le nom utilisateur, et l'état actuel entre parenthèses.
+      Sélectionnez une ligne pour modifier le nom utilisateur à l'aide du volet de détail. Lorsque
+      la modification est effectuée, appuyez sur <strong>Mise à jour</strong>. Le nom utilisateur
+      peut ne pas être le même que le nom utilisateur d'une autre Condition dans ce Logix, mais
+      peut être le même que le nom utilisateur d'une Condition dans un Logix différent.</p>
 
-      <div style="margin-left : 2em ;"><p><code>if (expression logique) then
-        (action)</code></p></div>
-  
-        <p>Lorsqu'une rang&#233;e Condition est d&#233;velopp&#233;e, cinq rang&#233;es s'affichent. 
-        Les rang&#233;es Ant&#233;c&#233;dent, Variables et Type de logique sont utilis&#233;es pour construire 
-        l'expression logique.  Les rang&#233;es Mode de d&#233;clenchement et Actions sont utilis&#233;es pour construire l'expression logique.</p>
-  
-        <h2>Expression logique</h2>
-  
-        <p>D&#233;veloppez la rang&#233;e <strong>Variables</strong> pour voir les diff&#233;rentes rang&#233;es 
-        <strong>Variables</strong>. Chaque ligne commence par un num&#233;ro de ligne (Rn)
-        qui est utilis&#233; pour cr&#233;er une logique manuelle lorsque le Type de logique a &#233;t&#233; d&#233;fini
-        sur <strong>Mixte</strong>.  Une description de la d&#233;claration suit. Le param&#232tre de d&#233;clenchement 
-        et le dernier &#233;tat calcul&#233; sont en gras &#224; la fin.</p>
-  
-        <p>Lorsqu'une ligne de variable est s&#233;lectionn&#233;e, l'information s'affiche dans 
-        la section des d&#233;tails. Les 4 premi&#232res lignes de d&#233;tail sont communes &#224; tous les types de Variable. 
-        La premi&#232re ligne correspond au type s&#233;lectionn&#233;.  La deuxi&#232me sera d&#233;finie
-        sur AND ou OR.  Ce param&#232tre est d&#233;fini automatiquement par le type de logique ou manuellement
-        lorsque vous utilisez MIXTE.  La troisi&#232me ligne peut &#234;tre r&#233;gl&#233;e sur NOT.  Si elle est d&#233;finie, cela
-        inversera le test.  La quatri&#232me ligne est la case &#224; cocher D&#233;clenchement Calcul.
-        Pour les cas o&#249; la modification d'une entit&#233; sp&#233;cifique (capteur, aiguillage,
-        etc.) ne doit pas d&#233;clencher un r&#233;sultat de calcul, vous devez d&#233;cocher cette case en cliquant dessus. 
-        En d&#233;cochant la case, vous demandez au programme 
-        de surveiller les changements d'&#233;tat de cette entit&#233; et de calculer l'&#233;tat de la condition, 
-        mais de ne prendre aucune mesure sur le r&#233;sultat du calcul.</p>
-  
-        </p> <p>Les autres champs de la section de d&#233;tail varient en fonction du
-        type de variable s&#233;lectionn&#233;. Si vous ne savez pas ce qui doit &#234;tre saisi dans un
-        champ de donn&#233;es, passez votre curseur sur l'&#233;tiquette, et un message d'aide appara&#238;tra. 
-        Pour plus de d&#233;tails, voir
-        <a href="StateVariableActionList.shtml#variable">Variables d'&#233;tat</a>.</p>
-  
-        <p>Le type de logique peut &#234;tre d&#233;fini sur <strong>AND</strong>, <strong>OR</strong>.
-        ou <strong>MIXTE</strong>.  S'il s'agit de ET ou de OU, la partie descriptive de la variableaffichera tous les AND ou tous les OR.  Si elle est d&#233;finie sur MIXTE, chaque ligne peut
-        avoir sa propre valeur.  Voir ci-dessous.</p>
-  
-        <p>Le <strong>Type logique</strong> par d&#233;faut est "AND". Dans ce cas, la
-        condition testera si tous les tests de variables sont vrais, apr&#232s avoir pris en compte les
-        n&#233;gations "NOT". En utilisant la ligne <strong>Type logique</strong>,
-        vous pouvez changer cela en "OR" ou "Mixte". "OR" signifie que la Condition sera
-        sera vraie si l'un des tests de la variable est vrai, apr&#232s avoir tenu compte des
-        les n&#233;gations.</p>
-  
-        </p> <p>S&#233;lectionner "Mixte" activera la rang&#233;e Ant&#233;c&#233;dent.  S&#233;lectionnez cette ligne pour
-        afficher le champ ant&#233;c&#233;dent dans le volet de d&#233;tail. Cela vous permettra de saisir
-        une expression logique en utilisant des ET, des OU et des NON et les num&#233;ros de ligne. Dans
-        Dans cette expression, chaque variable est d&#233;sign&#233;e par un num&#233;ro, par exemple R1, R2, R3, etc.
-        pour les trois premi&#232res variables, vous pouvez utiliser les op&#233;rateurs "et", "ou" et
-        "pas" en plus des parenth&#232ses. Quelques exemples :</p>
-        
-        <div style="margin-left : 2em ;"><p><code>
-        R1 et R2<br>
+      <p>Pour modifier l'ordre des condition, sélectionnez une ligne de condition. et utilisez les
+      boutons <strong>Haut</strong> et <strong>Bas</strong> pour déplacer la ligne. Notez que
+      l'ordre dans lequel les Conditions sont répertoriés dans la section Logix ne détermine pas
+      l'ordre dans lequel elles sont évaluées, ni l'évaluation d'une condition lorsqu'une condition
+      antérieure ou postérieure est évaluée. est évaluée. Pour plus d'informations à ce sujet, voir
+      la discussion sur l'article <a href="../../../../html/tools/Logix.shtml">Page principale de
+      Logix</a> .</p>
+
+      <p>Les conditions sont des énoncés de la forme :</p>
+
+      <div style="margin-left : 2em ;">
+        <p><code>if (expression logique) then (action)</code>
+        </p>
+      </div>
+
+      <p>Lorsqu'une rangée Condition est développée, cinq rangées s'affichent. Les rangées
+      Antécédent, Variables et Type de logique sont utilisées pour construire l'expression logique.
+      Les rangées Mode de déclenchement et Actions sont utilisées pour construire l'expression
+      logique.</p>
+
+      <h2>Expression logique</h2>
+
+      <p>Développez la rangée <strong>Variables</strong> pour voir les différentes rangées
+      <strong>Variables</strong>. Chaque ligne commence par un numéro de ligne (Rn) qui est utilisé
+      pour créer une logique manuelle lorsque le Type de logique a été défini sur
+      <strong>Mixte</strong>. Une description de la déclaration suit. Le paramètre de déclenchement
+      et le dernier état calculé sont en gras à la fin.</p>
+
+      <p>Lorsqu'une ligne de variable est sélectionnée, l'information s'affiche dans la section des
+      détails. Les 4 premières lignes de détail sont communes à tous les types de Variable. La
+      première ligne correspond au type sélectionné. La deuxième sera définie sur AND ou OR. Ce
+      paramètre est défini automatiquement par le type de logique ou manuellement lorsque vous
+      utilisez MIXTE. La troisième ligne peut être réglée sur NOT. Si elle est définie, cela
+      inversera le test. La quatrième ligne est la case à cocher Déclenchement Calcul. Pour les cas
+      où la modification d'une entité spécifique (capteur, aiguillage, etc.) ne doit pas déclencher
+      un résultat de calcul, vous devez décocher cette case en cliquant dessus. En décochant la
+      case, vous demandez au programme de surveiller les changements d'état de cette entité et de
+      calculer l'état de la condition, mais de ne prendre aucune mesure sur le résultat du
+      calcul.</p>
+
+      <p>Les autres champs de la section de détail varient en fonction du type de variable
+      sélectionné. Si vous ne savez pas ce qui doit être saisi dans un champ de données, passez
+      votre curseur sur l'étiquette, et un message d'aide apparaîtra. Pour plus de détails, voir
+      <a href="StateVariableActionList.shtml#variable">Variables d'état</a>.</p>
+
+      <p>Le type de logique peut être défini sur <strong>AND</strong>, <strong>OR</strong>. ou
+      <strong>MIXTE</strong>. S'il s'agit de ET ou de OU, la partie descriptive de la
+      variableaffichera tous les AND ou tous les OR. Si elle est définie sur MIXTE, chaque ligne
+      peut avoir sa propre valeur. Voir ci-dessous.</p>
+
+      <p>Le <strong>Type logique</strong> par défaut est "AND". Dans ce cas, la condition testera
+      si tous les tests de variables sont vrais, après avoir pris en compte les négations "NOT". En
+      utilisant la ligne <strong>Type logique</strong>, vous pouvez changer cela en "OR" ou
+      "Mixte". "OR" signifie que la Condition sera sera vraie si l'un des tests de la variable est
+      vrai, après avoir tenu compte des les négations.</p>
+
+      <p>Sélectionner "Mixte" activera la rangée Antécédent. Sélectionnez cette ligne pour afficher
+      le champ antécédent dans le volet de détail. Cela vous permettra de saisir une expression
+      logique en utilisant des ET, des OU et des NON et les numéros de ligne. Dans Dans cette
+      expression, chaque variable est désignée par un numéro, par exemple R1, R2, R3, etc. pour les
+      trois premières variables, vous pouvez utiliser les opérateurs "et", "ou" et "pas" en plus
+      des parenthèses. Quelques exemples :</p>
+
+      <div style="margin-left : 2em ;">
+        <p><code>R1 et R2<br>
         R1 ou (R2 et R3)<br>
-        (R2 et R3) ou (R3 et R1)
-        </code></p></div>
-  
-        <h3>Ajouter une nouvelle variable d'&#233;tat</h3>
-  
-        <p>Appuyez sur le bouton <strong>Ajouter</strong> lorsque la ligne Variables ou
-        une ligne Variable est s&#233;lectionn&#233;e pour ajouter une variable d'&#233;tat. Le panneau de d&#233;tail
-        affichera une bo&#238;te de choix pour que l'utilisateur puisse s&#233;lectionner un type de variable d'&#233;tat.
-        Les variables d'&#233;tat disponibles sont document&#233;es &#224; l'adresse suivante
-        <a href="StateVariableActionList.shtml#variable">Variables d'&#233;tat</a>.
-        Lorsqu'un type est choisi, des champs suppl&#233;mentaires sont ajout&#233;s au volet de d&#233;tail.
-  
-        Le champ de texte pour le nom doit contenir une entit&#233; existante (capteur,
-        aiguillage, feu, etc.). Le format r&#233;el de saisie des noms d&#233;pend
-        du param&#232tre de la m&#233;thode de s&#233;lection des noms Condition. Voir
-        <a href="../beantable/LogixTable.shtml#logixOptions">
-        M&#233;thode de s&#233;lection des noms Condition </a>.</p>.
-        
-        <p>Pour les variables Conditions, le champ de saisie de texte est remplac&#233; par deux
-        bo&#238;tes combo d&#233;roulantes.  La premi&#232re bo&#238;te est utilis&#233;e pour s&#233;lectionner le Logix, la
-        deuxi&#232me case est utilis&#233;e pour s&#233;lectionner une Condition qui appartient au
-        Logix s&#233;lectionn&#233;.
-        <span class="since">depuis 4.7.4</span></p>.
-        <div style="margin-left : 2em ;">
-        <a href="images/SelectConditionalReference.png">
-        <img src="images/SelectConditionalReference.png"
-        alt="Logix/Conditional Combo Boxes" height="148" width="558">
-        </a>
-        </div>
-  
-        </p> <p>Apr&#232s avoir saisi le nom, s&#233;lectionnez l'&#233;tat requis &#224; partir de la bo&#238;te &#224; options
-        <strong>&#201;tat variable</strong> de la liste d&#233;roulante.  Selon le type de variable et l'&#233;tat 
-        s&#233;lectionn&#233;s, des champs suppl&#233;mentaires peuvent &#234;tre affich&#233;s.
-  
-  
-  
-      <p>Apr&#232s avoir effectu&#233; vos mises &#224; jour, vous pouvez s&#233;lectionner la ligne Variables
-        et utiliser le bouton <strong>V&#233;rifier &#201;tat</strong> pour &#233;valuer les variables d'&#233;tat. 
-        Lorsque vous appuyez sur ce bouton, la v&#233;rification et l'&#233;valuation
-        se poursuivent jusqu'&#224; ce que la v&#233;rification se termine avec succ&#232s ou qu'une erreur soit d&#233;tect&#233;e.
-        Si une erreur est d&#233;tect&#233;e, la v&#233;rification s'arr&#234;te pour que l'utilisateur puisse corriger l'erreur et 
-        cliquer sur le bouton <strong>V&#233;rifier &#201;tat</strong>.
-        erreur et cliquer &#224; nouveau sur <strong>V&#233;rifier &#201;tat</strong>.</p>
-  
-        <p>S&#233;lectionnez <strong>Mise &#224; jour</strong> pour enregistrer les modifications ou...
-        <strong>Annuler</strong> pour abandonner les changements.</p>
-  
-        <h2>Action</h2>
-  
-        <p>D&#233;veloppez la rang&#233;e <strong>Actions</strong> pour voir les <strong>Actions</strong> individuelles. 
-          Chaque ligne commence par une phrase qui indique
-        dans quelles conditions elle sera invoqu&#233;e.  Une description de l'action
-        suit.</p>
-  
-        <p>Les actions sont &#233;valu&#233;es dans l'ordre de la liste. Pour changer cet
-        ordre, s&#233;lectionnez une ligne d'action et utilisez les boutons <strong>Haut</strong> et <strong>Bas</strong> pour d&#233;placer l'action.</p> 
-        <p>Les actions sont &#233;valu&#233;es dans l'ordre indiqu&#233;.
-  
-        S&#233;lectionnez une ligne d'action pour afficher les d&#233;tails dans le volet de d&#233;tails.  Cliquez sur
-        un champ pour passer en mode &#233;dition.  Pour cr&#233;er une nouvelle action, s&#233;lectionnez
-        <strong>Ajouter</strong> dans la liste des actions ou des boutons d'action.
-  
-        <p>Si une nouvelle action est en cours de cr&#233;ation, seul le groupe d'actions sera
-        affich&#233;. Une fois qu'un choix a &#233;t&#233; fait, d'autres champs seront affich&#233;s
-        en fonction du type s&#233;lectionn&#233;. Les types d'action disponibles sont document&#233;s &#224; l'adresse suivante
-        <a href="StateVariableActionList.shtml#action">Actions</a>.</p>
-  
-        <p>Lorsqu'un type est choisi, la fen&#234;tre de modification de l'action affiche un champ de texte pour
-        le nom de l'entit&#233; &#224; utiliser pour l'action. Lorsqu'un nom
-        (soit le nom syst&#232me, soit le nom utilisateur) est saisi, il doit
-        correspondre &#224; une entit&#233; existante (capteur, aiguillage, feu, etc.),
-        etc.). La m&#233;thode r&#233;elle de saisie des noms
-        d&#233;pendra du param&#232tre de la m&#233;thode de s&#233;lection  des noms conditions
-        Voir <a href="../beantable/LogixTable.shtml#logixOptions">.
-        M&#233;thode de S&#233;lection des Noms Condition</a>.</p>
-        
-        <p>Les &#233;l&#233;ments de donn&#233;es n&#233;cessaires pour sp&#233;cifier compl&#232tement l'
-        action appara&#238;tront dans le volet de d&#233;tail. Si vous ne
-        savez pas ce qui doit &#234;tre saisi dans un champ de donn&#233;es, passez votre
-        curseur sur l'&#233;tiquette, et un message d'indication appara&#238;tra.</p> 
-        <p>Les donn&#233;es n&#233;cessaires pour sp&#233;cifier l'action apparaissent dans le volet d&#233;taill&#233;.
-  
-        </p> <p>Pour chaque action, trois options sont disponibles pour savoir quand
-        d&#233;clencher l'action:</p> <p>
-        <ul>
-          <li>Sur le changement en Vrai</li>
-          <li>Sur le changement en Faux</li>
-          <li>OSur le changement </li>
-        </ul>
-        <p>Ceux-ci font r&#233;f&#233;rence &#224; l'&#233;tat calcul&#233;
-        de la condition, qui est &#233;gal &#224; la valeur de l'expression logique 
-        telle que sp&#233;cifi&#233;e dans le tableau des variables d'&#233;tat.
-        L'une de ces options doit &#234;tre s&#233;lectionn&#233;e.</p> 
-        <p>Il s'agit de l'&#233;tat calcul&#233; de la condition.
-  
-        </p> <p>Si la ligne <strong>Mode de D&#233;clenchement:</strong> a &#233;t&#233; modifi&#233;e en
-        <strong>Ex&#233;cuter l'action &#224; chaque fois qu'elle est d&#233;clench&#233;e</strong>, les options sont alors :</p>
-        <ul>
-          <li>Lorsque d&#233;clench&#233; Vrai</li>
-          <li>Lorsque d&#233;clench&#233; Faux</li>
-          <li>Lorsque d&#233;clench&#233;</li>
-        </ul>
-  
-        <p>S&#233;lectionnez <strong>Mettre &#224; jour</strong> pour enregistrer les modifications ou 
-        <strong>Annuler</strong> pour abandonner les changements.</p>
-  
-        <p>Pour plus d'informations, consultez la <a href=
-        "../../../../html/tools/Logix.shtml">documentation principale de Logix</a>.</p> <p>.
-  
-        <h2>Les pages de la documentation Logix sont class&#233;es logiquement</h2>.
-  
-  <p>Traduction2021-03-28</p>
+        (R2 et R3) ou (R3 et R1)</code>
+        </p>
+      </div>
+
+      <h3>Ajouter une nouvelle variable d'état</h3>
+
+      <p>Appuyez sur le bouton <strong>Ajouter</strong> lorsque la ligne Variables ou une ligne
+      Variable est sélectionnée pour ajouter une variable d'état. Le panneau de détail affichera
+      une boîte de choix pour que l'utilisateur puisse sélectionner un type de variable d'état. Les
+      variables d'état disponibles sont documentées à l'adresse suivante <a href=
+      "StateVariableActionList.shtml#variable">Variables d'état</a>. Lorsqu'un type est choisi, des
+      champs supplémentaires sont ajoutés au volet de détail. Le champ de texte pour le nom doit
+      contenir une entité existante (capteur, aiguillage, feu, etc.). Le format réel de saisie des
+      noms dépend du paramètre de la méthode de sélection des noms Condition. Voir <a href=
+      "../beantable/LogixTable.shtml#logixOptions">Méthode de sélection des noms Condition</a>
+      .</p>
+      .
+      <p>Pour les variables Conditions, le champ de saisie de texte est remplacé par deux boîtes
+      combo déroulantes. La première boîte est utilisée pour sélectionner le Logix, la deuxième
+      case est utilisée pour sélectionner une Condition qui appartient au Logix sélectionné.
+      <span class="since">depuis 4.7.4</span></p>
+      .
+      <div style="margin-left : 2em ;">
+        <a href="images/SelectConditionalReference.png"><img src=
+        "images/SelectConditionalReference.png" alt="Logix/Conditional Combo Boxes" height="148"
+        width="558"></a>
+      </div>
+
+      <p>Après avoir saisi le nom, sélectionnez l'état requis à partir de la boîte à options
+      <strong>État variable</strong> de la liste déroulante. Selon le type de variable et l'état
+      sélectionnés, des champs supplémentaires peuvent être affichés.</p>
+
+      <p>Après avoir effectué vos mises à jour, vous pouvez sélectionner la ligne Variables et
+      utiliser le bouton <strong>Vérifier État</strong> pour évaluer les variables d'état. Lorsque
+      vous appuyez sur ce bouton, la vérification et l'évaluation se poursuivent jusqu'à ce que la
+      vérification se termine avec succès ou qu'une erreur soit détectée. Si une erreur est
+      détectée, la vérification s'arrête pour que l'utilisateur puisse corriger l'erreur et cliquer
+      sur le bouton <strong>Vérifier État</strong>. erreur et cliquer à nouveau sur
+      <strong>Vérifier État</strong>.</p>
+
+      <p>Sélectionnez <strong>Mise à jour</strong> pour enregistrer les modifications ou...
+      <strong>Annuler</strong> pour abandonner les changements.</p>
+
+      <h2>Action</h2>
+
+      <p>Développez la rangée <strong>Actions</strong> pour voir les <strong>Actions</strong>
+      individuelles. Chaque ligne commence par une phrase qui indique dans quelles conditions elle
+      sera invoquée. Une description de l'action suit.</p>
+
+      <p>Les actions sont évaluées dans l'ordre de la liste. Pour changer cet ordre, sélectionnez
+      une ligne d'action et utilisez les boutons <strong>Haut</strong> et <strong>Bas</strong> pour
+      déplacer l'action.</p>
+
+      <p>Les actions sont évaluées dans l'ordre indiqué. Sélectionnez une ligne d'action pour
+      afficher les détails dans le volet de détails. Cliquez sur un champ pour passer en mode
+      édition. Pour créer une nouvelle action, sélectionnez <strong>Ajouter</strong> dans la liste
+      des actions ou des boutons d'action.</p>
+
+      <p>Si une nouvelle action est en cours de création, seul le groupe d'actions sera affiché.
+      Une fois qu'un choix a été fait, d'autres champs seront affichés en fonction du type
+      sélectionné. Les types d'action disponibles sont documentés à l'adresse suivante <a href=
+      "StateVariableActionList.shtml#action">Actions</a>.</p>
+
+      <p>Lorsqu'un type est choisi, la fenêtre de modification de l'action affiche un champ de
+      texte pour le nom de l'entité à utiliser pour l'action. Lorsqu'un nom (soit le nom système,
+      soit le nom utilisateur) est saisi, il doit correspondre à une entité existante (capteur,
+      aiguillage, feu, etc.), etc.). La méthode réelle de saisie des noms dépendra du paramètre de
+      la méthode de sélection des noms conditions Voir <a href=
+      "../beantable/LogixTable.shtml#logixOptions">. Méthode de Sélection des Noms
+      Condition</a>.</p>
+
+      <p>Les éléments de données nécessaires pour spécifier complètement l' action apparaîtront
+      dans le volet de détail. Si vous ne savez pas ce qui doit être saisi dans un champ de
+      données, passez votre curseur sur l'étiquette, et un message d'indication apparaîtra.</p>
+
+      <p>Les données nécessaires pour spécifier l'action apparaissent dans le volet détaillé.</p>
+
+      <p>Pour chaque action, trois options sont disponibles pour savoir quand déclencher
+      l'action:</p>
+
+      <ul>
+        <li>Sur le changement en Vrai</li>
+
+        <li>Sur le changement en Faux</li>
+
+        <li>OSur le changement</li>
+      </ul>
+
+      <p>Ceux-ci font référence à l'état calculé de la condition, qui est égal à la valeur de
+      l'expression logique telle que spécifiée dans le tableau des variables d'état. L'une de ces
+      options doit être sélectionnée.</p>
+
+      <p>Il s'agit de l'état calculé de la condition.</p>
+
+      <p>Si la ligne <strong>Mode de Déclenchement:</strong> a été modifiée en <strong>Exécuter
+      l'action à chaque fois qu'elle est déclenchée</strong>, les options sont alors :</p>
+
+      <ul>
+        <li>Lorsque déclenché Vrai</li>
+
+        <li>Lorsque déclenché Faux</li>
+
+        <li>Lorsque déclenché</li>
+      </ul>
+
+      <p>Sélectionnez <strong>Mettre à jour</strong> pour enregistrer les modifications ou
+      <strong>Annuler</strong> pour abandonner les changements.</p>
+
+      <p>Pour plus d'informations, consultez la <a href=
+      "../../../../html/tools/Logix.shtml">documentation principale de Logix</a>.</p>
+
+      <p>.</p>
+
+      <h2>Les pages de la documentation Logix sont classées logiquement</h2>
+      .
+      <p>Traduction2021-03-28</p>
       <!--#include virtual="LogixDocList.shtml" -->
-
-
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>
-
-   
-

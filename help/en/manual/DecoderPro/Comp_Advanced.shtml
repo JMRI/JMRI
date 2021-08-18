@@ -1,67 +1,94 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Comprehensive Programmer - Advanced Features Pane</title>
   <!--#include virtual="/Style.shtml" -->
-</head>
+  <!-- DecoderPro Styles -->
 
+  <style>
+    .dp-ctr {
+      text-align: center;
+    }
+
+    .dp-mid {
+      text-align: middle;
+    }
+
+    .dp-right {
+      text-align: right;
+    }
+
+    .dp-none {
+      list-style-type: none;
+    }
+
+    .dp-sq {
+      list-style-type: square;
+    }
+
+    .dp-ua {
+      list-style-type: upper-alpha
+    }
+
+    .dp-la {
+      list-style-type: lower-alpha
+    }
+
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Advanced Features Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_Consist.shtml">Previous |</a> <a href=
-        "Comp_SoundFX.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_Consist.shtml">Previous |</a> <a href="Comp_SoundFX.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>The <b>Advanced Features</b> pane covers CVs that don't
-      fall readily into one of the other categories, and more
-      importantly are not generally part of the NMRA DCC standard.
-      This is a bit like the Netscape/Microsoft Browser Wars, areas
-      where the manufacturer is pushing the envelope. In this case,
-      the CV here controls the Transponding feature of newer
-      Digitrax decoders, which allows them to report their location
-      and engine number back to the LocoNet.</p>
+      <p>The <strong>Advanced Features</strong> pane covers CVs that don't fall readily into one of
+      the other categories, and more importantly are not generally part of the NMRA DCC standard.
+      This is a bit like the Netscape/Microsoft Browser Wars, areas where the manufacturer is
+      pushing the envelope. In this case, the CV here controls the Transponding feature of newer
+      Digitrax decoders, which allows them to report their location and engine number back to the
+      LocoNet.</p>
 
-      <p>There may be one or several of these panes, depending on
-      how complex the decoder programming is and the style of the
-      person who wrote the definition file for your particular
+      <p>There may be one or several of these panes, depending on how complex the decoder
+      programming is and the style of the person who wrote the definition file for your particular
       decoder.</p>
 
-      <p>Note that the Tsunami decoder has advanced, Tsunami
-      Lighting, Equalizer, Reverb, and ASC TAB that are unique to
-      this decoder and will not be discussed in this manual.</p>
+      <p>Note that the Tsunami decoder has advanced, Tsunami Lighting, Equalizer, Reverb, and ASC
+      TAB that are unique to this decoder and will not be discussed in this manual.</p>
 
-      <h1><img style="width: 900px; height: 325px;" alt="advanced"
-      src="images/Comp_08_Advanced.png"><br></h1>
+      <h1><img style="width: 900px; height: 325px;" alt="advanced" src=
+      "images/Comp_08_Advanced.png"><br>
+      </h1>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_SoundFX.shtml"></a> <a href=
-        "Comp_Consist.shtml">Previous |</a> <a href=
+      <div class="dp-right">
+        <p><a href="Comp_SoundFX.shtml"></a> <a href="Comp_Consist.shtml">Previous |</a> <a href=
         "Comp_SoundFX.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

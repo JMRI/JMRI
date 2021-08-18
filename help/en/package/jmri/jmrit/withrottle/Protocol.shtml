@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright ($Author$) 2009 -->
 
-  <title>JMRI: WiThrottle Protocol</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: WiThrottle Protocol</title><!--#include virtual="/Style.shtml" -->
+
   <style type="text/css">
-  	table.data, pre.code {
+        table.data, pre.code {
         margin: initial;
         margin-left: 12px;
         width: fit-content;
         padding-right: 1em;
     }
     pre.code {
-    	color: darkred;
-    	border: solid 0.5px black;
+        color: darkred;
+        border: solid 0.5px black;
     }
     .delimiter1 {
         color: red;
@@ -39,27 +39,23 @@
       color: darkred;
     }
     table.data, table.data th, table.data td {
- 		border: 0.5px solid black;
- 		font-size: 90%;
-	}
+                border: 0.5px solid black;
+                font-size: 90%;
+        }
   </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-	  <a name="top" id="top"></a>
-      <h1>JMRI: WiThrottle Protocol</h1>
+      <h1 id="top">JMRI: WiThrottle Protocol</h1>
 
       <p>This page describes the protocol provided by the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
-      jmri.jmrit.withrottle</a> package for controlling trains,
-      turnouts, and more through JMRI via a TCP/IP socket.</p>
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
+      package for controlling trains, turnouts, and more through JMRI via a TCP/IP socket.</p>
 
-      <p>
-      <a href="#StringParsing">String Parsing</a><br>
+      <p><a href="#StringParsing">String Parsing</a><br>
       <a href="#InitialConnection">Initial Connection (Server to Client)</a><br>
       <a href="#ThrottleChangeNotification">Throttle Change Notification</a><br>
       <a href="#OtherServertoClientMessages">Other Server to Client Messages</a><br>
@@ -72,66 +68,48 @@
       <a href="#Observations">Observations</a><br>
       </p>
 
-      <p>JMRI uses a fairly simple text-based client-server
-      protocol over TCP/IP sockets. Throttles (or other
-      applications) can locate JMRI by sending a multi-cast DNS
-      request, using ZeroConf/Bonjour, for the address
-      "_withrottle._tcp.local". JMRI won't always reply (it depends
-      on your operating system, firewall settings, and network
-      environment), so your application should also allow entering
-      an IP address and port.</p>
+      <p>JMRI uses a fairly simple text-based client-server protocol over TCP/IP sockets. Throttles
+      (or other applications) can locate JMRI by sending a multi-cast DNS request, using
+      ZeroConf/Bonjour, for the address "_withrottle._tcp.local". JMRI won't always reply (it
+      depends on your operating system, firewall settings, and network environment), so your
+      application should also allow entering an IP address and port.</p>
 
-      <p>When you first open the connection, JMRI responds with a
-      number of lines of text that provide information about the
-      JMRI instance to which you've connected. Your application
-      then sends commands to JMRI. Each of these commands is plain
-      text, with a system-specific newline character at the end (typically 0A hex). Similarly,
-      lines sent back from JMRI are terminated by a system-specific newline.
-      A newline can be a linefeed (0A hex), carriage return (0D hex),
-      or a carriage return followed by a newline. (0D 0A hex)
-      Clients and servers should accept any newline sequence as a command termination.</p>
+      <p>When you first open the connection, JMRI responds with a number of lines of text that
+      provide information about the JMRI instance to which you've connected. Your application then
+      sends commands to JMRI. Each of these commands is plain text, with a system-specific newline
+      character at the end (typically 0A hex). Similarly, lines sent back from JMRI are terminated
+      by a system-specific newline. A newline can be a linefeed (0A hex), carriage return (0D hex),
+      or a carriage return followed by a newline. (0D 0A hex) Clients and servers should accept any
+      newline sequence as a command termination.</p>
 
-      <p>You can see these messages by enabling DEBUG
-      for the JMRI package jmri.jmrit.withrottle.
-      Add the line "<b>log4j.category.jmri.jmrit.withrottle=DEBUG</b>"
-      to your default.lcf file and restart JMRI. All messages (both directions)
-      will be added to your JMRI System Console and the session.log file.
-      </p>
+      <p>You can see these messages by enabling DEBUG for the JMRI package jmri.jmrit.withrottle.
+      Add the line "<strong>log4j.category.jmri.jmrit.withrottle=DEBUG</strong>" to your
+      default.lcf file and restart JMRI. All messages (both directions) will be added to your JMRI
+      System Console and the session.log file.</p>
 
-	  <a name="StringParsing" id="StringParsing"></a>
-      <h2>String Parsing
-	    <a class="to-top" href="#top">^Top</a>
-	  </h2>
+      <h2 id="StringParsing">String Parsing <a class="to-top" href="#top">^Top</a></h2>
 
-      <p>JMRI commands and results are very often arrays of values,
-      and sometimes arrays of arrays. The array elements are
-      separated by three-character delimiters. For example, the
-      following roster entry contains two engines, and each engine
-      has three values:</p>
+      <p>JMRI commands and results are very often arrays of values, and sometimes arrays of arrays.
+      The array elements are separated by three-character delimiters. For example, the following
+      roster entry contains two engines, and each engine has three values:</p>
+
       <pre class="code">
-RL2<span class="delimiter1">]\[</span>RGS 41<span class=
-"delimiter2">}|{</span>41<span class=
-"delimiter2">}|{</span>L<span class=
-"delimiter1">]\[</span>Test Loco<span class=
+RL2<span class="delimiter1">]\[</span>RGS 41<span class="delimiter2">}|{</span>41<span class=
+"delimiter2">}|{</span>L<span class="delimiter1">]\[</span>Test Loco<span class=
 "delimiter2">}|{</span>1234<span class="delimiter2">}|{</span>L
 </pre>
+      <p>Here the delimiters are color-coded to make it easier to see the two different delimiters.
+      The <code class="delimiter1"><strong>]\[</strong></code> delimiter is used to divide the
+      different roster entries (there are two), while the <code class="delimiter2">}|{</code>
+      delimiter is used to divide the parts of each roster entry. The details are described in
+      sections below for each command and response.</p>
 
-      <p>Here the delimiters are color-coded to make it easier to
-      see the two different delimiters. The <code class=
-      "delimiter1"><b>]\[</b></code> delimiter is used to divide
-      the different roster entries (there are two), while the
-      <code class="delimiter2">}|{</code> delimiter is used to
-      divide the parts of each roster entry. The details are
-      described in sections below for each command and
-      response.</p>
+      <h2 id="InitialConnection">Initial Connection (Server to Client) <a class="to-top" href=
+      "#top">^Top</a></h2>
 
-	  <a name="InitialConnection" id="InitialConnection"></a>
-      <h2>Initial Connection (Server to Client)
-	    <a class="to-top" href="#top">^Top</a>
-	  </h2>
+      <p>When you first open a socket to JMRI, you may get a response that will look something like
+      the following:</p>
 
-      <p>When you first open a socket to JMRI, you may get a
-      response that will look something like the following:</p>
       <pre class="code">
 VN2.0
 RL1]\[SP 2101}|{2102}|{L
@@ -142,429 +120,361 @@ RCC0
 PW12080
 *10
 </pre>
+      <p class="note">Some implementations will not send these initial lines until a command has
+      been sent by the client, typically the N or HU commands identifying the client device.</p>
 
-      <p class="note">Some implementations will not send these initial
-      lines until a command has been sent by the client, typically the N or HU
-      commands identifying the client device.</p>
-
-      <p>Each line contains information for part of JMRI, as
-      described below, so your application can show things like
-      engines, turnouts, etc.</p>
+      <p>Each line contains information for part of JMRI, as described below, so your application
+      can show things like engines, turnouts, etc.</p>
 
       <h3>WiThrottle Protocol Version</h3>
 
-      <p>The first string, <code>VN2.0</code>, provides the version
-      number of the WiThrottle protocol. In this case the version
-      number is 2.0. Clients use this to determine WiThrottle syntax. EngineDriver
-      now requires at least 2.0 to connect.</p>
+      <p>The first string, <code>VN2.0</code>, provides the version number of the WiThrottle
+      protocol. In this case the version number is 2.0. Clients use this to determine WiThrottle
+      syntax. EngineDriver now requires at least 2.0 to connect.</p>
 
       <h3>Roster List</h3>
 
-      <p>The roster string always begins with <code>RL</code>
-      (Roster List) followed by the number of entries in the
-      roster. Here are three different examples of roster strings
-      that might be returned by JMRI:</p>
+      <p>The roster string always begins with <code>RL</code> (Roster List) followed by the number
+      of entries in the roster. Here are three different examples of roster strings that might be
+      returned by JMRI:</p>
+
       <pre class="code">
 RL0
 RL2]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 </pre>
-
-      <p>with zero, two, and three roster entries, respectively.
-      Each roster entry contains three pieces of information,
-      always in the same order:</p>
+      <p>with zero, two, and three roster entries, respectively. Each roster entry contains three
+      pieces of information, always in the same order:</p>
 
       <table class="data">
         <tr>
           <th>Segment</th>
-
           <th>Example</th>
-
           <th>Description</th>
         </tr>
 
         <tr>
           <td>Name</td>
-
           <td>RGS 41</td>
-
           <td>The name to show in your application</td>
         </tr>
 
         <tr>
           <td>Address</td>
-
           <td>41</td>
-
           <td>The DCC address of the locomotive</td>
         </tr>
 
         <tr>
           <td>Length</td>
-
           <td>L</td>
-
-          <td>S or L to indicate if this is a Short or Long DCC
-          address</td>
+          <td>S or L to indicate if this is a Short or Long DCC address</td>
         </tr>
       </table>
 
       <h3>Track Power</h3>
 
-      <p>Returns information about the current state of track power.
-      This can be one of the following:</p>
+      <p>Returns information about the current state of track power. This can be one of the
+      following:</p>
 
       <table class="data">
         <tr>
           <td>PPA0</td>
-
           <td>Off</td>
         </tr>
 
         <tr>
           <td>PPA1</td>
-
           <td>On</td>
         </tr>
 
         <tr>
           <td>PPA2</td>
-
           <td>Unknown</td>
         </tr>
       </table>
 
-      <a name="TurnoutList" id="TurnoutList"></a>
-      <h3>Turnout List</h3>
+      <h3 id="TurnoutList">Turnout List</h3>
 
-      <p>JMRI returns either zero, one, or two strings for this
-      section. The first string provides the labels for the
-      different turnout states. For example:</p>
+      <p>JMRI returns either zero, one, or two strings for this section. The first string provides
+      the labels for the different turnout states. For example:</p>
+
       <pre class="code">
 PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
 </pre>
-
-      <p>This string contains an array with two elements, which
-      provide the labels to use for each turnout state (except for
-      Unknown):</p>
+      <p>This string contains an array with two elements, which provide the labels to use for each
+      turnout state (except for Unknown):</p>
 
       <table class="data">
         <tr>
           <th>Segment</th>
-
           <th>Example</th>
-
           <th>Description</th>
         </tr>
 
         <tr>
           <td>Caption</td>
-
           <td>Closed</td>
-
           <td>The string to show for the state of turnout</td>
         </tr>
 
         <tr>
           <td>Value</td>
-
           <td>2</td>
-
           <td>The corresponding value for the turnout state</td>
         </tr>
       </table>
 
-      <p class="note">There is also a third value, Unknown,
-      represented with the value 1, that is not explicitly given a
-      caption in the reply.</p>
+      <p class="note">There is also a third value, Unknown, represented with the value 1, that is
+      not explicitly given a caption in the reply.</p>
 
-      <p>The second string appears when you have turnouts defined
-      in JMRI, and contains the array of defined turnouts, and will look
-      something like this:</p>
+      <p>The second string appears when you have turnouts defined in JMRI, and contains the array
+      of defined turnouts, and will look something like this:</p>
+
       <pre class="code">
 PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
 </pre>
-
       <p>Each turnout contains the following segments:</p>
 
       <table class="data">
         <tr>
           <th>Segment</th>
-
           <th>Example</th>
-
           <th>Description</th>
         </tr>
 
         <tr>
           <td>System Name</td>
-
           <td>LT12</td>
-
           <td>The system name used to define this turnout</td>
         </tr>
 
         <tr>
           <td>User Name</td>
-
           <td>Rico Station N</td>
-
           <td>The user name entered into JMRI for this turnout</td>
         </tr>
 
         <tr>
           <td>State</td>
-
           <td>1</td>
-
           <td>The current state of the turnout (see above)</td>
         </tr>
       </table>
 
-	  <a name="RouteList" id="RouteList"></a>
-      <h3>Route List</h3>
+      <h3 id="RouteList">Route List</h3>
 
-      <p>Like for turnouts, JMRI will reply with zero, one or two
-      strings. The first string is likewise a list of labels for
-      the route values. Again, Unknown (1) is not explicitly
-      listed. For example:</p>
+      <p>Like for turnouts, JMRI will reply with zero, one or two strings. The first string is
+      likewise a list of labels for the route values. Again, Unknown (1) is not explicitly listed.
+      For example:</p>
+
       <pre class="code">
 PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
 </pre>
+      <p>The second string contains an array of defined routes. For example:</p>
 
-      <p>The second string contains an array of defined routes. For
-      example:</p>
       <pre class="code">
 PRL]\[IR:AUTO:0001}|{Rico Main}|{2
 </pre>
-
       <table class="data">
         <tr>
           <th>Segment</th>
-
           <th>Example</th>
-
           <th>Description</th>
         </tr>
+
         <tr>
           <td>System Name</td>
-
           <td>IR:AUTO:0001</td>
-
-          <td>The system name defined for this route. The name in
-          this example was auto-generated</td>
+          <td>The system name defined for this route. The name in this example was
+          auto-generated</td>
         </tr>
+
         <tr>
           <td>User Name</td>
-
           <td>Rico Main</td>
-
           <td>The name user entered into JMRI for this route</td>
         </tr>
+
         <tr>
           <td>State</td>
-
           <td>2</td>
-
           <td>1=Unknown, 2=Active, 4=Inactive, 8=Inconsistent</td>
         </tr>
       </table>
 
       <h3>Consist List</h3>
 
-      <p>The consist list is somewhat similar in concept to the roster
-      list. However, there is a separate line for each consist entry.
-      Here is an example of a consist list that contains two entries:</p>
+      <p>The consist list is somewhat similar in concept to the roster list. However, there is a
+      separate line for each consist entry. Here is an example of a consist list that contains two
+      entries:</p>
 
       <pre class="code">
 RCC2
 RCD}|{74(S)}|{74(S)]\[3374(L)}|{true]\[346(L)}|{true
 RCD}|{123(S)}|{123(S)]\[3374(L)}|{true
 </pre>
+      <p>The first line marks the start of the consist list, with the number of entries after the
+      "RCC". Subsequent lines start with "RCD}|{" and are followed by information about a single
+      consist entry.</p>
 
-      <p>The first line marks the start of the consist list, with the
-      number of entries after the "RCC". Subsequent lines start with
-      "RCD}|{" and are followed by information about a single consist
-      entry.</p>
+      <p>For whatever reason, consist entries don't follow the same pattern as roster entries. Here
+      is a summary of the Format for each consist entry (with spaces added for readability):</p>
 
-      <p>For whatever reason, consist entries don't follow the same
-      pattern as roster entries. Here is a summary of the Format
-      for each consist entry (with spaces added for readability):</p>
-
-<pre class="code">
+      <pre class="code">
   RCD }|{ consistAddress }|{ consistId
     Array: ]\[  loco DCC Address }|{ locoDirection
 </pre>
+      <p>Addresses have the format <em>address</em>(S/L). For example, 3374(L) is a long address
+      and 74(S) is a short addresses.</p>
 
-      <p>Addresses have the format <i>address</i>(S/L). For example,
-      3374(L) is a long address and 74(S) is a short addresses.</p>
-
-      <p>In the example above, here is the information about the
-      first consist entry:</p>
+      <p>In the example above, here is the information about the first consist entry:</p>
 
       <table class="data">
-          <tr>
-            <th>Data</th>
+        <tr>
+          <th>Data</th>
+          <th>Description</th>
+        </tr>
 
-            <th>Description</th>
-          </tr>
+        <tr>
+          <td>74(S)</td>
+          <td>Consist has short DCC address 74</td>
+        </tr>
 
-          <tr>
-            <td>74(S)</td>
+        <tr>
+          <td>74(S)</td>
+          <td>The ID of the consist</td>
+        </tr>
 
-            <td>Consist has short DCC address 74</td>
-          </tr>
+        <tr>
+          <td>3374(L)}|{true</td>
+          <td>Loco with long address 3374 in the forward direction</td>
+        </tr>
 
-          <tr>
-              <td>74(S)</td>
-
-              <td>The ID of the consist</td>
-          </tr>
-
-          <tr>
-              <td>3374(L)}|{true</td>
-
-              <td>Loco with long address 3374 in the forward direction</td>
-          </tr>
-
-          <tr>
-              <td>346(L)}|{true</td>
-
-              <td>Loco with long address 346 in the forward direction</td>
-          </tr>
+        <tr>
+          <td>346(L)}|{true</td>
+          <td>Loco with long address 346 in the forward direction</td>
+        </tr>
       </table>
-
 
       <h3>JMRI Web Port</h3>
 
-      <p>The final string from the initial reply provides the port
-      set for the JMRI web server. For example:</p>
+      <p>The final string from the initial reply provides the port set for the JMRI web server. For
+      example:</p>
+
       <pre class="code">
 PW12080
 </pre>
-
       <p>indicates that the web server port is set to 12080.</p>
 
-	  <a name="ThrottleChangeNotification" id="ThrottleChangeNotification"></a>
-      <h2>Throttle Change Notification
-      	    <a class="to-top" href="#top">^Top</a>
-	  </h2>
+      <h2 id="ThrottleChangeNotification">Throttle Change Notification <a class="to-top" href=
+      "#top">^Top</a></h2>
 
-      <p>There are cases where throttle property changes in JMRI cause a
-      message to be sent. These messages are not a response to a
-      command, but rather are sent at any time (from the perspective
-      of your WiThrottle protocol client). For example, if you have a Throttle
-      window open in JMRI and you turn on the headlight (F0), a property
-      change message will be sent with the function information:</p>
+      <p>There are cases where throttle property changes in JMRI cause a message to be sent. These
+      messages are not a response to a command, but rather are sent at any time (from the
+      perspective of your WiThrottle protocol client). For example, if you have a Throttle window
+      open in JMRI and you turn on the headlight (F0), a property change message will be sent with
+      the function information:</p>
 
       <pre class="code">
 M0AL341&lt;;&gt;F10
 </pre>
-
-      <p>All property change messages begin with M0A (where '0' could
-      be a different throttle character) and then the DCC address of the
-      locomotive. The part after the &lt;;&gt; separator uses the
-      format described below, under the 'F' Function.</p>
+      <p>All property change messages begin with M0A (where '0' could be a different throttle
+      character) and then the DCC address of the locomotive. The part after the &lt;;&gt; separator
+      uses the format described below, under the 'F' Function.</p>
 
       <p>Here is a list of property notifications that can be sent</p>
 
       <ul>
-        <li>Function state <code>Fsnn</code> where 's' is state ('0'=Off, '1'=On) and 'nn' is function number ('0'-'28')</li>
-        <li>Speed <code>Vnnnn</code> where 'nnnn' is a speed value between 0 and 126, or -1 for eStop</li>
+        <li>Function state <code>Fsnn</code> where 's' is state ('0'=Off, '1'=On) and 'nn' is
+        function number ('0'-'28')</li>
+
+        <li>Speed <code>Vnnnn</code> where 'nnnn' is a speed value between 0 and 126, or -1 for
+        eStop</li>
+
         <li>Direction <code>Rd</code> where 'd' is '0'=Reverse and '1'=Forward</li>
-        <li>Speed step mode <code>sn</code> where 'n' is '1'=128step, '2'=28step, '4'=27step or '8'=14step</li>
+
+        <li>Speed step mode <code>sn</code> where 'n' is '1'=128step, '2'=28step, '4'=27step or
+        '8'=14step</li>
       </ul>
-<pre class="code">
+
+      <pre class="code">
 M0AL341&lt;;&gt;F10
 M0AL341&lt;;&gt;V23
 M0AL341&lt;;&gt;R1
 M0AL341&lt;;&gt;s1
 </pre>
+      <h2 id="OtherServertoClientMessages">Other Server to Client Messages <a class="to-top" href=
+      "#top">^Top</a></h2>
 
-    <a name="OtherServertoClientMessages" id="OtherServertoClientMessages"></a>
-    <h2>Other Server to Client Messages
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
+      <h3>Fast Clock Message</h3>
 
-    <h3>Fast Clock Message</h3>
+      <p>The 'PFT' command is used to synchronize the fast clock time. It is sent from the server
+      when time or rate change, indicating the "now" time and the current time ratio (or 0 when
+      clock stopped). Examples include:</p>
 
-    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
-    sent from the server when time or rate change, indicating the "now" time
-    and the current time ratio (or 0 when clock stopped). Examples include:</p>
-
-    <pre class="code">
+      <pre class="code">
 PFT65871&lt;;&gt;4
 PFT1550686525&lt;;&gt;4.0
 PFT1550681224&lt;;&gt;0.0
 </pre>
+      <p>The first number is an integer number of seconds since 12:00 midnight, January 1st, 1970
+      fast clock time. This zero date is very close to the Unix time epoch, which is 12:00
+      midnight, January 1st, 1970 UTC, only differing in the time zone offset, where applicable. In
+      fact, this makes it easy to convert this value using the standard time libraries, as long as
+      any time zone conversions are omitted. JMRI sends a value based on the system date when the
+      fast clock was started, so it will return a value near the calendar date. Since the JMRI fast
+      clock does not really support calendar dates, only the hour, minute and second are useful.
+      The Digitrax LNWI returns values within the range 0-86400, which translates to times on
+      January 1st, 1970, when the day, month and year are calculated.<br>
+      To give an example: A JMRI instance started on Dec 13, 2020 with a fast clock time set to
+      10:23:45 am will return 1607855025, which can be converted back to hours, minutes and seconds
+      by "modulo dividing" by 86400 (number of seconds in a day) and calculating further as
+      follows:<br>
+      1607855025 mod 86400 = 37425 seconds since midnight.<br>
+      37425 seconds since midnight = 10 hours 1425 seconds since midnight = 10 hours 23 minutes 45
+      seconds since midnight = 10:23:45 am.<br>
+      The second number is the current fast time ratio. It may be an integer value (4) or a
+      floating point value (4.0). If this value is 0 (or 0.0), the clock is stopped.<br>
+      Updates are sent on each change in time or rate, and when clock stopped or started, so expect
+      one message every fast clock minute.</p>
 
-    <p>The first number is an integer number of seconds since 12:00 midnight,
-    January 1st, 1970 fast clock time. This zero date is very close to the
-    Unix time epoch, which is 12:00 midnight, January 1st, 1970 UTC, only
-    differing in the time zone offset, where applicable.
-    In fact, this makes it easy to convert this value using the standard time
-    libraries, as long as any time zone conversions are omitted. JMRI sends a
-    value based on the system date when the fast clock was started, so it will
-    return a value near the calendar date. Since the JMRI fast clock does not
-    really support calendar dates, only the hour, minute and second are useful.
-    The Digitrax LNWI returns values within the range 0-86400, which translates
-    to times on January 1st, 1970, when the day, month and year are
-    calculated.<br/>
-    To give an example: A JMRI instance started on Dec 13, 2020 with a fast clock
-    time set to 10:23:45 am will return 1607855025, which can be converted back
-    to hours, minutes and seconds by "modulo dividing" by 86400
-    (number of seconds in a day) and calculating further as follows:<br/>
-    1607855025 mod 86400 = 37425 seconds since midnight.<br/>
-    37425 seconds since midnight = 10 hours 1425 seconds since midnight =
-    10 hours 23 minutes 45 seconds since midnight = 10:23:45 am.<br/>
-    The second number is the current fast time ratio.  It
-    may be an integer value (4) or a floating point value (4.0).  If this
-    value is 0 (or 0.0), the clock is stopped.<br/>
-    Updates are sent on each change in time or rate, and when clock stopped
-    or started, so expect one message every fast clock minute.</p>
+      <h3 id="AlertandInfoMessage">Alert and Info Message</h3>
 
-    <a name="AlertandInfoMessage" id="AlertandInfoMessage"></a>
-    <h3>Alert and Info Message</h3>
+      <p>The server can send a message string that the client can display. These cannot have
+      newlines in message. Two types:<br>
+      Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br>
+      Info message: 'Hm' + message text. Same as HM, but informational only.</p>
 
-    <p>The server can send a message string that the client can display. These cannot have
-      newlines in message. Two types:<br />
-      Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br />
-      Info message: 'Hm' + message text. Same as HM, but informational only.
-      </p>
-    <p>Example returned after client requests invalid address (say <code>M0+L23&lt;;&gt;L23</code>) the
-    response is:</p>
+      <p>Example returned after client requests invalid address (say
+      <code>M0+L23&lt;;&gt;L23</code>) the response is:</p>
 
-    <pre class="code">
+      <pre class="code">
 HMJMRI: address 'L23' not allowed as Long
 </pre>
+      <h3>Server Type Message</h3>
 
-    <h3>Server Type Message</h3>
-
-    <p>The server can send a "type" to identify itself to clients, useful to enable specific behaviors. Two types:<br />
-      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br />
+      <p>The server can send a "type" to identify itself to clients, useful to enable specific
+      behaviors. Two types:<br>
+      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br>
       'Ht' + description. Longer informational text string, cannot contain newlines</p>
 
-    <pre class="code">
+      <pre class="code">
 HTJMRI
 HtJMRI v4.19.8 My JMRI Railroad
 </pre>
+      <h2 id="Commands">Commands (Client to Server) <a class="to-top" href="#top">^Top</a></h2>
 
-      <a name="Commands" id="Commands"></a>
-      <h2>Commands (Client to Server)
-	    <a class="to-top" href="#top">^Top</a>
-	  </h2>
-
-      <p>Once you've established a connection as outlined above,
-      you can start sending commands to JMRI. The first letter of
-      each command is interpreted by the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/DeviceServer.java">
-      DeviceServer</a> class to determine where to send the rest of
-      the command. Here are the letters currently supported:</p>
+      <p>Once you've established a connection as outlined above, you can start sending commands to
+      JMRI. The first letter of each command is interpreted by the <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/DeviceServer.java">DeviceServer</a>
+      class to determine where to send the rest of the command. Here are the letters currently
+      supported:</p>
 
       <ul>
-        <li>'T' sends a throttle command, <i>deprecated, use 'M'</i></li>
+        <li>'T' sends a throttle command, <em>deprecated, use 'M'</em></li>
 
-        <li>'S' sends a throttle command to a second throttle, <i>deprecated, use 'M'</i></li>
+        <li>'S' sends a throttle command to a second throttle, <em>deprecated, use 'M'</em></li>
 
         <li>'M' sends a command to a "multi" throttle</li>
 
@@ -572,8 +482,7 @@ HtJMRI v4.19.8 My JMRI Railroad
 
         <li>'*' sends a heartbeat, or sets heartbeat on or off</li>
 
-        <li>'C' is not used anymore and forwards to the throttle
-        controller.</li>
+        <li>'C' is not used anymore and forwards to the throttle controller.</li>
 
         <li>'N' sets the device name</li>
 
@@ -583,41 +492,35 @@ HtJMRI v4.19.8 My JMRI Railroad
 
         <li>'R' sends a roster command</li>
 
-        <li>'Q' indicates the device has quit, close its
-        connection and release any resources.</li>
+        <li>'Q' indicates the device has quit, close its connection and release any resources.</li>
       </ul>
 
       <h3>'H' Hardware Information</h3>
 
-      <p>Sets the device ID for the client. This could, for example,
-      be the MAC address of the caller, as a string.
-      The syntax is <code>HU<i>identifier</i></code>, where <i>identifier</i>
-      is different for each connected device.
-      This needs to be unique for each device connected to the server, it is
-      used to prevent duplicate connections from the same client.
-      Engine Driver and WiThrottle app use a generated unique identifier.</p>
+      <p>Sets the device ID for the client. This could, for example, be the MAC address of the
+      caller, as a string. The syntax is <code>HU<em>identifier</em></code>, where
+      <em>identifier</em> is different for each connected device. This needs to be unique for each
+      device connected to the server, it is used to prevent duplicate connections from the same
+      client. Engine Driver and WiThrottle app use a generated unique identifier.</p>
 
       <h3>'N' Device Name</h3>
 
-      <p>Sets the name that will appear in the WiThrottle window.
-      In Engine Driver, this is the throttle name that you can set.
-      The syntax is <code>N<i>name</i></code>, where <i>name</i>
-      can be any text, except for a newline, as the newline
-      terminates the command. For example:</p>
+      <p>Sets the name that will appear in the WiThrottle window. In Engine Driver, this is the
+      throttle name that you can set. The syntax is <code>N<em>name</em></code>, where
+      <em>name</em> can be any text, except for a newline, as the newline terminates the command.
+      For example:</p>
+
       <pre class="code">
 NJohn's Throttle
 </pre>
+      <p>Reply: <code>*</code><em>StopSeconds</em></p>
 
-      <p>Reply: <code>*</code><i>StopSeconds</i></p>
       <pre class="code">
 *10
 </pre>
-
-      <p>The number after '*' indicates how often your throttle
-      will need to send a command or heartbeat (0 means a heartbeat
-      is not required). JMRI will send an EStop to the locomotive
-      if it hasn't received a command or heartbeat within the
-      number of seconds provided.</p>
+      <p>The number after '*' indicates how often your throttle will need to send a command or
+      heartbeat (0 means a heartbeat is not required). JMRI will send an EStop to the locomotive if
+      it hasn't received a command or heartbeat within the number of seconds provided.</p>
 
       <h3>'*' Heartbeat</h3>
 
@@ -626,140 +529,117 @@ NJohn's Throttle
       <table class="data">
         <tr>
           <td>Command</td>
-
           <td>Description</td>
         </tr>
 
         <tr>
           <td>*</td>
-
           <td>Send heartbeat</td>
         </tr>
 
         <tr>
           <td>*+</td>
-
           <td>Turn heartbeat monitoring on</td>
         </tr>
 
         <tr>
           <td>*-</td>
-
           <td>Turn heartbeat monitoring off</td>
         </tr>
       </table>
 
-      <p>The idea of the heartbeat is that JMRI will issue an
-      emergency stop if it has not received any commands from your
-      throttle within the heartbeat period. When you set your
-      throttle name, using the N command, JMRI returns the
-      emergency stop delay, in seconds, but it doesn't turn
-      heartbeat monitoring on until you explicitly tell it to do
-      so. Once you've turned it on, your throttle will need to
-      ensure it sends periodic heartbeat commands (or any other
-      command) to keep your engine(s) alive.</p>
+      <p>The idea of the heartbeat is that JMRI will issue an emergency stop if it has not received
+      any commands from your throttle within the heartbeat period. When you set your throttle name,
+      using the N command, JMRI returns the emergency stop delay, in seconds, but it doesn't turn
+      heartbeat monitoring on until you explicitly tell it to do so. Once you've turned it on, your
+      throttle will need to ensure it sends periodic heartbeat commands (or any other command) to
+      keep your engine(s) alive.</p>
 
       <h3>M - MultiThrottle Controller</h3>
 
-      <p>The 'M' command is for a "multi" throttle, and is handled
-      by the <a href=
+      <p>The 'M' command is for a "multi" throttle, and is handled by the <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/ThrottleController.java">
       ThrottleController</a> class.</p>
 
-      <p>The 'M' multithrottle
-      can handle more than one locomotive. Engine Driver uses this
-      feature, for example, to make it super easy to create a
-      consist on the fly with any set of engines (without using DCC
-      consisting). You can have one or more multithrottles, and
-      each multithrottle can have more than one locomotives
-      attached to it. The first character after the 'M' is used as
-      a key for the instance of MultiThrottle to use. Engine Driver
-      uses '0' through '6' as its keys for multithrottle
-      instances. However, you can use other characters for
-      the key, 'T' is used in the examples below.</p>
+      <p>The 'M' multithrottle can handle more than one locomotive. Engine Driver uses this
+      feature, for example, to make it super easy to create a consist on the fly with any set of
+      engines (without using DCC consisting). You can have one or more multithrottles, and each
+      multithrottle can have more than one locomotives attached to it. The first character after
+      the 'M' is used as a key for the instance of MultiThrottle to use. Engine Driver uses '0'
+      through '6' as its keys for multithrottle instances. However, you can use other characters
+      for the key, 'T' is used in the examples below.</p>
 
       <h4>MultiThrottle Elements</h4>
 
-      <p>The command string after the first two characters is
-      passed to the MultiThrottle for further processing. As in
-      other cases, the commands are arrays, where the "&lt;;&gt;"
-      string is used as the delimiter. For example:</p>
+      <p>The command string after the first two characters is passed to the MultiThrottle for
+      further processing. As in other cases, the commands are arrays, where the "&lt;;&gt;" string
+      is used as the delimiter. For example:</p>
+
       <pre class="code">
 MT+L341&lt;;&gt;ED&amp;RGW 341
 </pre>
+      <p>Contains the array elements "+L341" and "ED&amp;RGW 341" (after removing the first two
+      letters of the command).</p>
 
-      <p>Contains the array elements "+L341" and "ED&amp;RGW 341"
-      (after removing the first two letters of the command).</p>
-
-      <p>The first character of the first element describes the
-      MultiThrottle command, and is one of the following:</p>
+      <p>The first character of the first element describes the MultiThrottle command, and is one
+      of the following:</p>
 
       <table class="data">
         <tr>
           <th>3rd Char</th>
-
           <th>Description</th>
         </tr>
 
         <tr>
           <td>A</td>
-
-          <td>Action. The following characters provide more
-          details</td>
+          <td>Action. The following characters provide more details</td>
         </tr>
 
         <tr>
           <td>+</td>
-
           <td>Add a locomotive to the throttle</td>
         </tr>
 
         <tr>
           <td>-</td>
-
           <td>Remove a locomotive from the throttle</td>
         </tr>
 
         <tr>
           <td>S</td>
-
           <td>Request steal locomotive (see more below)</td>
         </tr>
       </table>
 
-      <p>Each of these operations is described in sections
-      below.</p>
+      <p>Each of these operations is described in sections below.</p>
 
-      <p>The second element will be passed onto the
-      ThrottleController instance for further processing, and the
-      details are described below in the <a href="#ThrottleCommands">Throttle&nbsp;Commands</a>
-      section.</p>
+      <p>The second element will be passed onto the ThrottleController instance for further
+      processing, and the details are described below in the <a href=
+      "#ThrottleCommands">Throttle&nbsp;Commands</a> section.</p>
 
-      <h5>'+' -- Add Locomotive</h5>The following command is a
-      request to add a new locomotive to the multithrottle:
+      <h5>'+' -- Add Locomotive</h5>
+      The following command is a request to add a new locomotive to the multithrottle:
+
       <pre class="code">
 MT+S3&lt;;&gt;ED&amp;RGW 341
 </pre>
+      <p>The first element is "+S3" has the '+' to indicate that this is a request to add a
+      locomotive to the multithrottle. The rest of the string is another key, formatted like an
+      address (e.g., "S3" or "L341"), which will be used in future references by MultiThrottle
+      commands.</p>
 
-      <p>The first element is "+S3" has the '+' to indicate that
-      this is a request to add a locomotive to the multithrottle.
-      The rest of the string is another key, formatted like an address
-      (e.g., "S3" or "L341"), which will be used in future references
-      by MultiThrottle commands.</p>
+      <p>The second element is the actual address to select, using either the address directly
+      ("S79" or "L3002") or by referencing a roster entry using the "E" command (such as
+      "ED&amp;RGW 341").</p>
 
-      <p>The second element is the actual address to select, using
-      either the address directly ("S79" or "L3002") or by referencing
-      a roster entry using the "E" command (such as "ED&amp;RGW 341").</p>
-
-      <p>The key address MUST match the address chosen via the
-      third element of the string (after the &lt;;&gt;).  Any mismatch
-      results in undefined behavior (and is known to vary between
+      <p>The key address MUST match the address chosen via the third element of the string (after
+      the &lt;;&gt;). Any mismatch results in undefined behavior (and is known to vary between
       implementations).</p>
 
-      <p>The reply from this command is quite verbose, and contains
-      details about this locomotive as known by JMRI. If the engine
-      number is in JMRI's roster, it will return information like
+      <p>The reply from this command is quite verbose, and contains details about this locomotive
+      as known by JMRI. If the engine number is in JMRI's roster, it will return information like
       the following:</p>
+
       <pre class="code">
 MT+L41&lt;;&gt;
 MTLL41&lt;;&gt;]\[Headlight]\[Bell]\[Whistle]\[Short Whistle]\[Steam Release]\[FX5 Light]\[FX6 Light]\[Dimmer]\[Mute]\[Water Stop]\[Injectors]\[Brake Squeal]\[Coupler]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[
@@ -773,10 +653,9 @@ MTAL41&lt;;&gt;V0
 MTAL41&lt;;&gt;R1
 MTAL41&lt;;&gt;s1
 </pre>
+      <p>If, on the other hand, JMRI does not have the engine number in it's roster, it returns
+      information like the following:</p>
 
-      <p>If, on the other hand, JMRI does not have the engine
-      number in it's roster, it returns information like the
-      following:</p>
       <pre class="code">
 MT+L341&lt;;&gt;
 MTAL341&lt;;&gt;F00
@@ -788,9 +667,7 @@ MTAL341&lt;;&gt;V0
 MTAL341&lt;;&gt;R1
 MTAL341&lt;;&gt;s1
 </pre>
-
-      <p class="note">the examples above are all replies from the
-      multithrottle.</p>
+      <p class="note">the examples above are all replies from the multithrottle.</p>
 
       <p>The reply consists of the following sections:</p>
 
@@ -806,55 +683,44 @@ MTAL341&lt;;&gt;s1
         <li>Current speed step mode</li>
       </ul>
 
-      <p>For all except the function labels, see the appropriate
-      throttle commands, such as 'V' below, for details.</p>
+      <p>For all except the function labels, see the appropriate throttle commands, such as 'V'
+      below, for details.</p>
 
-      <p>The function labels are an ordered array of strings, with ]\[ used
-      as the array delimiter. So in the example above, F0 is called
-      Headlight, F1 Bell, etc. Note that, unlike with other arrays,
-      the array delimiter appears at the start and end of the
-      array, as well as between elements.</p>
+      <p>The function labels are an ordered array of strings, with ]\[ used as the array delimiter.
+      So in the example above, F0 is called Headlight, F1 Bell, etc. Note that, unlike with other
+      arrays, the array delimiter appears at the start and end of the array, as well as between
+      elements.</p>
 
       <h5>'-' -- Remove Locomotive</h5>
 
-      <p>The '-' command removes an engine from a multithrottle.
-      Engine Driver, for example, sends the following command to
-      release all locomotives from the 'T' throttle:</p>
+      <p>The '-' command removes an engine from a multithrottle. Engine Driver, for example, sends
+      the following command to release all locomotives from the 'T' throttle:</p>
+
       <pre class="code">
 MT-*&lt;;&gt;r
 </pre>
-
-      <p>The first element after the '-' character is the key of
-      the locomotive to remove, or '*' to remove <i>all</i>
-      locomotives from the multithrottle instance. The
-      multithrottle instance will loop through all of it's throttle
-      instances and send the 'r' command to each one. The 'r'
-      command is a release command.</p>
+      <p>The first element after the '-' character is the key of the locomotive to remove, or '*'
+      to remove <em>all</em> locomotives from the multithrottle instance. The multithrottle
+      instance will loop through all of it's throttle instances and send the 'r' command to each
+      one. The 'r' command is a release command.</p>
 
       <h5>'A' -- Locomotive Action</h5>
 
-      <p>This command passes the second element in the array to
-      either a specific throttle (if you specify a key), or to all
-      of the throttles in the multithrottle instance if you
-      provide '*' as the key. For example:</p>
+      <p>This command passes the second element in the array to either a specific throttle (if you
+      specify a key), or to all of the throttles in the multithrottle instance if you provide '*'
+      as the key. For example:</p>
+
       <pre class="code">
 MTA*&lt;;&gt;qR
 </pre>
+      <p>The characters after the 'A' in the first element are the key to a locomotive in the
+      multithrottle, or '*' to send the command to all of the locomotives. In the example above,
+      Engine Driver is sending a "qR" command to all of the locomotives on the 'T' throttle.</p>
 
-      <p>The characters after the 'A' in the first element are the
-      key to a locomotive in the multithrottle, or '*' to send the
-      command to all of the locomotives. In the example above,
-      Engine Driver is sending a "qR" command to all of the
-      locomotives on the 'T' throttle.</p>
+      <h2 id="ThrottleCommands">Throttle Commands <a class="to-top" href="#top">^Top</a></h2>
 
-      <a name="ThrottleCommands" id="ThrottleCommands"></a>
-      <h2>Throttle Commands
-	    <a class="to-top" href="#top">^Top</a>
-	  </h2>
-
-      <p>This section describes throttle commands, which are
-      the second element of 'Mx' commands (as described above). After
-      the command prefix, the next letter is one of the following:</p>
+      <p>This section describes throttle commands, which are the second element of 'Mx' commands
+      (as described above). After the command prefix, the next letter is one of the following:</p>
 
       <ul>
         <li>'C' consist</li>
@@ -863,25 +729,23 @@ MTA*&lt;;&gt;qR
 
         <li>'d' dispatch.</li>
 
-        <li>'E' sets an address from a roster entry. Format
-        E<i>ID</i>.</li>
+        <li>'E' sets an address from a roster entry. Format E<em>ID</em>.</li>
 
-        <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
+        <li>'F' function key. Format F<em>{0|1}</em><em>Function</em>.</li>
 
-        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
+        <li>'f' force function. Format f<em>{0|1}</em><em>Function</em>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 
         <li>'L' sets a long DCC address.</li>
 
-        <li>'m' momentary. Format m<i>{0|1}</i><i>Function</i>.</li>
+        <li>'m' momentary. Format m<em>{0|1}</em><em>Function</em>.</li>
 
-        <li>'q' ask for current settings, such as speed or
-        direction</li>
+        <li>'q' ask for current settings, such as speed or direction</li>
 
         <li>'Q' quit</li>
 
-        <li>'R' set direction. Format R<i>{0|1}</i>.</li>
+        <li>'R' set direction. Format R<em>{0|1}</em>.</li>
 
         <li>'r' release.</li>
 
@@ -889,119 +753,105 @@ MTA*&lt;;&gt;qR
 
         <li>'s' set speed step mode</li>
 
-        <li>'V' sets the speed (velocity). Format V<i>speed.</i></li>
+        <li>'V' sets the speed (velocity). Format V<em>speed.</em></li>
 
         <li>'X' emergency stop.</li>
       </ul>
 
-      <p>Each of the commands is described in a section below when
-      it takes additional information. Some commands, such as 'X'
-      require no additional information.</p>
+      <p>Each of the commands is described in a section below when it takes additional information.
+      Some commands, such as 'X' require no additional information.</p>
 
       <h3>'C' and 'c' Set lead loco for consist</h3>
 
-      <p>These two commands both allow you to set the lead loco to
-      which function commands will be sent. This is used in cases where
-      you're not using CV21 and CV22 to determine how locos in an
+      <p>These two commands both allow you to set the lead loco to which function commands will be
+      sent. This is used in cases where you're not using CV21 and CV22 to determine how locos in an
       advanced consist should respond to functions.</p>
 
       <pre class="code">
 MTAL341&lt;;&gt;CL346
 </pre>
-
       <h3>'d' Dispatch and 'r' Release</h3>
 
-      <p>For most DCC systems, these are the same thing; if in
-      doubt, use release. Device server will then send a
-      remove address command to the mobile device.</p>
+      <p>For most DCC systems, these are the same thing; if in doubt, use release. Device server
+      will then send a remove address command to the mobile device.</p>
 
       <pre class="code">
 MT-L341&lt;;&gt;r
 MT-L341&lt;;&gt;d
 </pre>
-
-      <p>You can also release or dispatch all of the locomotives
-      under control of the current throttle:</p>
+      <p>You can also release or dispatch all of the locomotives under control of the current
+      throttle:</p>
 
       <pre class="code">
 MT-*&lt;;&gt;r
 </pre>
-
-      <p>After sending this command, the WiThrottle Server will
-      typically reply with a removed message</p>
+      <p>After sending this command, the WiThrottle Server will typically reply with a removed
+      message</p>
 
       <pre class="code">
 MT-L341&lt;;&gt;
 </pre>
-
       <h3>'F' Function</h3>
 
-      <p>Function keys have two states. Either they're pushed down
-      (when you're pushing with your finger), or they're up (when
-      you release them). Therefore, when you send function
-      commands, you'll send a pair--first when the button is pushed
-      down and second when the button is released. Here is an
-      example of a pair of messages (usually with some time in
-      between them):</p>
+      <p>Function keys have two states. Either they're pushed down (when you're pushing with your
+      finger), or they're up (when you release them). Therefore, when you send function commands,
+      you'll send a pair--first when the button is pushed down and second when the button is
+      released. Here is an example of a pair of messages (usually with some time in between
+      them):</p>
+
       <pre class="code">
 MTA*&lt;;&gt;F112
 MTA*&lt;;&gt;F012
 </pre>
+      <p>The first command is when you push F12, and the second is when you release the F12 button.
+      Although this example sends to all of the 'T' throttles, you can send a function to just one
+      by providing the key you used when you added an engine.</p>
 
-      <p>The first command is when you push F12, and the second is
-      when you release the F12 button. Although this example sends
-      to all of the 'T' throttles, you can send a function to just
-      one by providing the key you used when you added an
-      engine.</p>
-
-      <p class="note">Some functions, such as whistle, remain
-      active only while you have the button down, while others,
-      like lights, are toggle. In both cases, your code should send
-      both the push (1) and release (0) and JMRI will map that into
-      the correct DCC command or commands, as appropriate.</p>
+      <p class="note">Some functions, such as whistle, remain active only while you have the button
+      down, while others, like lights, are toggle. In both cases, your code should send both the
+      push (1) and release (0) and JMRI will map that into the correct DCC command or commands, as
+      appropriate.</p>
 
       <h3>'f' Force Function</h3>
 
-      <p>This command will set the function state regardless of
-      the state before this command. For example:</p>
+      <p>This command will set the function state regardless of the state before this command. For
+      example:</p>
+
       <pre class="code">
 MTA*&lt;;&gt;f112
 </pre>
+      <p>will activate Function 12 if it was off before and will keep F12 active if it was on
+      before. If Function 12 is a momentary function, it will still be activated by this command
+      and stay active.</p>
 
-      <p>will activate Function 12 if it was off before and will
-      keep F12 active if it was on before. If Function 12 is
-      a momentary function, it will still be activated by this
-      command and stay active.</p>
-
-      <p>The server will respond with a property change
-      notification only if this command changes the function state.
-      </p>
+      <p>The server will respond with a property change notification only if this command changes
+      the function state.</p>
 
       <h3>'m' momentary: Set Function to momentary or locking</h3>
 
-      <p>A function can either be momentary, i.e. active as long as
-      the function key is pushed, or locking, i.e. active until the
-      function key is pushed a second time. By default, JMRI uses the
-      roster information to determine whether a function is momentary
-      or locking for each loco.</p>
+      <p>A function can either be momentary, i.e. active as long as the function key is pushed, or
+      locking, i.e. active until the function key is pushed a second time. By default, JMRI uses
+      the roster information to determine whether a function is momentary or locking for each
+      loco.</p>
 
-      <p>This command allows a wiThrottle client to override the
-      setting from the roster. For example:</p>
+      <p>This command allows a wiThrottle client to override the setting from the roster. For
+      example:</p>
+
       <pre class="code">
 MTA*&lt;;&gt;m112
 </pre>
       <p>will set function 12 to be momentary from now on, and</p>
+
       <pre class="code">
 MTA*&lt;;&gt;m012
 </pre>
-      <p>will set function 12 to be locking from now on. Actually, any
-      value other than '1' will set the function to locking. Although
-      this example sets/resets the function to momentary on all 'T'
-      throttles, you can set this individually on a per-engine basis
-      by providing the key you used when you added an engine.</p>
+      <p>will set function 12 to be locking from now on. Actually, any value other than '1' will
+      set the function to locking. Although this example sets/resets the function to momentary on
+      all 'T' throttles, you can set this individually on a per-engine basis by providing the key
+      you used when you added an engine.</p>
 
-      <p class="note">The global wiThrottle preference "F2 always
-      momentary" will override this setting for F2</p>
+      <p class="note">The global wiThrottle preference "F2 always momentary" will override this
+      setting for F2</p>
 
       <h3>'R' Set Direction</h3>
 
@@ -1010,321 +860,323 @@ MTA*&lt;;&gt;m012
       <table class="data">
         <tr>
           <td>R0</td>
-
           <td>Reverse</td>
         </tr>
 
         <tr>
           <td>R1</td>
-
-          <td>Forward. Actually, any value other than 0 after the R
-          is considered forward</td>
+          <td>Forward. Actually, any value other than 0 after the R is considered forward</td>
         </tr>
       </table>
 
       <h3>'V' Set Speed</h3>
 
-      <p>Set the speed to a value between 0 and 126. The format
-      looks something like this:</p>
+      <p>Set the speed to a value between 0 and 126. The format looks something like this:</p>
+
       <pre class="code">
 MTA*&lt;;&gt;V30
 </pre>
-
       <p>If the value received from the WiThrottle Server is negative (e.g., during the
-         initialization information when an address is selected), that indicates the
-         address is in Emergency Stop mode.</p>
+      initialization information when an address is selected), that indicates the address is in
+      Emergency Stop mode.</p>
 
-    <h3>'S' Steal Locomotive</h3>
+      <h3>'S' Steal Locomotive</h3>
 
-    <p>Requests stealing a locomotive. This is a feature that is of most
-        interest when working with Digitrax command stations and allows the WiThrottle protocol
-        to support the same steal scenario supported by Digitrax throttles.
-        </p>
+      <p>Requests stealing a locomotive. This is a feature that is of most interest when working
+      with Digitrax command stations and allows the WiThrottle protocol to support the same steal
+      scenario supported by Digitrax throttles.</p>
 
-        <p>Stealing a loco takes a few steps. Here is the sequence</p>
+      <p>Stealing a loco takes a few steps. Here is the sequence</p>
 
-    <ul>
-      <li>Send a normal (MT+) command to acquire a locomotive</li>
-      <li>
-        WiThrottle Server sends back a steal (MTS) reply, indicating that a
-        steal request is required
-      </li>
-      <li>Send a steal request (MTS) for the locomotive</li>
-    </ul>
+      <ul>
+        <li>Send a normal (MT+) command to acquire a locomotive</li>
 
-    <p>Here is an example</p>
+        <li>WiThrottle Server sends back a steal (MTS) reply, indicating that a steal request is
+        required</li>
 
-    <table class="data">
-      <tr>
-        <th>From WiThrottle Server (JMRI)</th>
-        <th>From Client</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td>MT+L341&lt;;&gt;L341</td>
-      </tr>
-      <tr>
-        <td>MTSL341&lt;;&gt;L341</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>MTSL341&lt;;&gt;L341</td>
-      </tr>
+        <li>Send a steal request (MTS) for the locomotive</li>
+      </ul>
+
+      <p>Here is an example</p>
+
+      <table class="data">
+        <tr>
+          <th>From WiThrottle Server (JMRI)</th>
+          <th>From Client</th>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td>MT+L341&lt;;&gt;L341</td>
+        </tr>
+
+        <tr>
+          <td>MTSL341&lt;;&gt;L341</td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td>MTSL341&lt;;&gt;L341</td>
+        </tr>
       </table>
 
-    <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
+      <p><strong>Note:</strong> Steal requires JMRI 4.10 or later</p>
 
       <h3>'q' Query Speed or Direction</h3>
+
       <p>Used to request the current values of speed (V) or direction (R)</p>
+
       <table class="data">
         <tr>
           <td>qR</td>
           <td>Query current direction</td>
         </tr>
+
         <tr>
           <td>qV</td>
           <td>Query current speed</td>
         </tr>
       </table>
-	<p>Example requesting current speed and direction for all locos on throttle '0':
+
+      <p>Example requesting current speed and direction for all locos on throttle '0':</p>
+
       <pre class="code">
 M0A*&lt;;&gt;qV
 M0A*&lt;;&gt;qR
 </pre>
-	<p>The server responds with the Throttle Change Notification as described <a href="#ThrottleChangeNotification">[here]</a>.
-	Example responses for address 3(S) on throttle '0':
+      <p>The server responds with the Throttle Change Notification as described <a href=
+      "#ThrottleChangeNotification">[here]</a>. Example responses for address 3(S) on throttle
+      '0':</p>
+
       <pre class="code">
 M0AS3&lt;;&gt;V25
 M0AS3&lt;;&gt;R1
 </pre>
+      <h2 id="ConsistCommands">Consist Commands <a class="to-top" href="#top">^Top</a></h2>
 
-    <a name="ConsistCommands" id="ConsistCommands"></a>
-    <h2>Consist Commands
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
+      <p>The commands in this section are used to work with consists. All the consist commands
+      start with "RC", which stands for Roster Consist.</p>
 
-    <p>The commands in this section are used to work with consists.
-    All the consist commands start with "RC", which stands for
-    Roster Consist.</p>
+      <ul>
+        <li>'P' Change order of locos in the consist</li>
 
-    <ul>
-      <li>'P' Change order of locos in the consist</li>
+        <li>'R' Delete (remove) a consist</li>
 
-      <li>'R' Delete (remove) a consist</li>
+        <li>'+' Add loco to a consist and/or set the relative direction</li>
 
-      <li>'+' Add loco to a consist and/or set the relative direction</li>
+        <li>'-' Remove a loco from the consist</li>
 
-      <li>'-' Remove a loco from the consist</li>
+        <li>'F' Program CV21 and CV22 function behavior</li>
+      </ul>
 
-      <li>'F' Program CV21 and CV22 function behavior</li>
-    </ul>
+      <h3>'+' Add to Consist</h3>
 
-    <h3>'+' Add to Consist</h3>
+      <p>Either creates a consist or adds a locomotive to an existing consist. As an example, let's
+      say that consist S74 does <strong>not</strong> exist. The following commands will create a
+      consist with address "S74" and name "My consist" with two locos:</p>
 
-    <p>Either creates a consist or adds a locomotive to an existing
-    consist. As an example, let's say that consist S74 does <b>not</b>
-    exist. The following commands will create a consist with address
-    "S74" and name "My consist" with two locos:</p>
-
-    <pre class="code">
+      <pre class="code">
 RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L341&lt;;&gt;true
 RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L342&lt;;&gt;true
 </pre>
+      <p>The parts of this command are as follows:</p>
 
-    <p>The parts of this command are as follows:</p>
+      <table class="data">
+        <tr>
+          <td>S74</td>
+          <td>The DCC address of the consist</td>
+        </tr>
 
-    <table class="data">
-      <tr>
-        <td>S74</td>
-        <td>The DCC address of the consist</td>
-      </tr>
-      <tr>
-        <td>My consist</td>
-        <td>The JMRI id (name) of the consist</td>
-      </tr>
-      <tr>
-        <td>L341</td>
-        <td>DCC address of the loco to add to the consist</td>
-      </tr>
-      <tr>
-        <td>true</td>
-        <td>Direction is normal (false for reversed)</td>
-      </tr>
-    </table>
+        <tr>
+          <td>My consist</td>
+          <td>The JMRI id (name) of the consist</td>
+        </tr>
 
-    <h3>'-' Remove Loco from Consist</h3>
+        <tr>
+          <td>L341</td>
+          <td>DCC address of the loco to add to the consist</td>
+        </tr>
 
-    <p>Removes a single locomotive from the consist. For example:</p>
+        <tr>
+          <td>true</td>
+          <td>Direction is normal (false for reversed)</td>
+        </tr>
+      </table>
 
-    <pre class="code">
+      <h3>'-' Remove Loco from Consist</h3>
+
+      <p>Removes a single locomotive from the consist. For example:</p>
+
+      <pre class="code">
 RC-&lt;;&gt;S74&lt;:&gt;L341
 </pre>
+      <p>Removes DCC address L341 from the consist with the DCC address of S74.</p>
 
-    <p>Removes DCC address L341 from the consist with the DCC address
-    of S74.</p>
+      <h3>'P' Change Position in Consist</h3>
 
-    <h3>'P' Change Position in Consist</h3>
+      <p>This command is used to change the order of locos in a consist. These commands have the
+      following format:</p>
 
-    <p>This command is used to change the order of locos in a consist.
-    These commands have the following format:</p>
-
-    <pre class="code">
+      <pre class="code">
 RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
 </pre>
+      <p>Notice that this has no direction information--it just has a list of locomotive DCC
+      addresses. For example:</p>
 
-    <p>Notice that this has no direction information--it just has a
-    list of locomotive DCC addresses. For example:</p>
-
-    <pre class="code">
+      <pre class="code">
 RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
 </pre>
+      <p>The example sets the position of the locos in the consist with the DCC address of S74 so
+      that DCC L346 is the lead and L3374 is the trailing loco.</p>
 
-    <p>The example sets the position of the locos in the consist with
-    the DCC address of S74 so that DCC L346 is the lead and L3374 is
-    the trailing loco.</p>
+      <h3>'R' Remove Consist</h3>
 
-    <h3>'R' Remove Consist</h3>
+      <p>Deletes a consist. For example, the following command deletes the consist with DCC address
+      S74.</p>
 
-    <p>Deletes a consist. For example, the following command deletes
-    the consist with DCC address S74.</p>
-
-<pre class="code">
+      <pre class="code">
 RCR&lt;;&gt;S74
 </pre>
+      <h2 id="TurnoutCommands">Turnout Commands <a class="to-top" href="#top">^Top</a></h2>
 
-    <a name="TurnoutCommands" id="TurnoutCommands"></a>
-    <h2>Turnout Commands
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
-    <p>There are three types of turnout commands:</p>
-    <p><a href="#TurnoutList">Turnout List</a> sent when a client connects. This was described <a href="#TurnoutList">[here]</a></p>
-    <p><b>Turnout Request</b> sent from client to server, requesting a new state for a turnout. Can (optionally) create the
-    turnout in JMRI if "Turnout Creation" is allowed in WiThrottle Preferences. Will return
-    <a href="#AlertandInfoMessage">HM alert message</a> if error setting
-    requested state.</p>
+      <p>There are three types of turnout commands:</p>
 
-<pre class="code">
+      <p><a href="#TurnoutList">Turnout List</a> sent when a client connects. This was described
+      <a href="#TurnoutList">[here]</a></p>
+
+      <p><strong>Turnout Request</strong> sent from client to server, requesting a new state for a
+      turnout. Can (optionally) create the turnout in JMRI if "Turnout Creation" is allowed in
+      WiThrottle Preferences. Will return <a href="#AlertandInfoMessage">HM alert message</a> if
+      error setting requested state.</p>
+
+      <pre class="code">
 PTACLT92
 </pre>
+      <p>The parts of this command are as follows:</p>
 
-    <p>The parts of this command are as follows:</p>
+      <table class="data">
+        <tr>
+          <td>PTA</td>
+          <td>Prefix used for turnout commands</td>
+        </tr>
 
-    <table class="data">
-      <tr>
-        <td>PTA</td>
-        <td>Prefix used for turnout commands</td>
-      </tr>
-      <tr>
-        <td>C</td>
-        <td>Requested state, can be 'C'losed, 'T'hrown or '2'Toggle current state</td>
-      </tr>
-      <tr>
-        <td>LT92</td>
-        <td>Name of turnout, can be a system name or a number. If number, server will use default connection.</td>
-      </tr>
-    </table>
+        <tr>
+          <td>C</td>
+          <td>Requested state, can be 'C'losed, 'T'hrown or '2'Toggle current state</td>
+        </tr>
 
-    <p><b>Turnout Notification</b> sent from server to client, advising the new state of a turnout. This is
-    sent for all changes to known turnouts, whether requested by this client or elsewhere.</p>
+        <tr>
+          <td>LT92</td>
+          <td>Name of turnout, can be a system name or a number. If number, server will use default
+          connection.</td>
+        </tr>
+      </table>
 
-<pre class="code">
+      <p><strong>Turnout Notification</strong> sent from server to client, advising the new state
+      of a turnout. This is sent for all changes to known turnouts, whether requested by this
+      client or elsewhere.</p>
+
+      <pre class="code">
 PTA2LT92
 </pre>
+      <p>The parts of this response are:</p>
 
-    <p>The parts of this response are:</p>
+      <table class="data">
+        <tr>
+          <td>PTA</td>
+          <td>Prefix used for turnout commands</td>
+        </tr>
 
-    <table class="data">
-      <tr>
-        <td>PTA</td>
-        <td>Prefix used for turnout commands</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Current state, can be '2'=Closed, '4'=Thrown, '1'=Unknown or '8'=Inconsistent</td>
-      </tr>
-      <tr>
-        <td>LT92</td>
-        <td>Always returns system name of turnout.</td>
-      </tr>
-    </table>
+        <tr>
+          <td>2</td>
+          <td>Current state, can be '2'=Closed, '4'=Thrown, '1'=Unknown or '8'=Inconsistent</td>
+        </tr>
 
-    <a name="RouteCommands" id="RouteCommands"></a>
-    <h2>Route Commands
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
-    <p>There are three types of Route commands:</p>
-    <p><a href="#RouteList">Route List</a> sent when a client connects. This was described <a href="#RouteList">[here]</a></p>
-    <p><b>Route Request</b> sent from client to server, requesting the route be "set". Will return
-    <a href="#AlertandInfoMessage">HM alert message</a> if error setting route.</p>
+        <tr>
+          <td>LT92</td>
+          <td>Always returns system name of turnout.</td>
+        </tr>
+      </table>
 
-<pre class="code">
+      <h2 id="RouteCommands">Route Commands <a class="to-top" href="#top">^Top</a></h2>
+
+      <p>There are three types of Route commands:</p>
+
+      <p><a href="#RouteList">Route List</a> sent when a client connects. This was described
+      <a href="#RouteList">[here]</a></p>
+
+      <p><strong>Route Request</strong> sent from client to server, requesting the route be "set".
+      Will return <a href="#AlertandInfoMessage">HM alert message</a> if error setting route.</p>
+
+      <pre class="code">
 PRA2IO_RESET_LAYOUT
 </pre>
+      <p>The parts of this command are as follows:</p>
 
-    <p>The parts of this command are as follows:</p>
+      <table class="data">
+        <tr>
+          <td>PRA</td>
+          <td>Prefix used for route commands</td>
+        </tr>
 
-    <table class="data">
-      <tr>
-        <td>PRA</td>
-        <td>Prefix used for route commands</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Always '2'=Set route</td>
-      </tr>
-      <tr>
-        <td>IO_RESET_LAYOUT</td>
-        <td>System name of route to set.</td>
-      </tr>
-    </table>
+        <tr>
+          <td>2</td>
+          <td>Always '2'=Set route</td>
+        </tr>
 
-    <p><b>Route Notification</b> sent from server to client, advising the new state of a route. This is
-    sent for all changes to known routes, whether requested by this client or elsewhere.</p>
+        <tr>
+          <td>IO_RESET_LAYOUT</td>
+          <td>System name of route to set.</td>
+        </tr>
+      </table>
 
-<pre class="code">
+      <p><strong>Route Notification</strong> sent from server to client, advising the new state of
+      a route. This is sent for all changes to known routes, whether requested by this client or
+      elsewhere.</p>
+
+      <pre class="code">
 PRA2IO_RESET_LAYOUT
 </pre>
+      <p>The parts of this response are:</p>
 
-    <p>The parts of this response are:</p>
+      <table class="data">
+        <tr>
+          <td>PRA</td>
+          <td>Prefix used for route commands</td>
+        </tr>
 
-    <table class="data">
-      <tr>
-        <td>PRA</td>
-        <td>Prefix used for route commands</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Current state, can be '2'=Active, '4'=Inactive or '8'=Inconsistent</td>
-      </tr>
-      <tr>
-        <td>IO_RESET_LAYOUT</td>
-        <td>System name of route.</td>
-      </tr>
-    </table>
+        <tr>
+          <td>2</td>
+          <td>Current state, can be '2'=Active, '4'=Inactive or '8'=Inconsistent</td>
+        </tr>
 
-    <a name="UnknownCommands" id="UnknownCommands"></a>
-    <h2>Unknown Commands
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
+        <tr>
+          <td>IO_RESET_LAYOUT</td>
+          <td>System name of route.</td>
+        </tr>
+      </table>
 
-    <p>Any command that is not recognized by a client should be ignored,
-    with processing continuing after the next newlines.</p>
+      <h2 id="UnknownCommands">Unknown Commands <a class="to-top" href="#top">^Top</a></h2>
 
-    <a name="Observations" id="Observations"></a>
-    <h2>Observations
-	    <a class="to-top" href="#top">^Top</a>
-    </h2>
+      <p>Any command that is not recognized by a client should be ignored, with processing
+      continuing after the next newlines.</p>
 
-    <p>The LnWI sends a <code>PFC</code> command after connecting.  Its purpose is
-    unknown at this time.</p>
+      <h2 id="Observations">Observations <a class="to-top" href="#top">^Top</a></h2>
 
-	<hr>
+      <p>The LnWI sends a <code>PFC</code> command after connecting. Its purpose is unknown at this
+      time.</p>
 
-    <p>This is the package/jmri/jmrit/withrottle/Protocol help
-      page</p><!--#include virtual="/Footer.shtml" -->
+      <hr>
+
+      <p>This is the package/jmri/jmrit/withrottle/Protocol help page</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,215 +1,164 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Set Signals at Crossover Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Set Signals at Crossover</h1>
 
       <h2>Introduction</h2>
 
-      <p>This tool provides an automated procedure for assigning
-      signals to a crossover turnout, either a double crossover, a
-      right-handed single crossover, or a left-handed single
-      crossover. If requested, this tool will place signal icons on
-      the panel at the specified turnout, and will set up signal
-      logic for specified signal heads. Prior to selecting this
-      tool, the turnout must be on the panel, and required signal
-      heads must be in the Signal Head Table. This tool places
-      signal heads only when the main track of the turnout is
-      vertical or horizontal (or mostly vertical or horizontal) on
-      the panel, so design your panel accordingly. The Simple
-      Signal Logic created by this tool only works correctly if
-      each of the track segments connected to the four connection
-      points of the crossover are assigned to different blocks.</p>
+      <p>This tool provides an automated procedure for assigning signals to a crossover turnout,
+      either a double crossover, a right-handed single crossover, or a left-handed single
+      crossover. If requested, this tool will place signal icons on the panel at the specified
+      turnout, and will set up signal logic for specified signal heads. Prior to selecting this
+      tool, the turnout must be on the panel, and required signal heads must be in the Signal Head
+      Table. This tool places signal heads only when the main track of the turnout is vertical or
+      horizontal (or mostly vertical or horizontal) on the panel, so design your panel accordingly.
+      The Simple Signal Logic created by this tool only works correctly if each of the track
+      segments connected to the four connection points of the crossover are assigned to different
+      blocks.</p>
 
-      <p>When this item is selected in the <b>Tools</b> menu, a
-      small dialog is shown for entry of the turnout name (system
-      or user) of a crossover turnout. If this tool is entered by
-      selecting <b>Set Signals...</b> in the crossover turnout's
-      popup menu, the turnout name is automatically entered. After
-      the crossover turnout name has been entered and verified, a
-      dialog is shown for entry of the names (system or user) of
-      four to eight signal heads to be assigned to the crossover
-      turnout.</p>
+      <p>When this item is selected in the <strong>Tools</strong> menu, a small dialog is shown for
+      entry of the turnout name (system or user) of a crossover turnout. If this tool is entered by
+      selecting <strong>Set Signals...</strong> in the crossover turnout's popup menu, the turnout
+      name is automatically entered. After the crossover turnout name has been entered and
+      verified, a dialog is shown for entry of the names (system or user) of four to eight signal
+      heads to be assigned to the crossover turnout.</p>
 
-      <p>Crossover turnouts differ from other turnouts in several
-      important ways. Like other turnouts, crossovers have two
-      states--crossed (Thrown) and straight (Closed). To change a
-      crossover's state, however, requires two or four track
-      switches to change in unison. This may be accomplished using
-      one to four switch machines. Normally a crossover is assigned
-      a single turnout entry in the turnout table, but it may have
-      several if its switch machines are controlled by different
-      stationary decoders. You can use two JMRI routes controlled
-      by the same internal turnout to make multiple switch machines
-      work together. In this case, enter the internal turnout as
-      the turnout linked to the crossover turnout drawing.</p>
+      <p>Crossover turnouts differ from other turnouts in several important ways. Like other
+      turnouts, crossovers have two states--crossed (Thrown) and straight (Closed). To change a
+      crossover's state, however, requires two or four track switches to change in unison. This may
+      be accomplished using one to four switch machines. Normally a crossover is assigned a single
+      turnout entry in the turnout table, but it may have several if its switch machines are
+      controlled by different stationary decoders. You can use two JMRI routes controlled by the
+      same internal turnout to make multiple switch machines work together. In this case, enter the
+      internal turnout as the turnout linked to the crossover turnout drawing.</p>
 
-      <p>For each signal head, check boxes are available for
-      selecting whether an icon is to be placed on the panel, and
-      whether Simple Signal Logic is to be created for the signal
-      head. Regardless of whether icons are placed or logic is
-      created, Layout Editor will record that the entered signal
-      heads are assigned to the specified crossover turnout.</p>
+      <p>For each signal head, check boxes are available for selecting whether an icon is to be
+      placed on the panel, and whether Simple Signal Logic is to be created for the signal head.
+      Regardless of whether icons are placed or logic is created, Layout Editor will record that
+      the entered signal heads are assigned to the specified crossover turnout.</p>
 
-      <p><b>Assigning signal heads to turnouts is important to
-      completely describe your layout in Layout Editor.</b> Even if
-      you elect to place your icons and set up your signal logic
-      manually, you should use this tool to assign the signal heads
-      to their crossover turnout.</p>
+      <p><strong>Assigning signal heads to turnouts is important to completely describe your layout
+      in Layout Editor.</strong> Even if you elect to place your icons and set up your signal logic
+      manually, you should use this tool to assign the signal heads to their crossover turnout.</p>
 
       <h2>The Set Signals at Crossover Dialog</h2>
 
-      <p>If prompted to enter the <b>Turnout Name</b>, enter the
-      name (system or user) of the crossover turnout to which the
-      signal heads will be assigned. If the tool cannot find the
-      entered turnout on the panel, an error message results. Also
-      if the entered turnout is not a crossover turnout, an error
-      message results. If an internal turnout is used to control
-      the crossover (see above), enter its name in the <b>Turnout
-      Name</b> field.</p>
+      <p>If prompted to enter the <strong>Turnout Name</strong>, enter the name (system or user) of
+      the crossover turnout to which the signal heads will be assigned. If the tool cannot find the
+      entered turnout on the panel, an error message results. Also if the entered turnout is not a
+      crossover turnout, an error message results. If an internal turnout is used to control the
+      crossover (see above), enter its name in the <strong>Turnout Name</strong> field.</p>
 
-      <p>Signal Head names (either system or user) are entered in
-      the large dialog. Entry of two signals at each corner of the
-      double crossover turnout is provided for. For left-handed
-      crossovers or right-handed crossovers, the tool provides for
-      two signals at each throat corner, and one signal at each
-      continuing track corner. At least one <b>Continuing</b>
-      signal head must be entered at each corner, but the
-      <b>Diverging</b> entries are optional. The corner labels, A,
-      B, C, and D are as shown below for the double crossover case
-      of all eight signal heads and the double crossover turnout in
-      the straight through (Closed) position. (In the diagram
-      below, the double crossover turnout has not been
-      rotated.)</p>
+      <p>Signal Head names (either system or user) are entered in the large dialog. Entry of two
+      signals at each corner of the double crossover turnout is provided for. For left-handed
+      crossovers or right-handed crossovers, the tool provides for two signals at each throat
+      corner, and one signal at each continuing track corner. At least one
+      <strong>Continuing</strong> signal head must be entered at each corner, but the
+      <strong>Diverging</strong> entries are optional. The corner labels, A, B, C, and D are as
+      shown below for the double crossover case of all eight signal heads and the double crossover
+      turnout in the straight through (Closed) position. (In the diagram below, the double
+      crossover turnout has not been rotated.)</p>
 
-      <p><a href="./images/DoubleXover8.gif"><img src=
-      "./images/DoubleXover8.gif" width="207"
-      height="109" hspace="0" vspace="0"></a></p>
+      <p><a href="./images/DoubleXover8.gif"><img src="./images/DoubleXover8.gif" width="207"
+      height="109" alt="crossover double heads"></a>
+      </p>
 
-      <p>Similarly, the diagram below shows the four-signal-head
-      case with a double crossover turnout in the crossover
-      (Thrown) position. If you rotate the turnout, the corner
-      labels rotate also. Single crossovers are the same, except
-      with one crossover track instead of two.</p>
+      <p>Similarly, the diagram below shows the four-signal-head case with a double crossover
+      turnout in the crossover (Thrown) position. If you rotate the turnout, the corner labels
+      rotate also. Single crossovers are the same, except with one crossover track instead of
+      two.</p>
 
-      <p><a href="./images/DoubleXover4.gif"><img src=
-      "./images/DoubleXover4.gif" width="221"
-      height="113" hspace="0" vspace="0"></a></p>
+      <p><a href="./images/DoubleXover4.gif"><img src="./images/DoubleXover4.gif" width="221"
+      height="113" alt="crossover single heads"></a>
+      </p>
 
-      <p>If signal heads at this crossover turnout have been
-      entered previously, click <b>Get Saved</b> to retrieve the
-      signal head names previously entered.</p>
+      <p>If signal heads at this crossover turnout have been entered previously, click <strong>Get
+      Saved</strong> to retrieve the signal head names previously entered.</p>
 
-      <p>Any of the corners that can have two signals, may actually
-      have either one or two signals, so all cases in between the
-      two illustrated above are possible. Single crossovers may
-      have 4, 5, or 6 signal heads, and double crossovers may have
-      4, 5, 6, 7, or 8 signal heads. If a signal head is entered
-      for <b>Diverging</b>, then the <b>Continuing</b> head signals
-      the straight through track and the <b>Diverging</b> head
-      signals the crossover track. If no signal head is entered for
-      <b>Diverging</b>, the <b>Continuing</b> signal head reflects
-      the state of whichever track the turnout is switched to. In
-      that case, the Simple Signal Logic type for the
-      <b>Continuing</b> signal head is <b>On Facing-Point
-      Turnout</b>.</p>
+      <p>Any of the corners that can have two signals, may actually have either one or two signals,
+      so all cases in between the two illustrated above are possible. Single crossovers may have 4,
+      5, or 6 signal heads, and double crossovers may have 4, 5, 6, 7, or 8 signal heads. If a
+      signal head is entered for <strong>Diverging</strong>, then the <strong>Continuing</strong>
+      head signals the straight through track and the <strong>Diverging</strong> head signals the
+      crossover track. If no signal head is entered for <strong>Diverging</strong>, the
+      <strong>Continuing</strong> signal head reflects the state of whichever track the turnout is
+      switched to. In that case, the Simple Signal Logic type for the <strong>Continuing</strong>
+      signal head is <strong>On Facing-Point Turnout</strong>.</p>
 
-      <p>If there was a signal head previously assigned to any
-      position, and you enter a <i>different</i> signal head in the
-      same place, the new signal head will replace the previous
-      signal head, and the icon of the previous signal head (if
-      there was one) will be deleted from the panel. Similarly, if
-      you replace a previously assigned <b>Diverging</b> signal
-      head with a blank entry (no signal head), the previous entry
-      is deleted and the crossover will not have a signal head at
-      that position. <b>If a signal head is changed, you must redo
-      any logic that involves it.</b></p>
+      <p>If there was a signal head previously assigned to any position, and you enter a
+      <em>different</em> signal head in the same place, the new signal head will replace the
+      previous signal head, and the icon of the previous signal head (if there was one) will be
+      deleted from the panel. Similarly, if you replace a previously assigned
+      <strong>Diverging</strong> signal head with a blank entry (no signal head), the previous
+      entry is deleted and the crossover will not have a signal head at that position. <strong>If a
+      signal head is changed, you must redo any logic that involves it.</strong></p>
 
-      <p>Check <b>Add Signal Icon to Panel</b> to request that an
-      icon for a signal head be placed on the panel at the turnout
-      position indicated. This tool can only place a signal icon on
-      a turnout that is almost vertical or almost horizontal. If
-      this is not so, a message is printed, and you should place
-      the signal icon manually using the Layout Editor tool bar.
-      Regardless, the signal head name is assigned to the specified
-      turnout position.</p>
+      <p>Check <strong>Add Signal Icon to Panel</strong> to request that an icon for a signal head
+      be placed on the panel at the turnout position indicated. This tool can only place a signal
+      icon on a turnout that is almost vertical or almost horizontal. If this is not so, a message
+      is printed, and you should place the signal icon manually using the Layout Editor tool bar.
+      Regardless, the signal head name is assigned to the specified turnout position.</p>
 
-      <p>Check <b>Set up Logic</b> to request that the tool set up
-      a Simple Signal Logic for a signal head. The tool will create
-      the logic and automatically fill in entries from the
-      information available. If the tool does not have enough
-      information available to set up the logic, a message results,
-      and you will have to return later after more signals have
-      been assigned to turnouts and block boundaries on the
-      panel.</p>
+      <p>Check <strong>Set up Logic</strong> to request that the tool set up a Simple Signal Logic
+      for a signal head. The tool will create the logic and automatically fill in entries from the
+      information available. If the tool does not have enough information available to set up the
+      logic, a message results, and you will have to return later after more signals have been
+      assigned to turnouts and block boundaries on the panel.</p>
 
       <h2>Notes</h2>
 
-      <p>When setting up logic, this tool will follow track within
-      a block until it finds a signal at the end of the block away
-      from the turnout being signaled. If your layout contains
-      sections that are signaled and sections that are not, to get
-      this tool to set up logic correctly, you may have to place a
-      virtual signal (a signal that does not correspond to an
-      actual signal on the layout) at the unsignaled end of the
-      block that connects a section of track that is signaled with
-      track that is not signaled. If a block ends with an end
-      bumper, no signal is required at the end bumper end.</p>
+      <p>When setting up logic, this tool will follow track within a block until it finds a signal
+      at the end of the block away from the turnout being signaled. If your layout contains
+      sections that are signaled and sections that are not, to get this tool to set up logic
+      correctly, you may have to place a virtual signal (a signal that does not correspond to an
+      actual signal on the layout) at the unsignaled end of the block that connects a section of
+      track that is signaled with track that is not signaled. If a block ends with an end bumper,
+      no signal is required at the end bumper end.</p>
 
-      <p>If a block has an internal turnout (the turnout, and the
-      track segments at its throat and continuing legs are within
-      the block), the program will expect signals at that turnout
-      even if it's not at the end of the block. However, at times
-      the user may not want to signal a seldom used turnout within
-      a block. When following track through a block, the program
-      will skip over unsignaled internal turnouts if <b>Skip
-      Unsignaled Internal Turnouts</b> is checked in the Layout
-      Editor <b>Tools</b> menu. It will always, however, warn that
-      it is doing so. <b>Use this option with caution.</b> There is
-      no signal protecting against a skipped turnout being set
-      incorrectly, so if an unsignaled internal turnout is not set
-      correctly, derailed trains could result.</p>
+      <p>If a block has an internal turnout (the turnout, and the track segments at its throat and
+      continuing legs are within the block), the program will expect signals at that turnout even
+      if it's not at the end of the block. However, at times the user may not want to signal a
+      seldom used turnout within a block. When following track through a block, the program will
+      skip over unsignaled internal turnouts if <strong>Skip Unsignaled Internal Turnouts</strong>
+      is checked in the Layout Editor <strong>Tools</strong> menu. It will always, however, warn
+      that it is doing so. <strong>Use this option with caution.</strong> There is no signal
+      protecting against a skipped turnout being set incorrectly, so if an unsignaled internal
+      turnout is not set correctly, derailed trains could result.</p>
 
-      <p>This tool sets up three-aspect signaling. With crossovers,
-      the crossover tracks are always considered side track, and
-      any mainline track entering the turnout, leaves on the same
-      straight as it entered. So, if the crossover is in the
-      crossover state, limited speed (the least restrictive is not
-      green, but yellow) is set up (see the four-turnout diagram
-      above). If you would prefer not to have limited speed when
-      the turnout is set to crossover, edit the Simple Signal Logic
-      by selecting <b>Edit Logic...</b> in the turnout's popup
-      menu, uncheck <b>Limited Speed</b>, and click
-      <b>Apply</b>.</p>
+      <p>This tool sets up three-aspect signaling. With crossovers, the crossover tracks are always
+      considered side track, and any mainline track entering the turnout, leaves on the same
+      straight as it entered. So, if the crossover is in the crossover state, limited speed (the
+      least restrictive is not green, but yellow) is set up (see the four-turnout diagram above).
+      If you would prefer not to have limited speed when the turnout is set to crossover, edit the
+      Simple Signal Logic by selecting <strong>Edit Logic...</strong> in the turnout's popup menu,
+      uncheck <strong>Limited Speed</strong>, and click <strong>Apply</strong>.</p>
 
-      <p>If you have a special situation at a signal, you may have
-      to do more editing of information entered by this tool into
-      the Simple Signal Logic. If you would like four-aspect
-      signaling, you can easily manually edit the logic to achieve
-      this. Similarly, by simple hand edits of the logic, you can
-      add approach lighting. The Simple Signal Logic dialog can be
-      accessed from the popup menu of each signal icon. If your
-      special situation cannot be handled by Simple Signal Logic,
-      you should refer to Logix to tailor the signal logic to your
+      <p>If you have a special situation at a signal, you may have to do more editing of
+      information entered by this tool into the Simple Signal Logic. If you would like four-aspect
+      signaling, you can easily manually edit the logic to achieve this. Similarly, by simple hand
+      edits of the logic, you can add approach lighting. The Simple Signal Logic dialog can be
+      accessed from the popup menu of each signal icon. If your special situation cannot be handled
+      by Simple Signal Logic, you should refer to Logix to tailor the signal logic to your
       needs.</p>
 
-      <p><b>Please remember to save your Panel after using this
-      tool.</b></p>
-
+      <p><strong>Please remember to save your Panel after using this tool.</strong>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

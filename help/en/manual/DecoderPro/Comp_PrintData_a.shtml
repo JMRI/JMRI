@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Comprehensive Programmer</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Comprehensive Programmer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-ctr {
+      text-align: center;
+    }
+
+    .dp-mid {
+      text-align: middle;
+    }
+
+    .dp-right {
+      text-align: right;
+    }
+
+    .dp-none {
+      list-style-type: none;
+    }
+
+    .dp-sq {
+      list-style-type: square;
+    }
+
+    .dp-ua {
+      list-style-type: upper-alpha
+    }
+
+    .dp-la {
+      list-style-type: lower-alpha
+    }
+
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a> <img src=
-      "images/Comp_09a_PrintData.png" alt=
-      "Comprehensive Programmer - Advanced Features" border="5"
-      height="494" width="382" hspace="20">
 
-      <div align="right">
-        <p><a href="Comp_PrintData.shtml#Print">Back</a></p>
+    <div id="mainContent">
+      <a id="Top"></a> <img src="images/Comp_09a_PrintData.png" alt=
+      "Comprehensive Programmer - Advanced Features" height="494" width="382" style=
+      "border: 5px solid; margin-left: 20px">
+      <div class="dp-right">
+        <p><a href="Comp_PrintData.shtml#Print">Back</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

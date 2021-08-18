@@ -4,10 +4,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import jmri.IdTagManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Reporter;
+
+import javax.annotation.CheckForNull;
+
+import jmri.*;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,13 +45,13 @@ public class DefaultIdTag extends AbstractIdTag {
     }
 
     @Override
-    public final void setWhereLastSeen(Reporter r) {
+    public final void setWhereLastSeen(@CheckForNull Reporter r) {
         Reporter oldWhere = this.whereLastSeen;
         Date oldWhen = this.whenLastSeen;
         this.whereLastSeen = r;
         if (r != null) {
             this.whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
-                    ? InstanceManager.getDefault(jmri.ClockControl.class).getTime()
+                    ? InstanceManager.getDefault(ClockControl.class).getTime()
                     : Calendar.getInstance().getTime();
         } else {
             this.whenLastSeen = null;
@@ -105,20 +106,16 @@ public class DefaultIdTag extends AbstractIdTag {
     @Override
     public void load(Element e) {
         if (e.getName().equals("idtag")) { // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Load IdTag element for {}", this.getSystemName());
-            }
-            if (e.getChild("userName") != null) // NOI18N
-            {
+            log.debug("Load IdTag element for {}", this.getSystemName());
+            if (e.getChild("userName") != null) { // NOI18N
                 this.setUserName(e.getChild("userName").getText()); // NOI18N
             }
-            if (e.getChild("comment") != null) // NOI18N
-            {
+            if (e.getChild("comment") != null) { // NOI18N
                 this.setComment(e.getChild("comment").getText()); // NOI18N
             }
             if (e.getChild("whereLastSeen") != null) { // NOI18N
                 try {
-                    Reporter r = InstanceManager.getDefault(jmri.ReporterManager.class)
+                    Reporter r = InstanceManager.getDefault(ReporterManager.class)
                                     .provideReporter(e.getChild("whereLastSeen").getText()); // NOI18N
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;

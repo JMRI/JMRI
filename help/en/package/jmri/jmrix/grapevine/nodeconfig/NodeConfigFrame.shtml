@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure Grapevine Nodes</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help configure grapevine node">
+  <meta name="keywords" content="JMRI help configure grapevine node">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Configure Grapevine Nodes</h1>
-
-      <img src="../images/GrapevineNodeConfigToolPane.png" width=
-      "653" height="312" align="right"
-      alt="Grapevine Node Configuration Tool Interface">
-      <p>Grapevine nodes need to be configured before input
-      works. Select the "Configure Node" tool either from the JMRI
-      Preference Connection pane or the Grapevinemenu.</p>
+      <img src="../images/GrapevineNodeConfigToolPane.png" width="653" height="312" class=
+      "floatRight" alt="Grapevine Node Configuration Tool Interface">
+      <p>Grapevine nodes need to be configured before input works. Select the "Configure Node" tool
+      either from the JMRI Preference Connection pane or the Grapevinemenu.</p>
 
       <p>The node software comes in three separate varieties:</p>
 
@@ -32,25 +27,23 @@
 
         <dt>2002 node, pre version 6</dt>
 
-        <dd>If you have one of these, you should probably update
-        the software in it</dd>
+        <dd>If you have one of these, you should probably update the software in it</dd>
 
         <dt>2000 (original) node</dt>
 
-        <dd>Although JMRI has code to support these, it has not
-        been extensively tested. If you encounter problems, please
-        let us now so we improve the support for these cards.</dd>
+        <dd>Although JMRI has code to support these, it has not been extensively tested. If you
+        encounter problems, please let us now so we improve the support for these cards.</dd>
       </dl>
-      <p>Although currently there are no additional properties,
-      we expect to eventually add more information here as we learn
-      about the capabilities of Grapevine nodes.</p>
 
-      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
-      page.</p>
+      <p>Although currently there are no additional properties, we expect to eventually add more
+      information here as we learn about the capabilities of Grapevine nodes.</p>
 
+      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine
+      Hardware Help</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>
