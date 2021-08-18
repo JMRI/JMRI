@@ -25,12 +25,16 @@ public class DefaultRailComManager extends DefaultIdTagManager
     @SuppressWarnings("deprecation")
     public DefaultRailComManager() {
         super(new jmri.jmrix.ConflictingSystemConnectionMemo("R", "RailCom")); // NOI18N
+        setInstances();
+    }
+    
+    final void setInstances() {
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);
     }
 
     @Override
-    protected RailCom createNewIdTag(String systemName, String userName) {
+    protected RailCom createNewIdTag(@Nonnull String systemName, String userName) {
         // we've decided to enforce that IdTag system
         // names start with RD by prepending if not present
         if (!systemName.startsWith(getSystemPrefix() + "D")) {
@@ -49,9 +53,13 @@ public class DefaultRailComManager extends DefaultIdTagManager
         }
     }
 
+    /**
+     * Provide by userName, then SystemName, else create new.
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
         checkSystemName(systemName, userName);
 
