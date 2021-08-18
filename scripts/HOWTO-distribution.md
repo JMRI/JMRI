@@ -90,22 +90,19 @@ This is the next release in the 4.24 cycle. It's intended to be created from the
 
 - Update the help/en/Acknowledgements.shtml help page with any recent changes
 
-- Remake the help map, search, index and TOC. Be patient, it might take a couple minutes. It will pop some frames, etc, but should be entirely automatic. I/O exceptions in Sidebar* files are normal and expected.
+- Remake the JmriHelp control files, webindex.shtml and webtoc.shtml.
 
 ```
-        cd help/en/
-        ant
-        cd ../..
-
+        ant buildhelp
 ```
 
-- [ ] We need to consider whether to do the above in help/fr, the French translation; there will perhaps be eventually other translations too, so keep that in mind. (As of 10/2017, the help/fr files would complain about not supporting iso-8851-1 and then create truncated control files)
+- Verify the results of the build process.  Files will be created for English and French.
 
 - Run PanelPro and make sure help works from the Help menu.
 
 - Commit this back:
 ```
-        git commit -m"JavaHelp indexing update" help/en/
+        git commit -m"JmriHelp indexing update" help/
 ```
 
 ================================================================================
@@ -500,10 +497,10 @@ git merge origin/release-4.25.2
 Note that you're testing the merge of the release branch back onto master.  This should report "Already up-to-date.", i.e. no changes, with the possible exception of some auto-generated files:
 ```
 xml/decoderIndex.xml
-help/en/webindex.shtml
-help/en/webtoc.shtml
-help/en/Map.jhm
-help/en/JavaHelpSearch/*
+help/[en|fr]/webindex.shtml
+help/[en|fr]/webtoc.shtml
+help/[en|fr]/local/*
+
 ```
 and perhaps (depending on merge history as the release branch was made) the control file:
 ```
