@@ -21,6 +21,36 @@ public class Ib1Throttle extends LocoNetThrottle {
         log.debug("Ib1Throttle created");
     }
 
+    /**
+     * Convert a LocoNet speed integer to a float speed value
+     *
+     * @param lSpeed LocoNet style speed value
+     * @return speed as float 0.0-1.0, or -1.0 to indicate E-Stop
+     * The IB provides an integer 0-127
+     */
+     @Override
+     protected float floatSpeed(int lSpeed) {
+         if (lSpeed == 0) {
+            return 0.f;
+        } else if (lSpeed == 1) {
+            return -1.f;   // estop
+        }
+        return ((lSpeed - 1) / 126.f);
+    }
+
+    /**
+     * Computes the integer speed value from a float.
+     * The IB will convert appropriately for the speed step mode.
+     *
+     * @param fSpeed is the floating-point speed value to be converted
+     * @return an integer which represents the speed step value
+     */
+    @Override
+    protected int intSpeed(float speed) {
+        // IB does not need special handling based on speed step mode
+		return(jmri.jmrix.AbstractThrottle.intSpeed(speed,127));
+	}
+
     @Override
     protected void sendFunctionGroup3() {
         // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation
