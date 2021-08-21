@@ -46,7 +46,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  * @author Pete Cressman Copyright (C) 2009
  */
-public interface SignalMast extends NamedBean, Signal { 
+public interface SignalMast extends Signal {
 
     /**
      * Set aspect to a valid name in the current signal system definition.
@@ -77,10 +77,10 @@ public interface SignalMast extends NamedBean, Signal {
     public SignalAppearanceMap getAppearanceMap();
 
     /**
-     * Set the specific mast type for this mast. 
+     * Set the specific mast type for this mast.
      * This is the
      * type that appears in the SystemName and filename, i.e. "SL-3-high"
-     * for the 
+     * for the
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
      * @param type mast type.
@@ -91,13 +91,13 @@ public interface SignalMast extends NamedBean, Signal {
      * Get the specific mast type for this mast.
      * This is the
      * type that appears in the SystemName and filename, i.e. "SL-3-high"
-     * for the 
+     * for the
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
      * @return mast type.
      */
     public String getMastType();
-    
+
     /**
      * Get if signal mast is lit or dark. Changes to this property can be
      * listened to using the property {@literal Lit}.
