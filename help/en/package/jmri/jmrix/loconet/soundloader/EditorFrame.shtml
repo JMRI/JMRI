@@ -1,148 +1,114 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Sound Editor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help sound editor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help sound editor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>SPJ Sound File Editor</h1>
-      <p>Digitrax sound decoders are
-      loaded with "sound projects", stored in "Sound Project"
-      (.spj) files. Those contain a number of "sound fragments" in
-      .wav format, plus a small program that tells the decoder when
-      to play the various sounds, and controls the use of functions
-      and CVs. That program is stored in a "Sound Definition" (SDF)
-      format.</p>
 
-      <p>The "Digitrax SPJ Editor" window allows you to examine and
-      change the contents of a sound project file. Once you've
-      changed them, you can install them into your decoder with the
+      <p>Digitrax sound decoders are loaded with "sound projects", stored in "Sound Project" (.spj)
+      files. Those contain a number of "sound fragments" in .wav format, plus a small program that
+      tells the decoder when to play the various sounds, and controls the use of functions and CVs.
+      That program is stored in a "Sound Definition" (SDF) format.</p>
+
+      <p>The "Digitrax SPJ Editor" window allows you to examine and change the contents of a sound
+      project file. Once you've changed them, you can install them into your decoder with the
       <a href="LoaderFrame.shtml">sound downloader</a>.</p>
 
-      <p>Digitrax provides sample sound project files at their
-      Sound Depot <a href=
-      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
-      web site. You can also find links to documentation and
-      additional tools there.</p>
+      <p>Digitrax provides sample sound project files at their Sound Depot <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web
+      site. You can also find links to documentation and additional tools there.</p>
 
-      <p>When you invoke the SPJ Sounds File Editor tool from the
-      LocoNet menu, you first get a file selection window:<br>
-      <img src="OpenFilePane.gif" width="240" height="61" alt=
-      "File selection window"></p>
+      <p>When you invoke the SPJ Sounds File Editor tool from the LocoNet menu, you first get a
+      file selection window:<br>
+      <img src="OpenFilePane.gif" width="240" height="61" alt="File selection window"></p>
 
-      <p>Click "Open File..." and select the .spj file that you'd
-      like to work with. (The examples on this page are from the
-      Digitrax AC4400 example) The editor window will then expand
-      to show the content of the file:<br>
-      <a href="InitEditorPane.gif"><img src="InitEditorPane.gif"
-      width="351" height="251" alt="Initial Editor Image"></a><br>
-      (Click on any of the images on this page to see a full size
-      version)</p>
+      <p>Click "Open File..." and select the .spj file that you'd like to work with. (The examples
+      on this page are from the Digitrax AC4400 example) The editor window will then expand to show
+      the content of the file:<br>
+      <a href="InitEditorPane.gif"><img src="InitEditorPane.gif" width="351" height="251" alt=
+      "Initial Editor Image"></a><br>
+      (Click on any of the images on this page to see a full size version)</p>
 
-      <p>Most of the content of a DIgitrax SPJ file is the
-      individual .wav sound fragments. For those, the columns of
-      the table are:</p>
+      <p>Most of the content of a DIgitrax SPJ file is the individual .wav sound fragments. For
+      those, the columns of the table are:</p>
 
       <ul>
         <li>The number of the fragment</li>
 
         <li>The type, WAV for .wav sound fragments</li>
 
-        <li>The short name given this fragment by the file's
-        author</li>
+        <li>The short name given this fragment by the file's author</li>
 
-        <li>The handle number, which the SDF sound definition uses
-        to refer to the sound</li>
+        <li>The handle number, which the SDF sound definition uses to refer to the sound</li>
 
         <li>The original filename for this fragment</li>
 
         <li>The fragments length in second</li>
 
-        <li>A button that plays the sound on your computers
-        speakers</li>
+        <li>A button that plays the sound on your computers speakers</li>
 
         <li>A "Replace" button</li>
       </ul>
 
-      <p>If you click the "Replace" button on a sound fragment, a
-      file selection window opens in which you can select a new
-      sound file (.wav file) which the replaces the original
-      fragment. The new file should contain 8-bit unsigned monaural
-      sound sampled 11.025kHz. Other formats might or might not
-      work, but we know that this one does.</p>
+      <p>If you click the "Replace" button on a sound fragment, a file selection window opens in
+      which you can select a new sound file (.wav file) which the replaces the original fragment.
+      The new file should contain 8-bit unsigned monaural sound sampled 11.025kHz. Other formats
+      might or might not work, but we know that this one does.</p>
 
-      <p>After making changes, you can click "Save" at the top of
-      the editor window to save the file with the original name, or
-      (better) under another name. You can then use the <a href=
-      "LoaderFrame.shtml">Sound Downloader</a> tool to load the
-      modified file into a Digitrax decoder via a <a href=
-      "../../../../../html/hardware/loconet/PR2.shtml">PR2</a> or
-      <a href=
-      "../../../../../html/hardware/loconet/PR3.shtml">PR3</a>
-      interface.</p>
+      <p>After making changes, you can click "Save" at the top of the editor window to save the
+      file with the original name, or (better) under another name. You can then use the <a href=
+      "LoaderFrame.shtml">Sound Downloader</a> tool to load the modified file into a Digitrax
+      decoder via a <a href="../../../../../html/hardware/loconet/PR2.shtml">PR2</a> or <a href=
+      "../../../../../html/hardware/loconet/PR3.shtml">PR3</a> interface.</p>
 
-      <p>SPJ files contains some additional parts, visible at the
-      bottom of the list here:<br>
-      <a href="LowerEditorPane.gif"><img src="LowerEditorPane.gif"
-      width="351" height="251" alt="Lower Editor Image"></a></p>
+      <p>SPJ files contains some additional parts, visible at the bottom of the list here:<br>
+      <a href="LowerEditorPane.gif"><img src="LowerEditorPane.gif" width="351" height="251" alt=
+      "Lower Editor Image"></a></p>
 
-      <p>The "comment" element contains human-readable information
-      from the SPJ file's author, in a specific format with other
-      parts of DecoderPro are able to read. The View button shows
-      it in another window:<br>
-      <a href="CommentWindow.gif"><img src="CommentWindow.gif"
-      width="360" height="316" alt="Comment View"></a></p>
+      <p>The "comment" element contains human-readable information from the SPJ file's author, in a
+      specific format with other parts of DecoderPro are able to read. The View button shows it in
+      another window:<br>
+      <a href="CommentWindow.gif"><img src="CommentWindow.gif" width="360" height="316" alt=
+      "Comment View"></a></p>
 
-      <p>The ".map file" element contains the connection between
-      sound names (3rd column) and handle number (4th column) used
-      by the SDF sound program. The View button shows it in another
+      <p>The ".map file" element contains the connection between sound names (3rd column) and
+      handle number (4th column) used by the SDF sound program. The View button shows it in another
       window:<br>
-      <a href="MapPane.gif"><img src="MapPane.gif" width="82"
-      height="237" alt="MAP View"></a></p>
+      <a href="MapPane.gif"><img src="MapPane.gif" width="82" height="237" alt="MAP View"></a></p>
 
-      <p>The "SDF" element contains the Sound Definition File (or
-      Format) information that the decoder uses to determine which
-      sound fragments to show when. These are written in a form of
-      assembly language, written in a specific format. The file
-      only contains the result of that process; the human-readable
-      source code is not stored in the SPJ file. Still, JMRI can
-      recreate it (except for the original spacing and comments) to
-      give you a rough idea of the content, and will show that in
-      another window if you click the View button:<br>
-      <a href="SDFview.gif"><img src="SDFview.gif" width="620"
-      height="439" alt="SDF View"></a><br>
-      JMRI also provides a limited capability to edit the SDF
-      information using the <a href=
-      "../sdfeditor/EditorFrame.shtml">SDF Editor</a>. Click the
-      "Edit" button to open a separate SDF editor window, with its
-      own <a href="../sdfeditor/EditorFrame.shtml">help
-      page</a>.<br>
-      <a href="../sdfeditor/SdfInitSound.gif"><img src=
-      "../sdfeditor/SdfInitSound.gif" width="415" height="235" alt=
-      "SDF Editor"></a></p>
+      <p>The "SDF" element contains the Sound Definition File (or Format) information that the
+      decoder uses to determine which sound fragments to show when. These are written in a form of
+      assembly language, written in a specific format. The file only contains the result of that
+      process; the human-readable source code is not stored in the SPJ file. Still, JMRI can
+      recreate it (except for the original spacing and comments) to give you a rough idea of the
+      content, and will show that in another window if you click the View button:<br>
+      <a href="SDFview.gif"><img src="SDFview.gif" width="620" height="439" alt="SDF View"></a><br>
+      JMRI also provides a limited capability to edit the SDF information using the <a href=
+      "../sdfeditor/EditorFrame.shtml">SDF Editor</a>. Click the "Edit" button to open a separate
+      SDF editor window, with its own <a href="../sdfeditor/EditorFrame.shtml">help page</a>.<br>
+      <a href="../sdfeditor/SdfInitSound.gif"><img src="../sdfeditor/SdfInitSound.gif" width="415"
+      height="235" alt="SDF Editor"></a></p>
 
-      <p>The "CV data" element isn't used by JMRI. DecoderPro uses
-      another method for storing CV information.</p>
+      <p>The "CV data" element isn't used by JMRI. DecoderPro uses another method for storing CV
+      information.</p>
 
-      <h2>Related Tools</h2>The JMRI <a href=
-      "LoaderFrame.shtml">Sound File Downloader</a> lets you
-      download SPJ sound files to a Digitrax decoder if you have a
-      Digitrax PR2 interface.
-
-      <p>The <a href="../sdfeditor/EditorFrame.shtml">SDF
-      Editor</a>, referenced above, lets you edit the SDF program
-      within a SPJ file.</p>
+      <h2>Related Tools</h2>
+      The JMRI <a href="LoaderFrame.shtml">Sound File Downloader</a> lets you download SPJ sound
+      files to a Digitrax decoder if you have a Digitrax PR2 interface.
+      <p>The <a href="../sdfeditor/EditorFrame.shtml">SDF Editor</a>, referenced above, lets you
+      edit the SDF program within a SPJ file.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

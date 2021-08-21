@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <title>JMRI: System Properties</title>
-  <!--#include virtual="/Style.shtml" -->
-</head>
 
+  <title>JMRI: System Properties</title><!--#include virtual="/Style.shtml" -->
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
-   <div id="mBody">
-     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI Code: System Properties</h1>
-      <p>This page lists the system properties that JMRI uses.
-      See also the 
-      <a href="JUnit.shtml">JUnit testing page</a>
-      and the
-      <a href="StartUpScripts.shtml">Start Scripts page</a>.
-      </p>
+
+      <p>This page lists the system properties that JMRI uses. See also the <a href=
+      "JUnit.shtml">JUnit testing page</a> and the <a href="StartUpScripts.shtml">Start Scripts
+      page</a>.</p>
 
       <h3>Operating System Properties</h3>
 
@@ -27,39 +25,32 @@
         <dt>os.name</dt>
 
         <dd>
-          Most of JMRI is system-independent, but in a couple
-          places we provide system-specific code to customize the
-          user experience. This is the property we use to tell what
-          type of computer operating system is in use.
-
+          Most of JMRI is system-independent, but in a couple places we provide system-specific
+          code to customize the user experience. This is the property we use to tell what type of
+          computer operating system is in use.
           <p>For example, we locate the default <a href=
-          "../../apps/DecoderPro/Files.shtml#location">preferences
-          directory</a> in different places depending on the system
-          type.</p>
+          "../../apps/DecoderPro/Files.shtml#location">preferences directory</a> in different
+          places depending on the system type.</p>
         </dd>
 
         <dt>user.dir</dt>
 
-        <dd>Java sets this to the directory in which JMRI is
-        running. JMRI uses it to find many of its files; this
-        property should not be changed by the user!</dd>
+        <dd>Java sets this to the directory in which JMRI is running. JMRI uses it to find many of
+        its files; this property should not be changed by the user!</dd>
 
         <dt>user.home</dt>
 
-        <dd>Java sets this to the "home" directory of the current
-        user. JMRI uses it, on some systems, for locating the
-        default locations for the preferences directory.</dd>
+        <dd>Java sets this to the "home" directory of the current user. JMRI uses it, on some
+        systems, for locating the default locations for the preferences directory.</dd>
 
         <dt>purejavacomm.portnamepattern</dt>
 
-        <dd>The PureJavaComm communications library uses this to specify 
-        the pattern for serial ports to use.  If you have e.g. a USB to serial
-        adapter which is not showing up in the preferences chooser boxes,
-        assign its name (not it's path) to this property:<br>
+        <dd>The PureJavaComm communications library uses this to specify the pattern for serial
+        ports to use. If you have e.g. a USB to serial adapter which is not showing up in the
+        preferences chooser boxes, assign its name (not it's path) to this property:<br>
         <code>-J-Dpurejavacomm.portnamepattern=ttyUSB0</code><br>
         Multiple ports can be specified using the pattern:<br>
-        <code>-J-Ppurejavacomm.portnamepattern=(ttyUSB0|ttyUSB2)</code>
-        </dd>
+        <code>-J-Ppurejavacomm.portnamepattern=(ttyUSB0|ttyUSB2)</code></dd>
       </dl>
 
       <h3>JMRI properties</h3>
@@ -67,45 +58,39 @@
       <dl>
         <dt>jmri.log</dt>
 
-        <dd>Name of JMRI's logging control file, typically
-        default.lcf</dd>
+        <dd>Name of JMRI's logging control file, typically default.lcf</dd>
 
         <dt>jmri.log.path</dt>
 
-        <dd>The directory for storing logs. If not specified, logs
-        are stored in the JMRI settings directory.</dd>
+        <dd>The directory for storing logs. If not specified, logs are stored in the JMRI settings
+        directory.</dd>
 
         <dt>jmri.prefsdir</dt>
 
-        <dd>By setting this property, you can explicitly set where
-        JMRI looks for it's preference directory.</dd>
+        <dd>By setting this property, you can explicitly set where JMRI looks for it's preference
+        directory.</dd>
 
         <dt>jmri.inset.height</dt>
 
         <dd>
-          If set, provides a minimum inset value for the height of
-          JMRI windows. The inset is the space allowed for
-          decorations at the top and bottom of the screen. Set this
-          to a positive integer N to ensure that JMRI windows open
-          with at least N pixels available at the top and/or
-          bottom.
-
+          If set, provides a minimum inset value for the height of JMRI windows. The inset is the
+          space allowed for decorations at the top and bottom of the screen. Set this to a positive
+          integer N to ensure that JMRI windows open with at least N pixels available at the top
+          and/or bottom.
           <p>-Djmri.inset.height=45</p>
         </dd>
 
         <dt>jmri.inset.width</dt>
 
-        <dd>If set, provides a minimum inset value for the width of
-        JMRI windows. The inset is the space allowed for
-        decorations around the sides of the screen. Set this to a
-        positive integer N to ensure that JMRI windows open with at
-        least N pixels available on the sides.</dd>
+        <dd>If set, provides a minimum inset value for the width of JMRI windows. The inset is the
+        space allowed for decorations around the sides of the screen. Set this to a positive
+        integer N to ensure that JMRI windows open with at least N pixels available on the
+        sides.</dd>
 
         <dt>org.jmri.Apps.(key)</dt>
 
         <dt>org.jmri.Apps.configFilename</dt>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

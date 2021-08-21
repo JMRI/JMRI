@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Roster Grouping</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Roster Grouping">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Roster Grouping"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Roster Grouping</h1>
 
-      <p>This table lists all the Roster
-      entries, from the drop down box at the top select the group
-      that you wish to view/add/remove entries to. Placing a tick
-      will add that entry to the Roster Group, removing the tick
-      will remove that Entry from the Roster Group.</p>
-
+      <p>This table lists all the Roster entries, from the drop down box at the top select the
+      group that you wish to view/add/remove entries to. Placing a tick will add that entry to the
+      Roster Group, removing the tick will remove that Entry from the Roster Group.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>
