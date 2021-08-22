@@ -117,7 +117,7 @@ public class HelpUtil {
 
         // Use jmri.org if selected.
         if (preferences.getOpenHelpOnline()) {
-            url = "https://www.jmri.org/a/" + file;
+            url = "https://www.jmri.org/" + file;
             if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
             webError = true;
         }
