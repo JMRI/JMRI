@@ -22,7 +22,7 @@
       by <strong>OBlocks</strong> and the directions trains move by <strong>Portals</strong> and
       <strong>Paths</strong>. For detailed information about what these objects are and how to make
       them see <a href="../display/CircuitBuilder.shtml">Circuit Builder</a> or <a href=
-      "../OBlockTable.shtml">Occupancy Block Tables</a>.
+      "OBlockTable.shtml">Occupancy Block Tables</a>.
       <p>Next, your panel layout diagram must done with Indicator Track icons. These icons display
       the status of the block they represent with colors and can show names. If your diagram has
       already been created using regular track icons, they can easily be converted to Indicator

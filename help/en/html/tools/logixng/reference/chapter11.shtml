@@ -190,7 +190,7 @@
       <p>The tables are created using a spreadsheet program and then exported as a
       <strong><em>TAB</em></strong> delimited CSV file. PanelPro <strong>Tools ⇒ Tables ⇒ LogixNG ⇒
       LogixNG Tables</strong> is used to load the table into JMRI memory. See <a href=
-      "../.././../help/en/package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables
+      "../../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables
       Table</a> for details. The table is not stored in the PanelPro data file. When the data file
       is loaded, a reference to the table will be used to load the CSV file into memory. The CSV
       file should be located in the user files location along with the PanelPro data file.</p>

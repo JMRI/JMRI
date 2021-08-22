@@ -64,7 +64,7 @@
             </li>
 
             <li>
-              <a href="tools/signaling//SignalingSetup.shtml">Signaling Quick Start</a>
+              <a href="tools/signaling/SignalingSetup.shtml">Signaling Quick Start</a>
             </li>
 
             <li>
@@ -313,7 +313,7 @@
   <!-- closes #mBody-->
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
-   
+
   <script src="/js/main.js"></script>
 </body>
 </html>

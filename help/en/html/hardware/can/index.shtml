@@ -321,54 +321,54 @@
           <ul>
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/%20/CbusConsoleFrame.shtml">Console</a>
+              "../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
               - Tool for viewing and sending CAN frames / events.
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event
+              "../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event
               Table</a> - Monitors events and presents them in a table full of statistics.
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node
+              "../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node
               Manager</a> - Node Table and node configuration tools
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+              "../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
               Command Station Monitor</a> - Loco session monitoring and Command Station Tools.
             </li>
 
             <li>
-              <a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send
+              <a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send
               Frame</a> - Send CAN frames or CBUS events
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event
+              "../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event
               Capture Tool</a> - Capture CBUS events
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml">
+              "../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml">
               Event Request Monitor</a> - Request Event status monitoring tool
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Network
+              "../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Network
               Item simulation</a> - Simulates Cbus Command stations and responds to event requests
             </li>
 
             <li>
               <a href=
-              "../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">CBUS
+              "../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">CBUS
               bootloader</a> - to update CBUS module firmware
             </li>
           </ul>
