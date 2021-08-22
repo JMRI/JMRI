@@ -520,6 +520,28 @@ so handling that is part of your user-error handling.
 
       <p>When the script is done scanning, it provides an option to export the
       <strong>entire</strong> key list to a CSV file.</p>
+      
+      <h3 id="translatorshelper">Translators Helper</h3>
+      <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators. 
+          The program searches for all <code>.properties</code> files in all used languages. 
+          It then counts the untranslated keys for a specific language and file. 
+          This will help translators to find untranslated keys.</p>
+      <p>The program can be started from the command line with the command:</p>
+      <p><code>java -jar TranslatorsHelper.jar</code></p>
+      <p>After startup enter the directory with the source code 
+          <code>$your-ide-dir$/JMRI/java/src</code> in the 
+          <strong>Start directory</strong> field.
+          Click the <strong>Run</strong> button to start processing.</p>
+      <p>In the <strong>Languages</strong> tab, the program displays 
+          all found languages and the number of translated keys.</p>
+      <a href="images/TranslatorsHelperLanguages.png"><img src="images/TranslatorsHelperLanguages.png"
+      height="602" width="574" alt="tab Languages"></a>
+      <p>In the <strong>Files</strong> tab it is possible to select a specific language. 
+          The table below the selection shows all found .properties files 
+          and the number of translated keys.</p>
+      <a href="images/TranslatorsHelperFiles.png"><img src="images/TranslatorsHelperFiles.png"
+      height="602" width="574" alt="tab Files"></a>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
