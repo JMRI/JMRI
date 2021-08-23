@@ -22,7 +22,7 @@
       <img src="images/LNCVTool1.png" alt="Initial view of LNCV Programming Tool pane"> <img src=
       "images/LNCVTool2.png" alt="LNCV Programming Tool pane with Article and Address filled in">
       <p>As the tool is new, you might use it in combination with the "Show Raw Data" option in the
-      <a href="../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
+      <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
       responses rejected by the LNCV filters.</p>
 
       <p>Unless a programming session is running, LNCV modules will not respond to Write commands

@@ -15,7 +15,7 @@
       <h1>Configure LocoIO (deprecated)</h1>
 
       <p>Users of JMRI version 4.0 and above should configure LocoIO boards using <a href=
-      "../../apps/DecoderPro/index.shtml">DecoderPro</a> and the <a href=
+      "../../../../../html/apps/DecoderPro/index.shtml">DecoderPro</a> and the <a href=
       "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO
       Decoder Definition</a> in the "Public Domain and DIY" category.<br>
       Supports a wide range of LocoIO devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo
