@@ -525,7 +525,9 @@ so handling that is part of your user-error handling.
       <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators. 
           The program searches for all <code>.properties</code> files in all used languages. 
           It then counts the untranslated keys for a specific language and file. 
-          This will help translators to find untranslated keys.</p>
+          This will help translators to find untranslated keys. The source code 
+          of the program is available here 
+          <a href="https://github.com/sidlo64/TranslatorsHelper">https://github.com/sidlo64/TranslatorsHelper</a>.</p>
       <p>The program can be started from the command line with the command:</p>
       <p><code>java -jar TranslatorsHelper.jar</code></p>
       <p>After startup enter the directory with the source code 
