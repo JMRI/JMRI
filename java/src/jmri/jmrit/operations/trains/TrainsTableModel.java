@@ -19,6 +19,7 @@ import javax.swing.table.TableCellEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
@@ -567,6 +568,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "synchronized (this) before SwingUtilities.invokeLater(() -> works properly and has been tested")
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
@@ -595,7 +597,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             synchronized (this) {
                 SwingUtilities.invokeLater(() -> {
                     int row = sysList.indexOf(train);
-                    if (row >= 0  && _table != null) {
+                    if (row >= 0 && _table != null) {
                         fireTableRowsUpdated(row, row);
                         int viewRow = _table.convertRowIndexToView(row);
                         _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
