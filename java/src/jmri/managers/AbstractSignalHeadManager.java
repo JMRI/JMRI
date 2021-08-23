@@ -1,10 +1,9 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
+
+import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import java.util.Objects;
@@ -26,7 +25,11 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     public AbstractSignalHeadManager(InternalSystemConnectionMemo memo) {
         super(memo);
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        init();
+    }
+    
+    final void init(){
+        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */
@@ -43,6 +46,7 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public SignalHead getSignalHead(@Nonnull String name) {
         Objects.requireNonNull(name, "SignalHead name cannot be null.");  // NOI18N
         if (name.trim().length() == 0) {
@@ -68,6 +72,12 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     @Override
     public Class<SignalHead> getNamedBeanClass() {
         return SignalHead.class;
+    }
+    
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
 }
