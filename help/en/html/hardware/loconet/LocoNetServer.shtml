@@ -29,7 +29,7 @@
       other computers running JMRI connect to the Server computer as Clients.
       <ul>
         <li>Configure the LocoNet connection just like for any other use. Select the protocol that
-        corresponds to your hardware (e.g. <a href="LocoBufferII">LocoBuffer-II</a>, etc), the
+        corresponds to your hardware (e.g. <a href="LocoBufferII.shtml">LocoBuffer-II</a>, etc), the
         communication port, and other options. It's best to make sure this is working well before
         proceeding.
         </li>

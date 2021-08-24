@@ -19,13 +19,13 @@
 
       <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br>
       <br></p>
-      <img src="images/ModeSwitcherMenu.png" alt="Mode switcher menu entry">
+      <img src="images/ModeSwitcherMenu.PNG" alt="Mode switcher menu entry">
       <p>Select the desired mode by clicking one of the radio buttons.<br>
       <br></p>
-      <img src="images/Sprog3PlusModeSwitcher.png" alt="SPROG 3 Plus mode switcher">
+      <img src="images/Sprog3PlusModeSwitcher.PNG" alt="SPROG 3 Plus mode switcher">
       <p>The Decoder Pro main window status bar shows the currently available programmers.<br>
       <br></p>
-      <img src="images/StatusBar.png" alt="DP3 status bar">
+      <img src="images/StatusBar.PNG" alt="DP3 status bar">
       <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
