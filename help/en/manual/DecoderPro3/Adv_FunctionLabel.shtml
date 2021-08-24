@@ -42,7 +42,7 @@
       </p>
 
       <p>This pane is more than a scratch pad to keep track of what happens when function buttons
-      are pushed. It also interacts with the <a href="Throttle.shtml">JMRI throttle</a>.</p>
+      are pushed. It also interacts with the <a href="../../html/tools/throttle/ThrottleMain.shtml">JMRI throttle</a>.</p>
 
       <p>The <strong>Function Label</strong>s Tab makes settings for the Software Throttles within
       JMRI. Primarily the on-screen throttles, but some of the settings are mirrored on

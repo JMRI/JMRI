@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: Signal Group Table</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Signal Group Table</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI: Signal Logic Source Frame</h1>
-      <p>From this window you
-      can see all the signal logics that affect the Appearance of
-      the Signal Mast, along with being able to edit each
-      logic.<br>
-      If the Layout Editor is being used, it is possible to
-      automatically discover all the Signal Mast Logics based upon
-      the Layout Editor Panel.</p>
 
+      <p>From this window you can see all the signal logics that affect the Appearance of the
+      Signal Mast, along with being able to edit each logic.<br>
+      If the Layout Editor is being used, it is possible to automatically discover all the Signal
+      Mast Logics based upon the Layout Editor Panel.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

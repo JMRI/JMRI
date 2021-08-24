@@ -1,115 +1,100 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Coordinate Edit Help</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Coordinate Edit Help">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Coordinate Edit Help"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Label and Icon Property Editor</h1>
 
-      <p>A contextual menu in the Panel Editor allows you modify
-      the properties of elements on your Panel:</p>
+      <p>A contextual menu in the Panel Editor allows you modify the properties of elements on your
+      Panel:</p>
 
       <h2>Edit Location</h2>
 
-      <p>Right click an Icon or Label and select <strong>Edit
-      Location... &gt; Set x &amp; y...</strong> to set the icon
-      location on your Panel using two text boxes where you can
-      change the x and y coordinates for this icon/label. By
-      pressing the "Set" button, the icon will move to that
-      location. If you wish to return the icon to its original
-      location before the editor was opened, press the "Cancel"
-      button to keep the icon at its original position and close
-      the editor window.<br>
-      Use the spinner (up/down arrows to the right of both fields)
-      to change the value one pixel.</p>
+      <p>Right click an Icon or Label and select <strong>Edit Location... &gt; Set x &
+      y...</strong> to set the icon location on your Panel using two text boxes where you can
+      change the x and y coordinates for this icon/label. By pressing the "Set" button, the icon
+      will move to that location. If you wish to return the icon to its original location before
+      the editor was opened, press the "Cancel" button to keep the icon at its original position
+      and close the editor window.<br>
+      Use the spinner (up/down arrows to the right of both fields) to change the value one
+      pixel.</p>
 
       <h2>Edit Level</h2>
 
-      <p>Right click an Icon or Label and select <strong>Edit
-      Level... &gt; Set Level...</strong> to set the desired
-      display level using a text box. Levels range from 1 to 10,
-      with 10 being the top layer.<br>
-      Use the Level value to place one icon above another to get
-      the view you want on your Panel.<br>
-      Use the spinner (up/down arrow to the right of the text
-      field) to change the value one level.</p>
+      <p>Right click an Icon or Label and select <strong>Edit Level... &gt; Set Level...</strong>
+      to set the desired display level using a text box. Levels range from 1 to 10, with 10 being
+      the top layer.<br>
+      Use the Level value to place one icon above another to get the view you want on your
+      Panel.<br>
+      Use the spinner (up/down arrow to the right of the text field) to change the value one
+      level.</p>
 
       <h2>Rotating an Icon</h2>
 
-      <p>Right click an Icon or Label and select <strong>Rotate
-      (Orthogonal)</strong> to flip it 90 degrees counterclockwise
-      (Icons only) or select <strong>Rotate (degrees)...</strong>
-      and enter the angle in degrees to rotate the item
-      clockwise.<br>
-      To restore an Icon or Label to its original angle, enter the
-      value "0".</p>
+      <p>Right click an Icon or Label and select <strong>Rotate (Orthogonal)</strong> to flip it 90
+      degrees counterclockwise (Icons only) or select <strong>Rotate (degrees)...</strong> and
+      enter the angle in degrees to rotate the item clockwise.<br>
+      To restore an Icon or Label to its original angle, enter the value "0".</p>
 
       <h2>Scaling an Icon</h2>
 
-      <p>Right click an icon and select <strong>Scale
-      (percentage)...</strong> to increase or decrease the size of
-      the icon relative to its original size. To restore the icon
-      to its original size, enter the value 100 (%).</p>
+      <p>Right click an icon and select <strong>Scale (percentage)...</strong> to increase or
+      decrease the size of the icon relative to its original size. To restore the icon to its
+      original size, enter the value 100 (%).</p>
 
       <h2>Text Label Editor</h2>
 
       <h3>Label Text</h3>
 
-      <p>Right click an icon and select <strong>Edit
-      Text...</strong> to edit the desired Label Text in the text
-      box.<br>
-      Close this pane by clicking on <strong>Set</strong> to use
-      the value you entered, or click <strong>Cancel</strong> to
-      keep the old value.</p>
+      <p>Right click an icon and select <strong>Edit Text...</strong> to edit the desired Label
+      Text in the text box.<br>
+      Close this pane by clicking on <strong>Set</strong> to use the value you entered, or click
+      <strong>Cancel</strong> to keep the old value.</p>
 
       <h3>Fixed Size</h3>
 
-      <p>Right click an icon and select <strong>Edit Fixed
-      Size...</strong> to edit the width and height for a fixed
-      space to contain the Labels (Note: a small size could obscure
-      the Label). Enter "0" to release the Fixed Size property.</p>
+      <p>Right click an icon and select <strong>Edit Fixed Size...</strong> to edit the width and
+      height for a fixed space to contain the Labels (Note: a small size could obscure the Label).
+      Enter "0" to release the Fixed Size property.</p>
 
       <h3>Label Margin</h3>
 
-      <p>Right click an icon and select <strong>Edit Margin... &gt;
-      Set Margin Size</strong> to edit the size in pixels for the
-      Label Margin (the space between the text and a Border).</p>
+      <p>Right click an icon and select <strong>Edit Margin... &gt; Set Margin Size</strong> to
+      edit the size in pixels for the Label Margin (the space between the text and a Border).</p>
 
       <h3>Label Border</h3>
 
-      <p>Right click an icon and select <strong>Edit Border... &gt;
-      Set Border Size</strong> to edit the size in pixels for the
-      Label Border width.<br>
-      Select <strong>Edit Border... &gt; Border Color</strong> to
-      pick a Label Border Color from the list.</p>
+      <p>Right click an icon and select <strong>Edit Border... &gt; Set Border Size</strong> to
+      edit the size in pixels for the Label Border width.<br>
+      Select <strong>Edit Border... &gt; Border Color</strong> to pick a Label Border Color from
+      the list.</p>
 
       <h3>More options</h3>
 
-      <p>The contextual menu provides more options to set the Font,
-      Font Size, Background Color, Justification and Orientation of
-      Labels.</p>
+      <p>The contextual menu provides more options to set the Font, Font Size, Background Color,
+      Justification and Orientation of Labels.</p>
 
       <h3>Label Properties</h3>
 
-      <p>Selecting <strong>Properties</strong> from the contextual
-      menu opens the Text Label pane. Using four tabs, you can
-      control the Font, Contents, Border and Size &amp; Position
+      <p>Selecting <strong>Properties</strong> from the contextual menu opens the Text Label pane.
+      Using four tabs, you can control the Font, Contents, Border and Size & Position
       respectively.<br>
-      Close this pane by clicking on "Okay" to update the Panel
-      with your changes, "Cancel" to abort or click "Apply" to
-      update the Panel using your edits but keep the Properties
-      pane open.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      Close this pane by clicking on "Okay" to update the Panel with your changes, "Cancel" to
+      abort or click "Apply" to update the Panel using your edits but keep the Properties pane
+      open.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

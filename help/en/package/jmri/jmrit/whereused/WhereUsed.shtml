@@ -1,118 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>JMRI: Where Used Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Where Used Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-    <span class="since">since 4.19.4</span>
+      <span class="since">since 4.19.4</span>
+      <h1>Where Used</h1>
 
-    <h1>Where Used</h1>
+      <p>The <strong>Where Used</strong> tool is usd to search JMRI for references to a selected
+      item.</p>
 
-    <p>The <strong>Where Used</strong> tool is usd to search JMRI for references to a
-    selected item.</p>
-
-   <p>When the tool is started, it displays a dropdown combo box that is used to select
-   the item type.  When the type has been selected, the second dropdown combo box will
-   contain a list of items for the selected type.  After selecting an item, click on the
-   <strong>Create</strong> button.  The references to the selected item will be displayed
-   in lower part of the window.</p>
+      <p>When the tool is started, it displays a dropdown combo box that is used to select the item
+      type. When the type has been selected, the second dropdown combo box will contain a list of
+      items for the selected type. After selecting an item, click on the <strong>Create</strong>
+      button. The references to the selected item will be displayed in lower part of the
+      window.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/WhereUsed.png">
-      <img src="images/WhereUsed.png"
-      alt="Where Used" height="366" width="633">
-      </a>
+        <a href="images/WhereUsed.png"><img src="images/WhereUsed.png" alt="Where Used" height=
+        "366" width="633"></a>
       </div>
 
-   <p>The <strong>Save to Text File</strong> button can be used to save the reference
-   report to a text file.</p>
+      <p>The <strong>Save to Text File</strong> button can be used to save the reference report to
+      a text file.</p>
 
-<h3>Reference Lines</h3>
-    <p>Depending on the search results, the matchs are listed under a header that indicates
-    where the match occurred.  The detail lines provide information about the matches.  The
-    formats are shown below.</p>
+      <h3>Reference Lines</h3>
 
-    <dl>
-      <dt>user name (system name)</dt>
-      <dd>This is the object that references the selected item.
-<pre>
+      <p>Depending on the search results, the matchs are listed under a header that indicates where
+      the match occurred. The detail lines provide information about the matches. The formats are
+      shown below.</p>
+
+      <dl>
+        <dt>user name (system name)</dt>
+
+        <dd>
+          This is the object that references the selected item.
+
+          <pre>
     Route references
         Sensors (IO:AUTO:0002)
 </pre>
-      </dd>
+        </dd>
 
-      <dt>user name (system name) data</dt>
-      <dd>Additional data is included after the name.
-<pre>
+        <dt>user name (system name) data</dt>
+
+        <dd>
+          Additional data is included after the name.
+
+          <pre>
     Signal mast SML references
         Left-B (IF$vsm:basic:one-searchlight($0003)) Source
         Left-B (IF$vsm:basic:one-searchlight($0003)) Destination
 </pre>
-      </dd>
+        </dd>
 
-      <dt>panel name :: icon type :: location</dt>
-      <dd>The location portion provides the xy coordinates.
-<pre>
+        <dt>panel name :: icon type :: location</dt>
+
+        <dd>
+          The location portion provides the xy coordinates.
+
+          <pre>
     Panel references
         CPE Panel Editor :: SignalMastIcon :: x=219, y=174
         LE Panel :: SignalMastIcon :: x=230, y=85
         LE Panel :: LayoutTurnout :: x=200, y=100
-</pre>
-    This example may seem confusing.  The selected item was a signal mast.  It is on
-    the Layout Editor panel AND it is attached to a block boundary on the turnout at
-    the indicated location.
-      </dd>
-      <dd>&nbsp;</dd>
+</pre>This example may seem confusing. The selected item was a signal mast. It is on the Layout
+Editor panel AND it is attached to a block boundary on the turnout at the indicated location.
+        </dd>
 
-      <dt>source name -&gt; destination name</dt>
-      <dd>Used to identify a pair such as signal mast logic or entry exit sensors.
-<pre>
+        <dd>&nbsp;</dd>
+
+        <dt>source name -&gt; destination name</dt>
+
+        <dd>
+          Used to identify a pair such as signal mast logic or entry exit sensors.
+
+          <pre>
     Signal mast SML references
         Right-B -&gt; Right-EB
         Right-C -&gt; Right-EB
         Right-A -&gt; Left-B
         Right-A -&gt; Left-C
 </pre>
-      </dd>
+        </dd>
 
-      <dt>transit name, action for "section name" section</dt>
-      <dd>Identify the transit and section that refers to the selected action item.
-<pre>
+        <dt>transit name, action for "section name" section</dt>
+
+        <dd>
+          Identify the transit and section that refers to the selected action item.
+
+          <pre>
     Transit references
         Left to Right (IZ:AUTO:0001), action for "LeftTO to Main" section
 </pre>
-      </dd>
+        </dd>
 
-      <dt>logix name, conditional name, type:  description</dt>
-      <dd>The Logix/Conditional format includes Logix and Conditional names, either
-      antecedent or action for the type and the full description.
-<pre>
+        <dt>logix name, conditional name, type: description</dt>
+
+        <dd>
+          The Logix/Conditional format includes Logix and Conditional names, either antecedent or
+          action for the type and the full description.
+
+          <pre>
     Logix Conditional references
         System Logix (IX:SYS), Sensor Group Test, antecedent: Sensor "S-Group-Center" state is "Sensor Active"
         System Logix (IX:SYS), Sensor Group Test, action: On Change To True, Set Sensor, "S-Group-Center" to Inactive
 </pre>
-      </dd>
+        </dd>
 
-      <dt>O.S. name : sub-type object-type</dt>
-      <dd>The O.S. name is the turnout number and the signal number.  The sub-type is
-      either Global or a detail section acronym.
-<pre>
+        <dt>O.S. name : sub-type object-type</dt>
+
+        <dd>
+          The O.S. name is the turnout number and the signal number. The sub-type is either Global
+          or a detail section acronym.
+
+          <pre>
     CTC references
         1/2 : SWDI Turnout
         1/2 : TUL Turnout
 </pre>
-      </dd>
-
-    </dl>
-
+        </dd>
+      </dl>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

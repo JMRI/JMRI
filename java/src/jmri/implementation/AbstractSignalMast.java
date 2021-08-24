@@ -123,6 +123,23 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
     }
 
+    public boolean isAtStop() {
+        if  (speed.equals("0")) return true;  // should this also include DANGER?
+        return false;
+    }
+
+    public boolean isShowingRestricting() {
+        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return true;
+        return false;
+    }
+
+    public boolean isCleared() {
+        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return false;
+        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))) return false;
+        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))) return false;
+        return true;
+    }
+
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 

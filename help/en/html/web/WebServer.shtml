@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI Web Server</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI Web Server</title><!--#include virtual="/Style.shtml" -->
   <meta http-equiv="refresh" content="0; url=index.shtml">
 </head>
-
 <body>
-  <p>This content has been superseded by <a href="index.shtml">JMRI
-  Web Access</a>.</p>
+  <p>This content has been superseded by <a href="index.shtml">JMRI Web Access</a>.</p>
 </body>
 </html>

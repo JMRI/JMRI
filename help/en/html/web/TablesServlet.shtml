@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: Tables Servlet</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Tables Servlet</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Tables Servlet</h1>
-      <p>The JMRI Tables Servlet provides web access to information about
-      JMRI objects such as Turnouts and Sensors.</p>
+
+      <p>The JMRI Tables Servlet provides web access to information about JMRI objects such as
+      Turnouts and Sensors.</p>
+
       <p>This servlet responds to the following URL patterns:</p>
 
       <dl>
         <dt>/tables/</dt>
 
         <dt>/tables/type</dt>
+
         <dd>Lists all potentially supported data types (in a table).</dd>
 
         <dt>/tables/&lt;type&gt;</dt>
-        <dd>Displays an operating list of objects of that type (or "No data for this table." in case of an empty
-          list).<br />
-          The table updates dynamically to reflect changes in JMRI.
-          Click the State column entry to toggle the state of that item in JMRI.<br />
-          <em>&lt;type&gt;</em> is one of: <em>turnout</em>, <em>sensor</em>, <em>route</em>, <em>reporter</em> etc.</dd>
 
-      </dl><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <dd>Displays an operating list of objects of that type (or "No data for this table." in
+        case of an empty list).<br>
+        The table updates dynamically to reflect changes in JMRI. Click the State column entry to
+        toggle the state of that item in JMRI.<br>
+        <em>&lt;type&gt;</em> is one of: <em>turnout</em>, <em>sensor</em>, <em>route</em>,
+        <em>reporter</em> etc.</dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

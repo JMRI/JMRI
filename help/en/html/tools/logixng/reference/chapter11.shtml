@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>LogixNG Reference - Chapter 11</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference tables">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 11</h1>
 
@@ -27,102 +23,209 @@
 
       <div style="margin-left: 2em;">
         <table>
-          <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
-          <tr><th>&nbsp;1&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
-          <tr><th>&nbsp;2&nbsp;</th><td></td><td colspan="3">Left entrance of the yard</td></tr>
-          <tr><th>&nbsp;3&nbsp;</th><td>Leftmost turnout</td><td>IT101</td><td>IT201</td><td>IT301</td></tr>
-          <tr><th>&nbsp;4&nbsp;</th><td>Left turnout</td><td>IT103</td><td>IT203</td><td>IT303</td></tr>
-          <tr><th>&nbsp;5&nbsp;</th><td></td><td colspan="3">Right entrance of the yard</td></tr>
-          <tr><th>&nbsp;6&nbsp;</th><td>Rightmost turnout</td><td>IT112</td><td>IT212</td><td>IT312</td></tr>
-          <tr><th>&nbsp;7&nbsp;</th><td>Right turnout</td><td>IT114</td><td>IT214</td><td>IT314</td></tr>
+          <tr>
+            <th>
+            </th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+          </tr>
+
+          <tr>
+            <th>&nbsp;1&nbsp;</th>
+            <td>
+            </td>
+            <td>West yard</td>
+            <td>East yard</td>
+            <td>North yard</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;2&nbsp;</th>
+            <td>
+            </td>
+            <td colspan="3">Left entrance of the yard</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;3&nbsp;</th>
+            <td>Leftmost turnout</td>
+            <td>IT101</td>
+            <td>IT201</td>
+            <td>IT301</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;4&nbsp;</th>
+            <td>Left turnout</td>
+            <td>IT103</td>
+            <td>IT203</td>
+            <td>IT303</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;5&nbsp;</th>
+            <td>
+            </td>
+            <td colspan="3">Right entrance of the yard</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;6&nbsp;</th>
+            <td>Rightmost turnout</td>
+            <td>IT112</td>
+            <td>IT212</td>
+            <td>IT312</td>
+          </tr>
+
+          <tr>
+            <th>&nbsp;7&nbsp;</th>
+            <td>Right turnout</td>
+            <td>IT114</td>
+            <td>IT214</td>
+            <td>IT314</td>
+          </tr>
         </table>
       </div>
 
-      <p>A table can be used to create a lookup table. It's accessed by either its
-      system name or its user name, followed by a left square bracket, the name of the
-      row, a comma, the name of the column, and a right square bracket.</p>
+      <p>A table can be used to create a lookup table. It's accessed by either its system name or
+      its user name, followed by a left square bracket, the name of the row, a comma, the name of
+      the column, and a right square bracket.</p>
 
-      <p>Instead of the names of the row and column, it's also possible to use the row
-      number or the column number.  The row and column numbers start at 0 with the row
-      names in column 0 and the column names in row 0.  The first data cell is 1,1.  In
-      spreadsheet terms, this is B2.
+      <p>Instead of the names of the row and column, it's also possible to use the row number or
+      the column number. The row and column numbers start at 0 with the row names in column 0 and
+      the column names in row 0. The first data cell is 1,1. In spreadsheet terms, this is B2.</p>
 
-      <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
-      &lt;column letter&gt;&lt;row number&gt; while references in JMRI has table[row,column].
-      Example: Cell B3 is table[2,1], since B3 is row 2 and column 1.</p>
+      <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell &lt;column
+      letter&gt;&lt;row number&gt; while references in JMRI has table[row,column]. Example: Cell B3
+      is table[2,1], since B3 is row 2 and column 1.</p>
 
       <p>To avoid confusion, use the row and column names.</p>
 
-      <p>Example from the table above. These examples assume that IM3 has the value
-      'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
+      <p>Example from the table above. These examples assume that IM3 has the value 'West yard',
+      IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
 
       <div style="margin-left: 2em;">
         <table>
-          <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
-          <tr><td>IQT22[0,1]</td><td>West yard</td><td>Cell B1 has the name of column B</td></tr>
-          <tr><td>IQT22[2,0]</td><td>Leftmost turnout</td><td>Cell A3 has the name of row 2</td></tr>
-          <tr><td>Yard table[2,0]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
-          <tr><td>IQT22[3,2]</td><td>IT203</td><td>Cell C4 has the value 'IT203'</td></tr>
-          <tr><td>IQT22[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D4 with the value 'IT303'</td></tr>
-          <tr><td>Yard table[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D4 with the value 'IT303'</td></tr>
-          <tr><td>IQT22[Leftmost turnout,{IM3}]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B3</td></tr>
-          <tr><td>IQT22[{IM4},East yard]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C6</td></tr>
-          <tr><td>IQT22[{IM4},{IM3}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B6</td></tr>
-          <tr><td>{IM5}[{IM4},{IM3}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+          <tr>
+            <td>Cell</td>
+            <td>Value</td>
+            <td>Note</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[0,1]</td>
+            <td>West yard</td>
+            <td>Cell B1 has the name of column B</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[2,0]</td>
+            <td>Leftmost turnout</td>
+            <td>Cell A3 has the name of row 2</td>
+          </tr>
+
+          <tr>
+            <td>Yard table[2,0]</td>
+            <td>Leftmost turnout</td>
+            <td>The user name of the table can be used to access the table</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[3,2]</td>
+            <td>IT203</td>
+            <td>Cell C4 has the value 'IT203'</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[Left turnout,North yard]</td>
+            <td>IT303</td>
+            <td>Column 'North yard' and row 'Left turnout' has the cell D4 with the value
+            'IT303'</td>
+          </tr>
+
+          <tr>
+            <td>Yard table[Left turnout,North yard]</td>
+            <td>IT303</td>
+            <td>Column 'North yard' and row 'Left turnout' has the cell D4 with the value
+            'IT303'</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[Leftmost turnout,{IM3}]</td>
+            <td>IT101</td>
+            <td>IM3 is in curly brackets and have the value 'West yard' so this points to cell
+            B3</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[{IM4},East yard]</td>
+            <td>IT212</td>
+            <td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to
+            cell C6</td>
+          </tr>
+
+          <tr>
+            <td>IQT22[{IM4},{IM3}]</td>
+            <td>IT112</td>
+            <td>Column {IM3} and row {IM4} points to cell B6</td>
+          </tr>
+
+          <tr>
+            <td>{IM5}[{IM4},{IM3}]</td>
+            <td>IT112</td>
+            <td>Even the table name can be accessed indirectly</td>
+          </tr>
         </table>
       </div>
 
-      <p>Note that a Memory can point to a table. For example, if the memory IM7 has
-      the value '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and
-      find that it's value is in curly brackets. It will then resolve the value inside
-      these curly brackets, which is 'Yard table[{IM3},Leftmost turnout]'. It will then
-      resolve the value of IM3 which has the value 'West yard'. It will then get the
-      table cell 'Yard table[West yard,Leftmost turnout]' which is cell B3 with the
-      value 'IT101'.</p>
+      <p>Note that a Memory can point to a table. For example, if the memory IM7 has the value
+      '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and find that it's value is
+      in curly brackets. It will then resolve the value inside these curly brackets, which is 'Yard
+      table[{IM3},Leftmost turnout]'. It will then resolve the value of IM3 which has the value
+      'West yard'. It will then get the table cell 'Yard table[West yard,Leftmost turnout]' which
+      is cell B3 with the value 'IT101'.</p>
 
       <p>The tables are created using a spreadsheet program and then exported as a
-      <strong><em>TAB</em></strong> delimited CSV file.  PanelPro <strong>Tools &rArr;
-      Tables &rArr; LogixNG &rArr; LogixNG Tables</strong> is used to load the table
-      into JMRI memory.  See
-      <a href="../.././../help/en/package/jmri/jmrit/beantable/LogixNGTableTable.shtml">
-      LogixNG Tables Table</a> for details.  The table is not stored in the PanelPro data
-      file.  When the data file is loaded, a reference to the table will be used to load
-      the CSV file into memory.  The CSV file should be located in the user files
-      location along with the PanelPro data file.
-
+      <strong><em>TAB</em></strong> delimited CSV file. PanelPro <strong>Tools ⇒ Tables ⇒ LogixNG ⇒
+      LogixNG Tables</strong> is used to load the table into JMRI memory. See <a href=
+      "../../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables
+      Table</a> for details. The table is not stored in the PanelPro data file. When the data file
+      is loaded, a reference to the table will be used to load the CSV file into memory. The CSV
+      file should be located in the user files location along with the PanelPro data file.</p>
 
       <h3>Using comments in the table</h3>
 
       <p>It's useful to be able to add comments in the table, especially for large tables.
-      Therefore LogixNG has a simple way to add comments to tables. If the header of a row
-      or column is empty, LogixNG treats that row or column as a comment. So if you want
-      to add a comment on a row, leave the first column on that row empty. And if you want
-      to add a comment on a column, leave the first row on that column empty. If the first
-      cell on a row or column is empty, the action "Table: For each" will skip that row or
-      column entirely.</p>
+      Therefore LogixNG has a simple way to add comments to tables. If the header of a row or
+      column is empty, LogixNG treats that row or column as a comment. So if you want to add a
+      comment on a row, leave the first column on that row empty. And if you want to add a comment
+      on a column, leave the first row on that column empty. If the first cell on a row or column
+      is empty, the action "Table: For each" will skip that row or column entirely.</p>
 
       <h3>The CSV File</h3>
 
-      <p>The CSV files LogixNG uses must be separated with tab, not comma. In OpenOffice
-      Calc, select {Tab} as the field delimiter.</p>
+      <p>The CSV files LogixNG uses must be separated with tab, not comma. In OpenOffice Calc,
+      select {Tab} as the field delimiter.</p>
 
-      <p><strong>You must not use single or double quotes in the CSV table. OpenOffice
-      Calc uses different single quote characters at the beginning of a word and at the
-      end of a word, and if you store a csv file with these, you might end up with non
-      readable characters in the CSV file. OpenOffice Calc also writes non readable
-      characters for double qoute characters to the CSV file.</strong></p>
+      <p><strong>You must not use single or double quotes in the CSV table. OpenOffice Calc uses
+      different single quote characters at the beginning of a word and at the end of a word, and if
+      you store a csv file with these, you might end up with non readable characters in the CSV
+      file. OpenOffice Calc also writes non readable characters for double qoute characters to the
+      CSV file.</strong>
+      </p>
 
-      <p>Also, don't use backspace in the CSV file. It might later be supported to quote
-      other characters so it's reserved fornow.</p>
+      <p>Also, don't use backspace in the CSV file. It might later be supported to quote other
+      characters so it's reserved fornow.</p>
 
-      <p>If a name has the characters comma, left or righ square bracket or left or right
-      curly brackets, these characters must be escaped by preceding them with a backslash.
-      Examples: \, \[ \] \{ \} \\</p>
+      <p>If a name has the characters comma, left or righ square bracket or left or right curly
+      brackets, these characters must be escaped by preceding them with a backslash. Examples: \,
+      \[ \] \{ \} \\</p>
 
-      <p>If a reference contains a backslash, it will take some more time to evaluate it
-      than if it doesn't contain any backslash. So if it's possible to not use these
-      special characters in references or names of beans, it's recommended.</p>
-
+      <p>If a reference contains a backslash, it will take some more time to evaluate it than if it
+      doesn't contain any backslash. So if it's possible to not use these special characters in
+      references or names of beans, it's recommended.</p>
       <a id="TableActions"></a>
       <h3>Table Actions</h3>
 
@@ -132,115 +235,102 @@
 
       <p>This is used to look at the rows for a column or the columns for a row.</p>
 
-      <p>The contents of a series of cells will be placed in a <a href="chapter8.shtml">
-      local variable</a>.  As each cell is processed, the action will be performed.</p>
+      <p>The contents of a series of cells will be placed in a <a href="chapter8.shtml">local
+      variable</a>. As each cell is processed, the action will be performed.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/chapter11/for_each_action.png">
-      <img src="images/chapter11/for_each_action.png"
-      alt="LogixNG table for each action" width="778" height="62">
-      </a>
+        <a href="images/chapter11/for_each_action.png"><img src=
+        "images/chapter11/for_each_action.png" alt="LogixNG table for each action" width="778"
+        height="62"></a>
       </div>
 
       <p>To create the action, select the <strong>Table: For each</strong> type from the
       <strong>Common</strong> category.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/chapter11/table_for_each.png">
-      <img src="images/chapter11/table_for_each.png"
-      alt="LogixNG table for each" width="485" height="380">
-      </a>
+        <a href="images/chapter11/table_for_each.png"><img src=
+        "images/chapter11/table_for_each.png" alt="LogixNG table for each" width="485" height=
+        "380"></a>
       </div>
 
-      <p>Select the table, row or column, and then the row name or column name.  The name
-      selection will change based on the table and row/column selections.  Enter the name
-      of a local variable.</p>
+      <p>Select the table, row or column, and then the row name or column name. The name selection
+      will change based on the table and row/column selections. Enter the name of a local
+      variable.</p>
 
-      <p>After the action has been created, add another action to the new A1 do handle
-      the current cell item.</p>
+      <p>After the action has been created, add another action to the new A1 do handle the current
+      cell item.</p>
 
       <h5>Listen on beans - Table</h5>
 
-      <p>Since the items in the table, such as turnouts and sensors, are accessed using
-      references, when their state changes, there is no notification of the event.
-      See <a href="chapter7.shtml#ListenOnBeans">Chapter 7</a> for details about the issue.</p>
+      <p>Since the items in the table, such as turnouts and sensors, are accessed using references,
+      when their state changes, there is no notification of the event. See <a href=
+      "chapter7.shtml#ListenOnBeans">Chapter 7</a> for details about the issue.</p>
 
-      <p>Rather than creating a Listen on beans list entry for each item, the <strong>
-      Listen on beans - table</strong >
-      action can simplify creating the listeners.</p>
+      <p>Rather than creating a Listen on beans list entry for each item, the <strong>Listen on
+      beans - table</strong> action can simplify creating the listeners.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/chapter11/for_each_listen_action.png">
-      <img src="images/chapter11/for_each_listen_action.png"
-      alt="LogixNG table listen action" width="522" height="31">
-      </a>
+        <a href="images/chapter11/for_each_listen_action.png"><img src=
+        "images/chapter11/for_each_listen_action.png" alt="LogixNG table listen action" width="522"
+        height="31"></a>
       </div>
 
       <p>To create the action, select the <strong>Listen on beans - Table</strong> type from the
       <strong>Other</strong> category.</p>
 
       <div style="margin-left: 2em">
-      <a href="images/chapter11/table_for_each_listen.png">
-      <img src="images/chapter11/table_for_each_listen.png"
-      alt="LogixNG table for each listen" width="485" height="358">
-      </a>
+        <a href="images/chapter11/table_for_each_listen.png"><img src=
+        "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen" width=
+        "485" height="358"></a>
       </div>
 
-      <p>Select the table, row or column, and then the row name or column name.  The name
-      selection will change based on the table and row/column selections.  Select the
-      type of item.  The supported types are Light, Memory, Sensor and Turnout.</p>
+      <p>Select the table, row or column, and then the row name or column name. The name selection
+      will change based on the table and row/column selections. Select the type of item. The
+      supported types are Light, Memory, Sensor and Turnout.</p>
 
       <h2>Tables - working with templates</h2>
 
-      <p>The sample shown on the home page is an example of a template.  A module is
-      created that implements the locking logic.  It can be used for any turnout that can
-      be locked by a sensor.</p>
+      <p>The sample shown on the home page is an example of a template. A module is created that
+      implements the locking logic. It can be used for any turnout that can be locked by a
+      sensor.</p>
 
-      <p>The data for the template comes from a table.  The table identifies the sensor
-      that is used to request that a turnout be toggled, the sensor that can used to
-      lock the turnout and the name of the turnout.</p>
+      <p>The data for the template comes from a table. The table identifies the sensor that is used
+      to request that a turnout be toggled, the sensor that can used to lock the turnout and the
+      name of the turnout.</p>
 
       <div style="margin-left: 2em">
-      <a href="../images/sample_table.png">
-      <img src="../images/sample_table.png"
-      alt="LogixNG sample table" width="257" height="140">
-      </a>
+        <a href="../images/sample_table.png"><img src="../images/sample_table.png" alt=
+        "LogixNG sample table" width="257" height="140"></a>
       </div>
 
       <p>See <a href="chapter10.shtml">Chapter 10 - Modules</a> for details about modules.</p>
 
-      <p>The module is supplied the row name for the turnout.  The row name is used to
-      find the lock sensor.  If the sensor is not active, the row name is used to find
-      the turnout and set its state to toggle.</p>
+      <p>The module is supplied the row name for the turnout. The row name is used to find the lock
+      sensor. If the sensor is not active, the row name is used to find the turnout and set its
+      state to toggle.</p>
 
       <div style="margin-left: 2em">
-      <a href="../images/sample_module.png">
-      <img src="../images/sample_module.png"
-      alt="LogixNG sample module" width="630" height="198">
-      </a>
+        <a href="../images/sample_module.png"><img src="../images/sample_module.png" alt=
+        "LogixNG sample module" width="630" height="198"></a>
       </div>
 
-      <p>To invoke the module, a ConditionalNG sets the module's variable with a row name
-      and calls the module.</p>
+      <p>To invoke the module, a ConditionalNG sets the module's variable with a row name and calls
+      the module.</p>
 
       <div style="margin-left: 2em">
-      <a href="../images/sample_logixng.png">
-      <img src="../images/sample_logixng.png"
-      alt="LogixNG sample logixng" width="345" height="142">
-      </a>
+        <a href="../images/sample_logixng.png"><img src="../images/sample_logixng.png" alt=
+        "LogixNG sample logixng" width="345" height="142"></a>
       </div>
-
 
       <hr>
-      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
-
-
-
 </body>
 </html>
