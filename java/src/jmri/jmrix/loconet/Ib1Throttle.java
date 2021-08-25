@@ -31,41 +31,40 @@ public class Ib1Throttle extends LocoNetThrottle {
      */
      @Override
      protected float floatSpeed(int lSpeed) {
-		if (lSpeed == 0) {
+        if (lSpeed == 0) {
             return 0.f;    // stop
         } else if (lSpeed == 1) {
             return -1.f;   // estop
         }
-            switch (this.getSpeedStepMode()) {
+        switch (this.getSpeedStepMode()) {
             case NMRA_DCC_28:
             case MOTOROLA_28:
-				/*
-            	 * 28 speeds are not commensurate with the 126 speeds the IB1 puts on Loconet
-            	 * Loconet speeds are 2-6, 7-10, 11-15. 16-19 ... 124-127
-            	 * There are 5 Loconet speeds in first speed, 4 in the second,
-            	 * 5 in the third, 4 in the fourth, etc.
-            	 */
-			    lSpeed -= 1;   // skip estop
-           		int cycle = (lSpeed-1) / 9;
-             	int ispeed = (cycle*2) + 1;  // ispeed contains the speed in 1-28 steps
-            	if ((lSpeed - (cycle * 9)) > 5) {
-            		ispeed++;  // add 1 if even step
-            	}
-        		ispeed = Math.round(ispeed * 4.5f); // Quantize the speed to 126 steps
-           		return ispeed / 126.f;  // 5/126 <= speed <= 1
+                /*
+                 * 28 speeds are not commensurate with the 126 speeds the IB1 puts on Loconet
+                 * Loconet speeds are 2-6, 7-10, 11-15. 16-19 ... 124-127
+                 * There are 5 Loconet speeds in first speed, 4 in the second,
+                 * 5 in the third, 4 in the fourth, etc.
+                 */
+                lSpeed -= 1;   // skip estop
+                int cycle = (lSpeed-1) / 9;
+                int ispeed = (cycle*2) + 1;  // ispeed contains the speed in 1-28 steps
+                if ((lSpeed - (cycle * 9)) > 5) {
+                    ispeed++;  // add 1 if even step
+                }
+                return ispeed / 28.f;
            case NMRA_DCC_14:
-            	/*
-            	 * The implementation for 14 speed should be simple, but the IB1 did not
-            	 * implement equally spaced steps
-            	 */
-            	cycle = lSpeed / 19;
-              	ispeed = (cycle*2) + 1;
-              	if ((lSpeed - (cycle * 19)) > 9) {
-            		ispeed++;
-              	}
-       			return ispeed / 14.f;  // 9/126 <= speed <= 1 (126 is divisible by 14)
+                /*
+                 * The implementation for 14 speed should be simple, but the IB1 did not
+                 * implement equally spaced steps
+                 */
+                cycle = lSpeed / 19;
+                ispeed = (cycle*2) + 1;
+                if ((lSpeed - (cycle * 19)) > 9) {
+                    ispeed++;
+                }
+                return ispeed / 14.f;  // 9/126 <= speed <= 1 (126 is divisible by 14)
             case NMRA_DCC_128:
-	            return (lSpeed-1) / 126.f;  // 1/126 <= speed <= 1
+                return (lSpeed-1) / 126.f;  // 1/126 <= speed <= 1
             default:
                 log.warn("Unhandled speed step: {}", this.getSpeedStepMode());
                 break;
@@ -80,29 +79,29 @@ public class Ib1Throttle extends LocoNetThrottle {
      */
     @Override
     protected int intSpeed(float speed) {
-	    // log.debug("throttle speed is {}", speed*126.f);
+        // log.debug("throttle speed is {}", speed*126.f);
 
- 		int lSpeed = jmri.jmrix.AbstractThrottle.intSpeed(speed,127);
+        int lSpeed = jmri.jmrix.AbstractThrottle.intSpeed(speed,127);
         switch (this.getSpeedStepMode()) {
             case NMRA_DCC_14:
-          		if (lSpeed > 2) {
-            		lSpeed--;   // speed from JMRI throttle 1 higher than IB1
-            	}
-				break;
+                if (lSpeed > 2) {
+                    lSpeed--;   // speed from JMRI throttle 1 higher than IB1
+                }
+                break;
             case NMRA_DCC_28:
             case MOTOROLA_28:
-           	case NMRA_DCC_128:
-   				/*
-   				 * The IB1 works appropriately for these speed step modes
-     			 */
-            	break;
+            case NMRA_DCC_128:
+                /*
+                 * The IB1 works appropriately for these speed step modes
+                 */
+                break;
             default:
                 log.warn("Unhandled speed step: {}", this.getSpeedStepMode());
                 break;
         }
-	    // log.debug("loconet speed is {}", lSpeed);
- 		return lSpeed;
-	}
+        // log.debug("loconet speed is {}", lSpeed);
+        return lSpeed;
+    }
 
     @Override
     protected void sendFunctionGroup3() {
