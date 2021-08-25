@@ -72,7 +72,6 @@
 <mapID target="html.hardware.arduino.index_using" url="html/hardware/arduino/index.shtml#using"/>
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
 <mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
-<mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml"/>
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 <mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml"/>
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
@@ -99,6 +98,7 @@
 <mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml"/>
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
 <mapID target="html.hardware.marklin.index" url="html/hardware/marklin/index.shtml"/>
+<mapID target="html.hardware.merg.Details" url="html/hardware/merg/Details.shtml"/>
 <mapID target="html.hardware.merg.index" url="html/hardware/merg/index.shtml"/>
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 <mapID target="html.hardware.modbus.index" url="html/hardware/modbus/index.shtml"/>

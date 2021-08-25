@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Ecos Loco Database</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help ECoS Loco Database Table">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>ECoS Loco Database</h1>
 
-      <p>The ECoS Loco Table lets you organise the
-        Locos stored inside the ECoS Command Station.</p>
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>The ECoS Loco Table lets you organise the Locos stored inside the ECoS Command
+      Station.</p>
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

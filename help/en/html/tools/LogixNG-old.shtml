@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Documentation</title>
   <meta name="author" content="Daniel Bergqvist">
-  <meta name="keywords" content=
-  "logixng model railroad JMRI LogixNG PanelPro">
+  <meta name="keywords" content="logixng model railroad JMRI LogixNG PanelPro">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <div id="container">
     <!--#include virtual="/Header" -->
@@ -24,112 +19,105 @@
 
         <h1>JMRI: LogixNG Documentation</h1>
 
-        <p>This page is the user manual for LogixNG. For the technical
-        aspects and how to extend LogixNG with new features, see the
-        <a href="../doc/Technical/logixng/LogixNG.shtml">Technical documentation</a>
-        of LogixNG.</p>
+        <p>This page is the user manual for LogixNG. For the technical aspects and how to extend
+        LogixNG with new features, see the <a href=
+        "../doc/Technical/logixng/LogixNG.shtml">Technical documentation</a> of LogixNG.</p>
 
-        <p>LogixNG provide a powerful capability for JMRI to monitor
-        one or more conditions on a layout, and take action when these
-        conditions change in a user-specified way. Logix can be used
-        to control signals, crossing gates, and other types of
-        automation on the layout.</p>
+        <p>LogixNG provide a powerful capability for JMRI to monitor one or more conditions on a
+        layout, and take action when these conditions change in a user-specified way. Logix can be
+        used to control signals, crossing gates, and other types of automation on the layout.</p>
 
         <h2>LogixNG documentation</h2>
 
         <ul>
-          <li><a href="PackageStructure.shtml">The structure of
-          LogixNG packages</a></li>
+          <li>
+            <a href="PackageStructure.shtml">The structure of LogixNG packages</a>
+          </li>
 
-          <li><a href="CategoriesEnum.shtml">The Categories enum</a></li>
+          <li>
+            <a href="CategoriesEnum.shtml">The Categories enum</a>
+          </li>
 
-          <li><a href="CreateExpressionsAndActions.shtml">Create
-          Expressions, Actions, and so on</a></li>
+          <li>
+            <a href="CreateExpressionsAndActions.shtml">Create Expressions, Actions, and so on</a>
+          </li>
 
-          <li><a href="Sockets.shtml">Sockets</a></li>
+          <li>
+            <a href="Sockets.shtml">Sockets</a>
+          </li>
 
-          <li><a href="Plugins.shtml">Plugins for LogixNG</a></li>
+          <li>
+            <a href="Plugins.shtml">Plugins for LogixNG</a>
+          </li>
         </ul>
 
+        <hr>
 
-        <hr/>
-
-
-        <p>The most common building blocks in LogixNG is Expressions and
-        Actions. Expressions ask a question while Actions do somethings.
-        It can be described as:</p>
+        <p>The most common building blocks in LogixNG is Expressions and Actions. Expressions ask a
+        question while Actions do somethings. It can be described as:</p>
 
         <div style="margin-left: 2em;">
-        <p><code>if (expression) then (action).
-        </code></p></div>
+          <p><code>if (expression) then (action).</code>
+          </p>
+        </div>
 
-        <p>An expression ask a question which can be true or False.
-        "Is turnout LT20 thrown?" If it is, the answer is True,
-        else it's False. Some expressions depends on other expressions.
-        Like the "And" expression, which is True if all of its expressions
-        are True. There is also a timer expression which becomes true when
-        a certain time has passed.</p>
+        <p>An expression ask a question which can be true or False. "Is turnout LT20 thrown?" If it
+        is, the answer is True, else it's False. Some expressions depends on other expressions.
+        Like the "And" expression, which is True if all of its expressions are True. There is also
+        a timer expression which becomes true when a certain time has passed.</p>
 
-        <p>Actions do something. They can set a turnout or a signal. Some
-        actions activates other actions, which in turn do something.</p>
+        <p>Actions do something. They can set a turnout or a signal. Some actions activates other
+        actions, which in turn do something.</p>
 
-        <p>There are also AnalogExpressions, AnalogActions, StringExpressions
-        and StringActions. AnalogExpressions returns an decimal number,
-        for example the voltage to the track. StringExpressions returns a
-        String. An AnalogAction sets a decimal value, for example the desired
-        voltage to the track. A StringAction sets a string, for example a
-        message to be sent to throttles that support text messages.
+        <p>There are also AnalogExpressions, AnalogActions, StringExpressions and StringActions.
+        AnalogExpressions returns an decimal number, for example the voltage to the track.
+        StringExpressions returns a String. An AnalogAction sets a decimal value, for example the
+        desired voltage to the track. A StringAction sets a string, for example a message to be
+        sent to throttles that support text messages.</p>
 
         <h3>Expressions</h3>
 
-        <p><strong>And</strong> - True if all of its expressions
-        are true.</p>
+        <p><strong>And</strong> - True if all of its expressions are true.</p>
 
-        <p><strong>Hold</strong> - This expression has expressions,
-        the hold expression and the trigger expression. The expression.
-        becomes true when both the hold and the trigger expression
-        is true and it then stays true as long as the hold expression
-        remains true. This expression can be used then a condition is
-        true under a short period of time, for example a button that
-        the user presses, and there the expression needs to stay true.</p>
+        <p><strong>Hold</strong> - This expression has expressions, the hold expression and the
+        trigger expression. The expression. becomes true when both the hold and the trigger
+        expression is true and it then stays true as long as the hold expression remains true. This
+        expression can be used then a condition is true under a short period of time, for example a
+        button that the user presses, and there the expression needs to stay true.</p>
 
-        <p><strong>Reset On True</strong> - This Expression has two
-        expressions, the primary expression and the secondary
-        expression. When the primary expression becomes True after
+        <p><strong>Reset On True</strong> - This Expression has two expressions, the primary
+        expression and the secondary expression. When the primary expression becomes True after
         have been False, the secondary expression is reset.<br>
-        The result of the evaluation of this expression is True if
-        both the expressions evaluates to True.<br>
-        This expression is used for example if one expression should
-        trigger a timer. If the primary expression is a sensor having a
-        certain state and the secondary expression is a timer, this
-        expression will evaluate to True if the sensor has had that
-        state during the specified time.</p>
+        The result of the evaluation of this expression is True if both the expressions evaluates
+        to True.<br>
+        This expression is used for example if one expression should trigger a timer. If the
+        primary expression is a sensor having a certain state and the secondary expression is a
+        timer, this expression will evaluate to True if the sensor has had that state during the
+        specified time.</p>
 
-        <p><strong>Timer</strong> - This expression has a timer. The
-        expression is true if the time has passed.</p>
+        <p><strong>Timer</strong> - This expression has a timer. The expression is true if the time
+        has passed.</p>
 
-        <p><strong>Trigger Once</strong> - An expression that has
-        another expression. It is true the first time the child
-        expression is true and then becomes false. It stays false
-        until the child expression becomes false and then true again.</p>
+        <p><strong>Trigger Once</strong> - An expression that has another expression. It is true
+        the first time the child expression is true and then becomes false. It stays false until
+        the child expression becomes false and then true again.</p>
 
-        <p><strong>Turnout</strong> - True if a turnout has a certain
-        state.</p>
+        <p><strong>Turnout</strong> - True if a turnout has a certain state.</p>
 
         <h3>Actions</h3>
 
-        <p><strong>Do If</strong> - This action ask an expression if its
-        condition is true. If it is, it activates an other action.</p>
+        <p><strong>Do If</strong> - This action ask an expression if its condition is true. If it
+        is, it activates an other action.</p>
 
         <p><strong>Many</strong> - This action activates many other actions.</p>
 
-        <p><strong>DoAnalogAction</strong> - This action has an AnalogExpression
-        and an AnalogAction. It asks the AnalogExpression about the value and then
-        sets that value to the AnalogAction.</p>
+        <p><strong>DoAnalogAction</strong> - This action has an AnalogExpression and an
+        AnalogAction. It asks the AnalogExpression about the value and then sets that value to the
+        AnalogAction.</p>
 
-        <p><strong>DoStringAction</strong> - This action has an StringExpression
-        and an StringAction. It asks the StringExpression about the value and then
-        sets that value to the StringAction.</p>
+        <p><strong>DoStringAction</strong> - This action has an StringExpression and an
+        StringAction. It asks the StringExpression about the value and then sets that value to the
+        StringAction.</p>
 
         <p><strong>Turnout</strong> - Set the state of a turnout.</p>
 
@@ -155,167 +143,172 @@
 
         <h2>Plugins for LogixNG</h2>
 
-        <p style="color:yellow;background-color:red">LogixNG has gone thru
-        big changes and the code for plugins is not up to date.</p>
+        <p style="color:yellow;background-color:red">LogixNG has gone thru big changes and the code
+        for plugins is not up to date.</p>
 
-        <p>LogixNG supports expression and action plugins. This can be done
-        in two different ways, native plugin or external plugin.</p>
+        <p>LogixNG supports expression and action plugins. This can be done in two different ways,
+        native plugin or external plugin.</p>
 
-        <p>A <strong>native plugin</strong> is a class that implements the
-        Expression interface or the Action interface. The
-        downside is that the jar file with these classes needs to be placed
-        in the <a href="../../Technical/StartUpScripts.shtml">JMRI classpath</a>
-        to be accessible for JMRI. But as long as they are located at the
-        JMRI classpath, they will be included automaticly.</p>
+        <p>A <strong>native plugin</strong> is a class that implements the Expression interface or
+        the Action interface. The downside is that the jar file with these classes needs to be
+        placed in the <a href="../../Technical/StartUpScripts.shtml">JMRI classpath</a> to be
+        accessible for JMRI. But as long as they are located at the JMRI classpath, they will be
+        included automaticly.</p>
 
         <p>A <strong>external plugin</strong> is a class that implements the
-        ExpressionPluginInterface interface or the ActionPluginInterface
-        interface. These classes can be placed anywhere, but they needs to
-        be configured by the user. That is, the user has to point JMRI to the
-        jar file and select which classes in the jar file to use with JMRI.</p>
-
-
+        ExpressionPluginInterface interface or the ActionPluginInterface interface. These classes
+        can be placed anywhere, but they needs to be configured by the user. That is, the user has
+        to point JMRI to the jar file and select which classes in the jar file to use with
+        JMRI.</p>
 
         <h2>LogixNG system names</h2>
 
         <p>LogixNG enforces a strict naming convention of system names.</p>
 
         <ul>
-        <li>All user created LogixNG system names starts with IQ followed by
-        a number. Example: IQ54</li>
-        <li>All auto-generated created LogixNG system names starts with IQA
-        followed by a number. Example: IQA54</li>
+          <li>All user created LogixNG system names starts with IQ followed by a number. Example:
+          IQ54</li>
+
+          <li>All auto-generated created LogixNG system names starts with IQA followed by a number.
+          Example: IQA54</li>
         </ul>
 
-        <p>All system names for expressions and actions starts with the system
-        name for the LogixNG that it belongs to, followed by a colon, followed
-        by the type of expression or action, followed by a number.</p>
+        <p>All system names for expressions and actions starts with the system name for the LogixNG
+        that it belongs to, followed by a colon, followed by the type of expression or action,
+        followed by a number.</p>
 
         <ul>
-        <li>DA Digital Action</li>
-        <li>DE Digital Expression</li>
-        <li>AA Analog Action</li>
-        <li>AE Analog Expression</li>
-        <li>SA String Action</li>
-        <li>SE String Expression</li>
+          <li>DA Digital Action</li>
+
+          <li>DE Digital Expression</li>
+
+          <li>AA Analog Action</li>
+
+          <li>AE Analog Expression</li>
+
+          <li>SA String Action</li>
+
+          <li>SE String Expression</li>
         </ul>
 
-        <p>For auto-generated system names, the letter A is appended after the
-        type letters above. For example, DAA for auto-generated digital action
-        and SEA for auto-generated string expression.</p>
+        <p>For auto-generated system names, the letter A is appended after the type letters above.
+        For example, DAA for auto-generated digital action and SEA for auto-generated string
+        expression.</p>
 
         <p>Examples for actions and expressions</p>
 
         <ul>
-        <li>IQ21:DA52 Digital Action</li>
-        <li>IQ21:DE52 Digital Expression</li>
-        <li>IQ21:AA52 Analog Action</li>
-        <li>IQ21:AE52 Analog Expression</li>
-        <li>IQ21:SA52 String Action</li>
-        <li>IQ21:SE52 String Expression</li>
-        <li>IQ21:DAA52 Auto-generated Digital Action</li>
-        <li>IQ21:DEA52 Auto-generated Digital Expression</li>
-        <li>IQ21:AAA52 Auto-generated Analog Action</li>
-        <li>IQ21:AEA52 Auto-generated Analog Expression</li>
-        <li>IQ21:SAA52 Auto-generated String Action</li>
-        <li>IQ21:SEA52 Auto-generated String Expression</li>
+          <li>IQ21:DA52 Digital Action</li>
+
+          <li>IQ21:DE52 Digital Expression</li>
+
+          <li>IQ21:AA52 Analog Action</li>
+
+          <li>IQ21:AE52 Analog Expression</li>
+
+          <li>IQ21:SA52 String Action</li>
+
+          <li>IQ21:SE52 String Expression</li>
+
+          <li>IQ21:DAA52 Auto-generated Digital Action</li>
+
+          <li>IQ21:DEA52 Auto-generated Digital Expression</li>
+
+          <li>IQ21:AAA52 Auto-generated Analog Action</li>
+
+          <li>IQ21:AEA52 Auto-generated Analog Expression</li>
+
+          <li>IQ21:SAA52 Auto-generated String Action</li>
+
+          <li>IQ21:SEA52 Auto-generated String Expression</li>
         </ul>
 
+        <h2>Error handling</h2>
 
+        <p style="color:yellow;background-color:red">This is yet to be implemented.</p>
 
-		<h2>Error handling</h2>
+        <p>Sometimes an error occurs. It may be due to an error on the layout, an arithmetic error
+        or something else. Each action and expression can handle that and there are a couple of
+        options.</p>
 
-        <p style="color:yellow;background-color:red">This is yet
-        to be implemented.</p>
+        <ul>
+          <li>Show a dialog box</li>
 
-		<p>Sometimes an error occurs. It may be due to an error on the layout,
-		an arithmetic error or something else. Each action and expression can
-		handle that and there are a couple of options.</p>
-		
-		<ul>
-		<li>Show a dialog box</li>
-		<li>Log the error</li>
-		<li>Log the error once</li>
-		<li>Let the action or exception above handle it</li>
-		</ul>
+          <li>Log the error</li>
 
-		<p>These options can be configured at three different layers:</p>
+          <li>Log the error once</li>
 
-		<ul>
-		<li>For each action or expression</li>
-		<li>For the LogixNG the action or expression belongs to</li>
-		<li>In the LogixNG preferences</li>
-		</ul>
+          <li>Let the action or exception above handle it</li>
+        </ul>
 
-		<p>The default is to log the error once. And by default, neither
-		each LogixNG nor each action and expression overrides the settings
-		in the preferences.</p>
+        <p>These options can be configured at three different layers:</p>
 
-		<p>The recommendation is to set the desired error handling in the
-		LogixNG preferences, which sets it for all actions and expressions.
-		And then override that setting at the LogixNG level or an individual
-		action or expression when needed.</p>
+        <ul>
+          <li>For each action or expression</li>
 
-		<p>For example, a LogixNG that has an AnalogAction that sets an analog
-		value may want to abort that particular LogixNG if something goes wrong,
-		for example due to an arithmetic error. In that case, that LogixNG can
-		be configured to "Let the action or exception above handle it", which
-		means that the LogixNG will be aborted since no action or exception
-		in that LogixNG will handle the error.</p>
+          <li>For the LogixNG the action or expression belongs to</li>
 
-		<p>Note that for actions or expressions that has multiple children,
-		for example the "Many" action, an that is not handled in one of the
-		children will abort that action or expression even if there are more
-		children to execute. Lets say, for example, the action "Many" have
-		three child actions A, B and C, and the Many action itself handles the
-		error but not the child A. If an error occurs in A, the Many action
-		will be aborted so that actions B and C will not be executed, but the
-		parent of the Many action will not be affected by the error.</p>
+          <li>In the LogixNG preferences</li>
+        </ul>
 
+        <p>The default is to log the error once. And by default, neither each LogixNG nor each
+        action and expression overrides the settings in the preferences.</p>
 
+        <p>The recommendation is to set the desired error handling in the LogixNG preferences,
+        which sets it for all actions and expressions. And then override that setting at the
+        LogixNG level or an individual action or expression when needed.</p>
+
+        <p>For example, a LogixNG that has an AnalogAction that sets an analog value may want to
+        abort that particular LogixNG if something goes wrong, for example due to an arithmetic
+        error. In that case, that LogixNG can be configured to "Let the action or exception above
+        handle it", which means that the LogixNG will be aborted since no action or exception in
+        that LogixNG will handle the error.</p>
+
+        <p>Note that for actions or expressions that has multiple children, for example the "Many"
+        action, an that is not handled in one of the children will abort that action or expression
+        even if there are more children to execute. Lets say, for example, the action "Many" have
+        three child actions A, B and C, and the Many action itself handles the error but not the
+        child A. If an error occurs in A, the Many action will be aborted so that actions B and C
+        will not be executed, but the parent of the Many action will not be affected by the
+        error.</p>
 
         <h2>Execution groups</h2>
 
-        <p style="color:yellow;background-color:red">Execution groups are yet
-        to be implemented.</p>
+        <p style="color:yellow;background-color:red">Execution groups are yet to be
+        implemented.</p>
 
-        <p>This section is on an advanced topic that most JMRI users probably
-        don't need to use. It's recommended to learn to use LogixNG before
-        starting to use execution groups.</p>
+        <p>This section is on an advanced topic that most JMRI users probably don't need to use.
+        It's recommended to learn to use LogixNG before starting to use execution groups.</p>
 
-        <p>The LogixNGs are executed when one of the actions or expressions
-        notify the LogixNG manager that it wants to execute the LogixNGs. This
-        may be due to a change on the layout, for example an activated sensor,
-        or a timer that is finished.</p>
+        <p>The LogixNGs are executed when one of the actions or expressions notify the LogixNG
+        manager that it wants to execute the LogixNGs. This may be due to a change on the layout,
+        for example an activated sensor, or a timer that is finished.</p>
 
-        <p>As default, this executes all the LogixNGs. But there may cases
-        there this is not desired. It can be due to large layouts or due to
-        some Actions or Expressions that takes a long time to finish.</p>
+        <p>As default, this executes all the LogixNGs. But there may cases there this is not
+        desired. It can be due to large layouts or due to some Actions or Expressions that takes a
+        long time to finish.</p>
 
-        <p>To solve this, LogixNG groups all the LogixNGs into execution
-        groups. When notified, the LogixNG manager executes the LogixNGs that
-        are part of a particular execution group.</p>
+        <p>To solve this, LogixNG groups all the LogixNGs into execution groups. When notified, the
+        LogixNG manager executes the LogixNGs that are part of a particular execution group.</p>
 
-        <p>In case one LogixNG wants to trigger execution of another execution
-        group whan the one it belongs to, one can use the
-        ActionTriggerExecutionGroup that notifies the LogixNG manager to
-        execute a predefined exectution group.</p>
+        <p>In case one LogixNG wants to trigger execution of another execution group whan the one
+        it belongs to, one can use the ActionTriggerExecutionGroup that notifies the LogixNG
+        manager to execute a predefined exectution group.</p>
 
-        <p>If the LogixNG manager gets several notifications before it can
-        execute an execution group, it always starts with the execution group
-        with the lowest system name. For example, the main execution group,
-        IQEG0, always has the highest priority.</p>
+        <p>If the LogixNG manager gets several notifications before it can execute an execution
+        group, it always starts with the execution group with the lowest system name. For example,
+        the main execution group, IQEG0, always has the highest priority.</p>
 
-        <p>The execution groups are Named Beans and has a system name and a
-        user name. The system name is IQEG&lt;number&gt;, where the main
-        execution group has the system name IQEG0. (I=Internal, Q=LogixNG,
-        EG=ExecutionGroup).</p>
-
-
+        <p>The execution groups are Named Beans and has a system name and a user name. The system
+        name is IQEG&lt;number&gt;, where the main execution group has the system name IQEG0.
+        (I=Internal, Q=LogixNG, EG=ExecutionGroup).</p>
         <!--#include virtual="/Footer" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,46 +1,40 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI: Operations web functions</title>
-
-<!--#include virtual="/Style.shtml" -->
-
+  <title>JMRI: Operations web functions</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Operations web functions</h1>
 
-      <p>JMRI OperationsPro&trade; provides many features to support operating sessions. You can learn more about 
-      <a href="../apps/OperationsPro/index.shtml">JMRI OperationsPro here</a>.</p>
+      <p>JMRI OperationsPro™ provides many features to support operating sessions. You can learn
+      more about <a href="../apps/OperationsPro/index.shtml">JMRI OperationsPro here</a>.</p>
 
-      <p>Providing access to these Operations features from mobile
-      devices and web browsers is still under development.<br>
-      With JMRI running on your network and the <a href=
-      "index.shtml#Start">Web Server</a> active, the current
-      functionality can be accessed by visiting the <a href=
-      "http://localhost:12080/operations">http://localhost:12080/operations</a>
-      URL.</p>
+      <p>Providing access to these Operations features from mobile devices and web browsers is
+      still under development.<br>
+      With JMRI running on your network and the <a href="index.shtml#Start">Web Server</a> active,
+      the current functionality can be accessed by visiting the <a href=
+      "http://localhost:12080/operations">http://localhost:12080/operations</a> URL.</p>
 
-      <p>Under the Operations tab, that web page lists all
-      available trains, with a link to the Manifest page for each
-      Train.<br>
-      From each Manifest page, you can view the Locations to be
-      visited, and the current status of the Train.<br>
-      You can click on each location and the status line to display
-      additional details about the pickups, set outs, and cars on
-      the train.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Under the Operations tab, that web page lists all available trains, with a link to the
+      Manifest page for each Train.<br>
+      From each Manifest page, you can view the Locations to be visited, and the current status of
+      the Train.<br>
+      You can click on each location and the status line to display additional details about the
+      pickups, set outs, and cars on the train.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

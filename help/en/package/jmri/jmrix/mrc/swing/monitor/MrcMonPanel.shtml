@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: MRC Command Monitor</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: MRC Command Monitor</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>JMRI: MRC Command Monitor</h1>This is the
-      package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml
-      package help file.
-
-      <p><b>Include Poll Messages</b> - When enabled you will see
-      the messages as each cab on the network is polled by the
-      command station. This is a lot of traffic and generally shows
-      that nothing meaningful is happening. It is useful to confirm
-      that a cab is being polled and if the cab is responding.</p>
-
+      <h1>JMRI: MRC Command Monitor</h1>
+      This is the package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml package help file.
+      <p><strong>Include Poll Messages</strong> - When enabled you will see the messages as each
+      cab on the network is polled by the command station. This is a lot of traffic and generally
+      shows that nothing meaningful is happening. It is useful to confirm that a cab is being
+      polled and if the cab is responding.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,47 +1,39 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Edit Level Crossing Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Layout Editor Level Crossing">
+  <meta name="keywords" content="JMRI help Layout Editor Level Crossing">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+      <h1>Edit Layout Slip</h1>
+      A Slip is a special piece of track that represents two tracks crossing at grade, with the
+      ability to switch between the tracks. It can come in two forms as a Single or a Double Slip.
+      The slip has four connection points, and two tracks, designated 1 and 2. When a level
+      crossing is created, track 1 is the horizontal track, and track 2 is the inclined track. The
+      angle between the two tracks, the incline of each track, and the length of each track may be
+      varied by dragging connection points with the meta key pressed. The center of the level
+      crossing may be positioned by dragging the center circle with the meta key pressed (see the
+      help bar for which key is the meta key for your operating system).
+      <p>Although the slip is made up of two tracks it is treated as a single block and can be
+      either a <em>mainline track</em> or <em>side track</em> depending on the mainline track or
+      side track designation of track segment connected to each track. If a block name is entered
+      in the <strong>Block: Name</strong> field of the tool bar prior to creating a slip, that
+      block is assigned to the slip.</p>
 
-      <h1>Edit Layout Slip</h1>A Slip is a special piece of track
-      that represents two tracks crossing at grade, with the
-      ability to switch between the tracks. It can come in two
-      forms as a Single or a Double Slip. The slip has four
-      connection points, and two tracks, designated 1 and 2. When a
-      level crossing is created, track 1 is the horizontal track,
-      and track 2 is the inclined track. The angle between the two
-      tracks, the incline of each track, and the length of each
-      track may be varied by dragging connection points with the
-      meta key pressed. The center of the level crossing may be
-      positioned by dragging the center circle with the meta key
-      pressed (see the help bar for which key is the meta key for
-      your operating system).
-
-      <p>Although the slip is made up of two tracks it is treated
-      as a single block and can be either a <i>mainline track</i>
-      or <i>side track</i> depending on the mainline track or side
-      track designation of track segment connected to each track.
-      If a block name is entered in the <b>Block: Name</b> field of
-      the tool bar prior to creating a slip, that block is assigned
-      to the slip.</p>
-
-      <p>The edit Slip window, allows you to configure the output
-      states for the two turnouts that drive the slip and test
-      these prior to confirming the configuration.</p>
+      <p>The edit Slip window, allows you to configure the output states for the two turnouts that
+      drive the slip and test these prior to confirming the configuration.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,83 +1,65 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Edit Track Segment Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Layout Editor Track Segment">
+  <meta name="keywords" content="JMRI help Layout Editor Track Segment">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Edit Track Segment</h1>
 
-      <h2>Track Segments and Connecting Points</h2>A <b>Track
-      Segment</b> is a piece of straight track stretching between
-      two connection points. Connection points are drawn as small
-      red or green squares. Connection points are found on
-      turnouts, anchor points, end bumpers, and level crossings.
-      Each turnout has three or four connection points, each
-      accepting one connection. Each anchor point has one
-      connection point that can accept two connections. An end
-      bumper is similar, but only accepts one connection. Level
-      crossings have four connection points, each accepting one
-      connection. A connection point that can accept a connecting
-      track segment is drawn red. When a connection point has its
-      capacity of connections, its color is changed to green. When
-      all connection points are green, a track diagram is complete,
-      with all connections defined.
+      <h2>Track Segments and Connecting Points</h2>
+      A <strong>Track Segment</strong> is a piece of straight track stretching between two
+      connection points. Connection points are drawn as small red or green squares. Connection
+      points are found on turnouts, anchor points, end bumpers, and level crossings. Each turnout
+      has three or four connection points, each accepting one connection. Each anchor point has one
+      connection point that can accept two connections. An end bumper is similar, but only accepts
+      one connection. Level crossings have four connection points, each accepting one connection. A
+      connection point that can accept a connecting track segment is drawn red. When a connection
+      point has its capacity of connections, its color is changed to green. When all connection
+      points are green, a track diagram is complete, with all connections defined.
+      <h2>Line Styles</h2>
+      Track segments are normally drawn as solid lines. but you can designate that a track segment
+      be drawn <em>dashed</em> to show tunnels or tracks crossing at different grades. You can
+      request a dashed line for a track segment by checking <strong>Dashed</strong> in the tool bar
+      before the track segment is created, or you can change a track segment to
+      <strong>Dashed</strong> in the Edit Track Segment dialog. (More anchor points can be added to
+      get the dashed part of your track to cover the exact area desired.) You can also designate a
+      track segment as <em>hidden</em> so it's displayed only when edit mode is active.
+      <em>Hidden</em> track segments are useful for track diagrams drawn as multiple rows where the
+      end of one row connects to the beginning of the same or another row. To make a track segment
+      hidden, check <strong>Hide Track</strong> in the Edit Track Segment dialog.
+      <h2>Mainline Track and Side Track</h2>
+      Optionally, track segments are used to designate <em>mainline track</em> or <em>side
+      track</em>. The legs of turnouts and level crossings are set to <em>mainline track</em> or
+      <em>side track</em> according to the designations of track segments that are connected to
+      them. See the discussion of continuing routes in the above section on turnouts for
+      information on how a mainline is tracked through a turnout.
+      <p>If <strong>Mainline</strong> is checked in the tool bar when a track segment is created,
+      that track segment is designated as <em>mainline track</em>, otherwise it is considered
+      <em>side track</em>. You can change from mainline track to side track, or vice versa, in the
+      Edit Track dialog. Mainline track and side track may be drawn with different width lines.
+      Track widths for each are set using the <strong>Set Track Width...</strong> item in the
+      Options menu.</p>
 
-      <h2>Line Styles</h2>Track segments are normally drawn as
-      solid lines. but you can designate that a track segment be
-      drawn <i>dashed</i> to show tunnels or tracks crossing at
-      different grades. You can request a dashed line for a track
-      segment by checking <b>Dashed</b> in the tool bar before the
-      track segment is created, or you can change a track segment
-      to <b>Dashed</b> in the Edit Track Segment dialog. (More
-      anchor points can be added to get the dashed part of your
-      track to cover the exact area desired.) You can also
-      designate a track segment as <i>hidden</i> so it's displayed
-      only when edit mode is active. <i>Hidden</i> track segments
-      are useful for track diagrams drawn as multiple rows where
-      the end of one row connects to the beginning of the same or
-      another row. To make a track segment hidden, check <b>Hide
-      Track</b> in the Edit Track Segment dialog.
-
-      <h2>Mainline Track and Side Track</h2>Optionally, track
-      segments are used to designate <i>mainline track</i> or
-      <i>side track</i>. The legs of turnouts and level crossings
-      are set to <i>mainline track</i> or <i>side track</i>
-      according to the designations of track segments that are
-      connected to them. See the discussion of continuing routes in
-      the above section on turnouts for information on how a
-      mainline is tracked through a turnout.
-
-      <p>If <b>Mainline</b> is checked in the tool bar when a track
-      segment is created, that track segment is designated as
-      <i>mainline track</i>, otherwise it is considered <i>side
-      track</i>. You can change from mainline track to side track,
-      or vice versa, in the Edit Track dialog. Mainline track and
-      side track may be drawn with different width lines. Track
-      widths for each are set using the <b>Set Track Width...</b>
-      item in the Options menu.</p>
-
-      <h2>Track Blocks</h2>Optionally, you can designate which
-      <b>Block</b> a track segment is in--either by entering a
-      block name in the <b>Block: Name</b> field of the tool bar
-      prior to creating each track segment, or by entering a block
-      name in the Edit Track Segment dialog at a later time. The
-      Edit Track Segment dialog also allows an Edit Block dialog to
-      be requested, so information for the track segment's block
-      may be entered or changed. Blocks are discussed more fully in
-      the help page of the Create/Edit Block dialog.
+      <h2>Track Blocks</h2>
+      Optionally, you can designate which <strong>Block</strong> a track segment is in--either by
+      entering a block name in the <strong>Block: Name</strong> field of the tool bar prior to
+      creating each track segment, or by entering a block name in the Edit Track Segment dialog at
+      a later time. The Edit Track Segment dialog also allows an Edit Block dialog to be requested,
+      so information for the track segment's block may be entered or changed. Blocks are discussed
+      more fully in the help page of the Create/Edit Block dialog. 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

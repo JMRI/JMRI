@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE USB Interface Tool</title>
   <meta name="author" content="Ken Cameron">
-  <meta name="keywords" content="JMRI Help NCE Cab Monitor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>NCE USB Interface Tool</h1>
 
-      <p>This tool will change options in the NCE USB interface.
-      Currently this only sets the cab id of the USB interface.</p>
+      <p>This tool will change options in the NCE USB interface. Currently this only sets the cab
+      id of the USB interface.</p>
 
-      <p>The valid range of cab id values for the USB Interface
-      vary depending the command station, software version in the
-      command station, and version of the firmware in the USB
+      <p>The valid range of cab id values for the USB Interface vary depending the command station,
+      software version in the command station, and version of the firmware in the USB
       interface.</p>
 
-      <p>This tool used to (prior to 4.1.1) try to find the current
-      USB cab id, but the method was imperfect and did not allow
-      for resetting the id when the cab id was not vaild for the
-      system it was plugged into.</p>
-
+      <p>This tool used to (prior to 4.1.1) try to find the current USB cab id, but the method was
+      imperfect and did not allow for resetting the id when the cab id was not vaild for the system
+      it was plugged into.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>
