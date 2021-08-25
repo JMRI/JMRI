@@ -74,7 +74,7 @@ public class SplitEnumVariableValue extends VariableValue
 
     private static final int RETRY_COUNT = 2;
     
-    int atest;
+    int atest = 1;
     private final List<JTree> trees = new ArrayList<>();
     
     private final List<ComboCheckBox> comboCBs = new ArrayList<>();
@@ -644,8 +644,6 @@ public class SplitEnumVariableValue extends VariableValue
             int oldCv = cv.getValue();
             int newVal = getIntValue();
             int max = (int)_maxVal;
-            //int oldInt = (int)oldCv;
-            //int newInt = (int)newVal;
             int newCv = setValueInCV(oldCv, newVal, getMask(), max-1);
             if (newCv != oldCv) {
                 cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
@@ -803,6 +801,7 @@ public class SplitEnumVariableValue extends VariableValue
             log.debug("Variable={}; Set Color to defaultColor {}", _name, _defaultColor.toString());
             _value.setBackground(_defaultColor);
         }
+        
         // prop.firePropertyChange("Value", null, null);
     }
 
@@ -962,11 +961,12 @@ public class SplitEnumVariableValue extends VariableValue
         setToRead(false);
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
-        _value.setSelectedIndex(0); // start with a clean slate
+        //_value.setSelectedIndex(0); // start with a clean slate
         for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
             cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
         }
-        super.setState(READING_FIRST);
+        //super.setState(READING_FIRST);
+        _progState = READING_FIRST;
         retry = 0;
         log.info("Variable={}; Start CV read", _name);
         log.info("Reading CV={}", cvList.get(0).cvName);
@@ -1025,11 +1025,14 @@ public class SplitEnumVariableValue extends VariableValue
         switch (e.getPropertyName()) {
             case "Busy":
                 if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-                    setToRead(false);
-                    setToWrite(false);  // some programming operation just finished
-                    setBusy(false);
+                    if ( 0 >= _progState){
+                        setToRead(false);
+                        setToWrite(false);  // some programming operation just finished
+                        setBusy(false);
+                    }
                     if (_progState >= READING_FIRST){
-                        if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
+                        int curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
+                        if (curState == READ) {   // was the last read successful?
                             retry = 0;
                             if (Math.abs(_progState) < cvCount) {   // read next CV
                                 _progState++;
@@ -1038,12 +1041,14 @@ public class SplitEnumVariableValue extends VariableValue
                             } else {  // finally done, set not busy
                                 log.info("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
                                 _progState = IDLE;
+                                setToRead(false);
                                 setBusy(false);
                             }
                         } else {   // read failed
                             log.info("Variable={}; Busy goes false with failure READING _progState {}", _name, _progState);
                             if (retry < RETRY_COUNT) { //have we exhausted retry count?
                                 retry++;
+                                _progState++;
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                             } else {
                                 _progState = IDLE;
@@ -1065,6 +1070,7 @@ public class SplitEnumVariableValue extends VariableValue
                                 log.info("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
                                 _progState = IDLE;
                                 setBusy(false);
+                                setToWrite(false);
                             }
                         } else {   // read failed we're done!
                             log.info("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
@@ -1084,11 +1090,14 @@ public class SplitEnumVariableValue extends VariableValue
                         varState = state;
                     } else if (priorityValue(state) > priorityValue(varState)) {
                         varState = AbstractValue.UNKNOWN; // or should it be = state ?
-                        varState = state; // or should it be = state ?
+//                        varState = state; // or should it be = state ?
                     }
                 }
                 setState(varState);
-                
+                for (JTree tree : trees) {
+                    tree.setBackground(_value.getBackground());
+                    //tree.setOpaque(true);
+                }
                 log.info("{} variable state set to {}", _name, stateNameFromValue(varState));
                 break;
             }
@@ -1122,7 +1131,6 @@ public class SplitEnumVariableValue extends VariableValue
                 int cvVal = cv.getValue();
                 int newVal = getValueInCV(cv.getValue(), getMask(), intMax-1); // _maxVal value is count of possibles, i.e. radix
                 setValue(newVal);
-                
                 break;
             }
             default:
