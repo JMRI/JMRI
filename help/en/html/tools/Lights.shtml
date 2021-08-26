@@ -92,7 +92,7 @@
       </dl>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h2>id="what"&gt;What are Lights and How Are They Used?</h2>
+      <h2 id="what">What are Lights and How Are They Used?</h2>
 
       <p>Lights were created to provide an easy way to control fascia panel lights and scenery
       lighting. They can be used for any purpose that requires an on/off switch, for example, to

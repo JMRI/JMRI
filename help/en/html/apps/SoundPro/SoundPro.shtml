@@ -1,34 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SoundPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Matthew Harris">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: SoundPro Main Window</h1>
+      <img src="../../../../../resources/SoundPro.gif" class="floatRight" height="100" width="100"
+      alt="">
+      <p>The SoundPro app provides an alternate PanelPro splash screen that includes a button that
+      provides a shortcut to the <strong>Audio</strong> table. The normal path is <strong>Tools ⇒
+      Tables ⇒ Audio</strong>.</p>
 
-      <img src="../../../../../resources/SoundPro.gif" class="floatRight"
-      height="100" width="100" alt="">
-
-      <p>The SoundPro app provides an alternate PanelPro splash screen that includes a
-      button that provides a shortcut to the <strong>Audio</strong> table.
-      The normal path is <strong>Tools &rArr; Tables &rArr; Audio</strong>.</p>
-
-      <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a>
-
-      <!--#include virtual="/Footer.shtml" -->
+      <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a> 
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -42,7 +42,7 @@
       here. To use the Comprehensive Programmer just be sure that you select the Comprehensive
       Programmer in the <strong><a href="Start_Preferences.shtml">Preferences</a></strong>.</p>
 
-      <p>When you are on the<a href="Basic_Programming.shtml">Service Mode Programmer Setup</a> and
+      <p>When you are on the <a href="Programmer_ServiceMode.shtml">Service Mode Programmer Setup</a> and
       click on the <strong>Open Programmer</strong> button, the appropriate Programmer window will
       open, in this case the Comprehensive Programmer.. All programmers, Basic and Comprehensive,
       open to the Roster Entry pane, which will be similar to that shown below. (Using Tsunami
@@ -57,7 +57,7 @@
       <strong>Basic</strong> programmer, but the window has a LOT more options in the
       <strong>Tabs</strong> at the top of the window!!! If you are unsure how to handle the
       <strong>Roster Entry</strong> information, go back to that section in the <a href=
-      "Basic_Programming.shtml#Roster"><strong>Basic Programmer</strong></a>. If you're ready to
+      "Basic_BasicPane.shtml"><strong>Basic Programmer</strong></a>. If you're ready to
       move on to bigger and better things, let's go to the next tab, the <a href=
       "Comp_Basic.shtml"><strong>Expanded Basic Tab.</strong></a></p>
 

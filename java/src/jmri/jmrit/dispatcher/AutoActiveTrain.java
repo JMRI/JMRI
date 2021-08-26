@@ -1909,7 +1909,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             }
                         }
                         // test if need to change speed
-                        if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.001) {
+                        if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.0004f) {
                             if (_currentRampRate == RAMP_NONE) {
                                 // set speed immediately
                                 _currentSpeed = _targetSpeed;
@@ -1981,7 +1981,7 @@ public class AutoActiveTrain implements ThrottleListener {
         public synchronized boolean isStopped() {
             // when stopping by speed profile you must refresh the throttle speed.
             _currentSpeed = _throttle.getSpeedSetting();
-            return _currentSpeed <= 0.005f;
+            return _currentSpeed <= 0.0004f;
         }
 
         /**

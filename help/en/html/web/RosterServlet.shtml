@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI: Roster Servlet</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Roster Servlet</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Roster Servlet</h1>
-      <p>The JMRI Roster Servlet provides web access to information about
-      JMRI roster entries. This servlet responds to the following URL patterns:</p>
+
+      <p>The JMRI Roster Servlet provides web access to information about JMRI roster entries. This
+      servlet responds to the following URL patterns:</p>
 
       <ul>
         <li>/roster/</li>
@@ -34,9 +32,12 @@
         <li>/roster/&lt;ID&gt;/image</li>
 
         <li>/roster/&lt;ID&gt;/icon</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

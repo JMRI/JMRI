@@ -20,7 +20,7 @@
 
       <p>Start the firmware update tool from the SPROG generation 5 menu.<br>
       <br></p>
-      <img src="images/FirmwareMenu.png" alt="CBUS menu entry for bootloader client">
+      <img src="images/FirmwareMenu.PNG" alt="CBUS menu entry for bootloader client">
       <p>Enter the Node Number (the default is 65534) and click Read Node Parameters.<br>
       <br></p>
       <img src="images/UpdateNN.png" alt="Select Node Number to be updated">

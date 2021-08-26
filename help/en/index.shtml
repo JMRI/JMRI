@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Help</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!-- This page doesn't have the usual formatting because it's -->
   <!-- only encountered (normally) from the help system. See    -->
   <!-- https://jmri.org/help/en/html/doc/Technical/Help.shtml    -->
-
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mainContent" class="no-sidebar">
@@ -19,26 +17,28 @@
 
     <p>This is the top-level Help page for JMRI.</p>
 
-    <p>The <a href="Acknowledgements.shtml">acknowledgements page</a> shows that a lot of
-    people have been able to contribute.</p>
+    <p>The <a href="Acknowledgements.shtml">acknowledgements page</a> shows that a lot of people
+    have been able to contribute.</p>
 
     <h2>Using The JMRI Help System</h2>
 
-    <p>If you're viewing this via the JMRI Help menu, the section to the left is a table
-    of contents.  Clicking on an entry will load the help page in the right section.</p>
+    <p>If you're viewing this via the JMRI Help menu, the section to the left is a table of
+    contents. Clicking on an entry will load the help page in the right section.</p>
 
-    <p>In JMRI, selecting <strong>Preferences &rArr; Help</strong> provides three options.</p>
+    <p>In JMRI, selecting <strong>Preferences ⇒ Help</strong> provides three options.</p>
 
     <ol>
-      <li><strong>Open help pages locally</strong>: The help pages will be loaded from your
-      JMRI install location.  This means that the pages will be based on the installed
-      JMRI version.  This is the default option.</li>
+      <li><strong>Open help pages locally</strong>: The help pages will be loaded from your JMRI
+      install location. This means that the pages will be based on the installed JMRI version. This
+      is the default option.</li>
 
-      <li><strong>Open help pages online</strong>: The help page will be displayed by
-      linking to <a href="https://jmri.org">jmri.org</a>.  The content on the JMRI website
-      might be more recent than the content in the local JMRI install location.  The page
-      will have the standard navigation bar, sidebars and CSS formatting.  This option
-      requires that an internet connection is available.</li>
+      <li>
+        <strong>Open help pages online</strong>: The help page will be displayed by linking to
+        <a href="https://jmri.org">jmri.org</a>. The content on the JMRI website might be more
+        recent than the content in the local JMRI install location. The page will have the standard
+        navigation bar, sidebars and CSS formatting. This option requires that an internet
+        connection is available.
+      </li>
 
       <li><strong>Open help pages using the web server in JMRI</strong>: This is a future
       capability.</li>
@@ -46,24 +46,22 @@
 
     <h2>Further information</h2>
 
-    <p>The main JMRI web page, <a href=
-    "https://jmri.org">https://jmri.org</a>, is a good place to start for information about
-    current status, updates, etc.<br>  (Depending on your computer, you might have to copy
-    that link to your web browser to be able to see external sites properly).</p>
+    <p>The main JMRI web page, <a href="https://jmri.org">https://jmri.org</a>, is a good place to
+    start for information about current status, updates, etc.<br>
+    (Depending on your computer, you might have to copy that link to your web browser to be able to
+    see external sites properly).</p>
 
-    <p>We have a Groups.io discussion area, JMRI Users. This group is the place to discuss
-    any aspect of JMRI.  If you have questions about how to do things, suggestions or even
-    complaints, post them there.  You can subscribe, browse posts, etc. at
-    <a href="https://groups.io/g/jmriusers">https://groups.io/g/jmriusers/</a>.</p>
+    <p>We have a Groups.io discussion area, JMRI Users. This group is the place to discuss any
+    aspect of JMRI. If you have questions about how to do things, suggestions or even complaints,
+    post them there. You can subscribe, browse posts, etc. at <a href=
+    "https://groups.io/g/jmriusers">https://groups.io/g/jmriusers/</a>.</p>
 
-    <p>Our <a href=
-    "https://jmri.org/help/en/html/doc/Technical/index.shtml">technical web pages</a> are
-    continually being updated. We're always short of documentation, so if you're interested
-    in working with the code or updating some Help files, we'd love to help you
-    <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
-    get started</a>.</p>
-
-  </div><!-- close #mainContent -->
+    <p>Our <a href="https://jmri.org/help/en/html/doc/Technical/index.shtml">technical web
+    pages</a> are continually being updated. We're always short of documentation, so if you're
+    interested in working with the code or updating some Help files, we'd love to help you <a href=
+    "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get started</a>.</p>
+  </div>
+  <!-- close #mainContent -->
   <script src="/js/main.js"></script>
 </body>
 </html>

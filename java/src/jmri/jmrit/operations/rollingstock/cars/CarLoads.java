@@ -105,6 +105,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     public JComboBox<String> getPriorityComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(CarLoad.PRIORITY_LOW);
+        box.addItem(CarLoad.PRIORITY_MEDIUM);
         box.addItem(CarLoad.PRIORITY_HIGH);
         return box;
     }

@@ -36,7 +36,7 @@
       <h3>Rename socket</h3>
 
       <p>Each row in the tree starts with the socket type and the socket name. See the list at
-      <a href="chapter1#chapter1_socket_types">socket types</a>.</p>
+      <a href="chapter1.shtml#chapter1_socket_types">socket types</a>.</p>
 
       <p>The names usually reflect their purpose, such as <strong>If</strong> for the beginning of
       an <strong>If Then Else</strong> group, or <strong>A</strong> for action or

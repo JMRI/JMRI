@@ -258,7 +258,7 @@
       <h4>Signals</h4>
 
       <p>To use a Grapevine output as a JMRI <a href=
-      "../../tools/Signaling/index.shtml">Signal</a>, capable of displaying red/yellow/green and
+      "../../tools/signaling/index.shtml">Signal</a>, capable of displaying red/yellow/green and
       associated flashing Aspects, you must define it as a "Grapevine Signal Head" using the
       <a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button in the
       <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.

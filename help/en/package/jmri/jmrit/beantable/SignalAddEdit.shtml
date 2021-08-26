@@ -85,7 +85,7 @@
           Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight
           with bicolor, tricolor or RGB LEDs or multi-lamp with individual LEDs), but is much
           easier to use when configured as a complete Signal Mast with all Signal Heads on a single
-          DCC address using the <a href="signalmasttable.shtml#dccsmd">DCC Signal Mast driver</a>.
+          DCC address using the <a href="SignalMastTable.shtml#dccsmd">DCC Signal Mast driver</a>.
           In that case you don't need to add Signal Heads for your signal. Key difference between a
           Signal Head and a Signal Mast is the number of different states each might have. A Signal
           Head only has (up to) 8 Appearance entries, but a Signal Mast can have up to 32 (0-31)
