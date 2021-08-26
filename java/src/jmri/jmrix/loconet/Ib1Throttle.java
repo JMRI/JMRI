@@ -26,7 +26,7 @@ public class Ib1Throttle extends LocoNetThrottle {
      * Convert a LocoNet speed integer to a float speed value
      *
      * @param lSpeed LocoNet style speed value
-     * @return speed as float 0.0-1.0, or -1.0 to indicate E-Stop
+     * @return floatSpeed as float 0.0-1.0, or -1.0 to indicate E-Stop
      * The IB provides an integer 0-127
      */
      @Override
@@ -74,8 +74,8 @@ public class Ib1Throttle extends LocoNetThrottle {
 
     /**
      * Computes the integer speed value from a float.
-     * @param fSpeed is the floating-point speed value to be converted
-     * @return an integer which represents the speed step value
+     * @param speed is the floating-point speed value to be converted
+     * @return intSpeed an integer which represents the speed step value
      */
     @Override
     protected int intSpeed(float speed) {
