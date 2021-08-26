@@ -14,7 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20210630"/>
   <!-- Version 1 New file from 1.15 manual -->
-  <version author="Michael Mosher" version="1" lastUpdated="20210807"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20210807"/>
   <!-- Version 2 bug fix -->
   <decoder>
     <family name="Paragon 4" mfg="Broadway Limited Imports, LLC">
