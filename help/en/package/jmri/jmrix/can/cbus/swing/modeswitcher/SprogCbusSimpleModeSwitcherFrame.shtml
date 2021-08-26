@@ -20,16 +20,16 @@
 
       <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br>
       <br></p>
-      <img src="images/ModeSwitcherMenu.png" alt="Mode switcher menu entry">
+      <img src="images/ModeSwitcherMenu.PNG" alt="Mode switcher menu entry">
       <p>Select programmer mode for service mode programming on a programming track</p>
 
       <p>Select command station mode for running trains and using ops mode (on the main)
       programming.<br>
       <br></p>
-      <img src="images/SimpleModeSwitcher.png" alt="SPROG simple mode switcher">
+      <img src="images/SimpleModeSwitcher.PNG" alt="SPROG simple mode switcher">
       <p>The Decoder Pro main window status bar shows the currently available programmers.<br>
       <br></p>
-      <img src="images/StatusBar.png" alt="DP3 status bar">
+      <img src="images/StatusBar.PNG" alt="DP3 status bar">
       <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
