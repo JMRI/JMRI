@@ -35,7 +35,7 @@ import jmri.util.table.ButtonRenderer;
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
-    List<Train> sysList = trainManager.getTrainsByTimeList();
+    volatile List<Train> sysList = trainManager.getTrainsByTimeList();
     JTable _table = null;
     TrainsTableFrame _frame = null;
     
