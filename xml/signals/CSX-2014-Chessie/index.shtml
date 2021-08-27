@@ -20,16 +20,19 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
+<h1>
 JMRI: CSX 'Chessie' 2014 Signaling Definition
 </h1>
 
-This directory contains signaling definitions corresponding to 
+This directory contains signaling definitions corresponding to
 the CSX Transportation 'Chessie' Signal Rules - C1281-C1292, January 2014.
 
 <p>
 
-<a href="..\CSX-1998\index.shtml">CSX</a>, <a href="..\B&O-2009\index.shtml">former B&amp;O</a> and <a href="..\B&O-Semaphore\index.shtml">B&amp;O Semaphore</a> rules 1281-1298, and <a href="..\NS-2008\index.shtml">Conrail</a> rules CR1280-CR1295 are not included in this system but are available seperately in their respective definitions.
+<a href="../CSX-1998/index.shtml">CSX</a>,
+<a href="../B&amp;O-2009/index.shtml">former B&amp;O</a> and
+<a href="../B&amp;O-Semaphore/index.shtml">B&amp;O Semaphore</a> rules 1281-1298, and
+<a href="../NS-2008/index.shtml">Conrail</a> rules CR1280-CR1295 are not included in this system but are available seperately in their respective definitions.
 
 <p>
 
@@ -37,10 +40,11 @@ The included masts are the types anticipated to be most likely used. If the exac
 
 <p>
 
-Where possible the default aspect numbers match similar appearances in the <a href="..\BNSF-1996\index.shtml">BNSF</a> and <a href="..\UP-2008\index.shtml">UP</a>,  definitions in order that hardware intended to be used with those defintions will work for the most part with this defintion with minimal reconfiguration.
+Where possible the default aspect numbers match similar appearances in the <a href="../BNSF-1996/index.shtml">BNSF</a> and
+<a href="../UP-2008/index.shtml">UP</a>,  definitions in order that hardware intended to be used with those defintions will work for the most part with this defintion with minimal reconfiguration.
 
 <p>
-See the 
+See the
 <a href="aspects.xml">aspect page</a> to see the aspect that can be displayed with the defined masts listed below.
 
 <p>

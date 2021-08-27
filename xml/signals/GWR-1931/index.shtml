@@ -20,7 +20,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
+<h1>
 JMRI: GWR 1931 Searchlight Signalling Definition
 </h1>
 
@@ -30,7 +30,7 @@ This directory contains signalling definitions corresponding to the power signal
 2-aspect and 3-aspect masts have been defined as well as a dwarf and the parts required to build bracket signals.
 
 <p>
-See the 
+See the
 <a href="aspects.xml">aspect page</a>.
 
 <p>
@@ -38,7 +38,7 @@ Signal Mast definitions:
 <ul>
 <li><a href="appearance-mast-3.xml">3-aspect mast</a>
 <li><a href="appearance-mast-2.xml">2-aspect home mast</a>
-<li><a href="appearance-mast-2d.xml">2-aspect distant mast</a>
+<li><a href="appearance-mast-2D.xml">2-aspect distant mast</a>
 <li><a href="appearance-bracket-3.xml">3-aspect bracket</a>
 <li><a href="appearance-bracket-2.xml">2-aspect home bracket</a>
 <li><a href="appearance-bracket-2D.xml">2-aspect distant bracket</a>
