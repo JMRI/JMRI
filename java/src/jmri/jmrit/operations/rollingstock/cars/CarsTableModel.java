@@ -129,8 +129,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
-        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE || sort == SORTBY_RWL
-                || sort == SORTBY_DIVISION) {
+        if (sort == SORTBY_DESTINATION ||
+                sort == SORTBY_FINALDESTINATION ||
+                sort == SORTBY_RWE ||
+                sort == SORTBY_RWL ||
+                sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
@@ -584,6 +587,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LOAD_COLUMN:
                 if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                     return car.getLoadName() + " " + Bundle.getMessage("(P)");
+                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
                 } else {
                     return car.getLoadName();
                 }
