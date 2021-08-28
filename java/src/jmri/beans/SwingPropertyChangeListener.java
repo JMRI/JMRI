@@ -59,5 +59,5 @@ public class SwingPropertyChangeListener implements PropertyChangeListener {
         return notifyOnEDT;
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingPropertyChangeListener.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingPropertyChangeListener.class);
 }
