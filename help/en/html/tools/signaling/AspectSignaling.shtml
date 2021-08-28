@@ -181,11 +181,29 @@
         <dd>British Rail 2003 rule book</dd>
 
         <dt>
+          <a href="../../../../../xml/signals/C&amp;O-1980/index.shtml">C&amp;O-1980</a>
+        </dt>
+
+        <dd>1980 C&amp;O Signaling Definition</dd>
+
+        <dt>
+          <a href="../../../../../xml/signals/CCOR-1967/index.shtml">CCOR-1967</a>
+        </dt>
+
+        <dd>1967 CCOR Signaling Definition</dd>
+
+        <dt>
           <a href="../../../../../xml/signals/CFL-2014/index.shtml">CFL-2014</a>
         </dt>
 
         <dd>Current (2014) Luxemburg railways (Societé Nationale des Chemins de Fer
         Luxembourgeois)</dd>
+
+        <dt>
+          <a href="../../../../../xml/signals/CNJ-1974/index.shtml">CNJ-1974</a>
+        </dt>
+
+        <dd>1974 CNJ Signaling Definition</dd>
 
         <dt>
           <a href="../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a>
@@ -224,12 +242,11 @@
         <dd>CSX 2014 rule book (former Chessie rules)</dd>
 
         <dt>
-          <a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
+          <a href="../../../../../xml/signals/CTC-MB/index.shtml">Non-Prototype USS Signal
+          Masts</a>
         </dt>
 
-        <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal
-        (Hauptsignal/Vorsignal) system revision<br>
-        (<em>Missing aspect mapping, not finished as of JMRI 3.10.</em>)</dd>
+        <dd>Non-Prototype USS Signal Masts</dd>
 
         <dt>
           <a href="../../../../../xml/signals/DanishSimplified/index.shtml">Danish (Simplified)
@@ -237,6 +254,14 @@
         </dt>
 
         <dd>Signals based on a Danish prototype</dd>
+
+        <dt>
+          <a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
+        </dt>
+
+        <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal
+        (Hauptsignal/Vorsignal) system revision<br>
+        (<em>Missing aspect mapping, not finished as of JMRI 3.10.</em>)</dd>
 
         <dt>
           <a href="../../../../../xml/signals/GWR-1931/index.shtml">GWR-1931</a>
@@ -282,6 +307,12 @@
 
         <dd>From the New York Central System publication "Rules of the Operating Department,
         Effective October 28, 1956."</dd>
+
+        <dt>
+          <a href="../../../../../xml/signals/PKP-PLK-2020/index.shtml">PKP-PLK-2020</a>
+        </dt>
+
+        <dd>Instruction E1 - Polish railroads standard PKP PLK</dd>
 
         <dt>
           <a href="../../../../../xml/signals/ProRail-1954/index.shtml">ProRail-1954</a>

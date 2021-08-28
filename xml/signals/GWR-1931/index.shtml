@@ -1,71 +1,87 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author: Suzie_Tall $) 2014 -->
-<title>JMRI: GWR-1931 Signaling Definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author: Suzie_Tall $) 2014 -->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: GWR-1931 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1>
-JMRI: GWR 1931 Searchlight Signalling Definition
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-This directory contains signalling definitions corresponding to the power signalling used by the Great Western Railway in 1931 for new signalling schemes in Bristol, Cardiff and London which remained in use until around 1960.
+      <h1>JMRI: GWR 1931 Searchlight Signalling Definition</h1>
+      This directory contains signalling definitions corresponding to the power signalling used by
+      the Great Western Railway in 1931 for new signalling schemes in Bristol, Cardiff and London
+      which remained in use until around 1960.
+      <p>2-aspect and 3-aspect masts have been defined as well as a dwarf and the parts required to
+      build bracket signals.</p>
 
-<p>
-2-aspect and 3-aspect masts have been defined as well as a dwarf and the parts required to build bracket signals.
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
-<p>
-See the
-<a href="aspects.xml">aspect page</a>.
+      <p>Signal Mast definitions:</p>
 
-<p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-mast-3.xml">3-aspect mast</a>
-<li><a href="appearance-mast-2.xml">2-aspect home mast</a>
-<li><a href="appearance-mast-2D.xml">2-aspect distant mast</a>
-<li><a href="appearance-bracket-3.xml">3-aspect bracket</a>
-<li><a href="appearance-bracket-2.xml">2-aspect home bracket</a>
-<li><a href="appearance-bracket-2D.xml">2-aspect distant bracket</a>
-<li><a href="appearance-doll-3.xml">3-aspect additional doll</a>
-<li><a href="appearance-doll-2.xml">2-aspect additional home doll</a>
-<li><a href="appearance-doll-2D.xml">2-aspect additional distant doll</a>
-<li><a href="appearance-dwarf.xml">dwarf signal</a>
+      <ul>
+        <li>
+          <a href="appearance-mast-3.xml">3-aspect mast</a>
+        </li>
 
-<p>
-<img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-a.gif" /img>
+        <li>
+          <a href="appearance-mast-2.xml">2-aspect home mast</a>
+        </li>
 
-Double head searchlight
+        <li>
+          <a href="appearance-mast-2D.xml">2-aspect distant mast</a>
+        </li>
 
-<p>
-<img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-b.gif" /img><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-d.gif" /img><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/proceed-c.gif" /img>
+        <li>
+          <a href="appearance-bracket-3.xml">3-aspect bracket</a>
+        </li>
 
-Bracket with assorted dolls
+        <li>
+          <a href="appearance-bracket-2.xml">2-aspect home bracket</a>
+        </li>
 
-<p>
-<img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-g.gif" /img>
+        <li>
+          <a href="appearance-bracket-2D.xml">2-aspect distant bracket</a>
+        </li>
 
-Dwarf
+        <li>
+          <a href="appearance-doll-3.xml">3-aspect additional doll</a>
+        </li>
 
+        <li>
+          <a href="appearance-doll-2.xml">2-aspect additional home doll</a>
+        </li>
 
+        <li>
+          <a href="appearance-doll-2D.xml">2-aspect additional distant doll</a>
+        </li>
 
+        <li>
+          <a href="appearance-dwarf.xml">dwarf signal</a>
+        </li>
+      </ul>
+
+      <p><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-a.gif" alt="">
+      Double head searchlight</p>
+
+      <p><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-b.gif" alt=
+      ""><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-d.gif" alt=
+      ""><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/proceed-c.gif" alt="">
+      Bracket with assorted dolls</p>
+
+      <p><img src="../../../resources/icons/smallschematics/aspects/GWR-1931/danger-g.gif" alt="">
+      Dwarf
+
+       <!--#include virtual="/Footer.shtml" --></p>
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
