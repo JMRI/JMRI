@@ -1,32 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: ID Tag Table Help</title>
   <meta name="author" content="Matthew Harris">
-  <meta name="keywords" content="JMRI help ID Tag Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help ID Tag Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>The ID Tag Table</h1>You can use the ID Tag Table to look
-      at the contents of JMRI IdTag objects.
-
-      <p>Note that you can sort the table by each of the columns;
-      just click on a column heading.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>The ID Tag Table</h1>
+      You can use the ID Tag Table to look at the contents of JMRI IdTag objects.
+      <p>Note that you can sort the table by each of the columns; just click on a column
+      heading.</p>
 
       <h2>ID Tag Table Controls</h2>
 
-      <p>To create a new ID Tag, click on the "<a href=
-      "IdTagAddEdit.shtml">Add...</a>" button at the bottom left of
-      the pane.</p>
+      <p>To create a new ID Tag, click on the "<a href="IdTagAddEdit.shtml">Add...</a>" button at
+      the bottom left of the pane.</p>
 
       <p>Next to it, two check boxes let you activate:</p>
 
@@ -36,11 +29,13 @@
         <li>Use Fast Clock Time</li>
       </ul>
 
-      <p>For more information on ID Tags, see the <a href=
-      "../../../../html/tools/IdTags.shtml">ID Tag help page</a>.</p>
+      <p>For more information on ID Tags, see the <a href="../../../../html/tools/IdTags.shtml">ID
+      Tag help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -2385,19 +2385,19 @@ public class PaneProgPane extends javax.swing.JPanel
         // need to update this with e.g. the specific CV numbers
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanRead()) {
-            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot read)");
+            start = StringUtil.concatTextHtmlAware(start, SymbolicProgBundle.getMessage("TipHardwareCannotRead"));
         }
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanWrite()) {
-            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot write)");
+            start = StringUtil.concatTextHtmlAware(start, SymbolicProgBundle.getMessage("TipHardwareCannotWrite"));
         }
 
         // indicate other reasons for read/write constraints
         if (variable.getReadOnly()) {
-            start = StringUtil.concatTextHtmlAware(start, " (Defined to be read only)");
+            start = StringUtil.concatTextHtmlAware(start, SymbolicProgBundle.getMessage("TipDefinedToBeReadOnly"));
         }
         if (variable.getWriteOnly()) {
-            start = StringUtil.concatTextHtmlAware(start, " (Defined to be write only)");
+            start = StringUtil.concatTextHtmlAware(start, SymbolicProgBundle.getMessage("TipDefinedToBeWriteOnly"));
         }
 
         return start;

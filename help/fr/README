@@ -1,59 +1,22 @@
-French JavaHelp files for JMRI
+French JmriHelp files for JMRI
 
-This directory contains metadata for the javahelp sub-system,
+This directory contains metadata for the jmrihelp sub-system,
 plus the actual content.
 
 There are several content subtrees:
   manual - a help version of the original DecoderPro manual
   html - a help-customized version of the web site
   package - package-sensitive help, organized by Java package
-  
+
 The template-no-sidebar.shtml and template-sidebar.shtml files
 are basic templates to copy when making a new file.
 
-For more information on maintaining the various metadata in the 
+For more information on maintaining the various metadata in the
 help system, please see:
 <https://jmri.org/help/en/html/doc/Technical/Help.shtml>
 
-The JHelpDev.xml file is a convenient project definition for
-JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
-table of contents and map files.  These files may also be manually
-maintained in this directory; JHelpDev will pick up changes when
-next run. Note that we use .shtml as the help file name suffix;
-this requires a special version of JHelpDev.
-
-The search index files in JavaHelpSearch/ should NOT be 
-manually edited.  JHelpDev will overwrite them when next run.
-
 The build.xml and format.xsl files are used to create the webtoc.html
 and webindex.html files automatically. Those use Server-Side Includes
-to display the standard JMRI header and footer, and also some 
+to display the standard JMRI header and footer, and also some
 explanatory content from the tocheader and indexheader files.
-
-
-TO DO:
-
-The html/tools directory is only partially converted - get it from
-the main web site.
-
-html/hardware needs to be carefully checked
-
-JHELPDEV:
-
-The JHelpDev included here is 0.63 from jhelpdev.sf.net, 
-with the following modifications to 
-(a) allow .shtml files
-(b) handle <a name="foo" id="foo">
-
-javasrc/net/sourceforge/jhelpdev/action/CreateMapAction.java 
-54c54
-<  * directory and all subdirectories for files with .html, .htm, .shtml, .jsp or .gif suffixes.
----
->  * directory and all subdirectories for files with .html, .htm, .jsp or .gif suffixes.
-85c85
-<     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*?\"",
----
->     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*\"",
-256d255
-<                     || filesInDir[i].toUpperCase().endsWith(".SHTML")
 

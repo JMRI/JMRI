@@ -29,31 +29,31 @@ public interface RouteManager extends ProvidingManager<Route> {
     public void dispose();
 
     /**
+     * Provides existing Route by UserName then SystemName if one exists.
      * Create a new Route if the route does not exist.
-     *
      * @param systemName the system name for the route
      * @param userName   the user name for the route
-     * @return null if a Route with the same systemName or userName already
-     *         exists or if there is trouble creating a new Route
+     * @return New or existing Route.
+     * @throws IllegalArgumentException if there is trouble creating a new Route
      */
     @Nonnull
-    public Route provideRoute(@Nonnull String systemName, String userName);
+    public Route provideRoute(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
-     * Create a new Route if the route does not exist. Intended for use with
-     * User GUI, to allow the auto generation of systemNames, where the user can
-     * optionally supply a username.
+     * Create a new Route if the route does not exist.
+     * Intended for use with User GUI, to allow the auto generation of 
+     * systemNames, where the user can optionally supply a username.
      *
      * @param userName user name for the new route
-     * @return null if a Route with the same userName already exists or if there
-     *         is trouble creating a new Route
+     * @return New Route.
+     * @throws IllegalArgumentException if there is trouble creating a new Route
      */
     @Nonnull
-    public Route newRoute(@Nonnull String userName);
+    public Route newRoute(@Nonnull String userName) throws IllegalArgumentException;
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Locate via user name, then system name if needed.
+     * Does not create a new one if nothing found.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -62,9 +62,11 @@ public interface RouteManager extends ProvidingManager<Route> {
     public Route getRoute(@Nonnull String name);
 
     @CheckForNull
+    @Override
     public Route getByUserName(@Nonnull String s);
 
     @CheckForNull
+    @Override
     public Route getBySystemName(@Nonnull String s);
 
     /**

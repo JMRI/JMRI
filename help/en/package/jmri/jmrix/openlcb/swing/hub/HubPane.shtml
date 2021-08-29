@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Openlcb hub">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Openlcb hub"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>OpenLCB Hub Control</h1><a href="OpenLCB_Hub_Control.png"><img src=
-      "OpenLCB_Hub_Control.png" width="394" height="124" alt=
-      "OpenLCB Hub Control" align="right"></a><br>
-      
-      <p>The "OpenLCB Hub Control" tool enables a physical OpenLCB connection to be shared on a Network Connection.</p>
-      
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>OpenLCB Hub Control</h1>
+      <a href="OpenLCB_Hub_Control.png"><img src="OpenLCB_Hub_Control.png" width="394" height="124"
+      alt="OpenLCB Hub Control" class="floatRight"></a><br>
+
+      <p>The "OpenLCB Hub Control" tool enables a physical OpenLCB connection to be shared on a
+      Network Connection.</p>
+
       <p>The window displays the IP address and port of the Hub.</p>
-      
-      <p>The OpenLCB Hub can be opened by adding as a system startup action.</p>
 
+      <p>The OpenLCB Hub can be opened by adding as a system startup action.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

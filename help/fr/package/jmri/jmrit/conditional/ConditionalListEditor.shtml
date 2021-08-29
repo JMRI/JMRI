@@ -1,367 +1,332 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional List Editor</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=iso*8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Logix Conditional Add Edit">
+  <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-      <h1>&#201;diteur de Listes Conditions</h1>
+      <h1>Éditeur de Listes Conditions</h1>
 
       <h2>Modifier le Logix</h2>
-      <p>Lorsque <strong>Modifier</strong> est s&#233;lectionn&#233; pour un Logix, la fen&#234;tre Modifier le Logix.
-      s'affiche.</p>
+
+      <p>Lorsque <strong>Modifier</strong> est sélectionné pour un Logix, la fenêtre Modifier le
+      Logix. s'affiche.</p>
+
       <div style="margin-left : 2em">
-      <a href="images/ListEditLogix.png">
-      <img src="images/ListEditLogix.png"
-      alt="Fen&#234;tre Edit Logix" height="413" width="493">
-      </a>
+        <a href="images/ListEditLogix.png"><img src="images/ListEditLogix.png" alt=
+        "Fenêtre Edit Logix" height="413" width="493"></a>
       </div>
 
-      <p>La fen&#234;tre Modifier Logix permet de cr&#233;er et de modifier des Conditions. 
-        Le nom syst&#232;me et le nom utilisateur du Logix sont
-      affich&#233;s en haut de la fen&#234;tre. Le nom utilisateur peut &#234;tre modifi&#233; en
-      saisissant/modifiant le texte dans le champ Nom Utilisateur. Vient ensuite un
-      tableau des Conditions appartenant au Logix. Pour ajouter une nouvelle
-      Condition, cliquez sur le bouton <strong>Nouvelle Condition</strong> sous le tableau des
-      Conditions. Cela cr&#233;era une nouvelle
-      Condition (une nouvelle ligne dans la table Condition), et ouvre le volet
-      &#201;dition de la Condition permettant de d&#233;finir l'expression logique et les actions 
-      de la nouvelle Condition. Une Condition existante
-      peut &#234;tre &#233;dit&#233;e en cliquant sur le bouton <strong>Modifier</strong>.
-      de cette Condition dans le tableau. Le nom utilisateur de la
-      Condition peut &#234;tre modifi&#233; dans le tableau. Les noms utilisateurs Conditions
-      peuvent &#234;tre tout texte utile, &#224; condition que le nouveau nom utilisateur ne soit pas
-      utilis&#233; par une autre Condition appartenant &#224; ce Logix. Il
-      peut &#234;tre le m&#234;me que le nom utilisateur d'une Condition d'un autre Logix. 
-      <em>Lorsque vous modifiez le nom utilisateur (ou tout &#233;l&#233;ment dans    
-      tout tableau JMRI), n'oubliez pas de vous d&#233;placer vers une autre cellule du
-      du tableau afin que le programme soit inform&#233; que vous avez termin&#233; votre
-      saisie, sinon la saisie peut ne pas prendre
-      effet.</em></p>
+      <p>La fenêtre Modifier Logix permet de créer et de modifier des Conditions. Le nom système et
+      le nom utilisateur du Logix sont affichés en haut de la fenêtre. Le nom utilisateur peut être
+      modifié en saisissant/modifiant le texte dans le champ Nom Utilisateur. Vient ensuite un
+      tableau des Conditions appartenant au Logix. Pour ajouter une nouvelle Condition, cliquez sur
+      le bouton <strong>Nouvelle Condition</strong> sous le tableau des Conditions. Cela créera une
+      nouvelle Condition (une nouvelle ligne dans la table Condition), et ouvre le volet Édition de
+      la Condition permettant de définir l'expression logique et les actions de la nouvelle
+      Condition. Une Condition existante peut être éditée en cliquant sur le bouton
+      <strong>Modifier</strong>. de cette Condition dans le tableau. Le nom utilisateur de la
+      Condition peut être modifié dans le tableau. Les noms utilisateurs Conditions peuvent être
+      tout texte utile, à condition que le nouveau nom utilisateur ne soit pas utilisé par une
+      autre Condition appartenant à ce Logix. Il peut être le même que le nom utilisateur d'une
+      Condition d'un autre Logix. <em>Lorsque vous modifiez le nom utilisateur (ou tout élément
+      dans tout tableau JMRI), n'oubliez pas de vous déplacer vers une autre cellule du du tableau
+      afin que le programme soit informé que vous avez terminé votre saisie, sinon la saisie peut
+      ne pas prendre effet.</em></p>
 
-      <p>Cliquez sur <strong>Calculer</strong> sous le tableau des Conditions 
-        entra&#238;ne le calcul de toutes les Conditions du Logix.
-      Les &#233;tats r&#233;sultants sont affich&#233;s dans la colonne &#201;tat du
-      tableau. &#201;tant donn&#233; que le Logix est "inactif" pendant qu'il est modifi&#233;, aucune
-      actions Conditions ne sont prises lorsque le bouton <strong>Calculer</strong>
-      est press&#233;.</p>
+      <p>Cliquez sur <strong>Calculer</strong> sous le tableau des Conditions entraîne le calcul de
+      toutes les Conditions du Logix. Les états résultants sont affichés dans la colonne État du
+      tableau. Étant donné que le Logix est "inactif" pendant qu'il est modifié, aucune actions
+      Conditions ne sont prises lorsque le bouton <strong>Calculer</strong> est pressé.</p>
 
-      <p>L'ordre des Conditions dans le tableau Condition peut &#234;tre
-      changer en cliquant sur <strong>R&#233;organiser</strong> (sous le tableau Condition). 
-      En cliquant sur <strong>R&#233;organiser</strong>, ous les boutons d'&#233;dition de la 
-      derni&#232;re colonne du tableau deviennent  <strong>Premier</strong>. S&#233;lectionnez la
-      Condition qui doit &#234;tre la premi&#232;re, et elle est imm&#233;diatement d&#233;plac&#233;e
-      en haut du tableau. Tous les boutons restants se transforment en
-      <strong>Suivant</strong>. S&#233;lectionnez les autres Conditions dans l'ordre souhait&#233;,
-      jusqu'&#224; ce que tous les boutons redeviennent <strong>Modifier</strong>. Notez que l'ordre
-      dans lequel les Conditions sont list&#233;es dans le Logix ne d&#233;termine pas
-      l'ordre dans lequel elles sont &#233;valu&#233;es, ni ne force l'&#233;valuation d'une
-      Condition lorsqu'une Condition ant&#233;rieure ou post&#233;rieure est &#233;valu&#233;e. 
-      Pour plus d'informations &#224; ce sujet, voir la discussion sur la 
+      <p>L'ordre des Conditions dans le tableau Condition peut être changer en cliquant sur
+      <strong>Réorganiser</strong> (sous le tableau Condition). En cliquant sur
+      <strong>Réorganiser</strong>, ous les boutons d'édition de la dernière colonne du tableau
+      deviennent <strong>Premier</strong>. Sélectionnez la Condition qui doit être la première, et
+      elle est immédiatement déplacée en haut du tableau. Tous les boutons restants se transforment
+      en <strong>Suivant</strong>. Sélectionnez les autres Conditions dans l'ordre souhaité,
+      jusqu'à ce que tous les boutons redeviennent <strong>Modifier</strong>. Notez que l'ordre
+      dans lequel les Conditions sont listées dans le Logix ne détermine pas l'ordre dans lequel
+      elles sont évaluées, ni ne force l'évaluation d'une Condition lorsqu'une Condition antérieure
+      ou postérieure est évaluée. Pour plus d'informations à ce sujet, voir la discussion sur la
       <a href="../../../../html/tools/Logix.shtml">Page principale de Logix</a>.</p>
 
-      <p>Lorsque l'on clique sur <strong>Fait</strong> au bas de la fen&#234;tre Modifier
-      Logix, toute modification du nom utilisateur Logix est v&#233;rifi&#233;e
-      et effectu&#233;e. Une v&#233;rification est faite pour d&#233;tecter les incoh&#233;rences en sp&#233;cifiant
-      qu'une entit&#233; (capteur, aiguillage, etc.) r&#233;f&#233;renc&#233;e dans plusieurs variables 
-      d'&#233;tat n'est pas surveill&#233;e en tant que d&#233;clencheur de calcul du
-      du Logix, et un message d'avertissement appara&#238;t si des
-      incoh&#233;rences sont trouv&#233;es. Ensuite, le Logix est activ&#233;, la fen&#234;tre
-      Logix est activ&#233;e, la fen&#234;tre Modifier Logix est ferm&#233;e et l'utilisateur revient 
-      au tableau des logix. Imm&#233;diatement avant l'activation du Logix,
-      l'&#233;tat de toutes ses Conditions est r&#233;gl&#233; sur INCONNU.
-      Imm&#233;diatement apr&#232;s l'activation, toutes les Conditions sont
-      calcul&#233;es.</p>
+      <p>Lorsque l'on clique sur <strong>Fait</strong> au bas de la fenêtre Modifier Logix, toute
+      modification du nom utilisateur Logix est vérifiée et effectuée. Une vérification est faite
+      pour détecter les incohérences en spécifiant qu'une entité (capteur, aiguillage, etc.)
+      référencée dans plusieurs variables d'état n'est pas surveillée en tant que déclencheur de
+      calcul du du Logix, et un message d'avertissement apparaît si des incohérences sont trouvées.
+      Ensuite, le Logix est activé, la fenêtre Logix est activée, la fenêtre Modifier Logix est
+      fermée et l'utilisateur revient au tableau des logix. Immédiatement avant l'activation du
+      Logix, l'état de toutes ses Conditions est réglé sur INCONNU. Immédiatement après
+      l'activation, toutes les Conditions sont calculées.</p>
 
       <h2>Modifier une Condition</h2>
 
-      <p>La fen&#234;tre de modification des Conditions est l'endroit où les expressions logiques
-      sont configur&#233;es et où les actions sont sp&#233;cifi&#233;es. La fen&#234;tre Modifier
-      Condition s'affiche lorsqu'une Condition est
-      cr&#233;&#233;e, ou lorsque le bouton <strong>Modifier</strong> d'une Condition est
-      appuy&#233; dans la fen&#234;tre Modifier Logix.</p>
+      <p>La fenêtre de modification des Conditions est l'endroit où les expressions logiques sont
+      configurées et où les actions sont spécifiées. La fenêtre Modifier Condition s'affiche
+      lorsqu'une Condition est créée, ou lorsque le bouton <strong>Modifier</strong> d'une
+      Condition est appuyé dans la fenêtre Modifier Logix.</p>
+
       <div style="margin-left : 2em">
-      <a href="images/ListEditConditional.png">
-      <img src="images/ListEditConditional.png"
-      alt="Fen&#234;tre d'&#233;dition Condition" height="413" width="493">
-      </a>
+        <a href="images/ListEditConditional.png"><img src="images/ListEditConditional.png" alt=
+        "Fenêtre d'édition Condition" height="413" width="493"></a>
       </div>
-      <p>La fen&#234;tre d'&#233;dition Condition en haut de page
-      affiche le nom du syst&#232;me et le nom utilisateur de la Condition. Le nom syst&#232;me
-      est automatiquement d&#233;fini par le programme et ne peut pas &#234;tre
-      modifi&#233;. Le nom utilisateur peut &#234;tre modifi&#233; en saisissant/modifiant
-      le texte dans le champ Nom Utilisateur. Le nom utilisateur ne peut pas &#234;tre
-      Le nom utilisateur ne peut pas &#234;tre le m&#234;me que le nom utilisateur d'une autre Condition dans ce Logix,
-      mais peut &#234;tre le m&#234;me que le nom utilisateur d'une Condition dans un
-      Logix diff&#233;rent.</p>
 
-      <p>Viennent ensuite deux sections : une pour la mise en place d'une expression logique
-       et une pour la mise en place d'actions. Les Conditions sont
-      des d&#233;clarations de la forme:</p> <p>
+      <p>La fenêtre d'édition Condition en haut de page affiche le nom du système et le nom
+      utilisateur de la Condition. Le nom système est automatiquement défini par le programme et ne
+      peut pas être modifié. Le nom utilisateur peut être modifié en saisissant/modifiant le texte
+      dans le champ Nom Utilisateur. Le nom utilisateur ne peut pas être Le nom utilisateur ne peut
+      pas être le même que le nom utilisateur d'une autre Condition dans ce Logix, mais peut être
+      le même que le nom utilisateur d'une Condition dans un Logix différent.</p>
 
-      <div style="margin-left: 2em;"><p><code>if (expression logique) then
-      (action)</code></p></div>
-      
-      <p>Une condition comporte deux parties distinctes : son "expression logique" 
-        et son "action". La fen&#234;tre comporte des sections pour la mise en place de chacune.</p>
+      <p>Viennent ensuite deux sections : une pour la mise en place d'une expression logique et une
+      pour la mise en place d'actions. Les Conditions sont des déclarations de la forme:</p>
+
+      <div style="margin-left: 2em;">
+        <p><code>if (expression logique) then (action)</code>
+        </p>
+      </div>
+
+      <p>Une condition comporte deux parties distinctes : son "expression logique" et son "action".
+      La fenêtre comporte des sections pour la mise en place de chacune.</p>
 
       <h2>Expression logique</h2>
-      <p>La section expression logique contient un tableau de variables d'&#233;tat, 
-        avec deux boutons en dessous. La premi&#232;re colonne du
-      tableau des variables d'&#233;tat affiche le num&#233;ro de ligne de la variable d'&#233;tat. 
-      Cela n'a d'importance que lorsque le choix <strong>Op&#233;rateur
-      Logique</strong> est r&#233;gl&#233; sur 'Mixte. La deuxi&#232;me colonne
-      contient un AND automatique lorsque le choix <strong>Op&#233;rateur Logique</strong>
-      est d&#233;fini sur 'AND' ou un OR automatique lorsque le choix est sur
-      OR'. Lorsque le choix est 'Mixte', l'utilisateur peut s&#233;lectionner AND ou
-      OR selon les besoins. La troisi&#232;me colonne contient une bo&#238;te de choix qui
-      permet &#224; l'utilisateur de s&#233;lectionner l'op&#233;rateur NOT selon ses besoins. La quatri&#232;me colonne 
-      est une description du type de variable d'&#233;tat et de la condition pour laquelle elle doit &#234;tre test&#233;e. 
-      Vient ensuite une colonne affichant l'&#233;tat actuel de la description du test. L'&#233;tat affich&#233; sur
-      l'effet de l'op&#233;rateur NOT, si l'option NOT est s&#233;lectionn&#233;.</p>
 
-      </p> <p>La colonne des d&#233;clencheurs de calcul contient des cases &#224; cocher qui
-      sont normalement coch&#233;es, de sorte qu'un changement de la variable d'&#233;tat
-      d&#233;clenchera un calcul du Logix. Pour les cas
-      où un changement dans une entit&#233; sp&#233;cifique (capteur, aiguillage, etc.)
-      ne doit pas d&#233;clencher un calcul, vous devez d&#233;cocher la case en cliquant dessus. 
-      En d&#233;cochant la case, vous demandez au programme de surveiller les changements 
-      d'&#233;tat de cette entit&#233; et de calculer l'&#233;tat de la condition, du capteur ou de l'aiguillage.
-      , mais de ne prendre aucune mesure sur le r&#233;sultat du calcul.</p>
+      <p>La section expression logique contient un tableau de variables d'état, avec deux boutons
+      en dessous. La première colonne du tableau des variables d'état affiche le numéro de ligne de
+      la variable d'état. Cela n'a d'importance que lorsque le choix <strong>Opérateur
+      Logique</strong> est réglé sur 'Mixte. La deuxième colonne contient un AND automatique
+      lorsque le choix <strong>Opérateur Logique</strong> est défini sur 'AND' ou un OR automatique
+      lorsque le choix est sur OR'. Lorsque le choix est 'Mixte', l'utilisateur peut sélectionner
+      AND ou OR selon les besoins. La troisième colonne contient une boîte de choix qui permet à
+      l'utilisateur de sélectionner l'opérateur NOT selon ses besoins. La quatrième colonne est une
+      description du type de variable d'état et de la condition pour laquelle elle doit être
+      testée. Vient ensuite une colonne affichant l'état actuel de la description du test. L'état
+      affiché sur l'effet de l'opérateur NOT, si l'option NOT est sélectionné.</p>
 
-      <p>Les deux derni&#232;res colonnes du tableau (<strong>Modifier</strong> et
-      <strong>Supprimer</strong>) sont utilis&#233;es pour modifier ou supprimer cette ligne dans le
-      ltableau des variables d'&#233;tat. Supprimez une variable d'&#233;tat si vous
-      d&#233;cidez qu'elle n'est plus n&#233;cessaire. La colonne &#201;tat du tableau
-      indique l'&#233;tat (vrai ou faux) de chaque variable d'&#233;tat lorsqu'elle est &#233;valu&#233;e.</p>
+      <p>La colonne des déclencheurs de calcul contient des cases à cocher qui sont normalement
+      cochées, de sorte qu'un changement de la variable d'état déclenchera un calcul du Logix. Pour
+      les cas où un changement dans une entité spécifique (capteur, aiguillage, etc.) ne doit pas
+      déclencher un calcul, vous devez décocher la case en cliquant dessus. En décochant la case,
+      vous demandez au programme de surveiller les changements d'état de cette entité et de
+      calculer l'état de la condition, du capteur ou de l'aiguillage. , mais de ne prendre aucune
+      mesure sur le résultat du calcul.</p>
 
-      </p> <p>&#192; tout moment pendant la saisie des donn&#233;es de la variable d'&#233;tat,
-      <strong>V&#233;rifier &#201;tat Variables</strong> peut &#234;tre cliqu&#233; pour v&#233;rifier les donn&#233;es saisies 
-      et &#233;valuer les variables d'&#233;tat. Lorsque ce bouton est actionn&#233;, 
-      la v&#233;rification et l'&#233;valuation se poursuivent jusqu'&#224; ce que la v&#233;rification
-      se termine avec succ&#232;s, ou qu'une erreur soit d&#233;tect&#233;e. Si une erreur
-      est d&#233;tect&#233;e, la v&#233;rification s'arr&#234;te pour que vous puissiez corriger l'erreur et
-      cliquez &#224; nouveau sur <strong>V&#233;rifier &#201;tat Variables</strong>. <em>Veuillez vous rappeler
-      apr&#232;s avoir modifi&#233; les &#233;l&#233;ments de nom et de donn&#233;es, de cliquer sur une cellule diff&#233;rente
-      dans le tableau avant de cliquer sur <strong>V&#233;rifier &#201;tat Variables</strong> (ou
-      <strong>Mise &#224; Jour </strong> en bas de la fen&#234;tre) afin que
-      le programme soit inform&#233; que vous avez termin&#233; votre
-      entr&#233;e. Sinon, votre entr&#233;e peut ne pas prendre effet, et une erreur
-      risque d'&#234;tre signal&#233;e inutilement.</em></p> 
+      <p>Les deux dernières colonnes du tableau (<strong>Modifier</strong> et
+      <strong>Supprimer</strong>) sont utilisées pour modifier ou supprimer cette ligne dans le
+      ltableau des variables d'état. Supprimez une variable d'état si vous décidez qu'elle n'est
+      plus nécessaire. La colonne État du tableau indique l'état (vrai ou faux) de chaque variable
+      d'état lorsqu'elle est évaluée.</p>
 
-      <p>Le bouton <strong>R&#233;organiser</strong> permet de modifier l'ordre des
-      variables conditions.  Ce bouton est d&#233;sactiv&#233; si l'op&#233;rateur de logique est configur&#233;
-      &#224; <strong>Mixte</strong>.<span class="since">depuis 4.9.2</span></p><p>.
-      
-      <p>L'op&#233;rateur logique <strong>par d&#233;faut</strong> est "AND". Dans ce cas
-      la condition testera si tous les tests des variables sont vrais,
-      apr&#232;s avoir pris en compte les n&#233;gations "NOT". En utilisant l'
-      <strong>Op&#233;rateur logique</strong> situ&#233; en dessous de la liste des variables, vous
-      pouvez changer cela en "OR" ou "Mixed". "OR" signifie que la
-      condition sera vrai si l'un des tests de la variable est 
-      vrais, apr&#232;s avoir pris en compte les n&#233;gations. En s&#233;lectionnant "Mixte"
-      vous permettra de saisir une expression logique dans une nouvelle zone de texte
-      en utilisant des AND, des OR, des NOT et les num&#233;ros de ligne. Dans cette expression
-      , chaque variable est d&#233;sign&#233;e par un num&#233;ro, par exemple R1,
-      R2, R3 pour les trois premi&#232;res variables, vous pouvez utiliser les op&#233;rateurs
-      "and", "or" et "not" en plus des parenth&#232;ses. Quelques
-      exemples:</p>
-      
-      <div style="margin-left : 2em ;"><p><code>
-      R1 et R2<br>
-      R1 ou (R2 et R3)<br>
-      (R2 et R3) ou (R3 et R1)
-      </code></p></div>
+      <p>À tout moment pendant la saisie des données de la variable d'état, <strong>Vérifier État
+      Variables</strong> peut être cliqué pour vérifier les données saisies et évaluer les
+      variables d'état. Lorsque ce bouton est actionné, la vérification et l'évaluation se
+      poursuivent jusqu'à ce que la vérification se termine avec succès, ou qu'une erreur soit
+      détectée. Si une erreur est détectée, la vérification s'arrête pour que vous puissiez
+      corriger l'erreur et cliquez à nouveau sur <strong>Vérifier État Variables</strong>.
+      <em>Veuillez vous rappeler après avoir modifié les éléments de nom et de données, de cliquer
+      sur une cellule différente dans le tableau avant de cliquer sur <strong>Vérifier État
+      Variables</strong> (ou <strong>Mise à Jour</strong> en bas de la fenêtre) afin que le
+      programme soit informé que vous avez terminé votre entrée. Sinon, votre entrée peut ne pas
+      prendre effet, et une erreur risque d'être signalée inutilement.</em></p>
 
-      <h3>Ajouter/Modifier des variables d'&#233;tat</h3>
+      <p>Le bouton <strong>Réorganiser</strong> permet de modifier l'ordre des variables
+      conditions. Ce bouton est désactivé si l'opérateur de logique est configuré à
+      <strong>Mixte</strong>.<span class="since">depuis 4.9.2</span></p>
 
-      <p>Appuyez sur le bouton <strong>Ajouter Variable d'&#201;tat</strong> pour ajouter une nouvelle variable d'&#233;tat 
-        (une ligne dans le tableau des variables d'&#233;tat) ou cliquez sur un bouton <strong>Modifier</strong>
-      pour modifier une variable d'&#233;tat existante.
-      .</p>
-      <div style="margin-left : 2em">
-      <a href="images/ListEditVariable.png">
-      <img src="images/ListEditVariable.png"
-      alt="Fen&#234;tre d'&#233;dition de variable" height="182" width="592">
-      </a>
+      <p>.</p>
+
+      <p>L'opérateur logique <strong>par défaut</strong> est "AND". Dans ce cas la condition
+      testera si tous les tests des variables sont vrais, après avoir pris en compte les négations
+      "NOT". En utilisant l' <strong>Opérateur logique</strong> situé en dessous de la liste des
+      variables, vous pouvez changer cela en "OR" ou "Mixed". "OR" signifie que la condition sera
+      vrai si l'un des tests de la variable est vrais, après avoir pris en compte les négations. En
+      sélectionnant "Mixte" vous permettra de saisir une expression logique dans une nouvelle zone
+      de texte en utilisant des AND, des OR, des NOT et les numéros de ligne. Dans cette expression
+      , chaque variable est désignée par un numéro, par exemple R1, R2, R3 pour les trois premières
+      variables, vous pouvez utiliser les opérateurs "and", "or" et "not" en plus des parenthèses.
+      Quelques exemples:</p>
+
+      <div style="margin-left : 2em ;">
+        <p><code>R1 et R2<br>
+        R1 ou (R2 et R3)<br>
+        (R2 et R3) ou (R3 et R1)</code>
+        </p>
       </div>
-      <p>Si une nouvelle variable est en cours de cr&#233;ation, seul le type de variable sera
-      affich&#233;. Une fois le choix effectu&#233;, d'autres champs s'afficheront
-      en fonction du type s&#233;lectionn&#233;. Les types de variables d'&#233;tat disponibles sont document&#233;s
-      &#224; <a href="StateVariableActionList.shtml#variable">Variables d'&#233;tat</a>.</p>
 
-      <p>Lorsqu'un type est choisi, la fen&#234;tre Modifier la variable affiche un champ de texte
-        pour le nom de l'entit&#233; &#224; utiliser pour la variable d'&#233;tat. Lorsqu'un nom
-        (soit le nom du syst&#232;me, soit le nom de l'utilisateur) est saisi, il doit
-        correspondre &#224; une entit&#233; existante (capteur, aiguillage, feu, etc.),
-        etc.). La m&#233;thode r&#233;elle de saisie des noms
-        d&#233;pendra du param&#232;tre M&#233;thode de s&#233;lection des noms conditions.
-        Voir <a href="../beantable/LogixTable.shtml#logixOptions">.
-        M&#233;thode de s&#233;lection de noms conditions</a>.</p>
-  
-        <p>Pour les r&#233;f&#233;rences conditions, le champ de saisie de texte est remplac&#233;
-        par deux bo&#238;tes combo d&#233;roulantes.  La premi&#232;re bo&#238;te est utilis&#233;e pour
-        s&#233;lectionner le Logix, la deuxi&#232;me bo&#238;te est utilis&#233;e pour s&#233;lectionner une
-        Condition qui appartient &#224; la Logix s&#233;lectionn&#233;e.
-        <span class="since">depuis 4.7.4</span></p>.
-        <div style="margin-left : 2em">
-        <a href="images/SelectConditionalReference.png">
-        <img src="images/SelectConditionalReference.png"
-        alt="Logix/Conditional Combo Boxes" height="148" width="558">
-        </a>
-        </div>
-  
-        </p> <p>Apr&#232;s avoir saisi le nom, s&#233;lectionnez l'&#233;tat requis &#224; partir de la bo&#238;te &#224; options.
-        <strong>&#201;tat variable</strong> de la liste d&#233;roulante.  Selon le type et l'&#233;tat de la
-        variable et l'&#233;tat s&#233;lectionn&#233;s, des champs suppl&#233;mentaires peuvent &#234;tre affich&#233;s.
-  
-        <p>&#192; tout moment pendant la saisie des donn&#233;es de la variable d'&#233;tat, la fonction
-        <strong>V&#233;rification des Variables d'&#201;tat</strong> peut &#234;tre cliqu&#233; pour v&#233;rifier
-        les donn&#233;es saisies et &#233;valuer les variables d'&#233;tat. Lorsque ce
-        bouton est press&#233;, la v&#233;rification et l'&#233;valuation se poursuivent jusqu'&#224; ce que
-        la v&#233;rification se termine avec succ&#232;s, ou qu'une erreur soit d&#233;tect&#233;e. Si
-        une erreur est d&#233;tect&#233;e, la v&#233;rification s'arr&#234;te pour que l'utilisateur puisse
-        corriger l'erreur et cliquer &#224; nouveau sur <strong>V&#233;rification des Variables d'&#201;tat</strong>.
-        &#224; nouveau. <em>Veuillez vous rappeler qu'apr&#232;s avoir modifi&#233; le nom du syst&#232;me et les
-        &#233;l&#233;ments de donn&#233;es, de cliquer sur une cellule diff&#233;rente dans le tableau avant de
-        cliquer sur <strong>V&#233;rification des Variables d'&#201;tat</strong> (ou <strong>Mise &#224; Jour
-        Condition</strong> en bas du volet) afin que le
-        programme soit inform&#233; que vous avez termin&#233; votre entr&#233;e.
-        Sinon, votre entr&#233;e peut ne pas prendre effet, et une erreur peut &#234;tre
-        signal&#233;e inutilement.</em></p>.
-  
-        <h2>Action</h2>
-        <p>La section action contient un tableau d'actions, avec deux
-        boutons en dessous.  La liste des actions pr&#233;sente une description de chaque
-        action.  Le bouton <strong>Modifier</strong> est utilis&#233; pour modifier une action.
-        Le bouton <strong>Supprimer</strong> est utilis&#233; pour supprimer une action.
-  
-        <p>Les actions sont &#233;valu&#233;es dans l'ordre de la liste. Pour changer cet
-        ordre, cliquez sur le bouton "R&#233;organiser" dans la fen&#234;tre "Modifier la condition".
-        Les boutons les plus &#224; droite &#224; c&#244;t&#233; des actions vous permettront alors de
-        ds&#233;lectionner la premi&#232;re, la suivante, etc.</p>
-  
-        <h3>Ajouter/Modifier des actions</h3>
-        <p>Appuyez sur le bouton <strong>Ajouter Action</strong> pour ajouter une nouvelle action ou
-        cliquez sur un bouton <strong>Modifier</strong> pour modifier une action existante.
-        .</p>
-        <div style="margin-left : 2em">
-        <a href="images/ListEditAction.png">
-        <img src="images/ListEditAction.png"
-        alt="Fen&#234;tre d'&#233;dition d'action" height="182" width="900">
-        </a>
-        </div>
-        <p>Si une nouvelle action est en cours de cr&#233;ation, seul le groupe d'actions sera
-        affich&#233;. Une fois qu'un choix a &#233;t&#233; fait, d'autres champs seront affich&#233;s
-        en fonction du type s&#233;lectionn&#233;. Les types d'actons disponibles sont document&#233;s &#224; l'adresse suivante
-        <a href="StateVariableActionList.shtml#action">Actions</a>.</p>
-  
-        <p>Lorsqu'un type est choisi, la fen&#234;tre d'&#233;dition de l'action affiche un champ de texte pour le
-        nom de l'entit&#233; &#224; utiliser pour la variable d'&#233;tat. Lorsqu'un nom
-        (soit le nom syst&#232;me, soit le nom utilisateur) est saisi, il doit
-        correspondre &#224; une entit&#233; existante (capteur, aiguillage, feu, etc.),
-        etc.). La m&#233;thode r&#233;elle de saisie des noms
-        d&#233;pendra du param&#232;tre M&#233;thode de s&#233;lection des Noms Condition.
-        Voir <a href="../beantable/LogixTable.shtml#logixOptions">.
-        M&#233;thode de s&#233;lection des Noms Condition</a>.</p>
-  
-        <p class="important">Note :
-           <br>Comme une fonctionnalit&#233; avanc&#233;e, le nom d'une entit&#233; peut &#234;tre saisi en tant 
-           qu'une "r&#233;f&#233;rence indirecte" &#224; un emplacement m&#233;moire.  On entend par l&#224; , 
-           plut&#244;t que de nommer l'action directement, la valeur d'un emplacement de  
-           la valeur d'un emplacement m&#233;moire est utilis&#233;e pour le nom de l'action. Pour ce faire, vous entrez  
-             le nom de l'entit&#233; m&#233;moire pr&#233;c&#233;d&#233; du symbole "@".
-          <br>
-           Par exemple, supposons qu'une ic&#244;ne de m&#233;moire d'entr&#233;e ou une ic&#244;ne de m&#233;moire de ComboBox.
-           d&#233;finissent la valeur de la m&#233;moire <em>MyMemory10</em> &#224; un nom d'aiguillage. 
-           Laissez &#233;galement une entit&#233; d'action de type turnout &#234;tre nomm&#233;e <em>@MyMemory10</em>. 
-           Laissez &#233;galement son type d'action &#234;tre "Set Turnout Position Thrown" lorsque 
-           l'option de changement est "On Change to True".
-           Lorsque l'expression logique devient vraie, l'aiguillage nomm&#233;
-            dans la valeur actuelle de la m&#233;moire MaM&#233;moire10 sera d&#233;vi&#233;
-          <br>
-           La m&#233;thode de s&#233;lection du nom doit &#234;tre une liste de s&#233;lection afin
-           d'utiliser cette fonctionnalit&#233;.</p>
-  
-           <p>Les &#233;l&#233;ments de donn&#233;es n&#233;cessaires pour sp&#233;cifier compl&#232;tement l'action
-            action appara&#238;tront &#224; droite de la bo&#238;te de type. Si vous ne savez pas
-            savez pas ce qui doit &#234;tre saisi dans un champ de donn&#233;es, passez votre
-            curseur dessus, et un message d'aide appara&#238;tra.</p> <p>
-      
-            </p> <p>Pour chaque action, trois options sont disponibles pour savoir quand
-            d&#233;clencher l'action :</p> <p>
-            <ul>
-              <li>Sur le changement en Vrai</li>
-              <li>On Change to False</li>
-              <li>On Change</li>
-            </ul>
-      
-            </p> <p>Si l'option <strong>Ex&#233;cuter les actions</strong> a &#233;t&#233; chang&#233;e en .
-            <strong>Ex&#233;cuter une action &#224; chaque fois qu'elle est d&#233;clench&#233;e</strong>, alors les options sont :</p>
-            <ul>
-              <li>Lorsque d&#233;clench&#233; Vrai</li>
-              <li>Lorsque d&#233;clench&#233; Faux</li>
-              <li>Lorsque d&#233;clench&#233;</li>
-            </ul>
-      
-            <p>Ils se r&#233;f&#232;rent &#224; l'&#233;tat calcul&#233; 
-            de la condition, qui est &#233;gal &#224; la valeur de l'expression logique 
-            telle que sp&#233;cifi&#233;e dans le tableau des variables d'&#233;tat. 
-            L'une de ces options doit &#234;tre s&#233;lectionn&#233;e. Lorsque vous avez termin&#233;, cliquez sur 
-            "Mise &#224; Jour" pour installer vos modifications, sur "Annuler" pour fermer la fen&#234;tre sans aucune 
-            modification ou sur "Supprimer" pour supprimer enti&#232;rement l'action.</p>
-      
-            <p>Quand l'expression logique et les actions ont &#233;t&#233;
-            sp&#233;cifi&#233;es, cliquez sur <strong>Mise &#224; jour conditionnelle</strong> en bas de la
-            la fen&#234;tre. Cela initie une v&#233;rification de l'expression logique
-            (la m&#234;me que celle effectu&#233;e par <strong>Check State Variables</strong>) et une
-            v&#233;rification des donn&#233;es saisies pour les actions. Si le nom de l'utilisateur a &#233;t&#233;
-            modifi&#233;, il est &#233;galement v&#233;rifi&#233;. Si une erreur est trouv&#233;e, un message 
-            s'ouvre pour annoncer l'erreur, et la mise &#224; jour est arr&#234;t&#233;e pour 
-            vous permettre de corriger l'erreur et de cliquer &#224; nouveau sur <strong>Mise &#224; Jour
-            </strong> &#224; nouveau. Si aucune erreur n'est trouv&#233;e, l'action est
-            mise &#224; jour avec les donn&#233;es saisies, la fen&#234;tre Modifier la condition est
-            ferm&#233;e, et l'utilisateur est renvoy&#233; &#224; la fen&#234;tre Modifier Logix
-            </p>
-      
-            </p> <p>Deux autres boutons sont disponibles au bas de la fen&#234;tre Modifier.
-            Condition. En cliquant sur <strong>Annuler</strong>, la fen&#234;tre Modifier Condition se ferme 
-            sans mettre &#224; jour la condition.
-            Cliquer sur <strong>Annuler</strong> entra&#238;ne la perte de toutes les donn&#233;es qui ont &#233;t&#233;
-            &#233;t&#233; saisies. L'autre bouton, <strong>Supprimer la Condition</strong>,
-            offre un moyen facile de supprimer une condition inutile. Cliquez sur
-            <strong>Supprimer la Condition</strong> pour supprimer la Condition en cours de modification et revenir &#224; la fen&#234;tre de modification de Logix.
-            &#233;dit&#233;e et revenir &#224; la fen&#234;tre Modifier Logix.</p>
-      
-            <p>Pour plus d'informations, consultez la <a href="../../../../html/tools/Logix.shtml">.
-            documentation principale de Logix</a>.</p>
-            
-            <h2>Les pages de la documentation Logix sont class&#233;es logiquement</h2>.
-            <p>Traduction2021-03-27</p>
+      <h3>Ajouter/Modifier des variables d'état</h3>
 
+      <p>Appuyez sur le bouton <strong>Ajouter Variable d'État</strong> pour ajouter une nouvelle
+      variable d'état (une ligne dans le tableau des variables d'état) ou cliquez sur un bouton
+      <strong>Modifier</strong> pour modifier une variable d'état existante. .</p>
+
+      <div style="margin-left : 2em">
+        <a href="images/ListEditVariable.png"><img src="images/ListEditVariable.png" alt=
+        "Fenêtre d'édition de variable" height="182" width="592"></a>
+      </div>
+
+      <p>Si une nouvelle variable est en cours de création, seul le type de variable sera affiché.
+      Une fois le choix effectué, d'autres champs s'afficheront en fonction du type sélectionné.
+      Les types de variables d'état disponibles sont documentés à <a href=
+      "StateVariableActionList.shtml#variable">Variables d'état</a>.</p>
+
+      <p>Lorsqu'un type est choisi, la fenêtre Modifier la variable affiche un champ de texte pour
+      le nom de l'entité à utiliser pour la variable d'état. Lorsqu'un nom (soit le nom du système,
+      soit le nom de l'utilisateur) est saisi, il doit correspondre à une entité existante
+      (capteur, aiguillage, feu, etc.), etc.). La méthode réelle de saisie des noms dépendra du
+      paramètre Méthode de sélection des noms conditions. Voir <a href=
+      "../beantable/LogixTable.shtml#logixOptions">. Méthode de sélection de noms
+      conditions</a>.</p>
+
+      <p>Pour les références conditions, le champ de saisie de texte est remplacé par deux boîtes
+      combo déroulantes. La première boîte est utilisée pour sélectionner le Logix, la deuxième
+      boîte est utilisée pour sélectionner une Condition qui appartient à la Logix sélectionnée.
+      <span class="since">depuis 4.7.4</span></p>
+      .
+      <div style="margin-left : 2em">
+        <a href="images/SelectConditionalReference.png"><img src=
+        "images/SelectConditionalReference.png" alt="Logix/Conditional Combo Boxes" height="148"
+        width="558"></a>
+      </div>
+
+      <p>Après avoir saisi le nom, sélectionnez l'état requis à partir de la boîte à options.
+      <strong>État variable</strong> de la liste déroulante. Selon le type et l'état de la variable
+      et l'état sélectionnés, des champs supplémentaires peuvent être affichés.</p>
+
+      <p>À tout moment pendant la saisie des données de la variable d'état, la fonction
+      <strong>Vérification des Variables d'État</strong> peut être cliqué pour vérifier les données
+      saisies et évaluer les variables d'état. Lorsque ce bouton est pressé, la vérification et
+      l'évaluation se poursuivent jusqu'à ce que la vérification se termine avec succès, ou qu'une
+      erreur soit détectée. Si une erreur est détectée, la vérification s'arrête pour que
+      l'utilisateur puisse corriger l'erreur et cliquer à nouveau sur <strong>Vérification des
+      Variables d'État</strong>. à nouveau. <em>Veuillez vous rappeler qu'après avoir modifié le
+      nom du système et les éléments de données, de cliquer sur une cellule différente dans le
+      tableau avant de cliquer sur <strong>Vérification des Variables d'État</strong> (ou
+      <strong>Mise à Jour Condition</strong> en bas du volet) afin que le programme soit informé
+      que vous avez terminé votre entrée. Sinon, votre entrée peut ne pas prendre effet, et une
+      erreur peut être signalée inutilement.</em></p>
+      .
+      <h2>Action</h2>
+
+      <p>La section action contient un tableau d'actions, avec deux boutons en dessous. La liste
+      des actions présente une description de chaque action. Le bouton <strong>Modifier</strong>
+      est utilisé pour modifier une action. Le bouton <strong>Supprimer</strong> est utilisé pour
+      supprimer une action.</p>
+
+      <p>Les actions sont évaluées dans l'ordre de la liste. Pour changer cet ordre, cliquez sur le
+      bouton "Réorganiser" dans la fenêtre "Modifier la condition". Les boutons les plus à droite à
+      côté des actions vous permettront alors de dsélectionner la première, la suivante, etc.</p>
+
+      <h3>Ajouter/Modifier des actions</h3>
+
+      <p>Appuyez sur le bouton <strong>Ajouter Action</strong> pour ajouter une nouvelle action ou
+      cliquez sur un bouton <strong>Modifier</strong> pour modifier une action existante. .</p>
+
+      <div style="margin-left : 2em">
+        <a href="images/ListEditAction.png"><img src="images/ListEditAction.png" alt=
+        "Fenêtre d'édition d'action" height="182" width="900"></a>
+      </div>
+
+      <p>Si une nouvelle action est en cours de création, seul le groupe d'actions sera affiché.
+      Une fois qu'un choix a été fait, d'autres champs seront affichés en fonction du type
+      sélectionné. Les types d'actons disponibles sont documentés à l'adresse suivante <a href=
+      "StateVariableActionList.shtml#action">Actions</a>.</p>
+
+      <p>Lorsqu'un type est choisi, la fenêtre d'édition de l'action affiche un champ de texte pour
+      le nom de l'entité à utiliser pour la variable d'état. Lorsqu'un nom (soit le nom système,
+      soit le nom utilisateur) est saisi, il doit correspondre à une entité existante (capteur,
+      aiguillage, feu, etc.), etc.). La méthode réelle de saisie des noms dépendra du paramètre
+      Méthode de sélection des Noms Condition. Voir <a href=
+      "../beantable/LogixTable.shtml#logixOptions">. Méthode de sélection des Noms
+      Condition</a>.</p>
+
+      <p class="important">Note :<br>
+      Comme une fonctionnalité avancée, le nom d'une entité peut être saisi en tant qu'une
+      "référence indirecte" à un emplacement mémoire. On entend par là , plutôt que de nommer
+      l'action directement, la valeur d'un emplacement de la valeur d'un emplacement mémoire est
+      utilisée pour le nom de l'action. Pour ce faire, vous entrez le nom de l'entité mémoire
+      précédé du symbole "@".<br>
+      Par exemple, supposons qu'une icône de mémoire d'entrée ou une icône de mémoire de ComboBox.
+      définissent la valeur de la mémoire <em>MyMemory10</em> à un nom d'aiguillage. Laissez
+      également une entité d'action de type turnout être nommée <em>@MyMemory10</em>. Laissez
+      également son type d'action être "Set Turnout Position Thrown" lorsque l'option de changement
+      est "On Change to True". Lorsque l'expression logique devient vraie, l'aiguillage nommé dans
+      la valeur actuelle de la mémoire MaMémoire10 sera dévié<br>
+      La méthode de sélection du nom doit être une liste de sélection afin d'utiliser cette
+      fonctionnalité.</p>
+
+      <p>Les éléments de données nécessaires pour spécifier complètement l'action action
+      apparaîtront à droite de la boîte de type. Si vous ne savez pas savez pas ce qui doit être
+      saisi dans un champ de données, passez votre curseur dessus, et un message d'aide
+      apparaîtra.</p>
+
+      <p>Pour chaque action, trois options sont disponibles pour savoir quand déclencher l'action
+      :</p>
+
+      <ul>
+        <li>Sur le changement en Vrai</li>
+
+        <li>On Change to False</li>
+
+        <li>On Change</li>
+      </ul>
+
+      <p>Si l'option <strong>Exécuter les actions</strong> a été changée en . <strong>Exécuter une
+      action à chaque fois qu'elle est déclenchée</strong>, alors les options sont :</p>
+
+      <ul>
+        <li>Lorsque déclenché Vrai</li>
+
+        <li>Lorsque déclenché Faux</li>
+
+        <li>Lorsque déclenché</li>
+      </ul>
+
+      <p>Ils se réfèrent à l'état calculé de la condition, qui est égal à la valeur de l'expression
+      logique telle que spécifiée dans le tableau des variables d'état. L'une de ces options doit
+      être sélectionnée. Lorsque vous avez terminé, cliquez sur "Mise à Jour" pour installer vos
+      modifications, sur "Annuler" pour fermer la fenêtre sans aucune modification ou sur
+      "Supprimer" pour supprimer entièrement l'action.</p>
+
+      <p>Quand l'expression logique et les actions ont été spécifiées, cliquez sur <strong>Mise à
+      jour conditionnelle</strong> en bas de la la fenêtre. Cela initie une vérification de
+      l'expression logique (la même que celle effectuée par <strong>Check State Variables</strong>)
+      et une vérification des données saisies pour les actions. Si le nom de l'utilisateur a été
+      modifié, il est également vérifié. Si une erreur est trouvée, un message s'ouvre pour
+      annoncer l'erreur, et la mise à jour est arrêtée pour vous permettre de corriger l'erreur et
+      de cliquer à nouveau sur <strong>Mise à Jour</strong> à nouveau. Si aucune erreur n'est
+      trouvée, l'action est mise à jour avec les données saisies, la fenêtre Modifier la condition
+      est fermée, et l'utilisateur est renvoyé à la fenêtre Modifier Logix</p>
+
+      <p>Deux autres boutons sont disponibles au bas de la fenêtre Modifier. Condition. En cliquant
+      sur <strong>Annuler</strong>, la fenêtre Modifier Condition se ferme sans mettre à jour la
+      condition. Cliquer sur <strong>Annuler</strong> entraîne la perte de toutes les données qui
+      ont été été saisies. L'autre bouton, <strong>Supprimer la Condition</strong>, offre un moyen
+      facile de supprimer une condition inutile. Cliquez sur <strong>Supprimer la
+      Condition</strong> pour supprimer la Condition en cours de modification et revenir à la
+      fenêtre de modification de Logix. éditée et revenir à la fenêtre Modifier Logix.</p>
+
+      <p>Pour plus d'informations, consultez la <a href="../../../../html/tools/Logix.shtml">.
+      documentation principale de Logix</a>.</p>
+
+      <h2>Les pages de la documentation Logix sont classées logiquement</h2>
+      .
+      <p>Traduction2021-03-27</p>
       <!--#include virtual="LogixDocList.shtml" -->
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>
-
-    
-

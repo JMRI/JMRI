@@ -1,158 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Table Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng conditionalng">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
 
     <div id="mainContent">
-
       <h1>JMRI: LogixNG Table Editor</h1>
 
-        <p>The Edit LogixNG table contains a list of the defined ConditionalNGs.</p>
+      <p>The Edit LogixNG table contains a list of the defined ConditionalNGs.</p>
 
-        <ul>
-          <li><a href="#tableContent">Table Content</a>
-          <li><a href="#addConditionalNG">Add a ConditionalNG</a>
-          <li><a href="#buttonReorder">Reorder</a>
-          <li><a href="#buttonExecute">Execute</a>
-          <li><a href="#buttonClose">Close</a>
-          <li><a href="#buttonDelete">Delete</a>
-        </ul>
+      <ul>
+        <li>
+          <a href="#tableContent">Table Content</a>
+        </li>
 
-      <a id="tableContent" name="tableContent"></a>
-      <h2>Table Content</h2>
-        <p>
-        The LogixNG Editor table lists all of the currently defined ConditionalNGs.
-        </p>
+        <li>
+          <a href="#addConditionalNG">Add a ConditionalNG</a>
+        </li>
 
-        <div style="margin-left: 2em">
-        <a href="images/LogixNGEditor.png">
-        <img src="images/LogixNGEditor.png"
-        alt="LogixNG Editor" width="1001" height="373" >
-        </a>
-        </div>
+        <li>
+          <a href="#buttonReorder">Reorder</a>
+        </li>
 
-        <dl>
-          <dt>System Name</dt>
-          <dd>The system name for the ConditionalNG.  ConditionalNG system names have an
-          <strong>IQC</strong> prefix normally followed by numbers.  For details about the ConditionalNG
-          system name, see <a href="#addConditionalNG">Add a ConditionalNG</a>.
-          The system name cannot be changed.</dd>
+        <li>
+          <a href="#buttonExecute">Execute</a>
+        </li>
 
-          <dt>User Name</dt>
-          <dd>The user name for the ConditionalNG.  This is a free form field that contains a meaningful name.</dd>
+        <li>
+          <a href="#buttonClose">Close</a>
+        </li>
 
-          <dt>Thread</dt>
-          <dd>The thread field shows the currently assigned thread name.  It is changed
-          by using the <strong>Edit threads</strong> button.
+        <li>
+          <a href="#buttonDelete">Delete</a>
+        </li>
+      </ul>
 
-          <dt>Edit</dt>
-          <dd>The <strong>Edit</strong> button opens the ConditionalNG Editor window.</dd>
+      <h2 id="tableContent">Table Content</h2>
 
-          <dt>Debug</dt>
-          <dd>Advanced feature.</dd>
+      <p>The LogixNG Editor table lists all of the currently defined ConditionalNGs.</p>
 
-          <dt>Delete</dt>
-          <dd>The <strong>Delete</strong> button deletes the current ConditionalNG and
-          the ConditionalNG content.  A confirmation dialog will be displayed.
+      <div style="margin-left: 2em">
+        <a href="images/LogixNGEditor.png"><img src="images/LogixNGEditor.png" alt="LogixNG Editor"
+        width="1001" height="373"></a>
+      </div>
 
+      <dl>
+        <dt>System Name</dt>
+
+        <dd>
+          The system name for the ConditionalNG. ConditionalNG system names have an
+          <strong>IQC</strong> prefix normally followed by numbers. For details about the
+          ConditionalNG system name, see <a href="#addConditionalNG">Add a ConditionalNG</a>. The
+          system name cannot be changed.
+        </dd>
+
+        <dt>User Name</dt>
+
+        <dd>The user name for the ConditionalNG. This is a free form field that contains a
+        meaningful name.</dd>
+
+        <dt>Thread</dt>
+
+        <dd>The thread field shows the currently assigned thread name. It is changed by using the
+        <strong>Edit threads</strong> button.</dd>
+
+        <dt>Edit</dt>
+
+        <dd>The <strong>Edit</strong> button opens the ConditionalNG Editor window.</dd>
+
+        <dt>Debug</dt>
+
+        <dd>Advanced feature.</dd>
+
+        <dt>Delete</dt>
+
+        <dd>
+          The <strong>Delete</strong> button deletes the current ConditionalNG and the
+          ConditionalNG content. A confirmation dialog will be displayed.
           <div style="margin-left: 2em">
-          <a href="images/DeleteConditionalNG.png">
-          <img src="images/DeleteConditionalNG.png"
-          alt="Delete ConditionalNG Confirmation" width="347" height="126" >
-          </a>
+            <a href="images/DeleteConditionalNG.png"><img src="images/DeleteConditionalNG.png" alt=
+            "Delete ConditionalNG Confirmation" width="347" height="126"></a>
           </div>
+        </dd>
 
-          </dd>
+        <dt>Edit threads</dt>
 
-          <dt>Edit threads</dt>
-          <dd>This is an advanced feature.</dd>
+        <dd>This is an advanced feature.</dd>
 
-          <dt>Show startup thread checkbox</dt>
-          <dd>This controls the Thread field display.  When unchecked, it displays the main
-          LogixNG thread.  If checked, it displays the assigned startup thread.</dd>
-        </dl>
+        <dt>Show startup thread checkbox</dt>
 
-      <a id="addConditionalNG" name="addConditionalNG"></a>
-      <h2>Add a ConditionalNG</h2>
+        <dd>This controls the Thread field display. When unchecked, it displays the main LogixNG
+        thread. If checked, it displays the assigned startup thread.</dd>
+      </dl>
 
-        <p>To create a new ConditionalNG, click on the <strong>Add...</strong> button. The
-        <strong>Add ConditionalNG</strong> window will be displayed.</p>
+      <h2 id="addConditionalNG">Add a ConditionalNG</h2>
 
-        <div style="margin-left: 2em">
-        <a href="images/AddConditionalNG.png">
-        <img src="images/AddConditionalNG.png"
-        alt="Add ConditionalNG" width="603" height="171" >
-        </a>
-        </div>
+      <p>To create a new ConditionalNG, click on the <strong>Add...</strong> button. The
+      <strong>Add ConditionalNG</strong> window will be displayed.</p>
 
-        <p>The system name is required. The system name for a ConditionalNG always begins
-        with the letters <strong>IQC</strong>.  If the entered name does not start with
-        <strong>IQC</strong>, it will be automatically added.  The typical suffix is a
-        number.  If <strong>Automatically generate System Name</strong> is checked, the
-        system name format will be <strong>IQC:AUTO:nnnn</strong>.  Any other format
-        requires adding a <strong>$</strong> (dollar) character between <strong>IQC</strong>
-        and the suffix.</p>
+      <div style="margin-left: 2em">
+        <a href="images/AddConditionalNG.png"><img src="images/AddConditionalNG.png" alt=
+        "Add ConditionalNG" width="603" height="171"></a>
+      </div>
 
-        <p class="noted">The ConditionalNG system name is <strong>not</strong> derived
-        from the the parent LogixNG system name. This is different than the Logix procedure.</p>
+      <p>The system name is required. The system name for a ConditionalNG always begins with the
+      letters <strong>IQC</strong>. If the entered name does not start with <strong>IQC</strong>,
+      it will be automatically added. The typical suffix is a number. If <strong>Automatically
+      generate System Name</strong> is checked, the system name format will be
+      <strong>IQC:AUTO:nnnn</strong>. Any other format requires adding a <strong>$</strong>
+      (dollar) character between <strong>IQC</strong> and the suffix.</p>
 
-        <p>The user name is optional but recommended. A user name may be any useful text,
-        provided the new user name was not previously assigned to another ConditionalNG
-        in <strong>this</strong> LogixNG.  The user name can be the same as another
-        ConditionalNG that is in a different LogixNG.</p>
+      <p class="noted">The ConditionalNG system name is <strong>not</strong> derived from the the
+      parent LogixNG system name. This is different than the Logix procedure.</p>
 
-        <p>Once a
-        ConditionalNG is created, its system name cannot be changed.  Its user name may be changed
-        in the Edit LogixNG window. The user name is usually used to provide a more
-        descriptive name, for example, "Signal 5 Control".</p>
+      <p>The user name is optional but recommended. A user name may be any useful text, provided
+      the new user name was not previously assigned to another ConditionalNG in
+      <strong>this</strong> LogixNG. The user name can be the same as another ConditionalNG that is
+      in a different LogixNG.</p>
 
-        <p>After clicking <strong>Create</strong>, the ConditionalNG will be created and the
-        <a href="ConditionalNGEditor.shtml">Edit ConditionalNG</a> window will appear.</p>
+      <p>Once a ConditionalNG is created, its system name cannot be changed. Its user name may be
+      changed in the Edit LogixNG window. The user name is usually used to provide a more
+      descriptive name, for example, "Signal 5 Control".</p>
 
-      <a id="buttonReorder" name="buttonReorder"></a>
-      <h2>Reorder</h2>
-        <p>During initial startup of a LogixNG, the ConditionalNGs will be executed in sequence.
-        The sequence for subsequent executions is dependent on JMRI change events.</p>
+      <p>After clicking <strong>Create</strong>, the ConditionalNG will be created and the <a href=
+      "ConditionalNGEditor.shtml">Edit ConditionalNG</a> window will appear.</p>
 
-        <p>When the <strong>Reorder</strong> button is pressed, the <strong>Edit</strong>
-        labels for each row will change to <strong>First</strong>.  After the first ConditionalNG
-        is selected, the label will change to 1 and the remaining labels will change to
-        <strong>Next</strong>.  As each <strong>Next</strong> is selected, the label will
-        change to the new row number.  When all of the <strong>Next</strong> labels have
-        been selected, the labels will change back to <strong>Edit</strong>.</p>
+      <h2 id="buttonReorder">Reorder</h2>
 
-      <a id="buttonExecute" name="buttonExecute"></a>
-      <h2>Execute</h2>
-        <p>When the <strong>Execute</strong> button is pressed, the ConditionalNG
-        Expressions will be evaluated using the current JMRI states and the appropriate
-        Actions will be performed.
-        </p>
+      <p>During initial startup of a LogixNG, the ConditionalNGs will be executed in sequence. The
+      sequence for subsequent executions is dependent on JMRI change events.</p>
 
-      <a id="buttonClose" name="buttonClose"></a>
-      <h2>Close</h2>
-        <p>When the <strong>Close</strong> button is pressed, the Edit LogixNG window will close.</p>
+      <p>When the <strong>Reorder</strong> button is pressed, the <strong>Edit</strong> labels for
+      each row will change to <strong>First</strong>. After the first ConditionalNG is selected,
+      the label will change to 1 and the remaining labels will change to <strong>Next</strong>. As
+      each <strong>Next</strong> is selected, the label will change to the new row number. When all
+      of the <strong>Next</strong> labels have been selected, the labels will change back to
+      <strong>Edit</strong>.</p>
 
-      <a id="buttonDelete" name="buttonDelete"></a>
-      <h2>Delete</h2>
-        <p>When the <strong>Delete</strong> button is pressed, the LogixNG, its ConditionalNGs
-        and related content will be deleted.  The LogixNG delete confirmation dialog will be
-        displayed.</p>
+      <h2 id="buttonExecute">Execute</h2>
 
+      <p>When the <strong>Execute</strong> button is pressed, the ConditionalNG Expressions will be
+      evaluated using the current JMRI states and the appropriate Actions will be performed.</p>
+
+      <h2 id="buttonClose">Close</h2>
+
+      <p>When the <strong>Close</strong> button is pressed, the Edit LogixNG window will close.</p>
+
+      <h2 id="buttonDelete">Delete</h2>
+
+      <p>When the <strong>Delete</strong> button is pressed, the LogixNG, its ConditionalNGs and
+      related content will be deleted. The LogixNG delete confirmation dialog will be
+      displayed.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,108 +1,82 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <title>JMRI: Multi-Decoder Control</title>
-  <!--#include virtual="/Style.shtml" -->
-</head>
 
+  <title>JMRI: Multi-Decoder Control</title><!--#include virtual="/Style.shtml" -->
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
 
-    <div id="mainContent">
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h2>JMRI: Multi-Decoder Control</h2>
-      Originally, DCC did not
-      provide a convenient way to program configuration values
-      (CVs) when you have more than one decoder installed in a
-      locomotive. For example, if you have separate decoders to
-      control the motor and provide sound, and they both use the
-      same CV locations, programming one decoder would change the
-      settings on the other, usually in an undesired way.
+      Originally, DCC did not provide a convenient way to program configuration values (CVs) when
+      you have more than one decoder installed in a locomotive. For example, if you have separate
+      decoders to control the motor and provide sound, and they both use the same CV locations,
+      programming one decoder would change the settings on the other, usually in an undesired way.
+      <p>There are various tricks that can be used with long and short addresses and programming on
+      the main, but they're not entirely satisfactory.</p>
+      https://www.nmra.org/dcc-working-group
+      https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf
+      <p>Digitrax <a href="http://www.digitrax.com/v1/LOCK.htm">proposed a method</a> for dealing
+      with this to the <a href="https://www.nmra.org/dcc-working-group">DCC Working Group</a>. This
+      was accepted by the NMRA for inclusion in " <a href=
+      "https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
+      Configuration Variables For Digital Command Control, All Scales</a>, and has since been
+      adopted by many manufacturers.</p>
 
-      <p>There are various tricks that can be used with long and
-      short addresses and programming on the main, but they're not
-      entirely satisfactory.</p>
-
-      <p>Digitrax <a href=
-      "http://www.digitrax.com/v1/LOCK.htm">proposed a method</a>
-      for dealing with this to the <a href=
-      "http://www.nmra.org/standards/DCC/WGpublic/0305051/0305051.html">
-      DCC Working Group</a>. This was <a href=
-      "http://www.nmra.org/standards/DCC/WGpublic/discussion_topics.html#Topic0305051">
-      accepted by the NMRA</a> for inclusion in a "<a href=
-      "http://www.nmra.org/standards/DCC/standards_rps/rp922.html#Descriptions%20of%20Configuration%20Variables%20for%20Multi-Function%20Decoders">Recommended
-      Practice</a>", and has since been adopted by many
-      manufacturers.</p>
-
-      <p>The method uses CV15 and CV16 to control writing and
-      reading CV values. Before the decoders are installed in the
-      locomotive, each one has a specific value programmed into
-      CV16. (The recommended values are 1 for the motor decoder, 2
-      for a sound decoder, 3 for a function-only decoder, and 4-7
-      for other uses; decoders are supposed to ship with a value of
-      0 in both CV15 and CV16) A decoder will only do read and
-      write operations if the values in CV15 and CV16 are the same,
-      with the exception that you can always write CV15. In effect,
+      <p>The method uses CV15 and CV16 to control writing and reading CV values. Before the
+      decoders are installed in the locomotive, each one has a specific value programmed into CV16.
+      (The recommended values are 1 for the motor decoder, 2 for a sound decoder, 3 for a
+      function-only decoder, and 4-7 for other uses; decoders are supposed to ship with a value of
+      0 in both CV15 and CV16) A decoder will only do read and write operations if the values in
+      CV15 and CV16 are the same, with the exception that you can always write CV15. In effect,
       CV16 is a lock and CV15 is the key.</p>
 
-      <p><a href="../../../../images/DualDecoder.jpg"><img src=
-      "../../../../images/DualDecoder.jpg" width="122" height="306"
-      align="right" alt="Dual Decoder Window"></a> DecoderPro has a
-      "Multi-Decoder Control" to make use of this feature easier.
-      You can open it from the "Programmers" selection in the
-      "Tools" menu. This opens a window, which you can also see on
+      <p><a href="../../../../images/DualDecoder.jpg"><img src="../../../../images/DualDecoder.jpg"
+      width="122" height="306" class="floatRight" alt="Dual Decoder Window"></a> DecoderPro has a
+      "Multi-Decoder Control" to make use of this feature easier. You can open it from the
+      "Programmers" selection in the "Tools" menu. This opens a window, which you can also see on
       the right of this page.</p>
 
-      <p>The top section of the window consists of eight radio
-      buttons. Clicking the buttons numbered 0 to 6 will unlock the
-      decoder with the corresponding number in it's lock CV (CV16).
-      DecoderPro then reads back the value in CV16 to confirm that
-      the decoder has successfully unlocked.</p>
+      <p>The top section of the window consists of eight radio buttons. Clicking the buttons
+      numbered 0 to 6 will unlock the decoder with the corresponding number in it's lock CV (CV16).
+      DecoderPro then reads back the value in CV16 to confirm that the decoder has successfully
+      unlocked.</p>
 
-      <p>Normally, one clicks the button for the decoder you want
-      to program, and them moves over to the main DecoderPro window
-      to read and write values.</p>
+      <p>Normally, one clicks the button for the decoder you want to program, and them moves over
+      to the main DecoderPro window to read and write values.</p>
 
-      <p>The "Legacy" button writes a 7 to CV15, which is another
-      special case. Many decoders, especially older models, do not
-      have this locking mechanism present. In some cases, most
-      specifically a Digitrax FX3 or later decoder and an early
-      SoundTraxx decoder, it's possible to emulate the lock using
-      sequential writing of CVs. Clicking the "Legacy" button
-      activates. Unfortunately, it's not an entirely reliable
-      method.</p>
+      <p>The "Legacy" button writes a 7 to CV15, which is another special case. Many decoders,
+      especially older models, do not have this locking mechanism present. In some cases, most
+      specifically a Digitrax FX3 or later decoder and an early SoundTraxx decoder, it's possible
+      to emulate the lock using sequential writing of CVs. Clicking the "Legacy" button activates.
+      Unfortunately, it's not an entirely reliable method.</p>
 
-      <p>In the middle section are there buttons that can do more
-      complicated operations.</p>
+      <p>In the middle section are there buttons that can do more complicated operations.</p>
 
-      <p>The "Search" button sequentially works through the
-      possible addresses, marking those decoder addresses that are
-      found to be present.</p>
+      <p>The "Search" button sequentially works through the possible addresses, marking those
+      decoder addresses that are found to be present.</p>
 
-      <p>"Reset" works through the possible combinations to unlock
-      a decoder that has been inadvertantly locked. This should
-      only be used if you have just one decoder in the locomotive.
-      If you have more than one, it will unlock all of them, which
-      may cause confusion later.</p>
+      <p>"Reset" works through the possible combinations to unlock a decoder that has been
+      inadvertantly locked. This should only be used if you have just one decoder in the
+      locomotive. If you have more than one, it will unlock all of them, which may cause confusion
+      later.</p>
 
-      <p>"Init DH163 + Soundtraxx" configures the "Legacy" mode
-      discussed above.</p>
+      <p>"Init DH163 + Soundtraxx" configures the "Legacy" mode discussed above.</p>
 
       <p>Below that, the program displays status messages.</p>
 
-      <p>The bottom section allows you to directly set the
-      programming mode in use. If you're using ops-mode programming
-      (programming on the main), you wil also need to specify the
-      address of the locomotive being programmed.</p>
-
+      <p>The bottom section allows you to directly set the programming mode in use. If you're using
+      ops-mode programming (programming on the main), you wil also need to specify the address of
+      the locomotive being programmed.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- close #mBody -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,160 +1,160 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI CBUS setup Fast Clock Fastclock time speed rate FCLK">
-  <title>JMRI Hardware Support - CBUS&reg; Fast Clock</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - CBUS® Fast Clock</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: CBUS - Fast Clock</h1>
-        <ul class="snav">
-        <li><a href="#outbound">Sending to Network</a></li>
-        <li><a href="#inbound">Receiving from Network</a></li>
-       </ul>
-      
-      
+
+      <ul class="snav">
+        <li>
+          <a href="#outbound">Sending to Network</a>
+        </li>
+
+        <li>
+          <a href="#inbound">Receiving from Network</a>
+        </li>
+      </ul>
       <span class="since">Since 4.19.6</span>
-      
-      <p>JMRI maintains an Internal Fast Clock which is used in various places
-        including RfID Tag Timestamping, and layout automation tools.
-      </p>
+      <p>JMRI maintains an Internal Fast Clock which is used in various places including RfID Tag
+      Timestamping, and layout automation tools.</p>
 
-      <p>The CBUS Fast Clock can be used to send this internal clock data to a CBUS Network, 
-        enabling other network devices to use the same time and date.
-      </p>
+      <p>The CBUS Fast Clock can be used to send this internal clock data to a CBUS Network,
+      enabling other network devices to use the same time and date.</p>
 
-      <p>JMRI can also listen to the CBUS Network for incoming Fast Clock data which is used
-        to update the internal clock.</p>
-      
+      <p>JMRI can also listen to the CBUS Network for incoming Fast Clock data which is used to
+      update the internal clock.</p>
+
       <p>If you aren't sharing time data across the network, the internal Fast Clock will provide
-        all of the functionality you need, without having to send or receive it via CBUS.</p>
+      all of the functionality you need, without having to send or receive it via CBUS.</p>
 
-      <p>Internal Fast Clock, and extra CBUS functionality are configured in the main 
-      <a href="../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Fast Clock Setup Window</a>,
-        <br><strong>PanelPro > Tools > Clocks > Set Up Fast Clock ...</strong></p>
-      
+      <p>Internal Fast Clock, and extra CBUS functionality are configured in the main <a href=
+      "../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Fast Clock Setup
+      Window</a>,<br>
+      <strong>PanelPro &gt; Tools &gt; Clocks &gt; Set Up Fast Clock ...</strong></p>
 
-      <h2><a name="outbound" id="outbound">Sending Fast Clock data to Network</a></h2>
-      
-        <div style="float: right;"><img src="images/web/cbus_fastclock_incoming_420x606.png" 
-        alt="CBUS Fast Clock Incoming" width="420" height="606"></div>
-      
-        <p>Open up the Fast Clock Setup Window.</p>
-      
-        <p>Ensure that Internal Computer Clock is selected as the time source.</p>
-      
-        <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
+      <h2 id="outbound">Sending Fast Clock data to Network</h2>
 
-        <p>The Fast Clock Configuration is stored in xml, remember to store your setup!</p>
+      <div style="float: right;"><img src="images/web/cbus_fastclock_incoming_420x606.png" alt=
+      "CBUS Fast Clock Incoming" width="420" height="606">
+      </div>
 
-        <p>When the clock is paused / resumed, the appropriate CBUS FCLK message is sent.</p>
+      <p>Open up the Fast Clock Setup Window.</p>
 
-        <p>Each time the Internal Fast Clock rolls over a minute, a CBUS FCLK message will be sent.</p>
+      <p>Ensure that Internal Computer Clock is selected as the time source.</p>
 
-        <p>Data includes clock speed rate, minute, hour, day of month, day of week, month, 
-        and a temperature field ( which defaults to 0 ).</p>
-        
-        <p>If the Internal Fast Clock Speed Rate is not a whole number, the Fast Clock Rate ( DIV value )
-        will be sent excluding the decimal ( ie no rounding up ).
-        For a receiving Fast Clock to accurately calculate second changes this should be set to 
-        a whole number, however for many applications this is not a requirement.
-        </p>
+      <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
 
-      
-      
-      <h2><a name="inbound" id="inbound">Receiving Fast Clock data from Network</a></h2>
+      <p>The Fast Clock Configuration is stored in xml, remember to store your setup!</p>
 
-        <p>Open up the Fast Clock Setup Window.</p>
-      
-        <p>Ensure that CBUS Fast Clock is selected as the time source.</p>
-      
-        <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
+      <p>When the clock is paused / resumed, the appropriate CBUS FCLK message is sent.</p>
 
-        <p>The master JMRI date and time will now be set whenever CBUS FCLK OPCs are heard on the network.</p>
-        
-        <p>The master JMRI clock will be paused and resumed according to the incoming CBUS FLCK OPCs.</p>
-        
-        <p>The Clock speed rate and CBUS Fast Clock temperature fields are also updated.</p>
-        
-        <p>If an external Fast Clock is not sending updates ( and the clock is not paused ),
-        the Internal Clock will continue updating the master JMRI time.</p>
+      <p>Each time the Internal Fast Clock rolls over a minute, a CBUS FCLK message will be
+      sent.</p>
 
-        <p>This behaviour is likely undesirable on startup, so you may to have the master clock paused on startup.
-        <br> Start Up Options > Start with Fast Clock > Stopped</p>
-        
-        <p>The Fast Clock Configuration is stored in xml, remember to store your setup!</p>
-        
-        <p>Initially, JMRI attempts to update the whole date, using the minute, hour, day of month, and month fields.
-        <br>If this is impossible ( eg. 29th feb in non-leap year / month 17 ), a second attempt
-        is made to set the Internal clock using just the hour / minute fields, and the current clock date.</p>
-        
-      
+      <p>Data includes clock speed rate, minute, hour, day of month, day of week, month, and a
+      temperature field ( which defaults to 0 ).</p>
+
+      <p>If the Internal Fast Clock Speed Rate is not a whole number, the Fast Clock Rate ( DIV
+      value ) will be sent excluding the decimal ( ie no rounding up ). For a receiving Fast Clock
+      to accurately calculate second changes this should be set to a whole number, however for many
+      applications this is not a requirement.</p>
+
+      <h2 id="inbound">Receiving Fast Clock data from Network</h2>
+
+      <p>Open up the Fast Clock Setup Window.</p>
+
+      <p>Ensure that CBUS Fast Clock is selected as the time source.</p>
+
+      <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
+
+      <p>The master JMRI date and time will now be set whenever CBUS FCLK OPCs are heard on the
+      network.</p>
+
+      <p>The master JMRI clock will be paused and resumed according to the incoming CBUS FLCK
+      OPCs.</p>
+
+      <p>The Clock speed rate and CBUS Fast Clock temperature fields are also updated.</p>
+
+      <p>If an external Fast Clock is not sending updates ( and the clock is not paused ), the
+      Internal Clock will continue updating the master JMRI time.</p>
+
+      <p>This behaviour is likely undesirable on startup, so you may to have the master clock
+      paused on startup.<br>
+      Start Up Options &gt; Start with Fast Clock &gt; Stopped</p>
+
+      <p>The Fast Clock Configuration is stored in xml, remember to store your setup!</p>
+
+      <p>Initially, JMRI attempts to update the whole date, using the minute, hour, day of month,
+      and month fields.<br>
+      If this is impossible ( eg. 29th feb in non-leap year / month 17 ), a second attempt is made
+      to set the Internal clock using just the hour / minute fields, and the current clock
+      date.</p>
 
       <h4>Pausing and Resuming Internal Clock via CBUS Event</h4>
-      
-      
-        <p>The JMRI master clock can be paused / resumed by CBUS event.</p>
 
-        <p>After you've set the clock running for the first time, there will be a new Internal Sensor called "ISCLOCKRUNNING".</p>
+      <p>The JMRI master clock can be paused / resumed by CBUS event.</p>
 
-        <p>Use Logix ( or Light Control ) to set a CBUS Sensor ( operated via CBUS event ) to command this Internal Sensor 
-            to On and Off for a remote pause / resume by CBUS event.</p>
+      <p>After you've set the clock running for the first time, there will be a new Internal Sensor
+      called "ISCLOCKRUNNING".</p>
 
-        <p>For multiple operators, the pause buttons could send an OFF, 
-        with a master resume button sending the ON.</p>
+      <p>Use Logix ( or Light Control ) to set a CBUS Sensor ( operated via CBUS event ) to command
+      this Internal Sensor to On and Off for a remote pause / resume by CBUS event.</p>
 
-
+      <p>For multiple operators, the pause buttons could send an OFF, with a master resume button
+      sending the ON.</p>
 
       <h4>Triggering CBUS Events by Fast Clock</h4>
 
-        <p>To send on / off CBUS events at certain fast times, use Light Controls or Logix.</p>
+      <p>To send on / off CBUS events at certain fast times, use Light Controls or Logix.</p>
 
-        <p>CBUS Lights are a good choice for beginners, sending ON / OFF events whenever they are switched on / off.</p>
-        
-        <p>You can add lots of simple automation tasks with these by using Fast Clock Light Controllers.</p>
-        
-        <p>This enables scheduled tasks, eg Streetlights, house lights, sunset / sunrise etc. </p>
+      <p>CBUS Lights are a good choice for beginners, sending ON / OFF events whenever they are
+      switched on / off.</p>
 
+      <p>You can add lots of simple automation tasks with these by using Fast Clock Light
+      Controllers.</p>
+
+      <p>This enables scheduled tasks, eg Streetlights, house lights, sunset / sunrise etc.</p>
 
       <h4>Accessing the Date / Temperature Fields</h4>
-      
-        <p>The fast clock time will be updated in a JMRI memory variable.
-        <br>This format can be changed to include day, month and year, see main JMRI Fast Clock support.
-        </p>
-      
-        <p>Jython scripting can set the date, along with getting and setting the temperature field.</p>
-      
-        <p>eg. A script could listen for a particular event which could carry a temperature value
-        in its added data.
-        </p>
 
-      
-      
-      
+      <p>The fast clock time will be updated in a JMRI memory variable.<br>
+      This format can be changed to include day, month and year, see main JMRI Fast Clock
+      support.</p>
+
+      <p>Jython scripting can set the date, along with getting and setting the temperature
+      field.</p>
+
+      <p>eg. A script could listen for a particular event which could carry a temperature value in
+      its added data.</p>
+
       <h3>JMRI Help</h3>
 
-        <p><a href="../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">JMRI Fast Clock Setup</a></p>
+      <p><a href="../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">JMRI Fast
+      Clock Setup</a>
+      </p>
 
-        <p><a href="../../../tools/fastclock/index.shtml">JMRI Fast Clock Overview</a></p>
+      <p><a href="../../../tools/fastclock/index.shtml">JMRI Fast Clock Overview</a>
+      </p>
 
-        <p><a href="../../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
-            >JMRI Light Controllers</a> - Fast Clock Controlled.</p>
-        
-        
-        <h2></h2>
-        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p><a href=
+      "../../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock">JMRI
+      Light Controllers</a> - Fast Clock Controlled.</p>
 
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

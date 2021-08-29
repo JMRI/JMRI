@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Communications Monitor Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help monitor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help monitor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Communications Monitor Window</h1>JMRI provides a
-      communications monitor window so you can see what's happening
-      on the communications link between the program and the layout
-      hardware.
-
-      <p>Once you open a monitor window, it will automatically
-      display all traffic on the link as long as "Filter Bytes" is
-      blank.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Communications Monitor Window</h1>
+      JMRI provides a communications monitor window so you can see what's happening on the
+      communications link between the program and the layout hardware.
+      <p>Once you open a monitor window, it will automatically display all traffic on the link as
+      long as "Filter Bytes" is blank.</p>
 
       <h2>Controls</h2>
 
@@ -34,73 +26,59 @@
 
         <dt>Freeze Screen</dt>
 
-        <dd>Stops acquiring new information, so that the captured
-        information stops scrolling up</dd>
+        <dd>Stops acquiring new information, so that the captured information stops scrolling
+        up</dd>
 
         <dt>Show raw data</dt>
 
-        <dd>Normally, the monitor displays the program's
-        interpretation of what it's seeing. If you want to see the
-        raw bytes, check this box.</dd>
+        <dd>Normally, the monitor displays the program's interpretation of what it's seeing. If you
+        want to see the raw bytes, check this box.</dd>
 
         <dt>Show timestamps</dt>
 
-        <dd>Normally, the program just displays the data from the
-        communication link. If you'd like each message to be
-        preceded by the time it was sent or received, check this
-        box.</dd>
+        <dd>Normally, the program just displays the data from the communication link. If you'd like
+        each message to be preceded by the time it was sent or received, check this box.</dd>
 
         <dt>Add message</dt>
 
-        <dd>If you want to insert a message into the captured
-        information, e.g. to make a note about what you're about to
-        do, you can type it into the text field next to the "Add
-        Message" button and then click that button. This is
-        particularly useful when you're logging to a file (see
-        below) and want to make a note for later about what's
-        happening.</dd>
+        <dd>If you want to insert a message into the captured information, e.g. to make a note
+        about what you're about to do, you can type it into the text field next to the "Add
+        Message" button and then click that button. This is particularly useful when you're logging
+        to a file (see below) and want to make a note for later about what's happening.</dd>
 
         <dt>Filter Bytes</dt>
 
-        <dd>You can filter unwanted messages from the window by
-        entering each message's first hex value into the "Filter
-        Bytes" field. This can be especially helpful when there is
-        a lot of routine comm traffic. Separate multiple values by
-        spaces. e.g. "B0 D0 CC". This example will suppress any
-        messages whose raw data starts with "B0", "D0" or "CC" You
-        can determine the available hex values by turning on "Show
-        raw data."</dd>
+        <dd>You can filter unwanted messages from the window by entering each message's first hex
+        value into the "Filter Bytes" field. This can be especially helpful when there is a lot of
+        routine comm traffic. Separate multiple values by spaces. e.g. "B0 D0 CC". This example
+        will suppress any messages whose raw data starts with "B0", "D0" or "CC" You can determine
+        the available hex values by turning on "Show raw data."</dd>
       </dl>
 
-      <h2>Logging To A File</h2>Sometimes, it's helpful to capture
-      what's happening. For example, you might encounter a bug
-      (!!), and want to send a copy of what's happening to the
-      people who are trying to fix it.
+      <h2>Logging To A File</h2>
+      Sometimes, it's helpful to capture what's happening. For example, you might encounter a bug
+      (!!), and want to send a copy of what's happening to the people who are trying to fix it.
+      <p>Small amounts of data can be copied from the log window with your computers "copy" command
+      (e.g. ctrl-C or cmd-C), and then pasted into an email.</p>
 
-      <p>Small amounts of data can be copied from the log window
-      with your computers "copy" command (e.g. ctrl-C or cmd-C),
-      and then pasted into an email.</p>
-
-      <p>If you want to capture more, you can have the window write
-      a log file on your computer's disk. To do this:</p>
+      <p>If you want to capture more, you can have the window write a log file on your computer's
+      disk. To do this:</p>
 
       <ol>
-        <li>Click "Choose log file". A file-chooser window will
-        open. Navigate to where you want to store the file, enter a
-        name for the new log file, and click "Save". Note that if
-        you pick a file that already exists, it will be
-        overwritten.</li>
+        <li>Click "Choose log file". A file-chooser window will open. Navigate to where you want to
+        store the file, enter a name for the new log file, and click "Save". Note that if you pick
+        a file that already exists, it will be overwritten.</li>
 
-        <li>When you're ready to capture the data you want, click
-        "Start logging" on the monitor window.</li>
+        <li>When you're ready to capture the data you want, click "Start logging" on the monitor
+        window.</li>
 
-        <li>When you're done, click "Stop logging" to store the
-        data and close the file.</li>
+        <li>When you're done, click "Stop logging" to store the data and close the file.</li>
       </ol>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

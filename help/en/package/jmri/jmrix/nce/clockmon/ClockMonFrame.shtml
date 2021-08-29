@@ -1,116 +1,94 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE Clock Monitor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>NCE Fast Clock</h1>
-      
-        <p>The NCE fast clock can be
-          either a source of fast time or can be commanded to
-          follow the internal clock. The best synchronization is
-          when the NCE clock is the master source. It works by
-          adjusting the internal clock ratio so the fast minutes
-          will be the same. The provides for the clocks to be
-          basically in sync all the time. Adjustments are made
-          about every 20 fast seconds.</p>
 
-          <p>You may also have the internal clock drive the NCE
-          fast clock. However, this requires some number of seconds
-          to be added or skipped in the NCE fast clock so the
-          minutes will roll over at the same time. That minute roll
-          over is critical for the NCE as that is when the time is
-          sent to all the Pro cabs. Due to limited adjustments in
-          the NCE fast clock this method causes the clock to run
-          fast for part of the minute and slow for the other part
-          of the minute so the minute roll over is correct.</p>
+      <p>The NCE fast clock can be either a source of fast time or can be commanded to follow the
+      internal clock. The best synchronization is when the NCE clock is the master source. It works
+      by adjusting the internal clock ratio so the fast minutes will be the same. The provides for
+      the clocks to be basically in sync all the time. Adjustments are made about every 20 fast
+      seconds.</p>
 
-    <h1>NCE Clock Monitor</h1>
+      <p>You may also have the internal clock drive the NCE fast clock. However, this requires some
+      number of seconds to be added or skipped in the NCE fast clock so the minutes will roll over
+      at the same time. That minute roll over is critical for the NCE as that is when the time is
+      sent to all the Pro cabs. Due to limited adjustments in the NCE fast clock this method causes
+      the clock to run fast for part of the minute and slow for the other part of the minute so the
+      minute roll over is correct.</p>
 
-      <p>When running in the NCE as clock master mode, the internal
-      clock rate is adjusted to match time with the NCE command
-      station clock. The goal is the minute should roll over at the
-      same time for the internal clock and ProCab displays should
-      change the same as clocks on PanelPro etc....</p>
+      <h1>NCE Clock Monitor</h1>
 
-      <p>When running with the internal clock as master, the NCE
-      clock is adjusted, forward or backwards, some number of
-      seconds just before the minute rolls over. So NCE time does
-      jump slightly as time is adjusted but the goal is the minutes
-      tick off at the same time as the internal clock.</p>
+      <p>When running in the NCE as clock master mode, the internal clock rate is adjusted to match
+      time with the NCE command station clock. The goal is the minute should roll over at the same
+      time for the internal clock and ProCab displays should change the same as clocks on PanelPro
+      etc....</p>
 
-      <p>This service depends on being able to do memory read and
-      write commands to the command station. This is currently
-      supported by the serial connection on the command stations
-      only. Those devices that rely on the NCE-USB adapter, like
-      the PowerCab or SB3, are not currently supported due to lack
-      of command station memory access.</p>
+      <p>When running with the internal clock as master, the NCE clock is adjusted, forward or
+      backwards, some number of seconds just before the minute rolls over. So NCE time does jump
+      slightly as time is adjusted but the goal is the minutes tick off at the same time as the
+      internal clock.</p>
+
+      <p>This service depends on being able to do memory read and write commands to the command
+      station. This is currently supported by the serial connection on the command stations only.
+      Those devices that rely on the NCE-USB adapter, like the PowerCab or SB3, are not currently
+      supported due to lack of command station memory access.</p>
 
       <h2>Clock Status Lines</h2>
 
-      <p>These lines display current status of each clock and
-      settings. When running in sync mode, the line that is the
-      master will be so marked. Also the current error between the
-      NCE and internal clock will be displayed.</p>
+      <p>These lines display current status of each clock and settings. When running in sync mode,
+      the line that is the master will be so marked. Also the current error between the NCE and
+      internal clock will be displayed.</p>
 
       <h2>Clock Settings</h2>
 
-      <p>These are the same as making changes from the ProCab
-      throttle. If the sync mode is 'Internal Master' these are
-      disabled and you have to make your changes via the internal
-      clock control panel.</p>
+      <p>These are the same as making changes from the ProCab throttle. If the sync mode is
+      'Internal Master' these are disabled and you have to make your changes via the internal clock
+      control panel.</p>
 
-      <p>Changing clock settings while in sync mode will cause the
-      sync mode to reset and perform initialization for that sync
-      mode.</p>
+      <p>Changing clock settings while in sync mode will cause the sync mode to reset and perform
+      initialization for that sync mode.</p>
 
       <h2>Polling Speed</h2>
 
-      <p>This sets how often a clock read is made just for the
-      purpose of updating the clock monitor display. Setting this
-      low will increase the serial traffic to the command station.
-      But setting this high will also cause the clock status
-      display to lag considerable and the indicated 'error' will
-      tend to look worse but that is cosmetic only.</p>
+      <p>This sets how often a clock read is made just for the purpose of updating the clock
+      monitor display. Setting this low will increase the serial traffic to the command station.
+      But setting this high will also cause the clock status display to lag considerable and the
+      indicated 'error' will tend to look worse but that is cosmetic only.</p>
 
       <h2>PID Constants</h2>
 
-      <p>These values should generally be left alone. They adjust
-      how the calculations are handled to keep the NCE and internal
-      clock in sync. It was a very loose 'PID' type calculation.
-      Generally the clock sync will improve as it is allowed to
-      run. The first few minutes may hunt around while finding the
-      best adjustments.</p>
+      <p>These values should generally be left alone. They adjust how the calculations are handled
+      to keep the NCE and internal clock in sync. It was a very loose 'PID' type calculation.
+      Generally the clock sync will improve as it is allowed to run. The first few minutes may hunt
+      around while finding the best adjustments.</p>
 
       <h3>P Factor</h3>
 
-      <p>This adjusts how much the current error is used to adjust
-      the clocks.</p>
+      <p>This adjusts how much the current error is used to adjust the clocks.</p>
 
       <h3>I Factor</h3>
 
-      <p>This adjusts how much the difference between the current
-      error and prior error is used in the clock adjustments.</p>
+      <p>This adjusts how much the difference between the current error and prior error is used in
+      the clock adjustments.</p>
 
       <h3>D Factor</h3>
 
-      <p>This adjusts how much the rate of change between the
-      current error and the prior error is used in adjusting the
-      clock.</p><!--#include virtual="/Footer.shtml" -->
+      <p>This adjusts how much the rate of change between the current error and the prior error is
+      used in adjusting the clock.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,81 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: PanelPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: PanelPro Main Window</h1>
-      <p>The PanelPro main window
-      gives you access to all the capabilities of JMRI.</p>
 
-      <p>Help on specific menus:</p>
-
-      <ul>
-        <li>Edit - (<a href=
-        "../TabbedPreferences.shtml">Preferences</a>)</li>
-
-        <li><a href=
-        "../../jmri/jmrit/ToolsMenu.shtml">Tools</a></li>
-
-        <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a></li>
-
-        <li><a href=
-        "../../jmri/jmrit/display/PanelMenuHelp.shtml">Panels</a></li>
-
-        <li>(Menus specific to your layout connection will appear
-        here)</li>
-
-        <li><a href=
-        "../../../package/jmri/jmrit/DebugMenu.shtml">Debug</a></li>
-
-        <li>Window - Shows the currently available windows
-
-          <ul>
-            <li>Minimize - minimize the current window, hides
-            it.</li>
-          </ul>
-        </li>
-
-        <li>Help
-
-          <ul>
-            <li>Window Help - Opens a help page specific to the
-            current window. For the main window, that's this
-            page.</li>
-
-            <li>General Help - Opens the main JMRI Help page</li>
-
-            <li>License - Displays the JMRI license.</li>
-
-            <li>Locations - Show where the JMRI program and
-            preferences directories are located</li>
-
-            <li>Context - Displays information about your setup of
-            JMRI that might be useful when somebody is trying to
-            help with a problem.</li>
-
-            <li>Upload Debugging Info - Opens a window for
-            uploading debugging info.</li>
-          </ul>
-        </li>
-      </ul>
-
+      <p>The PanelPro main window gives you access to all the capabilities of JMRI. See <a href=
+      "../../../html/apps/PanelPro/index.shtml">PanelPro</a> for details.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

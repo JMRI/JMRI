@@ -446,7 +446,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             OperationsXml.save();
         }
         if (ae.getSource() == deleteButton) {
-            log.debug("car delete button activated");
+            log.debug("rolling stock delete button activated");
             // disable delete and save buttons
             deleteButton.setEnabled(false);
             saveButton.setEnabled(false);

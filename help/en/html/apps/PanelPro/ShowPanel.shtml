@@ -1,79 +1,66 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Displaying JMRI Panel Files</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Displaying JMRI Panel Files</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Displaying Panel File Contents</h1>
 
-      <p>To load a Panel previously saved to disk in JMRI
-      and have the program display it, see <a href="../LoadStoreWork.shtml">
-      Loading and Storing Your Work.</a><br>
-      In contrast, this page describes how to show the contents
-      of the file itself, meaning the data used to draw
-      the Panel, either on screen or on paper.</p>
+      <p>To load a Panel previously saved to disk in JMRI and have the program display it, see
+      <a href="../LoadStoreWork.shtml">Loading and Storing Your Work.</a><br>
+      In contrast, this page describes how to show the contents of the file itself, meaning the
+      data used to draw the Panel, either on screen or on paper.</p>
 
-      <p>JMRI panel and configuration information is stored in XML
-      files. These are text files that people can directly read,
-      but the format and structure information take a lot of
-      space.</p>
+      <p>JMRI panel and configuration information is stored in XML files. These are text files that
+      people can directly read, but the format and structure information take a lot of space.</p>
 
-      <p>JMRI provides a tool, called an "XSLT transform", to
-      convert the JMRI panel file into a more readable web page.
-      You open your panel file with a web browser, and can then
-      read it, print it, copy and paste into a file of another
-      form, etc.</p>
-      <img src="images/PanelFileView.png"
-           alt="screen shot of xml preview" align="right" width="462"
-           height="164" hspace="0" vspace="0">
-
+      <p>JMRI provides a tool, called an "XSLT transform", to convert the JMRI panel file into a
+      more readable web page. You open your panel file with a web browser, and can then read it,
+      print it, copy and paste into a file of another form, etc.</p>
+      <img src="images/PanelFileView.png" alt="screen shot of xml preview" class="floatRight"
+      width="462" height="164">
       <p>A large example of this is available as a <a href=
-      "https://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF
-      file</a>. This is the configuration information, including
-      routes, Logix, etc, for the <a href=
-      "https://jmri.org/community/examples/SPShasta.shtml">SP Shasta
-      Route</a> layout.</p>
+      "https://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF file</a>. This is the
+      configuration information, including routes, Logix, etc, for the <a href=
+      "https://jmri.org/community/examples/SPShasta.shtml">SP Shasta Route</a> layout.</p>
 
-      <p>To view your own panel file, the easiest approach is to
-      view it via JMRI's web server which knows how to find all
-      the needed formating files automatically.  The steps are: </p>
+      <p>To view your own panel file, the easiest approach is to view it via JMRI's web server
+      which knows how to find all the needed formating files automatically. The steps are:</p>
+
       <ol>
-      <li>Start the JMRI web server from the Debug menu
-      <li>In your favorite browser, go to
-        <a href="http://localhost:12080">http://localhost:12080</a>
-        (the 12080 is the default setting; if you've changed
-        that value in the JMRI preferences, use the correct one here)
-      <li>Finally, navigate to your panel file.  If it's in the
-        user files part of the preferences (which is strongly
-        recommended) start here:
-        <a href="http://localhost:12080/prefs">http://localhost:12080/prefs</a>
-        then either click on your file, or navigate into the proper directory
-        to find it.
-        <p>
-        If you have put your file in the program directory (not recommended),
-        start here:
-        <a href="http://localhost:12080/dist">http://localhost:12080/dist</a>
-        instead.
-    </ol>
+        <li>Start the JMRI web server using <strong>Tools ⇒ Servers ⇒ Start JMRI Web
+        Server</strong></li>
 
+        <li>In your favorite browser, go to <a href=
+        "http://localhost:12080">http://localhost:12080</a> (the 12080 is the default setting; if
+        you've changed that value in the JMRI preferences, use the correct one here)
+        </li>
+
+        <li>Finally, navigate to your panel file. If it's in the user files part of the preferences
+        (which is strongly recommended) start here: <a href=
+        "http://localhost:12080/prefs">http://localhost:12080/prefs</a> then either click on your
+        file, or navigate into the proper directory to find it.
+          <p>If you have put your file in the program directory (not recommended), start here:
+          <a href="http://localhost:12080/dist">http://localhost:12080/dist</a> instead.</p>
+        </li>
+      </ol>
 
       <p>For technical information on this, see the <a href=
       "../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
