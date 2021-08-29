@@ -62,6 +62,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
         silenceableProperties.add("beans");
+        setRegisterSelf();
+    }
+    
+    final void setRegisterSelf(){
         registerSelf();
     }
 
@@ -143,6 +147,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public E getBySystemName(@Nonnull String systemName) {
         return _tsys.get(systemName);
@@ -156,6 +161,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      * @param comparator a Comparator encapsulating the system specific comparison behavior
      * @return a named bean of the appropriate type, or null if not found
      */
+    @CheckForNull
     protected E getBySystemName(String systemName, Comparator<String> comparator){
         for (Map.Entry<String,E> e : _tsys.entrySet()) {
             if (0 == comparator.compare(e.getKey(), systemName)) {
@@ -174,6 +180,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public E getNamedBean(@Nonnull String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);

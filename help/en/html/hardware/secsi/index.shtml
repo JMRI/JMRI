@@ -1,52 +1,41 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - TracTronics SECSI System</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: TracTronics SECSI System</h1>
-      JMRI can
-      connect to TracTronics SECSI system Nodes. <a name=
-      "limitations" id="limitations"></a>
+      JMRI can connect to TracTronics SECSI system Nodes.
+      <h2 id="limitations">Limitations</h2>
 
-      <h2>Limitations</h2>
+      <p><strong>As of 2016 TracTronics SECSI is no longer online.</strong> It previously appeared
+      at <a href="http://www.tractronics.com">www.tractronics.com</a>. A archived version of their
+      web site is available on the <a href=
+      "http://web.archive.org/web/20160323021156/http://www.TracTronics.com">Internet
+      Archive</a>.</p>
 
-      <p><strong>As of 2016 TracTronics SECSI is no longer online.</strong> 
-      It previously appeared at 
-      <a href="http://www.tractronics.com">www.tractronics.com</a>.
-      A archived version of their web site is available on the
-      <a href="http://web.archive.org/web/20160323021156/http://www.TracTronics.com">Internet Archive</a>.
-      <p>
-      SECSI support will remain in JMRI, but it's unlikely to 
-      be updated any further if there's no active manufacturer of components.
-      
-      <a name="connecting" id="connecting"></a></p>
+      <p>SECSI support will remain in JMRI, but it's unlikely to be updated any further if there's
+      no active manufacturer of components.</p>
 
-      <h2>Connecting</h2>
-      
-      You tell JMRI about how to connect to your SECSI
-      hardware via the Connections pane in the Preferences window.
-      Select "SECSI" as the manufacturer name.
-
+      <h2 id="connecting">Connecting</h2>
+      You tell JMRI about how to connect to your SECSI hardware via the Connections pane in the
+      Preferences window. Select "SECSI" as the manufacturer name.
       <h3>Naming</h3>
 
-      <p>The system letter is "V", so for example the first Sensor
-      on node 5 would be "VS5001".</p>
-      
+      <p>The system letter is "V", so for example the first Sensor on node 5 would be "VS5001".</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

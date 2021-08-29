@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright JMRI.org 2020 -->
 
-  <title>JMRI: CTC Tools</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: CTC Tools</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>JMRI: CTC Tools</h1>
 
-    <h1>JMRI: CTC Tools</h1>
-    
-    <p>
-      This help placeholder is for the "new" implementation of CTC that provides capabilities beyond <a href="./uss/index.shtml">
-      USS CTC</a>.  
-      See <a href="../../package/jmri/jmrit/ctc/CTC.shtml">here </a> for information on this new CTC implementation.  It provides
-      a GUI editor to configure the CTC rules and a run-time to implement CTC logic. It also builds a skeleton
-      Panel Editor CTC panel with the turnout levers/indicators, signal levers/indicators, code button, etc.,
-      and a minimal track plan.
+      <p>JMRI has two CTC tools.</p>
 
-      </p>
-      
-      <p class="noted">
-      The original implementation of USS CTC tools (requires scripting) is discussed <a href="./uss/index.shtml"> here.</a>
-      </p>
+      <dl style="margin-left: 2em">
+        <dt>
+          The original scripting based <a href="uss/index.shtml">USS CTC</a>.
+        </dt>
 
+        <dd>This uses scripting along with a couple of helper classes.</dd>
+
+        <dt>
+          The new GUI based <a href="../../package/jmri/jmrit/ctc/CTC.shtml">CTC</a>.
+        </dt>
+
+        <dd>A GUI editor is used to configure the CTC rules and a run-time is used to implement the
+        CTC logic. It can also build a skeleton Panel Editor CTC panel with the turnout
+        levers/indicators, signal levers/indicators, code button, etc., with a minimal track
+        plan.</dd>
+      </dl>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

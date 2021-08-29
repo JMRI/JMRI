@@ -1,102 +1,79 @@
 <!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure LocoNet ID</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet ID">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Configure LocoNet ID Tool</h1>
 
       <h2>What is LocoNet ID?</h2>
 
-      <p>The "LocoNet ID" is a number which is used by throttles
-      and UR90, UR91, UR92, and UR92CE devices when a throttle is
-      operating in a tetherless mode using infrared or simplex
-      radio communications. When receiving infrared signals, the
-      UR90, UR91, UR92 will only pay attention to throttles which
-      are using the same LocoNet ID number. When receiving simplex
-      radio signals, the UR91 will only pay attention to throttles
-      which are using the same LocoNet ID number.</p>
-
-      <p>The LocoNet ID number is intended to allow multiple
-      Digitrax layouts to operate independently when in close
-      proximity. In this case, each each layout must use a
-      different LocoNet ID number.</p>
-
-      <p>If there are no other Digitrax layouts in close proximity,
-      then there is no need to change the LocoNet ID number.</p>
-
-      <p>When there is more than one UR9x device installed, it is
-      important that all UR9x devices use the same LocoNet ID
+      <p>The "LocoNet ID" is a number which is used by throttles and UR90, UR91, UR92, and UR92CE
+      devices when a throttle is operating in a tetherless mode using infrared or simplex radio
+      communications. When receiving infrared signals, the UR90, UR91, UR92 will only pay attention
+      to throttles which are using the same LocoNet ID number. When receiving simplex radio
+      signals, the UR91 will only pay attention to throttles which are using the same LocoNet ID
       number.</p>
 
-      <p>When there are no UR9x devices installed, this tool does
-      not perform any useful function.</p>
+      <p>The LocoNet ID number is intended to allow multiple Digitrax layouts to operate
+      independently when in close proximity. In this case, each each layout must use a different
+      LocoNet ID number.</p>
+
+      <p>If there are no other Digitrax layouts in close proximity, then there is no need to change
+      the LocoNet ID number.</p>
+
+      <p>When there is more than one UR9x device installed, it is important that all UR9x devices
+      use the same LocoNet ID number.</p>
+
+      <p>When there are no UR9x devices installed, this tool does not perform any useful
+      function.</p>
 
       <h2>Using the LocoNet ID Tool</h2>
 
-      <p>The LocoNet ID Tool may be used to read and to change the
-      LocoNet ID number.</p>
+      <p>The LocoNet ID Tool may be used to read and to change the LocoNet ID number.</p>
 
-      <p>Use the "Query" button to read the current LocoNet ID
-      number. If a UR9x device responds to the query, the reported
-      LocoNet ID number will be updated in the tool.</p>
+      <p>Use the "Query" button to read the current LocoNet ID number. If a UR9x device responds to
+      the query, the reported LocoNet ID number will be updated in the tool.</p>
 
-      <p>To change the LocoNet ID number, use the pull-down box to
-      select the desired LocoNet ID number, then use the "Set"
-      button to write the LocoNet ID number to the UR9x
-      devices.</p>
+      <p>To change the LocoNet ID number, use the pull-down box to select the desired LocoNet ID
+      number, then use the "Set" button to write the LocoNet ID number to the UR9x devices.</p>
 
-      <p>After changing the LocoNet ID number, all throttles
-      capable of tetherless operation must be un-plugged then
-      plugged in to LocoNet so that they will accept the new
-      LocoNet ID number. <i>Failure to acquire this updated LocoNet
-      ID number on a throttle will prevent the throttle from
-      communicating with the UR9x device via infrared and/or
-      Simplex radio</i>.</p>
+      <p>After changing the LocoNet ID number, all throttles capable of tetherless operation must
+      be un-plugged then plugged in to LocoNet so that they will accept the new LocoNet ID number.
+      <em>Failure to acquire this updated LocoNet ID number on a throttle will prevent the throttle
+      from communicating with the UR9x device via infrared and/or Simplex radio</em>.</p>
 
       <h2>Note</h2>
 
-      <p>For the purposes of this discussion, the UR92CE is
-      equivalent to the UR92. For clarity, this discussion only
-      shows the term "UR92".</p>
+      <p>For the purposes of this discussion, the UR92CE is equivalent to the UR92. For clarity,
+      this discussion only shows the term "UR92".</p>
 
       <h2>See Also</h2>
 
-      <p>For more information on the UR90 and its infrared
-      tetherless operation, see the appropriate UR90 link at the
-      <a href="http://digitrax.com/menu_wireless.php">Digitrax
+      <p>For more information on the UR90 and its infrared tetherless operation, see the
+      appropriate UR90 link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax
       "Wireless" page</a>.</p>
 
-      <p>For more information on the UR91 and its infrared and
-      "Simplex" radio tetherless operation, see the appropriate
-      link at the <a href=
-      "http://digitrax.com/menu_wireless.php">Digitrax "Wireless"
-      page</a>.</p>
+      <p>For more information on the UR91 and its infrared and "Simplex" radio tetherless
+      operation, see the appropriate link at the <a href=
+      "http://digitrax.com/menu_wireless.php">Digitrax "Wireless" page</a>.</p>
 
-      <p>For more information on the UR92 and its infrared and
-      "Duplex" radio tetherless operation, see the appropriate link
-      at the <a href=
-      "http://digitrax.com/menu_wireless.php">Digitrax "Wireless"
-      page</a>.</p>
+      <p>For more information on the UR92 and its infrared and "Duplex" radio tetherless operation,
+      see the appropriate link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax
+      "Wireless" page</a>.</p>
 
       <p>See also page 98 of the Digitrax <a href=
-      "http://www.digitrax.com/ftp/superchief.pdf">Super Chief
-      manual</a>(PDF).</p>
-
-    <!--#include virtual="/Footer.shtml" -->
+      "http://www.digitrax.com/ftp/superchief.pdf">Super Chief manual</a>(PDF).</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

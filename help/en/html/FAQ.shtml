@@ -1,240 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Frequently Asked Questions (General)</title>
-  <meta name="author" content="Jerry Grochow">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
   <!-- special inline FAQ styles -->
-  <style type="text/css">
-* {
-  box-sizing: border-box;
-}
 
-/* Create two equal columns that float next to each other */
-.column {
+  <style type="text/css">
+  * {
+  box-sizing: border-box;
+  }
+
+  /* Create two equal columns that float next to each other */
+  .column {
   float: left;
   width: 50%;
   padding: 10px;
-}
+  }
 
-/* Clear floats after the columns */
-.row:after {
+  /* Clear floats after the columns */
+  .row:after {
   content: "";
   display: table;
   clear: both;
-}
-</style>
+  }
+  </style><!-- FAQ-Head -->
 
-<!-- FAQ-Head -->
   <script type="text/javascript">
     /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
-  <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
-  media="screen">
-<!-- /FAQ-Head -->
-
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Frequently Asked Questions (General)</h1>
 
-      <p>Making it easy for all model railroaders to get started with JMRI is important. Below are some common questions and answers
-      frequently asked in user forums, of experienced users, and of developers. As your experience with JMRI grows, you will have your own questions.
-      The best place to get help is by asking for it in the JMRI User Forum.  Below are links to other topics that will also further your understanding:</p>
+      <p>Making it easy for all model railroaders to get started with JMRI is important. Below are
+      some common questions and answers frequently asked in user forums, of experienced users, and
+      of developers. As your experience with JMRI grows, you will have your own questions. The best
+      place to get help is by asking for it in the JMRI User Forum. Below are links to other topics
+      that will also further your understanding:</p>
 
       <div class="row">
+        <div class="column">
+          <p>Introductions and Getting Started Guides:</p>
 
-      <div class="column">
+          <ul>
+            <li>
+              <a href="apps/PanelPro/GettingStarted.shtml">Getting Started With PanelPro</a>
+            </li>
 
-           <p>Introductions and Getting Started Guides:</p>
-      <ul>
-        <li><a href="apps/PanelPro/GettingStarted.shtml">Getting Started With PanelPro</a>
-        <li><a href="apps/DecoderPro/Tour.shtml">DecoderPro Quick Tour</a>
-        <li><a href="apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>
-        <li><a href="tools/signaling//SignalingSetup.shtml">Signaling Quick Start</a>
-        <li><a href="tools/consisttool/ConsistTool.shtml">Consist Basics</a>
-        <li><a href="tools/scripting/HowTo.shtml">Scripting "How To"</a>
-        <li><a href="../package/jmri/jmrit/logix/Warrant.shtml">Getting Started with Warrants</a>
-        <li><a href="../package/jmri/jmrit/operations/Operations.shtml#QuickStartHelp">OperationsPro Quick Start</a>
-      </ul>
+            <li>
+              <a href="apps/DecoderPro/Tour.shtml">DecoderPro Quick Tour</a>
+            </li>
 
-      </div>
+            <li>
+              <a href="apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>
+            </li>
 
-      <div class="column">
+            <li>
+              <a href="tools/signaling/SignalingSetup.shtml">Signaling Quick Start</a>
+            </li>
 
-      <p>Additional FAQs on specific topics:</p>
+            <li>
+              <a href="tools/consisttool/ConsistTool.shtml">Consist Basics</a>
+            </li>
 
-      <ul>
-        <li><a href="apps/PanelPro/FAQ.shtml">PanelPro FAQ</a>
-        <li><a href="apps/DecoderPro/FAQ.shtml">DecoderPro FAQ</a>
-        <li><a href="setup/FAQ.shtml">JMRI Setup FAQ (TBD)</a>
-        <li><a href="../../../install/FAQLinux.shtml">Linux FAQ</a>
-        <li><a href="doc/Technical/GitFAQ.shtml">Git (Development Tool) FAQ</a>
-      </ul>
+            <li>
+              <a href="tools/scripting/HowTo.shtml">Scripting "How To"</a>
+            </li>
 
-      </div>
+            <li>
+              <a href="../package/jmri/jmrit/logix/Warrant.shtml">Getting Started with Warrants</a>
+            </li>
 
+            <li>
+              <a href=
+              "../package/jmri/jmrit/operations/Operations.shtml#QuickStartHelp">OperationsPro
+              Quick Start</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="column">
+          <p>Additional FAQs on specific topics:</p>
+
+          <ul>
+            <li>
+              <a href="apps/PanelPro/FAQ.shtml">PanelPro FAQ</a>
+            </li>
+
+            <li>
+              <a href="apps/DecoderPro/FAQ.shtml">DecoderPro FAQ</a>
+            </li>
+
+            <li>
+              <a href="setup/FAQ.shtml">JMRI Setup FAQ (TBD)</a>
+            </li>
+
+            <li>
+              <a href="../../../install/FAQLinux.shtml">Linux FAQ</a>
+            </li>
+
+            <li>
+              <a href="doc/Technical/GitFAQ.shtml">Git (Development Tool) FAQ</a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div id="para">
+        <dl class="faq">
+          <dt class="on" id="canuse">Can I use JMRI to...</dt>
 
+          <dd>
+            <ul>
+              <li>
+                <strong>operate my DCC trains?</strong><br>
+                Yes. JMRI provides the functions of a <a href=
+                "tools/throttle/ThrottleMain.shtml">throttle (or many throttles)</a> to your DCC
+                command station.
+              </li>
 
-      <dl class="faq">
-        <dt class="on" id="canuse">Can I use JMRI to...</dt>
+              <li>
+                <strong>program the decoders in my locomotives?</strong><br>
+                Yes. JMRI <a href="apps/DecoderPro/index.shtml">DecoderPro</a> greatly simplifies
+                programming decoders through your DCC command station.
+              </li>
 
-        <dd>
-        <ul>
+              <li>
+                <strong>control accessories on my layout?</strong><br>
+                Yes, <a href="hardware/index.shtml">of all kinds</a> including turnouts, lights,
+                signals, room lighting, automations - anything that can be electrically connected
+                to your computer, DCC or other object control system which uses any <a href=
+                "hardware/index.shtml#networks">network or protocol</a> that JMRI supports.
+              </li>
 
-          <li><strong>operate my DCC trains?</strong>
-          <br>Yes. JMRI provides the functions of a <a href="tools/throttle/ThrottleMain.shtml">throttle (or many throttles)</a>
-          to your DCC command station.</li>
-          <li><strong>program the decoders in my locomotives?</strong>
-          <br>Yes.  JMRI <a href="apps/DecoderPro/index.shtml">DecoderPro </a>greatly simplifies programming decoders through your DCC command station.</li>
-          <li><strong>control accessories on my layout?</strong>
-          <br>Yes, <a href="hardware/index.shtml">of all kinds </a>including turnouts, lights, signals, room lighting, automations - anything that
-          can be electrically connected to your computer, DCC or other object control system which uses any <a href="hardware/index.shtml#networks">
-          network or protocol </a>that JMRI supports.</li>
-          <li><strong>receive and process feedback from my layout?</strong>
-          <br>Yes.  Any type of <a href="tools/Sensors.shtml">sensor </a>can be used to provide feedback from different aspects of your layout.</li>
-          <li><strong>operate my DC trains?</strong>
-          <br>Only to the extent that they can be controlled by whatever DCC system you are using.</li>
-          <li><strong>control signals on my layout?</strong>
-          <br>Yes, according to many different <a href="tools/signaling/index.shtml">signaling </a>protocols.</li>
-          <li><strong>automate train operation?</strong>
-          <br>Yes, in <a href="tools/automation/index.shtml">many different ways.</a></li>
-          <li><strong>do more than one of these things at the same time?</strong>
-          <br>YES!  You can use JMRI for as little or as much as you want.  Start small with one function. Keep
-          adding more as you learn and your layout grows.</li>
+              <li>
+                <strong>receive and process feedback from my layout?</strong><br>
+                Yes. Any type of <a href="tools/Sensors.shtml">sensor</a> can be used to provide
+                feedback from different aspects of your layout.
+              </li>
 
-        </ul>
-        </dd>
+              <li><strong>operate my DC trains?</strong><br>
+              Only to the extent that they can be controlled by whatever DCC system you are
+              using.</li>
 
-        <dt id="wherestart">JMRI has so many features, where do I start?</dt>
+              <li>
+                <strong>control signals on my layout?</strong><br>
+                Yes, according to many different <a href=
+                "tools/signaling/index.shtml">signaling</a> protocols.
+              </li>
 
-        <dd>Many people start by connecting their DCC system controller and registering their
-        locomotives using <a href="apps/DecoderPro/index.shtml">DecoderPro </a>.  You can then start running trains using a throttle
-        in JMRI, a <a href="../package/jmri/jmrit/withrottle/UserInterface.shtml">wireless throttle, or your smartphone / tablet.</a>  Alternatively,
-        you can dig right in entering layout information on a Layout Editor Panel in PanelPro (<a href="apps/PanelPro/GettingStarted.shtml">tutorial</a>).
-        Before moving on to <a href="apps/DispatcherPro/index.shtml">DispatcherPro</a> and <a href="apps/OperationsPro/index.shtml">OperationsPro</a>,
-        make sure you have a working Panel. More advanced operations using these modules requires a
-        more complex setup before they will work properly. The KEY... Don't do too much at once.  Get the more basic aspects of JMRI working before you take
-        the next step.
-        </dd>
+              <li>
+                <strong>automate train operation?</strong><br>
+                Yes, in <a href="tools/automation/index.shtml">many different ways.</a>
+              </li>
 
-        <dt id="wherelearn">Where can I learn about using JMRI?</dt>
+              <li><strong>do more than one of these things at the same time?</strong><br>
+              YES! You can use JMRI for as little or as much as you want. Start small with one
+              function. Keep adding more as you learn and your layout grows.</li>
+            </ul>
+          </dd>
 
-        <dd>
-          The internet - There are many presentations and videos available to help in learning different
-          aspects of JMRI.  The JMRI.org web site has getting started guides (<a href="apps/PanelPro/GettingStarted.shtml">PanelPro</a>, <a href="apps/DecoderPro/Tour.shtml">DecoderPro</a>).
-          Reading questions and responses asked by others on the user forum. Asking your own questions on the forum.
-        </dd>
+          <dt id="wherestart">JMRI has so many features, where do I start?</dt>
 
-        <dt id="apps">What is the difference between using PanelPro, DecoderPro, and the other JMRI modules?</dt>
+          <dd>
+            Many people start by connecting their DCC system controller and registering their
+            locomotives using <a href="apps/DecoderPro/index.shtml">DecoderPro</a> . You can then
+            start running trains using a throttle in JMRI, a <a href=
+            "../package/jmri/jmrit/withrottle/UserInterface.shtml">wireless throttle, or your
+            smartphone / tablet.</a> Alternatively, you can dig right in entering layout
+            information on a Layout Editor Panel in PanelPro (<a href=
+            "apps/PanelPro/GettingStarted.shtml">tutorial</a>). Before moving on to <a href=
+            "apps/DispatcherPro/index.shtml">DispatcherPro</a> and <a href=
+            "apps/OperationsPro/index.shtml">OperationsPro</a>, make sure you have a working Panel.
+            More advanced operations using these modules requires a more complex setup before they
+            will work properly. The KEY... Don't do too much at once. Get the more basic aspects of
+            JMRI working before you take the next step.
+          </dd>
 
-        <dd>
-         The JMRI application is a series of functions and user interfaces operating on a common linked set of data.
-         While <a href="apps/DecoderPro/index.shtml">DecoderPro </a>, <a href="apps/PanelPro/index.shtml">PanelPro </a>,<a href="apps/DispatcherPro/index.shtml"> DispatcherPro, </a>
-         <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro,</a>
-         <a href="apps/SoundPro/SoundPro.shtml"> and SoundPro </a> serve different purposes, all use the same set of data.
-         For example, when opening PanelPro, you get a main window with pulldowns that include all the functions of DecoderPro.
-         If you start by opening DecoderPro, you get a roster window with pulldowns that include all the functions of PanelPro.
-        </dd>
+          <dt id="wherelearn">Where can I learn about using JMRI?</dt>
 
-        <dt id="programming">How much computer programming knowledge do I need to use JMRI?</dt>
+          <dd>
+            The internet - There are many presentations and videos available to help in learning
+            different aspects of JMRI. The JMRI.org web site has getting started guides (<a href=
+            "apps/PanelPro/GettingStarted.shtml">PanelPro</a>, <a href=
+            "apps/DecoderPro/Tour.shtml">DecoderPro</a>). Reading questions and responses asked by
+            others on the user forum. Asking your own questions on the forum.
+          </dd>
 
-        <dd>
-        None - to use most of the functions of JMRI.  Advanced JMRI capabilities use programming-like logic
-        (such as the <a href="tools/Logix.shtml">Logix </a>tool), but basic capabilities necessary to run your railroad are always available with a simpler
-        interface (such as the <a href="tools/Routes.shtml">Routes </a>and <a href="tools/LRoutes.shtml">LRoutes </a>tools).  Those with computer programming knowledge can write <a href="tools/scripting/index.shtml">
-        "scripts" </a> and even develop complete applications that use the underlying JMRI functions
-        (for example, <a href="http://cats4ctc.wikidot.com/">CATS </a> and <a href="apps/index.shtml#addapp">many others</a>).
-        </dd>
+          <dt id="apps">What is the difference between using PanelPro, DecoderPro, and the other
+          JMRI modules?</dt>
 
-        <dt id="commandsta">Is JMRI a DCC command station?</dt>
+          <dd>
+            The JMRI application is a series of functions and user interfaces operating on a common
+            linked set of data. While <a href="apps/DecoderPro/index.shtml">DecoderPro</a> ,
+            <a href="apps/PanelPro/index.shtml">PanelPro</a> , <a href=
+            "apps/DispatcherPro/index.shtml">DispatcherPro,</a> <a href=
+            "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro,</a> <a href=
+            "apps/SoundPro/SoundPro.shtml">and SoundPro</a> serve different purposes, all use the
+            same set of data. For example, when opening PanelPro, you get a main window with
+            pulldowns that include all the functions of DecoderPro. If you start by opening
+            DecoderPro, you get a roster window with pulldowns that include all the functions of
+            PanelPro.
+          </dd>
 
-        <dd>
-        No.  JMRI is software that greatly enhances your ability to control your trains through your DCC command station.
-        </dd>
+          <dt id="programming">How much computer programming knowledge do I need to use JMRI?</dt>
 
-        <dt id="connections">Can I have more than one "connection" to JMRI?</dt>
+          <dd>
+            None - to use most of the functions of JMRI. Advanced JMRI capabilities use
+            programming-like logic (such as the <a href="tools/Logix.shtml">Logix</a> tool), but
+            basic capabilities necessary to run your railroad are always available with a simpler
+            interface (such as the <a href="tools/Routes.shtml">Routes</a> and <a href=
+            "tools/LRoutes.shtml">LRoutes</a> tools). Those with computer programming knowledge can
+            write <a href="tools/scripting/index.shtml">"scripts"</a> and even develop complete
+            applications that use the underlying JMRI functions (for example, <a href=
+            "http://cats4ctc.wikidot.com/">CATS</a> and <a href="apps/index.shtml#addapp">many
+            others</a>).
+          </dd>
 
-        <dd>
-        Yes.  You can have multiple connections to multiple DCC controllers, to networks of accessory controllers, etc.  See
-        <a href="../package/apps/TabbedPreferences.shtml#Connection">here </a>for
-        information on how to set up multiple connections. For a complete list of all hardware supported, see<a href="hardware/index.shtml"> here</a>.
-        </dd>
+          <dt id="commandsta">Is JMRI a DCC command station?</dt>
 
-        <dt id="problem">What if I have a problem using JMRI?</dt>
+          <dd>No. JMRI is software that greatly enhances your ability to control your trains
+          through your DCC command station.</dd>
 
-        <dd>
-        There many people who are available via the user group (<a href="https://groups.io/g/jmriusers">JMRI Users at groups.io</a>)
-        to assist you.  Just ask a question! There are also dozens of blogs and videos on the internet posted by people, just like you,
-        who want to help. <strong> The important thing is...  don't give up!</strong> We all want you to succeed in using JMRI, making your model railroad
-        as good as it can be.
-        </dd>
+          <dt id="connections">Can I have more than one "connection" to JMRI?</dt>
 
-        <dt id="errormsg">What does it mean to get Error 301, Error 306 or any other errors?</dt>
+          <dd>
+            Yes. You can have multiple connections to multiple DCC controllers, to networks of
+            accessory controllers, etc. See <a href=
+            "../package/apps/TabbedPreferences.shtml#Connection">here</a> for information on how to
+            set up multiple connections. For a complete list of all hardware supported, see
+            <a href="hardware/index.shtml">here</a>.
+          </dd>
 
-        <dd>
-        JMRI will display various errors when it finds something wrong in attempting to communicate with your DCC command station.
-        This <a href="apps/Errors.shtml">list of all error messages </a>also provides some suggestions about how to clear them.
-        </dd>
+          <dt id="problem">What if I have a problem using JMRI?</dt>
 
-        <dt id="bug">What if my "problem" turns out to be a bug in JMRI?</dt>
+          <dd>
+            There many people who are available via the user group (<a href=
+            "https://groups.io/g/jmriusers">JMRI Users at groups.io</a>) to assist you. Just ask a
+            question! There are also dozens of blogs and videos on the internet posted by people,
+            just like you, who want to help. <strong>The important thing is... don't give
+            up!</strong> We all want you to succeed in using JMRI, making your model railroad as
+            good as it can be.
+          </dd>
 
-        <dd>
-        JMRI is open source and maintained by JMRI community volunteers.  They are proud of their work and want it to be "bug
-        free". As JMRI continously develops, there will be bugs. If you find one, please report it on JMRI Users forum or directly to
-        <a href="https://github.com/JMRI/JMRI/issues">the JMRI issues lists on Github.</a> The many developers will review them and work
-        to resolve the issue.  What this means is that you can't get a schedule of what bugs will be fixed when,
-        but you can count on the community to address bugs that are stopping you from enjoying JMRI as quickly as they can.  In some cases,
-        that might even be a day or less;  in others, unfortunately, it could be months.  Remember that all who work on JMRI are
-        volunteering their time. All are dedicated to doing the best they can to make JMRI as great as it can be.
+          <dt id="errormsg">What does it mean to get Error 301, Error 306 or any other errors?</dt>
 
-        </dd>
-<!--
+          <dd>
+            JMRI will display various errors when it finds something wrong in attempting to
+            communicate with your DCC command station. This <a href="apps/Errors.shtml">list of all
+            error messages</a> also provides some suggestions about how to clear them.
+          </dd>
+
+          <dt id="bug">What if my "problem" turns out to be a bug in JMRI?</dt>
+
+          <dd>
+            JMRI is open source and maintained by JMRI community volunteers. They are proud of
+            their work and want it to be "bug free". As JMRI continously develops, there will be
+            bugs. If you find one, please report it on JMRI Users forum or directly to <a href=
+            "https://github.com/JMRI/JMRI/issues">the JMRI issues lists on Github.</a> The many
+            developers will review them and work to resolve the issue. What this means is that you
+            can't get a schedule of what bugs will be fixed when, but you can count on the
+            community to address bugs that are stopping you from enjoying JMRI as quickly as they
+            can. In some cases, that might even be a day or less; in others, unfortunately, it
+            could be months. Remember that all who work on JMRI are volunteering their time. All
+            are dedicated to doing the best they can to make JMRI as great as it can be.
+          </dd>
+          <!--
         <dt id="MORE">MORE</dt>
 
         <dd>
         MORE
         </dd>
  -->
-        <dt id="develops">Who develops and maintains JMRI?</dt>
 
-        <dd>
-        We do!  JMRI is open source and community maintained.  There are over 300 model railroaders who have already made
-        contributions to the effort since 2005 (see their names on the
-        <a href="../Acknowledgements.shtml">Acknowledgements</a> page). Anyone with knowledge of Java
-        (to maintain the programs), HTML (to maintain help documentation), or XML (to maintain decoder definitions) can join in.
-        Become one of the almost 10,000 registered JMRI Users on the groups.io forum, asking your questions and answering the questions of others.
-        </dd>
+          <dt id="develops">Who develops and maintains JMRI?</dt>
 
-        <dt id="wanttohelp">I don't have the skills to help maintain JMRI but I still want to help.  What can I do to help?</dt>
+          <dd>
+            We do! JMRI is open source and community maintained. There are over 300 model
+            railroaders who have already made contributions to the effort since 2005 (see their
+            names on the <a href="../Acknowledgements.shtml">Acknowledgements</a> page). Anyone
+            with knowledge of Java (to maintain the programs), HTML (to maintain help
+            documentation), or XML (to maintain decoder definitions) can join in. Become one of the
+            almost 10,000 registered JMRI Users on the groups.io forum, asking your questions and
+            answering the questions of others.
+          </dd>
 
-        <dd>
-        First and foremost, you can use JMRI.  When you find an issue, or have a good idea, contribute to the
-        <a href="https://groups.io/g/jmriusers">JMRI Users forum on groups.io</a>. You can also <a href="../../../donations.shtml">
-        contribute money </a>- JMRI.org has a small financial need to maintain the web site and source libraries so
-        contributions are always welcome.
-        </dd>
+          <dt id="wanttohelp">I don't have the skills to help maintain JMRI but I still want to
+          help. What can I do to help?</dt>
 
-      </dl>
-
-      </div><!-- close Para -->
-
+          <dd>
+            First and foremost, you can use JMRI. When you find an issue, or have a good idea,
+            contribute to the <a href="https://groups.io/g/jmriusers">JMRI Users forum on
+            groups.io</a>. You can also <a href="../../../donations.shtml">contribute money</a> -
+            JMRI.org has a small financial need to maintain the web site and source libraries so
+            contributions are always welcome.
+          </dd>
+        </dl>
+      </div>
+      <!-- close Para -->
       <!--#include virtual="/Footer.shtml" -->
-
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <!-- FAQ-Tail -->
-  <script type="text/javascript" src="/web/js/faq.js">
-  </script><!-- /FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
+
   <script src="/js/main.js"></script>
 </body>
 </html>

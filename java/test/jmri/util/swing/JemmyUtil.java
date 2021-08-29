@@ -47,10 +47,14 @@ public class JemmyUtil {
     }
     
     static public void enterClickAndLeaveThreadSafe(JButton comp) {
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             JButtonOperator jbo = new JButtonOperator(comp);
             jbo.push();
-        }).start();
+        });
+        t.start();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return t.getState().equals(Thread.State.TERMINATED);
+        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {
@@ -122,6 +126,13 @@ public class JemmyUtil {
                }
         });
         return jl;
+    }
+    
+    static public void waitFor(JmriJFrame f) {
+        f.requestFocus();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return f.isActive();
+        }, "wait for frame to be active");
     }
 
 }

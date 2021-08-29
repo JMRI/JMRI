@@ -60,6 +60,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // location now deleted
         Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 

@@ -8,6 +8,7 @@
     <choice xml:lang="fr">Bas</choice>
     <choice xml:lang="de">Niedrig</choice>
     <choice xml:lang="nl">Laag</choice>
+    <choice xml:lang="cs">Nízký</choice>
   </enumChoice>
   <enumChoice choice="High">
     <choice>High</choice>
@@ -15,5 +16,6 @@
     <choice xml:lang="fr">Haut</choice>
     <choice xml:lang="de">Hoch</choice>
     <choice xml:lang="nl">Hoog</choice>
+    <choice xml:lang="cs">Vysoký</choice>
   </enumChoice>
 </enumVal>

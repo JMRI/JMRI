@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: RailCom Table Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Help RailCom Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help RailCom Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The RailCom Table</h1>
 
       <p>JMRI "Reporters" can feedback RailCom data from a layout into JMRI.</p>
 
-      <p>For more information on Reporters and their use, see the
-      <a href="../../../../html/tools/Reporters.shtml">main
-      Reporter Help page</a>.</p>
-
+      <p>For more information on Reporters and their use, see the <a href=
+      "../../../../html/tools/Reporters.shtml">main Reporter Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

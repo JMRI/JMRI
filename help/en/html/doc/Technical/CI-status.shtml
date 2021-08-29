@@ -1,116 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>
- 	JMRI: CI Status
-    </title>
-<!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CI Status</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>CI Status</h1>
-		
-		<u>Note that this page is still being updated for the 2020 Jenkins installation</u>.
-		<p>
-		See also the 
-		<a href="https://builds.jmri.org/jenkins/view/CI%20Status/">Jenkins status page</a>
-      (hover over a badge to see the name of the run).
-		<!-- we use Jenkins embeddable Protected links, style Plain -->
-		<table>
-		<tr><td align="right">
-		<a href="https://builds.jmri.org/jenkins/job/development/">Development</a>:</td><td>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/packages/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpackages' title="Packages"></a>
-		<br/>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations' title="Deprecations"></a>
-      <a href='https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title="HTML scan"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan' title="Ignored Test Scan"></a>
-      <a href='https://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests' title="Separate Tests"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title="SpotBugs"></a>
-		<br>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/cucumber/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fcucumber' title="Cucumber"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/jacoco/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjacoco' title="JaCoCo"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/jqassistant-reports/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjqassistant-reports' title="JQassistant"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/pit/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpit' title="Pit"></a>
-		</td></tr><tr><td align="right">
-		<a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/">Version Checks</a>:</td><td>
-		    <table><tr>
-		    <td>JDK:</td>
-		    <td><table>
-                <tr><td align="right">13:</td><td><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13'></a>
-                    on JRE 8u181:
-                    <a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13-to-jre-8/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13-to-jre-8'></a>
-                    </td></tr>
-                <tr><td align="right">11:</td><td><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11'></a>
-                    on JRE 8u181:
-                    <a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11-to-jre-8/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11-to-jre-8'></a>
-                    </td></tr>
-            </table></td>
-            <td>JDK 8u151 on JRE:</td>
-		    <td><table>
-                <tr><td align="right">13:</td><td><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-13/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-13' title="JRE 13"></a></td></tr>
-                <tr><td align="right">11:</td><td><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-11/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-11' title="JRE 13"></a></td></tr>
-                <tr><td align="right">8u181:</td><td><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-8u181/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-8u181' title="JRE 8u181"></a></td></tr>
+      <u>Note that this page is still being updated for the 2020 Jenkins installation</u>.
+      <p>See also the <a href="https://builds.jmri.org/jenkins/view/CI%20Status/">Jenkins status
+      page</a> (hover over a badge to see the name of the run). 
+      <!-- we use Jenkins embeddable Protected links, style Plain --></p>
+
+      <table>
+        <tr>
+          <td style="text-align: right">
+            <a href="https://builds.jmri.org/jenkins/job/development/">Development</a>:
+          </td>
+          <td>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title=
+            "Builds" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/packages/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpackages' title=
+            "Packages" alt=""></a><br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title=
+            "AllTest" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations'
+            title="Deprecations" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title=
+            "HTML scan" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan'
+            title="Ignored Test Scan" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests'
+            title="Separate Tests" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title=
+            "SpotBugs" alt=""></a><br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/cucumber/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fcucumber' title=
+            "Cucumber" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/jacoco/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjacoco' title=
+            "JaCoCo" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/jqassistant-reports/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjqassistant-reports'
+            title="JQassistant" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/pit/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpit' title="Pit"
+            alt=""></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right">
+            <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/">Version
+            Checks</a>:
+          </td>
+          <td>
+            <table>
+              <tr>
+                <td>JDK:</td>
+                <td>
+                  <table>
+                    <tr>
+                      <td style="text-align: right">13:</td>
+                      <td>
+                        <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13'
+                        alt=""></a> on JRE 8u181: <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13-to-jre-8/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13-to-jre-8'
+                        alt=""></a>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align: right">11:</td>
+                      <td>
+                        <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11'
+                        alt=""></a> on JRE 8u181: <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11-to-jre-8/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11-to-jre-8'
+                        alt=""></a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>JDK 8u151 on JRE:</td>
+                <td>
+                  <table>
+                    <tr>
+                      <td style="text-align: right">13:</td>
+                      <td>
+                        <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-13/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-13'
+                        title="JRE 13" alt=""></a>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align: right">11:</td>
+                      <td>
+                        <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-11/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-11'
+                        title="JRE 13" alt=""></a>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td style="text-align: right">8u181:</td>
+                      <td>
+                        <a href=
+                        'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jre-8u181/'>
+                        <img src=
+                        'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjre-8u181'
+                        title="JRE 8u181" alt=""></a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
             </table>
-            </td>
-            </table></td>
-		</tr><tr><td align="right">
-		<a href="https://builds.jmri.org/jenkins/job/WebSite/">Web Site</a>:</td><td>
-		<a href='https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/generate-website' title="generate website"></a>
-    <a href='https://builds.jmri.org/jenkins/job/WebSite/job/java-11-javadoc-tests/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=website%2Fjava-11-javadoc-tests' title="generate Javadoc UML"></a>
-		<a href='https://builds.jmri.org/jenkins/job/WebSite/job/JMRI_repository/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/jmri-repository' title="JMRI repository"></a>
-		<a href='https://builds.jmri.org/jenkins/job/WebSite/job/website_repository/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-repository' title="website repository"></a>
-		<a href='https://builds.jmri.org/jenkins/job/WebSite/job/website-legal_repository/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-legal-repository' title="website-legal"></a>
-		</td></tr>
+          </td>
+        </tr>
 
-        <tr><td align="right">
-        <a href="https://travis-ci.org/JMRI/JMRI">Travis:</a></td><td>
-		<a href='https://travis-ci.org/JMRI/JMRI'><img src='https://travis-ci.org/JMRI/JMRI.svg?branch=master' title="Travis`"></a>
+        <tr>
+          <td style="text-align: right">
+            <a href="https://builds.jmri.org/jenkins/job/WebSite/">Web Site</a>:
+          </td>
+          <td>
+            <a href='https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/generate-website' title=
+            "generate website" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/java-11-javadoc-tests/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=website%2Fjava-11-javadoc-tests'
+            title="generate Javadoc UML" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/JMRI_repository/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/jmri-repository' title=
+            "JMRI repository" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/website_repository/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-repository'
+            title="website repository" alt=""></a> <a href=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/website-legal_repository/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-legal-repository'
+            title="website-legal" alt=""></a>
+          </td>
+        </tr>
 
-        <a href="https://coveralls.io/github/JMRI/JMRI?branch=master">Coveralls:</a>
-		<a href='https://coveralls.io/github/JMRI/JMRI?branch=master'><img src='https://coveralls.io/repos/github/JMRI/JMRI/badge.svg?branch=master' title="Coveralls`"></a>
-        </td></tr>
-        <tr><td align="right">
-        <a href="https://github.org/JMRI/JMRI">GitHub:</a></td><td>
-            <a href="https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Windows+CI+Tests%22"><img src="https://github.com/JMRI/JMRI/workflows/Windows%20CI%20Tests/badge.svg" title="Windows CI Tests"></a>
-            <a href="https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Static+Analysis%22"><img src="https://github.com/JMRI/JMRI/workflows/Static%20Analysis/badge.svg" title="Static Analysis"></a>
-        </td></tr>
+        <tr>
+          <td style="text-align: right">
+            <a href="https://travis-ci.org/JMRI/JMRI">Travis:</a>
+          </td>
+          <td>
+            <a href='https://travis-ci.org/JMRI/JMRI'><img src=
+            'https://travis-ci.org/JMRI/JMRI.svg?branch=master' title="Travis`" alt=""></a>
+            <a href="https://coveralls.io/github/JMRI/JMRI?branch=master">Coveralls:</a> <a href=
+            'https://coveralls.io/github/JMRI/JMRI?branch=master'><img src=
+            'https://coveralls.io/repos/github/JMRI/JMRI/badge.svg?branch=master' title=
+            "Coveralls`" alt=""></a>
+          </td>
+        </tr>
 
-		</table>
-		
-	<table>
+        <tr>
+          <td style="text-align: right">
+            <a href="https://github.com/JMRI/JMRI">GitHub:</a>
+          </td>
+          <td>
+            <a href=
+            "https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Windows+CI+Tests%22"><img src="https://github.com/JMRI/JMRI/workflows/Windows%20CI%20Tests/badge.svg"
+            title="Windows CI Tests" alt=""></a> <a href=
+            "https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Static+Analysis%22"><img src=
+            "https://github.com/JMRI/JMRI/workflows/Static%20Analysis/badge.svg" title=
+            "Static Analysis" alt=""></a>
+          </td>
+        </tr>
+      </table>
 
-		<tr><td><a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/">SpotBugs</a><br>
-      <a href='https://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title="SpotBugs"></a>
-<!--        <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/spotbugs/">-->
-<!--            <img src="https://builds.jmri.org/jenkins/job/development/job/spotbugs/spotbugs-history-chart/png?url=PRIORITY">-->
-<!--        </a>-->
-		</td>
-		
-		<td><a href="https://builds.jmri.org/jenkins/job/development/job/deprecations/">Deprecations</a><br>
-      <a href='https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations' title="Deprecations"></a>
-<!--        <a href="https://builds.jmri.org/jenkins/job/development/job/deprecations/lastBuild/warnings4Result/">-->
-<!--            <img-->
-<!--                    src="https://builds.jmri.org/jenkins/job/Development/job/deprecations/warnings3/trendGraph/png?url=PRIORITY">-->
-<!--        </a>-->
-        </td></tr>
-        
+      <table>
+        <tr>
+          <td>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/spotbugs/">SpotBugs</a><br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title=
+            "SpotBugs" alt=""></a> 
+            <!--        <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/spotbugs/">-->
+             
+            <!--            <img src="https://builds.jmri.org/jenkins/job/development/job/spotbugs/spotbugs-history-chart/png?url=PRIORITY">-->
+             <!--        </a>-->
+          </td>
+          <td>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/deprecations/">Deprecations</a><br>
+
+            <a href='https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations'
+            title="Deprecations" alt=""></a> 
+            <!--        <a href="https://builds.jmri.org/jenkins/job/development/job/deprecations/lastBuild/warnings4Result/">-->
+             <!--            <img-->
+             
+            <!--                    src="https://builds.jmri.org/jenkins/job/Development/job/deprecations/warnings3/trendGraph/png?url=PRIORITY">-->
+             <!--        </a>-->
+          </td>
+        </tr>
         <!-- the following are commented out until we understand how to specify incremental in the URL -->
-<!-- 
-		<tr><td><a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
+        <!--
+                <tr><td><a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
         <a href="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
             <img src="https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=FIXED">
         </a>
-		</td>
-		
-		<td><a href="https://builds.jmri.org/jenkins/job/Development/job/Deprecations/">Deprecations</a>  (Incremental)<br>
+                </td>
+
+                <td><a href="https://builds.jmri.org/jenkins/job/Development/job/Deprecations/">Deprecations</a>  (Incremental)<br>
         <a href="https://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
             <img src="https://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=FIXED">
         </a>
@@ -118,138 +241,167 @@
  -->
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/">JaCoCo</a><br>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/lastBuild/">
-                    <img src="https://builds.jmri.org/jenkins/job/development/job/jacoco/jacoco/graph">
-                </a>
-            </td>
-            <td align="center">
-                <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
-                <br>
-                <b><a href="jacoco_difference.php ">Compare Two JaCoCo Runs</a></b>
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/jacoco/">JaCoCo</a><br>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/jacoco/lastBuild/"><img src=
+            "https://builds.jmri.org/jenkins/job/development/job/jacoco/jacoco/graph" alt=""></a>
+          </td>
+          <td style="text-align: center"><strong><a href="jacoco_sort_report.php">JaCoCo Sortable
+          Coverage Report</a></strong><br>
+          <strong><a href="jacoco_difference.php">Compare Two JaCoCo Runs</a></strong>
+          </td>
         </tr>
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/Development/job/separate-tests//">Separate Tests</a> - Runtime Warnings Results
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests'></a>
-<!--                    <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/separate-tests//lastBuild/testReport/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/separate-tests//warnings5/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/">Ignored Tests</a>
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan'></a>
-<!--                    <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/lastBuild/testReport/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/warnings6/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
-       </tr>
-
-        <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/">AllTest</a> - Unit Tests Run and Skipped
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
-                    <br>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/">
-                    <img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend">
-                </a>
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/">AllTest</a> - Unit Test Failures
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
-                    <br>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/">
-                    <img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend?failureOnly=true">
-                </a>
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/Development/job/separate-tests//">Separate
+            Tests</a> - Runtime Warnings Results<br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests'
+            alt=""></a> <!--                    <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/separate-tests//lastBuild/testReport/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/separate-tests//warnings5/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
+          <td>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/">Ignored
+            Tests</a><br>
+            <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan'
+            alt=""></a> <!--                    <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/lastBuild/testReport/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/ignored-test-scan/warnings6/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
         </tr>
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Unit Tests Run and Skipped<br>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/testReport/">
-                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/test/trend">
-                </a>
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Unit Test Failures<br>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/testReport/">
-                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/test/trend?failureOnly=true">
-                </a>
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/">AllTest</a> -
+            Unit Tests Run and Skipped<br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title=
+            "AllTest" alt=""></a><br>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend"
+            alt=""></a>
+          </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/alltest/">AllTest</a> -
+            Unit Test Failures<br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title=
+            "AllTest" alt=""></a><br>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend?failureOnly=true"
+            alt=""></a>
+          </td>
         </tr>
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Regular Java warnings<br>
-              <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
-<!--              <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings10Result/NORMAL/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings10/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - ECJ Java warnings<br>
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings25Result/NORMAL/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings24/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Unit
+            Tests Run and Skipped<br>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/builds/test/trend"
+            alt=""></a>
+          </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Unit
+            Test Failures<br>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/builds/test/trend?failureOnly=true"
+            alt=""></a>
+          </td>
         </tr>
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Javadoc results
-<!--              <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings42Result/NORMAL/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings41/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/html-scan/">HTML Scan</a>
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title="HTML scan"></a>
-<!--                    <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/html-scan/lastBuild/warnings25Result/NORMAL/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/html-scan/warnings4/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> -
+            Regular Java warnings<br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title=
+            "Builds" alt=""></a> 
+            <!--              <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings10Result/NORMAL/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings10/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - ECJ
+            Java warnings<br>
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings25Result/NORMAL/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings24/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
         </tr>
 
         <tr>
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/">JDK 13 build</a> - Java warnings
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13'></a>
-<!--                    <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/lastBuild/warnings10Result/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/warnings10/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
-
-            <td>
-                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/">Java 11 build</a> - Java warnings
-                    <br><a href='https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11'></a>
-<!--                    <br>-->
-<!--                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/lastBuild/">-->
-<!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/warnings10/trendGraph/png?url=PRIORITY">-->
-<!--                </a>-->
-            </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> -
+            Javadoc results <!--              <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings42Result/NORMAL/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings41/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
+          <td>
+            <a href="https://builds.jmri.org/jenkins/job/development/job/html-scan/">HTML
+            Scan</a><br>
+            <a href='https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src=
+            'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title=
+            "HTML scan" alt=""></a> <!--                    <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/html-scan/lastBuild/warnings25Result/NORMAL/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/html-scan/warnings4/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
         </tr>
 
-    </table>        
-        
-<!--#include virtual="/Footer.shtml" -->
-
-</div><!-- closes #mainContent-->
-</div> <!-- closes #mBody -->
-
+        <tr>
+          <td>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/">JDK 13
+            build</a> - Java warnings<br>
+            <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-13'
+            alt=""></a> <!--                    <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/lastBuild/warnings10Result/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-13/warnings10/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
+          <td>
+            <a href=
+            "https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/">Java 11
+            build</a> - Java warnings<br>
+            <a href=
+            'https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fversionchecks%2Fjdk-11'
+            alt=""></a> <!--                    <br>-->
+             
+            <!--                <a href="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/lastBuild/">-->
+             
+            <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/versionchecks/job/jdk-11/warnings10/trendGraph/png?url=PRIORITY">-->
+             <!--                </a>-->
+          </td>
+        </tr>
+      </table>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,74 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Main Window</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Main Window</h1>
 
       <h2>SECSI Menu</h2>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "Main_Menu.shtml#System"></a></p>
+      <div class="dp-right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p><strong>Communications Monitor</strong></p>
+      <p><strong>Communications Monitor</strong>
+      </p>
 
       <blockquote>
-        <p>Opens the <a href=
-        "Main_Monitor_Window.shtml">Communications Monitor
-        Window</a> and automatically displays the information that
-        is being sent and received on the communications link
-        between your computer and your DCC system.</p>
+        <p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> and
+        automatically displays the information that is being sent and received on the
+        communications link between your computer and your DCC system.</p>
       </blockquote>
 
-      <p><strong>Send Command</strong></p>
+      <p><strong>Send Command</strong>
+      </p>
 
       <blockquote>
-        <p>The <strong>Send SECSI serial command</strong> prompt
-        opens.</p>
+        <p>The <strong>Send SECSI serial command</strong> prompt opens.</p>
 
-        <table width="90%" border="1" cellspacing="1" cellpadding=
-        "1">
+        <table>
           <tr>
-            <td width="52%" align="left" valign="top"><img src=
-            "images/Main_Serial_Command.png" alt="SECSI Command"
-            width="276" height="133" border="4"></td>
+            <td style="width: 40%"><img src="images/Main_Serial_Command.png" alt="SECSI Command"
+            width="276" height="133">
+            </td>
+            <td>
+              <p>Type the <strong>Command</strong> into the text box and click the
+              <strong>Send</strong> button to send the command.</p>
 
-            <td width="48%" align="left" valign="top">
-              <p>Type the <strong>Command</strong> into the text
-              box and click the <strong>Send</strong> button to
-              send the command.</p>
-
-              <p>A polling <strong>Address</strong>: may be typed
-              in the text box at the bottom of the prompt box and
-              click on <strong>Send poll</strong> to poll the
-              addresses on the communications link.</p>
+              <p>A polling <strong>Address</strong>: may be typed in the text box at the bottom of
+              the prompt box and click on <strong>Send poll</strong> to poll the addresses on the
+              communications link.</p>
             </td>
           </tr>
         </table>
       </blockquote>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "Main_Menu.shtml#System"></a></p>
+      <div class="dp-right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

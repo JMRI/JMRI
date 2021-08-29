@@ -1,118 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>LogixNG Reference - Chapter 8</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference local variables">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 8</h1>
 
       <h2>Local Variables</h2>
 
-      <p>JMRI has memories that can store data. And that's great. But there is a problem
-      with memories. They are global, which means that anyone can change them. Lets assume
-      you want to count something so you create a memory IMCOUNTER. You create a LogixNG
-      that does the counting and everything works fine.</p>
+      <p>JMRI has memories that can store data. And that's great. But there is a problem with
+      memories. They are global, which means that anyone can change them. Lets assume you want to
+      count something so you create a memory IMCOUNTER. You create a LogixNG that does the counting
+      and everything works fine.</p>
 
-      <p>A year passes and you need to count something else. You create a new LogixNG that
-      does the new counting and you need a memory, so you decide to use the memory IMCOUNTER.
-      And your new LogixNG works fine. But then you suddenly realise that something else
-      on the layout stops working. Why? What has happen? Well, the problem is that you use
-      the same memory IMCOUNTER for two different things in two different places. And when
-      that happens, you get into trouble.</p>
+      <p>A year passes and you need to count something else. You create a new LogixNG that does the
+      new counting and you need a memory, so you decide to use the memory IMCOUNTER. And your new
+      LogixNG works fine. But then you suddenly realise that something else on the layout stops
+      working. Why? What has happen? Well, the problem is that you use the same memory IMCOUNTER
+      for two different things in two different places. And when that happens, you get into
+      trouble.</p>
 
-      <p>LogixNG has a simple solution to this problem, <strong>local variables</strong>.
-      A local variable is similar to a memory, but it only exists in a very limited context
-      and nothing outside that context can interfer with the variable.  The local variable
-      is also transient.  It is only available during the execution of the ConditionalNG
-      and it goes away when the execution is finished.  This protects the local variable
-      from being changed in an unpredictable way.</p>
+      <p>LogixNG has a simple solution to this problem, <strong>local variables</strong>. A local
+      variable is similar to a memory, but it only exists in a very limited context and nothing
+      outside that context can interfer with the variable. The local variable is also transient. It
+      is only available during the execution of the ConditionalNG and it goes away when the
+      execution is finished. This protects the local variable from being changed in an
+      unpredictable way.</p>
 
       <h3>Defining local variables</h3>
 
-        <p>Local variables are created in the ConditionalNG editor. Open the editor of a
-        ConditionalNG and right-click on an action or expression and select
-        <strong>Local variables</strong>.</p>
+      <p>Local variables are created in the ConditionalNG editor. Open the editor of a
+      ConditionalNG and right-click on an action or expression and select <strong>Local
+      variables</strong>.</p>
 
-        <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variables_menu.png">
-        <img src="images/chapter8/local_variables_menu.png"
-        alt="Chapter 8 local variable menu item" width="215" height="434">
-        </a>
-        </div>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/local_variables_menu.png"><img src=
+        "images/chapter8/local_variables_menu.png" alt="Chapter 8 local variable menu item" width=
+        "215" height="434"></a>
+      </div>
 
-        <p>The local variable dialog window will open.</p>
+      <p>The local variable dialog window will open.</p>
 
-        <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variables_dialog.png">
-        <img src="images/chapter8/local_variables_dialog.png"
-        alt="Chapter 8 local variables dialog" width="467" height="277">
-        </a>
-        </div>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/local_variables_dialog.png"><img src=
+        "images/chapter8/local_variables_dialog.png" alt="Chapter 8 local variables dialog" width=
+        "467" height="277"></a>
+      </div>
 
-        <p>To create a local variable, click on the <strong>Add variable</strong> button.
-        A new row will be added.  Double click in the <strong>Name</strong> field and give
-        it a name. Select the <strong>Type</strong> and provide an initial value if desired.
-        The <strong>Select</strong> menu is used to <strong>Delete</strong> a local
-        variable and has <strong>Move Up</strong> and <strong>Move Down</strong> options
-        if there is more than one variable.</p>
+      <p>To create a local variable, click on the <strong>Add variable</strong> button. A new row
+      will be added. Double click in the <strong>Name</strong> field and give it a name. Select the
+      <strong>Type</strong> and provide an initial value if desired. The <strong>Select</strong>
+      menu is used to <strong>Delete</strong> a local variable and has <strong>Move Up</strong> and
+      <strong>Move Down</strong> options if there is more than one variable.</p>
 
-        <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variable_types.png">
-        <img src="images/chapter8/local_variable_types.png"
-        alt="Chapter 8 local variable types" width="458" height="277">
-        </a>
-        </div>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/local_variable_types.png"><img src=
+        "images/chapter8/local_variable_types.png" alt="Chapter 8 local variable types" width="458"
+        height="277"></a>
+      </div>
 
-        <p>Click on <strong>OK</strong> to finish.  The local variable will be added to the
-        tree.  See the image below.</p>
+      <p>Click on <strong>OK</strong> to finish. The local variable will be added to the tree. See
+      the image below.</p>
 
       <h3>Order of local variables</h3>
 
-        <p>The order of the local variables that are defined in an action or expression
-        matters if you use one variable in the initialization of another. Lets say you
-        define two variables "a" and "b", and that you define "a" to be initialized to
-        the formula "34 * 4" and you define "b" to be initialized to "a * 3". This will
-        work if "a" is defined before "b". You can define both variables in the same action
-        or expression, but "a" needs to be before "b" since "b" uses "a" in its
-        initialization.</p>
+      <p>The order of the local variables that are defined in an action or expression matters if
+      you use one variable in the initialization of another. Lets say you define two variables "a"
+      and "b", and that you define "a" to be initialized to the formula "34 * 4" and you define "b"
+      to be initialized to "a * 3". This will work if "a" is defined before "b". You can define
+      both variables in the same action or expression, but "a" needs to be before "b" since "b"
+      uses "a" in its initialization.</p>
 
       <h3>Local variables are local</h3>
 
-        <p>This may seem obvious, but when writing scripts that uses local variables,
-        it's important to remember this. A script can access the symbol table if it has
-        access to the ConditionalNG, but the symbol table is dependent on which action
-        or expression that's currently running.</p>
+      <p>This may seem obvious, but when writing scripts that uses local variables, it's important
+      to remember this. A script can access the symbol table if it has access to the ConditionalNG,
+      but the symbol table is dependent on which action or expression that's currently running.</p>
 
-        <p>The <strong>scope</strong> of a local variable depends on where it is defined
-        in the tree.  This a contrived example to show scope behavior.</p>
+      <p>The <strong>scope</strong> of a local variable depends on where it is defined in the tree.
+      This a contrived example to show scope behavior.</p>
 
-        <p>There are two local variables defined.  One at the root of the tree and a
-        second one part way up the first branch.</p>
+      <p>There are two local variables defined. One at the root of the tree and a second one part
+      way up the first branch.</p>
 
-        <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variables_scope.png">
-        <img src="images/chapter8/local_variables_scope.png"
-        alt="Chapter 8 local variables scope" width="700" height="508">
-        </a>
-        </div>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/local_variables_scope.png"><img src=
+        "images/chapter8/local_variables_scope.png" alt="Chapter 8 local variables scope" width=
+        "700" height="508"></a>
+      </div>
 
-        <p>The output on the JMRI system console shows the result when the ConditionalNG
-        is executed.</p>
+      <p>The output on the JMRI system console shows the result when the ConditionalNG is
+      executed.</p>
 
-        <div style="margin-left: 2em;">
+      <div style="margin-left: 2em;">
         <pre>
 in if trees
 WARN  - Log local variables: [JMRI LogixNGThread]
@@ -125,35 +114,34 @@ WARN  - Log local variables: [JMRI LogixNGThread]
 WARN  - Name: rootlevel, value: null [JMRI LogixNGThread]
 WARN  - Log local variables done [JMRI LogixNGThread]
         </pre>
-        </div>
+      </div>
 
       <h3>Initialization of local variables</h3>
 
-        <p>When an action or expression is executed that defines local variables, these
-        local variables are created with an initial value. When you create the local
-        variable, you define what the inital value should be. 'None' means that the
-        value will be 'null'. Reference means that the value will be the value that the
-        reference is pointing at. Formula means the result of the formula.</p>
-
+      <p>When an action or expression is executed that defines local variables, these local
+      variables are created with an initial value. When you create the local variable, you define
+      what the inital value should be. 'None' means that the value will be 'null'. Reference means
+      that the value will be the value that the reference is pointing at. Formula means the result
+      of the formula.</p>
       <a id="LogLocalVariables"></a>
       <h3>Debugging local variables</h3>
 
-        <p>What to do if the ConditionalNG doesn't do the expected? The debugger provides one
-        tool, but another tool is the action <strong>Log local variables</strong>. Each time
-        it's executed, it prints all the local variables and their values to the JMRI Sytem
-        Console.</p>
+      <p>What to do if the ConditionalNG doesn't do the expected? The debugger provides one tool,
+      but another tool is the action <strong>Log local variables</strong>. Each time it's executed,
+      it prints all the local variables and their values to the JMRI Sytem Console.</p>
 
       <hr>
-      <p><a href="chapter9.shtml">Chapter 9 - Formula</a></p>
-      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
+      <p><a href="chapter9.shtml">Chapter 9 - Formula</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
-
-
-
 </body>
 </html>

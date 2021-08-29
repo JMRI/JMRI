@@ -3,7 +3,7 @@ package jmri.jmrit.beantable.signalmast;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -47,6 +47,11 @@ import jmri.util.javaworld.GridLayout2;
 public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
 
     public SignalHeadSignalMastAddPane() {
+        initPane();
+    }
+    
+    final void initPane() {
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // lit/unlit controls
         JPanel p = new JPanel();
@@ -61,11 +66,8 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         signalHeadPanel.setBorder(border);
         add(signalHeadPanel);
 
-        includeUsed.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                refreshHeadComboBox();
-            }
+        includeUsed.addActionListener((ActionEvent e) -> {
+            refreshHeadComboBox();
         });
 
         // disabled aspects controls
@@ -85,9 +87,9 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
 
     JPanel signalHeadPanel = new JPanel();
     ArrayList<NamedBeanComboBox<SignalHead>> headList = new ArrayList<>(5);
-    JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
+    private final JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
 
-    JCheckBox allowUnLit = new JCheckBox();
+    private final JCheckBox allowUnLit = new JCheckBox();
 
     LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
     JPanel disabledAspectsPanel = new JPanel();
@@ -234,7 +236,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         }
 
         // heads are attached via the system name
-        if (!username.equals("")) {
+        if (!username.isEmpty()) {
             currentMast.setUserName(username);
         }
 

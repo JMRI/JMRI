@@ -1,115 +1,91 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Signal Group Table Help</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20181104">
-  <meta name="keywords" content=
-  "model railroad JMRI decoderpro panelpro signal">
+  <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Signal Group Table</h1>
 
-      <p>The Signal Group Table displays a list of your Signal
-      Groups.</p><a href="images/SignalGroupTable.png"><img src=
-      "images/SignalGroupTable.png" alt="Tools &gt; Signal Group Table"
-      align="right" width="386" height="168"></a>
-
+      <p>The Signal Group Table displays a list of your Signal Groups.</p>
+      <a href="images/SignalGroupTable.png"><img src="images/SignalGroupTable.png" alt=
+      "Tools &gt; Signal Group Table" class="floatRight" width="386" height="168"></a>
       <p>There are six columns in the Signal Group Table:</p>
 
       <ol>
-        <li>Each line starts with the System Name and User Name of
-        each Signal Group</li>
+        <li>Each line starts with the System Name and User Name of each Signal Group</li>
 
-        <li>You may add a <b>Comment</b> by double clicking on that
-        field</li>
+        <li>You may add a <strong>Comment</strong> by double clicking on that field</li>
 
-        <li>The following column contains a <b>Delete</b> button
-        for that Signal Group</li>
+        <li>The following column contains a <strong>Delete</strong> button for that Signal
+        Group</li>
 
-        <li>By unchecking the <b>Enabled</b> check box you can
-        temporarily disable a particular Signal Group</li>
+        <li>By unchecking the <strong>Enabled</strong> check box you can temporarily disable a
+        particular Signal Group</li>
 
-        <li>Finally there is an <b>Edit</b> button</li>
-      </ol><a name="add" id="add"></a>
+        <li>Finally there is an <strong>Edit</strong> button</li>
+      </ol>
 
-      <h3>Creating a Signal Group</h3>
+      <h3 id="add">Creating a Signal Group</h3>
 
-      <p>To define a new Signal Group, click on the <a href=
-      "SignalGroupAddEdit.shtml">Add...</a> button at the bottom of
-      the Signal Group Table. This will prompt you for a Signal
-      Group name and whatever further information is needed.</p>
+      <p>To define a new Signal Group, click on the <a href="SignalGroupAddEdit.shtml">Add...</a>
+      button at the bottom of the Signal Group Table. This will prompt you for a Signal Group name
+      and whatever further information is needed.</p>
 
-      <p>You can delete a Signal Group from the Signal Group Table
-      by clicking one of the <b>Delete</b> buttons. Save a copy of
-      your JMRI Configuration file as a backup first!</p>
+      <p>You can delete a Signal Group from the Signal Group Table by clicking one of the
+      <strong>Delete</strong> buttons. Save a copy of your JMRI Configuration file as a backup
+      first!</p>
 
-      <h3><a name="edit" id="edit">Editing an existing Signal
-      Group</a></h3>
+      <h3 id="edit">Editing an existing Signal Group</h3>
 
-      <p>Click on one of the <b>Edit</b>
-      buttons at the right of the Signal Group Table to open
-      the
-      <a href="SignalGroupAddEdit.shtml">Edit Signal
-      Group</a> window for the corresponding Signal Group. <a href=
-      "images/SignalGroup.png"><img src="images/SignalGroup.png"
-      alt="Signal Goup Edit pane" align="right" height="225"
-      width="257"></a></p>
+      <p>Click on one of the <strong>Edit</strong> buttons at the right of the Signal Group Table
+      to open the <a href="SignalGroupAddEdit.shtml">Edit Signal Group</a> window for the
+      corresponding Signal Group. <a href="images/SignalGroup.png"><img src=
+      "images/SignalGroup.png" alt="Signal Goup Edit pane" class="floatRight" height="225" width=
+      "257"></a></p>
 
-      <h2><a name="example" id="example">Signal Group Example -
-      Junction Indicator</a></h2>
+      <h2 id="example">Signal Group Example - Junction Indicator</h2>
 
-      <p>Consider the following track diagram, with 6 possible
-      junctions off the main running line.<br>
-      <a href="images/SignalGroupTrackDiagram.png"><img src=
-      "images/SignalGroupTrackDiagram.png" alt="Signal Group
-      application example track plan" height="90"
-      width="233"></a></p>
+      <p>Consider the following track diagram, with 6 possible junctions off the main running
+      line.<br>
+      <a href="images/SignalGroupTrackDiagram.png"><img src="images/SignalGroupTrackDiagram.png"
+      alt="Signal Group application example track plan" height="90" width="233"></a></p>
 
-      <p>The Signal facing this junction will have a Junction
-      Indicator attached, with each possible route through the
-      junction having it own Indication. When the Route is set for
-      straight through, then no indicator is shown (pictured
-      above).</p>
+      <p>The Signal facing this junction will have a Junction Indicator attached, with each
+      possible route through the junction having it own Indication. When the Route is set for
+      straight through, then no indicator is shown (pictured above).</p>
 
-      <p>If the route is set for position 1, then the position 1
-      indicator will be shown (pictured below).<br>
-      <a href="images/SignalGroupTrackDiagram1.png"><img src=
-      "images/SignalGroupTrackDiagram1.png" alt="Position
-      indicator on signal" height="90" width="262"></a></p>
+      <p>If the route is set for position 1, then the position 1 indicator will be shown (pictured
+      below).<br>
+      <a href="images/SignalGroupTrackDiagram1.png"><img src="images/SignalGroupTrackDiagram1.png"
+      alt="Position indicator on signal" height="90" width="262"></a></p>
 
-      <p>With this configuration, you would create a single Turnout
-      Signal Head for each position, configured with both a Dark
-      and Lunar Appearance. You can use any two combinations of
-      colors you like, however Dark and Lunar are more suitable for
-      this situation.</p>
+      <p>With this configuration, you would create a single Turnout Signal Head for each position,
+      configured with both a Dark and Lunar Appearance. You can use any two combinations of colors
+      you like, however Dark and Lunar are more suitable for this situation.</p>
 
-      <p>Within the Signal Group, you would then select each of the
-      Signal Heads that are used to create the junction indicator.
-      The logic for each Signal Head is then configured as
+      <p>Within the Signal Group, you would then select each of the Signal Heads that are used to
+      create the junction indicator. The logic for each Signal Head is then configured as
       follows:</p>
 
       <table>
         <tr>
-          <td width="200" valign="top">
+          <td>
             <p>Position 1 - Set Turnouts</p>
 
             <p>IT1 set Thrown</p>
 
             <p>IT2 set Thrown</p>
           </td>
-
-          <td width="200">
+          <td>
             <p>Position 2 - Set Turnouts</p>
 
             <p>IT1 set Thrown</p>
@@ -121,7 +97,7 @@
         </tr>
 
         <tr>
-          <td width="200">
+          <td>
             <p>Position 3 - Set Turnouts</p>
 
             <p>IT1 set Thrown</p>
@@ -130,8 +106,7 @@
 
             <p>IT3 set Closed</p>
           </td>
-
-          <td width="200">
+          <td>
             <p>Position 4 - Set Turnouts</p>
 
             <p>IT1 set Closed</p>
@@ -143,7 +118,7 @@
         </tr>
 
         <tr>
-          <td width="200">
+          <td>
             <p>Position 5 - Set Turnouts</p>
 
             <p>IT1 set Closed</p>
@@ -154,8 +129,7 @@
 
             <p>IT6 set Thrown</p>
           </td>
-
-          <td width="200">
+          <td>
             <p>Position 6 - Set Turnouts</p>
 
             <p>IT1 set Closed</p>
@@ -169,13 +143,13 @@
         </tr>
       </table>
 
-      <p>Back to the <a href=
-      "../../../../html/tools/signaling/SignalGroups.shtml">Signal
-        Groups help page</a>.</p>
-
+      <p>Back to the <a href="../../../../html/tools/signaling/SignalGroups.shtml">Signal Groups
+      help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

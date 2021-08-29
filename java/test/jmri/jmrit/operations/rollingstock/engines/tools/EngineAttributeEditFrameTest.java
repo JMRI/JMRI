@@ -41,6 +41,8 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
         // did the replace work?
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced SD45 with DS54").isEqualTo("DS54");
 
@@ -70,6 +72,8 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
         // did the replace work?
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced 12 with 13").isEqualTo("13");
 
@@ -109,9 +113,9 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("A" + "\"");
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-
         JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         JUnitUtil.dispose(f);
     }
 
@@ -136,7 +140,8 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         JUnitUtil.dispose(f);
     }
 
@@ -150,10 +155,10 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // now add a bogus length
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
@@ -165,10 +170,10 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // now add a negative length
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
@@ -182,10 +187,9 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         JUnitUtil.dispose(f);
@@ -212,6 +216,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
@@ -222,11 +227,10 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -250,6 +254,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
         assertThat(f.comboBox.getItemAt(1)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
@@ -260,20 +265,19 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
-
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
                 Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         // enter a road name that has a reserved character
         f.addTextBox.setText("A.B");
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
-
         JemmyUtil.pressDialogButton(
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 

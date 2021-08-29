@@ -1,38 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Set Track Width Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Track">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Set Track Width</h1>The Set Track Width dialog allows
-      changing widths of both types of track used in Layout Editor
-      track diagrams. Track may be designated as <i>mainline
-      track</i> or <i>side track</i> when creating or editing Track
-      Segments. The track type of turnout parts and level crossing
-      parts are inferred from the track type of connected Track
-      Segments. All track initially defaults to <i>side track</i>.
-      Specifying <i>mainline track</i> type for specific segments
-      of track is an option that you may or may not choose to take
-      advantage of.
-
-      <p>Each type of track may be drawn using a different track
-      width. Changing the width of a track type changes the widths
-      of all track of that type in the track diagram.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Set Track Width</h1>
+      The Set Track Width dialog allows changing widths of both types of track used in Layout
+      Editor track diagrams. Track may be designated as <em>mainline track</em> or <em>side
+      track</em> when creating or editing Track Segments. The track type of turnout parts and level
+      crossing parts are inferred from the track type of connected Track Segments. All track
+      initially defaults to <em>side track</em>. Specifying <em>mainline track</em> type for
+      specific segments of track is an option that you may or may not choose to take advantage of.
+      <p>Each type of track may be drawn using a different track width. Changing the width of a
+      track type changes the widths of all track of that type in the track diagram.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

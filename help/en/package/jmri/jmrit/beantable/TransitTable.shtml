@@ -1,156 +1,128 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Transit Table Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Transit Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Transit Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Transit Table Help</h1>
 
-      <p>All the Transits that JMRI knows about can be viewed using
-      the <strong>Transit Table</strong>.</p>
+      <p>All the Transits that JMRI knows about can be viewed using the <strong>Transit
+      Table</strong>.</p>
 
-      <p>To open this tool, select <strong>Transits</strong> in the
-      <strong>Tables</strong> submenu of the <strong>Tools</strong> menu of the main
-      JMRI program window.</p>
+      <p>To open this tool, select <strong>Transits</strong> in the <strong>Tables</strong> submenu
+      of the <strong>Tools</strong> menu of the main JMRI program window.</p>
 
       <h2>Using the Transit Table</h2>
 
-      <p>Transits are set up in the Transit Table. When set up,
-      Transits are independent of the Trains that use them.</p>
+      <p>Transits are set up in the Transit Table. When set up, Transits are independent of the
+      Trains that use them.</p>
 
-      <p>All Transits that currently exist can be referenced using
-      the <strong>Transits</strong> tool under <strong>Tables</strong> in the Tools
-      menu of most JMRI programs. There are seven columns in the
-      Transit Table:</p>
+      <p>All Transits that currently exist can be referenced using the <strong>Transits</strong>
+      tool under <strong>Tables</strong> in the Tools menu of most JMRI programs. There are seven
+      columns in the Transit Table:</p>
 
       <ul>
-        <li><strong>System Name</strong> - The system name is assigned to the
-        Transit when it's created, and can't be changed.</li>
+        <li><strong>System Name</strong> - The system name is assigned to the Transit when it's
+        created, and can't be changed.</li>
 
-        <li><strong>User Name</strong> - If you're interested in having your
-        Transits carry "human readable" names, you can click in the
-        "User Name" column and change that information to whatever
-        you want.</li>
+        <li><strong>User Name</strong> - If you're interested in having your Transits carry "human
+        readable" names, you can click in the "User Name" column and change that information to
+        whatever you want.</li>
 
-        <li><strong>State</strong> - The state of a Transit tells whether a
-        section is <strong>IDLE</strong> (available for activation and
-        assignment to a Train), or <strong>ASSIGNED</strong> (linked to a
-        Train to form an Active Train). The state of a newly added
-        Transit is always <strong>IDLE</strong>.</li>
+        <li><strong>State</strong> - The state of a Transit tells whether a section is
+        <strong>IDLE</strong> (available for activation and assignment to a Train), or
+        <strong>ASSIGNED</strong> (linked to a Train to form an Active Train). The state of a newly
+        added Transit is always <strong>IDLE</strong>.</li>
 
-        <li><strong>Comment</strong> - This column is for your use to record
-        any comment you may want to use to keep track of your
-        Transits. It is for information only.</li>
+        <li><strong>Comment</strong> - This column is for your use to record any comment you may
+        want to use to keep track of your Transits. It is for information only.</li>
 
-        <li>Click the <strong>Delete</strong> button in a specific row to
-        delete the Transit in that row. Use this button with
-        caution! Do not delete a running Transit.</li>
+        <li>Click the <strong>Delete</strong> button in a specific row to delete the Transit in
+        that row. Use this button with caution! Do not delete a running Transit.</li>
 
-        <li>Click the <strong>Edit</strong> button in a row to view or change
-        entered information for a Transit. System name cannot be
-        changed. User name may be changed, Sections may be
-        redefined, etc. Only one Transit may be edited at a time. A
-        Transit may not be edited if another is being created, or
-        if the Transit is not in the IDLE state.</li>
+        <li>Click the <strong>Edit</strong> button in a row to view or change entered information
+        for a Transit. System name cannot be changed. User name may be changed, Sections may be
+        redefined, etc. Only one Transit may be edited at a time. A Transit may not be edited if
+        another is being created, or if the Transit is not in the IDLE state.</li>
 
-        <li>Click the <strong>Duplicate</strong> button in a row to add
-        another Transit identical to this one. Clicking this button
-        is similar to clicking the <strong>Add...</strong> button (see below)
-        except the information from this Transit is copied into the
-        Add/Edit Transit window. This option offers an easy way to
-        enter multiple copies of a Transit when multiple Trains
-        must follow the same route at the same time.</li>
+        <li>Click the <strong>Duplicate</strong> button in a row to add another Transit identical
+        to this one. Clicking this button is similar to clicking the <strong>Add...</strong> button
+        (see below) except the information from this Transit is copied into the Add/Edit Transit
+        window. This option offers an easy way to enter multiple copies of a Transit when multiple
+        Trains must follow the same route at the same time.</li>
       </ul>
 
       <p>To define a new Transit, click the <strong><a href=
-      "TransitAddEdit.shtml">Add...</a></strong> button. An Add/Edit
-      Transit window will be brought up that will allow you to
-      designate the Sections in the new Transit. (Obviously,
-      Sections must be defined before any Transit can be created.)
-      Since a Transit may be used in only one Active Train at a
-      time, the Duplicate option (see above) may save time when
-      creating multiple copies of the same Transit.</p>
+      "TransitAddEdit.shtml">Add...</a></strong> button. An Add/Edit Transit window will be brought
+      up that will allow you to designate the Sections in the new Transit. (Obviously, Sections
+      must be defined before any Transit can be created.) Since a Transit may be used in only one
+      Active Train at a time, the Duplicate option (see above) may save time when creating multiple
+      copies of the same Transit.</p>
 
       <h3>Using the Layout Editor to Set Up Transits</h3>
-      If you are using a
-      <a href="../display/LayoutEditor.shtml">Layout Editor</a>
-      Panel to define and generate the Logic for
-      Signal Masts and Sections, it is possible to create a basic
-      Transit from the Layout Editor. To do this, bring up the
-      context menu (right-click) of a Signal Mast on the panel. If
-      things have been set up correctly you will see the option to
-      <strong>Create Transit From Here</strong>. After selecting that option
-      you can progress along your route and select each facing
-      Signal Mast, bringing up the context menu on each and
-      selecting <strong>Add to Transit</strong>. When you are at the final
-      destination Signal Mast on your route, select <strong>Add to Transit
-      and Complete</strong> in the context menu of that last Signal Mast.
-      <br>
-      Please note that you will have to manually save the Transits
-      to disk (see below).
-
+      If you are using a <a href="../display/LayoutEditor.shtml">Layout Editor</a> Panel to define
+      and generate the Logic for Signal Masts and Sections, it is possible to create a basic
+      Transit from the Layout Editor. To do this, bring up the context menu (right-click) of a
+      Signal Mast on the panel. If things have been set up correctly you will see the option to
+      <strong>Create Transit From Here</strong>. After selecting that option you can progress along
+      your route and select each facing Signal Mast, bringing up the context menu on each and
+      selecting <strong>Add to Transit</strong>. When you are at the final destination Signal Mast
+      on your route, select <strong>Add to Transit and Complete</strong> in the context menu of
+      that last Signal Mast.<br>
+      Please note that you will have to manually save the Transits to disk (see below).
       <h2>Setting up for Continuous Running</h2>
 
-      <p>A Transit may be set up for continuous running, allowing
-      an Active Train to travel through its Transit multiple times
-      without being terminated and re-activated. Provided its
-      Transit is set up for continuous running, each time an Active
-      Train completes traveling through its Transit, the Active
-      Train optionally may be automatically reset by
-      <a href="../dispatcher/Dispatcher.shtml">Dispatcher</a> so
-      it is ready to run through its Transit again. For a Transit to be capable of
-      continuous running, its first Section and its last Section
-      must be the same, and both must be set up for running in the
-      same direction. This applies to both Manual and Automatic
-      running of Trains.</p>
-      <p>For more information on setting the continuous running option,
-      visit the <a href="../dispatcher/NewTrain.shtml">Activate New
-      Train</a> Help.</p>
+      <p>A Transit may be set up for continuous running, allowing an Active Train to travel through
+      its Transit multiple times without being terminated and re-activated. Provided its Transit is
+      set up for continuous running, each time an Active Train completes traveling through its
+      Transit, the Active Train optionally may be automatically reset by <a href=
+      "../dispatcher/Dispatcher.shtml">Dispatcher</a> so it is ready to run through its Transit
+      again. For a Transit to be capable of continuous running, its first Section and its last
+      Section must be the same, and both must be set up for running in the same direction. This
+      applies to both Manual and Automatic running of Trains.</p>
+
+      <p>For more information on setting the continuous running option, visit the <a href=
+      "../dispatcher/NewTrain.shtml">Activate New Train</a> Help.</p>
 
       <h2>Specifying Actions for Automatic Running</h2>
 
-      <p>Transits support a variety of
-      <strong><a href="ViewSpecialActions.shtml">Actions</a></strong> that
-      automatically happen when a Train is run through the Transit
-      in Automatic mode. One or more <strong>Actions</strong> may be
-      specified with each Section in the Transit. <strong>Action</strong> are
-      initiated when their associated Section in the Transit is
-      entered by the Automatically run Train.<br>
+      <p>Transits support a variety of <strong><a href=
+      "ViewSpecialActions.shtml">Actions</a></strong> that automatically happen when a Train is run
+      through the Transit in Automatic mode. One or more <strong>Actions</strong> may be specified
+      with each Section in the Transit. <strong>Action</strong> are initiated when their associated
+      Section in the Transit is entered by the Automatically run Train.<br>
       Each <strong>Action</strong> has two parts:</p>
+
       <ul>
-        <li>a <em>When</em> part, that specifies when the <strong>Action</strong>
-        is to be performed, and</li>
-        <li>a <em>What</em> part, that specifies what <strong>Action</strong> task
-        is to be performed.</li>
+        <li>a <em>When</em> part, that specifies when the <strong>Action</strong> is to be
+        performed, and</li>
+
+        <li>a <em>What</em> part, that specifies what <strong>Action</strong> task is to be
+        performed.</li>
       </ul>
-      <p>A commonly used Action, for example, is "When the
-      train starts, turn on its headlight." More information on
-      Actions is located in the Actions.
-      Read <a href="ViewSpecialActions.shtml">more on Actions</a>.</p>
+
+      <p>A commonly used Action, for example, is "When the train starts, turn on its headlight."
+      More information on Actions is located in the Actions. Read <a href=
+      "ViewSpecialActions.shtml">more on Actions</a>.</p>
 
       <h2>Saving Transits to Disk</h2>
 
-      <p>Use the Store item in the File menu to save Transit
-      information to disk. See <a href="../../../../html/apps/LoadStoreWork.shtml">
-      Loading and Storing Your Work</a>.</p>
+      <p>Use the Store item in the File menu to save Transit information to disk. See <a href=
+      "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
-      <p>Back to
-      <a href="../../../../html/tools/Transits.shtml">Transits Documentation</a>.</p>
+      <p>Back to <a href="../../../../html/tools/Transits.shtml">Transits Documentation</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

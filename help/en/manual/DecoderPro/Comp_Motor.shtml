@@ -1,95 +1,113 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Comprehensive Programmer</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Comprehensive Programmer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-ctr {
+      text-align: center;
+    }
+
+    .dp-mid {
+      text-align: middle;
+    }
+
+    .dp-right {
+      text-align: right;
+    }
+
+    .dp-none {
+      list-style-type: none;
+    }
+
+    .dp-sq {
+      list-style-type: square;
+    }
+
+    .dp-ua {
+      list-style-type: upper-alpha
+    }
+
+    .dp-la {
+      list-style-type: lower-alpha
+    }
+
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Motor Control Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_Basic.shtml">Previous |</a> <a href=
-        "Comp_Speed.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_Basic.shtml">Previous |</a> <a href="Comp_Speed.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>Motor control is divided into three separate panes. The
-      <strong>Motor Control pane</strong> deals with CV's for
-      simulating locomotive weight or inertia. The <a href=
-      "Comp_Speed.shtml" target="_parent"><strong>Basic Speed
-      Control pane</strong></a><a href="Comp_Basic.shtml" target=
-      "_parent"></a> deals with basic motor control CV's and the
-      third <a href="Comp_Speed_Talble.shtml" target=
-      "_parent"><strong>Speed Table pane</strong></a><a href=
-      "Comp_Speed.shtml" target="_parent"></a> covers those dealing
-      with the Speed Table method of controlling the motor. These
-      last two methods of motor control are mutually exclusive. The
-      selection is made with a radio button at the top of each of
-      those two panes. The default selection is Basic Speed
-      Control.</p>
+      <p>Motor control is divided into three separate panes. The <strong>Motor Control
+      pane</strong> deals with CV's for simulating locomotive weight or inertia. The <a href=
+      "Comp_Speed.shtml" target="_parent"><strong>Basic Speed Control pane</strong></a><a href=
+      "Comp_Basic.shtml" target="_parent"></a> deals with basic motor control CV's and the third
+      <a href="Comp_Speed_Talble.shtml" target="_parent"><strong>Speed Table
+      pane</strong></a><a href="Comp_Speed.shtml" target="_parent"></a> covers those dealing with
+      the Speed Table method of controlling the motor. These last two methods of motor control are
+      mutually exclusive. The selection is made with a radio button at the top of each of those two
+      panes. The default selection is Basic Speed Control.</p>
 
-      <p><strong>The Motor Pane</strong></p>
+      <p><strong>The Motor Pane</strong>
+      </p>
 
-      <h1><img style="width: 801px; height: 372px;" alt="motor"
-      src="images/Comp_03_Motor.png"><br></h1>
+      <h1><img style="width: 801px; height: 372px;" alt="motor" src="images/Comp_03_Motor.png"><br>
+      </h1>
 
-      <p>The contents of the Motor pane will vary significantly
-      between different brands and models of decoders. In the case
-      of the decoder shown in the illustration:</p>
+      <p>The contents of the Motor pane will vary significantly between different brands and models
+      of decoders. In the case of the decoder shown in the illustration:</p>
 
-      <p><strong>Acceleration Rate</strong> and
-      <strong>Deceleration Rate</strong> help simulate a locomotive
-      under load - but don't use them unless you have very clean
-      track, because an interruption of power can make a locomotive
-      stop and cycle through the acceleration curve again! On the
-      latest Tsunami Diesel sound decoders the firmware has been
-      changed. The decoder now returns to the last speed setting
-      before the power interruption but it has no knowledge of
-      where it was in the acceleration curve. So if you have been
-      in the habit of using lots of momentum and setting speed to
-      maximum to get the sound of a notch 8 motor, be aware that if
-      the loco loses power for just an instant from a dirt spot on
-      the rails, it will resume at the top speed step and appear to
-      be running away.</p>
+      <p><strong>Acceleration Rate</strong> and <strong>Deceleration Rate</strong> help simulate a
+      locomotive under load - but don't use them unless you have very clean track, because an
+      interruption of power can make a locomotive stop and cycle through the acceleration curve
+      again! On the latest Tsunami Diesel sound decoders the firmware has been changed. The decoder
+      now returns to the last speed setting before the power interruption but it has no knowledge
+      of where it was in the acceleration curve. So if you have been in the habit of using lots of
+      momentum and setting speed to maximum to get the sound of a notch 8 motor, be aware that if
+      the loco loses power for just an instant from a dirt spot on the rails, it will resume at the
+      top speed step and appear to be running away.</p>
 
-      <p>High deceleration rates can make station stops and
-      switching realistic, but very challenging!</p>
+      <p>High deceleration rates can make station stops and switching realistic, but very
+      challenging!</p>
 
-      <p><strong>Back EMF</strong> or <strong>Speed
-      stabilization</strong> <strong>(BEMF)</strong>is implemented
-      differently by each manufacturer.. See your decoder
-      documentation for the best ways to implement these variables,
-      and be prepared to do a lot of experimenting! However they do
-      it and whatever they call it, you should find it in this
+      <p><strong>Back EMF</strong> or <strong>Speed stabilization</strong>
+      <strong>(BEMF)</strong>is implemented differently by each manufacturer.. See your decoder
+      documentation for the best ways to implement these variables, and be prepared to do a lot of
+      experimenting! However they do it and whatever they call it, you should find it in this
       pane.</p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_Speed.shtml"></a> <a href=
-        "Comp_Basic.shtml">Previous |</a> <a href=
+      <div class="dp-right">
+        <p><a href="Comp_Speed.shtml"></a> <a href="Comp_Basic.shtml">Previous |</a> <a href=
         "Comp_Speed.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

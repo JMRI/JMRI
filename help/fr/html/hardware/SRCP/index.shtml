@@ -1,80 +1,83 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated by Blorec Herv&#233; 2017-01-11-->
-<title>JMRI Hardware Support - SRCP Protocol</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; 2017-01-11-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Support - SRCP Protocol</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1> Structure Mat&#233;rielle: Configuration Connexion SRCP</h1>
+      <h1>Structure Matérielle: Configuration Connexion SRCP</h1>
+      <a href="http://www.der-moba.de/index.php/Digitalprojekt"><img src=
+      "http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"
+      alt=""></a>
+      <p>le <a href="http://srcpd.sourceforge.net/">protocole SRCP</a> a été créé par le groupe de
+      modélisme ferroviaire <a href="http://www.der-moba.de/index.php/Hauptseite">der Moba</a>
+      comme un moyen standard de connexion d'un programmes utilisateur "client" à un "serveur", qui
+      à son tour se connecte au réseau ferroviaire. Il y a un nombre de serveurs SRCP de trains
+      miniatures disponibles , qui à leur tour peuvent actuellement se connecter aux réseau par
+      l'intermédiaire d' Intellibox, et les unités de commande Marklin 605x et les interfaces de
+      Lenz. Il y a aussi un serveur disponible qui peut créer directement des signaux DCC via une
+      inteface RS232, qui peut ensuite utiliser un booster(s) DCC pour alimenter le réseau.
+      D'autres démons SRCP avec d'autres connexions ont été tout le temps développés .</p>
 
-<a href="http://www.der-moba.de/index.php/Digitalprojekt">
-<img src="http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"/></a>
+      <p>La structure initiale JMRI permet à JMRI de se connecter à un réseau grâce à un Serveur
+      SRCP. JMRI peut alors faire fonctionner les Aiguillages, les Lumières et les Feux de
+      Signalisation s'ils peuvent être atteints via SRCP. Il y a aussi la structure initiale pour
+      les Régulateurs JMRI via SRCP. <a name="limitations" id="limitations"></a></p>
 
-<p>le <a href="http://srcpd.sourceforge.net/">protocole SRCP</a>
-a &#233;t&#233; cr&#233;&#233; par le groupe de mod&#233;lisme ferroviaire
-<a href="http://www.der-moba.de/index.php/Hauptseite"> der Moba</a>
- comme un moyen standard de connexion d'un programmes utilisateur "client" 
- &#224; un "serveur", qui &#224; son tour se connecte au r&#233;seau ferroviaire. 
-Il y a un nombre de serveurs SRCP de trains miniatures disponibles
-, qui &#224; leur tour peuvent actuellement se connecter aux r&#233;seau par l'interm&#233;diaire d'
-Intellibox, et les unit&#233;s de commande Marklin 605x et les interfaces de Lenz.
-Il y a aussi un serveur disponible qui peut cr&#233;er directement des signaux DCC
-via une inteface RS232, qui peut ensuite utiliser un booster(s) DCC pour alimenter le r&#233;seau.
-D'autres d&#233;mons SRCP avec d'autres connexions ont &#233;t&#233; tout le temps d&#233;velopp&#233;s .
+      <h2>Limitations</h2>
 
-<p>
-La structure initiale JMRI permet &#224; JMRI de se  connecter &#224; un r&#233;seau gr&#226;ce &#224; un
-Serveur SRCP. JMRI peut alors faire fonctionner les Aiguillages, les Lumi&#232;res et les Feux de Signalisation s'ils
-peuvent &#234;tre atteints via SRCP. Il y a aussi la structure initiale pour les R&#233;gulateurs JMRI via SRCP.
+      <p>La structure SRCP a été introduite dans <a href=
+      "https://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a>durant l'été 2008. La première
+      version avait plusieurs limitations;</p>
 
+      <ul>
+        <li>Il ne supportait le "mode exploitation" pour configurer les décodeurs, ex:
+        configuration des CVs.</li>
 
-<a name="limitations"></a><h2>Limitations</h2>
-<p>
-La structure SRCP a &#233;t&#233; introduite dans <a href="https://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a>durant l'&#233;t&#233; 2008.
-La premi&#232;re version avait plusieurs limitations;
-<ul>
-<li>Il ne supportait le "mode exploitation" pour configurer les d&#233;codeurs, ex: configuration des CVs.
-<li>Il n&#233;cessitait plus de tests, sp&#233;cialement avec M&#228;rklin et autres syst&#232;mes non-DCC.
-</ul>
+        <li>Il nécessitait plus de tests, spécialement avec Märklin et autres systèmes
+        non-DCC.</li>
+      </ul>
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
 
-<a name="connecting"></a><h2>Connexion</h2>
-<p>
-Pour utiliser une connexion SRCP, s&#233;lectionnez "Serveur SRCP" comme protocole dans les Pr&#233;f&#233;rences.
-<p>
-Ensuite remplissez l'adresse Internet pour le serveur SRCP. Ce peut &#234;tre des nombres, comme 127.0.0.1 ou
-un nom comme "srcp.sf.net". Un serveur fonctionnant sur le m&#234;me ordinateur peut habituellement &#234;tre appel&#233; "localhost".
-<p>
-Remplissez ensuite le num&#233;ro de port. Celui-ci peut &#234;tre obtenu &#224; partir de la configuration de votre serveur SRCP.
-<p>
-Enfin, enregistrez les Pr&#233;f&#233;rences et red&#233;marrer le programme.
+      <p>Pour utiliser une connexion SRCP, sélectionnez "Serveur SRCP" comme protocole dans les
+      Préférences.</p>
 
-<a name="documentation"></a><h2>Documentation</h2>
-<h3>Info Tierce Partie</h3>
-<p>
-Il y a beaucoup de bonnes informations sur SRCP et comment il s'int&#232;gre dans une
- syst&#232;me globale de mod&#232;le ferroviaire sur
-<a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de ( en allemand )</a>
-</p>
+      <p>Ensuite remplissez l'adresse Internet pour le serveur SRCP. Ce peut être des nombres,
+      comme 127.0.0.1 ou un nom comme "srcp.sf.net". Un serveur fonctionnant sur le même ordinateur
+      peut habituellement être appelé "localhost".</p>
 
-        <!--#include virtual="/Footer.shtml" -->
+      <p>Remplissez ensuite le numéro de port. Celui-ci peut être obtenu à partir de la
+      configuration de votre serveur SRCP.</p>
+
+      <p>Enfin, enregistrez les Préférences et redémarrer le programme. <a name="documentation" id=
+      "documentation"></a></p>
+
+      <h2>Documentation</h2>
+
+      <h3>Info Tierce Partie</h3>
+
+      <p>Il y a beaucoup de bonnes informations sur SRCP et comment il s'intègre dans une système
+      globale de modèle ferroviaire sur <a href=
+      "http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de ( en allemand )</a></p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

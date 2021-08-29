@@ -1,241 +1,329 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: DCC++ Turnouts</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: DCC++ Turnouts</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>DCC++ Turnouts and Outputs</h1>
 
-      <a name="types" id="types"></a><h2>Types of DCC++ Turnout Control</h2>
+      <h2 id="types">Types of DCC++ Turnout Control</h2>
+
       <p>There are 3 ways to control a turnout via DCC++:</p>
+
       <ul>
-          <li>Direct DCC Accessory Command ("a" command)</li>
-          <li>Indexed control of a DCC Accessory via the Base Station's Turnout table ("T" command)</li>
-          <li>Indexed control of an Arduino IO via the Base Station's Output table ("Z" command)</li>
+        <li>Direct DCC Accessory Command ("a" command)</li>
+
+        <li>Indexed control of a DCC Accessory via the Base Station's Turnout table ("T"
+        command)</li>
+
+        <li>Indexed control of an Arduino IO via the Base Station's Output table ("Z" command)</li>
       </ul>
+
       <p>For each control method, there are two things you must configure:</p>
+
       <ul>
-          <li>JMRI's Turnout Table, including the System Name assigned to the turnout</li>
-          <li>The Base station's Turnout or Output Table</li>
+        <li>JMRI's Turnout Table, including the System Name assigned to the turnout</li>
+
+        <li>The Base station's Turnout or Output Table</li>
       </ul>
-      
+
       <h2>Direct DCC Accessory Control</h2>
-      
-      <p>With Direct control, you can directly control a DCC Stationary Decoder through DCC++.  There will be no feedback on the turnout's
-          actual position.</p>
-      <p>To control a Stationary Decoder or other DCC-controlled Accessory (using the Base Station's "a" command), follow these steps.</p>
-      
+
+      <p>With Direct control, you can directly control a DCC Stationary Decoder through DCC++.
+      There will be no feedback on the turnout's actual position.</p>
+
+      <p>To control a Stationary Decoder or other DCC-controlled Accessory (using the Base
+      Station's "a" command), follow these steps.</p>
+
       <h3>1: Choose a System Name and a User Name</h3>
-      
-      <p>The Hardware Address for a Direct DCC accessory must be the accessory's DCC address.
-          For example, if your Stationary Decoder's switch address is set to 52, the Hardware Address for that turnout should be 52.</p>
+
+      <p>The Hardware Address for a Direct DCC accessory must be the accessory's DCC address. For
+      example, if your Stationary Decoder's switch address is set to 52, the Hardware Address for
+      that turnout should be 52.</p>
+
       <p>The User Name can be anything you like.</p>
-      
+
       <h3>2: Add the Turnout to the JMRI Turnout Table</h3>
-      
+
       <p>In the JMRI Turnout Table...</p>
+
       <ol>
-          <li>Click the "Add" button</li>
-          <li>Make sure "DCC++" is selected in the System Name chooser</li>
-          <li>Enter the turnout's DCC address in the Hardware Address box</li>
-          <li>Enter the turnout's User Name in the User Name box</li>
-          <li>Click "OK"</li>
-          <li>Click the "Edit" button on the new Turnout's row</li>
-          <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
-          <li>Choose "DIRECT" in the Feedback Mode chooser</li>
-          <li>Click "OK"</li>
+        <li>Click the "Add" button</li>
+
+        <li>Make sure "DCC++" is selected in the System Name chooser</li>
+
+        <li>Enter the turnout's DCC address in the Hardware Address box</li>
+
+        <li>Enter the turnout's User Name in the User Name box</li>
+
+        <li>Click "OK"</li>
+
+        <li>Click the "Edit" button on the new Turnout's row</li>
+
+        <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
+
+        <li>Choose "DIRECT" in the Feedback Mode chooser</li>
+
+        <li>Click "OK"</li>
       </ol>
 
-        <table>
-            <tbody><tr>
-                <th>Entry</th>
-                <th>Meaning</th>
-                <th>makes System Name</th>
-                <th>Mask</th>
-                <th>Equivalent</th>
-                <th>Minimum</th>
-                <th>Maximum</th>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>ID in internal DCC++ table</td>
-                <td>DT12</td>
-                <td>integer</td>
-                <td> </td>
-                <td>0</td>
-                <td>32767</td>
-            </tr>
-            </tbody>
-        </table>
-        <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      <table>
+        <tbody>
+          <tr>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Equivalent</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+          </tr>
+
+          <tr>
+            <td>12</td>
+            <td>ID in internal DCC++ table</td>
+            <td>DT12</td>
+            <td>integer</td>
+            <td>
+            </td>
+            <td>0</td>
+            <td>32767</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
         based on information from the Hardware help pages
         by Egbert Broerse @silverailscolo July 2017 -->
 
       <h3>3: Configure the Base Station</h3>
-      
+
       <p>For Direct mode control, there is no Base Station configuration needed.</p>
-      
+
       <h2>Indexed DCC Accessory Control</h2>
 
-      <p>Indexed control is the preferred method of controlling DCC Statonary Decoders with DCC++.
-      <p>With Indexed control, you can control a DCC Stationary Decoder through DCC++, using the Base Station's internal turnout index table.</p>
-      <p>Each turnout has an entry in the Base Station's turnout table.  The base station stores the actual DCC Stationary Decoder address
-      internally, and you assign an ID value (anything from 0-32767) to the turnout.  JMRI references the turnout using the ID value,
-      not the decoder address.</p>
-      <p>Turnout ID values do not need to be sequential.  Each turnout's ID can be any unused value within the allowed range (0-32767).</p>
-      <p>To control a Stationary Decoder or other DCC-controlled Accessory using Indexed control (using the Base Station's "T" command), 
-          follow these steps.</p>
-      
+      <p>Indexed control is the preferred method of controlling DCC Statonary Decoders with
+      DCC++.</p>
+
+      <p>With Indexed control, you can control a DCC Stationary Decoder through DCC++, using the
+      Base Station's internal turnout index table.</p>
+
+      <p>Each turnout has an entry in the Base Station's turnout table. The base station stores the
+      actual DCC Stationary Decoder address internally, and you assign an ID value (anything from
+      0-32767) to the turnout. JMRI references the turnout using the ID value, not the decoder
+      address.</p>
+
+      <p>Turnout ID values do not need to be sequential. Each turnout's ID can be any unused value
+      within the allowed range (0-32767).</p>
+
+      <p>To control a Stationary Decoder or other DCC-controlled Accessory using Indexed control
+      (using the Base Station's "T" command), follow these steps.</p>
+
       <h3>1: Choose a System Name and a User Name</h3>
-      
-      <p>The Hardware Address for an Indexed DCC accessory is the ID value assigned in the Base Station's internal Turnout table.
-          For example, if your Stationary Decoder's switch address is set to 52, and that decoder is assigned ID value 13 in the 
-          Base Station, the Hardware Address for that turnout should be 13.</p>
+
+      <p>The Hardware Address for an Indexed DCC accessory is the ID value assigned in the Base
+      Station's internal Turnout table. For example, if your Stationary Decoder's switch address is
+      set to 52, and that decoder is assigned ID value 13 in the Base Station, the Hardware Address
+      for that turnout should be 13.</p>
+
       <p>The User Name can be anything you like.</p>
-      
+
       <h3>2: Add the Turnout to the JMRI Turnout Table</h3>
-      
-      <p>NOTE: Turnout configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
-          on startup.</p>
+
+      <p>NOTE: Turnout configurations stored in the Base Station's EEPROM will be automatically
+      added to the JMRI Sensor Table on startup.</p>
 
       <p>In the JMRI Turnout Table...</p>
+
       <ol>
-          <li>Click the "Add" button</li>
-          <li>Make sure "DCC++" is selected in the System Name chooser</li>
-          <li>Enter the turnout's ID value in the Hardware Address box</li>
-          <li>Enter the turnout's User Name in the User Name box</li>
-          <li>Click "OK"</li>
-          <li>Click the "Edit" button on the new Turnout's row</li>
-          <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
-          <li>Choose "BSTURNOUT" ("MONITOR" in JMRI 4.6.x or previous) in the Feedback Mode chooser</li>
-          <li>Click "OK"</li>
+        <li>Click the "Add" button</li>
+
+        <li>Make sure "DCC++" is selected in the System Name chooser</li>
+
+        <li>Enter the turnout's ID value in the Hardware Address box</li>
+
+        <li>Enter the turnout's User Name in the User Name box</li>
+
+        <li>Click "OK"</li>
+
+        <li>Click the "Edit" button on the new Turnout's row</li>
+
+        <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
+
+        <li>Choose "BSTURNOUT" ("MONITOR" in JMRI 4.6.x or previous) in the Feedback Mode
+        chooser</li>
+
+        <li>Click "OK"</li>
       </ol>
-      
+
       <h3>3: Configure the Base Station</h3>
-      
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors &amp; Turnouts") tool to store
-      the turnout ID and DCC Address in the Base Station.</p>
-      <p>Note: DCC++ requires the use of an Address/Subaddress pair.  If your Stationary Decoder does not have
-          subaddresses, take the address and divide by 4.  The result is the address, the remainder is the subaddress.
-          For example, Address 51 (no subaddress) is DCC++ Address 12, Subaddress 3.
+
+      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool
+      to store the turnout ID and DCC Address in the Base Station.</p>
+
+      <p>Note: DCC++ requires the use of an Address/Subaddress pair. If your Stationary Decoder
+      does not have subaddresses, take the address and divide by 4. The result is the address, the
+      remainder is the subaddress. For example, Address 51 (no subaddress) is DCC++ Address 12,
+      Subaddress 3.</p>
+
       <ol>
-          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &amp; Turnouts")</li>
-          <li>Choose the "Turnouts" tab</li>
-          <li>Click the "Add Turnout" button. This will add a new row to the table.</li>
-          <li>In the new row, set the "Index" to the ID value of the new turnout</li>
-          <li>In the new row, set the "Address" to the DCC address of the new turnout</li>
-          <li>If the turnout has a sub-address, set the "Subaddress" to the correct value for the new turnout.
-          Otherwise, make sure the subaddress value is zero (0)</li>
-          <li>Click "Save Turnouts" or "Close" and answer the prompts</li>
+        <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &
+        Turnouts")</li>
+
+        <li>Choose the "Turnouts" tab</li>
+
+        <li>Click the "Add Turnout" button. This will add a new row to the table.</li>
+
+        <li>In the new row, set the "Index" to the ID value of the new turnout</li>
+
+        <li>In the new row, set the "Address" to the DCC address of the new turnout</li>
+
+        <li>If the turnout has a sub-address, set the "Subaddress" to the correct value for the new
+        turnout. Otherwise, make sure the subaddress value is zero (0)</li>
+
+        <li>Click "Save Turnouts" or "Close" and answer the prompts</li>
       </ol>
-      
-      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Turnouts" you will <em>not</em> be given the
-          opportunity to write the changes to the Base Station's EEPROM.  To write to EEPROM, you must choose 
-          "Close" <em>instead</em> of "Save Changes".</p>
-      
+
+      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Turnouts" you will
+      <em>not</em> be given the opportunity to write the changes to the Base Station's EEPROM. To
+      write to EEPROM, you must choose "Close" <em>instead</em> of "Save Changes".</p>
+
       <h2>Indexed DCC++ Output Pin Control</h2>
 
-      <p>Indexed Output Pin control is the <em>only</em> way to control a turnout directly connected to a DCC++ Arduino IO pin from JMRI.</p>
-      <p>With Indexed control, you can control a DCC++ Arduino IO pin, using the Base Station's internal output index table.</p>
-      <p>Each Output pin has an entry in the Base Station's Output table.  The base station stores the actual Arduino IO Pin number
-      internally, and you assign an ID value (anything from 0-32767) to the output.  JMRI references the turnout using the ID value,
-      not the Arduino pin number.</p>
-      <p>Output ID values do not need to be sequential.  Each turnout's ID can be any unused value within the allowed range (0-32767).</p>
-      <p>When using analog Arduino pins as digital outputs, use the pin's digital pin number.  For example, analog pin A0 is digital pin 14</p>
-      <p>To control an Arduino IO pin using Indexed control (using the Base Station's "Z" command), 
-          follow these steps.</p>
-      
+      <p>Indexed Output Pin control is the <em>only</em> way to control a turnout directly
+      connected to a DCC++ Arduino IO pin from JMRI.</p>
+
+      <p>With Indexed control, you can control a DCC++ Arduino IO pin, using the Base Station's
+      internal output index table.</p>
+
+      <p>Each Output pin has an entry in the Base Station's Output table. The base station stores
+      the actual Arduino IO Pin number internally, and you assign an ID value (anything from
+      0-32767) to the output. JMRI references the turnout using the ID value, not the Arduino pin
+      number.</p>
+
+      <p>Output ID values do not need to be sequential. Each turnout's ID can be any unused value
+      within the allowed range (0-32767).</p>
+
+      <p>When using analog Arduino pins as digital outputs, use the pin's digital pin number. For
+      example, analog pin A0 is digital pin 14</p>
+
+      <p>To control an Arduino IO pin using Indexed control (using the Base Station's "Z" command),
+      follow these steps.</p>
+
       <h3>1: Choose a System Name and a User Name</h3>
-      
-      <p>The Hardware Address for an Indexed Output is the ID value assigned in the Base Station's internal Output table.
-          For example, if your turnout control is connected to Arduino pin 7, and that output is assigned ID value 13 in the 
-          Base Station, the Hardware Address for that turnout should be 13.</p>
+
+      <p>The Hardware Address for an Indexed Output is the ID value assigned in the Base Station's
+      internal Output table. For example, if your turnout control is connected to Arduino pin 7,
+      and that output is assigned ID value 13 in the Base Station, the Hardware Address for that
+      turnout should be 13.</p>
+
       <p>The User Name can be anything you like.</p>
-      
+
       <h3>2: Add the Turnout to the JMRI Turnout Table</h3>
-      
-      <p>NOTE: Output configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
-          on startup.</p>
+
+      <p>NOTE: Output configurations stored in the Base Station's EEPROM will be automatically
+      added to the JMRI Sensor Table on startup.</p>
 
       <p>In the JMRI Turnout Table...</p>
-      <ol>
-          <li>Click the "Add" button</li>
-          <li>Make sure "DCC++" is selected in the System Name chooser</li>
-          <li>Enter the turnout's ID value in the Hardware Address box</li>
-          <li>Enter the turnout's User Name in the User Name box</li>
-          <li>Click "OK"</li>
-          <li>Click the "Edit" button on the new Turnout's row</li>
-          <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
-          <li>Choose "BSOUTPUT" ("EXACT" in JMRI 4.6.x or previous) in the Feedback Mode chooser</li>
-          <li>Click "OK"</li>
-      </ol>
-      
-      <h3>3: Configure the Base Station</h3>
-      
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors &amp; Turnouts") tool to store
-      the turnout ID and Arduino pin number in the Base Station.</p>
-      <ol>
-          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &amp; Turnouts")</li>
-          <li>Choose the "Outputs" tab</li>
-          <li>Click the "Add Output" button. This will add a new row to the table.</li>
-          <li>In the new row, set the "Index" to the ID value of the new output</li>
-          <li>In the new row, set the "Pin #" to the Arduino pin number of the new turnout</li>
-          <li>If the pin output needs to be inverted, check the "Invert Output" box</li>
-          <li>Click "Save Outputs" or "Close" and answer the prompts</li>
-      </ol>
-      
-      <p>Note: On JMRI versions 4.7.1 and earlier, if you choose "Save Outputs" you will <em>not</em> be given the
-          opportunity to write the changes to the Base Station's EEPROM.  To write to EEPROM, you must choose 
-          "Close" <em>instead</em> of "Save Changes".</p>
-      <h2>General Notes</h2>
-      
-      <h3>On Turnout and Output IDs</h3>
-      
-      <p>Turnout and Output IDs do not need to be sequential.  You can use any unused value
-          within the allowed range (0-32767).  The DCC++ Base Station will also allow a Turnout
-          and an Output to have the same ID and be treated as separate devices (they are stored
-          in separate tables and accessed via different commands).</p>
-      <p><em>However</em>, JMRI requires that all (JMRI) Turnout System Names be unique, and therefore the
-      Hardware Addresses assigned to Turnouts and Outputs must be different.  For example,
-      while the Base Station will allow a Turnout ID 2 and an Output ID 2, JMRI will not
-      be able to treat these as separate devices, so this is not allowed.</p>
-      <p>For the same reason, you must choose Turnout/Output ID values that are different from
-      any Direct mode DCC Address Turnouts accessed through the DCC++ Base Station.</p>
-      <p>If you have multiple interfaces (e.g. a stand-alone LocoNet or a second DCC++ Base Station),
-          each interface has its own "namespace", so you <em>can</em> have a Turnout ID2 on one DCC++ Base Station
-          interface and a Direct Address 2 turnout on a <em>different</em> DCC++ Base Station, and a LocoNet
-          address 2 turnout on a stand-alone LocoNet interface.</p>
-      <p>Having said that, such overlapping address spaces can be very confusing, so we recommend allocating certain
-          address spaces for each interface so that there is only one "Turnout #42" on the whole system</p>
-      
-      <h3>On Inverting Outputs (BSOUTPUT mode Turnouts)</h3>
-      <p>The DCC++ Base Station Output table allows the output signal to be inverted.  JMRI <em>also</em>
-      allows JMRI Turnouts to be inverted in the JMRI Turnout Table entries.  This means that a BSOUTPUT mode Turnout can be
-      inverted <em>twice</em>.  Please be sure to check both the Base Station settings and the Turnout Table settings
-      to be sure that you achieve the intended result.</p>
-      
-      <h3>On Using the JMRI "Configure Base Station" Tool</h3>
-      
-      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and Output
-      tables in your Base Station.  It is not, however, required to work with DCC++ within JMRI.  You can,
-      for example, set up your Base Station's tables using the DCC++ serial command interface, or the
-      DCC++ Controller software.  As long as the IDs assigned in the Base Station match the Hardware Address
-      assigned in JMRI's Turnout Table, all will be well.</p>
 
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <ol>
+        <li>Click the "Add" button</li>
+
+        <li>Make sure "DCC++" is selected in the System Name chooser</li>
+
+        <li>Enter the turnout's ID value in the Hardware Address box</li>
+
+        <li>Enter the turnout's User Name in the User Name box</li>
+
+        <li>Click "OK"</li>
+
+        <li>Click the "Edit" button on the new Turnout's row</li>
+
+        <li>Click the "Feedback" tab in the Edit Turnout dialog</li>
+
+        <li>Choose "BSOUTPUT" ("EXACT" in JMRI 4.6.x or previous) in the Feedback Mode chooser</li>
+
+        <li>Click "OK"</li>
+      </ol>
+
+      <h3>3: Configure the Base Station</h3>
+
+      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool
+      to store the turnout ID and Arduino pin number in the Base Station.</p>
+
+      <ol>
+        <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &
+        Turnouts")</li>
+
+        <li>Choose the "Outputs" tab</li>
+
+        <li>Click the "Add Output" button. This will add a new row to the table.</li>
+
+        <li>In the new row, set the "Index" to the ID value of the new output</li>
+
+        <li>In the new row, set the "Pin #" to the Arduino pin number of the new turnout</li>
+
+        <li>If the pin output needs to be inverted, check the "Invert Output" box</li>
+
+        <li>Click "Save Outputs" or "Close" and answer the prompts</li>
+      </ol>
+
+      <p>Note: On JMRI versions 4.7.1 and earlier, if you choose "Save Outputs" you will
+      <em>not</em> be given the opportunity to write the changes to the Base Station's EEPROM. To
+      write to EEPROM, you must choose "Close" <em>instead</em> of "Save Changes".</p>
+
+      <h2>General Notes</h2>
+
+      <h3>On Turnout and Output IDs</h3>
+
+      <p>Turnout and Output IDs do not need to be sequential. You can use any unused value within
+      the allowed range (0-32767). The DCC++ Base Station will also allow a Turnout and an Output
+      to have the same ID and be treated as separate devices (they are stored in separate tables
+      and accessed via different commands).</p>
+
+      <p><em>However</em>, JMRI requires that all (JMRI) Turnout System Names be unique, and
+      therefore the Hardware Addresses assigned to Turnouts and Outputs must be different. For
+      example, while the Base Station will allow a Turnout ID 2 and an Output ID 2, JMRI will not
+      be able to treat these as separate devices, so this is not allowed.</p>
+
+      <p>For the same reason, you must choose Turnout/Output ID values that are different from any
+      Direct mode DCC Address Turnouts accessed through the DCC++ Base Station.</p>
+
+      <p>If you have multiple interfaces (e.g. a stand-alone LocoNet or a second DCC++ Base
+      Station), each interface has its own "namespace", so you <em>can</em> have a Turnout ID2 on
+      one DCC++ Base Station interface and a Direct Address 2 turnout on a <em>different</em> DCC++
+      Base Station, and a LocoNet address 2 turnout on a stand-alone LocoNet interface.</p>
+
+      <p>Having said that, such overlapping address spaces can be very confusing, so we recommend
+      allocating certain address spaces for each interface so that there is only one "Turnout #42"
+      on the whole system</p>
+
+      <h3>On Inverting Outputs (BSOUTPUT mode Turnouts)</h3>
+
+      <p>The DCC++ Base Station Output table allows the output signal to be inverted. JMRI
+      <em>also</em> allows JMRI Turnouts to be inverted in the JMRI Turnout Table entries. This
+      means that a BSOUTPUT mode Turnout can be inverted <em>twice</em>. Please be sure to check
+      both the Base Station settings and the Turnout Table settings to be sure that you achieve the
+      intended result.</p>
+
+      <h3>On Using the JMRI "Configure Base Station" Tool</h3>
+
+      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and
+      Output tables in your Base Station. It is not, however, required to work with DCC++ within
+      JMRI. You can, for example, set up your Base Station's tables using the DCC++ serial command
+      interface, or the DCC++ Controller software. As long as the IDs assigned in the Base Station
+      match the Hardware Address assigned in JMRI's Turnout Table, all will be well.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

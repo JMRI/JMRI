@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: System Info Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: System Info Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h2>JMRI: System Info Tool</h2>This is the
-      jmri.jmrix.lenxz.systeminfo.SystemInfoFrame help page. 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h2>JMRI: System Info Tool</h2>
+      This is the jmri.jmrix.lenxz.systeminfo.SystemInfoFrame help page. 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

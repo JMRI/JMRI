@@ -20,9 +20,9 @@ import java.io
 import org.apache.commons.csv
 
 b = java.io.FileReader(java.io.File("demo.csv"))
-c = org.apache.commons.CSVFormat.DEFAULT.parse(b)
+c = org.apache.commons.csv.CSVFormat.DEFAULT.parse(b)
 
-for (r : c.getRecords()) :
+for r in c.getRecords() :
     systemname = r.get(0)
     username = r.get(1)
     comment = r.get(2)
@@ -30,7 +30,7 @@ for (r : c.getRecords()) :
     if (username != "") :
         turnout.setUserName(username)
     if (comment != "") :
-        turnout.setComment(comment)    
+        turnout.setComment(comment)
     print systemname,"/",username,"/",comment
-    
+
 

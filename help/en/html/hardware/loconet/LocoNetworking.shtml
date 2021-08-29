@@ -1,93 +1,75 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Connecting Multiple Computers to a
-  LocoNet&reg; Layout</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Connecting Multiple Computers to a LocoNet® Layout</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Methods to Connect Multiple Computers to a LocoNet® Layout</h1>
 
-      <h1>Hardware Support: Methods to Connect Multiple Computers
-      to a LocoNet&reg; Layout</h1>
+      <p>JMRI currently supports two different ways to connect multiple computers to your
+      LocoNet®-equipped layout using a single LocoBuffer. In both methods, the computers
+      communicate using standard TCP/IP protocols, but there are differences in the details.</p>
 
-      <p>JMRI currently supports two different ways to connect
-      multiple computers to your LocoNet&reg;-equipped layout using
-      a single LocoBuffer. In both methods, the computers
-      communicate using standard TCP/IP protocols, but there are
-      differences in the details.</p>
+      <p>One method allows multiple JMRI nodes to connect as Clients to a single <a href=
+      "http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>,
+      which is external to JMRI.<br>
+      The other method uses the inbuilt <a href="LocoNetServer.shtml">LocoNet Client/Server
+      capability</a> of JMRI.</p>
 
-      <p>
-      One method allows multiple JMRI nodes to connect as
-      Clients to a single <a href=
-      "http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP
-      LbServer</a>, which is external to JMRI.<br>
-      The other method uses the inbuilt <a href=
-      "LocoNetServer.shtml">LocoNet Client/Server capability</a> of
-      JMRI.
-      </p>
+      <p>The difference between these two methods is that JMRI LocoNet Client/Server uses the
+      native Java Remote Method Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a
+      separate non-Java server process, LbServer, that communicates using plain ASCII String
+      messages over TCP/IP sockets, allowing non-Java nodes to also share the one LocoBuffer.</p>
 
-      <p>The difference between these two methods is that 
-      JMRI LocoNet Client/Server uses the native Java Remote Method
-      Invocation (RMI) protocol, 
-      whereas the 
-      LocoNetOverTCP uses a
-      separate non-Java server process, LbServer, that communicates
-      using plain ASCII String messages over TCP/IP sockets,
-      allowing non-Java nodes to also share the one LocoBuffer.</p>
-
-      <p>For most people who simply want to have several computers
-      share a single LocoBuffer connection, the <a href=
-      "LocoNetServer.shtml">JMRI LocoNet Client/Server option</a>
-      can be easier to configure. For
-      others wanting to provide remote access the layout over
-      Internet, the <a href="LbServer.shtml">LocoNetOverTCP
-      LbServer option</a> may be more suitable as configuring the firewall rules
-      to allow external access will be simpler.
-      Setting up networking equipment can be complicated, so if 
-      one of them doesn't work for you initially, you might want to 
-      just try the other one to see if it works on your home network.</p>
+      <p>For most people who simply want to have several computers share a single LocoBuffer
+      connection, the <a href="LocoNetServer.shtml">JMRI LocoNet Client/Server option</a> can be
+      easier to configure. For others wanting to provide remote access the layout over Internet,
+      the <a href="LbServer.shtml">LocoNetOverTCP LbServer option</a> may be more suitable as
+      configuring the firewall rules to allow external access will be simpler. Setting up
+      networking equipment can be complicated, so if one of them doesn't work for you initially,
+      you might want to just try the other one to see if it works on your home network.</p>
 
       <ul>
-        <li><a href="LocoNetServer.shtml">How to set up LocoNet
-        Client/Server</a></li>
+        <li>
+          <a href="LocoNetServer.shtml">How to set up LocoNet Client/Server</a>
+        </li>
 
-        <li><a href="LbServer.shtml">How to set up LocoNetOverTCP
-        LbServer</a></li>
+        <li>
+          <a href="LbServer.shtml">How to set up LocoNetOverTCP LbServer</a>
+        </li>
       </ul>
 
       <h2>Notes:</h2>
 
       <ul>
-        <li>If the computers are all close to the LocoNet, e.g.
-        acting as local control panels, you don't really need any
-        networking to do this. You can instead connect each of the
-        computers to the LocoNet via their own LocoBuffer or
-        LocoBuffer-II (or MS-100, though this is not recommended)
-        and have them individually take part in the LocoNet
-        communications. This doesn't cause any additional
-        communications load. It does cost a little more for the
-        extra adapters, and doesn't permit you to put a computer
-        remote from the layout.</li>
+        <li>If the computers are all close to the LocoNet, e.g. acting as local control panels, you
+        don't really need any networking to do this. You can instead connect each of the computers
+        to the LocoNet via their own LocoBuffer or LocoBuffer-II (or MS-100, though this is not
+        recommended) and have them individually take part in the LocoNet communications. This
+        doesn't cause any additional communications load. It does cost a little more for the extra
+        adapters, and doesn't permit you to put a computer remote from the layout.</li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
+
       <hr class="hide">
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

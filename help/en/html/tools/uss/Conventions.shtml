@@ -1,49 +1,47 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: USS CTC Tools Recommendations</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: USS CTC Tools Recommendations</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h2>JMRI: USS CTC Tools Recommendations</h2>
 
-      <p>This page discussions some conventions that might be 
-        useful when setting up a CTC panel using the USS CTC tools.
-        Basically, this is how we did the examples, and it might be 
-        a helpful approach for you to organize all the needed info.</p>
-            
-    <p>
-        User names for devices:
-    <p>
-        The indicators on the panel are driven by Turnouts named things like "CTC 31 N" or "CTC 31 R"
-        for a turnout lever, or "CTC 32 R", "CTC 32 C" or "CTC 32 L" for a signal lever.
-    <p>
-        The Sensors that are connected to switch inputs on the panel use the same names,
-        though the center one on a signal (i.e. "CTC 32 C") is often omitted.
-    <p>
-        Occupancy detector Sensors are labelled as "Track Circuits", i.e. "TC 12". 
-        The corresponding lamp on the panel is driven by a Turnout of the same name, "TC 12".
-    <p>
-        The code button and code light are called "Code Button 32" and "Code Lamp 32" respectively.
-    <p>
-        Maintainer call turnouts and sensors are labelled as e.g. "MC 88".
-    <p>
-        The real turnout on the layout is known as "CTC 3 Turnout".
-    <p>
-        Signals are around an OS section are known by the section number and location:
-        "CTC 4 main upper", "CTC 4 main lower", "CTC 4 main single", "CTC 4 siding".
-        
+      <p>This page discussions some conventions that might be useful when setting up a CTC panel
+      using the USS CTC tools. Basically, this is how we did the examples, and it might be a
+      helpful approach for you to organize all the needed info.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>User names for devices:</p>
+
+      <p>The indicators on the panel are driven by Turnouts named things like "CTC 31 N" or "CTC 31
+      R" for a turnout lever, or "CTC 32 R", "CTC 32 C" or "CTC 32 L" for a signal lever.</p>
+
+      <p>The Sensors that are connected to switch inputs on the panel use the same names, though
+      the center one on a signal (i.e. "CTC 32 C") is often omitted.</p>
+
+      <p>Occupancy detector Sensors are labelled as "Track Circuits", i.e. "TC 12". The
+      corresponding lamp on the panel is driven by a Turnout of the same name, "TC 12".</p>
+
+      <p>The code button and code light are called "Code Button 32" and "Code Lamp 32"
+      respectively.</p>
+
+      <p>Maintainer call turnouts and sensors are labelled as e.g. "MC 88".</p>
+
+      <p>The real turnout on the layout is known as "CTC 3 Turnout".</p>
+
+      <p>Signals are around an OS section are known by the section number and location: "CTC 4 main
+      upper", "CTC 4 main lower", "CTC 4 main single", "CTC 4 siding". 
+      <!--#include virtual="/Footer.shtml" --></p>
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

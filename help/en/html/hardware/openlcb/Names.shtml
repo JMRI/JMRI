@@ -1,76 +1,55 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - OpenLCB - Naming</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - OpenLCB - Naming</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
-      <h1>Hardware Support: OpenLCB - Naming</h1>This page
-      discusses how JMRI uses System Names to access
-      OpenLCB-attached resources.
-
-      <h2>JMRI's Use of Names</h2>JMRI provides an interface to the
-      real layout via internal objects such as Turnouts, Sensors,
-      etc. that are closely mapped to corresponding physical
-      devices. This mapping is done via "System Names", which both
-      identify how to access a particular device, and are the key
-      to looking up the corresponding object in JMRI. <a name=
-      "openlcbevents" id="openlcbevents"></a>
-
-      <h2>OpenLCB Events</h2><a href=
-      "http://openlcb.org">OpenLCB</a> communicates events via
-      messages with a fixed format: eight bytes of content. We
-      convert this to a 16 hexadecimal digit code with a leading
-      "x" character, e.g. "x1234567890ABCDEF". We recommend you use
-      upper case for the A-F letters. You can also enter it with
-      periods separating the bytes: "12.34.56.78.90.AB.CD.EF". In
-      this case only, one leading zero per byte can be omitted when
-      typing the event; JMRI will insert them automatically in
-      names. For example, "00.01.02.03.04.05.06.07" can be typed as
+      <h1>Hardware Support: OpenLCB - Naming</h1>
+      This page discusses how JMRI uses System Names to access OpenLCB-attached resources.
+      <h2>JMRI's Use of Names</h2>
+      JMRI provides an interface to the real layout via internal objects such as Turnouts, Sensors,
+      etc. that are closely mapped to corresponding physical devices. This mapping is done via
+      "System Names", which both identify how to access a particular device, and are the key to
+      looking up the corresponding object in JMRI.
+      <h2 id="openlcbevents">OpenLCB Events</h2>
+      <a href="http://openlcb.org">OpenLCB</a> communicates events via messages with a fixed
+      format: eight bytes of content. We convert this to a 16 hexadecimal digit code with a leading
+      "x" character, e.g. "x1234567890ABCDEF". We recommend you use upper case for the A-F letters.
+      You can also enter it with periods separating the bytes: "12.34.56.78.90.AB.CD.EF". In this
+      case only, one leading zero per byte can be omitted when typing the event; JMRI will insert
+      them automatically in names. For example, "00.01.02.03.04.05.06.07" can be typed as
       "0.1.2.3.4.5.6.7".
-
       <h2>OpenLCB Configuration Memory</h2>
-      DecoderPro accesses
-      decoder memory via "CVs". For that purpose, the JMRI OpenLCB
-      provides a CV syntax that can be used to access OpenLCB node
-      configuration memory:
-
+      DecoderPro accesses decoder memory via "CVs". For that purpose, the JMRI OpenLCB provides a
+      CV syntax that can be used to access OpenLCB node configuration memory:
       <ul>
-        <li>CV12345 - A single byte at address 12345 in the default
-        configuration address space</li>
+        <li>CV12345 - A single byte at address 12345 in the default configuration address
+        space</li>
 
-        <li>CV(252)12345 - A single byte at address 12345 in the
-        252 address space</li>
+        <li>CV(252)12345 - A single byte at address 12345 in the 252 address space</li>
 
-        <li>CV12345:4 - Four bytes starting at address 12345 in the
-        default configuration address space.</li>
+        <li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address
+        space.</li>
 
-        <li>CV(252)12345:4 - Four bytes starting at address 12345
-        in the 252 address space.</li>
+        <li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.</li>
       </ul>
 
       <h2>OpenLCB Signal Masts</h2>
-
-      See the 
-      <a href="OlcbSignalMast.shtml">OpenLCB Signal Mast page</a>
-      for more information on OpenLCB Signal Mast names.
-      
-      <p>Back to the <a href="index.shtml">main OpenLCB Help
-      page</a>
-      
-      </p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      See the <a href="OlcbSignalMast.shtml">OpenLCB Signal Mast page</a> for more information on
+      OpenLCB Signal Mast names.
+      <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

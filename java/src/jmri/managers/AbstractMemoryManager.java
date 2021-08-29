@@ -40,8 +40,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    public @Nonnull Memory provideMemory(@Nonnull String sName) {
+    public Memory provideMemory(@Nonnull String sName) throws IllegalArgumentException {
         Memory m = getMemory(sName);
         if (m != null) {
             return m;
@@ -54,6 +55,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public Memory getMemory(@Nonnull String name) {
         Memory t = getByUserName(name);
@@ -67,19 +69,23 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
                 + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
         Memory m;
-        if ((userName != null) && ((m = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != m) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, m.getSystemName()); // NOI18N
+        if (userName != null) {
+            m = getByUserName(userName);
+            if ( m!= null) {
+                if (getBySystemName(systemName) != m) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, m.getSystemName()); // NOI18N
+                }
+                return m;
             }
-            return m;
         }
-        if ((m = getBySystemName(systemName)) != null) {
+        m = getBySystemName(systemName);
+        if (m != null) {
             // handle user name from request
             if (userName != null) {
                 // check if already on set in Object, might be inconsistent
@@ -96,11 +102,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // doesn't exist, make a new one
         m = createNewMemory(systemName, userName);
 
-        // if that failed, blame it on the input arguments
-        if (m == null) {
-            throw new IllegalArgumentException();
-        }
-
         // save in the maps
         register(m);
         // Keep track of the last created auto system name
@@ -110,8 +111,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String userName) {
+    public Memory newMemory(@CheckForNull String userName) throws IllegalArgumentException {
         return newMemory(getAutoSystemName(), userName);
     }
 
@@ -124,7 +126,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
      * @return a new Memory
      */
     @Nonnull
-    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName);
+    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -141,6 +143,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return Memory.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public Memory provide(@Nonnull String name) throws IllegalArgumentException {

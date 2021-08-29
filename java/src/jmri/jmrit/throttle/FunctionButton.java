@@ -258,11 +258,13 @@ public class FunctionButton extends JToggleButton {
     }
 
     /**
-     * Update Button Look and Feel.
-     * Decide if it should show the label or an image with text as tooltip.
-     * Button UI updated according to above result.
+     * Update Button Look and Feel !
+     *    Hide/show it if necessary
+     *    Decide if it should show the label or an image with text as tooltip.
+     *    Button UI updated according to above result.
      */
     public void updateLnF() {
+        setVisible(isDisplayed);
         setBorderPainted(!isImageOK());
         setContentAreaFilled(!isImageOK());
         if (isImageOK()) { // adjust button for image
@@ -473,8 +475,7 @@ public class FunctionButton extends JToggleButton {
             this.setIdentity(e.getAttribute("id").getIntValue());
             this.setText(e.getAttribute("text").getValue());
             this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
-            boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
-            this.setDisplay(isVisible);
+            this.setDisplay(e.getAttribute("isVisible").getBooleanValue());
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
             this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {

@@ -1,89 +1,66 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE DCC Packet Analyzer</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Help DCC Analyzer">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help DCC Analyzer"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>NCE DCC Packet Analyzer</h1>
 
       <table>
         <tr>
           <td>
-            <p>The NCE DCC Packet Analyzer tool works with the
-            <a href=
-            "https://ncedcc.zendesk.com/hc/en-us/articles/200979515-Packet-Analyzer"
-            target="_blank">NCE Packet Analyzer</a> product to read
-            and present the DCC packets on your track. It connects
-            via a separate serial port from your command station
-            connection.</p>
+            <p>The NCE DCC Packet Analyzer tool works with the <a href=
+            "https://ncedcc.zendesk.com/hc/en-us/articles/200979515-Packet-Analyzer" target=
+            "_blank">NCE Packet Analyzer</a> product to read and present the DCC packets on your
+            track. It connects via a separate serial port from your command station connection.</p>
 
-            <p>If you do not have an NCE system, configure a new
-            second connection in <a href=
-            "/help/en/manual/DecoderPro/Start_Preferences.shtml#Connections"
-            target="_blank">Preferences-&gt;Connections</a> to "NCE
-            Simulator" so you can access the NCE "DCC Packet
-            Analyzer" menu item. If you do this, you will need to
-            restart JMRI and then open <a href=
-            "/help/en/manual/DecoderPro/Start_Preferences.shtml#Defaults"
-            target="_blank">Preferences-&gt;Defaults</a> to check
-            that the NCE Simulator has not "stolen" any of your
-            real connections.</p>
+            <p>If you do not have an NCE system, configure a new second connection in <a href=
+            "/help/en/manual/DecoderPro/Start_Preferences.shtml#Connections" target=
+            "_blank">Preferences-&gt;Connections</a> to "NCE Simulator" so you can access the NCE
+            "DCC Packet Analyzer" menu item. If you do this, you will need to restart JMRI and then
+            open <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Defaults" target=
+            "_blank">Preferences-&gt;Defaults</a> to check that the NCE Simulator has not "stolen"
+            any of your real connections.</p>
           </td>
-
           <td><img src=
           "https://ncedcc.zendesk.com/hc/en-us/article_attachments/200950605/Packet_Analyzer.jpg"
-          height="80" width="91" alt="Packet Analyzer" border=
-          "0"></td>
+          height="80" width="91" alt="Packet Analyzer">
+          </td>
         </tr>
       </table>
 
-      <h2>Using the Analyzer</h2>Select the "Serial port:" and push
-      the "Open" button before using any of the radio buttons. The
-      baud rate is fixed at 38.4Kbps. If nothing appears on the
-      screen immediately, select a new display mode (e.g.
-      "Verbose") and some packet types to display (e.g. "Idle
-      Packets").
+      <h2>Using the Analyzer</h2>
+      Select the "Serial port:" and push the "Open" button before using any of the radio buttons.
+      The baud rate is fixed at 38.4Kbps. If nothing appears on the screen immediately, select a
+      new display mode (e.g. "Verbose") and some packet types to display (e.g. "Idle Packets").
+      <p>Use the radio buttons to configure the analyzer to your liking. Note that the NCE analyzer
+      will remember the configuration when it is powered down.</p>
 
-      <p>Use the radio buttons to configure the analyzer to your
-      liking. Note that the NCE analyzer will remember the
-      configuration when it is powered down.</p>
+      <p>The "+ on" checkbox allows you to suppress identical packets. Each time the JMRI program
+      detects a packet that it identical to the previous it will replace the packet with a "+"
+      character. Warning, the JMRI program will only display the suppressed packets ("+"
+      characters) after receiving a packet that isn't identical to the previous. If there's little
+      activity it is recommended that you not use the suppress feature. This way you will
+      immediately see all packets being captured by the analyzer.</p>
 
-      <p>The "+ on" checkbox allows you to suppress identical
-      packets. Each time the JMRI program detects a packet that it
-      identical to the previous it will replace the packet with a
-      "+" character. Warning, the JMRI program will only display
-      the suppressed packets ("+" characters) after receiving a
-      packet that isn't identical to the previous. If there's
-      little activity it is recommended that you not use the
-      suppress feature. This way you will immediately see all
-      packets being captured by the analyzer.</p>
+      <p>The "Info" button will cause the analyzer to display its inbuilt help screen and the
+      Analyzer version number. Press the "Res." button to resume normal operation.</p>
 
-      <p>The "Info" button will cause the analyzer to display its
-      inbuilt help screen and the Analyzer version number. Press
-      the "Res." button to resume normal operation.</p>
+      <p>The following help was copied from NCE Corporation with their permission. <a href=
+      "https://ncedcc.zendesk.com/hc/en-us/article_attachments/200259175/Analyzer1_1.pdf" target=
+      "_blank">Click here</a> to download the full Analyzer manual.</p>
 
-      <p>The following help was copied from NCE Corporation with
-      their permission. <a href=
-      "https://ncedcc.zendesk.com/hc/en-us/article_attachments/200259175/Analyzer1_1.pdf"
-      target="_blank">Click here</a> to download the full Analyzer
-      manual.</p>
+      <p><strong>Commands:</strong>
+      </p>
 
-      <p><b>Commands:</b></p>
-
-      <p>V Display packets in 'verbose' mode (able to be
-      intrepreted by humans)<br>
+      <p>V Display packets in 'verbose' mode (able to be intrepreted by humans)<br>
       H Display packets as hex bytes<br>
       H0 Set hex display mode 0 (see hex display table)<br>
       H1 Set hex display mode 1 (see hex display table)<br>
@@ -106,216 +83,158 @@
       S- Don't display signal packets<br>
       ? Display list of commands supported</p>
 
-      <p>The analyzer remembers the last display mode after power
-      up.</p>
+      <p>The analyzer remembers the last display mode after power up.</p>
 
-      <h2>Hex mode displays:</h2><b>H0 mode (compatible with the
-      ICC analyzer):</b><br>
-      Displays packets in hex mode preceded by one character
-      indicating how many start bits in the packet preamble. There
-      are no spaces between any characters or bytes.<br>
+      <h2>Hex mode displays:</h2>
+      <strong>H0 mode (compatible with the ICC analyzer):</strong><br>
+      Displays packets in hex mode preceded by one character indicating how many start bits in the
+      packet preamble. There are no spaces between any characters or bytes.<br>
       Example: $03686B<br>
-      Description: 14 start bits with three byte packet following
-      with bytes of 0x03, 0x68, 0x6B
-
-      <p><b>H1 mode:</b><br>
-      Same as H0 mode except spaces will delimit preamble char and
-      each pair of hex characters.<br>
+      Description: 14 start bits with three byte packet following with bytes of 0x03, 0x68, 0x6B
+      <p><strong>H1 mode:</strong><br>
+      Same as H0 mode except spaces will delimit preamble char and each pair of hex characters.<br>
       Example: $ 03 68 6B<br>
-      14 start bits with three byte packet following with bytes of
-      0x03, 0x68, 0x6B</p>
+      14 start bits with three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H2 mode:</b><br>
-      Displays packets in hex mode with no indication of how many
-      preamble bits. There are no spaces between any characters or
-      bytes.<br>
+      <p><strong>H2 mode:</strong><br>
+      Displays packets in hex mode with no indication of how many preamble bits. There are no
+      spaces between any characters or bytes.<br>
       Example: 03686B<br>
-      Three byte packet following with bytes of 0x03, 0x68,
-      0x6B</p>
+      Three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H3 mode:</b><br>
-      Same as H2 mode except spaces will delimit each pair of hex
-      characters<br>
+      <p><strong>H3 mode:</strong><br>
+      Same as H2 mode except spaces will delimit each pair of hex characters<br>
       Example: 03 68 6B<br>
-      Three byte packet following with bytes of 0x03, 0x68,
-      0x6B</p>
+      Three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H4 mode:</b><br>
-      Displays packets in hex mode preceded by Pxx where xx
-      indicates how many preamble bits (in hex). There are no
-      spaces between any characters or bytes.<br>
+      <p><strong>H4 mode:</strong><br>
+      Displays packets in hex mode preceded by Pxx where xx indicates how many preamble bits (in
+      hex). There are no spaces between any characters or bytes.<br>
       Example: P0E03686B<br>
-      14 start bits with three byte packet following with bytes of
-      0x03, 0x68, 0x6B</p>
+      14 start bits with three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H5 mode:</b><br>
-      Same as H4 mode except spaces will delimit preamble chars and
-      each pair of hex characters<br>
+      <p><strong>H5 mode:</strong><br>
+      Same as H4 mode except spaces will delimit preamble chars and each pair of hex characters<br>
       Example: P0E 03 68 6B<br>
-      14 start bits with three byte packet following with bytes of
-      0x03, 0x68, 0x6B</p>
+      14 start bits with three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H6 mode:</b><br>
-      Displays packets in hex mode with no indication of how many
-      preamble bits but preceded by the letter P. There are no
-      spaces between any characters or bytes.<br>
+      <p><strong>H6 mode:</strong><br>
+      Displays packets in hex mode with no indication of how many preamble bits but preceded by the
+      letter P. There are no spaces between any characters or bytes.<br>
       Example: P03686B<br>
-      Three byte packet following with bytes of 0x03, 0x68,
-      0x6B</p>
+      Three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <p><b>H7 mode:</b><br>
-      Same as H6 mode except spaces will delimit each pair of hex
-      characters<br>
+      <p><strong>H7 mode:</strong><br>
+      Same as H6 mode except spaces will delimit each pair of hex characters<br>
       Example: P 03 68 6B<br>
-      Three byte packet following with bytes of 0x03, 0x68, 0x6B 
-      </p>
+      Three byte packet following with bytes of 0x03, 0x68, 0x6B</p>
 
-      <h2>Verbose mode displays:</h2>Verbose mode displays are
-      intended to allow humans to interpret packet contents. The
-      display is cryptic but understandable. Unless stated
-      otherwise all numbers are displayed in decimal. Any packet
-      that isn't understood by the analyzer will be displayed in
-      hex.
-
+      <h2>Verbose mode displays:</h2>
+      Verbose mode displays are intended to allow humans to interpret packet contents. The display
+      is cryptic but understandable. Unless stated otherwise all numbers are displayed in decimal.
+      Any packet that isn't understood by the analyzer will be displayed in hex.
       <p>Reset packets will be displayed as: "RESET"</p>
 
       <p>Idle packets are displayed as: "IDLE"</p>
 
-      <p><b>Format of locomotive speed packets: L1234 S123F</b><br>
-      A short loco address is displayed with 3 digits (ie, L003)
-      and a long address is displayed with 4 digits (ie.L1234).<br>
-      14/28 speed commands are displayed with 2 digits (S08) and
-      128 speed commands are displayed with 3 digits (S123). The
-      last character displayed is the direction. F for forward and
-      R for Reverse.<br>
-      Emergency stop packets are displayed as such: L1234
-      ESTOP.</p>
+      <p><strong>Format of locomotive speed packets: L1234 S123F</strong><br>
+      A short loco address is displayed with 3 digits (ie, L003) and a long address is displayed
+      with 4 digits (ie.L1234).<br>
+      14/28 speed commands are displayed with 2 digits (S08) and 128 speed commands are displayed
+      with 3 digits (S123). The last character displayed is the direction. F for forward and R for
+      Reverse.<br>
+      Emergency stop packets are displayed as such: L1234 ESTOP.</p>
 
-      <p><b>Format for locomotive function group 1 packets: L1234
-      FL1234</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The function numbers, if off,
-      are indicated by a dash (-). If on the function numbers are
+      <p><strong>Format for locomotive function group 1 packets: L1234 FL1234</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The function numbers, if off, are indicated by a dash (-). If on the function numbers are
       indicated by L for F0 and 1-4 for F1-F4.</p>
 
-      <p>Example: L1234 F--32- means function 2 and 3 are on and
-      function 0,1 and 4 are off.</p>
+      <p>Example: L1234 F--32- means function 2 and 3 are on and function 0,1 and 4 are off.</p>
 
-      <p><b>Format for locomotive function group 2 packets: L1234
-      F8765</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The function numbers, if off,
-      are indicated by a dash (-). If on the function numbers are
+      <p><strong>Format for locomotive function group 2 packets: L1234 F8765</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The function numbers, if off, are indicated by a dash (-). If on the function numbers are
       indicated by 5-8 for F5-F8.</p>
 
-      <p>Example: L1234 F8-6- means function 8 and 6 are on and
-      function 5 and 7 are off.</p>
+      <p>Example: L1234 F8-6- means function 8 and 6 are on and function 5 and 7 are off.</p>
 
-      <p><b>Format for locomotive function group 3 packets: L1234
-      FCBA9</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The function numbers, if off,
-      are indicated by a dash (-). If on the function numbers are
+      <p><strong>Format for locomotive function group 3 packets: L1234 FCBA9</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The function numbers, if off, are indicated by a dash (-). If on the function numbers are
       indicated by 9,A,B,or C for F9-F12.</p>
 
-      <p>Example: L1234 FC-A- means function 12 and 10 are on and
-      function 9 and 11 are off.</p>
+      <p>Example: L1234 FC-A- means function 12 and 10 are on and function 9 and 11 are off.</p>
 
-      <p><b>Format for locomotive function group 4 packets: L1234
-      FKJIHGFED</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The function numbers, if off,
-      are indicated by a dash (-). If on the function numbers are
+      <p><strong>Format for locomotive function group 4 packets: L1234 FKJIHGFED</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The function numbers, if off, are indicated by a dash (-). If on the function numbers are
       indicated by D,E,F,G,H,I,J,K for F13-F20.</p>
 
-      <p>Example: L1234 F----G-E- means functions 14 and 16 are
-      on.</p>
+      <p>Example: L1234 F----G-E- means functions 14 and 16 are on.</p>
 
-      <p><b>Format for locomotive function group 5 packets: L1234
-      FSRQPONML</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The function numbers, if off,
-      are indicated by a dash (-). If on the function numbers are
+      <p><strong>Format for locomotive function group 5 packets: L1234 FSRQPONML</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The function numbers, if off, are indicated by a dash (-). If on the function numbers are
       indicated by L,M,N,O,P,Q,R and S,T for F21-F28.</p>
 
-      <p>Example: L1234 F----O-M- means functions 22 and 24 are
-      on.</p>
+      <p>Example: L1234 F----O-M- means functions 22 and 24 are on.</p>
 
-      <p><b>Format for locomotive long form OPS write byte: L1234
-      CV0044=123</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The CV number in the above
-      example is 44 (always displayed with 4 digits) and the value
-      for the CV is 123 (always displayed with 3 digits).</p>
+      <p><strong>Format for locomotive long form OPS write byte: L1234 CV0044=123</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The CV number in the above example is 44 (always displayed with 4 digits) and the value for
+      the CV is 123 (always displayed with 3 digits).</p>
 
-      <p><b>Format for locomotive long form OPS write bits: L1234
-      CV0044 b3=1</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The CV number in the above
-      example is 44 (always displayed with 4 digits) and bit 3 is
-      to be programmed to a 1.</p>
+      <p><strong>Format for locomotive long form OPS write bits: L1234 CV0044 b3=1</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The CV number in the above example is 44 (always displayed with 4 digits) and bit 3 is to be
+      programmed to a 1.</p>
 
-      <p><b>Format for locomotive long form OPS verify byte: L1234
-      OPS VFY</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The command is not completely
-      decoded by the analyzer</p>
+      <p><strong>Format for locomotive long form OPS verify byte: L1234 OPS VFY</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The command is not completely decoded by the analyzer</p>
 
-      <p><b>Format for locomotive short form OPS write byte: L1234
-      CV23=123</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. The CV number in the above
-      example is 23 (only CV23 or CV24 can be programmed with short
-      form) and the value for the CV is 123 (always displayed with
-      3 digits). If the analyzer doesn't understand the CV number
-      indicated it will display L1234 OPS?</p>
+      <p><strong>Format for locomotive short form OPS write byte: L1234 CV23=123</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      The CV number in the above example is 23 (only CV23 or CV24 can be programmed with short
+      form) and the value for the CV is 123 (always displayed with 3 digits). If the analyzer
+      doesn't understand the CV number indicated it will display L1234 OPS?</p>
 
-      <p><b>Format for consist control setup packets: L1234
-      CON=123R</b><br>
-      Short and long locomotive addresses are are indicated by 3 or
-      4 digits as in speed packets. In the example above CV19
-      (consist address) will be set to 123 with the direction of
+      <p><strong>Format for consist control setup packets: L1234 CON=123R</strong><br>
+      Short and long locomotive addresses are are indicated by 3 or 4 digits as in speed packets.
+      In the example above CV19 (consist address) will be set to 123 with the direction of
       operation to be reverse.</p>
 
-      <p><b>Format for accessory control (paired outputs):
-      A1234N</b><br>
-      The accessory address is always displayed with 4 digits. "N"
-      or "R" follows to indicate normal (on) or reverse (off) for
-      the turnout position.</p>
+      <p><strong>Format for accessory control (paired outputs): A1234N</strong><br>
+      The accessory address is always displayed with 4 digits. "N" or "R" follows to indicate
+      normal (on) or reverse (off) for the turnout position.</p>
 
-      <p><b>Format for accessory OPS write byte (legacy Ops mode):
-      A1234*CV0513=123</b><br>
-      The accessory address is always displayed with 4 digits. The
-      CV number in the above example is 513 (always displayed with
-      4 digits) and the value for the CV is 123. The distinction
-      between legacy mode and new mode (see below) is the asterisk
-      (*) between the accessory address and the CV address for
-      legacy mode.</p>
+      <p><strong>Format for accessory OPS write byte (legacy Ops mode):
+      A1234*CV0513=123</strong><br>
+      The accessory address is always displayed with 4 digits. The CV number in the above example
+      is 513 (always displayed with 4 digits) and the value for the CV is 123. The distinction
+      between legacy mode and new mode (see below) is the asterisk (*) between the accessory
+      address and the CV address for legacy mode.</p>
 
-      <p><b>Format for accessory OPS write byte (new Ops mode):
-      A1234 CV0513=123</b><br>
-      The accessory address is always displayed with 4 digits. The
-      CV number in the above example is 513 (always displayed with
-      4 digits) and the value for the CV is 123. Only the write
-      byte portion of this command is decoded by the analyzer. The
-      distinction between legacy mode (see above) and new mode is
-      the asterisk (*) between the accessory address and the CV
-      address for legacy mode</p>
+      <p><strong>Format for accessory OPS write byte (new Ops mode): A1234 CV0513=123</strong><br>
+      The accessory address is always displayed with 4 digits. The CV number in the above example
+      is 513 (always displayed with 4 digits) and the value for the CV is 123. Only the write byte
+      portion of this command is decoded by the analyzer. The distinction between legacy mode (see
+      above) and new mode is the asterisk (*) between the accessory address and the CV address for
+      legacy mode</p>
 
-      <p><b>Format for signal ("extended" accessory addresses)
-      control: S1234 2F</b><br>
-      The signal address is always displayed with 4 digits followed
-      by the signal aspect byte displayed in hex.</p>
+      <p><strong>Format for signal ("extended" accessory addresses) control: S1234 2F</strong><br>
+      The signal address is always displayed with 4 digits followed by the signal aspect byte
+      displayed in hex.</p>
 
-      <p><b>Format for signal OPS write byte: S1234
-      CV0513=123</b><br>
-      The signal address is always displayed with 4 digits. The CV
-      number in the above example is 513 (always displayed with 4
-      digits) and the value for the CV is 123. Only the write byte
+      <p><strong>Format for signal OPS write byte: S1234 CV0513=123</strong><br>
+      The signal address is always displayed with 4 digits. The CV number in the above example is
+      513 (always displayed with 4 digits) and the value for the CV is 123. Only the write byte
       portion of this command is decoded by the analyzer.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

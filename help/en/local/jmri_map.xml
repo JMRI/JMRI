@@ -12,7 +12,10 @@
 <mapID target="html.apps.Errors" url="html/apps/Errors.shtml"/>
 <mapID target="html.apps.ManifestCreator.index" url="html/apps/ManifestCreator/index.shtml"/>
 <mapID target="html.apps.OperationsPro.index" url="html/apps/OperationsPro/index.shtml"/>
+<mapID target="html.apps.PanelPro.DebugMenu" url="html/apps/PanelPro/DebugMenu.shtml"/>
+<mapID target="html.apps.PanelPro.HelpMenu" url="html/apps/PanelPro/HelpMenu.shtml"/>
 <mapID target="html.apps.PanelPro.ShowPanel" url="html/apps/PanelPro/ShowPanel.shtml"/>
+<mapID target="html.apps.PanelPro.ToolsMenu" url="html/apps/PanelPro/ToolsMenu.shtml"/>
 <mapID target="html.apps.PanelPro.index" url="html/apps/PanelPro/index.shtml"/>
 <mapID target="html.apps.SoundPro.SoundPro" url="html/apps/SoundPro/SoundPro.shtml"/>
 <mapID target="html.apps.StoringYourWork" url="html/apps/StoringYourWork.shtml"/>
@@ -69,7 +72,6 @@
 <mapID target="html.hardware.arduino.index_using" url="html/hardware/arduino/index.shtml#using"/>
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
 <mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
-<mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml"/>
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 <mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml"/>
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
@@ -96,6 +98,7 @@
 <mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml"/>
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
 <mapID target="html.hardware.marklin.index" url="html/hardware/marklin/index.shtml"/>
+<mapID target="html.hardware.merg.Details" url="html/hardware/merg/Details.shtml"/>
 <mapID target="html.hardware.merg.index" url="html/hardware/merg/index.shtml"/>
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 <mapID target="html.hardware.modbus.index" url="html/hardware/modbus/index.shtml"/>
@@ -221,9 +224,7 @@
 <mapID target="package.apps.TabbedPreferences" url="package/apps/TabbedPreferences.shtml"/>
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 <mapID target="package.jmri.configurexml.ErrorHandler" url="package/jmri/configurexml/ErrorHandler.shtml"/>
-<mapID target="package.jmri.jmrit.DebugMenu" url="package/jmri/jmrit/DebugMenu.shtml"/>
 <mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml"/>
-<mapID target="package.jmri.jmrit.ToolsMenu" url="package/jmri/jmrit/ToolsMenu.shtml"/>
 <mapID target="package.jmri.jmrit.automat.monitor.AutomatTableFrame" url="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.AudioTable" url="package/jmri/jmrit/beantable/AudioTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.BlockAddEdit" url="package/jmri/jmrit/beantable/BlockAddEdit.shtml"/>

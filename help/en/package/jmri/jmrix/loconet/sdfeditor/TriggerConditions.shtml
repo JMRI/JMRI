@@ -1,31 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SDF Trigger Conditions</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Digitrax SDF Sound File Editor">
+  <meta name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>SDF Trigger Conditions</h1>This page documents the
-      meaning of the trigger conditions that can defined in a
-      Digitrax SDF instruction.
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>SDF Trigger Conditions</h1>
+      This page documents the meaning of the trigger conditions that can defined in a Digitrax SDF
+      instruction.
       <dl>
         <dt>TRIG_NEVER</dt>
 
-        <dd>Never triggers. This can be used to disable part of a
-        SDF file.</dd>
+        <dd>Never triggers. This can be used to disable part of a SDF file.</dd>
 
         <dt>TRIG_MODE_CHNG</dt>
 
@@ -43,8 +36,7 @@
 
         <dt>TRIG_CAM</dt>
 
-        <dd>Triggers on either the actual cam input, or the
-        autochuff mechanism.</dd>
+        <dd>Triggers on either the actual cam input, or the autochuff mechanism.</dd>
 
         <dt>TRIG_NOT_TRIG</dt>
 
@@ -56,13 +48,11 @@
 
         <dt>TRIG_DIRNOW_CHNG</dt>
 
-        <dd>Triggers when the direction of the motor is
-        changed.</dd>
+        <dd>Triggers when the direction of the motor is changed.</dd>
 
         <dt>TRIG_MOVING</dt>
 
-        <dd>If the motor is currently running at a non-zero
-        speed.</dd>
+        <dd>If the motor is currently running at a non-zero speed.</dd>
 
         <dt>TRIG_SND_ACTV11</dt>
 
@@ -70,15 +60,13 @@
 
         <dt>TRIG_BSC0</dt>
 
-        <dd>Triggers when a "binary state change" DCC packet is
-        received for BSC 0.</dd>
+        <dd>Triggers when a "binary state change" DCC packet is received for BSC 0.</dd>
 
         <dt>TRIG_BSC7</dt>
 
         <dt>TRIG_IN_0</dt>
 
-        <dd>Trigger when the input connection goes active, usually
-        used for a chuff input.</dd>
+        <dd>Trigger when the input connection goes active, usually used for a chuff input.</dd>
 
         <dt>TRIG_IN_7</dt>
 
@@ -92,8 +80,7 @@
 
         <dt>TRIG_OPSPROGWR_CV</dt>
 
-        <dd>Triggers when a CV is written in ops mode (on the
-        main).</dd>
+        <dd>Triggers when a CV is written in ops mode (on the main).</dd>
 
         <dt>TRIG_SCAT0</dt>
 
@@ -130,9 +117,11 @@
         <dt>T_SPD_DEC_SP2</dt>
 
         <dt>T_SPD_DIR_CHNG</dt>
-      </dl><!--#include virtual="/Footer.shtml" -->
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

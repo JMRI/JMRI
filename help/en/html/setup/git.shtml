@@ -1,186 +1,161 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Setup - Sharing Files with GitHub</title>
-  <meta name="keywords" content=
-  "java model railroad JMRI install Dropbox">
+  <meta name="keywords" content="java model railroad JMRI install Dropbox">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI Setup: Sharing Files with GitHub</h1>
 
-      <p><a href="https://www.github.com">GitHub</a>
-      is a free service that lets
-      you share files between multiple computers across a network
-      by storing a common copy in a Git repository.
-      After you've signed up with GitHub and configured your
-      local machine(s), you can configure JMRI to
-      use it to share Rosters, layout configuration files and other
-      information between multiple computers.</p>
- 
-      <p>Note: If you're not familiar with Git and GitHub,
-      you might be better off using 
-      <a href="Dropbox.shtml">Dropbox</a>
-      to share files between computers.  Git and GitHub
-      are a full-featured software version control system, 
-      which makes them more complex than the almost-automatic
-      nature of Dropbox.  Git and Github will let you control
-      when changes are stored, have multiple versions on branches, 
-      and in general manage your JMRI configurations very closely;
-      but if you just want share files, Dropbox may be easier.
-      
+      <p><a href="https://www.github.com">GitHub</a> is a free service that lets you share files
+      between multiple computers across a network by storing a common copy in a Git repository.
+      After you've signed up with GitHub and configured your local machine(s), you can configure
+      JMRI to use it to share Rosters, layout configuration files and other information between
+      multiple computers.</p>
+
+      <p>Note: If you're not familiar with Git and GitHub, you might be better off using <a href=
+      "Dropbox.shtml">Dropbox</a> to share files between computers. Git and GitHub are a
+      full-featured software version control system, which makes them more complex than the
+      almost-automatic nature of Dropbox. Git and Github will let you control when changes are
+      stored, have multiple versions on branches, and in general manage your JMRI configurations
+      very closely; but if you just want share files, Dropbox may be easier.</p>
+
       <p>Using Git has some advantages:</p>
 
       <ul>
-        <li>In normal use, Git will keep the entire
-            history of your files locally so that you can 
-            always back up to an earlier configuration.</li>
+        <li>In normal use, Git will keep the entire history of your files locally so that you can
+        always back up to an earlier configuration.</li>
 
-        <li>Git provides every powerful tools for managing 
-            updates when you're making changes on multiple
-            computers, i.e. the main layout computer
-            and some convenient laptoo.
+        <li>Git provides every powerful tools for managing updates when you're making changes on
+        multiple computers, i.e. the main layout computer and some convenient laptoo.</li>
 
-        <li>Git can be used with a sneaker-net connection
-            by pushing/pulling from a copy of a repository
-            on a USB stick.
+        <li>Git can be used with a sneaker-net connection by pushing/pulling from a copy of a
+        repository on a USB stick.</li>
       </ul>
 
-      <p>The following approach should also work with other
-      cloud-based file-synchronisation services such as <a href=
-      "https://www.google.com.au/drive/" target="_blank">Google
-      Drive</a> and <a href="https://onedrive.live.com" target=
-      "_blank">OneDrive</a>. However the <a href=
-      "https://www.dropbox.com" target="_blank">Dropbox</a>
-      solution is well tested, having been used by a number of JMRI
-      developers and users for quite some time.</p>
+      <p>The following approach should also work with other cloud-based file-synchronisation
+      services such as <a href="https://www.google.com.au/drive/" target="_blank">Google Drive</a>
+      and <a href="https://onedrive.live.com" target="_blank">OneDrive</a>. However the <a href=
+      "https://www.dropbox.com" target="_blank">Dropbox</a> solution is well tested, having been
+      used by a number of JMRI developers and users for quite some time.</p>
 
       <h3>Step 1</h3>
 
       <p>To set up a shared User File Location on the web:</p>
 
       <ul>
-        <li>Create a JMRI folder under Git control on the first
-        computer. If you want to use GitHub, the steps are:
-        <ul>
-            <li><a href="https://github.com/join">Create a GitHub account</a> if you don't have one.
-            <li>Create a new repository on GitHub using the "New" button on your
-                Repositories pane.
-            <li>Click the button named "(downarrow) Code" and copy the URL for your repository.
-            <li>On your computer, in the directory you want to contain your JMRI files,
-                check that repository out with (for example):
-<pre>
+        <li>Create a JMRI folder under Git control on the first computer. If you want to use
+        GitHub, the steps are:
+          <ul>
+            <li>
+              <a href="https://github.com/join">Create a GitHub account</a> if you don't have one.
+            </li>
+
+            <li>Create a new repository on GitHub using the "New" button on your Repositories
+            pane.</li>
+
+            <li>Click the button named "(downarrow) Code" and copy the URL for your
+            repository.</li>
+
+            <li>On your computer, in the directory you want to contain your JMRI files, check that
+            repository out with (for example):
+
+              <pre>
             git clone https://github.com/myaccountname/JMRI.git
 </pre>
-        </ul>
+            </li>
+          </ul>
         </li>
 
-        <li>If you have already created items (roster entries,
-        panels etc.) go to Help&#8209;&gt;Locations and press Open
-        User Files Location.<br>
-        <a href="images/Help_Locations.png"><img src=
-        "images/Help_Locations.png" width="682" height=
-        "139"></a><br>
-        This will open a window on your desktop showing a
-        directory. Remember where that is, because you'll move
-        items from there later.</li>
+        <li>If you have already created items (roster entries, panels etc.) go to
+        Help‑&gt;Locations and press Open User Files Location.<br>
+          <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682"
+          height="139" alt="user filess location"></a><br>
+          This will open a window on your desktop showing a directory. Remember where that is,
+          because you'll move items from there later.
+        </li>
 
-        <li>Still on the Help&#8209;&gt;Locations window, check to
-        see if your Roster Location is different from the User
-        Files Location. If so, click Open Roster Location to open a
-        window on that location. You'll copy files from there
-        later.<br>
-        <a href="images/Help_Locations_Roster.png"><img src=
-        "images/Help_Locations_Roster.png" width="682" height=
-        "139"></a></li>
+        <li>Still on the Help‑&gt;Locations window, check to see if your Roster Location is
+        different from the User Files Location. If so, click Open Roster Location to open a window
+        on that location. You'll copy files from there later.<br>
+          <a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png"
+          width="682" height="139" alt="roster location"></a>
+        </li>
 
-        <li>
-        Preferences&#8209;&gt;Roster&#8209;&gt;Roster&#8209;&gt;Roster
-        Location&#8209;&gt;Reset. Do not enter a Roster Location.
-        That way it will follow the setting for the User Files
-        Location.<br>
-        <a href="images/Roster_Reset.png"><img src=
-        "images/Roster_Reset.png" width="416" height=
-        "159"></a></li>
+        <li>Preferences‑&gt;Roster‑&gt;Roster‑&gt;Roster Location‑&gt;Reset. Do not enter a Roster
+        Location. That way it will follow the setting for the User Files Location.<br>
+          <a href="images/Roster_Reset.png"><img src="images/Roster_Reset.png" width="416" height=
+          "159" alt="reset roster location"></a>
+        </li>
 
-        <li>Preferences&#8209;&gt;File Locations&#8209;&gt;User
-        Files Location and set it to the JMRI folder you created in
-        Dropbox.<br>
-        <a href="images/Locations_Files.png"><img src=
-        "images/Locations_Files.png" width="418" height=
-        "157"></a></li>
+        <li>Preferences‑&gt;File Locations‑&gt;User Files Location and set it to the JMRI folder
+        you created in Dropbox.<br>
+          <a href="images/Locations_Files.png"><img src="images/Locations_Files.png" width="418"
+          height="157" alt="set user files location"></a>
+        </li>
 
-        <li>Restart JMRI and use Help &#8209;&gt; Locations to make
-        sure everything is changed correctly.</li>
+        <li>Restart JMRI and use Help ‑&gt; Locations to make sure everything is changed
+        correctly.</li>
 
-        <li>If you have already created any files of the types
-        listed at this link (see <a href=
-        "../../package/apps/TabbedPreferences.shtml#FileLocations"
-        target="_blank">this page</a> for help), move them from the
-        old location to your new location. For example, your files
-        in the User Files window we opened at the first step should
-        be moved to the new User Files Location you just
-        created.</li>
-        
-        <li>Use "git add", "git commit" to move
-            all those files under Git's control.
-        <li>Finally, "git push" to push the contents back up to GitHub.
-            
+        <li>If you have already created any files of the types listed at this link (see <a href=
+        "../../package/apps/TabbedPreferences.shtml#FileLocations" target="_blank">this page</a>
+        for help), move them from the old location to your new location. For example, your files in
+        the User Files window we opened at the first step should be moved to the new User Files
+        Location you just created.
+        </li>
+
+        <li>Use "git add", "git commit" to move all those files under Git's control.</li>
+
+        <li>Finally, "git push" to push the contents back up to GitHub.</li>
       </ul>
 
       <h3>Step 2-...</h3>
 
-      <p>The only steps you need to do on subsequent computers
-      are:</p>
+      <p>The only steps you need to do on subsequent computers are:</p>
 
       <ul>
-        <li>"git clone" with the roster URL to make your initial download of the
-            repository ("git pull" after that)
-        <li>Preferences &#8209;&gt; Roster &#8209;&gt; Roster
-        &#8209;&gt; Roster Location &#8209;&gt; Reset. Do not enter
-        a Roster Location. That way it will follow the User Files
-        Location.</li>
+        <li>"git clone" with the roster URL to make your initial download of the repository ("git
+        pull" after that)</li>
 
-        <li>Preferences &#8209;&gt; Locations &#8209;&gt; User
-        Files Location and set it to the JMRI folder you created in
-        Dropbox.</li>
+        <li>Preferences ‑&gt; Roster ‑&gt; Roster ‑&gt; Roster Location ‑&gt; Reset. Do not enter a
+        Roster Location. That way it will follow the User Files Location.</li>
+
+        <li>Preferences ‑&gt; Locations ‑&gt; User Files Location and set it to the JMRI folder you
+        created in Dropbox.</li>
       </ul>
-        
-        <h2>Sneaker Net</h2>
-        
-        <p>First, copy the <u>entire</u> directory from one of your
-        computers to the USB stick.  This will be a master that you're moving
-        around. (You can also directly 'git clone' onto the USB stick.)</p>
-        
-        <p>
-        Then, from your computer's JMRI preferences Git directory, 
-        you can bring the USB stick up to date with your directory with
-<pre>
+
+      <h2>Sneaker Net</h2>
+
+      <p>First, copy the <u>entire</u> directory from one of your computers to the USB stick. This
+      will be a master that you're moving around. (You can also directly 'git clone' onto the USB
+      stick.)</p>
+
+      <p>Then, from your computer's JMRI preferences Git directory, you can bring the USB stick up
+      to date with your directory with</p>
+
+      <pre>
             git commit -m"really lucid comment" .
             git push /path/to/USB/directory
 </pre>
+      <p>Similarly, you can get the contents from the USB stick with</p>
 
-        <p>
-        Similarly, you can get the contents from the USB stick with
-<pre>
+      <pre>
             git pull /path/to/USB/directory
-</pre>
-        
-        
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+</pre><!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
