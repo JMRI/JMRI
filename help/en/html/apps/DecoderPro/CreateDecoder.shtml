@@ -1,75 +1,60 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder
-  File</title>
+  <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-    <h1>JMRI: DecoderPro User Guide</h1>
+    <div id="mainContent">
+      <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Creating A Custom Decoder File</h2>
 
-      <p>This page provides information on how the decoder
-      definition files for the DecoderPro Symbolic Programmer work
-      and how to create a new one.</p>
+      <p>This page provides information on how the decoder definition files for the DecoderPro
+      Symbolic Programmer work and how to create a new one.</p>
 
-      <p>In this user guide, we walk you through the process of
-      creating a file to describe a new decoder. You might benefit
-      from reading the other sections of the DecoderPro user guide
-      to get background information, especially the <a href=
-      "IntroXML.shtml">XML introduction</a> and the section on
-      <a href="Files.shtml">Configuration Files contents</a>.</p>
+      <p>In this user guide, we walk you through the process of creating a file to describe a new
+      decoder. You might benefit from reading the other sections of the DecoderPro user guide to
+      get background information, especially the <a href="IntroXML.shtml">XML introduction</a> and
+      the section on <a href="Files.shtml">Configuration Files contents</a>.</p>
 
-      <p>The easiest way to create a configuration file is to
-      modify an existing one. In this section, we walk you through
-      doing this.</p>
+      <p>The easiest way to create a configuration file is to modify an existing one. In this
+      section, we walk you through doing this.</p>
 
       <dl>
         <dt class="left">Make a copy of a similar file.</dt>
 
         <dd class="first">
-          <p>Although you can call this new file anything you like,
-          it will work best if you use the same convention as the
-          provided files. That's <tt>"manufacturer name"_"decoder
-          family".xml</tt>, for example: <tt>Digitrax_1x2.xml</tt>
-          and <tt>Atlas_DualMode.xml</tt></p>
+          <p>Although you can call this new file anything you like, it will work best if you use
+          the same convention as the provided files. That's <code>"manufacturer name"_"decoder
+          family".xml</code>, for example: <code>Digitrax_1x2.xml</code> and
+          <code>Atlas_DualMode.xml</code></p>
 
-          <p>For the provided files, we use the same
-          capitalization, etc, that the decoder manufacturer uses
-          in their documentation.</p>
+          <p>For the provided files, we use the same capitalization, etc, that the decoder
+          manufacturer uses in their documentation.</p>
 
-          <p>This new file should go in the <tt>decoders</tt>
-          subdirectory in the <tt>JMRI</tt> preferences directory
-          so that the program can find it. The
-          <tt>DecoderProConfig2.xml</tt> file lives in the
-          preferences directory, so you can search for that file to
-          locate it. (See the <a href=
-          "Files.shtml#location"><em>configuration files
-          page</em></a> for further details about how to find that
-          directory and its contents)</p>
+          <p>This new file should go in the <code>decoders</code> subdirectory in the
+          <code>JMRI</code> preferences directory so that the program can find it. The
+          <code>DecoderProConfig2.xml</code> file lives in the preferences directory, so you can
+          search for that file to locate it. (See the <a href=
+          "Files.shtml#location"><em>configuration files page</em></a> for further details about
+          how to find that directory and its contents)</p>
 
-          <p>If you're modifying a decoder definition, it is best to
-          start with the most recent version, which can always be
-          found here on the JMRI web site at <a href=
-          "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>.
-          That way, it won't be hard to merge your changes with
-          ones that might have come before. Please don't do any
-          more reformatting than you have to. If you change the
-          tech stuff in the top 5 or 10 lines, or reformat the
-          contents, it gets very hard to tell what's changed and
-          what has not.</p>
+          <p>If you're modifying a decoder definition, it is best to start with the most recent
+          version, which can always be found here on the JMRI web site at <a href=
+          "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>. That way, it won't
+          be hard to merge your changes with ones that might have come before. Please don't do any
+          more reformatting than you have to. If you change the tech stuff in the top 5 or 10
+          lines, or reformat the contents, it gets very hard to tell what's changed and what has
+          not.</p>
         </dd>
 
         <dt class="left">Edit the new file</dt>
@@ -81,441 +66,346 @@
         <dt class="left">File contents: XML Header</dt>
 
         <dd>
-          <p>You'll see something like this at the top of the file
-          (the examples are from the <a href=
-          "../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a>
-          file):</p>
+          <p>You'll see something like this at the top of the file (the examples are from the
+          <a href="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> file):</p>
 
-          <p class="example">&lt;?xml version="1.0"
-          encoding="utf-8"?&gt;<br>
-          &lt;?xml-stylesheet type="text/xsl"
-          href="../XSLT/decoder.xsl"?&gt;<br>
-          &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010
-          All rights reserved --&gt;<br>
+          <p class="example">&lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
+          &lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<br>
+          &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;<br>
           ...<br>
-          &lt;decoder-config
-          xmlns:xi="http://www.w3.org/2001/XInclude"
+          &lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<br>
-          </p>
+          xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<br></p>
 
-          <p>Don't mess with these lines; they describe the format
-          of the file.</p>
+          <p>Don't mess with these lines; they describe the format of the file.</p>
         </dd>
 
         <dt class="left">File contents: Author</dt>
 
         <dd>
-          <p>The next element describes the author and version of
-          this decoder file:</p>
+          <p>The next element describes the author and version of this decoder file:</p>
 
-          <p class="example">&lt;version
-          author="jake@physics.berkeley.edu"<br>
-              version="1" lastUpdated="20011201"/&gt;</p>
+          <p class="example">&lt;version author="jake@physics.berkeley.edu"<br>
+          version="1" lastUpdated="20011201"/&gt;</p>
 
-          <p>These attributes are only read by people, not the
-          program, so their exact format isn't critical. But we
-          encourage you to insert your email address in files you
-          create or change, so that if anybody has any questions
-          they can find you. The version and lastUpdated attributes
-          provide a way of telling different versions of a decoder
-          definition apart, so we'd also like you to update those.
-          For a new file, set the version back to "1", and if
-          you're modifying an existing file, increment the version
-          attribute to the next number.</p>
+          <p>These attributes are only read by people, not the program, so their exact format isn't
+          critical. But we encourage you to insert your email address in files you create or
+          change, so that if anybody has any questions they can find you. The version and
+          lastUpdated attributes provide a way of telling different versions of a decoder
+          definition apart, so we'd also like you to update those. For a new file, set the version
+          back to "1", and if you're modifying an existing file, increment the version attribute to
+          the next number.</p>
         </dd>
 
-        <dt class="left">File contents: Decoder Family and
-        Model</dt>
+        <dt class="left">File contents: Decoder Family and Model</dt>
 
         <dd>
-          The next lines identify the "family" of decoders that
-          this file describes:
-
+          The next lines identify the "family" of decoders that this file describes:
           <p class="example">&lt;decoder&gt;<br>
-              &lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
-                  lowVersionID="240" highVersionID="242"<br>
-                  comment="Digitrax DH142, etc" &gt;<br>
-                  &lt;model model="DH142" numOuts="4"
-          numFns="2"/&gt;<br>
-                  &lt;model model="DN142" numOuts="4"
-          numFns="2"/&gt;<br>
-                  &lt;model model="DH083" numOuts="5"
-          numFns="2"/&gt;<br>
-              &lt;/family&gt;</p>
+          &lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+          lowVersionID="240" highVersionID="242"<br>
+          comment="Digitrax DH142, etc" &gt;<br>
+          &lt;model model="DH142" numOuts="4" numFns="2"/&gt;<br>
+          &lt;model model="DN142" numOuts="4" numFns="2"/&gt;<br>
+          &lt;model model="DH083" numOuts="5" numFns="2"/&gt;<br>
+          &lt;/family&gt;</p>
 
-          <p>The spacing is not important, but it is useful to indent
-          the file like this to make it more readable. XML uses
-          "elements" and "attributes" to carry information. The
-          &lt;model&gt; things are elements; attributes like
-          numOuts are set to specific values within elements. In
-          the 2nd through 4th lines above</p>
+          <p>The spacing is not important, but it is useful to indent the file like this to make it
+          more readable. XML uses "elements" and "attributes" to carry information. The
+          &lt;model&gt; things are elements; attributes like numOuts are set to specific values
+          within elements. In the 2nd through 4th lines above</p>
 
-          <p class="example">&lt;family name="Digitrax 1x2"
-          mfg="Digitrax"<br>
-              lowVersionID="240" highVersionID="242"<br>
-              comment="Digitrax DH142, etc" &gt;</p>
+          <p class="example">&lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+          lowVersionID="240" highVersionID="242"<br>
+          comment="Digitrax DH142, etc" &gt;</p>
 
-          <p>the element is 'family', with attributes 'name',
-          'mfg', 'lowVersionID', 'highVersionID', and 'comment'. An
-          attribute is given a value with an equals sign and a
-          value in quotes (the quotes are required). The order of
-          the attributes is not important, and you can break them
-          across lines if that makes the file easier to read. Note
-          that all of the attributes must be inside the angle
-          brackets, and after the name of the element.</p>
+          <p>the element is 'family', with attributes 'name', 'mfg', 'lowVersionID',
+          'highVersionID', and 'comment'. An attribute is given a value with an equals sign and a
+          value in quotes (the quotes are required). The order of the attributes is not important,
+          and you can break them across lines if that makes the file easier to read. Note that all
+          of the attributes must be inside the angle brackets, and after the name of the
+          element.</p>
 
-          <p>In this element, change the attributes to match your
-          new decoder:</p>
+          <p>In this element, change the attributes to match your new decoder:</p>
 
           <ul>
-            <li><dfn>name</dfn> - the name of the decoder family.
-            It's best if you use the same name here as you used in
-            the filename.</li>
+            <li><dfn>name</dfn> - the name of the decoder family. It's best if you use the same
+            name here as you used in the filename.</li>
 
-            <li><dfn>mfg</dfn> - the manufacturer of the decoder.
-            It's best if you use the same manufacturer name here as
-            you used in the filename.</li>
+            <li><dfn>mfg</dfn> - the manufacturer of the decoder. It's best if you use the same
+            manufacturer name here as you used in the filename.</li>
 
             <li>
-              <dfn>lowVersionID</dfn>, <dfn>highVersionID</dfn> -
-              The manufacturer can load a version number into CV 7
-              of a decoder. Not all manufacturers do this, but if
-              one is available the programmer can check if this
-              file is being used with the expected decoder type. If
-              only one specific value is valid, define the both
-              lowVersionID and highVersionID with the same value,
-              e.g.
-
-              <p class="example">    lowVersionID="123"
-              highVersionID="123"</p>If the decoder type can have
-              any one of a range of numbers, for example because
-              the manufacturer has made some updates, define both
-              attributes to cover the range:
-
-              <p class="example">    lowVersionID="21"
-              highVersionID="42"</p>If you don't know the version
-              number, don't define either of these attributes; just
-              leave them off. lowVersionID defaults to 0,
-              highVersionID defaults to 255, so together the
-              defaults mean "any value".
+              <dfn>lowVersionID</dfn>, <dfn>highVersionID</dfn> - The manufacturer can load a
+              version number into CV 7 of a decoder. Not all manufacturers do this, but if one is
+              available the programmer can check if this file is being used with the expected
+              decoder type. If only one specific value is valid, define the both lowVersionID and
+              highVersionID with the same value, e.g.
+              <p class="example">lowVersionID="123" highVersionID="123"</p>
+              If the decoder type can have any one of a range of numbers, for example because the
+              manufacturer has made some updates, define both attributes to cover the range:
+              <p class="example">lowVersionID="21" highVersionID="42"</p>
+              If you don't know the version number, don't define either of these attributes; just
+              leave them off. lowVersionID defaults to 0, highVersionID defaults to 255, so
+              together the defaults mean "any value".
             </li>
 
-            <li><dfn>comment</dfn> - this is optional. You might
-            want to include your name, or other info about the
-            changes in the file.</li>
+            <li><dfn>comment</dfn> - this is optional. You might want to include your name, or
+            other info about the changes in the file.</li>
           </ul>
 
           <p>The following lines:</p>
 
-          <p class="example">    &lt;model model="DH142"
-          numOuts="4" numFns="2"/&gt;<br>
-              &lt;model model="DN142" numOuts="4"
-          numFns="2"/&gt;<br>
-              &lt;model model="DH083" numOuts="5"
-          numFns="2"/&gt;</p>allow you to list a number of
-          different decoder models that can use this file. For a
-          single decoder, remove all but one of the "model"
-          elements, and give it the model name of the decoder. The
-          numOuts and numFns are described later, but for now you
-          can just delete them, leaving something like:
+          <p class="example">&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<br>
+          &lt;model model="DN142" numOuts="4" numFns="2"/&gt;<br>
+          &lt;model model="DH083" numOuts="5" numFns="2"/&gt;</p>
+          allow you to list a number of different decoder models that can use this file. For a
+          single decoder, remove all but one of the "model" elements, and give it the model name of
+          the decoder. The numOuts and numFns are described later, but for now you can just delete
+          them, leaving something like:
+          <p class="example">&lt;model model="DH142" /&gt;</p>
+          The model element can also contain lowVersionID and/or highVersionID attributes, which
+          apply to just that model. If one doesn't appear, the value from the family element (or
+          its default) will be used.
+          <p>It is important to note that <em>the 'family'+'model' combination must be unique</em>.
+          This is the <em>only</em> information that can be used to match a decoder definition to
+          an existing roster entry.</p>
 
-          <p class="example">    &lt;model model="DH142"
-          /&gt;</p>The model element can also contain lowVersionID
-          and/or highVersionID attributes, which apply to just that
-          model. If one doesn't appear, the value from the family
-          element (or its default) will be used.
-
-          <p>It is important to note that
-          <em>the 'family'+'model' combination must be unique</em>.
-          This is the <em>only</em> information that can be used to match
-          a decoder definition to an existing roster entry.
-          </p>
           <ul>
-              <li>There can be multiple instances of model 'x'
-              but they must reside in different families.</li>
-              <li>There can be multiple definitions of family 'y'
-              (in different decoder files) but model 'x'
-              can only appear within one of these.</li>
-              <li>The 'family'+'model' uniqueness restriction
-              applies irrespective of manufacturer.</li>
+            <li>There can be multiple instances of model 'x' but they must reside in different
+            families.</li>
+
+            <li>There can be multiple definitions of family 'y' (in different decoder files) but
+            model 'x' can only appear within one of these.</li>
+
+            <li>The 'family'+'model' uniqueness restriction applies irrespective of
+            manufacturer.</li>
           </ul>
         </dd>
 
         <dt class="left">File contents: Programming Modes</dt>
 
         <dd>
-          <p>The next element defines what programming modes the
-          decoder can understand:</p>
+          <p>The next element defines what programming modes the decoder can understand:</p>
 
-          <p class="example">&lt;programming direct="byteOnly"
-          paged="yes"<br>
-              register="yes" ops="yes"&gt;&lt;/programming&gt;</p>
+          <p class="example">&lt;programming direct="byteOnly" paged="yes"<br>
+          register="yes" ops="yes"&gt;&lt;/programming&gt;</p>
 
-          <p>Paged, register and ops can be set to either "yes" or
-          "no". Direct can be set to "no", "bitOnly", "byteOnly",
-          or "yes". The programmer uses this information to select
-          the programming mode to use when working with a
-          decoder.</p>
+          <p>Paged, register and ops can be set to either "yes" or "no". Direct can be set to "no",
+          "bitOnly", "byteOnly", or "yes". The programmer uses this information to select the
+          programming mode to use when working with a decoder.</p>
         </dd>
 
-        <dd><a name="variable" id="variable"></a></dd>
+        <dd id="variable">
+        </dd>
 
         <dt class="left">File contents: Variable names</dt>
 
         <dd>
-          <p>The next part of the file consists of a set of
-          'variable' elements defining specific variables, nested
-          inside a 'variables' (note the extra "s") element. An
-          example:</p>
+          <p>The next part of the file consists of a set of 'variable' elements defining specific
+          variables, nested inside a 'variables' (note the extra "s") element. An example:</p>
 
           <p class="example">&lt;variables&gt;<br>
-            &lt;variable CV="1" item="Primary Address"
-          default="03"&gt;<br>
-              &lt;decVal min="1" max="127"/&gt;<br>
-              &lt;label&gt;Short Address&lt;/label&gt;<br>
-              &lt;comment&gt;NMRA standard form&lt;/comment&gt;<br>
-              &lt;tooltip&gt;Digitrax systems only address
-          1-99&lt;/tooltip&gt;<br>
-            &lt;/variable&gt;<br>
+          &lt;variable CV="1" item="Primary Address" default="03"&gt;<br>
+          &lt;decVal min="1" max="127"/&gt;<br>
+          &lt;label&gt;Short Address&lt;/label&gt;<br>
+          &lt;comment&gt;NMRA standard form&lt;/comment&gt;<br>
+          &lt;tooltip&gt;Digitrax systems only address 1-99&lt;/tooltip&gt;<br>
+          &lt;/variable&gt;<br>
           <br>
-            (followed by more &lt;variable&gt; entries)<br>
+          (followed by more &lt;variable&gt; entries)<br>
           <br>
-            (Insert new ones at the end)<br>
+          (Insert new ones at the end)<br>
           &lt;/variables&gt;</p>
 
-          <p>Each variable represents one thing to configure. They
-          can represent a single CV, e.g. address, or a few bits
-          that can be configured to control a particular function.
-          If some of these aren't appropriate to your decoder, you
-          can just remove them. Make sure you remove the entire
-          element from the &lt;variable&gt; to the matching
-          &lt;/variable&gt;. You can also rearrange them if you'd
-          prefer a different order.</p>
+          <p>Each variable represents one thing to configure. They can represent a single CV, e.g.
+          address, or a few bits that can be configured to control a particular function. If some
+          of these aren't appropriate to your decoder, you can just remove them. Make sure you
+          remove the entire element from the &lt;variable&gt; to the matching &lt;/variable&gt;.
+          You can also rearrange them if you'd prefer a different order.</p>
 
           <p>The attributes include:</p>
 
           <ul>
-            <li><dfn>item</dfn> - The 'standard' name for this
-            variable. See the <a href=
-            "Programmer.shtml#id">discussion on the programmer
-            definition page</a> for more information on this.
-            Generally, look at the Comprehensive programmer to find
-            something similar, and use the "name" attribute of
-            that.</li>
+            <li>
+              <dfn>item</dfn> - The 'standard' name for this variable. See the <a href=
+              "Programmer.shtml#id">discussion on the programmer definition page</a> for more
+              information on this. Generally, look at the Comprehensive programmer to find
+              something similar, and use the "name" attribute of that.
+            </li>
 
-            <li><dfn>CV</dfn> - Which CV contains the configuration
-            information for this variable.</li>
+            <li><dfn>CV</dfn> - Which CV contains the configuration information for this
+            variable.</li>
 
-            <li><dfn>mask</dfn> - A pattern like "XXXVVVXX" which
-            controls which bits in the CV make up the variable.
-            Each "V" is a bit that's included, and "X" are bits
-            that are not to be included. It's best to have eight
-            characters, as that makes it clearer what's going on.
-            If the variable is a full byte, this attribute can be
-            omitted.
-            <p>
-            Generally, the V characters should be a contiguous block 
-            of bits as specified in the manufacturer's documentation
-            for the decoder.  In certain rare cases, the
-            layout of the decoder might
-            require a different pattern like XXVVXXVV, but 
-            in those cases please check the operation of the 
-            resulting decoder definition carefully to make sure it 
-            does what you want.
-            
-            <p>
-            As another special case, this can also be used (along with 
-            some other attributes) to handle CVs that are coded in
-            bases other than binary:  Ones that store their 
-            parts as decimal digits, or even base 3 or 5.
-            That's a bit more technical, it's rarely needed, but 
-            if you do need it see the 
-            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
+            <li>
+              <dfn>mask</dfn> - A pattern like "XXXVVVXX" which controls which bits in the CV make
+              up the variable. Each "V" is a bit that's included, and "X" are bits that are not to
+              be included. It's best to have eight characters, as that makes it clearer what's
+              going on. If the variable is a full byte, this attribute can be omitted.
+              <p>Generally, the V characters should be a contiguous block of bits as specified in
+              the manufacturer's documentation for the decoder. In certain rare cases, the layout
+              of the decoder might require a different pattern like XXVVXXVV, but in those cases
+              please check the operation of the resulting decoder definition carefully to make sure
+              it does what you want.</p>
 
-            <li><dfn>default</dfn> - The default value for this
-            variable. This is used for a new decoder, or when you
-            want to set the decoder back to its defaults.</li>
+              <p>As another special case, this can also be used (along with some other attributes)
+              to handle CVs that are coded in bases other than binary: Ones that store their parts
+              as decimal digits, or even base 3 or 5. That's a bit more technical, it's rarely
+              needed, but if you do need it see the <a href=
+              "https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for
+              more details</a>.</p>
+            </li>
+
+            <li><dfn>default</dfn> - The default value for this variable. This is used for a new
+            decoder, or when you want to set the decoder back to its defaults.</li>
           </ul>
 
-          <p>(There are a few more, which we'll leave for the
-          advanced section below)</p>
+          <p>(There are a few more, which we'll leave for the advanced section below)</p>
 
-          <p>The "label" included element provides a
-          human-comfortable name for this variable. This is
-          generally what the decoder manufacturer calls this item,
-          even if other manufacturers or the NMRA use a different
-          name for similar things. It is optional, in which case the
-          "item" value will be used to label it when it's presented
-          to the user.</p>
+          <p>The "label" included element provides a human-comfortable name for this variable. This
+          is generally what the decoder manufacturer calls this item, even if other manufacturers
+          or the NMRA use a different name for similar things. It is optional, in which case the
+          "item" value will be used to label it when it's presented to the user.</p>
 
-          <p>The "comment" element let you provide additional
-          information to future developers. This information is
-          visible when editing the definition, but isn't provided
-          to somebody who's just using DecoderPro.</p>
+          <p>The "comment" element let you provide additional information to future developers.
+          This information is visible when editing the definition, but isn't provided to somebody
+          who's just using DecoderPro.</p>
 
-          <p>The "tooltip" element let you provide additional
-          information to the user when the user hovers their cursor
-          over the variable on the screen.</p>
+          <p>The "tooltip" element let you provide additional information to the user when the user
+          hovers their cursor over the variable on the screen.</p>
         </dd>
 
-        <dt class="left">File contents: Creating new Variable
-        definitions</dt>
+        <dt class="left">File contents: Creating new Variable definitions</dt>
 
         <dd>
-          <p>You can also define new variables. A good starting
-          point is to copy a similar definition, change its item
-          name to a new value, and then edit its contents.</p>
+          <p>You can also define new variables. A good starting point is to copy a similar
+          definition, change its item name to a new value, and then edit its contents.</p>
 
-          <p>To define how the new variable is displayed and
-          edited, you add elements within the 'variable' element.
-          There are several possible forms:</p>
+          <p>To define how the new variable is displayed and edited, you add elements within the
+          'variable' element. There are several possible forms:</p>
 
           <ul>
-            <li>For a decimal value, you include a decVal element
-            like the example above. The two optional attributes are
-            min and max, which define the range of acceptable
-            values. If you omit them, values from 0 to 255 are
-            allowed.</li>
+            <li>For a decimal value, you include a decVal element like the example above. The two
+            optional attributes are min and max, which define the range of acceptable values. If
+            you omit them, values from 0 to 255 are allowed.</li>
 
-            <li>If you'd rather enter and display values in
-            hexadecimal, use a 'hexVal' element. It's otherwise the
-            same as the 'decVal' element we've already
-            discussed.</li>
+            <li>If you'd rather enter and display values in hexadecimal, use a 'hexVal' element.
+            It's otherwise the same as the 'decVal' element we've already discussed.</li>
 
             <li>
-              <p>If your decoder supports a long address, you can
-              add a 'longAddress' element. It's perhaps easiest to
-              copy this from another file, or from this
-              example:</p>
+              <p>If your decoder supports a long address, you can add a 'longAddress' element. It's
+              perhaps easiest to copy this from another file, or from this example:</p>
 
-              <p class="example">&lt;variable item="Long Address"
-              CV="17"&gt;<br>
-                  &lt;longAddressVal/&gt;<br>
+              <p class="example">&lt;variable item="Long Address" CV="17"&gt;<br>
+              &lt;longAddressVal/&gt;<br>
               &lt;/variable&gt;</p>
             </li>
 
             <li>
-              <p>If your decoder supports it, you can enter a
-              'speedTableVal' element for the speed table. Optional
-              attributes are: "entries", "min", "max" and "mfx"
-              (when true enables the M&auml;rklin mfx&reg; style
-              speed table). Example:</p>
+              <p>If your decoder supports it, you can enter a 'speedTableVal' element for the speed
+              table. Optional attributes are: "entries", "min", "max" and "mfx" (when true enables
+              the Märklin mfx® style speed table). Example:</p>
 
-              <p class="example">&lt;variable item="Speed Table"
-              CV="67"&gt;<br>
-                  &lt;speedTableVal/&gt;<br>
+              <p class="example">&lt;variable item="Speed Table" CV="67"&gt;<br>
+              &lt;speedTableVal/&gt;<br>
               &lt;/variable&gt;</p>
             </li>
 
-            <li>Some decoder options are best represented by
-            "choose one choice". These are represented by a
-            enumVariable element. Example:
-
-              <p class="example">&lt;variable item="F6 during DC
-              operation" CV="13" mask="XXVXXXXX"&gt;<br>
-                  &lt;enumVal&gt;<br>
-                      &lt;enumChoice choice="Off"/&gt;<br>
-                      &lt;enumChoice choice="On"/&gt;<br>
-                  &lt;/enumVal&gt;<br>
+            <li>Some decoder options are best represented by "choose one choice". These are
+            represented by a enumVariable element. Example:
+              <p class="example">&lt;variable item="F6 during DC operation" CV="13"
+              mask="XXVXXXXX"&gt;<br>
+              &lt;enumVal&gt;<br>
+              &lt;enumChoice choice="Off"/&gt;<br>
+              &lt;enumChoice choice="On"/&gt;<br>
+              &lt;/enumVal&gt;<br>
               &lt;/variable&gt;</p>
 
-              <p>Each enumChoice element describes one possibility.
-              There can be as many of these as desired. For a one
-              bit choice, you use two enumChoice elements as in the
-              example. For a 4 bit choice, like the FX codes in a
-              Digitrax decoder, you can use up to 16 choices. They
-              are displayed in the order they are entered in the
-              file, and are also numbered in that order. If the
-              first is chosen, a 0 is entered in the CV bits;
+              <p>Each enumChoice element describes one possibility. There can be as many of these
+              as desired. For a one bit choice, you use two enumChoice elements as in the example.
+              For a 4 bit choice, like the FX codes in a Digitrax decoder, you can use up to 16
+              choices. They are displayed in the order they are entered in the file, and are also
+              numbered in that order. If the first is chosen, a 0 is entered in the CV bits;
               choosing the second stores 1; etc.</p>
 
-              <p>If you need to specific a specific number for an
-              enum option, add a "value" attribute:</p>
+              <p>If you need to specific a specific number for an enum option, add a "value"
+              attribute:</p>
 
-              <p class="example">    &lt;enumChoice choice="Blue"
-              value="32"/&gt;</p>
-              
+              <p class="example">&lt;enumChoice choice="Blue" value="32"/&gt;</p>
             </li>
           </ul>
         </dd>
 
         <dt class="left">Including fragment files</dt>
-        <dd>
-          <p>Decoder definitions can include "fragment files"
-          which provide common definitions of some CVs.
-          This has the advantage that they're already created and 
-          tested, and often include tooltip text, translations 
-          and other nice features.  See the existing 
-          decoder definitions for 
-          <a href="https://jmri.org/xml/decoders/nmra">examples</a>.  
-          Some key ones:</p>
 
+        <dd>
+          <p>Decoder definitions can include "fragment files" which provide common definitions of
+          some CVs. This has the advantage that they're already created and tested, and often
+          include tooltip text, translations and other nice features. See the existing decoder
+          definitions for <a href="https://jmri.org/xml/decoders/nmra">examples</a>. Some key
+          ones:</p>
+
+          <ul>
+            <li>CV1, the primary or short address, CV17 and 18, the extended or long address, and
+            the corresponding CV29 bits can be handled by one of these, depending on what the
+            decode supports:
               <ul>
-                <li>CV1, the primary or short address, 
-                    CV17 and 18, the extended or long address,
-                    and the corresponding CV29 bits can 
-                    be handled by one of these, depending
-                    on what the decode supports:
-                    <ul>
-                    <li>xml/decoders/nmra/shortAddressOnly.xml
-                    <li>xml/decoders/nmra/shortAndLongAddress.xml
-                    </ul>
-                <li>CV19, the consist address and direction, 
-                    can be handled by one of these:
-                    <ul>
-                    <li>xml/decoders/nmra/consistAddr.xml	
-                    <li>xml/decoders/nmra/consistAddrDirection.xml
-                    </ul>
-                 <li>The CV16/CV15 decoder lock feature can be 
-                    handled by the xml/decoders/nmra/decoderLockId16.xml
-                    fragment file. Note that only CV16 is included;
-                    CV15 should not be included in the definition
-                    to prevent it from being changed after decoder
-                    installation.   
-                </ul>
-         
-         <p>You can also use fragment files to include (hence simplify)
-         <a href="https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+                <li>xml/decoders/nmra/shortAddressOnly.xml</li>
+
+                <li>xml/decoders/nmra/shortAndLongAddress.xml</li>
+              </ul>
+            </li>
+
+            <li>CV19, the consist address and direction, can be handled by one of these:
+              <ul>
+                <li>xml/decoders/nmra/consistAddr.xml</li>
+
+                <li>xml/decoders/nmra/consistAddrDirection.xml</li>
+              </ul>
+            </li>
+
+            <li>The CV16/CV15 decoder lock feature can be handled by the
+            xml/decoders/nmra/decoderLockId16.xml fragment file. Note that only CV16 is included;
+            CV15 should not be included in the definition to prevent it from being changed after
+            decoder installation.</li>
+          </ul>
+
+          <p>You can also use fragment files to include (hence simplify) <a href=
+          "https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p>
         </dd>
+
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>
-          <p>At this point, you've created a new configuration
-          file!</p>
+          <p>At this point, you've created a new configuration file!</p>
 
-          <p>You can check it for syntax by selecting the "Validate
-          XML file" item from the "Debug" menu. It opens a file
-          selection dialog; select your file and click "open". If
-          all is well, you'll get a dialog box that says "OK". If
-          not, you'll get a completely incomprehensible error
-          message. About the only useful part of that message is
-          the line number; open an editor to that line and try to
-          see what's wrong with the syntax.</p>
+          <p>You can check it for syntax by selecting the "Validate XML file" item from the "Debug"
+          menu. It opens a file selection dialog; select your file and click "open". If all is
+          well, you'll get a dialog box that says "OK". If not, you'll get a completely
+          incomprehensible error message. About the only useful part of that message is the line
+          number; open an editor to that line and try to see what's wrong with the syntax.</p>
         </dd>
 
         <dt class="left">Add the file to the index</dt>
 
         <dd>
-          <p>All that's left is to enter your new file in the
-          index. This index is used to speed the startup of the
-          program, when the list of available decoders is
-          constructed.</p>
+          <p>All that's left is to enter your new file in the index. This index is used to speed
+          the startup of the program, when the list of available decoders is constructed.</p>
 
-          <p>Select the "Recreate decoder index" item from the
-          DecoderPro "Actions" menu or the PanelPro "Debug" menu.</p>
+          <p>Select the "Recreate decoder index" item from the DecoderPro "Actions" menu or the
+          PanelPro "Debug" menu.</p>
         </dd>
       </dl>
 
-      <p>Congratulations! You're done. Next, open the programmer
-      application and try it.</p>
+      <p>Congratulations! You're done. Next, open the programmer application and try it.</p>
 
-      <p>For more advanced information on the content of the files,
-      please see the <a href="CreateDecoderAdvanced.shtml">Advanced
-      Decoder Definitions</a> page.</p>
+      <p>For more advanced information on the content of the files, please see the <a href=
+      "CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

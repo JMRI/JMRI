@@ -1,379 +1,331 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Translated by Herv&#233; Blorec le 2014-09-14; Egbert Broerse (html markup); le 2015-10-18 -->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Support Tools for LocoNet Devices</title>
   <meta name="Author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
   <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-      <h1>Outils JMRI qui prennent en charge les &eacute;quipements
-      LocoNet&reg;</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-      <p>Le logiciel JMRI peut fournir une vari&eacute;t&eacute;
-      d'outils pour prendre en charge le mat&eacute;riel
-      connect&eacute; au bus LocoNet&reg;. Ces outils fournissent
-      une vari&eacute;t&eacute; de fonctionnalit&eacute;s, tel que
-      la surveillance des statut, la lecture et l'&eacute;criture
-      de la configuration. Chacun de ces outils fournit un ensemble
-      de fonctionnalit&eacute;s qui est appropri&eacute; &agrave;
-      ce genre d'&eacute;quipement qu'il prend en charge, comme
-      r&eacute;sum&eacute; dans le tableau ci-dessous.</p>
+    <div id="mainContent">
+      <h1>Outils JMRI qui prennent en charge les équipements LocoNet®</h1>
 
-      <p>Dans le tableau chaque nom d'outil est un lien vers une
-      page d'aide sp&eacute;cifique &agrave; l'outil.</p>
+      <p>Le logiciel JMRI peut fournir une variété d'outils pour prendre en charge le matériel
+      connecté au bus LocoNet®. Ces outils fournissent une variété de fonctionnalités, tel que la
+      surveillance des statut, la lecture et l'écriture de la configuration. Chacun de ces outils
+      fournit un ensemble de fonctionnalités qui est approprié à ce genre d'équipement qu'il prend
+      en charge, comme résumé dans le tableau ci-dessous.</p>
 
-      <table border="2">
+      <p>Dans le tableau chaque nom d'outil est un lien vers une page d'aide spécifique à
+      l'outil.</p>
+
+      <table border="2" summary="">
         <tr align="center">
-          <td><b>Tool</b></td>
-
-          <td><b>Moniteur Status</b></td>
-
-          <td><b>Commande</b></td>
-
-          <td><b>Configurer</b></td>
-
-          <td><b>T&eacute;l&eacute;chargement Firmware</b></td>
-
-          <td><b>T&eacute;l&eacute;chargement Projet Son</b></td>
-
-          <td><b>Appliqu&eacute; &agrave;</b></td>
+          <td><strong>Tool</strong>
+          </td>
+          <td><strong>Moniteur Status</strong>
+          </td>
+          <td><strong>Commande</strong>
+          </td>
+          <td><strong>Configurer</strong>
+          </td>
+          <td><strong>Téléchargement Firmware</strong>
+          </td>
+          <td><strong>Téléchargement Projet Son</strong>
+          </td>
+          <td><strong>Appliqué à</strong>
+          </td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">
-          Moniteur LocoNet</a></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Moniteur
+          LocoNet</a>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>Tout Trafic LocoNet</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">
-          Moniteur Slots</a></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td>(limit&eacute;)</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Moniteur
+          Slots</a>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>(limité)</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>"Slots" Centrale de Commande</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">
-          Moniteur Horloge</a></td>
-
-          <td>&bull;</td>
-
-          <td>&bull;</td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">Moniteur
+          Horloge</a>
+          </td>
+          <td>•</td>
+          <td>•</td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>Horloge Rapide LocoNet</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
-          Moniteur Stats LocoNet</a></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">Moniteur
+          Stats LocoNet</a>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>PR3, LocoBuffer, LocoBuffer-II, LocoBuffer-USB</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">
-          Configurer BDL16x</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">Configurer
+          BDL16x</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>BDL16, BDL162, BDL168</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">
-          Configurer DS64</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Configurer
+          DS64</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>DS64</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configurer
-          PM4x</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configurer PM4x</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>PM4, PM42</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configurer
-          SE8C</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configurer SE8C</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>SE8C</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">
-          Configurer LocoIO</a> (d&eacute;sapprouv&eacute;)</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configurer
+          LocoIO</a> (désapprouvé)</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>LocoIO, LocoServo, LocoBooster</td>
         </tr>
 
         <tr align="center">
           <td><a href=
-          "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-          Configurer Centrale de Commande</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configurer
+          Centrale de Commande</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>DB150, DCS100, DCS50, DCS51</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">
-          Configurer LocoNet ID</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>UR90, UR91(Infrarouge&amp; Simplex),
-          UR92(Infrarouge)</td>
+          <td><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configurer
+          LocoNet ID</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>UR90, UR91(Infrarouge&amp; Simplex), UR92(Infrarouge)</td>
         </tr>
 
         <tr align="center">
           <td><a href=
-          "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
-          Configurer Groupe Duplex</a></td>
-
-          <td>(limit&eacute;)</td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
+          "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configurer
+          Groupe Duplex</a>
+          </td>
+          <td>(limité)</td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>UR92(Duplex)</td>
         </tr>
 
         <tr align="center">
           <td><a href=
-          "../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">
-          Envoyer Message R&eacute;gulateur</a></td>
-
-          <td></td>
-
-          <td>(limit&eacute;)</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
+          "../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">Envoyer
+          Message Régulateur</a>
+          </td>
+          <td>
+          </td>
+          <td>(limité)</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>DT400, DT402</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">
-          Envoyer Paquet LocoNet</a></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">Envoyer
+          Paquet LocoNet</a>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>LocoNet Traffic</td>
         </tr>
 
         <tr align="center">
-          <td><a href=
-          "../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">
-          S&eacute;lectionner le mode PR3</a></td>
-
-          <td></td>
-
-          <td></td>
-
+          <td><a href="../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">Sélectionner
+          le mode PR3</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>(limited)</td>
-
-          <td></td>
-
-          <td></td>
-
+          <td>
+          </td>
+          <td>
+          </td>
           <td>PR3</td>
         </tr>
 
         <tr align="center">
           <td><a href=
-          "../../../package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">
-          T&eacute;l&eacute;charger Firmware</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td></td>
-
-          <td>Le Mat&eacute;riel Digitrax prend en charge les mises
-          &agrave; jour Firmware</td>
+          "../../../package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Télécharger
+          Firmware</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>
+          </td>
+          <td>Le Matériel Digitrax prend en charge les mises à jour Firmware</td>
         </tr>
 
         <tr align="center">
           <td><a href=
-          "../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">
-          T&eacute;l&eacute;charger Sons</a></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>&bull;</td>
-
-          <td>D&eacute;codeurs Son Mobile Digitrax</td>
+          "../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Télécharger Sons</a>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>•</td>
+          <td>Décodeurs Son Mobile Digitrax</td>
         </tr>
       </table>
 
-      <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
-      <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-
+      <p>LocoNet® est une marque déposée de <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

@@ -111,7 +111,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private Color blockOccupiedColor = Color.red;
     private Color blockExtraColor = Color.white;
 
-    /*
+    /**
      * Creates a LayoutBlock object.
      *
      * Note: initializeLayoutBlock() must be called to complete the process. They are split
@@ -124,7 +124,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         super(sName, uName);
     }
 
-    /*
+    /**
      * Completes the creation of a LayoutBlock object by adding a Block to it.
      *
      * The block create process takes into account that the _bean register
@@ -601,14 +601,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 block.setNamedSensor(occupancyNamedSensor);
             }
         }
-
-        if (getOccupancySensor() == null) {
+        
+        Sensor s = getOccupancySensor();
+        if ( s == null) {
             return UNKNOWN;
         }
 
-        if (getOccupancySensor().getKnownState() != occupiedSense) {
+        if (s.getKnownState() != occupiedSense) {
             return EMPTY;
-        } else if (getOccupancySensor().getKnownState() == occupiedSense) {
+        } else if (s.getKnownState() == occupiedSense) {
             return OCCUPIED;
         }
         return UNKNOWN;
@@ -620,7 +621,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Does nothing, do not use. Dummy for completion of NamedBean interface
+     * Does nothing, do not use.Dummy for completion of NamedBean interface
+     * @param i does nothing
      */
     @Override
     public void setState(int i) {
@@ -855,7 +857,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     void handleBlockChange(PropertyChangeEvent e) {
         // Update memory object if there is one
-        if ((getMemory() != null) && (block != null) && !suppressNameUpdate) {
+        Memory m = getMemory();
+        if ((m != null) && (block != null) && !suppressNameUpdate) {
             // copy block value to memory if there is a value
             Object val = block.getValue();
             if (val != null) {
@@ -863,11 +866,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     val = val.toString();
                 }
             }
-            getMemory().setValue(val);
+            m.setValue(val);
         }
         if (e.getPropertyName().equals("UserName")) {
             setUserName(e.getNewValue().toString());
-            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).
+            InstanceManager.getDefault(NamedBeanHandleManager.class).
                     renameBean(e.getOldValue().toString(), e.getNewValue().toString(), this);
         }
         // Redraw all Layout Editor panels using this Layout Block
@@ -968,23 +971,24 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
 
-        if (getOccupancySensor() != null) {
+        Sensor s = getOccupancySensor();
+        if ( s != null) {
             if (sensorDebounceGlobalCheck.isSelected()) {
-                getOccupancySensor().setUseDefaultTimerSettings(true);
+                s.setUseDefaultTimerSettings(true);
             } else {
-                getOccupancySensor().setUseDefaultTimerSettings(false);
+                s.setUseDefaultTimerSettings(false);
                 if (!sensorDebounceInactiveField.getText().trim().isEmpty()) {
-                    getOccupancySensor().setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
+                    s.setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
                 }
                 if (!sensorDebounceActiveField.getText().trim().isEmpty()) {
-                    getOccupancySensor().setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
+                    s.setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
                 }
             }
-            Reporter reporter = getOccupancySensor().getReporter();
+            Reporter reporter = s.getReporter();
             if (reporter != null && block != null) {
                 String msg = java.text.MessageFormat.format(
                         Bundle.getMessage("BlockAssignReporter"),
-                        new Object[]{getOccupancySensor().getDisplayName(),
+                        new Object[]{s.getDisplayName(),
                             reporter.getDisplayName()});
                 if (JOptionPane.showConfirmDialog(editLayoutBlockFrame,
                         msg, Bundle.getMessage("BlockAssignReporterTitle"),
@@ -1864,13 +1868,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     // Might be possible to refactor the removal to use a bit of common code.
     private void removeAdjacency(Path removedPath) {
-        Block block = removedPath.getBlock();
-        if (block != null) {
+        Block ablock = removedPath.getBlock();
+        if (ablock != null) {
             if (enableDeleteRouteLogging) {
-                log.info("From {} Adjacency to be removed {} {}", this.getDisplayName(), block.getDisplayName(), Path.decodeDirection(removedPath.getToBlockDirection()));
+                log.info("From {} Adjacency to be removed {} {}", this.getDisplayName(), ablock.getDisplayName(), Path.decodeDirection(removedPath.getToBlockDirection()));
             }
             LayoutBlock layoutBlock = InstanceManager.getDefault(
-                    LayoutBlockManager.class).getLayoutBlock(block);
+                    LayoutBlockManager.class).getLayoutBlock(ablock);
             if (layoutBlock != null) {
                 removeAdjacency(layoutBlock);
             }
@@ -4257,6 +4261,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             direction = dir;
             routeMetric = met;
             length = len;
+            init();
+        }
+        
+        final void init() {
             validCurrentRoute = checkIsRouteOnValidThroughPath(this);
             firePropertyChange("length", null, null);
             destBlock.addPropertyChangeListener(this);
@@ -4508,6 +4516,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
     }
 
+    @Nonnull
     List<Block> getThroughPathSourceByDestination(Block dest) {
         List<Block> a = new ArrayList<>();
 
@@ -4519,6 +4528,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return a;
     }
 
+    @Nonnull
     List<Block> getThroughPathDestinationBySource(Block source) {
         List<Block> a = new ArrayList<>();
 

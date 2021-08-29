@@ -1,39 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Audio Table Help</title>
   <meta name="author" content="Matt Harris">
-  <meta name="keywords" content="JMRI help Audio Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Audio Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>The Audio Table</h1>You can use the Audio Table to look
-      at the contents of JMRI Audio objects.
-
-      <p>Note that you can sort the table by each of the columns;
-      just click on a column heading.</p><a href=
-      "AudioTable.jpg"><img src="AudioTable.jpg" height="178"
-      width="420"></a>
-
-      <p>To create a new Audio object, click either the "Add
-      Source..." or the "Add Buffer..." <a href=
-      "AudioAddEdit.shtml">button</a> at the bottom left of the
-      pane.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>The Audio Table</h1>
+      You can use the Audio Table to look at the contents of JMRI Audio objects.
+      <p>Note that you can sort the table by each of the columns; just click on a column
+      heading.</p>
+      <a href="AudioTable.jpg"><img src="AudioTable.jpg" height="178" width="420" alt=
+      "Audio Table"></a>
+      <p>To create a new Audio object, click either the "Add Source..." or the "Add Buffer..."
+      <a href="AudioAddEdit.shtml">button</a> at the bottom left of the pane.</p>
 
       <p>For more information on Audio objects, see the <a href=
       "../../../../html/tools/Audio.shtml">Audio help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

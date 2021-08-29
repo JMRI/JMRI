@@ -1,141 +1,119 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI help CBUS event capture">
-  <title>JMRI: CBUS&reg; Event Capture Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: CBUS® Event Capture Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-     <h1>JMRI: CBUS Event Capture Tool</h1>
-      
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: CBUS Event Capture Tool</h1>
+
       <ul class="nav">
-      <li><a href="#examinemultipleevents">Examine Multiple Events</a></li>
-      <li><a href="#eventid">Manual entry of the Event ID</a></li>
-      <li><a href="#capturenextevent">Capture the Next event</a></li>
-      <li><a href="#filterhighlight">Filter and Highlight Events</a></li>      
+        <li>
+          <a href="#examinemultipleevents">Examine Multiple Events</a>
+        </li>
+
+        <li>
+          <a href="#eventid">Manual entry of the Event ID</a>
+        </li>
+
+        <li>
+          <a href="#capturenextevent">Capture the Next event</a>
+        </li>
+
+        <li>
+          <a href="#filterhighlight">Filter and Highlight Events</a>
+        </li>
       </ul>
-      
-      <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-capture/event-capture-413x677.png"
-       alt="Event Capture Tool screenshot" width="413" height="677" align="right">
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/event-capture/event-capture-413x677.png"
+      alt="Event Capture Tool screenshot" width="413" height="677" class="floatRight">
+      <p>The CBUS Event Capture tool can simplify configuring JMRI to work well with your <a href=
+      "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a> installation.</p>
 
-      <p>The CBUS Event Capture tool can simplify configuring JMRI
-      to work well with your <a href=
-      "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
-      installation.</p>
+      <p>To <a href="../../../../../../../html/hardware/can/cbus/index.shtml">configure JMRI
+      Sensors, Turnouts and Lights</a>, you need to identify the associated CBUS events. There are
+      several ways to do this.</p>
 
-      <p>To <a href=
-      "../../../../../../../html/hardware/can/cbus/index.shtml">configure
-      JMRI Sensors, Turnouts and Lights</a>, you need to identify the
-      associated CBUS events. There are several ways to do this.</p>
-      
-      <p>This page uses the capture tool to configure a Sensor as an example, 
-      similar methods work for Turnouts and Lights.</p>
+      <p>This page uses the capture tool to configure a Sensor as an example, similar methods work
+      for Turnouts and Lights.</p>
 
-     <h3><a name="examinemultipleevents" id="examinemultipleevents" 
-     >Examine Multiple Events</a></h3>
-      <p>The upper part of the screen
-      can capture multiple CBUS Events, which you can then use to
-      create Sensors and Turnouts.
+      <h3 id="examinemultipleevents">Examine Multiple Events</h3>
 
-      <p>When a new CBUS message comes it, it will be captured in
-      the highest line that has the "Capture" box checked. The box
-      will then be unchecked so the captured message is not
-      overwritten by later CBUS messages. If you check a series of
-      boxes, you can capture a series of messages.</p>
+      <p>The upper part of the screen can capture multiple CBUS Events, which you can then use to
+      create Sensors and Turnouts.</p>
 
-      <p>Once you've captured the Event you want, you can copy and
-      paste it into the boxes in the lower part of the window. If
-      your computer allows it, you can also just drag and drop the
+      <p>When a new CBUS message comes it, it will be captured in the highest line that has the
+      "Capture" box checked. The box will then be unchecked so the captured message is not
+      overwritten by later CBUS messages. If you check a series of boxes, you can capture a series
+      of messages.</p>
+
+      <p>Once you've captured the Event you want, you can copy and paste it into the boxes in the
+      lower part of the window. If your computer allows it, you can also just drag and drop the
       value into the lower field.</p>
-      
-      
-     <h3><a name="eventid" id="eventid">Manually enter the Event ID</a></h3>
+
+      <h3 id="eventid">Manually enter the Event ID</h3>
+
       <p>You can just type an <a href=
-      "../../../../../../../html/hardware/can/cbus/index.shtml">Event
-      ID</a> in the field next to "Active On", and then press
-      "Create". A Sensor / Turnout / Light will be created that goes Active when the
-      Event is seen, and Inactive when the opposite Event (ON vs
-      OFF) is seen.</p>
+      "../../../../../../../html/hardware/can/cbus/index.shtml">Event ID</a> in the field next to
+      "Active On", and then press "Create". A Sensor / Turnout / Light will be created that goes
+      Active when the Event is seen, and Inactive when the opposite Event (ON vs OFF) is seen.</p>
 
-      <p>If you want to associate Active and Inactive with
-      completely separate Events, you can enter the Event IDs in
-      the two fields and click "Create".</p>
+      <p>If you want to associate Active and Inactive with completely separate Events, you can
+      enter the Event IDs in the two fields and click "Create".</p>
 
+      <h3 id="capturenextevent">Capture the Next Event</h3>
 
-     <h3><a name="capturenextevent" id="capturenextevent"
-     >Capture the Next Event</a></h3>
-      <p>If you can make the layout
-      emit the desired Event, for example by pressing a fascia
-      switch or throwing a turnout, you can capture that Event and
-      use it.</p>
+      <p>If you can make the layout emit the desired Event, for example by pressing a fascia switch
+      or throwing a turnout, you can capture that Event and use it.</p>
 
-      <p>If you press the "Capture Next" button next to one of the
-      Event fields, it will stay down (activated) until the next
-      CBUS Event (CAN frame) is seen by the program. That Event is
+      <p>If you press the "Capture Next" button next to one of the Event fields, it will stay down
+      (activated) until the next CBUS Event (CAN frame) is seen by the program. That Event is
       captured into the neighboring field for later use.</p>
 
-      <p>You can separately capture the two Events for a Sensor,
-      Turnout or Light if desired.</p>
+      <p>You can separately capture the two Events for a Sensor, Turnout or Light if desired.</p>
 
+      <h3 id="filterhighlight">Filtering and Highlighting</h3>
 
-     <h3><a name="filterhighlight" id="filterhighlight"
-     >Filtering and Highlighting</a></h3>
-      <p>You can open up a new 
-      <a href="../console/CbusConsoleFrame.shtml#filter">filter</a> or 
-      <a href="../console/CbusConsoleFrame.shtml#highlighter">event highlighter</a>
-      window by clicking on the buttons at top of the screen.
-        </p>
+      <p>You can open up a new <a href="../console/CbusConsoleFrame.shtml#filter">filter</a> or
+      <a href="../console/CbusConsoleFrame.shtml#highlighter">event highlighter</a> window by
+      clicking on the buttons at top of the screen.</p>
 
-      <p>You can also open the Capture Tool via the 
-      <a href="../console/CbusConsoleFrame.shtml">Console Log</a>.
-      <br>In this case, the filter and event highlighter used by 
-      the console log will be shared with the capture tool.
-      </p>
-      
-      
-      
-      
-    <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-capture/merg-cbus-event-capture-title-525x88.png"
-       alt="Event Capture Tool Title" height="88" width="525">
-      
-    <p>Any windows opened this way can be identified by the title.</p>  
-      
+      <p>You can also open the Capture Tool via the <a href=
+      "../console/CbusConsoleFrame.shtml">Console Log</a>.<br>
+      In this case, the filter and event highlighter used by the console log will be shared with
+      the capture tool.</p>
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/event-capture/merg-cbus-event-capture-title-525x88.png"
+      alt="Event Capture Tool Title" height="88" width="525">
+      <p>Any windows opened this way can be identified by the title.</p>
 
-    <h3>JMRI Help</h3>
-    
-      <p>Once you've created a CBUS Sensor or
-      Turnout, you can use the <a href=
-      "../../../../../jmrit/beantable/SensorTable.shtml">Sensor
-      Table</a>, <a href=
-      "../../../../../jmrit/beantable/TurnoutTable.shtml">Turnout
-      Table</a> or <a href=
-      "../../../../../jmrit/beantable/LightTable.shtml">Light
-      Table</a> to adjust the details.</p>
+      <h3>JMRI Help</h3>
 
-      <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS
-      Console</a> can help you figure out what events are happening
-      on your layout.</p>
-      
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the CBUS Event Capture window.</p>
-      
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
+      <p>Once you've created a CBUS Sensor or Turnout, you can use the <a href=
+      "../../../../../jmrit/beantable/SensorTable.shtml">Sensor Table</a>, <a href=
+      "../../../../../jmrit/beantable/TurnoutTable.shtml">Turnout Table</a> or <a href=
+      "../../../../../jmrit/beantable/LightTable.shtml">Light Table</a> to adjust the details.</p>
 
-        <h2></h2>
-        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS Console</a> can help you figure out
+      what events are happening on your layout.</p>
 
-      
+      <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
+      of the CBUS Event Capture window.</p>
+
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support
+      page</a>.</p>
+
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - TCH Technology System (no longer
-  supported)</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - TCH Technology System (no longer supported)</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: TCH Technology System (no longer supported)</h1>
 
-      <h1>Hardware Support: TCH Technology System (no longer
-      supported)</h1>
-
-      <p>As of November 10, 2008, JMRI no longer supports the TCH
-      Technology hardware.</p>
+      <p>As of November 10, 2008, JMRI no longer supports the TCH Technology hardware.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

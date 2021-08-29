@@ -31,7 +31,7 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
 
     public RouteAddFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
-        initComponents();
+        super.initComponents();
     }
 
     @Override
@@ -124,7 +124,7 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
         }
         Route g;
         // check if a Route with the same user name exists
-        if (!uName.equals("")) {
+        if (!uName.isEmpty()) {
             g = routeManager.getByUserName(uName);
             if (g != null) {
                 // Route already exists

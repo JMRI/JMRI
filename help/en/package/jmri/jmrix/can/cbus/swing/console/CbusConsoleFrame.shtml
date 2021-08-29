@@ -1,393 +1,435 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: CBUS&reg; Console Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CBUS® Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI CBUS help monitor console log logging event long short">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-     <h1>JMRI : CBUS Console Tool</h1>
-     
-     <ul class="snav">
-      <li><a href="#logtofile">Logging</a></li>
-      <li><a href="#stats">Statistics</a></li>
-      <li><a href="#packet">Packets</a></li>
-      <li><a href="#cbusSend">Send Event</a></li>
-      <li><a href="#filter">Filter</a></li>
-      <li><a href="#highlighter">Highlighter</a></li>
-      <li><a href="#eventcapture">Event Capture Tool</a></li>
-     </ul>
-     
-      <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-min-631x357.png"
-      width="400" height="226" alt="Initial Merg Cbus Console Tool Screen" align="right">
-      
-        <p>JMRI provides a communications monitor window so you can
-        see what's happening on the layout network.</p>
-    
-        <p>Once you open a Console window, it will automatically
-        display all traffic.<br>
-        The left part contains the raw CAN frames. The right part
-        interprets their CBUS meaning.</p>
-        
-        <p>If the CBUS event table is running, the event table will be queried for 
-        event and node names.</p>
-        
-        <p>You can open multiple console windows, whereby an 
-        instance number is added to the title bar.
-        <br> This number is also added to any Filter, Highlight or 
-        event Capture windows which are opened via the console.</p>
-        
-        
-        <p>You can drag the window boundaries between these to suit your display.</p>
-        <p>The vertical scrollbar synchronises both windows.</p>
-        
-        <p>Short CBUS events appear in the Console with a node number of 00.</p>
-        
-    <h3>Buttons</h3>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-max-400x396.png"
-        width="400" height="396" alt="Merg Cbus Console Tool Screen Expanded" align="right">
-      
-       <dl>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI : CBUS Console Tool</h1>
+
+      <ul class="snav">
+        <li>
+          <a href="#logtofile">Logging</a>
+        </li>
+
+        <li>
+          <a href="#stats">Statistics</a>
+        </li>
+
+        <li>
+          <a href="#packet">Packets</a>
+        </li>
+
+        <li>
+          <a href="#cbusSend">Send Event</a>
+        </li>
+
+        <li>
+          <a href="#filter">Filter</a>
+        </li>
+
+        <li>
+          <a href="#highlighter">Highlighter</a>
+        </li>
+
+        <li>
+          <a href="#eventcapture">Event Capture Tool</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-min-631x357.png"
+      width="400" height="226" alt="Initial Merg Cbus Console Tool Screen" class="floatRight">
+      <p>JMRI provides a communications monitor window so you can see what's happening on the
+      layout network.</p>
+
+      <p>Once you open a Console window, it will automatically display all traffic.<br>
+      The left part contains the raw CAN frames. The right part interprets their CBUS meaning.</p>
+
+      <p>If the CBUS event table is running, the event table will be queried for event and node
+      names.</p>
+
+      <p>You can open multiple console windows, whereby an instance number is added to the title
+      bar.<br>
+      This number is also added to any Filter, Highlight or event Capture windows which are opened
+      via the console.</p>
+
+      <p>You can drag the window boundaries between these to suit your display.</p>
+
+      <p>The vertical scrollbar synchronises both windows.</p>
+
+      <p>Short CBUS events appear in the Console with a node number of 00.</p>
+
+      <h3>Buttons</h3>
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-max-400x396.png"
+      width="400" height="396" alt="Merg Cbus Console Tool Screen Expanded" class="floatRight">
+      <dl>
         <dt>Clear Screen</dt>
+
         <dd>Erases the log area at the top of the screen.</dd>
 
         <dt>Freeze Screen</dt>
-        <dd>Stops acquiring new information, so that the captured
-        information stops scrolling up.</dd>
 
-       </dl>
-        
-    <h3>Checkboxes</h3>
-        <dl>
+        <dd>Stops acquiring new information, so that the captured information stops scrolling
+        up.</dd>
+      </dl>
+
+      <h3>Checkboxes</h3>
+
+      <dl>
         <dt>Timestamps</dt>
-        <dd>Normally, the program just displays the data from the
-        communication link. If you'd like each message to be
-        preceded by the time it was sent or received, check this
-        box.</dd>
+
+        <dd>Normally, the program just displays the data from the communication link. If you'd like
+        each message to be preceded by the time it was sent or received, check this box.</dd>
 
         <dt>Priorities</dt>
-        <dd>If you'd like each message to be preceded by the CBUS
-        priorities used in sending the message, check this
-        box.</dd>
-        
+
+        <dd>If you'd like each message to be preceded by the CBUS priorities used in sending the
+        message, check this box.</dd>
+
         <dt>Direction</dt>
+
         <dd>Displays a visual clue to network flow.</dd>
-        
+
         <dt>CanID</dt>
+
         <dd>Displays the Can ID of the message sender.</dd>
-        
+
         <dt>RTR</dt>
+
         <dd>Displays the RTR status of the CAN message.</dd>
 
         <dt>OPC</dt>
+
         <dd>Displays the OPC of the message.</dd>
-        
+
         <dt>OPC Extra</dt>
+
         <dd>Displays extra information on the OPC.</dd>
 
         <dt>Address</dt>
-        <dd>Displays the CBUS short an ID of the message.
-        <br>You can use this to enter as a CBUS hardware 
-        address for sensor inputs or turnout and light outputs.</dd>
+
+        <dd>Displays the CBUS short an ID of the message.<br>
+        You can use this to enter as a CBUS hardware address for sensor inputs or turnout and light
+        outputs.</dd>
 
         <dt>CAN</dt>
-        <dd>Displays the CAN message as appears in left side of main console.
-        <br>Enables Including the CAN message in your log files.</dd>
-        
-        </dl>
-        
-        
-     <h2><a name="logtofile" id="logtofile">Logging To A File</a></h2>
-        <div>
-        
-        <p>Sometimes, it's helpful to capture
-        what's happening. For example, you might encounter a bug
-        (!!), and want to send a copy of what's happening to the
-        people who are trying to fix it.</p>
-    
-        <p>Small amounts of data can be copied from the log window
-        with your computers "copy" command (e.g. ctrl-C or cmd-C),
-        and then pasted into an email.</p>
-    
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-logging-771x49.png"
-        width="771" height="49" alt="CBUS Console Logging to File">
-    
-        <p>If you want to capture more, you can have the window write
-        a log file on your computer's disk. To do this:</p>
-    
-        <ol>
-            <li>Click "Choose log file". A file-chooser window will
-            open. Navigate to where you want to store the file, enter a
-            name for the new log file, and click "Save". 
-            <br><b>Note that if
-            you pick a file that already exists, it will be
-            overwritten.</b> </li>
-    
-            <li>When you're ready to capture the data you want, click
-            "Start logging" on the monitor window.</li>
-    
-            <li>When you're done, click "Stop logging" to store the
-            data and close the file.</li>
-        </ol>
-        
-        <p>You can view contents of the log file by clicking on the 
-        Open Log File Button. </p>
 
-        <p>If you'd like to annotate the message log with your own
-        comments, enter a comment and press ENTER or click the Add to Log
-        button.</p>
-        </div>
-
-    <h2><a name="stats" id="stats">Statistics</a></h2>
-        <div>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-statistics-608x73.png"
-        width="608" height="73" alt="CBUS Console Statistics">
-    
-    
-        <p>This part of the window shows the
-        number of packets received and transmitted.</p>
-
-        <p>Clear button resets the packet counts to zero.</p>
-        </div>
-    <h2><a name="packet" id="packet">Packets</a></h2>
-        <div>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-packets-810x131.png"
-        width="810" height="131" alt="CBUS Console Packets">
-    
-        <p>This displays the most
-        recent packet received from the layout, along with a send packet tool.
-        <br>The individual
-        elements displayed are dynamic and minor priority, the first
-        data byte which is the CBUS opcode and the remaining, up to
-        seven, data bytes.</p>
-
-      <dl>
-        <dt>Copy</dt>
-        <dd>Copies the most recently received packet into the send
-        packet data fields.</dd>
-
-        <dt>Send</dt>
-        <dd>Sends the packet.</dd>
-
-        <dt>Decimal Data Entry/Display</dt>
-        <dd>Normally, the packets display data in
-        hexadecimal and treats data entered as hexadecimal. To
-        change the default to decimal, check this box.</dd>
+        <dd>Displays the CAN message as appears in left side of main console.<br>
+        Enables Including the CAN message in your log files.</dd>
       </dl>
+
+      <h2 id="logtofile">Logging To A File</h2>
+
+      <div>
+        <p>Sometimes, it's helpful to capture what's happening. For example, you might encounter a
+        bug (!!), and want to send a copy of what's happening to the people who are trying to fix
+        it.</p>
+
+        <p>Small amounts of data can be copied from the log window with your computers "copy"
+        command (e.g. ctrl-C or cmd-C), and then pasted into an email.</p>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-logging-771x49.png"
+        width="771" height="49" alt="CBUS Console Logging to File">
+        <p>If you want to capture more, you can have the window write a log file on your computer's
+        disk. To do this:</p>
+
+        <ol>
+          <li>Click "Choose log file". A file-chooser window will open. Navigate to where you want
+          to store the file, enter a name for the new log file, and click "Save".<br>
+          <strong>Note that if you pick a file that already exists, it will be
+          overwritten.</strong></li>
+
+          <li>When you're ready to capture the data you want, click "Start logging" on the monitor
+          window.</li>
+
+          <li>When you're done, click "Stop logging" to store the data and close the file.</li>
+        </ol>
+
+        <p>You can view contents of the log file by clicking on the Open Log File Button.</p>
+
+        <p>If you'd like to annotate the message log with your own comments, enter a comment and
+        press ENTER or click the Add to Log button.</p>
       </div>
 
-    <h2><a name="cbusSend" id="cbusSend">Send Event</a></h2>
-        <div>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-send-event-494x59.png"
+      <h2 id="stats">Statistics</h2>
+
+      <div>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-statistics-608x73.png"
+        width="608" height="73" alt="CBUS Console Statistics">
+        <p>This part of the window shows the number of packets received and transmitted.</p>
+
+        <p>Clear button resets the packet counts to zero.</p>
+      </div>
+
+      <h2 id="packet">Packets</h2>
+
+      <div>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-packets-810x131.png"
+        width="810" height="131" alt="CBUS Console Packets">
+        <p>This displays the most recent packet received from the layout, along with a send packet
+        tool.<br>
+        The individual elements displayed are dynamic and minor priority, the first data byte which
+        is the CBUS opcode and the remaining, up to seven, data bytes.</p>
+
+        <dl>
+          <dt>Copy</dt>
+
+          <dd>Copies the most recently received packet into the send packet data fields.</dd>
+
+          <dt>Send</dt>
+
+          <dd>Sends the packet.</dd>
+
+          <dt>Decimal Data Entry/Display</dt>
+
+          <dd>Normally, the packets display data in hexadecimal and treats data entered as
+          hexadecimal. To change the default to decimal, check this box.</dd>
+        </dl>
+      </div>
+
+      <h2 id="cbusSend">Send Event</h2>
+
+      <div>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-send-event-494x59.png"
         width="494" height="59" alt="CBUS Console Send Event">
-    
-        <p>At the bottom part of the Console, you can construct an Event
-        packet to be sent to the layout. For normal operation, do not
-        edit the preloaded values in the dynamic and normal priority
-        fields.<br>
-        Enter the opcode and the correct number of data bytes
-        (depending upon the opcode).</p>
+        <p>At the bottom part of the Console, you can construct an Event packet to be sent to the
+        layout. For normal operation, do not edit the preloaded values in the dynamic and normal
+        priority fields.<br>
+        Enter the opcode and the correct number of data bytes (depending upon the opcode).</p>
 
-        <p>If the decimal data entry/display checkbox is not selected
-        then data entry will, by default, be treated as hexadecimal.
-        If the decimal data entry/display checkbox is selected then
-        data entry will, by default, be treated as hexadecimal.</p>
+        <p>If the decimal data entry/display checkbox is not selected then data entry will, by
+        default, be treated as hexadecimal. If the decimal data entry/display checkbox is selected
+        then data entry will, by default, be treated as hexadecimal.</p>
 
-        <p>At any time, you may force data entered to be treated as
-        hexadecimal, decimal or binary by adding a "0x", "0d" or "0b"
-        prefix. For example "0x20", "0d32" and "0b00100000" all
+        <p>At any time, you may force data entered to be treated as hexadecimal, decimal or binary
+        by adding a "0x", "0d" or "0b" prefix. For example "0x20", "0d32" and "0b00100000" all
         donate a decimal value of 32.</p>
 
+        <dl>
+          <dt>Send</dt>
 
-      <dl>
-        <dt>Send</dt>
-        <dd>Checks the packet entered and sends it to the layout or
-        reports any error condition detected (e.g. the number of
-        data bytes does not match the opcode).</dd>
+          <dd>Checks the packet entered and sends it to the layout or reports any error condition
+          detected (e.g. the number of data bytes does not match the opcode).</dd>
 
-        <dt>Clear</dt>
-        <dd>Clears the data entry fields and preloads the priority
-        values.</dd>
-        
-        <dt>Decimal Data Entry/Display</dt>
-        <dd>When the decimal data entry/display checkbox
-        is not selected (hexadecimal mode), any value with three or
-        more digits will be treated as binary. When the decimal data
-        entry/display checkbox is selected (decimal mode), any value
-        with four or more digits will be treated as binary.
-        </dd>
-      </dl>
-        </div>
-        
-    <h2><a name="filter" id="filter">Filter</a></h2>
-        <div>
-        
-        <p>The filter logic works from top-to-bottom, 
-        following the order of the list for any applicable categories.</p>
+          <dt>Clear</dt>
 
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-426x254.png"
-        width="426" height="254" alt="CBUS Filter">        
-        
-        <p>The filter listens for new nodes heard on the network,
-        when a new node is heard it is listed under Nodes and is filterable.</p>
-        
-        <p>The minimum and max event ( device ) number filter 
-        also applies to data device numbers.</p>
-        
-        <p>The node filter works for all OPCs with a 2 byte node value, 
-        including node programming.</p>
+          <dd>Clears the data entry fields and preloads the priority values.</dd>
 
-        <p>To see which OPC's are included mouse-over the sub-category. <br>
-        ( You can set the time the tooltip is displayed for in Main Prefernces > Display ).</p>
+          <dt>Decimal Data Entry/Display</dt>
+
+          <dd>When the decimal data entry/display checkbox is not selected (hexadecimal mode), any
+          value with three or more digits will be treated as binary. When the decimal data
+          entry/display checkbox is selected (decimal mode), any value with four or more digits
+          will be treated as binary.</dd>
+        </dl>
+      </div>
+
+      <h2 id="filter">Filter</h2>
+
+      <div>
+        <p>The filter logic works from top-to-bottom, following the order of the list for any
+        applicable categories.</p>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-426x254.png" width=
+        "426" height="254" alt="CBUS Filter">
+        <p>The filter listens for new nodes heard on the network, when a new node is heard it is
+        listed under Nodes and is filterable.</p>
+
+        <p>The minimum and max event ( device ) number filter also applies to data device
+        numbers.</p>
+
+        <p>The node filter works for all OPCs with a 2 byte node value, including node
+        programming.</p>
+
+        <p>To see which OPC's are included mouse-over the sub-category.<br>
+        ( You can set the time the tooltip is displayed for in Main Prefernces &gt; Display ).</p>
 
         <p>OPC's are not modified to a short event if no node number is detected.<br>
-        ( You could identify these by filtering short events, passing long events, 
-        and then filter by node number less than 1 ).</p>
+        ( You could identify these by filtering short events, passing long events, and then filter
+        by node number less than 1 ).</p>
 
-        <p>
-        When a filter is changed between pass and filter, this is displayed in the console log.</p>
+        <p>When a filter is changed between pass and filter, this is displayed in the console
+        log.</p>
 
         <p>Changing the settings takes effect instantly.</p>
-        
+
         <h3>Filter Categories</h3>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png"
-        width="426" height="413" align="right" alt="CBUS Event Filter">
-        
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png" width=
+        "426" height="413" class="floatRight" alt="CBUS Event Filter">
         <ul>
-        <li>Incoming</li>
-        <li>Outgoing</li>
-        <li>Events
+          <li>Incoming</li>
+
+          <li>Outgoing</li>
+
+          <li>Events
             <ul>
-            <li>Min. Event</li>
-            <li>Max. Event</li>
-            <li>On Events</li>
-            <li>Off Events</li>
-            <li>Short Events</li>
-            <li>Long Events</li>
-            <li>Standard Events</li>
-            <li>Request Events</li>
-            <li>Response events</li>
-            <li>Event + No Data</li>
-            <li>Event + Data 1</li>
-            <li>Event + Data 2</li>
-            <li>Event + Data 3</li>
+              <li>Min. Event</li>
+
+              <li>Max. Event</li>
+
+              <li>On Events</li>
+
+              <li>Off Events</li>
+
+              <li>Short Events</li>
+
+              <li>Long Events</li>
+
+              <li>Standard Events</li>
+
+              <li>Request Events</li>
+
+              <li>Response events</li>
+
+              <li>Event + No Data</li>
+
+              <li>Event + Data 1</li>
+
+              <li>Event + Data 2</li>
+
+              <li>Event + Data 3</li>
             </ul>
-        </li>
-        <li>Nodes
+          </li>
+
+          <li>Nodes
             <ul>
-            <li>Min. Node ( select minimum )</li>
-            <li>Max. Node ( select maximum )</li>
-            <li>Any nodes heard on the network will be added to the main filter list here.</li>
+              <li>Min. Node ( select minimum )</li>
+
+              <li>Max. Node ( select maximum )</li>
+
+              <li>Any nodes heard on the network will be added to the main filter list here.</li>
             </ul>
-        </li>
-        <li>Data
+          </li>
+
+          <li>Data
             <ul>
-            <li>ACDAT</li>
-            <li>DDES</li>
-            <li>RQDAT</li>
-            <li>ARDAT</li>
-            <li>DDRS</li>
-            <li>RQDDS</li>
-            <li>Cabdata ( Experimental ) </li>
+              <li>ACDAT</li>
+
+              <li>DDES</li>
+
+              <li>RQDAT</li>
+
+              <li>ARDAT</li>
+
+              <li>DDRS</li>
+
+              <li>RQDDS</li>
+
+              <li>Cabdata ( Experimental )</li>
             </ul>
-        </li>
-        <li>Command Station
-                <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/nodes-426x247.png"
-        width="426" height="247" align="right" alt="CBUS Node Filter">
+          </li>
+
+          <li>Command Station <img src=
+          "../../../../../../../html/hardware/can/cbus/images/swing/filter/nodes-426x247.png"
+            width="426" height="247" class="floatRight" alt="CBUS Node Filter">
             <ul>
-            <li>Acquire / Release / Consist</li>
-            <li>Keep-Alive</li>
-            <li>Speed / Direction</li>
-            <li>Functions</li>
-            <li>Programming</li>
-            <li>Layout Commands</li>
-            <li>Command Station Control</li>
+              <li>Acquire / Release / Consist</li>
+
+              <li>Keep-Alive</li>
+
+              <li>Speed / Direction</li>
+
+              <li>Functions</li>
+
+              <li>Programming</li>
+
+              <li>Layout Commands</li>
+
+              <li>Command Station Control</li>
             </ul>
-        </li>
-        <li>Node Configuration
+          </li>
+
+          <li>Node Configuration
             <ul>
-            <li>General Node Setup</li>
-            <li>Node Variables</li>
-            <li>Node events</li>
-            <li>Node Number</li>
+              <li>General Node Setup</li>
+
+              <li>Node Variables</li>
+
+              <li>Node events</li>
+
+              <li>Node Number</li>
             </ul>
-        </li>
-        <li>Misc.
+          </li>
+
+          <li>Misc.
             <ul>
-            <li>Network Commands</li>
-            <li>Fast Clock</li>
-            <li>Others</li>
-            <li>Unknown</li>
+              <li>Network Commands</li>
+
+              <li>Fast Clock</li>
+
+              <li>Others</li>
+
+              <li>Unknown</li>
             </ul>
-        </li>
+          </li>
         </ul>
-        </div>
-        
-    <h2><a name="highlighter" id="highlighter">Event Highlighter</a></h2>        
-        <div>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-highlighter-460x337.png"
-        width="460" height="337" alt="CBUS Event Highlighter">  
-        
-        <p>This window can be accessed from the Display options at top of the main console.</p>
-        
-        <p>It can highlight a specific node or event CBUS message, both on and off options.</p>
-        
-        <p>You will need at least 1 type ( or / off ) and 1 direction ( in / out ) to activate the highlight.</p>
-        
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-console-highlighter-output-616x146.png"
-        width="616" height="146" alt="CBUS Event Highlighter Output"> 
-        </div>
+      </div>
 
-    <h2><a name="eventcapture" id="eventcapture">Event Capture</a></h2>
-        <div>
-        <p>You can open a new Event Capture window from within the Console tool.
-        The capture tool will share an event highlighter or filter with the console it was opened with.</p>
-        
-            <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-capture/merg-cbus-event-capture-title-525x88.png"
-       alt="Event Capture Tool Title" height="88" width="525">
-        
-        
-        <p>For more information, see the 
-        <a href="../configtool/ConfigToolFrame.shtml"
-        >Event Capture Tool</a>.</p>
-        
+      <h2 id="highlighter">Event Highlighter</h2>
+
+      <div><img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-highlighter-460x337.png"
+      width="460" height="337" alt="CBUS Event Highlighter">
+      <p>This window can be accessed from the Display options at top of the main console.</p>
+
+      <p>It can highlight a specific node or event CBUS message, both on and off options.</p>
+
+      <p>You will need at least 1 type ( or / off ) and 1 direction ( in / out ) to activate the
+      highlight.</p>
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-console-highlighter-output-616x146.png"
+      width="616" height="146" alt="CBUS Event Highlighter Output">
+      </div>
+
+      <h2 id="eventcapture">Event Capture</h2>
+
+      <div>
+        <p>You can open a new Event Capture window from within the Console tool. The capture tool
+        will share an event highlighter or filter with the console it was opened with.</p>
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/event-capture/merg-cbus-event-capture-title-525x88.png"
+        alt="Event Capture Tool Title" height="88" width="525">
+        <p>For more information, see the <a href="../configtool/ConfigToolFrame.shtml">Event
+        Capture Tool</a>.</p>
+
         <p>This window will close when the main console window is closed.</p>
-        
-        </div>
+      </div>
 
-        
-    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
-      
-        <p>All OPCs supported, additional OPC information available.</p>
-        <p>Received OPCS can be from either other JMRI components,
-        or from an external CBUS connection.</p>
-        <p>Very minor changes to OPC description text for increased screen readability.</p>
+      <h3 id="opc">Supported Operation Codes</h3>
 
-    <h3>JMRI Help</h3>
-      
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the CBUS Console window.</p>
-      
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
-        
-        
-        <h2></h2>
-        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p>All OPCs supported, additional OPC information available.</p>
 
-        
+      <p>Received OPCS can be from either other JMRI components, or from an external CBUS
+      connection.</p>
+
+      <p>Very minor changes to OPC description text for increased screen readability.</p>
+
+      <h3>JMRI Help</h3>
+
+      <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
+      of the CBUS Console window.</p>
+
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help
+      page</a>.</p>
+
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

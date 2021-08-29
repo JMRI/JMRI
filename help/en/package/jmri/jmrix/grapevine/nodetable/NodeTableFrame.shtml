@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Grapevine Node Table</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help configure grapevine node">
+  <meta name="keywords" content="JMRI help configure grapevine node">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Grapevine Node Table</h1>
 
-      <p>The "Node Table" tool lets you see all your Grapevine nodes at
-      once. Each line in the table corresponds to one node address.<br>
+      <p>The "Node Table" tool lets you see all your Grapevine nodes at once. Each line in the
+      table corresponds to one node address.<br>
       The columns are:</p>
 
       <dl>
@@ -32,57 +27,49 @@
 
         <dd>
           The current status of this node.
-
           <dl>
             <dt>Configured</dt>
 
-            <dd>This node has been configured in JMRI. You can talk
-            to its Turnouts, SignalHeads, Sensors, etc.</dd>
+            <dd>This node has been configured in JMRI. You can talk to its Turnouts, SignalHeads,
+            Sensors, etc.</dd>
 
             <dt>Present</dt>
 
-            <dd>This node has been detected on the Grapevine, but
-            it you need to configure it before you can access it in
-            the program.</dd>
+            <dd>This node has been detected on the Grapevine, but it you need to configure it
+            before you can access it in the program.</dd>
 
             <dt>Absent</dt>
 
-            <dd>The node is not configured, and has not been seen
-            on the Grapevine.</dd>
+            <dd>The node is not configured, and has not been seen on the Grapevine.</dd>
           </dl>
         </dd>
 
         <dt>Add/Edit Node</dt>
 
-        <dd>The third column provides a button for you to add a
-        missing node or edit the configuration of an existing node.
-        If you do add or edit a node, remember to save your
-        JMRI Preferences again!</dd>
+        <dd>The third column provides a button for you to add a missing node or edit the
+        configuration of an existing node. If you do add or edit a node, remember to save your JMRI
+        Preferences again!</dd>
 
         <dt>Initialize</dt>
 
-        <dd>If the node is configured, there's a button in the 4th
-        column that lets you send the initialization messages to
-        the node. This is useful if e.g. the node has been turned
-        off and on, so needs to be reinitialized. This is only
-        available for configured nodes.</dd>
+        <dd>If the node is configured, there's a button in the 4th column that lets you send the
+        initialization messages to the node. This is useful if e.g. the node has been turned off
+        and on, so needs to be reinitialized. This is only available for configured nodes.</dd>
       </dl>
 
-      <p>Below the table is a "Check" button and a status field.
-      <br>
-      Click "Check" to scan the Grapevine to check its status and
-      locate nodes. The status field displays:</p>
+      <p>Below the table is a "Check" button and a status field.<br>
+      Click "Check" to scan the Grapevine to check its status and locate nodes. The status field
+      displays:</p>
 
       <dl>
         <dt>Starting</dt>
 
-        <dd>A scan is starting, but no reply has been heard from
-        the Grapevine yet.</dd>
+        <dd>A scan is starting, but no reply has been heard from the Grapevine yet.</dd>
 
         <dt>Checking node x</dt>
 
-        <dd>Scan in progress, and the Grapevine seems to be
-        working. Wait for the chack to complete with node 127.</dd>
+        <dd>Scan in progress, and the Grapevine seems to be working. Wait for the chack to complete
+        with node 127.</dd>
 
         <dt>OK</dt>
 
@@ -90,21 +77,19 @@
 
         <dt>Grapevine failed</dt>
 
-        <dd>Scan completed without hearing anything from the
-        Grapevine. Perhaps the cable isn't completely connected, or
-        some piece isn't powered up.</dd>
+        <dd>Scan completed without hearing anything from the Grapevine. Perhaps the cable isn't
+        completely connected, or some piece isn't powered up.</dd>
       </dl>
 
-      <p>Click the "Change Node Board Address..." button to change
-      the address of a Grapevine node. It opens the
-      <a href="RenumberFrame.shtml">Change Grapevine Board Address</a> pane.</p>
+      <p>Click the "Change Node Board Address..." button to change the address of a Grapevine node.
+      It opens the <a href="RenumberFrame.shtml">Change Grapevine Board Address</a> pane.</p>
 
-      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
-      page.</p>
-
+      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine
+      Hardware Help</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

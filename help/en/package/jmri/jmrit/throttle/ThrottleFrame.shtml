@@ -1,82 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Throttle</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI Throttle</h1>This is the quick reference page for
-      the JMRI Throttle tool.<br>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI Throttle</h1>
+      This is the quick reference page for the JMRI Throttle tool.<br>
       <br>
       More informations about:<br>
 
       <ul>
-        <li>The <a href=
-        "../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml">
-        Throttle menu in JMRI</a></li>
+        <li>The <a href="../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml">Throttle
+        menu in JMRI</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/BasicThrottleWindow.shtml">
-        Throttle Window itself</a></li>
+        <li>The <a href="../../../../html/tools/throttle/BasicThrottleWindow.shtml">Throttle Window
+        itself</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/ThrottleWindowMenus.shtml">
-        Throttle Window menus</a></li>
+        <li>The <a href="../../../../html/tools/throttle/ThrottleWindowMenus.shtml">Throttle Window
+        menus</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/ThrottleToolBar.shtml">Throttle
-        Window toolbar</a></li>
+        <li>The <a href="../../../../html/tools/throttle/ThrottleToolBar.shtml">Throttle Window
+        toolbar</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/AdvancedThrottleControl.shtml">
-        Throttle Window controls</a></li>
+        <li>The <a href="../../../../html/tools/throttle/AdvancedThrottleControl.shtml">Throttle
+        Window controls</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/ThrottlesListWindow.shtml">
-        Throttles List Window</a></li>
+        <li>The <a href="../../../../html/tools/throttle/ThrottlesListWindow.shtml">Throttles List
+        Window</a>
+        </li>
 
-        <li>The <a href=
-        "../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">
-        Throttles preferences pane</a><br></li>
-      </ul><br>
+        <li>The <a href="../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">Throttles
+        preferences pane</a><br>
+        </li>
+      </ul>
+      <br>
       See also:<br>
 
       <ul>
-        <li>The <a href=
-        "../../../../html/tools/throttle/RostersMediaPane.shtml">Media
-        and Function label panels in DecoderPro</a></li>
+        <li>The <a href="../../../../html/tools/throttle/RostersMediaPane.shtml">Media and Function
+        label panels in DecoderPro</a>
+        </li>
 
-        <li><a href=
-        "../../../../html/tools/scripting/Jynstruments.shtml">Jynstruments</a></li>
+        <li>
+          <a href="../../../../html/tools/scripting/Jynstruments.shtml">Jynstruments</a>
+        </li>
 
-        <li><a href=
-        "../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml">
-        How to build a Throttle oriented JMRI</a>.</li>
+        <li>
+          <a href="../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml">How to build a
+          Throttle oriented JMRI</a>.
+        </li>
       </ul>
 
       <p><br>
       Finally the previous version of the help pages <a href=
-      "../../../../html/tools/throttle/ThrottleMain.shtml">general
-      throttle page</a> <a href=
-      "../../../../html/tools/throttle/ThrottleTOC.shtml">(direct
-      TOC access)</a> .</p>
+      "../../../../html/tools/throttle/ThrottleMain.shtml">general throttle page</a> <a href=
+      "../../../../html/tools/throttle/ThrottleTOC.shtml">(direct TOC access)</a> .</p>
 
-      <p><a id="prefs" name="prefs">(This is the
-      jmri.jmrit.throttle.ThrottleFrame help page)</a></p>
+      <p><a id="prefs">(This is the jmri.jmrit.throttle.ThrottleFrame help page)</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

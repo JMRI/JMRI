@@ -1,54 +1,43 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Audio objects</title>
   <meta name="author" content="Matt Harris">
-  <meta name="keywords" content="JMRI help Audio Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Audio Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Adding/Editing Audio objects</h1>To create an audio
-      object, click either the "Add Source..." or the "Add
-      Buffer..." button at the bottom of the <a href=
-      "AudioTable.shtml">Audio Table</a> pane. This will open a new
-      pane with space to enter a System Name and User Name for the
-      new Audio object.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Adding/Editing Audio objects</h1>
+      To create an audio object, click either the "Add Source..." or the "Add Buffer..." button at
+      the bottom of the <a href="AudioTable.shtml">Audio Table</a> pane. This will open a new pane
+      with space to enter a System Name and User Name for the new Audio object.
+      <p>You must enter a unique System Name. System Names for Audio objects have a set pattern:
+      they start with "IAL" for "Internal Audio Listener", "IAB" for "Internal Audio Buffer", or
+      "IAS" for "Internal Audio Source".</p>
 
-      <p>You must enter a unique System Name. System Names for
-      Audio objects have a set pattern: they start with "IAL" for
-      "Internal Audio Listener", "IAB" for "Internal Audio Buffer",
-      or "IAS" for "Internal Audio Source".</p>
+      <p>There are separate panes for adding each of the different types:</p>
 
-      <p>There are separate panes for adding each of the different
-      types:</p>
+      <p><a href="AddEditAudioListener.jpg"><img src="AddEditAudioListener.jpg" height="202" width=
+      "164" alt="Audio Listener"></a> <a href="AddEditAudioBuffer.jpg"><img src=
+      "AddEditAudioBuffer.jpg" height="94" width="272" alt="Audio Buffer"></a> <a href=
+      "AddEditAudioSource.jpg"><img src="AddEditAudioSource.jpg" height="263" width="164" alt=
+      "Audio Source"></a></p>
 
-      <p><a href="AddEditAudioListener.jpg"><img src=
-      "AddEditAudioListener.jpg" height="202" width="164"></a>  
-      <a href="AddEditAudioBuffer.jpg"><img src=
-      "AddEditAudioBuffer.jpg" height="94" width="272"></a>  
-      <a href="AddEditAudioSource.jpg"><img src=
-      "AddEditAudioSource.jpg" height="263" width="164"></a></p>
+      <p>The User Name is optional, but if given has to be unique.</p>
 
-      <p>The User Name is optional, but if given has to be
-      unique.</p>
-
-      <p>Back to the <a href="AudioTable.shtml">Audio Table help
-      page</a>.</p>
+      <p>Back to the <a href="AudioTable.shtml">Audio Table help page</a>.</p>
 
       <p>For more information on Audio objects, see the <a href=
       "../../../../html/tools/Audio.shtml">Audio help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

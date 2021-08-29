@@ -1,126 +1,115 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Fast Clock - Setup</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Fast Clocks</h1>
 
       <p>JMRI provides two kinds of Fast Clock capability:</p>
 
       <ul>
-        <li>Internal - the computers clock provides the time
+        <li>Internal - the computers clock provides the time information</li>
+
+        <li>External - the DCC system ( or an object on a Layout Control Bus ) provides the time
         information</li>
-        <li>External - the DCC system ( or an object on a Layout Control Bus )
-        provides the time information</li>
       </ul>
 
       <p>This help page describes the overall structure.</p>
 
-      <p>There are two different parts to consider: A "Timebase"
-      provides the basic time information, while one or more
-      displays show you what's going on.</p>
+      <p>There are two different parts to consider: A "Timebase" provides the basic time
+      information, while one or more displays show you what's going on.</p>
 
       <h2>Fast Clock Timebase</h2>
-      <p>To create a Timebase, use PanelPro > Tools > Clocks >
-      <a href=
-      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Set
-      up Fast Clock...</a>
-      
-      
-      This gives you a window where you can:
+
+      <p>To create a Timebase, use PanelPro &gt; Tools &gt; Clocks &gt; <a href=
+      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Set up Fast Clock...</a>
+      This gives you a window where you can:</p>
 
       <ul>
         <li>Set the time</li>
+
         <li>Start and stop the clock</li>
+
         <li>Set the rate at which the clock runs</li>
-        <li>Select the timebase source to control (typically, this
-        is the internal computer clock)</li>
+
+        <li>Select the timebase source to control (typically, this is the internal computer
+        clock)</li>
       </ul>
 
       <h2>Fast Clock Display</h2>
 
-      <p>Once you have created a timebase by configuring it in that
-      window, you can open clocks that will display on your screen,
-      all with an optional pause/run button.</p>
-      
-      
+      <p>Once you have created a timebase by configuring it in that window, you can open clocks
+      that will display on your screen, all with an optional pause/run button.</p>
+
       <p>All clocks can be resized by dragging the window edges</p>
-      
 
       <ul>
         <li>
-        <p>Tools > Clocks > 
-        Analog clock - The traditional circular clock with hands.</p>
-        <a href="images/analog-clock-513x567.png"><img 
-        src="images/analog-clock-513x567.png" width="245" height="271"
-        alt="Analog Clock"></a>
+          <p>Tools &gt; Clocks &gt; Analog clock - The traditional circular clock with hands.</p>
+          <a href="images/analog-clock-513x567.png"><img src="images/analog-clock-513x567.png"
+          width="245" height="271" alt="Analog Clock"></a>
         </li>
-        
-        <li><p>Tools > Clocks > LCD clock - a digital clock.</p>
-        <a href="images/lcd-clock-928x286.png"><img 
-        src="images/lcd-clock-928x286.png" width="879" height="271"
-        alt="LCD Clock"></a>
+
+        <li>
+          <p>Tools &gt; Clocks &gt; LCD clock - a digital clock.</p>
+          <a href="images/lcd-clock-928x286.png"><img src="images/lcd-clock-928x286.png" width=
+          "879" height="271" alt="LCD Clock"></a>
         </li>
-        
-        <li><p>Tools > Clocks > Nixie clock - a digital clock that looks like the
-        old-style Nixie tubes</p>
-        <a href="images/nixie-clock-1085x380.jpg"><img 
-        src="images/nixie-clock-1085x380.jpg" width="774" height="271"
-        alt="Nixie Clock"></a>
+
+        <li>
+          <p>Tools &gt; Clocks &gt; Nixie clock - a digital clock that looks like the old-style
+          Nixie tubes</p>
+          <a href="images/nixie-clock-1085x380.jpg"><img src="images/nixie-clock-1085x380.jpg"
+          width="774" height="271" alt="Nixie Clock"></a>
         </li>
-        
-        <li><p>Tools > Clocks > Pragotron clock - flip clock used in net Czechoslovak State Railways &ndash; &#268;SD 
-            <span class="since">since 4.19.2</span></p>
-            <a href="images/pragotron-clock-854x271.jpg"><img 
-        src="images/pragotron-clock-854x271.jpg" width="854" height="271"
-        alt="Nixie Clock"></a>
+
+        <li>
+          <p>Tools &gt; Clocks &gt; Pragotron clock - flip clock used in net Czechoslovak State
+          Railways – ČSD <span class="since">since 4.19.2</span></p>
+          <a href="images/pragotron-clock-854x271.jpg"><img src=
+          "images/pragotron-clock-854x271.jpg" width="854" height="271" alt="Nixie Clock"></a>
         </li>
-            
-            
-        <li><p>Panel clock - you can also embed a clock in a panel
-        from the panel editor.<br>
-        Analog clocks can be embedded into Layout Editor panels (instead of a separate window) via 
-        Panel Window > Options > Add > Add Fast Clock</p>
-        <a href="images/analog-clock-in-le-panel-211x252.png"><img 
-        src="images/analog-clock-in-le-panel-211x252.png" width="211" height="252"
-        alt="Analog Clock in Layout Editor Panel"></a>
+
+        <li>
+          <p>Panel clock - you can also embed a clock in a panel from the panel editor.<br>
+          Analog clocks can be embedded into Layout Editor panels (instead of a separate window)
+          via Panel Window &gt; Options &gt; Add &gt; Add Fast Clock</p>
+          <a href="images/analog-clock-in-le-panel-211x252.png"><img src=
+          "images/analog-clock-in-le-panel-211x252.png" width="211" height="252" alt=
+          "Analog Clock in Layout Editor Panel"></a>
         </li>
-            
-            
       </ul>
 
-      <p>When a clock is running, JMRI creates an internal sensor
-      and a memory variable that you can use to control and access
-      the clock. The ISCLOCKRUNNING sensor controls whether the
-      clock is running (ACTIVE) or stopped (INACTIVE). The
-      IMCURRENTTIME memory contains the current fast-clock time,
-      and can be easily accessed from Logix and scripts.</p>
-      
-      <p>Lights can be an easy way to set up Fast Clock Logic, see
-      <a href="../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
-        >Light Controller - Fast Clock Follower</a>.</p>
-        
-        <p><a href=
-      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Fast Clock Setup</a></p>
+      <p>When a clock is running, JMRI creates an internal sensor and a memory variable that you
+      can use to control and access the clock. The ISCLOCKRUNNING sensor controls whether the clock
+      is running (ACTIVE) or stopped (INACTIVE). The IMCURRENTTIME memory contains the current
+      fast-clock time, and can be easily accessed from Logix and scripts.</p>
+
+      <p>Lights can be an easy way to set up Fast Clock Logic, see <a href=
+      "../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock">Light
+      Controller - Fast Clock Follower</a>.</p>
+
+      <p><a href="../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Fast Clock
+      Setup</a>
+      </p>
 
       <p>Happy timekeeping!</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

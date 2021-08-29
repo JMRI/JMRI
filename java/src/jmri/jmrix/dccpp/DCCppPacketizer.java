@@ -52,7 +52,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
     @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
-            log.debug("Sending: '{}'", m);            
+            log.debug("Adding '{}' to send queue", m);            
             sendMessage(m, reply);
             // why the next line?
             // https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#yield--

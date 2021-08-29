@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Building with Command Line Tools</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code ant">
@@ -13,106 +10,109 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI Code: Building with Command Line Tools</h1>
-
-      Those of you who prefer a command line approach might want to
-      investigate <cite><a href="#ant">ant</a></cite> and
-      <cite><a href="#maven">maven</a></cite>, build utilities for
-      Java projects. In the JMRI devlopment ecosystem, these two tools
-      complement each other, each providing unique capabilities the other
-      tool does not.
-
+      Those of you who prefer a command line approach might want to investigate <cite><a href=
+      "#ant">ant</a></cite> and <cite><a href="#maven">maven</a></cite>, build utilities for Java
+      projects. In the JMRI devlopment ecosystem, these two tools complement each other, each
+      providing unique capabilities the other tool does not.
       <h2 id="ant">Ant</h2>
-      You computer may already have Ant installed as part of
-      a developer tools package.  Try <code>ant -version</code>
-      to check.  JMRI requires at least version 1.10.6, and 
-      should work with any version after that. 
-      <p>
-      If you need to install it, Ant is available for download at
-      <a href="http://ant.apache.org/">http://ant.apache.org/</a>
-      or via the usual package managers.
+      You computer may already have Ant installed as part of a developer tools package. Try
+      <code>ant -version</code> to check. JMRI requires at least version 1.10.6, and should work
+      with any version after that.
+      <p>If you need to install it, Ant is available for download at <a href=
+      "http://ant.apache.org/">http://ant.apache.org/</a> or via the usual package managers.</p>
 
       <ul>
         <li>Create a directory to contain your project.</li>
 
         <li>In that project directory, <a href=
-        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
-        get the code from GitHub</a>. This will create a
-        <tt>jmri</tt> subdirectory where Ant will run, and load it
-        with source, tests and resources. It will also create and
-        populate directories for xml, libraries, etc. in the
-        project directory.</li>
+        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from
+        GitHub</a>. This will create a <code>jmri</code> subdirectory where Ant will run, and load
+        it with source, tests and resources. It will also create and populate directories for xml,
+        libraries, etc. in the project directory.
+        </li>
 
-        <li>Change to the newly created <tt>jmri</tt> subdirectory.
-        To compile, type <tt>ant debug</tt>.</li>
+        <li>Change to the newly created <code>jmri</code> subdirectory. To compile, type <code>ant
+        debug</code>.</li>
 
-        <li>To run the program, type <tt>ant decoderpro</tt> or
-        <tt>ant panelpro</tt>, and sit back to watch it go.</li>
+        <li>To run the program, type <code>ant decoderpro</code> or <code>ant panelpro</code>, and
+        sit back to watch it go.</li>
 
-        <li>To run the test suite, type <tt>ant alltest</tt>.</li>
+        <li>To run the test suite, type <code>ant alltest</code>.</li>
 
-        <li>To build a jmri.jar file, type <tt>ant dist</tt>. Note
-        that you don't have to create the <tt>jmri.jar</tt> file to
-        run the program.</li>
+        <li>To build a jmri.jar file, type <code>ant dist</code>. Note that you don't have to
+        create the <code>jmri.jar</code> file to run the program.</li>
 
-        <li>To erase all previously compiled results and force the
-        program to be entirely built from scratch, type <tt>ant
-        clean</tt>.</li>
+        <li>To erase all previously compiled results and force the program to be entirely built
+        from scratch, type <code>ant clean</code>.</li>
       </ul>
 
-      <p>To make sure everything is working, before you e.g. commit
-      your code back, please do:</p>
+      <p>To make sure everything is working, before you e.g. commit your code back, please do:</p>
       <code>ant clean alltest</code>
       <p>and make sure the tests run cleanly.</p>
 
-      <p>A new JMRI checkout should build cleanly. If not, please
-      check with the JMRIusers or jmri-developers mailings lists
-      for help.</p>
+      <p>A new JMRI checkout should build cleanly. If not, please check with the JMRIusers or
+      jmri-developers mailings lists for help.</p>
 
       <h2 id="maven">Maven</h2>
-      Maven is an extensible plugin-based build tool for Java development.
-      Maven is available for download at
-      <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven
-      will download the appropriate plugins and dependencies as needed.
-      After installation, the following can be done from your JMRI working copy
-      (see <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
-      for instructions on creating a working copy):
-
+      Maven is an extensible plugin-based build tool for Java development. Maven is available for
+      download at <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven will
+      download the appropriate plugins and dependencies as needed. After installation, the
+      following can be done from your JMRI working copy (see <a href=
+      "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a> for
+      instructions on creating a working copy):
       <dl>
         <dt>Run unit and integration tests</dt>
-        <dd><code>mvn test</code><br>Use <code>mvn test -Dtest=PATTERN</code> to
-          run specific tests. See
-          <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
-        for more details, including running only a single test method. An example to run all tests in a package is <code>mvn test -Dtest=jmri/jmrix/openlcb/**</code></dd>
-        <dt>Check for vulnerabilities in JMRI dependencies</dt>
-        <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
-        <dt>Check for newer versions of JMRI dependencies</dt>
-        <dd><code>mvn versions:display-dependency-updates</code></dd>
-        <dt>Check for newer versions of the maven plugins</dt>
-        <dd><code>mvn versions:display-plugin-updates</code></dd>
-        <dt>Run DecoderPro</dt>
-        <dd><code>mvn antrun:run -Danttarget=decoderpro</code></dd>
-        <dt>Run PanelPro</dt>
-        <dd><code>mvn antrun:run -Danttarget=panelpro</code></dd>
-      </dl>
 
-      The <code>scripts/mvn-test</code> includes all the options 
-      necessary to run the Travis CI test Maven job from your
-      local command line.
-      
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <dd>
+          <code>mvn test</code><br>
+          Use <code>mvn test -Dtest=PATTERN</code> to run specific tests. See <a href=
+          "https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running
+          a Single Test</a> for more details, including running only a single test method. An
+          example to run all tests in a package is <code>mvn test
+          -Dtest=jmri/jmrix/openlcb/**</code>
+        </dd>
+
+        <dt>Check for vulnerabilities in JMRI dependencies</dt>
+
+        <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code>
+        </dd>
+
+        <dt>Check for newer versions of JMRI dependencies</dt>
+
+        <dd><code>mvn versions:display-dependency-updates</code>
+        </dd>
+
+        <dt>Check for newer versions of the maven plugins</dt>
+
+        <dd><code>mvn versions:display-plugin-updates</code>
+        </dd>
+
+        <dt>Run DecoderPro</dt>
+
+        <dd><code>mvn antrun:run -Danttarget=decoderpro</code>
+        </dd>
+
+        <dt>Run PanelPro</dt>
+
+        <dd><code>mvn antrun:run -Danttarget=panelpro</code>
+        </dd>
+      </dl>
+      The <code>scripts/mvn-test</code> includes all the options necessary to run the Travis CI
+      test Maven job from your local command line. <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Send Throttle Message</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Send Throttle Message</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: Send Throttle Message</h1>JMRI has a limited
-      ability to send messages to a hand-held throttle.
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Send Throttle Message</h1>
+      JMRI has a limited ability to send messages to a hand-held throttle.
       <p>This is the jmri.jmrit.messager.MessageFrame help page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

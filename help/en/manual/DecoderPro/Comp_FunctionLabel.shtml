@@ -1,61 +1,89 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Comprehensive Programmer</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Comprehensive Programmer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-ctr {
+      text-align: center;
+    }
+
+    .dp-mid {
+      text-align: middle;
+    }
+
+    .dp-right {
+      text-align: right;
+    }
+
+    .dp-none {
+      list-style-type: none;
+    }
+
+    .dp-sq {
+      list-style-type: square;
+    }
+
+    .dp-ua {
+      list-style-type: upper-alpha
+    }
+
+    .dp-la {
+      list-style-type: lower-alpha
+    }
+
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Function Labels Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_FMap.shtml">Previous |</a> <a href=
-        "Comp_LightFX.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_FMap.shtml">Previous |</a> <a href="Comp_LightFX.shtml">Next</a></p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
+        <p><a href="index.shtml">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>This pane is more than a scratch pad to keep track of what
-      happens when function buttons are pushed. It also interacts
-      with the <a href="Ops_Throttle.shtml">JMRI throttle</a>.</p>
+      <p>This pane is more than a scratch pad to keep track of what happens when function buttons
+      are pushed. It also interacts with the JMRI throttle.</p>
 
-      <p>When you use the roster pull-down on the JMRI throttle to
-      select a loco from your roster, the function buttons will be
-      marked with the descriptions you have entered for those
+      <p>When you use the roster pull-down on the JMRI throttle to select a loco from your roster,
+      the function buttons will be marked with the descriptions you have entered for those
       functions in this pane.</p>
 
-      <p>You may also set the text in the Function Labels from the
-      button properties of an active JMRI throttle when you save
-      them to the Roster. Subsequent uses of the throttle will use
-      the new labels.</p>
+      <p>You may also set the text in the Function Labels from the button properties of an active
+      JMRI throttle when you save them to the Roster. Subsequent uses of the throttle will use the
+      new labels.</p>
 
-      <p><img src="images/Function_Labels.png" alt=
-      "function labels" width="922" height="627"></p>
+      <p><img src="images/Function_Labels.png" alt="function labels" width="922" height="627">
+      </p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_LightFX.shtml"></a><a href=
-        "Comp_FMap.shtml">Previous |</a> <a href=
+      <div class="dp-right">
+        <p><a href="Comp_LightFX.shtml"></a><a href="Comp_FMap.shtml">Previous |</a> <a href=
         "Comp_LightFX.shtml">Next</a></p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
+        <p><a href="index.shtml">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

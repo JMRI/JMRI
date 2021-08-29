@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Turnout Lever Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OS Indicator">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OS Indicator"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Turnout Lever</h1><b>This is not fully implemented
-      yet</b>
-
-      <p>A turnout lever on a USS CTC panel has two inputs
-      (Sensors) for the lever itself, a number of other inputs and
-      outputs to make it function. This tool lets you define those,
-      and then creates the underlying logic to make them act
-      prototypically.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Turnout Lever</h1>
+      <strong>This is not fully implemented yet</strong>
+      <p>A turnout lever on a USS CTC panel has two inputs (Sensors) for the lever itself, a number
+      of other inputs and outputs to make it function. This tool lets you define those, and then
+      creates the underlying logic to make them act prototypically.</p>
 
       <dl>
         <dt>Turnout inputs</dt>
 
-        <dd>For the purpose of a multi-sensor input, you might want
-        to have a null internal sensor for the middle
-        position.</dd>
+        <dd>For the purpose of a multi-sensor input, you might want to have a null internal sensor
+        for the middle position.</dd>
 
         <dt>Turnout output</dt>
 
@@ -38,29 +29,29 @@
 
         <dt>Normal and Reverse lamps</dt>
 
-        <dd>Two outputs (Turnouts) which are set active (Thrown)
-        when the turnout has moved to CLOSED and THROWN
-        respectively.</dd>
+        <dd>Two outputs (Turnouts) which are set active (Thrown) when the turnout has moved to
+        CLOSED and THROWN respectively.</dd>
 
         <dt>Code input</dt>
 
-        <dd>The defined <a href="CodeButtonFrame.shtml">code
-        button</a> that causes this lever to act.</dd>
+        <dd>
+          The defined <a href="CodeButtonFrame.shtml">code button</a> that causes this lever to
+          act.
+        </dd>
 
         <dt>Inhibit input</dt>
 
-        <dd>A sensor which is used and ACTIVE indicates that the
-        turnout may not change position.</dd>
+        <dd>A sensor which is used and ACTIVE indicates that the turnout may not change
+        position.</dd>
 
         <dt>Lock output</dt>
 
-        <dd>A sensor which is set ACTIVE when the turnout has been
-        locked into position.</dd>
+        <dd>A sensor which is set ACTIVE when the turnout has been locked into position.</dd>
       </dl>
-
       page <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

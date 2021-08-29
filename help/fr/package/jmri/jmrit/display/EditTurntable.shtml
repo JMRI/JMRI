@@ -1,70 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23 -->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: &eacute;diter Pont Tournant</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: éditer Pont Tournant</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content=
-  "JMRI help Layout Editor turntable">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Layout Editor turntable"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>éditer Pont Tournant</h1>
+      Un Dessin de pont tournant est une représentation schématique d'un pont tournant sur le
+      réseau. Un pont tournant est dessiné comme un cercle avec un nombre variable de connexions de
+      voies, appelé <em>voies rayonnantes</em>. Chaque <em>voie rayonnante</em> est dessinée comme
+      une voie courte rayonnante en talon à partir du pont tournant. Un segment de voie doit se
+      connecter à chaque voie rayonnante. La plupart de ces segments de voies relieront une voie
+      rayonnante à un butoir. La distance de chaque point de connexion de voie rayonnante à partir
+      du cercle du ponte est fixe, mais la direction de chaque voie peut variée en faisant glisser
+      son point de connexion autour du cercle du pont. N'importe quel nombre de pont peut être
+      ajouté à un panneau, et chaque pont peut avoir n'importe quel nombre de voies rayonnantes.
+      <p>Un pont est ajouté à un panneau en sélectionnant l'option <strong>Ajouter Pont
+      Tournant</strong> dans le menu panneau. Les nouveaux pont sont placés au centre du panneau,
+      et doivent être déplacés aux endroits souhaités en déplaçant son centre avec la touche
+      enfoncée méta (glisser bouton droit sur Windows et Linux). Quand un pont est ajouté, il a
+      quatre voies rayonnantes situées en haut, en bas, à gauche et à droite. Le menu contextuel du
+      pont dispose de deux éléments. La sélection <strong>Modifier...</strong> fait apparaître une
+      boîte de dialogue Modifier Pont, et <strong>Supprimer</strong> supprime le pont et tous les
+      segments de voie qui lui sont connectés. Avant qu'un pont tournant soit effectivement
+      supprimé, le programme demande confirmation de cette action.</p>
 
-      <h1>&eacute;diter Pont Tournant</h1>Un Dessin de pont
-      tournant est une repr&eacute;sentation sch&eacute;matique
-      d'un pont tournant sur le r&eacute;seau. Un pont tournant est
-      dessin&eacute; comme un cercle avec un nombre variable de
-      connexions de voies, appel&eacute; <i>voies rayonnantes</i>.
-      Chaque <i>voie rayonnante</i> est dessin&eacute;e comme une
-      voie courte rayonnante en talon &agrave; partir du pont
-      tournant. Un segment de voie doit se connecter &agrave;
-      chaque voie rayonnante. La plupart de ces segments de voies
-      relieront une voie rayonnante &agrave; un butoir. La distance
-      de chaque point de connexion de voie rayonnante &agrave;
-      partir du cercle du ponte est fixe, mais la direction de
-      chaque voie peut vari&eacute;e en faisant glisser son point
-      de connexion autour du cercle du pont. N'importe quel nombre
-      de pont peut &ecirc;tre ajout&eacute; &agrave; un panneau, et
-      chaque pont peut avoir n'importe quel nombre de voies
-      rayonnantes.
-
-      <p>Un pont est ajout&eacute; &agrave; un panneau en
-      s&eacute;lectionnant l'option <b>Ajouter Pont Tournant</b>
-      dans le menu panneau. Les nouveaux pont sont plac&eacute;s au
-      centre du panneau, et doivent &ecirc;tre
-      d&eacute;plac&eacute;s aux endroits souhait&eacute;s en
-      d&eacute;pla&ccedil;ant son centre avec la touche
-      enfonc&eacute;e m&eacute;ta (glisser bouton droit sur Windows
-      et Linux). Quand un pont est ajout&eacute;, il a quatre voies
-      rayonnantes situ&eacute;es en haut, en bas, &agrave; gauche
-      et &agrave; droite. Le menu contextuel du pont dispose de
-      deux &eacute;l&eacute;ments. La s&eacute;lection
-      <b>Modifier...</b> fait appara&icirc;tre une bo&icirc;te de
-      dialogue Modifier Pont, et <b>Supprimer</b> supprime le pont
-      et tous les segments de voie qui lui sont connect&eacute;s.
-      Avant qu'un pont tournant soit effectivement supprim&eacute;,
-      le programme demande confirmation de cette action.</p>
-
-      <p><img src="images/EditTurntable.png" align="right"> Le
-      dialogue Modifier la plaque tournante permet de:</p>
+      <p><img src="images/EditTurntable.png" align="right" alt=""> Le dialogue Modifier la plaque
+      tournante permet de:</p>
 
       <ul>
         <li>Modifier Rayon du cercle de plaque tournante</li>
@@ -78,58 +53,40 @@
         <li>Configurer Automatisme</li>
       </ul>
 
-      <p>Les angles des voie Rayonnantes sont mesur&eacute;s
-      &agrave; partir de la verticale dans le sens horaire. Ainsi,
-      pensez &agrave; une horloge analogique, un angle de 0
-      degr&eacute;s est exactement &agrave; la verticale (position
-      12 heures). De la m&ecirc;me un angle de 90 degr&eacute;s
-      correspond &agrave; la position 03 heures, &agrave; 180
-      degr&eacute;s pour 06 heures, 270 degr&eacute;s &agrave; 09
-      heures, et ainsi de suite. Les angles sont toujours
-      entr&eacute;s en degr&eacute;s.</p>
+      <p>Les angles des voie Rayonnantes sont mesurés à partir de la verticale dans le sens
+      horaire. Ainsi, pensez à une horloge analogique, un angle de 0 degrés est exactement à la
+      verticale (position 12 heures). De la même un angle de 90 degrés correspond à la position 03
+      heures, à 180 degrés pour 06 heures, 270 degrés à 09 heures, et ainsi de suite. Les angles
+      sont toujours entrés en degrés.</p>
 
-      <p>Pour ajouter une voie rayonnante, entrez l'angle
-      correspondant &agrave; sa position souhait&eacute;e dans
-      <b>Angle Voie Rayonnante</b> et cliquez sur <b>Nouvelle Voie
-      Rayonnante</b>. Le pont montre la nouvelle voie rayonnante
-      imm&eacute;diatement. Pour supprimer une voie rayonnante,
-      entrez un angle proche de sa position actuelle dans
-      <b>l'Angle Voie Rayonnante</b>et cliquez sur <b>Supprimer
-      Voie Rayonnante</b> . La voie rayonnante, et tous les
-      segments de voie connect&eacute;s sont imm&eacute;diatement
-      supprim&eacute;s du panneau. La voie rayonnante qui est
-      supprim&eacute;e est celle qui est la plus proche de l'angle
-      entr&eacute;.</p>
+      <p>Pour ajouter une voie rayonnante, entrez l'angle correspondant à sa position souhaitée
+      dans <strong>Angle Voie Rayonnante</strong> et cliquez sur <strong>Nouvelle Voie
+      Rayonnante</strong>. Le pont montre la nouvelle voie rayonnante immédiatement. Pour supprimer
+      une voie rayonnante, entrez un angle proche de sa position actuelle dans <strong>l'Angle Voie
+      Rayonnante</strong>et cliquez sur <strong>Supprimer Voie Rayonnante</strong> . La voie
+      rayonnante, et tous les segments de voie connectés sont immédiatement supprimés du panneau.
+      La voie rayonnante qui est supprimée est celle qui est la plus proche de l'angle entré.</p>
 
-      <p class="important">Attention: Il n'y a pas d'annulation
-      possible pour ces op&eacute;rations.</p>
+      <p class="important">Attention: Il n'y a pas d'annulation possible pour ces opérations.</p>
 
-      <p><b>Pnt Tournant command&eacute; par DCC</b></p>
+      <p><strong>Pnt Tournant commandé par DCC</strong>
+      </p>
 
-      <p>Lorsque cette option est s&eacute;lectionn&eacute;e, elle
-      permet une commande des ponts tournants (et les pilotes) qui
-      utilisent lles adresses DCC d'aiguillage pour
-      d&eacute;terminer les diff&eacute;rentes positions du pont
-      tournant. De tels exemples sont le LDT TT-DEC ou le Pont
-      Tournant DCC Heljean. Pour chaque voie Rayonnantes,
-      s&eacute;lectionnez ou cr&eacute;ez l'adresse DCC de
-      l'aiguillage et la position n&eacute;cessaire pour le
-      d&eacute;terminer.</p>
+      <p>Lorsque cette option est sélectionnée, elle permet une commande des ponts tournants (et
+      les pilotes) qui utilisent lles adresses DCC d'aiguillage pour déterminer les différentes
+      positions du pont tournant. De tels exemples sont le LDT TT-DEC ou le Pont Tournant DCC
+      Heljean. Pour chaque voie Rayonnantes, sélectionnez ou créez l'adresse DCC de l'aiguillage et
+      la position nécessaire pour le déterminer.</p>
 
-      <p><b>Remarque:</b>Une proc&eacute;dure rapide est possible
-      pour aligner avec pr&eacute;cision les points de connexion
-      des voies rayonnantes et les butoirs de sorte que chaque
-      segment de voie soit align&eacute; avec le centre du pont.
-      Apr&egrave;s le positionnement du centre du pont, et
-      apr&egrave;s l'ajout de voies rayonnantes o&ocirc;
-      n&eacute;cessaire, &eacute;largir le rayon de la platine par
-      un facteur de trois &agrave; quatre. Puis ajoutez les
-      buttoirs adjacents &agrave; (ou sur) chaque point de
-      connexion de voie rayonnante. Apr&egrave;s avoir
-      diminu&eacute; le rayon de retour &agrave; sa derni&egrave;re
-      valeur, ajouter des segments voie. Les segments de voie
-      seront align&eacute;s assez pr&eacute;cis&eacute;ment avec le
-      centre du pont.</p><!--#include virtual="/Footer.shtml" -->
+      <p><strong>Remarque:</strong>Une procédure rapide est possible pour aligner avec précision
+      les points de connexion des voies rayonnantes et les butoirs de sorte que chaque segment de
+      voie soit aligné avec le centre du pont. Après le positionnement du centre du pont, et après
+      l'ajout de voies rayonnantes oô nécessaire, élargir le rayon de la platine par un facteur de
+      trois à quatre. Puis ajoutez les buttoirs adjacents à (ou sur) chaque point de connexion de
+      voie rayonnante. Après avoir diminué le rayon de retour à sa dernière valeur, ajouter des
+      segments voie. Les segments de voie seront alignés assez précisément avec le centre du
+      pont.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

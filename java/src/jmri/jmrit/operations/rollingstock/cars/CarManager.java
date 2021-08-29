@@ -55,6 +55,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         }
         return car;
     }
+    
+    @Override
+    public void deregister(Car car) {
+        super.deregister(car);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
+    }
 
     /**
      * @return requested Car object or null if none exists
@@ -377,10 +383,15 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 out.add(car);
             }
         }
+        for (Car car : list) {
+            if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                out.add(car);
+            }
+        }
         // now load all of the remaining low priority cars
-        for (Car rs : list) {
-            if (!out.contains(rs)) {
-                out.add(rs);
+        for (Car car : list) {
+            if (!out.contains(car)) {
+                out.add(car);
             }
         }
         return out;

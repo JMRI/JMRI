@@ -1,75 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-17-->
 
-  <title>JMRI: Programming DCC Specialties Products</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <title>JMRI: Programming DCC Specialties Products</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h2>JMRI: Programmation Poduits DCC Specialties</h2><a href=
-      "http://www.dccspecialties.com/products/hare-ng.htm"><img src="http://www.dccspecialties.com/products/img/hareng_2420-600.jpg"
-      height="126" width="150" align="right"></a> <a href=
-      "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_1077_600.jpg"
-      height="165" width="150" align="right"></a> <a href=
-      "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_rev_3.gif"
-      height="85" width="150" align="right"></a> <a href=
-      "http://www.dccspecialties.com/">DCC Specialties</a> fait
-      plusieurs contr&ocirc;leurs puissants pour les chemins de fer
-      mod&egrave;le. Leurs deux contr&ocirc;leurs de moteur switch
-      sont appel&eacute;s les <a href=
-      "http://www.dccspecialties.com/products/hare-ng.htm">Hare</a>
-      et <a href=
-      "http://www.dccspecialties.com/products/wabbit_review.htm">Wabbit</a>.
-      Ils font aussi un d&eacute;tecteur de canton intelligent
-      appel&eacute; <a href=
-      "http://www.dccspecialties.com/products/bwatcher.htm">Block
-      Watcher</a>, et les puissants contr&ocirc;leurs
-      d'Alimentation <a href=
-      "http://www.dccspecialties.com/products/powershield_x.htm">PSX</a>
-      et<a href=
-      "http://www.dccspecialties.com/products/powershield_x.htm">PSX-AR</a>
-      .
+      <h2>JMRI: Programmation Poduits DCC Specialties</h2>
+      <a href="http://www.dccspecialties.com/products/hare-ng.htm"><img src=
+      "http://www.dccspecialties.com/products/img/hareng_2420-600.jpg" height="126" width="150"
+      align="right" alt=""></a> <a href=
+      "http://www.dccspecialties.com/products/wabbit_review.htm"><img src=
+      "http://www.dccspecialties.com/products/img/wabbit_1077_600.jpg" height="165" width="150"
+      align="right" alt=""></a> <a href=
+      "http://www.dccspecialties.com/products/wabbit_review.htm"><img src=
+      "http://www.dccspecialties.com/products/img/wabbit_rev_3.gif" height="85" width="150" align=
+      "right" alt=""></a> <a href="http://www.dccspecialties.com/">DCC Specialties</a> fait
+      plusieurs contrôleurs puissants pour les chemins de fer modèle. Leurs deux contrôleurs de
+      moteur switch sont appelés les <a href=
+      "http://www.dccspecialties.com/products/hare-ng.htm">Hare</a> et <a href=
+      "http://www.dccspecialties.com/products/wabbit_review.htm">Wabbit</a>. Ils font aussi un
+      détecteur de canton intelligent appelé <a href=
+      "http://www.dccspecialties.com/products/bwatcher.htm">Block Watcher</a>, et les puissants
+      contrôleurs d'Alimentation <a href=
+      "http://www.dccspecialties.com/products/powershield_x.htm">PSX</a> et<a href=
+      "http://www.dccspecialties.com/products/powershield_x.htm">PSX-AR</a> .
+      <p>Ceux-ci peuvent faire beaucoup de choses, mais ils peuventt exiger du travail pour les
+      configurer.</p>
 
-      <p>Ceux-ci peuvent faire beaucoup de choses, mais ils
-      peuventt exiger du travail pour les configurer.</p>
+      <p>Brett Scott et Denny Whitaker ont écrit des scripts JMRI pour aider à les programmer, et
+      ont fourni un beau <a href=
+      "http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">document</a> ,
+      (lien cassé le 17/01/2012) sur la façon de les utiliser. Le documentp couvre également
+      comment il documente leurs réseaux, et discute les avantages et inconvénients de plusieurs
+      manières de connecter le Hare et le Wabbit.</p>
 
-      <p>Brett Scott et Denny Whitaker ont &eacute;crit des scripts
-      JMRI pour aider &agrave; les programmer, et ont fourni un
-      beau <a href=
-      "http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">
-      document</a> , (lien cass&eacute; le 17/01/2012) sur la
-      fa&ccedil;on de les utiliser. Le documentp couvre
-      &eacute;galement comment il documente leurs r&eacute;seaux,
-      et discute les avantages et inconv&eacute;nients de plusieurs
-      mani&egrave;res de connecter le Hare et le Wabbit.</p>
-
-      <p>vous pouvez t&eacute;l&eacute;charger <a href=
-      "https://jmri.org/jython/dccspecialties/">leurs scripts</a>
-      depuis le site web JMRI, et il est aussi disponible dans
-      <a href="https://jmri.org/jython">des exemples de
-      r&eacute;pertoires de scripts</a> dans le <a href=
-      "https://jmri.org/download">T&eacute;l&eacute;chargements
-      JMRI</a> .</p>
+      <p>vous pouvez télécharger <a href="https://jmri.org/jython/dccspecialties/">leurs
+      scripts</a> depuis le site web JMRI, et il est aussi disponible dans <a href=
+      "https://jmri.org/jython">des exemples de répertoires de scripts</a> dans le <a href=
+      "https://jmri.org/download">Téléchargements JMRI</a> .</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

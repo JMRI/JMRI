@@ -1,152 +1,129 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Signal Groups Documentation</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="keywords" content=
-  "model railroad JMRI decoderpro panelpro signal">
+  <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Signal Groups</h1>
 
-      <p>Signal Groups are used to define a number of Signal Heads,
-      where only one Signal Head can be illuminated at any given
-      time, depending upon the status of the associated Signal Mast
-      and a set of conditions.</p>
+      <p>Signal Groups are used to define a number of Signal Heads, where only one Signal Head can
+      be illuminated at any given time, depending upon the status of the associated Signal Mast and
+      a set of conditions.</p>
 
       <h3>Application</h3>
 
-      <p>Signal Groups would be used where additional Indicators
-      (displays) are used to support the main Signal Mast, such
-      as:</p>
+      <p>Signal Groups would be used where additional Indicators (displays) are used to support the
+      main Signal Mast, such as:</p>
 
       <ul>
-        <li><a href="#junction">Junction Indicators</a></li>
+        <li>
+          <a href="#junction">Junction Indicators</a>
+        </li>
 
-        <li><a href="#route">Route Indicators</a></li>
+        <li>
+          <a href="#route">Route Indicators</a>
+        </li>
 
-        <li><a href="#speed">Speed Indicators</a></li>
+        <li>
+          <a href="#speed">Speed Indicators</a>
+        </li>
       </ul>
 
-      <p>These Indicators provide additional information to the
-      driver that is not given by the main Signal Mast. Such
-      indicators are frequently seen in Continental European and UK
+      <p>These Indicators provide additional information to the driver that is not given by the
+      main Signal Mast. Such indicators are frequently seen in Continental European and UK
       signaling.</p>
 
-      <h4><a name="junction" id="junction">Junction
-      Indicators</a></h4><img src=
-      "../../../package/jmri/jmrit/beantable/images/SignalGroup1.png"
-      align="right" width="30" height="90" hspace="0" vspace="0"
-      alt="Junction Indicator figure">
+      <h4 id="junction">Junction Indicators</h4>
+      <img src="../../../package/jmri/jmrit/beantable/images/SignalGroup1.png" class="floatRight"
+      width="30" height="90" alt="Junction Indicator figure">
+      <p>A Junction Indicator can be configured to display anything from 1 to 6 diverging routes. A
+      single indicator will frequently be found where a branch line diverges off from a main line.
+      Multiple indicators will be found in more complex areas such as the approach to stations and
+      good yards, where multiple routes can be taken. The Junction Indicator informs the driver
+      that he is about to take a different route and should therefore adjust his speed according to
+      the signage.<br>
+      The Junction Indicators themselves will be set according to a given set of Turnouts for that
+      junction.</p>
 
-      <p>A Junction Indicator can be configured to display anything
-      from 1 to 6 diverging routes. A single indicator will
-      frequently be found where a branch line diverges off from a
-      main line. Multiple indicators will be found in more complex
-      areas such as the approach to stations and good yards, where
-      multiple routes can be taken. The Junction Indicator informs
-      the driver that he is about to take a different route and
-      should therefore adjust his speed according to the
-      signage.<br>
-      The Junction Indicators themselves will be set according to a
-      given set of Turnouts for that junction.</p>
+      <h4 id="route">Route Indicators</h4>
 
-      <h4><a name="route" id="route">Route Indicators</a></h4>
+      <p>A Route Indicator as used in the UK, will display a number or letter. They are
+      predominately found attached to Signals on the approach to a Station and display which
+      platform the train has been routed into. Given the complexity of some station throats, there
+      may be a number of different physical routes that could be take from the Signal to the
+      destination. Thus a Junction Indicator could not be used when tied in with turnout positions.
+      In addition the Junction Indicator can only deal with 6 different routes, and some stations
+      have more than 6 platforms.<br>
+      Therefore, the Route Indicator can only display one destination at time. The displaying of a
+      route doesn't necessarily indicate that the driver will take the same route to get to the
+      destination platform.</p>
 
-      <p>A Route Indicator as used in the UK, will display a number
-      or letter. They are predominately found attached to Signals
-      on the approach to a Station and display which platform the
-      train has been routed into. Given the complexity of some
-      station throats, there may be a number of different physical
-      routes that could be take from the Signal to the destination.
-      Thus a Junction Indicator could not be used when tied in with
-      turnout positions. In addition the Junction Indicator can
-      only deal with 6 different routes, and some stations have
-      more than 6 platforms.<br>
-      Therefore, the Route Indicator can only display one
-      destination at time. The displaying of a route doesn't
-      necessarily indicate that the driver will take the same route
-      to get to the destination platform.</p>
+      <h4 id="speed">Speed Indicators</h4>
+      <a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img src=
+      "../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif" class="floatRight" width=
+      "60" height="119" alt="Speed Indicator figure by J. Calvert"></a>
+      <p>A Speed Indicator as used in Dutch (Prorail) and Belgian (NMBS/SNCB) railways will display
+      an illuminated digit below the main Signal Head, e.g. a "4" restricts the maximum speed to 40
+      km/h.</p>
 
-      <h4><a name="speed" id="speed">Speed
-      Indicators</a></h4><a href=
-      "https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img
-            src="../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif"
-      align="right" width="60" height="119" hspace="0" vspace="0"
-      alt="Speed Indicator figure by J. Calvert"></a>
-
-      <p>A Speed Indicator as used in Dutch (Prorail) and Belgian
-      (NMBS/SNCB) railways will display an illuminated digit below
-      the main Signal Head, e.g. a "4" restricts the maximum speed
-      to 40 km/h.</p><a name="table" id="table"></a>
-
-      <h3>The Signal Group Table</h3><a href=
-      "../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png"><img
-            src="../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png"
-      align="right" width="386" height="168" hspace="0" vspace="0"
-      alt="Signal Group Table figure"></a>
-
-      <p>JMRI Signal Groups can be created and edited using the
-      <a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">
-      Signal Group Table</a>. You access this tool from the Tools
-      &gt; Tables &gt; Signal Groups menu of most JMRI
+      <h3 id="table">The Signal Group Table</h3>
+      <a href="../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png"><img src=
+      "../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png" class="floatRight" width=
+      "386" height="168" alt="Signal Group Table figure"></a>
+      <p>JMRI Signal Groups can be created and edited using the <a href=
+      "../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal Group Table</a>. You
+      access this tool from the Tools &gt; Tables &gt; Signal Groups menu of most JMRI
       programs.<br>
-      In the Signal Group Table you can create, change and delete
-      individual Signal Groups. You change the settings of a Signal
-      Group by clicking on the "Edit" button in the corresponding
+      In the Signal Group Table you can create, change and delete individual Signal Groups. You
+      change the settings of a Signal Group by clicking on the "Edit" button in the corresponding
       line.<br>
       More information on configuring Signal Groups and an <a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">
-      Example</a> can be found on the <a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">
-      Signal Group Table help page</a>.</p><a name="add" id=
-      "add"></a>
+      "../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">Example</a> can be
+      found on the <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal
+      Group Table help page</a>.</p>
 
-      <h3>Creating a Signal Group</h3>
+      <h3 id="add">Creating a Signal Group</h3>
 
-      <p>You add a new Signal Group by clicking on the "Add..."
-      button at the bottom of the Signal Group Table, which takes
-      you to the <a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">
-      "Add Signal Group" panel</a>.</p>
+      <p>You add a new Signal Group by clicking on the "Add..." button at the bottom of the Signal
+      Group Table, which takes you to the <a href=
+      "../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">"Add Signal Group"
+      panel</a>.</p>
 
       <h3>Controlling a Signal Group</h3>
 
-      <p>The information from the Signal Group Table is used by the
-      Signal Mast Logic to calculate the specified behavior of a
-      Signal Group. You can test this by manually changing one of
-      the Indicator Signal Heads in the <a href=
-      "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
-      Signal Head Table</a>.</p>
+      <p>The information from the Signal Group Table is used by the Signal Mast Logic to calculate
+      the specified behavior of a Signal Group. You can test this by manually changing one of the
+      Indicator Signal Heads in the <a href=
+      "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.</p>
 
       <h2>Saving and Reloading Configuration</h2>
-      <p>The Signal Groups information is saved as part of the JMRI configuration in an
-      XML file, along with control panel setup and similar stuff.
-      See <a href="../../apps/LoadStoreWork.shtml"> Loading and Storing Your Work</a>.</p>
 
-      <p>For more information on creating and displaying panels,
-      including how to show Signals on your Panels, please see the
-      <a href="../../apps/PanelPro/Panels.shtml">Panels help
+      <p>The Signal Groups information is saved as part of the JMRI configuration in an XML file,
+      along with control panel setup and similar stuff. See <a href=
+      "../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
+
+      <p>For more information on creating and displaying panels, including how to show Signals on
+      your Panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels help
       pages</a>.</p>
 
-      <p>Back to the <a href="index.shtml#tools">Signaling main
-      help page</a>.</p>
+      <p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

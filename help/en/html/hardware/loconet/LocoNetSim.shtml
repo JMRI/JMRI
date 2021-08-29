@@ -1,113 +1,99 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - LocoNet&reg; Simulator</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - LocoNet® Simulator</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <div id="container">
-    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip
-    to main content</a></p>
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a>
+    </p>
     <!--#include virtual="/Header.shtml" -->
+
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
+
       <div id="mainContent">
+        <h1>Hardware Support: LocoNet® Simulator</h1>
 
-      <h1>Hardware Support: LocoNet&reg; Simulator</h1>
+        <p>If JMRI is configured to use a Digitrax LocoNet® connection, but the connection isn't
+        available, several aspects of the program will not function. This is because the program
+        needs to interact with the LocoNet during normal operation, and without the expected
+        responses from the LocoNet it will appear basically dead.</p>
 
-        <p>If JMRI is configured to use a Digitrax LocoNet&reg;
-        connection, but the connection isn't available, several
-        aspects of the program will not function. This is because
-        the program needs to interact with the LocoNet during
-        normal operation, and without the expected responses from
-        the LocoNet it will appear basically dead.</p>
+        <p>The "LocoNet Simulator" was created to make it possible to use JMRI in a disconnected
+        mode. This is useful e.g. if you want to develop a panel while away from your layout.</p>
 
-        <p>The "LocoNet Simulator" was created to make it possible
-        to use JMRI in a disconnected mode. This is useful e.g. if
-        you want to develop a panel while away from your
-        layout.</p>
+        <p>To use the LocoNet Simulator, select it as your layout connection in the preferences,
+        save the preferences, quit and restart the program. You should then be able to access
+        LocoNet items such as Turnouts, Sensors, Signals, etc. Some of the more advanced features,
+        such as the BDL168 programmer, will not fully function, but you should be able to do all
+        the steps to build and edit panels.</p>
 
-        <p>To use the LocoNet Simulator, select it as your layout
-        connection in the preferences, save the preferences, quit
-        and restart the program. You should then be able to access
-        LocoNet items such as Turnouts, Sensors, Signals, etc. Some
-        of the more advanced features, such as the BDL168
-        programmer, will not fully function, but you should be able
-        to do all the steps to build and edit panels.</p>
-
-        <p>When your computer is connected to the LocoNet again,
-        you can change the preferences to the proper connection,
-        e.g. a LocoBuffer-USB, and use the panel you've
-        created.</p>
+        <p>When your computer is connected to the LocoNet again, you can change the preferences to
+        the proper connection, e.g. a LocoBuffer-USB, and use the panel you've created.</p>
 
         <h2>Hex files</h2>
-        <p>The simulator can also read and playback
-        hex traces of LocoNet activity to see how the program will
-        react to them. Each line in the trace is a single LocoNet
-        packet in hexadecimal characters. You can create one of
-        these by for example turning on the "show raw data" option
-        in a LocoNet Monitor window, and having the monitor write
-        to a log file. You'll have to edit the resulting file to
-        remove the human readable lines, leaving just the hex raw
-        data.<br>
+
+        <p>The simulator can also read and playback hex traces of LocoNet activity to see how the
+        program will react to them. Each line in the trace is a single LocoNet packet in
+        hexadecimal characters. You can create one of these by for example turning on the "show raw
+        data" option in a LocoNet Monitor window, and having the monitor write to a log file.
+        You'll have to edit the resulting file to remove the human readable lines, leaving just the
+        hex raw data.<br>
         An example hex file is shown here:</p>
 
-        <p><code>A1 0B 00 55 &crarr;</code></p>
+        <p><code>A1 0B 00 55 ↵</code>
+        </p>
+
         <pre>
-B0 2D 10 72 &crarr;
-</pre>
-        <pre>
-BB 10 00 54 &crarr;
+B0 2D 10 72 ↵
 </pre>
 
-        <p>Note that each hex value must be two valid hexadecimal
-        characters plus a space. Each message (line) must be
-        terminated by a carriage return. Note that there is a space
+        <pre>
+BB 10 00 54 ↵
+</pre>
+        <p>Note that each hex value must be two valid hexadecimal characters plus a space. Each
+        message (line) must be terminated by a carriage return. Note that there is a space
         immediately before the carriage return!</p>
 
-        <p>The sequence above would result in the following LocoNet
-        traffic, shown as decoded by the LocoNet Monitor tool (with
-        Raw Data displayed):</p>
+        <p>The sequence above would result in the following LocoNet traffic, shown as decoded by
+        the LocoNet Monitor tool (with Raw Data displayed):</p>
+
         <pre>
 [A1 0B 00 55]  Set loco in slot 11 direction to FWD, F0=Off, F1=Off, F2=Off, F3=Off, F4=Off.
 </pre>
+
         <pre>
 [B0 2D 10 72]  Requesting Switch at LT46 () to Thrown (output On).
 </pre>
+
         <pre>
 [BB 10 00 54]  Request data/status for slot 16.
 </pre>
+        <p>Because there is no Command Station, the last message would not receive a response.</p>
 
-        <p>Because there is no Command Station, the last message
-        would not receive a response.</p>
-
-        <h2><a name="SeeAlso" id="SeeAlso">Documentation</a></h2>
+        <h2 id="SeeAlso">Documentation</h2>
 
         <h3>JMRI Help</h3>
 
-        <p>The <a href=
-        "../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">
-        Monitor LocoNet</a> tool captures and interprets messages
-        on LocoNet.</p>
+        <p>The <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor
+        LocoNet</a> tool captures and interprets messages on LocoNet.</p>
 
         <h3>Third Party info</h3>
 
-        <p>The LocoNet&reg; Personal Use Edition 1.0 Specification
-        is available from the <a href=
+        <p>The LocoNet® Personal Use Edition 1.0 Specification is available from the <a href=
         "http://www.digitrax.com">Digitrax web site</a>.</p>
 
-        <p>LocoNet&reg; is a registered trademark of <a href=
-        "http://www.digitrax.com">Digitrax, Inc.</a></p>
-
+        <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+        Inc.</a></p>
         <!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div><!--closes container-->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!--closes container-->
   <script src="/js/main.js"></script>
 </body>
 </html>
