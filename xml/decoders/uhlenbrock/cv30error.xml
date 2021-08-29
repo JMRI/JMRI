@@ -41,38 +41,45 @@
             <choice xml:lang="de">kein Fehler</choice>
             <choice xml:lang="it">Nessun Errore</choice>
             <choice xml:lang="nl">Geen fout</choice>
+            <choice xml:lang="cs">Bez chyby</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor short circuit">
             <choice>Motor short circuit</choice>
             <choice xml:lang="de">Kurzschluss Motor</choice>
             <choice xml:lang="it">Corto-Circuito Motore</choice>
             <choice xml:lang="nl">Fout in motor</choice>
+            <choice xml:lang="cs">Zkrat na motoru</choice>
 	  </enumChoice>
 	  <enumChoice choice="Function output short circuit">
             <choice>Function output short circuit</choice>
             <choice xml:lang="de">Kurzschluss Funktionsausgang</choice>
             <choice xml:lang="it">Corto-Circuito Functione</choice>
             <choice xml:lang="nl">Fout in functie-uitgang</choice>
+            <choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor+Light short circuit">
             <choice>Motor+Functions short circuit</choice>
             <choice xml:lang="de">Kurzschluss Motor+Funktione</choice>
             <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
             <choice xml:lang="nl">Fout in Moter+Functie</choice>
+            <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
 	  </enumChoice>
       <enumChoice choice="Temperature error">
             <choice>Temperature Error</choice>
             <choice xml:lang="de">Temperaturüberschreitung</choice>
             <choice xml:lang="nl">Temperatuuroverschrijding</choice>
+            <choice xml:lang="cs">Chyba teploty</choice>
        </enumChoice>
     </enumVal>
 	<label>Error register</label>
 	<label xml:lang="de">Fehlerspeicher</label>
     <label xml:lang="it">Errore registro</label>
     <label xml:lang="nl">Fout-register</label>
+	<label xml:lang="cs">Registr chyby</label>
 	<tooltip>0 = No error (reset error register)</tooltip>
 	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
     <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
     <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
+	<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
   </variable>
 </variables>

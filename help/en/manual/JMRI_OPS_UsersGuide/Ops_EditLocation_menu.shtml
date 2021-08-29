@@ -1,30 +1,34 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Operations-Edit Locations</title><!--#include virtual="/Style.shtml" -->
+  <!-- OperationsPro Styles -->
 
-  <title>Operations-Edit Locations</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    <div id="mainContent">
+      <h1 id="Top">Using JMRI® to Operate Trains</h1>
 
       <h2>Operations Edit Location Menu Bar</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_EditLocation.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
       <img style="width: 798px; height: 96px;" alt="menu bar" src=
       "images/Ops_EditLocation_menubar.png"><br>
@@ -32,31 +36,32 @@
       <ul>
         <li>
           <span style="font-weight: bold;">Tools</span>
-
           <ul>
-            <li><a href="Ops_Locations_byCar.shtml"><span style=
-            "font-weight: bold;">Modify Location by Car
-            Type</span></a></li>
-
-            <li><a href="Ops_Cars.shtml"><span style=
-            "font-weight: bold;">Show Cars</span></a></li>
+            <li>
+              <a href="Ops_Locations_byCar.shtml"><span style="font-weight: bold;">Modify Location
+              by Car Type</span></a>
+            </li>
 
             <li>
-              <span style="font-weight: bold;">Change Track
-              Type</span>
+              <a href="Ops_Cars.shtml"><span style="font-weight: bold;">Show Cars</span></a>
+            </li>
 
-              <p><img style="width: 362px; height: 107px;" alt=
-              "change track type" src=
-              "images/Ops_EditLocation_changeTrack.png"></p>
+            <li>
+              <span style="font-weight: bold;">Change Track Type</span>
+              <p><img style="width: 362px; height: 107px;" alt="change track type" src=
+              "images/Ops_EditLocation_changeTrack.png">
+              </p>
             </li>
           </ul>
         </li>
       </ul>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back<br></a></p>
+      <div class="ops-right">
+        <p><a href="Ops_EditLocation.shtml">Back<br></a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -791,18 +791,21 @@ public class CarManagerTest extends OperationsTestCase {
         c1.setTrain(t1);
         c2.setTrain(t1);
         c3.setTrain(t1); // load name = "Tools"
-        c4.setTrain(t1);
+        c4.setTrain(t1); // load name = "Fuel"
         c5.setTrain(t1);
         c6.setTrain(t1);
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Tools");
         cl.setPriority("Boxcar", "Tools", CarLoad.PRIORITY_HIGH);
+        cl.addName("Boxcar", "Fuel");
+        cl.setPriority("Boxcar", "Fuel", CarLoad.PRIORITY_MEDIUM);
 
         // 1st car in list should be the car with the high priority load
         List<Car> carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
         Assert.assertEquals("1st car in list available for t1", c3, carList.get(0));
+        Assert.assertEquals("2nd car in list available for t1", c4, carList.get(1));
     }
 
     @Test

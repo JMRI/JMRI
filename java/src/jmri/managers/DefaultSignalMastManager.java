@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -25,39 +26,48 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     public DefaultSignalMastManager(InternalSystemConnectionMemo memo) {
         super(memo);
+        repeaterList = new ArrayList<>();
+        addListeners();
+    }
+    
+    final void addListeners(){
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'F';
     }
 
+    /** 
+     * {@inheritDoc} 
+     * Searches by UserName then SystemName.
+     */
     @Override
+    @CheckForNull
     public SignalMast getSignalMast(@Nonnull String name) {
         if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
         SignalMast t = getByUserName(name);
-        if (t != null) {
-            return t;
-        }
-
-        return getBySystemName(name);
+        return ( t != null ? t : getBySystemName(name));
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
                                         @Nonnull String signalSystem,
                                         @Nonnull String mastName,
-                                        @Nonnull String[] heads) {
+                                        @Nonnull String[] heads) throws JmriException {
         StringBuilder name = new StringBuilder(prefix);
         name.append(":");
         name.append(signalSystem);
@@ -70,9 +80,10 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return provideSignalMast(new String(name));
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
-    public SignalMast provideSignalMast(@Nonnull String name) {
+    public SignalMast provideSignalMast(@Nonnull String name) throws IllegalArgumentException {
         SignalMast m = getSignalMast(name);
         if (m == null) {
             // this should be replaced by a Service based approach, 
@@ -94,6 +105,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return m;
     }
 
+    /** {@inheritDoc} */
     @Nonnull
     @Override
     public SignalMast provideCustomSignalMast(@Nonnull String systemName, Class<? extends
@@ -118,12 +130,16 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return m;
     }
 
+    /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public SignalMast getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public SignalMast getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
@@ -142,7 +158,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return SignalMast.class;
     }
 
-    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();
+    private final ArrayList<SignalMastRepeater> repeaterList;
 
     /**
      * Creates or retrieves a signal mast repeater.
@@ -203,9 +219,19 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         }
     }
 
+    /** {@inheritDoc} */
+    @Nonnull
     @Override
     public SignalMast provide(String name) throws IllegalArgumentException {
         return provideSignalMast(name);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastManager.class);

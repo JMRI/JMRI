@@ -127,12 +127,6 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
         log.error("configureButton should not have been called");
         return null;
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameMemory");
-    }
     
     private static final Logger log = LoggerFactory.getLogger(MemoryTableDataModel.class);
 

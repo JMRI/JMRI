@@ -10,18 +10,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -29,8 +23,6 @@ import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of route locations used by operations
@@ -95,6 +87,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         if (_route != null) {
             _route.addPropertyChangeListener(this);
         }
+        Setup.getDefault().addPropertyChangeListener(this);
         initTable(table);
     }
 
@@ -646,7 +639,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             updateList();
             fireTableDataChanged();
         }
-
+        if (e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
+            fireTableDataChanged();
+        }
         if (e.getSource().getClass().equals(RouteLocation.class)) {
             RouteLocation rl = (RouteLocation) e.getSource();
             int row = _routeList.indexOf(rl);
@@ -670,6 +665,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         if (_route != null) {
             _route.removePropertyChangeListener(this);
         }
+        Setup.getDefault().removePropertyChangeListener(this);
         _routeList.clear();
         fireTableDataChanged();
     }

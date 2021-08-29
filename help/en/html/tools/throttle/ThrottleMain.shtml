@@ -1,87 +1,86 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Throttles Documentation</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttle throttlepro">
-  <meta name="description" content=
-  "Throttle documentation for JMRI project">
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="description" content="Throttle documentation for JMRI project">
   <meta name="author" content="Paul Fraker (paul@frakers.com)">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Throttles Documentation</h1>
 
-      <p>The <b>JMRI Throttle Tool</b> is just one of the many
-      digital railroading tools that are part of the <b>JMRI
-      Project</b>. It has the ability to run a DCC decoder equipped
-      Locomotive around a layout using a computer keyboard and
-      mouse for control instead of a hand-held throttle. The
-      Throttle tool offers many of the same features that can be
-      found on most hand-held throttles, including the ability to
-      control light and sound functions.</p>
+      <p>The <strong>JMRI Throttle Tool</strong> is just one of the many digital railroading tools
+      that are part of the <strong>JMRI Project</strong>. It has the ability to run a DCC decoder
+      equipped Locomotive around a layout using a computer keyboard and mouse for control instead
+      of a hand-held throttle. The Throttle tool offers many of the same features that can be found
+      on most hand-held throttles, including the ability to control light and sound functions.</p>
 
       <h2>Throttle Help</h2>
 
       <ul>
-        <li>The <a href="ToolsMenuThrottleEntry.shtml">JMRI
-        Throttle menu</a></li>
+        <li>The <a href="ToolsMenuThrottleEntry.shtml">JMRI Throttle menu</a>
+        </li>
 
-        <li>The <a href=
-        "BasicThrottleWindow.shtml">Throttle</a></li>
+        <li>The <a href="BasicThrottleWindow.shtml">Throttle</a>
+        </li>
 
-        <li>The <a href="ThrottleWindowMenus.shtml">Throttle
-        menus</a></li>
+        <li>The <a href="ThrottleWindowMenus.shtml">Throttle menus</a>
+        </li>
 
-        <li>The <a href="ThrottleToolBar.shtml">Throttle pane
-        toolbar</a></li>
+        <li>The <a href="ThrottleToolBar.shtml">Throttle pane toolbar</a>
+        </li>
 
-        <li>The <a href="AdvancedThrottleControl.shtml">Throttle
-        controls</a></li>
+        <li>The <a href="AdvancedThrottleControl.shtml">Throttle controls</a>
+        </li>
 
-        <li>The <a href="ThrottlesListWindow.shtml">Throttles
-        List</a></li>
+        <li>The <a href="ThrottlesListWindow.shtml">Throttles List</a>
+        </li>
 
-        <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles
-        Preferences</a></li>
+        <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>
+        </li>
       </ul>
 
       <p>See also:</p>
 
       <ul>
-        <li>The <a href="RostersMediaPane.shtml">Media and Function
-        label panels in DecoderPro</a></li>
+        <li>The <a href="RostersMediaPane.shtml">Media and Function label panels in DecoderPro</a>
+        </li>
 
-        <li><a href=
-        "../scripting/Jynstruments.shtml">Jynstruments</a></li>
+        <li>
+          <a href="../scripting/Jynstruments.shtml">Jynstruments</a>
+        </li>
 
-        <li><a href="HowToJMRIOrientedThrottle.shtml">How to build
-        a Throttle oriented JMRI</a></li>
+        <li>
+          <a href="HowToJMRIOrientedThrottle.shtml">How to build a Throttle oriented JMRI</a>
+        </li>
       </ul>
-                  
+
       <p>And for a related topic:</p>
 
       <ul>
-        <li>Using <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttles with JMRI</a></li>
+        <li>Using <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi
+        Throttles with JMRI</a>
+        </li>
         <!-- Prior href will need to be changted when referenced page is split into a help page and a package page @jerryg2003 01-29-2020 -->
       </ul>
+
       <hr>
 
-      <p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v
-      1.x/2.x</a></p>
+      <p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v 1.x/2.x</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

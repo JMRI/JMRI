@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Error Handling</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="java model railroad JMRI LogixNG error handling">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
 
@@ -22,75 +19,70 @@
 
       <h2>Error handling</h2>
 
-      <p>Sometimes errors happen. When they do, there are different ways to handle them.
-      In <a href="LogixNG.shtml#preferences">LogixNG Preferences</a> there is a setting
-      that's used by default. But it's also possible to override this setting on an action
-      or expression.</p>
+      <p>Sometimes errors happen. When they do, there are different ways to handle them. In
+      <a href="LogixNG.shtml#preferences">LogixNG Preferences</a> there is a setting that's used by
+      default. But it's also possible to override this setting on an action or expression.</p>
 
-      <p>For new users of LogixNG, it's recommended to show dialog when errors occurs. That
-      way, you will quickly notice the errors. The drawback with this is that all the
-      ConditionalNGs that uses this thread will stop until the dialog is closed.</p>
+      <p>For new users of LogixNG, it's recommended to show dialog when errors occurs. That way,
+      you will quickly notice the errors. The drawback with this is that all the ConditionalNGs
+      that uses this thread will stop until the dialog is closed.</p>
 
       <p>For production use, for example when you have a big layout with lots of ConditionalNGs,
-      it's recommended to log the errors. That way, LogixNG will still continue to run,
-      despite the error. The drawback with this is that an error might not be noticed.</p>
+      it's recommended to log the errors. That way, LogixNG will still continue to run, despite the
+      error. The drawback with this is that an error might not be noticed.</p>
 
       <h2>The different ways to handle errors</h2>
 
-        <h3>Use default</h3>
+      <h3>Use default</h3>
 
-        <p>This setting is available when editing an action or expression and is the default
-        in this case. It means that if an error occurs, it will use the default setting as
-        specified in Preferences. It's recommended to leave this setting, unless a particular
-        action or expression needs special handling.</p>
+      <p>This setting is available when editing an action or expression and is the default in this
+      case. It means that if an error occurs, it will use the default setting as specified in
+      Preferences. It's recommended to leave this setting, unless a particular action or expression
+      needs special handling.</p>
 
-        <h3>Show dialog box</h3>
+      <h3>Show dialog box</h3>
 
-        <p>Show a dialog box with the error. This is recommended for new users and for
-        ConditionalNGs that you have trouble with.  Note that every ConditionalNG that's
-        using the same thread will stop until the dialog is closed, but if you have
-        trouble with only a few ConditionalNGs, you can put these on a separate thread
-        to let the other ConditionalNGs to continue to run despite the dialog box.</p>
+      <p>Show a dialog box with the error. This is recommended for new users and for ConditionalNGs
+      that you have trouble with. Note that every ConditionalNG that's using the same thread will
+      stop until the dialog is closed, but if you have trouble with only a few ConditionalNGs, you
+      can put these on a separate thread to let the other ConditionalNGs to continue to run despite
+      the dialog box.</p>
 
-        <div style="margin-left: 2em">
-        <a href="images/error_dialog.png">
-        <img src="images/error_dialog.png"
-        alt="LogixNG error dialog" width="527" height="188">
-        </a>
-        </div>
+      <div style="margin-left: 2em">
+        <a href="images/error_dialog.png"><img src="images/error_dialog.png" alt=
+        "LogixNG error dialog" width="527" height="188"></a>
+      </div>
 
-        <p>The checkboxes can be used to prevent subsequent errors by disabling a component.
-        The <strong>Abort</strong> button will stop the ConditionalNG.  The
-        <strong>Continue</strong> button will let it continue if possible.</p>
+      <p>The checkboxes can be used to prevent subsequent errors by disabling a component. The
+      <strong>Abort</strong> button will stop the ConditionalNG. The <strong>Continue</strong>
+      button will let it continue if possible.</p>
 
-        <h3>Log error</h3>
+      <h3>Log error</h3>
 
-        <p>Log a warning message on the JMRI System Console. Recommended for advanced users
-        and for production use, for example when using LogixNG for large club layouts.</p>
+      <p>Log a warning message on the JMRI System Console. Recommended for advanced users and for
+      production use, for example when using LogixNG for large club layouts.</p>
 
-        <h3>Log error once</h3>
+      <h3>Log error once</h3>
 
-        <p>Log a warning message once. Recommended for errors that happens very often to
-        not fill the log. If you have an action or expression that often causes problems,
-        you can set that action or expression to log once.</p>
+      <p>Log a warning message once. Recommended for errors that happens very often to not fill the
+      log. If you have an action or expression that often causes problems, you can set that action
+      or expression to log once.</p>
 
-        <h3>Throw exception</h3>
+      <h3>Throw exception</h3>
 
-        <p>Throw causes errors to be thrown to the upper level. It's useful if you want an
-        error to abort execution for some levels. If you, for example, has a for loop, and
-        you want that loop to be aborted if an error occurs in it's child, you can let the
-        children throw the error.</p>
+      <p>Throw causes errors to be thrown to the upper level. It's useful if you want an error to
+      abort execution for some levels. If you, for example, has a for loop, and you want that loop
+      to be aborted if an error occurs in it's child, you can let the children throw the error.</p>
 
-        <h3>Abort execution</h3>
+      <h3>Abort execution</h3>
 
-        <p>Aborts the current execution of the ConditionalNG and log an error message.
-        This is useful if an error is so severe that the current execution of the
-        ConditionalNG must be stopped.</p>
-
+      <p>Aborts the current execution of the ConditionalNG and log an error message. This is useful
+      if an error is so severe that the current execution of the ConditionalNG must be stopped.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -225,7 +225,13 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
             if (ct != null) {
                 continue;   // tree already registered
             }
-            ct = mgr.newCatalogTree(sysName, userName);
+            try {
+                ct = mgr.newCatalogTree(sysName, userName);
+            }
+            catch (IllegalArgumentException ex){
+                log.error("Could not create CatalogTree: {}",ex.getMessage());
+                continue;
+            }
             if (ct instanceof DefaultTreeModel) {
                 log.debug("CatalogTree: sysName= {}, userName= {}", sysName, userName);
                 CatalogTreeNode root = ct.getRoot();

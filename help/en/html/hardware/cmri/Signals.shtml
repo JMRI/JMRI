@@ -1,94 +1,75 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Signals with C/MRI</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Bruce Chubb C/MRI Computer interface java model railroad JMRI signals">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Chubb C/MRI</h1>
 
       <h2>Signals with C/MRI</h2>
 
-      <p>For model signals with separate Red/Yellow/Green diodes,
-      the situation is simple: Connect each one to a separate
-      output with the proper polarity, have PanelPro drive those
-      three outputs, and it will Just Work. The "Triple Output"
-      type of Signal handles this type of wiring.</p>
+      <p>For model signals with separate Red/Yellow/Green diodes, the situation is simple: Connect
+      each one to a separate output with the proper polarity, have PanelPro drive those three
+      outputs, and it will Just Work. The "Triple Output" type of Signal handles this type of
+      wiring.</p>
 
-      <p>For model signals with just Red and Green diodes, there
-      are two ways of wiring them:</p>
+      <p>For model signals with just Red and Green diodes, there are two ways of wiring them:</p>
 
       <ol>
-        <li>The diodes have one common connection, plus one lead
-        for powering each diode. This is the so-called "three lead"
-        type. Note that there are still just two diodes here, but
-        there are three leads to wire.</li>
+        <li>The diodes have one common connection, plus one lead for powering each diode. This is
+        the so-called "three lead" type. Note that there are still just two diodes here, but there
+        are three leads to wire.</li>
 
-        <li>The diodes are wired back to back. This is the
-        so-called "two lead" type</li>
+        <li>The diodes are wired back to back. This is the so-called "two lead" type</li>
       </ol>
 
-      <p>In both cases you wire these to two C/MRI outputs. There
-      are a couple of extra resistors, and perhaps an external
-      power supply involved, so that when one of the C/MRI outputs
-      is activated, power is applied to one diode and it lights,
-      and when the other is activated the other diode gets power.
-      That makes Red and Green. The "Double Output" Signal type
-      handles this.</p>
+      <p>In both cases you wire these to two C/MRI outputs. There are a couple of extra resistors,
+      and perhaps an external power supply involved, so that when one of the C/MRI outputs is
+      activated, power is applied to one diode and it lights, and when the other is activated the
+      other diode gets power. That makes Red and Green. The "Double Output" Signal type handles
+      this.</p>
 
-      <p>To get Yellow, you have to power both LEDs. This is easy
-      with wiring (1.) above; the program just activates both of
-      the outputs, both LEDs make light, and the Red and Green
+      <p>To get Yellow, you have to power both LEDs. This is easy with wiring (1.) above; the
+      program just activates both of the outputs, both LEDs make light, and the Red and Green
       combine to make Yellow.</p>
 
-      <p>With wiring 2., you can't simultaneously light both LEDs,
-      since current can't flow in two directions at the same time.
-      But "at the same time" is the key; just alternate the
-      direction of the current Very Fast, too fast for the eye to
-      see, and the colors will merge into Yellow. There are two
-      ways to do this:</p>
+      <p>With wiring 2., you can't simultaneously light both LEDs, since current can't flow in two
+      directions at the same time. But "at the same time" is the key; just alternate the direction
+      of the current Very Fast, too fast for the eye to see, and the colors will merge into Yellow.
+      There are two ways to do this:</p>
 
-      <p>2.A) Use an external circuit. There's a signal driver
-      board to do this what connects between the C/MRI outputs and
-      the LED leads. When it detects that _both_ outputs are on, it
-      rapidly alternates the voltage to the LEDs, making yellow.
-      This circuit can be used with any C/MRI system type, and you
-      don't have to tell PanelPro anything to make it work.</p>
+      <p>2.A) Use an external circuit. There's a signal driver board to do this what connects
+      between the C/MRI outputs and the LED leads. When it detects that _both_ outputs are on, it
+      rapidly alternates the voltage to the LEDs, making yellow. This circuit can be used with any
+      C/MRI system type, and you don't have to tell PanelPro anything to make it work.</p>
 
-      <p><a href="images/CMRIConfigNodesSMINI.png"><img src=
-      "images/CMRIConfigNodesSMINI.png" alt="Config Pane" align=
-      "right" height="202" width="218"></a> 2.B) Use support built
-      into the SMINI card. An SMINI card can be configured to do a
-      similar thing. When the SMINI detects the two outputs are on,
-      it alternates the voltage. To configure this, you have to go
-      to the PanelPro Preferences, click on "Configure C/MRI nodes"
-      (or select it from the <strong>CMRI</strong> menu), select an
-      SMINI to configure, and click on one of the little
-      check-boxes to configure a specific output as "two lead
-      oscillating signal". Click "Edit Node" to update, then close
-      that panel, click "Save" and restart the program. Once this
-      is done, a "Double Turnout" signal type will also generate
-      yellow signals on those outputs.</p>
+      <p><a href="images/CMRIConfigNodesSMINI.png"><img src="images/CMRIConfigNodesSMINI.png" alt=
+      "Config Pane" class="floatRight" height="202" width="218"></a> 2.B) Use support built into
+      the SMINI card. An SMINI card can be configured to do a similar thing. When the SMINI detects
+      the two outputs are on, it alternates the voltage. To configure this, you have to go to the
+      PanelPro Preferences, click on "Configure C/MRI nodes" (or select it from the
+      <strong>CMRI</strong> menu), select an SMINI to configure, and click on one of the little
+      check-boxes to configure a specific output as "two lead oscillating signal". Click "Edit
+      Node" to update, then close that panel, click "Save" and restart the program. Once this is
+      done, a "Double Turnout" signal type will also generate yellow signals on those outputs.</p>
 
-      <p>Back to the <a href="CMRI.shtml">C/MRI Hardware Support
-      Help page</a>.</p>
-
+      <p>Back to the <a href="CMRI.shtml">C/MRI Hardware Support Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,242 +1,330 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2017-01-23 -->
+
 <head>
-<title>JMRI Hardware Support - DCC++</title>
-<meta name="Author" content="Mark Underwood">
-<meta name="keywords" content="DCC++ java model railroad JMRI install">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - DCC++</title>
+  <meta name="Author" content="Mark Underwood">
+  <meta name="keywords" content="DCC++ java model railroad JMRI install"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-	<!--#include virtual="../SidebarUp" -->
-	<div id="mainContent">
-		<!-- Page Body -->
+  <!--#include virtual="/Header.shtml" -->
 
-<h1>Prise en Charge Mat&#233;riel: DCC++</h1>
-<ul class="snav"><!-- TOC -->
-	<li><a href="#hardware">Mat&#233;riel</a></li>
-	<li><a href="#Limitations">Limitations</a></li>
-	<li><a href="#connecting">Connexion</a></li>
-	<li><a href="#tools">Outils JMRI</a></li>
-	<li><a href="#documentation">Documentation</a></li>
-</ul>
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
 
-<a name="overview" id="overview"></a>
-<h2>Aper&#231;u</h2>
-<p>DCC++ est une Centrale DCC Source Libre bas&#233;e sur Arduino  <a href="#documentation">&#192; faire Soi-M&#234;me</a>.</p>
-<p>Vous pouvez en savoir plus au sujet de DCC++ sur le site web
- <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++</a>.</p>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<p>Fonctionnalit&#233;s incluses:
-<ul>
-	<li>Conformit&#233; parfaite avec les standards DCC NMRA</li>
-	<li>Adressage des locomotives sur 2 ou 4 octets</li>
-	<li>Commande simultan&#233;e de plusieurs locomotives</li>
-	<li>Commande de vitesse 128 crans</li>
-	 <li>Commande de toutes les fonction F0-F28</li>
-	<li>Activation et D&#233;sactivation des fonctions accessoires 0-2048</li>
-	<li>Programmation sur la Voie de Programmation
-	<ul><li>&#201;criture des octets variables de configuration</li>
-		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
-		<li>Lire des octets variables de configuration</li>
-	</ul></li>
-	<li>Programmation sur la Voie d'Exploitaion
-	<ul><li>&#201;criture des octets variables de configuration</li>
-		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
-	</ul></li>
-	<li>Commande des Aiguillages de Capteurs DCC</li>
-	<li>Acc&#232;s et commandes directement par les bornes E/S de l'Arduino pour les fonctions et les capteurs</li>
-</ul>
+      <h1>Prise en Charge Matériel: DCC++</h1>
 
-<p><strong><em>NOTE:</em>La prise en charge DCC++ est cass&#233;e dans les versions JMRI 4.1.6 et 4.2.x .S'il vous plait utilisez JMRI 4.3.1 ou des versions plus r&#233;centes avec DCC++</strong></p>
+      <ul class="snav">
+        <!-- TOC -->
 
-<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
+        <li><a href="#hardware">Matériel</a>
+        </li>
 
-<h3>Centrales</h3>
-<p>
-	Actuellement les Centrales DCC++ de base peuvent &#234;tre construite soit depuis une plateforme Arduino Uno 
-	ou une Arduino M&#233;ga. JMRI devrait prendre en charge la plateforme soit via un USB ou une connexion R&#233;seau.
+        <li><a href="#Limitations">Limitations</a>
+        </li>
 
-<h3>Interfaces Informatiques</h3>
+        <li><a href="#connecting">Connexion</a>
+        </li>
 
-	Actuellement quatre interfaces sont accept&#233;es:
-	<ul>
-		<li>S&#233;rie/USB: Connexion directe &#224; un Arduino via un c&#226;ble USB</li>
-		<li>Simulateur: Centrale simul&#233;e pour une exploitation hors-ligne ou des tests</li>
-		<li>R&#233;seau: connexion TCP/IP depuis JMRI &#224; une centrale avec un Shield Ethernet ou WiFi</li>
-		<li>DCC++ Over TCP :Connexion r&#233;seau &#224; distance &#224; une instance JMRI locale connect&#233;e &#224; une Centrale</li>
-	</ul>
+        <li><a href="#tools">Outils JMRI</a>
+        </li>
 
-<h4>Simulateur</h4>
-<p>Pour utiliser le simulateur, choisir simplement cette option dans les Pr&#233;f&#233;rences JMRI. Notez que quelques fonctions ne travailleront
- pas dans ce mode. Par exemple, le Simulateur ne prands pas ( pour le moment) en charge les affectations, le stockage et le rappel des affectations des 
-Capteurs et des Aiguillages. L'interface Simulateur est assez fonctionnelle pour garder JMRI disponible pour travailler 
-sur des projets hors-ligne tels que l'Exploitation ou la d&#233;signation des Panneaux ou des Logix, mais n'est pas suffisant 
-pour &#234;tre Pour &#234;tre un &#233;mulateur de centrale &#224; part enti&#232;re. 
+        <li><a href="#documentation">Documentation</a>
+        </li>
+      </ul>
+      <a name="overview" id="overview"></a>
+      <h2>Aperçu</h2>
 
-<h4>DCC++ Over TCP</h4>
-<p>Pour le DCC++ Over TCP, un ordinateur h&#244;te doit &#234;tre connect&#233; &#224; la centrale
-&#224; travers une connexion S&#233;rie ou R&#233;seau ( ou un simulateur ). Cet ordinateur h&#244;te ex&#233;cute le serveur
-DCC++ Over TCP. Un ordinateur distant ( ou plusieurs ) peut alors utliser 
-l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler la centrale.
+      <p>DCC++ est une Centrale DCC Source Libre basée sur Arduino <a href="#documentation">À faire
+      Soi-Même</a>.</p>
 
-<a name="Limitations"></a><h2>Limitations</h2>
+      <p>Vous pouvez en savoir plus au sujet de DCC++ sur le site web <a href=
+      "https://sites.google.com/site/dccppsite/home" target="_blank">DCC++</a>.</p>
 
-<div class="list">
-    <dl>
-    	<dt class="left">JMRI</dt>
-		<dd class="first">
-			<p>Actuellement JMRI prends en charge la version V1.1 de l'Interface Centrale. Quelques commandes de V1.0 peuvent ne pas fonctionner.</p>
-		</dd>	
-	</dl>
-</div>
+      <p>Fonctionnalités incluses:</p>
 
-<a name="connecting"></a><h2>Connexion</h2>
-<h3>Configurer un Arduino pour l'utiliser comme Centrale DCC++</h3>
-<p>Dans le but d'utiliser un Arduino comme Centrale, premi&#232;rement vous devez assembler les &#233;quipements et 
-	t&#233;l&#233;charger le le logiciel Centrale. S'il vous plait suivez les <a href="#documentation">Des vid&#233;os p&#233;dagogiques ci-dessous sous Autres infos</a>.</p>
+      <ul>
+        <li>Conformité parfaite avec les standards DCC NMRA</li>
 
-<h3>Connexion &#224; une Centrale DCC++  via USB</h3>
-<ol>
-	<li>Pour connecter votre ordinateur &#224; une centrale DCC++, premi&#232;rement installer les pilotes appropri&#233;s
-	<ul>
-		<li>Pour la Centrale DCC++ avec JMRI, vous pouver avoir besoin d'installer un &#233;quipement pilote
-		sur votre ordinateur. S'il vous plait r&#233;f&#233;rez-vous aux pages
-		 <a href="https://www.arduino.cc/en/Guide/HomePage">D&#233;marrage d'Arduino </a>
-		pour les instructions.
-		<ul>
-			<li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (Voir <strong>Point 4</strong>)</li>
-			<li>Mac: pas besoin de drivers</li>
-			<li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a></li>
-		</ul>
-		</li>
-	</ul>
+        <li>Adressage des locomotives sur 2 ou 4 octets</li>
 
-	<p><strong>Note:</strong> Si vous avez d&#233;j&#224; install&#233; le logiciel Arduino IDE, les pilotes de p&#233;riph&#233;rique doivent d&#233;j&#224; 
-	&#234;tre install&#233;s. </p>
+        <li>Commande simultanée de plusieurs locomotives</li>
 
-	<p> Quand les pilotes de p&#233;riph&#233;riques sont install&#233;s, connectez la Centrale Arduino
-	&#224; votre ordinateur en utilisant un c&#226;ble standard USB.</p>
-	</li>
-	
-	<li>Une fois que les pilotes sont install&#233;s, vous &#234;tes pr&#234;t &#224; configurer 
-	JMRI. D&#233;marrez un des programmes JMRI, puis allez au 
-	panneau des Pr&#233;f&#233;rences. Celui-ci s'ouvre automatiquement lors d'un premier d&#233;marrage 
-	du programme, ou vous pouvez le s&#233;lectionner dans le menu "&#201;dition".</li>
+        <li>Commande de vitesse 128 crans</li>
 
-	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "System Manufacturer" ).</li>
-	<li>S&#233;lectionnez "DCC++ Serial Port" dans la seconde fen&#234;tre ( "System Connection" )</li>
-	<li>S&#233;lectionn&#233; le port USB/Serial appropri&#233; dans la troisi&#232;me fen&#234;tre  ("Serial Port")</li>
+        <li>Commande de toutes les fonction F0-F28</li>
 
-	<li>Cliquez "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le 
-	programme, cliquez"Oui.</li>
+        <li>Activation et Désactivation des fonctions accessoires 0-2048</li>
 
-	<li>Red&#233;marrez le programme, Vous devez &#234;tre op&#233;rationnel.</li>
-</ol>
+        <li>Programmation sur la Voie de Programmation
+          <ul>
+            <li>Écriture des octets variables de configuration</li>
 
-<h3>Connexion &#224; un DCC++ &#224; l'aide du R&#233;seau</h3>
-<ol>
-	<li>Premi&#232;rement, connectez la Centrale DCC++ &#224; un r&#233;seau c&#226;bl&#233; ou WiFi et
-		enregistrez l'adresse IP et le num&#233;ro du Port. Vous pouvez avoir besoin de 
-		connecter l'Arduino &#224; un ordinateur temporairement et utiliser le Moniteur 
-		Serie Arduino pour obtenir cette information.</li>
-	<li>Maintenant vous &#234;tes pr&#234;t &#224; configurer JMRI.
+            <li>Définir/Effacer la configuration spécifiques des octets variables</li>
 
-		D&#233;marrez un des programmes JMRI, puis allez au panneau des Pr&#233;f&#233;rences. Celui-ci s'ouvre 
-		automatiquement lors d'un premier d&#233;marrage du programme, ou vous pouvez le s&#233;lectionner 
-		dans le menu "&#201;dition" ( depuis le menu Application sur OS X ).</li>
-	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "System Manufacturer" ).</li>
-	<li>S&#233;lectionnez "DCC++ Ethernet" dans la seconde fen&#234;tre ( "System Connection" )</li>
-	<li>Entrez l'adresse IP et le num&#233;ro du Port de la Centrale DCC++</li>
+            <li>Lire des octets variables de configuration</li>
+          </ul>
+        </li>
 
-	<li>Cliquez "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le 
-	programme, cliquez"Oui.</li>
+        <li>Programmation sur la Voie d'Exploitaion
+          <ul>
+            <li>Écriture des octets variables de configuration</li>
 
-	<li>Red&#233;marrez le programme, Vous devez &#234;tre op&#233;rationnel. </li>
-</ol>
+            <li>Définir/Effacer la configuration spécifiques des octets variables</li>
+          </ul>
+        </li>
 
-<h3>Connexion &#224; un DCC++ &#224; l'aide de Over TCP</h3>
+        <li>Commande des Aiguillages de Capteurs DCC</li>
 
-<ol>
-	<li>Premi&#232;rement, connectez la Centrale DCC++ &#224; un ordinateur h&#244;te via le
-		l(interface S&#233;rie ou le R&#233;seau somme d&#233;crit pr&#233;c&#233;demment</li>
-	<li>Sur l'ordinateur h&#244;te s&#233;lectionnez "DCC++ Over TCP Server" depuis le menu DCC++.
-		V&#233;rifiez les r&#233;glages, puis pressez sur le bouton "Start Server". Si vous voulez que 
-		le serveur d&#233;marre automatiquementquand JMRI est lanc&#233;, cochez la
-		case propos&#233;e.
-	<li>L'ordinateur H&#244;te doit &#234;tre ex&#233;cut&#233; avec le serveur DCC++ actif avant 
-		le lancement de l'ordinateur Client</li>
-	<li>sur l'ordinateur client, lancer JMRI </li>
-	<li>Dans les Pr&#233;f&#233;rences connxion, s&#233;lectionnez DCC++ comme le "System Manufacturer"</li>
-	<li>S&#233;lectionnez "DCC++ Over TCP" dans la seconde fen&#234;tre "System Connection" </li>
-	<li>Entrez le nom r&#233;seau ou l'adresse IP de l'ordinateur h&#244;te et v&#233;rifiez
-		que le num&#233;ro du port est le m&#234;me sur sur l'ordinateur h&#244;te</li>
-	<li>Enregistrez vos Pr&#233;f&#233;rences er red&#233;marrez</li>
-</ol>
+        <li>Accès et commandes directement par les bornes E/S de l'Arduino pour les fonctions et
+        les capteurs</li>
+      </ul>
 
-<p> Une fois que les instances h&#244;te et client de JMRI sont configur&#233;es, vous pouvez utilisez
-	le client JMRI tout comme s'il &#233;tait directement connect&#233; &#224; la 
-	centrale.L'instance client JMRI peut &#234;te sur le m&#234;me ordinateur, Dans la m&#234;me maison, ou &#224; travers le pays de l'h&#244;te. </p>
+      <p><strong><em>NOTE:</em>La prise en charge DCC++ est cassée dans les versions JMRI 4.1.6 et
+      4.2.x .S'il vous plait utilisez JMRI 4.3.1 ou des versions plus récentes avec DCC++</strong>
+      </p>
+      <a name="hardware" id="hardware"></a>
+      <h2>Matériel pris en charge</h2>
 
-<h3>Connexion au Simulateur DCC++</h3>
-	<ol>
-		<li>D&#233;marrez un des programmes JMRI, puis allez au panneau des P&#233;f&#233;rences.
-		Celui-ci s'ouvre automatiquement lors d'un premier d&#233;marrage du programme, ou vous pouvez le s&#233;lectionner 
-			dans le menu "&#201;dition".</li>
+      <h3>Centrales</h3>
 
-		<li>S&#233;lectionnez "DCC++ Simulator" dans la fen&#234;tre de s&#233;lection du haut. Il n'y a pas 
-		d'&#233;tapes suppl&#233;mentaires de configuration pour utiliser le Simulateur DCC++.</li>
+      <p>Actuellement les Centrales DCC++ de base peuvent être construite soit depuis une
+      plateforme Arduino Uno ou une Arduino Méga. JMRI devrait prendre en charge la plateforme soit
+      via un USB ou une connexion Réseau.</p>
 
-		<li>Cliquez sur "Enregistrer", il vous sera demand&#233; si vous voulez quittez le programme,
-		cliquez "Oui".</li>
-		
-		<li>Red&#233;marrez le programme, Vous devez &#234;tre op&#233;rationnel.</li>
-	</ol>
+      <h3>Interfaces Informatiques</h3>
+      Actuellement quatre interfaces sont acceptées:
+      <ul>
+        <li>Série/USB: Connexion directe à un Arduino via un câble USB</li>
 
-<a name="tools"></a><h2>Outils JMRI DCC++</h2>
-<img src="images/DCCppMenu416.png" width="138" height="70" align="right">
-<p>Le menu DCC++ contient 5 outils:
-<ul>
-	<li>Moniteur de trafic DCC++
-	<li>Envoi Commande DCC++
-	<li>Mesure Courant Voie
-	<li>Configurer les Capteurs et Aiguillages
-	<li>Charger DCC++ over TCP Server
-</ul>
-<img src="images/DCCppGeneratePack.png" width="117" height="47">&nbsp;
-<img src="images/DCCppTrackCurrent.png" width="89" height="43">&nbsp;
-<img src="images/DCCppConfigTO.png" width="186" height="101">&nbsp;
-<img src="images/DCCppOverTCPIP.png" width="219" height="47">&nbsp;
+        <li>Simulateur: Centrale simulée pour une exploitation hors-ligne ou des tests</li>
 
-<a name="documentation"></a><h2>Documentation</h2>
-<h3>aide JMRI </h3>
-<p>Des informations suppl&#233;mentaires peuvent tre trouv&#233;es sur les pages suivantes:
+        <li>Réseau: connexion TCP/IP depuis JMRI à une centrale avec un Shield Ethernet ou
+        WiFi</li>
 
-<h3>Autres Sources d'Information</h3>
-Pour des informations suppl&#233;mentaires pour savoir comment construire et programmer une Centrale DCC++, se r&#233;f&#233;rer aux documents suivants:
-<ul>
-    <li> <a href="https://github.com/DccPlusPlus">R&#233;pertoire GitHub</a> DCC++</li>
-    <li><a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw/feed">
-    YouTube </a></li>
-    <li><a
-    href="http://www.trainboard.com/highball/index.php?threads/introducing-dcc-a-complete-open-source-dcc-station-and-interface.84800/">Trainboard.com
-    Discussion</a></li>
-    <li><a href="http://www.arduino.cc">Site du Projet Arduino</a></li>
-    <li><a href="http://www.sparkfun.com">Sparkfun</a> - Un des nombreux endroits o&#249; obtenir le logiciel</li>
-</ul>
+        <li>DCC++ Over TCP :Connexion réseau à distance à une instance JMRI locale connectée à une
+        Centrale</li>
+      </ul>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <h4>Simulateur</h4>
+
+      <p>Pour utiliser le simulateur, choisir simplement cette option dans les Préférences JMRI.
+      Notez que quelques fonctions ne travailleront pas dans ce mode. Par exemple, le Simulateur ne
+      prands pas ( pour le moment) en charge les affectations, le stockage et le rappel des
+      affectations des Capteurs et des Aiguillages. L'interface Simulateur est assez fonctionnelle
+      pour garder JMRI disponible pour travailler sur des projets hors-ligne tels que
+      l'Exploitation ou la désignation des Panneaux ou des Logix, mais n'est pas suffisant pour
+      être Pour être un émulateur de centrale à part entière.</p>
+
+      <h4>DCC++ Over TCP</h4>
+
+      <p>Pour le DCC++ Over TCP, un ordinateur hôte doit être connecté à la centrale à travers une
+      connexion Série ou Réseau ( ou un simulateur ). Cet ordinateur hôte exécute le serveur DCC++
+      Over TCP. Un ordinateur distant ( ou plusieurs ) peut alors utliser l'interface DCC++ Over
+      TCP pour accéder à distance et contrôler la centrale. <a name="Limitations" id=
+      "Limitations"></a></p>
+
+      <h2>Limitations</h2>
+
+      <div class="list">
+        <dl>
+          <dt class="left">JMRI</dt>
+
+          <dd class="first">
+            <p>Actuellement JMRI prends en charge la version V1.1 de l'Interface Centrale. Quelques
+            commandes de V1.0 peuvent ne pas fonctionner.</p>
+          </dd>
+        </dl>
+      </div>
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
+
+      <h3>Configurer un Arduino pour l'utiliser comme Centrale DCC++</h3>
+
+      <p>Dans le but d'utiliser un Arduino comme Centrale, premièrement vous devez assembler les
+      équipements et télécharger le le logiciel Centrale. S'il vous plait suivez les <a href=
+      "#documentation">Des vidéos pédagogiques ci-dessous sous Autres infos</a>.</p>
+
+      <h3>Connexion à une Centrale DCC++ via USB</h3>
+
+      <ol>
+        <li>Pour connecter votre ordinateur à une centrale DCC++, premièrement installer les
+        pilotes appropriés
+          <ul>
+            <li>Pour la Centrale DCC++ avec JMRI, vous pouver avoir besoin d'installer un
+            équipement pilote sur votre ordinateur. S'il vous plait référez-vous aux pages
+              <a href="https://www.arduino.cc/en/Guide/HomePage">Démarrage d'Arduino</a> pour les
+              instructions.
+              <ul>
+                <li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (Voir
+                <strong>Point 4</strong>)</li>
+
+                <li>Mac: pas besoin de drivers</li>
+
+                <li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <p><strong>Note:</strong> Si vous avez déjà installé le logiciel Arduino IDE, les pilotes
+          de périphérique doivent déjà être installés.</p>
+
+          <p>Quand les pilotes de périphériques sont installés, connectez la Centrale Arduino à
+          votre ordinateur en utilisant un câble standard USB.</p>
+        </li>
+
+        <li>Une fois que les pilotes sont installés, vous êtes prêt à configurer JMRI. Démarrez un
+        des programmes JMRI, puis allez au panneau des Préférences. Celui-ci s'ouvre
+        automatiquement lors d'un premier démarrage du programme, ou vous pouvez le sélectionner
+        dans le menu "Édition".</li>
+
+        <li>Sélectionnez "DCC++" dans la fenêtre de sélection en haut( "System Manufacturer"
+        ).</li>
+
+        <li>Sélectionnez "DCC++ Serial Port" dans la seconde fenêtre ( "System Connection" )</li>
+
+        <li>Sélectionné le port USB/Serial approprié dans la troisième fenêtre ("Serial Port")</li>
+
+        <li>Cliquez "Enregistrer". Il vous sera demandé si c'est OK pour quitter le programme,
+        cliquez"Oui.</li>
+
+        <li>Redémarrez le programme, Vous devez être opérationnel.</li>
+      </ol>
+
+      <h3>Connexion à un DCC++ à l'aide du Réseau</h3>
+
+      <ol>
+        <li>Premièrement, connectez la Centrale DCC++ à un réseau câblé ou WiFi et enregistrez
+        l'adresse IP et le numéro du Port. Vous pouvez avoir besoin de connecter l'Arduino à un
+        ordinateur temporairement et utiliser le Moniteur Serie Arduino pour obtenir cette
+        information.</li>
+
+        <li>Maintenant vous êtes prêt à configurer JMRI. Démarrez un des programmes JMRI, puis
+        allez au panneau des Préférences. Celui-ci s'ouvre automatiquement lors d'un premier
+        démarrage du programme, ou vous pouvez le sélectionner dans le menu "Édition" ( depuis le
+        menu Application sur OS X ).</li>
+
+        <li>Sélectionnez "DCC++" dans la fenêtre de sélection en haut( "System Manufacturer"
+        ).</li>
+
+        <li>Sélectionnez "DCC++ Ethernet" dans la seconde fenêtre ( "System Connection" )</li>
+
+        <li>Entrez l'adresse IP et le numéro du Port de la Centrale DCC++</li>
+
+        <li>Cliquez "Enregistrer". Il vous sera demandé si c'est OK pour quitter le programme,
+        cliquez"Oui.</li>
+
+        <li>Redémarrez le programme, Vous devez être opérationnel.</li>
+      </ol>
+
+      <h3>Connexion à un DCC++ à l'aide de Over TCP</h3>
+
+      <ol>
+        <li>Premièrement, connectez la Centrale DCC++ à un ordinateur hôte via le l(interface Série
+        ou le Réseau somme décrit précédemment</li>
+
+        <li>Sur l'ordinateur hôte sélectionnez "DCC++ Over TCP Server" depuis le menu DCC++.
+        Vérifiez les réglages, puis pressez sur le bouton "Start Server". Si vous voulez que le
+        serveur démarre automatiquementquand JMRI est lancé, cochez la case proposée.</li>
+
+        <li>L'ordinateur Hôte doit être exécuté avec le serveur DCC++ actif avant le lancement de
+        l'ordinateur Client</li>
+
+        <li>sur l'ordinateur client, lancer JMRI</li>
+
+        <li>Dans les Préférences connxion, sélectionnez DCC++ comme le "System Manufacturer"</li>
+
+        <li>Sélectionnez "DCC++ Over TCP" dans la seconde fenêtre "System Connection"</li>
+
+        <li>Entrez le nom réseau ou l'adresse IP de l'ordinateur hôte et vérifiez que le numéro du
+        port est le même sur sur l'ordinateur hôte</li>
+
+        <li>Enregistrez vos Préférences er redémarrez</li>
+      </ol>
+
+      <p>Une fois que les instances hôte et client de JMRI sont configurées, vous pouvez utilisez
+      le client JMRI tout comme s'il était directement connecté à la centrale.L'instance client
+      JMRI peut ête sur le même ordinateur, Dans la même maison, ou à travers le pays de
+      l'hôte.</p>
+
+      <h3>Connexion au Simulateur DCC++</h3>
+
+      <ol>
+        <li>Démarrez un des programmes JMRI, puis allez au panneau des Péférences. Celui-ci s'ouvre
+        automatiquement lors d'un premier démarrage du programme, ou vous pouvez le sélectionner
+        dans le menu "Édition".</li>
+
+        <li>Sélectionnez "DCC++ Simulator" dans la fenêtre de sélection du haut. Il n'y a pas
+        d'étapes supplémentaires de configuration pour utiliser le Simulateur DCC++.</li>
+
+        <li>Cliquez sur "Enregistrer", il vous sera demandé si vous voulez quittez le programme,
+        cliquez "Oui".</li>
+
+        <li>Redémarrez le programme, Vous devez être opérationnel.</li>
+      </ol>
+      <a name="tools" id="tools"></a>
+      <h2>Outils JMRI DCC++</h2>
+      <img src="images/DCCppMenu416.png" width="138" height="70" align="right" alt="">
+      <p>Le menu DCC++ contient 5 outils:</p>
+
+      <ul>
+        <li>Moniteur de trafic DCC++</li>
+
+        <li>Envoi Commande DCC++</li>
+
+        <li>Mesure Courant Voie</li>
+
+        <li>Configurer les Capteurs et Aiguillages</li>
+
+        <li>Charger DCC++ over TCP Server</li>
+      </ul>
+      <img src="images/DCCppGeneratePack.png" width="117" height="47" alt="">&nbsp; <img src=
+      "images/DCCppTrackCurrent.png" width="89" height="43" alt="">&nbsp; <img src=
+      "images/DCCppConfigTO.png" width="186" height="101" alt="">&nbsp; <img src=
+      "images/DCCppOverTCPIP.png" width="219" height="47" alt="">&nbsp; <a name="documentation" id=
+      "documentation"></a>
+      <h2>Documentation</h2>
+
+      <h3>aide JMRI</h3>
+
+      <p>Des informations supplémentaires peuvent tre trouvées sur les pages suivantes:</p>
+
+      <h3>Autres Sources d'Information</h3>
+      Pour des informations supplémentaires pour savoir comment construire et programmer une
+      Centrale DCC++, se référer aux documents suivants:
+      <ul>
+        <li><a href="https://github.com/DccPlusPlus">Répertoire GitHub</a> DCC++</li>
+
+        <li><a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw/feed">YouTube</a>
+        </li>
+
+        <li><a href=
+        "http://www.trainboard.com/highball/index.php?threads/introducing-dcc-a-complete-open-source-dcc-station-and-interface.84800/">
+        Trainboard.com Discussion</a>
+        </li>
+
+        <li><a href="http://www.arduino.cc">Site du Projet Arduino</a>
+        </li>
+
+        <li><a href="http://www.sparkfun.com">Sparkfun</a> - Un des nombreux endroits où obtenir le
+        logiciel</li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

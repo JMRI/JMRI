@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI OperationsPro - Build Report Print</title><!--#include virtual="/Style.shtml" -->
+  <!-- OperationsPro Styles -->
 
-  <title>JMRI OperationsPro - Build Report Print</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    <div id="mainContent">
+      <h1 id="Top">Using JMRI® to Operate Trains</h1>
 
       <h2>OperationsPro: Build Report Print</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditTrain.shtml">Back</a><a href=
-        "#"></a></p>
+      <div class="ops-right">
+        <p><a href="Ops_EditTrain.shtml">Back</a><a href="#"></a>
+        </p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 714px; height: 779px;" alt=
-        "Build report" src="images/Ops_BuildReportPrint.png">
+      <div style="margin-left: 40px;"><img style="width: 714px; height: 779px;" alt="Build report"
+      src="images/Ops_BuildReportPrint.png">
       </div>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Ops_EditTrain.shtml">Back</a><a href=
-        "#"></a></p>
+      <div class="ops-right">
+        <p><a href="Ops_EditTrain.shtml">Back</a><a href="#"></a>
+        </p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -14,7 +14,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
@@ -28,14 +28,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='index'>
     <HTML LANG="fr">
     <HEAD>
     <TITLE>JMRI Help System: Index</TITLE>
     <META NAME="Author" CONTENT="Bob Jacobsen" />
     <META NAME="keywords" CONTENT="JMRI Help Index" />
-    
+
     <!-- Style -->
     <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen" />
     <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print" />
@@ -43,14 +43,14 @@
     <LINK REL="home" TITLE="Home" HREF="/" />
     <!-- /Style -->
     </HEAD>
-    
+
     <BODY>
     <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="indexheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
-    
+
     <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
     </BODY>
     </HTML>
@@ -64,7 +64,7 @@
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:variable name="target" select="@target" />
-                    <xsl:for-each select="document('Map.jhm')/map/mapID">
+                    <xsl:for-each select="document('local/jmri_map.xml')/map/mapID">
                       <xsl:if test="( @target = $target )" >
                         <xsl:value-of select="@url"/>
                       </xsl:if>
@@ -76,7 +76,7 @@
         <xsl:if test="not(@target)" >
                 <xsl:value-of select="@text"/>
 	    </xsl:if>
-        
+
         <ul>
         <xsl:apply-templates/>
         </ul>
@@ -90,7 +90,7 @@
     <TITLE>JMRI Help System: Table of Contents</TITLE>
     <META NAME="Author" CONTENT="Bob Jacobsen" />
     <META NAME="keywords" CONTENT="JMRI Help Table of Contents TOC" />
-    
+
     <!-- Style -->
     <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen" />
     <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print" />
@@ -98,14 +98,14 @@
     <LINK REL="home" TITLE="Home" HREF="/" />
     <!-- /Style -->
     </HEAD>
-    
+
     <BODY>
     <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="tocheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
-    
+
     <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
     </BODY>
     </HTML>
@@ -119,7 +119,7 @@
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:variable name="target" select="@target" />
-                    <xsl:for-each select="document('Map.jhm')/map/mapID">
+                    <xsl:for-each select="document('local/jmri_map.xml')/map/mapID">
                       <xsl:if test="( @target = $target )" >
                         <xsl:value-of select="@url"/>
                       </xsl:if>
@@ -131,7 +131,7 @@
         <xsl:if test="not(@target)" >
                 <xsl:value-of select="@text"/>
 	    </xsl:if>
-        
+
         <ul>
         <xsl:apply-templates/>
         </ul>
