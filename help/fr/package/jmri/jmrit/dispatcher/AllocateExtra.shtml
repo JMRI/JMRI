@@ -1,122 +1,82 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Allocate Extra Window Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher New Train">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Dispatcher New Train"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Allouer une Fenêtre Supplémentaire</h1>
 
-      <h1>Allouer une Fen&ecirc;tre Suppl&eacute;mentaire</h1>
+      <h2>Présentation</h2>
 
-      <h2>Pr&eacute;sentation</h2>
+      <p><strong>Allouer une Fenêtre Supplémentaire</strong> permet à une "Sections
+      Supplémentaires" d'être affectée à tout train Actif. "Sections Extra" sont les sections qui
+      ne sont pas dans la séquence des sections définies dans le transit suivi par le train actif.
+      La nécessité d'allouer des "Sections supplémentaires" peuvent survenir si l'opérateur d'un
+      train Actif a besoin de faire plus que simplement circuler autour du réseau. Par exemple, des
+      sections supplémentaires pourraient être nécessaires pour définir où ramasser les wagons,
+      surtout s'il est nécessaire de manoeuvrer autour.</p>
 
-      <p><b>Allouer une Fen&ecirc;tre Suppl&eacute;mentaire</b>
-      permet &agrave; une "Sections Suppl&eacute;mentaires"
-      d'&ecirc;tre affect&eacute;e &agrave; tout train Actif.
-      "Sections Extra" sont les sections qui ne sont pas dans la
-      s&eacute;quence des sections d&eacute;finies dans le transit
-      suivi par le train actif. La n&eacute;cessit&eacute;
-      d'allouer des "Sections suppl&eacute;mentaires" peuvent
-      survenir si l'op&eacute;rateur d'un train Actif a besoin de
-      faire plus que simplement circuler autour du r&eacute;seau.
-      Par exemple, des sections suppl&eacute;mentaires pourraient
-      &ecirc;tre n&eacute;cessaires pour d&eacute;finir o&ugrave;
-      ramasser les wagons, surtout s'il est n&eacute;cessaire de
-      manoeuvrer autour.</p>
+      <p>Les Sections supplémentaire sont allouées manuellement via le panneau de Dispatcher, en
+      utilisant cette fenêtre pour sélectionner le train actif et la Section qui doit être
+      affectée. Une fois attribuées, Les Sections supplémentaires seront montrées dans la table
+      <strong>Sections Allouées</strong> dans la fenêtre <strong><a href=
+      "Dispatcher.shtml">Dispatcher</a></strong>. Le bouton <strong>Libération</strong> dans le
+      tableau Sections Allouées devrait être utilisé pour libérer les Sections Supplémentaires
+      quand elles ne sont plus nécessaires. L'option <strong>Libération Auto</strong> ne libère pas
+      les Sections Supplémentaires ; les Sections supplémentaires doivent être libérées
+      manuellement</p>
 
-      <p>Les Sections suppl&eacute;mentaire sont allou&eacute;es
-      manuellement via le panneau de Dispatcher, en utilisant cette
-      fen&ecirc;tre pour s&eacute;lectionner le train actif et la
-      Section qui doit &ecirc;tre affect&eacute;e. Une fois
-      attribu&eacute;es, Les Sections suppl&eacute;mentaires seront
-      montr&eacute;es dans la table <b>Sections Allou&eacute;es</b>
-      dans la fen&ecirc;tre <b><a href=
-      "Dispatcher.shtml">Dispatcher</a></b>. Le bouton
-      <b>Lib&eacute;ration</b> dans le tableau Sections
-      Allou&eacute;es devrait &ecirc;tre utilis&eacute; pour
-      lib&eacute;rer les Sections Suppl&eacute;mentaires quand
-      elles ne sont plus n&eacute;cessaires. L'option
-      <b>Lib&eacute;ration Auto</b> ne lib&egrave;re pas les
-      Sections Suppl&eacute;mentaires ; les Sections
-      suppl&eacute;mentaires doivent &ecirc;tre
-      lib&eacute;r&eacute;es manuellement</p>
+      <p>Note: La vérification des aiguillage et la commande des aiguillages sont coupés au cours
+      d'une Allocation Supplémentaire. Les aiguillages devraientt être commutés en fonction des
+      besoins par le répartiteur ou par le mécanicien.</p>
 
-      <p>Note: La v&eacute;rification des aiguillage et la commande
-      des aiguillages sont coup&eacute;s au cours d'une Allocation
-      Suppl&eacute;mentaire. Les aiguillages devraientt &ecirc;tre
-      commut&eacute;s en fonction des besoins par le
-      r&eacute;partiteur ou par le m&eacute;canicien.</p>
+      <h2>Utilisation de l'Allocation Fenêtre Supplémentaire</h2>
 
-      <h2>Utilisation de l'Allocation Fen&ecirc;tre
-      Suppl&eacute;mentaire</h2>
-
-      <p>Pour allouer une Section suppl&eacute;mentaire &agrave; un
-      train actif, utilisez la proc&eacute;dure suivante :</p>
+      <p>Pour allouer une Section supplémentaire à un train actif, utilisez la procédure suivante
+      :</p>
 
       <ol>
-        <li>Cliquez sur le bouton <b>Allouer extra ...</b> dans la
-        fen&ecirc;tre <b><a href=
-        "Dispatcher.shtml">Dispatcher</a></b> Ceci fait
-        appara&icirc;tre la fen&ecirc;tre ci-dessous.<img src=
-        "AllocateExtraWindow.jpg" height="146" width="267"></li>
+        <li>Cliquez sur le bouton <strong>Allouer extra ...</strong> dans la fenêtre
+        <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> Ceci fait apparaître la fenêtre
+        ci-dessous.<img src="AllocateExtraWindow.jpg" height="146" width="267" alt=""></li>
 
-        <li>S&eacute;lectionnez un train Actif dans la bo&icirc;te
-        de s&eacute;lection <b>Train Actif:</b>. Quand un Train
-        Actif est s&eacute;lectionn&eacute;, la bo&icirc;te de
-        s&eacute;lection <b>Section &agrave; Allouer:</b> va
-        changer pour afficher les sections qui sont
-        appropri&eacute;es &agrave; ce train Actif. Les noms des
-        Trains Actifs sont affich&eacute;s soit sous une forme
-        courte (ci-dessus) ou une forme longue selon l'option
-        s&eacute;lectionn&eacute;e dans la fen&ecirc;tre
-        <b><a href="Options.shtml">Options</a></b> du
-        r&eacute;partiteur .</li>
+        <li>Sélectionnez un train Actif dans la boîte de sélection <strong>Train Actif:</strong>.
+        Quand un Train Actif est sélectionné, la boîte de sélection <strong>Section à
+        Allouer:</strong> va changer pour afficher les sections qui sont appropriées à ce train
+        Actif. Les noms des Trains Actifs sont affichés soit sous une forme courte (ci-dessus) ou
+        une forme longue selon l'option sélectionnée dans la fenêtre <strong><a href=
+        "Options.shtml">Options</a></strong> du répartiteur .</li>
 
-        <li>S&eacute;lectionnez une Section &agrave; Allouer dans
-        la bo&icirc;te de s&eacute;lection des <b>Section &agrave;
-        Affecter:</b> Pour figurer dans cette bo&icirc;te de
-        s&eacute;lection, une Section doit &ecirc;tre LIBRE (non
-        attribu&eacute;e &agrave; un Train Actif), et doit
-        &ecirc;tre connect&eacute;e &agrave; une Section qui est
-        actuellement allou&eacute;e au Train Actif dans la boite de
-        s&eacute;lection le <b>Train Actif:</b></li>
+        <li>Sélectionnez une Section à Allouer dans la boîte de sélection des <strong>Section à
+        Affecter:</strong> Pour figurer dans cette boîte de sélection, une Section doit être LIBRE
+        (non attribuée à un Train Actif), et doit être connectée à une Section qui est actuellement
+        allouée au Train Actif dans la boite de sélection le <strong>Train Actif:</strong></li>
 
-        <li>Cliquez sur le bouton <b>Affecter</b> pour affecter la
-        Section s&eacute;lectionn&eacute;e au Train Actif
-        s&eacute;lectionn&eacute;. La Section est attribu&eacute;e
-        imm&eacute;diatement, et cette fen&ecirc;tre
-        dispara&icirc;t.</li>
+        <li>Cliquez sur le bouton <strong>Affecter</strong> pour affecter la Section sélectionnée
+        au Train Actif sélectionné. La Section est attribuée immédiatement, et cette fenêtre
+        disparaît.</li>
 
-        <li>Ou cliquez sur le bouton <b>Annuler</b> pour quitter
-        sans allouer un suppl&eacute;ment de Section.</li>
+        <li>Ou cliquez sur le bouton <strong>Annuler</strong> pour quitter sans allouer un
+        supplément de Section.</li>
       </ol>
 
-      <p>Note: Si cette fen&ecirc;tre devrait &ecirc;tre
-      laiss&eacute;e ouverte accidentellement, l'allocation d'une
-      Section d'une autre mani&egrave;re fera automatiquement
-      annuler l'op&eacute;ration dans cette fen&ecirc;tre, et cette
-      fen&ecirc;tre dispara&icirc;t.</p>
+      <p>Note: Si cette fenêtre devrait être laissée ouverte accidentellement, l'allocation d'une
+      Section d'une autre manière fera automatiquement annuler l'opération dans cette fenêtre, et
+      cette fenêtre disparaît.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

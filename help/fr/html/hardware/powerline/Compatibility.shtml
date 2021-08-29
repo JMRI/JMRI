@@ -1,170 +1,137 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Updated by Blorec Herv&#233;  2013-09-18-->
 
-  <title>JMRI: Powerline Controllers</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Powerline Controllers</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-      <h2>JMRI: Controleurs CPL (Powerline)pris en charge</h2>Cette
-      page vous permet d'identifier le type de contr&ocirc;leur que
-      vous avez, et vous donne des informations n&eacute;cessaires
-      pour configurer JMRI.
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-      <p>Voir aussi la page principale sur <a href=
-      "index.shtml">configuration JMRI pour les contr&ocirc;leurs
-      CPL</a> .</p>
+    <div id="mainContent">
+      <h2>JMRI: Controleurs CPL (Powerline)pris en charge</h2>
+      Cette page vous permet d'identifier le type de contrôleur que vous avez, et vous donne des
+      informations nécessaires pour configurer JMRI.
+      <p>Voir aussi la page principale sur <a href="index.shtml">configuration JMRI pour les
+      contrôleurs CPL</a> .</p>
 
-      <h3>Adaptateurs X10</h3><!-- start table of types -->
+      <h3>Adaptateurs X10</h3>
+      <!-- start table of types -->
       <br>
-      Derni&egrave;re Edition: 4 F&eacute;vrier 2008<br>
-      Derni&egrave;re Edition: 10 Mars 2008
-
-      <table border="1">
+      Dernière Edition: 4 Février 2008<br>
+      Dernière Edition: 10 Mars 2008
+      <table border="1" summary="">
         <!-- header row -->
 
         <tr>
           <th>Fabricant</th>
-
-          <th>Mod&egrave;le</th>
-
+          <th>Modèle</th>
           <th>Image</th>
-
           <th>Aide identification</th><!-- Comment -->
 
           <th>Status JMRI</th>
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td><a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td nowrap>CM11A<br>
           RCA HC60CRX</td><!-- Model -->
 
-          <td><img src="http://graphics.x10.com/images/cm11asa.gif"
-          width="125" height="150"></td><!-- Image -->
+          <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150" alt=
+          "">
+          </td><!-- Image -->
 
-          <td>Cet adaptateur peut &eacute;tre identfi&eacute; par
-          la connection RJ-11 4 pins dans le bas.<br>
-          Pour l'utiliser avec JMRI, s&eacute;lectionner "Powerline
-          Controller" dans les pr&eacute;f&eacute;rences JMRI, le
-          bon port s&eacute;rie, et "CM11" pour l'adaptateur.</td>
-          <!-- Comment -->
+          <td>Cet adaptateur peut étre identfié par la connection RJ-11 4 pins dans le bas.<br>
+          Pour l'utiliser avec JMRI, sélectionner "Powerline Controller" dans les préférences JMRI,
+          le bon port série, et "CM11" pour l'adaptateur.</td><!-- Comment -->
 
-          <td>L'aide est disponible depuis la version JMRI
-          2.1.3</td><!-- Type -->
+          <td>L'aide est disponible depuis la version JMRI 2.1.3</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td><a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td nowrap>CP290</td><!-- Model -->
 
-          <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif"
-          width="114" height="71"></td><!-- Image -->
+          <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71" alt="">
+          </td><!-- Image -->
 
-          <td>C'est un adaptateur de type console. Il peut aussi
-          fournir des boutons pour des op&eacute;rations sur des
-          &eacute;quipements X10 .<br>
-          Pour l'utiliser avec JMRI, s&eacute;lectionner "Powerline
-          Controller" dans les pr&eacute;f&eacute;rences JMRI, le
-          bon port s&eacute;rie, et "CP290" pour l'adaptateur.</td>
-          <!-- Comment -->
+          <td>C'est un adaptateur de type console. Il peut aussi fournir des boutons pour des
+          opérations sur des équipements X10 .<br>
+          Pour l'utiliser avec JMRI, sélectionner "Powerline Controller" dans les préférences JMRI,
+          le bon port série, et "CP290" pour l'adaptateur.</td><!-- Comment -->
 
-          <td>Le support est disponible depuis la version JMRI
-          2.1.5</td><!-- Type -->
+          <td>Le support est disponible depuis la version JMRI 2.1.5</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td><a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td>CM15A</td><!-- Model -->
 
-          <td><img src=
-          "http://graphics.x10.com/images_ahp//%20%3C!--%20Type%20--%3Ecm15a_c.gif"
-          width="125" height="150"></td><!-- Image -->
+          <td><img src="http://graphics.x10.com/images_ahp//%20%3C!--%20Type%20--%3Ecm15a_c.gif"
+          width="125" height="150" alt="">
+          </td><!-- Image -->
 
-          <td>C'est l'adaptateur fourni avec ActiveHome
-          Professionnal. Bien identifi&eacute; par la connexion USB
-          sur le fond et une antenne sur le c&ocirc;t&eacute;.</td>
-          <!-- Comment -->
+          <td>C'est l'adaptateur fourni avec ActiveHome Professionnal. Bien identifié par la
+          connexion USB sur le fond et une antenne sur le côté.</td><!-- Comment -->
 
-          <td>Non Support&eacute; (<i>encore</i>). Nous
-          esp&eacute;rons un prochain support, en attendant le
+          <td>Non Supporté (<em>encore</em>). Nous espérons un prochain support, en attendant le
           support USB et que quelqu'un veuille bien le tester.<br>
-          Derni&egrave;re Edition: 17 Janvier 2008</td>
-        </tr><!-- Type -->
+          Dernière Edition: 17 Janvier 2008</td>
+        </tr>
+        <!-- Type -->
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td><a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td>CM17A</td><!-- Model -->
 
-          <td><img src=
-          "http://graphics.x10.com/images2/ck17a_detail.jpg" width=
-          "125" height="150"> <img src=
-          "http://graphics.x10.com/images6/fc_inter.jpg" width=
-          "125" height="150"></td><!-- Image -->
+          <td><img src="http://graphics.x10.com/images2/ck17a_detail.jpg" width="125" height="150"
+          alt=""> <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150"
+          alt=""></td><!-- Image -->
 
-          <td>Ce dispositif repose sur un autre appareil X10 qui
-          est vrai contr&ocirc;leur, g&eacute;n&eacute;ralement
-          l'appareil TM751. Tandis qu'il est un &eacute;quipement
-          s&eacute;rie, il utilise les lignes RTS/DTS au lieu des
-          lignes de donn&eacute;es . Ceci permet &agrave;
-          l'&eacute;quipement de travailler alors que d'autres
-          mat&eacute;riels s&eacute;rie travaillent &agrave;
-          travers lui.</td><!-- Comment -->
+          <td>Ce dispositif repose sur un autre appareil X10 qui est vrai contrôleur, généralement
+          l'appareil TM751. Tandis qu'il est un équipement série, il utilise les lignes RTS/DTS au
+          lieu des lignes de données . Ceci permet à l'équipement de travailler alors que d'autres
+          matériels série travaillent à travers lui.</td><!-- Comment -->
 
-          <td>Non support&eacute;. Nous pouvons &eacute;tre capable
-          de le supporter &eacute;ventuellement, mais nous
-          travaillons sur le plus simple, premi&egrave;re version
-          bas&eacute;e sur les caract&egrave;res.<br>
-          Derni&egrave;re Edition: 17 Jan 2008</td><!-- Type -->
+          <td>Non supporté. Nous pouvons étre capable de le supporter éventuellement, mais nous
+          travaillons sur le plus simple, première version basée sur les caractères.<br>
+          Dernière Edition: 17 Jan 2008</td><!-- Type -->
         </tr>
-      </table><!-- end of table of types -->
+      </table>
+      <!-- end of table of types -->
 
-      <table>
+      <table summary="">
         <tr>
           <td nowrap>
             <h3>Adaptateurs Insteon</h3>
             <!-- start table of types -->
             <br>
-            Derni&egrave;re Edition: 3 Jan 2010
-
-            <table border="1">
+            Dernière Edition: 3 Jan 2010
+            <table border="1" summary="">
               <!-- header row -->
 
               <tr>
                 <th>Fabricant</th>
-
-                <th>Mod&egrave;le</th>
-
+                <th>Modèle</th>
                 <th>Image</th>
-
                 <th>Aide Identification</th><!-- Comment -->
 
                 <th>Status JMRI</th>
@@ -172,46 +139,40 @@
 
               <tr>
                 <td><a href=
-                "http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">
-                Smart Home</a></td><!-- Manufacturer -->
+                "http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart
+                Home</a>
+                </td><!-- Manufacturer -->
 
                 <td>PowerLinc Modem 2412S</td><!-- Model -->
 
-                <td><img src=
-                "http://cache1.smarthome.com/images/2414s.jpg"
-                width="138" height="138"></td><!-- Image -->
+                <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height=
+                "138" alt="">
+                </td><!-- Image -->
 
-                <td>Il s'agit de la s&eacute;rie (non USB)
-                d'Adaptateur INSTEON. Il peut contr&ocirc;ler
-                &agrave; la fois les INSTEON et les dispositifs
-                X10..</td>
-
-                <td>Le support est disponible depuis la version
-                JMRI 2.9.1</td><!-- Type -->
+                <td>Il s'agit de la série (non USB) d'Adaptateur INSTEON. Il peut contrôler à la
+                fois les INSTEON et les dispositifs X10..</td>
+                <td>Le support est disponible depuis la version JMRI 2.9.1</td><!-- Type -->
               </tr>
 
               <tr>
-                <td><a href=
-                "http://www.smarthome.com">Smarthome.com</a></td><!-- Manufacturer -->
+                <td><a href="http://www.smarthome.com">Smarthome.com</a>
+                </td><!-- Manufacturer -->
 
                 <td>PowerLinc Modem 2414U</td><!-- Model -->
 
-                <td><img src=
-                "http://www.smarthome.com/images/2414ubig.jpg"
-                width="133" height="133"></td><!-- Image -->
+                <td><img src="http://www.smarthome.com/images/2414ubig.jpg" width="133" height=
+                "133" alt="">
+                </td><!-- Image -->
 
-                <td>Cette version peut &eacute;tre
-                identifi&eacute;e par la connexion USB vers le
-                bas.<br></td><!-- Comment -->
+                <td>Cette version peut étre identifiée par la connexion USB vers le bas.<br></td>
+                <!-- Comment -->
 
-                <td>Non support&eacute; (<i>encore</i>) Nous
-                esp&eacute;rons le supporter prochainement, dans
-                l'attente du support USB et de quelqu'un
-                d&eacute;sireux de le tester.<br>
-                Derni&egrave;re Edition: 4 Feb 2008</td>
-                <!-- Type -->
+                <td>Non supporté (<em>encore</em>) Nous espérons le supporter prochainement, dans
+                l'attente du support USB et de quelqu'un désireux de le tester.<br>
+                Dernière Edition: 4 Feb 2008</td><!-- Type -->
               </tr>
-            </table><!--#include virtual="/Footer.shtml" -->
+            </table>
+            <!--#include virtual="/Footer.shtml" -->
           </td>
         </tr>
       </table>

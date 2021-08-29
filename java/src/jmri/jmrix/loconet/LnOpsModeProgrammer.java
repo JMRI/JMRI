@@ -149,7 +149,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             sv2AccessTimer.start();
-
         } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
             if (lncvAccessTimer == null) {
                 initializeLncvAccessTimer();
@@ -175,7 +174,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
-
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
@@ -265,7 +267,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             sv2AccessTimer.start();
-
         } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
             if (lncvAccessTimer == null) {
                 initializeLncvAccessTimer();
@@ -290,7 +291,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
-
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
@@ -318,6 +322,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.warn("confirm CV \"{}\" addr:{} in LNCV mode not (yet) implemented", CV, mAddress);
             readCV(CV, pL);
             //notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);

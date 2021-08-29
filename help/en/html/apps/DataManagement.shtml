@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Understanding the Data Management</title>
-  <meta name="Author" content="Jerry Grochow">
-  <!--#include virtual="/Style.shtml" -->
-
+  <meta name="Author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
   <script src="/web/js/sorttable.js" type="text/javascript"></script>
-
   <style type="text/css">
   table.sortable th {
         background-color: #EEECF6;
@@ -40,139 +37,175 @@
     clear: both;
   }
   </style>
-
 </head>
-
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1 id="TopOfPage">JMRI: Understanding the Data Management</h1>
 
-        <a id="TopOfPage" name="TopOfPage"></a>
-        <h1>JMRI: Understanding the Data Management</h1>
-        <p class="subtitle">A Work-In-Progress</p>
+      <p class="subtitle">A Work-In-Progress</p>
 
-        <div class="noted"><span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed.
-        See <a href="LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
-        The menu references below are for the new menu structure with the old
-        menu paths in braces.
-        </p>
-        </div>
+      <div class="noted">
+        <span class="since">since 4.23.3</span>
+        <p>Note: The PanelPro main menu is being changed. See <a href="LoadStoreWork.shtml">Loading
+        and Storing Your Work</a> for details. The menu references below are for the new menu
+        structure with the old menu paths in braces.</p>
+      </div>
 
-        <ul class="snav">
-		<li><a href="#category">Elements by Category</a></li>
-		<li><a href="#catalpha">Category/Alpha Index</a></li>
-	    </ul>
+      <ul class="snav">
+        <li>
+          <a href="#category">Elements by Category</a>
+        </li>
 
-      <p class="noted">This page includes information intended for advanced users of JMRI.  Basic information on commands to load and store your
-      work is available <a href="LoadStoreWork.shtml">here.</a>  The additional information containted on the current page is not
-      necessary for ordinary, day-to-day use of JMRI but may be of interest to those who want to understand in more detail when, how,
-      and where JMRI stores the data you and the system create and update.</p>
-
-      <p>As you work with JMRI, you will create and update many different items within its various applications and tools.
-      You may also develop and run "scripts" (external programs) that will do that as well. JMRI will update some of these
-      at certain points during train operation.
-      Although JMRI tries to hide lots of technical details from you, some model railroaders want to know
-      how things work:
-      what data is created when you take various actions, when it gets updated by the
-      JMRI programs, and also whether it gets saved once you quit JMRI and come back at another time.  This page provides a
-      reference guide to all JMRI data, how it gets created and updated, when it gets saved (some doesn't!), and, for
-      more advanced users, where it gets stored.</p>
-
-      <p>We want to stress that this is <span class="co">additional technical detail</span>. You should not need to know this
-      for normal operation of the programs.  If you find that you do, perhaps there's something going wrong, and
-      before reading this page you should ask for help on the
-      <a href="https://groups.io/g/jmriusers/">JmriUsers group</a>
-      or elsewhere.
-
-      <p> The <a href="#category">Elements by Category</a> table columns show the following information:
-
-      <p><b>Category:</b> The tables below categorize the different types of JMRI data to make this information easier to present and hopefully to
-      understand.  These categories are shown in the column labelled <b>"Category"</b>:</p>
-      <ul>
-      <li>Layout Elements: all the things that describe my layout and how it works, such as turnouts, tracks, pictures there of,
-      blocks, signals, etc.).  All this information is entered in <a href="PanelPro/index.shtml">PanelPro</a>.</li>
-      <li>Roster Information: roster entries for each of your engines and other DCC controlled accessories, pictures of engines, the roster
-      itself,  and related information.  Roster information is entered in <a href="DecoderPro/index.shtml">DecoderPro</a>.</li>
-      <li>Operations Elements: data related to operating your railroad (manually or with some degree of automation) such as warrants,
-      paths, and dozens of other things.  Operational elements are entered in various "Tools" listed in PanelPro including
-      <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">"Dispatacher..."</a>. </li>
-      <li>System Preferences: all the things you enter under Preferences, either in DecoderPro or PanelPro.</li>
+        <li>
+          <a href="#catalpha">Category/Alpha Index</a>
+        </li>
       </ul>
 
-      <p><b>Creates/Stores:</b>When it comes to saving what you input and/or what JMRI does with that input,
-      there are multiple different situations, shown in the table column <b>"Creates/Stores"</b>. There is data that is:</p>
-      <ul>
-      <li>User created, user stored (e.g. turnout table entries, layout panels, connections, start-up preferences)
-      <li>User created, automatically stored (e.g. size and position of windows, roster entries when change made to the roster table)
-      <li>Automatically created, user stored (e.g. Logix from LRoute)
-      <li>Automatically created, automatically stored (e.g. default profile)
-      <li>Automatically created, not stored!  (e.g. turnout status)
-      </ul>
-      <p>The key to successful operation with JMRI is understanding which is which.  And that is what the tables below will show you.</p>
+      <p class="noted">This page includes information intended for advanced users of JMRI. Basic
+      information on commands to load and store your work is available <a href=
+      "LoadStoreWork.shtml">here.</a> The additional information containted on the current page is
+      not necessary for ordinary, day-to-day use of JMRI but may be of interest to those who want
+      to understand in more detail when, how, and where JMRI stores the data you and the system
+      create and update.</p>
 
-      <p><b>Save Command:</b>Unfortunately, there is no single command to save all user created or modified data.  It is important to recognize when and
-      where you have to take some action to make sure your work is there the next time you come back to it. As the table shows in the
-      column labelled <b>"Save Command"</b>, these
-      are the places where a command to "save" or "store" will save and store some portion of your work:</p>
+      <p>As you work with JMRI, you will create and update many different items within its various
+      applications and tools. You may also develop and run "scripts" (external programs) that will
+      do that as well. JMRI will update some of these at certain points during train operation.
+      Although JMRI tries to hide lots of technical details from you, some model railroaders want
+      to know how things work: what data is created when you take various actions, when it gets
+      updated by the JMRI programs, and also whether it gets saved once you quit JMRI and come back
+      at another time. This page provides a reference guide to all JMRI data, how it gets created
+      and updated, when it gets saved (some doesn't!), and, for more advanced users, where it gets
+      stored.</p>
+
+      <p>We want to stress that this is <span class="co">additional technical detail</span>. You
+      should not need to know this for normal operation of the programs. If you find that you do,
+      perhaps there's something going wrong, and before reading this page you should ask for help
+      on the <a href="https://groups.io/g/jmriusers/">JmriUsers group</a> or elsewhere.</p>
+
+      <p>The <a href="#category">Elements by Category</a> table columns show the following
+      information:</p>
+
+      <p><strong>Category:</strong> The tables below categorize the different types of JMRI data to
+      make this information easier to present and hopefully to understand. These categories are
+      shown in the column labelled <strong>"Category"</strong>:</p>
+
+      <ul>
+        <li>Layout Elements: all the things that describe my layout and how it works, such as
+        turnouts, tracks, pictures there of, blocks, signals, etc.). All this information is
+        entered in <a href="PanelPro/index.shtml">PanelPro</a>.
+        </li>
+
+        <li>Roster Information: roster entries for each of your engines and other DCC controlled
+        accessories, pictures of engines, the roster itself, and related information. Roster
+        information is entered in <a href="DecoderPro/index.shtml">DecoderPro</a>.
+        </li>
+
+        <li>Operations Elements: data related to operating your railroad (manually or with some
+        degree of automation) such as warrants, paths, and dozens of other things. Operational
+        elements are entered in various "Tools" listed in PanelPro including <a href=
+        "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">"Dispatacher..."</a>.
+        </li>
+
+        <li>System Preferences: all the things you enter under Preferences, either in DecoderPro or
+        PanelPro.</li>
+      </ul>
+
+      <p><strong>Creates/Stores:</strong>When it comes to saving what you input and/or what JMRI
+      does with that input, there are multiple different situations, shown in the table column
+      <strong>"Creates/Stores"</strong>. There is data that is:</p>
+
+      <ul>
+        <li>User created, user stored (e.g. turnout table entries, layout panels, connections,
+        start-up preferences)</li>
+
+        <li>User created, automatically stored (e.g. size and position of windows, roster entries
+        when change made to the roster table)</li>
+
+        <li>Automatically created, user stored (e.g. Logix from LRoute)</li>
+
+        <li>Automatically created, automatically stored (e.g. default profile)</li>
+
+        <li>Automatically created, not stored! (e.g. turnout status)</li>
+      </ul>
+
+      <p>The key to successful operation with JMRI is understanding which is which. And that is
+      what the tables below will show you.</p>
+
+      <p><strong>Save Command:</strong>Unfortunately, there is no single command to save all user
+      created or modified data. It is important to recognize when and where you have to take some
+      action to make sure your work is there the next time you come back to it. As the table shows
+      in the column labelled <strong>"Save Command"</strong>, these are the places where a command
+      to "save" or "store" will save and store some portion of your work:</p>
+
       <ol>
         <li>Preferences: "Save"</li>
-        <li>Panel editors: <strong>File &rArr; Store ALL table content and panels...</strong>
-          {<em>Old: <strong>File &rArr; Store Panels...</strong></em>} or use the PanelPro main menu item
-          <strong>File &rArr; Store ALL table content and panels...</strong>
-          {<em>Old: <strong>Panels &rArr; Store Panels...</strong></em>}
-        </li>
-        <li>Tables (also Fast Clock):
-          <strong>File &rArr; Store &rArr; </strong><br>
-          (a) <strong>Store Only table content (No Panels)...</strong> {<em>Old: <strong>Store configuration</strong></em>} or<br>
-          (b) <strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}
-        </li>
-      <li>Roster entry: (a) automatic (b) File &rArr; Save or "Save to Roster" (c) "Write" to Decoder</li>
-      <li>Images/Icons: "Save Image Index"</li>
-      <li>Scripts: "Store..." (on Script Entry window)</li>
+
+        <li>Panel editors: <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old:
+        <strong>File ⇒ Store Panels...</strong></em>} or use the PanelPro main menu item
+        <strong>File ⇒ Store ALL table content and panels...</strong> {<em>Old: <strong>Panels ⇒
+        Store Panels...</strong></em>}</li>
+
+        <li>Tables (also Fast Clock): <strong>File ⇒ Store ⇒</strong><br>
+        (a) <strong>Store Only table content (No Panels)...</strong> {<em>Old: <strong>Store
+        configuration</strong></em>} or<br>
+        (b) <strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store
+        configuration and panels</strong></em>}</li>
+
+        <li>Roster entry: (a) automatic (b) File ⇒ Save or "Save to Roster" (c) "Write" to
+        Decoder</li>
+
+        <li>Images/Icons: "Save Image Index"</li>
+
+        <li>Scripts: "Store..." (on Script Entry window)</li>
       </ol>
 
       <p>These commands are identified in the tables by these numbers.</p>
 
-      <p><b>Where Stored:</b> Data stored on disk by JMRI is separated into a number of files and directories.  The typical user shouldn't
-      have to deal with these, but for those who are interested, see the help page on<a href="../doc/Technical/ProfileFileStructure.shtml">
-      Profile File Structure.</a></p>
+      <p><strong>Where Stored:</strong> Data stored on disk by JMRI is separated into a number of
+      files and directories. The typical user shouldn't have to deal with these, but for those who
+      are interested, see the help page on <a href=
+      "../doc/Technical/ProfileFileStructure.shtml">Profile File Structure.</a></p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h2 id="category">JMRI Elements by Category</h2>
 
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a id="category" name="category"></a>
-      <h2>JMRI Elements by Category</h2>
-
-      <p>This index cross-references JMRI data by <b>Category</b>: Layout Element, Operations Element, Roster Element, Preferences,
-      and Other. The column <b>Creates/Saves</b> uses abbreviations for the situations listed above, e.g. "UC/US" means "User Created/
-      User Stored."  The <b>Store Command</b> uses the numbers above for the different commands.</p>
+      <p>This index cross-references JMRI data by <strong>Category</strong>: Layout Element,
+      Operations Element, Roster Element, Preferences, and Other. The column
+      <strong>Creates/Saves</strong> uses abbreviations for the situations listed above, e.g.
+      "UC/US" means "User Created/ User Stored." The <strong>Store Command</strong> uses the
+      numbers above for the different commands.</p>
 
       <p>Click a heading to sort the list up or down by that column.</p>
 
       <table class="sortable">
-
         <tr style="text-align: left">
-          <th width="8%">Category</th>
-          <th width="20%">Data Types</th>
-          <th width="15%">Where Created</th>
+          <th style="width: 8%">Category</th>
+          <th style="width: 20%">Data Types</th>
+          <th style="width: 15%">Where Created</th>
           <th>Creates/Stores</th>
-          <th width="10%">Store Command</th>
+          <th style="width: 10%">Store Command</th>
           <th>Where Stored</th>
-          <th></th>
+          <th>
+          </th>
         </tr>
 
         <tr>
           <td class="type">Layout Elements</td>
           <td class="data">LE Panels, Track Connections, Block Assignments, Signal Placement</td>
-          <td class="where"><a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a></td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(b)</td>
-          <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
-          <td>&#10004;</td>
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>✔</td>
         </tr>
 
         <tr>
@@ -180,38 +213,48 @@
           <td class="data">Sensor, Turnout, Block, Light</td>
           <td class="where">Table for specific element type</td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b)
+          <td class="cmd">2, 3(a), 3(b) 
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
           In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
-          "Store configuration and panels" which stores tables and panels -->
-          <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
-          <td>&#10004;</td>
+          "Store configuration and panels" which stores tables and panels --></td>
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>✔</td>
         </tr>
 
-      <tr>
+        <tr>
           <td class="type">Layout Elements</td>
           <td class="data">Icons, Images, Image Index</td>
-          <td class="where"><a href="../../package/jmri/jmrit/display/IconAdder.shtml">Icon Editor</a>, Image Index Editor</td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/display/IconAdder.shtml">Icon Editor</a>, Image Index
+            Editor
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">5</td>
           <!-- In Image Index Editor or <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>:
           "Store Image Index" under the File poulldown menu. -->
-          <td class="store">Image/icon files where specified (default is the User Files Location directory). Image index in
-          catalogTrees.xml in the Preferences locaiton.</td>
-          <td></td>
+
+          <td class="store">Image/icon files where specified (default is the User Files Location
+          directory). Image index in catalogTrees.xml in the Preferences locaiton.</td>
+          <td>
+          </td>
         </tr>
 
-       <tr>
+        <tr>
           <td class="type">Layout Elements</td>
           <td class="data">Blocks</td>
-          <td class="where"><a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a></td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
           In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
           "Store configuration and panels" which stores tables and panels -->
-          <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
-          <td>&#10004;</td>
+
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>✔</td>
         </tr>
 
         <tr>
@@ -219,9 +262,12 @@
           <td class="data">Throttles</td>
           <td class="where">??</td>
           <td class="who">UC/US</td>
-          <td class="cmd"></td>
-          <td class="store"></td>
-          <td></td>
+          <td class="cmd">
+          </td>
+          <td class="store">
+          </td>
+          <td>
+          </td>
         </tr>
 
         <tr>
@@ -229,187 +275,224 @@
           <td class="data">Consisting</td>
           <td class="where">??</td>
           <td class="who">UC/US</td>
-          <td class="cmd"></td>
-          <td class="store"></td>
-          <td></td>
+          <td class="cmd">
+          </td>
+          <td class="store">
+          </td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Block Contents (Value)</td>
           <td class="where">??</td>
-          <td class="who">UC/US followed by <b>AS</b></td>
+          <td class="who">UC/US followed by <strong>AS</strong></td>
           <td class="cmd">User enters first Block Value, then JMRI updates automatically.</td>
           <td class="store">blockvalues.xml in Preferences location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Sensor Status, Turnout Status, Block (Occupancy) Status</td>
           <td class="where">Table for specific element type</td>
-          <td class="who"><b>AC</b>/NS</td>
+          <td class="who"><strong>AC</strong>/NS</td>
           <td class="cmd">Status data is not saved when JMRI is closed.</td>
           <td class="store">NA</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Occupancy Block (OBlock)</td>
-          <td class="where"><a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">OBlock Table</a></td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">OBlock Table</a>
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
           the File poulldown menu. -->
-          <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
-          <td>&#10004;</td>
+
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>✔</td>
         </tr>
 
-       <tr>
+        <tr>
           <td class="type">Operations Elements</td>
           <td class="data">OBlock, Portal, OPath</td>
-          <td class="where"><a href="../../package/jmri/jmrit/display/CircuitBuilder.shtml">Circuit Builder</a></td>
-          <td class="who"><b>AC</b>/US</td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/display/CircuitBuilder.shtml">Circuit Builder</a>
+          </td>
+          <td class="who"><strong>AC</strong>/US</td>
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
           the File poulldown menu. -->
-          <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
-          <td>&#10004;</td>
+
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Scripts</td>
-          <td class="where"><a href="../tools/scripting/index.shtml">Script Entry window</a> or external editor</td>
+          <td class="where">
+            <a href="../tools/scripting/index.shtml">Script Entry window</a> or external editor
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">6</td>
-          <td class="store">Scripts are stored in ".py" or ".js" files where specified by user (default: Script Location)</td>
-          <td>&#10004;</td>
+          <td class="store">Scripts are stored in ".py" or ".js" files where specified by user
+          (default: Script Location)</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Speedometer</td>
-          <td class="where"></td>
+          <td class="where">
+          </td>
           <td class="who">UC/US</td>
-          <td class="cmd">Tools->Speedometer, Hit "Save as default"</td>
-          <td class="store">In ?? in Preferences location. NOTE: <em>Sensor names are saved and reappear when JMRI reopens
-          even though they may not be defined at that point.  You must then load a panel or otherwise define the sensors.</em></td>
-          <td></td>
+          <td class="cmd">Tools-&gt;Speedometer, Hit "Save as default"</td>
+          <td class="store">In ?? in Preferences location. NOTE: <em>Sensor names are saved and
+          reappear when JMRI reopens even though they may not be defined at that point. You must
+          then load a panel or otherwise define the sensors.</em></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Timetable data</td>
-          <td class="where"></td>
+          <td class="where">
+          </td>
           <td class="who">UC/US</td>
-          <td class="cmd">Tools->Timetable, Hit "Save"</td>
+          <td class="cmd">Tools-&gt;Timetable, Hit "Save"</td>
           <td class="store">In timetable/TimeTableData.xml in Preferences location</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">CTC data</td>
-          <td class="where"></td>
+          <td class="where">
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(a), 3(b)</td>
           <td class="store">Included in the tables and panels xml data file</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Dispatcher</td>
-          <td class="where"></td>
+          <td class="where">
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">?</td>
           <td class="store">In dispatcheroptions.xml in Preferences location</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Dispatcher trains</td>
-          <td class="where"></td>
+          <td class="where">
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">?</td>
           <td class="store">In dispatcheroptions.xml in Preferences location</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">OperationsPro data</td>
-          <td class="where"><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations Pro</a> (Operations menu)</td>
-          <td class="who">UC/<b>AS</b></td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations Pro</a>
+            (Operations menu)
+          </td>
+          <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">Appropriate file saved when changes made</td>
           <td class="store">In six files in operations/ in User Files location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Other</td>
           <td class="data">Window size/location</td>
-          <td class="where"></td>
-          <td class="who">UC/<b>AS</b></td>
+          <td class="where">
+          </td>
+          <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">Saved when window is moved or resized</td>
           <td class="store">Saved in the user-interface.xml file in the Profile location.</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
           <td class="type">Other</td>
           <td class="data">Backup panels</td>
           <td class="where">Whenever panels or tables are stored</td>
-          <td class="who"><b>AC/AS</b></td>
+          <td class="who"><strong>AC/AS</strong>
+          </td>
           <td class="cmd">NA</td>
           <td class="store">In backupPanels/ in Profile location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Roster Info</td>
           <td class="data">Roster Entry Info</td>
           <td class="where">Changing info on main Roster page</td>
-          <td class="who">UC/<b>AS</b></td>
+          <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">4(a)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Roster Info</td>
           <td class="data">Roster Entry (full)</td>
-          <td class="where">"Save" <a href="DecoderPro/Roster.shtml">Roster Entry</a></td>
+          <td class="where">
+            "Save" <a href="DecoderPro/Roster.shtml">Roster Entry</a>
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">4(b)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Roster Info</td>
           <td class="data">Decoder CVs</td>
-          <td class="where">"Write" <a href="DecoderPro/Roster.shtml">Roster Entry</a></td>
+          <td class="where">
+            "Write" <a href="DecoderPro/Roster.shtml">Roster Entry</a>
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">4(c)</td>
           <td class="store">Individual files in subdirectory "roster" in Roster Files Location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
           <td class="type">Roster Info</td>
           <td class="data">Roster Group</td>
-          <td class="where">DecoderPro Settings-> options for
-          <a href="../../manual/DecoderPro/Main_RosterGroup.shtml">Roster Group</a></td>
-          <td class="who">UC/<b>AS</b></td>
+          <td class="where">
+            DecoderPro Settings-&gt; options for <a href=
+            "../../manual/DecoderPro/Main_RosterGroup.shtml">Roster Group</a>
+          </td>
+          <td class="who">UC/<strong>AS</strong></td>
           <td class="cmd">4(a)</td>
           <td class="store">roster.xml Roster Files Location</td>
-          <td>&#10004;</td>
+          <td>✔</td>
         </tr>
 
         <tr>
@@ -417,9 +500,11 @@
           <td class="data">Consisting</td>
           <td class="where">Select "Consist" tab on individual roster entry</td>
           <td class="who">UC/US</td>
-          <td class="cmd"></td>
+          <td class="cmd">
+          </td>
           <td class="store">Individual decoder files in Roster Files Location</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
         <tr>
@@ -429,131 +514,146 @@
           <td class="who">UC/<strong>NS</strong></td>
           <td class="cmd">??</td>
           <td class="store">Not saved.</td>
-          <td></td>
+          <td>
+          </td>
         </tr>
 
-         <tr>
+        <tr>
           <td class="type">System Preferences</td>
           <td class="data">Config Profiles</td>
-          <td class="where">Select <a href="../setup/profiles.shtml">Config Profiles</a> in Preferences window under Edit pulldown</td>
+          <td class="where">
+            Select <a href="../setup/profiles.shtml">Config Profiles</a> in Preferences window
+            under Edit pulldown
+          </td>
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
           <td class="store">In subdirectories under Config File locaiton.</td>
-          <td>&#10004;</td>
-       </tr>
+          <td>✔</td>
+        </tr>
 
-       <tr>
+        <tr>
           <td class="type">System Preferences</td>
-          <td class="data">Connections, Defaults, File Locations, Start Up Actions, etc. </td>
+          <td class="data">Connections, Defaults, File Locations, Start Up Actions, etc.</td>
           <td class="where">Select different items in Preferences window under Edit pulldown</td>
           <td class="who">UC/US</td>
           <td class="cmd">1</td>
           <td class="store">In several different files in the Settings Location.</td>
-          <td>&#10004;</td>
-       </tr>
-
-       <tr>
-          <td class="type">MORE</td>
-          <td class="data">MORE</td>
-          <td class="where"></td>
-          <td class="who"></td>
-          <td class="cmd">1, 2, 3(a), 3(b), 4(a), 4(b), 4(c), 5, 6?</td>
-          <td class="store"></td>
-          <td></td>
+          <td>✔</td>
         </tr>
 
-   </table>
+        <tr>
+          <td class="type">MORE</td>
+          <td class="data">MORE</td>
+          <td class="where">
+          </td>
+          <td class="who">
+          </td>
+          <td class="cmd">1, 2, 3(a), 3(b), 4(a), 4(b), 4(c), 5, 6?</td>
+          <td class="store">
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
 
-   <p><a href="#TopOfPage">[Go to top of page]</a></p>
+      <p><a href="#TopOfPage">[Go to top of page]</a>
+      </p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a id="catalpha" name="catalpha"></a>
-      <h2>Category/Alphabetic Index</h2>
+      <h2 id="catalpha">Category/Alphabetic Index</h2>
 
       <p>This index cross-references hardware and products by the categories under which they
-      appear on this page. Click on a category to go to that category on this page.  Click on a
-      hardware item to go to the JMRI Help page for that product or family. The sidebar provides
-      an alphabetic list.</p>
+      appear on this page. Click on a category to go to that category on this page. Click on a
+      hardware item to go to the JMRI Help page for that product or family. The sidebar provides an
+      alphabetic list.</p>
 
-         <div class="row">
-           <div class="column">
+      <div class="row">
+        <div class="column">
+          <em style="padding-left: 1em;"><a href="#layout">Layout elements:</a></em> Describe the
+          physical layout
+          <ul>
+            <li>Layout Editor (LE) Panel</li>
 
-                <i style="padding-left: 1em;"><a href="#layout">Layout elements:</a></i>
-                Describe the physical layout
-                <ul>
-                  <li>Layout Editor (LE) Panel</li>
-                  <li>Control Panel Editor (CPE) Panel </li>
-                  <li>Block</li>
-                  <li>Turnout</li>
-                  <li>Sensor</li>
-                  <li>Light</li>
-                  <li>MORE</li>
-                </ul>
+            <li>Control Panel Editor (CPE) Panel</li>
 
-               <br>
-               <i style="padding-left: 1em;"><a href="#roster">Roster information:</a></i>
-                Specify engine and other DCC controlled components
-                <ul>
-                  <li>Roster main page</li>
-                  <li>Roster entry</li>
-                  <li>Roster group</li>
-                </ul>
+            <li>Block</li>
 
-             </div>
+            <li>Turnout</li>
 
-             <div class="column">
+            <li>Sensor</li>
 
-                <i style="padding-left: 1em;"><a href="#opns">Operations elements:</a></i>
-                Additional information about the physical layout used for operational control of the railroad
-                <ul>
-                  <li>Block</li>
-                  <li>OBlock</li>
-                  <li>OPath</li>
-                  <li>Portal</li>
-                  <li>Route</li>
-                  <li>LRoute</li>
-                  <li>Warrant</li>
-                  <li>Script</li>
-                  <li>Memory Variable</li>
-                  <li>MORE</li>
-                </ul>
+            <li>Light</li>
 
-              </div>
+            <li>MORE</li>
+          </ul>
+          <br>
+          <em style="padding-left: 1em;"><a href="#roster">Roster information:</a></em> Specify
+          engine and other DCC controlled components
+          <ul>
+            <li>Roster main page</li>
 
-              <div class="column">
+            <li>Roster entry</li>
 
-                <i style="padding-left: 1em;"><a href="#pref">System preferences:</a></i>
-                 Information used by JMRI to customize look, feel, and operation of the JMRI system
-                <ul>
-                  <li>Connection</li>
-                  <li>Start-up</li>
-                  <li>MORE</li>
-                </ul>
+            <li>Roster group</li>
+          </ul>
+        </div>
 
-                <br>
-                <i style="padding-left: 1em;"><a href="#other">Other:</a></i>
+        <div class="column">
+          <em style="padding-left: 1em;"><a href="#opns">Operations elements:</a></em> Additional
+          information about the physical layout used for operational control of the railroad
+          <ul>
+            <li>Block</li>
 
-                <ul>
-                  <li>Window size/position</li>
-                  <li>Script</li>
-                  <li>MORE</li>
-                </ul>
-          </div>
+            <li>OBlock</li>
+
+            <li>OPath</li>
+
+            <li>Portal</li>
+
+            <li>Route</li>
+
+            <li>LRoute</li>
+
+            <li>Warrant</li>
+
+            <li>Script</li>
+
+            <li>Memory Variable</li>
+
+            <li>MORE</li>
+          </ul>
+        </div>
+
+        <div class="column">
+          <em style="padding-left: 1em;"><a href="#pref">System preferences:</a></em> Information
+          used by JMRI to customize look, feel, and operation of the JMRI system
+          <ul>
+            <li>Connection</li>
+
+            <li>Start-up</li>
+
+            <li>MORE</li>
+          </ul>
+          <br>
+          <em style="padding-left: 1em;"><a href="#other">Other:</a></em>
+          <ul>
+            <li>Window size/position</li>
+
+            <li>Script</li>
+
+            <li>MORE</li>
+          </ul>
+        </div>
       </div>
 
-   <p><a href="#TopOfPage">[Go to top of page]</a></p>
-
-
-
-
-
-   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
+      <p><a href="#TopOfPage">[Go to top of page]</a>
+      </p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
-
-

@@ -59,20 +59,22 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", def);
         def.commentTextField.setText("divisionComment");
         def.divisionNameTextField.setText("newDivisionNameABCDEFGHIJKLMNOPQ");
-        JemmyUtil.enterClickAndLeave(def.saveDivisionButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.saveDivisionButton);
         // new dialog window stating division name too long
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         Assert.assertEquals("Name", "testName", division.getName());
         Assert.assertEquals("Comment", "", division.getComment());
         // now test saving a division that already exists
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         dm.newDivision("newDivisionName");
         def.divisionNameTextField.setText("newDivisionName");
-        JemmyUtil.enterClickAndLeave(def.saveDivisionButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.saveDivisionButton);
         // new dialog window stating division already exists
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("save")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         JUnitUtil.dispose(def);
     }
     
@@ -103,14 +105,14 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         // now test adding a division that already exists
         dm.newDivision("newDivisionName");
         def.divisionNameTextField.setText("newDivisionName");
-        JemmyUtil.enterClickAndLeave(def.addDivisionButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.addDivisionButton);
         // new dialog window stating division already exists
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("add")}), Bundle.getMessage("ButtonOK"));
         Assert.assertEquals("Number of divisions", 1, dm.getNumberOfdivisions());
         // test name too long
         def.divisionNameTextField.setText("newDivisionNameABCDEFGHIJKLMNOPQ");
-        JemmyUtil.enterClickAndLeave(def.addDivisionButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.addDivisionButton);
         // new dialog window stating division name too long
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("add")}), Bundle.getMessage("ButtonOK"));
@@ -127,13 +129,19 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(dm.getDivisionByName("testDivisionName"));
         DivisionEditFrame def = new DivisionEditFrame(division);
         Assert.assertNotNull("exists", def);
-        JemmyUtil.enterClickAndLeave(def.deleteDivisionButton);
+        
+        // test no
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.deleteDivisionButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(def, Bundle.getMessage("DeleteDivision"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(def);        
         Assert.assertNotNull(dm.getDivisionByName("testDivisionName"));
-        JemmyUtil.enterClickAndLeave(def.deleteDivisionButton);
+        
+        // test yes
+        JemmyUtil.enterClickAndLeaveThreadSafe(def.deleteDivisionButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(def, Bundle.getMessage("DeleteDivision"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(def);
         Assert.assertNull(dm.getDivisionByName("testDivisionName"));
         JUnitUtil.dispose(def);
     }

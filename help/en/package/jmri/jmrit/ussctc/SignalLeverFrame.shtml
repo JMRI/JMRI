@@ -1,57 +1,50 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Signal Lever Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OS Indicator">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OS Indicator"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Signal Lever</h1><b>This is not fully implemented yet</b>
-
-      <p>A Signal lever on a USS CTC panel has two inputs (Sensors)
-      for the lever itself, a number of other inputs and outputs to
-      make it function. This tool lets you define those, and then
-      creates the underlying logic to make them act
-      prototypically.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Signal Lever</h1>
+      <strong>This is not fully implemented yet</strong>
+      <p>A Signal lever on a USS CTC panel has two inputs (Sensors) for the lever itself, a number
+      of other inputs and outputs to make it function. This tool lets you define those, and then
+      creates the underlying logic to make them act prototypically.</p>
 
       <dl>
         <dt>Signal inputs</dt>
 
-        <dd>For the purpose of a multi-sensor input, you might want
-        to have a null internal sensor for the middle
-        position.</dd>
+        <dd>For the purpose of a multi-sensor input, you might want to have a null internal sensor
+        for the middle position.</dd>
 
         <dt>Left and Right Signal Heads</dt>
 
-        <dt>The Signal Heads that are held and released as the
-        lever acts</dt>
+        <dt>The Signal Heads that are held and released as the lever acts</dt>
 
         <dt>Code input</dt>
 
-        <dd>The defined <a href="CodeButtonFrame.shtml">code
-        button</a> that causes this lever to act.</dd>
+        <dd>
+          The defined <a href="CodeButtonFrame.shtml">code button</a> that causes this lever to
+          act.
+        </dd>
 
         <dt>Inhibit input</dt>
 
-        <dd>A sensor which is used and ACTIVE indicates that the
-        signals may not change position.</dd>
+        <dd>A sensor which is used and ACTIVE indicates that the signals may not change
+        position.</dd>
       </dl>
 
-      <p>This is the help/jmri/jmrit/ussctc/SignalLeverFrame help
-      page</p>
+      <p>This is the help/jmri/jmrit/ussctc/SignalLeverFrame help page</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

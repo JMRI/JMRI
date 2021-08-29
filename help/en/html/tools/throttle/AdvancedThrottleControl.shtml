@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Advanced throttle control</title>
   <meta name="keywords" content="JMRI throttle">
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project">
-  <meta name="author" content="Lionel Jeanson">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Advanced Throttle Control</h1>
 
-      <h2>Keyboard Control of the Standard Throttle</h2>You can
-      operate your JMRI Throttle from the keyboard in addition to
-      using a mouse.
-
+      <h2>Keyboard Control of the Standard Throttle</h2>
+      You can operate your JMRI Throttle from the keyboard in addition to using a mouse.
       <div style="margin-left: 40px;">
         Throttles in current Window : Alt + left/right<br>
         Throttle Windows : Shift + left/right<br>
-      </div><br>
-      You can operate the Throttle using your keyboard (the Control
-      Panel in the Throttle Window has to be selected):<br>
+      </div>
+      <br>
+      You can operate the Throttle using your keyboard (the Control Panel in the Throttle Window
+      has to be selected):<br>
 
       <h4>Speed</h4>
 
@@ -53,18 +47,15 @@
 
         <dt>Page Up</dt>
 
-        <dd>Big Increase Speed (approximately 10% for each press of
-        the key)</dd>
+        <dd>Big Increase Speed (approximately 10% for each press of the key)</dd>
 
         <dt>Page Down</dt>
 
-        <dd>Big Decrease Speed (approximately 10% for each press of
-        the key)</dd>
+        <dd>Big Decrease Speed (approximately 10% for each press of the key)</dd>
 
         <dt>Numeric Pad *</dt>
 
-        <dd>Idle (set speed to 0, any speed momentum is
-        enabled)</dd>
+        <dd>Idle (set speed to 0, any speed momentum is enabled)</dd>
 
         <dt>Numeric Pad /</dt>
 
@@ -99,122 +90,100 @@
         <dd>Function 11 to Function 24</dd>
       </dl>
 
-      <h2>Custom Throttle with Jynstruments</h2><a href=
-      "../scripting/Jynstruments.shtml">Jynstruments</a> are
-      powerful tools for creating custom JMRI Throttles. There's
-      <a href="../scripting/Jynstruments.shtml">much more
-      information</a> on creating and customizing them on a
-      <a href="../scripting/Jynstruments.shtml">separate page</a>.
-      Here, we focus on using the customized Throttles.
-
-      <p><a href=
-      "https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
-      Jynstruments</a> provided below are for controlling already
-      assigned Throttles, the Throttle pane you will control has to
-      be set up before. Then it's only a matter of drag'n dropping
-      a folder on the <a href="ThrottleToolBar.shtml">Throttle
-      Window <span style=
+      <h2>Custom Throttle with Jynstruments</h2>
+      <a href="../scripting/Jynstruments.shtml">Jynstruments</a> are powerful tools for creating
+      custom JMRI Throttles. There's <a href="../scripting/Jynstruments.shtml">much more
+      information</a> on creating and customizing them on a <a href=
+      "../scripting/Jynstruments.shtml">separate page</a>. Here, we focus on using the customized
+      Throttles.
+      <p><a href="https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
+      Jynstruments</a> provided below are for controlling already assigned Throttles, the Throttle
+      pane you will control has to be set up before. Then it's only a matter of drag'n dropping a
+      folder on the <a href="ThrottleToolBar.shtml">Throttle Window <span style=
       "font-weight: bold;">toolbar</span></a>.</p>
 
-      <p><span style="font-style: italic;">Note that Throttle
-      Window content is Jynstrumentable too, so here we drop the
-      Jynstruments on the toolbar itself, not on the window
-      content.</span></p>
+      <p><span style="font-style: italic;">Note that Throttle Window content is Jynstrumentable
+      too, so here we drop the Jynstruments on the toolbar itself, not on the window
+      content.</span>
+      </p>
 
-      <h3>USB Joypad (USBControl.jyn)</h3>There is a Jynstrument
-      named USBControl.jyn to be dropped on a Throttle Window
-      toolbar to get control of that Window with a joypad. See the
-      .py files for default button settings, and possible
-      customizations.
+      <h3>USB Joypad (USBControl.jyn)</h3>
+      There is a Jynstrument named USBControl.jyn to be dropped on a Throttle Window toolbar to get
+      control of that Window with a joypad. See the .py files for default button settings, and
+      possible customizations.
+      <p>Particularly you might want to define a "driver" file for your own device, start from
+      default.py, copy it, rename it with the name of the device as seen by JMRI without any space
+      or ".", then use <a href="../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">the
+      JMRI Jinput USB Input Control window</a> (accessible from Debug menu) to get your Components
+      names and value,</p>
 
-      <p>Particularly you might want to define a "driver" file for
-      your own device, start from default.py, copy it, rename it
-      with the name of the device as seen by JMRI without any space
-      or ".", then use <a href=
-      "../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">
-      the JMRI Jinput USB Input Control window</a> (accessible from
-      Debug menu) to get your Components names and value,</p>
-
-      <p><span style="font-style: italic;">Note that a classic
-      Jython file exists to take control of a Throttle Window with
-      a USB device, this one is more complex but easier to use
-      (imho).</span></p>
+      <p><span style="font-style: italic;">Note that a classic Jython file exists to take control
+      of a Throttle Window with a USB device, this one is more complex but easier to use
+      (imho).</span>
+      </p>
 
       <h4>Default controls:</h4>
 
       <h5 style="margin-left: 40px;">Browsing throttles:</h5>
 
       <div style="margin-left: 80px;">
-        To browse through the currently assigned throttles for the
-        controlled window, the pov right and left buttons are used
-        (the pov, also known as switch hat, is the four or eight
+        To browse through the currently assigned throttles for the controlled window, the pov right
+        and left buttons are used (the pov, also known as switch hat, is the four or eight
         directions button on the left of the pad).
       </div>
 
       <h5 style="margin-left: 40px;">Speed:</h5>
 
       <div style="margin-left: 80px;">
-        Speed is controlled by axis "x" which usually is found on
-        the left stick.<br>
-        Note that buttons 0 to 3 (or 1 to 4) are assigned to some
-        speed presets, from idle (speed 0), to slow (speed 0,3), to
-        cruise (speed 0,8), to max (speed 1). A double tap on the
+        Speed is controlled by axis "x" which usually is found on the left stick.<br>
+        Note that buttons 0 to 3 (or 1 to 4) are assigned to some speed presets, from idle (speed
+        0), to slow (speed 0,3), to cruise (speed 0,8), to max (speed 1). A double tap on the
         button for speed 0 will send an emergency stop.
       </div>
 
       <h5 style="margin-left: 40px;">Direction:</h5>
 
       <div style="margin-left: 80px;">
-        Direction is controlled by axis "z" which usually is found
-        on right left stick
+        Direction is controlled by axis "z" which usually is found on right left stick
       </div>
 
       <h5 style="margin-left: 40px;">Functions buttons:</h5>
 
       <div style="margin-left: 80px;">
-        All remaining buttons are dedicated to functions (usually
-        the one left on the side, under, and in the middle of the
-        gamepad)
-      </div><br>
-      <span style="font-style: italic;">Note that joypads buttons
-      layout, and even sticks events differ from one manufacturer
-      to another, hence you should customize a driver.py for your
-      own hardware.</span>
-
-      <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>There is a
-      Jynstrument named WiimoteThrottle.jyn to be dropped on a
-      Throttle Window toolbar to get control of that Window with a
-      Nintendo Wiimote device. <span style="font-weight: bold;">See
-      the .py file for</span> default button settings and
-      <span style="font-weight: bold;">set up</span> (some jars are
-      to be downloaded and copied in JMRI lib folder).<br style=
-      "font-weight: bold;">
+        All remaining buttons are dedicated to functions (usually the one left on the side, under,
+        and in the middle of the gamepad)
+      </div>
       <br>
-      At the moment, none of the accelerometers of the Wiimote are
-      used, hence it's only a kind of deluxe remote as we only use
-      the buttons. But it fits very well in one hand and once you
-      know the settings, you don't even have to look at it to use
-      it.
-
+      <span style="font-style: italic;">Note that joypads buttons layout, and even sticks events
+      differ from one manufacturer to another, hence you should customize a driver.py for your own
+      hardware.</span>
+      <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>
+      There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle Window toolbar
+      to get control of that Window with a Nintendo Wiimote device. <span style=
+      "font-weight: bold;">See the .py file for</span> default button settings and <span style=
+      "font-weight: bold;">set up</span> (some jars are to be downloaded and copied in JMRI lib
+      folder).<br style="font-weight: bold;">
+      <br>
+      At the moment, none of the accelerometers of the Wiimote are used, hence it's only a kind of
+      deluxe remote as we only use the buttons. But it fits very well in one hand and once you know
+      the settings, you don't even have to look at it to use it.
       <h4>Default controls:</h4>
 
       <h5 style="margin-left: 40px;">Browsing throttles:</h5>
 
       <div style="margin-left: 80px;">
-        To browse through the currently assigned throttles for the
-        controlled window, the left and right buttons are used.
-      </div><a name="wii" id="wii"></a>
+        To browse through the currently assigned throttles for the controlled window, the left and
+        right buttons are used.
+      </div>
 
-      <h5 style="margin-left: 40px;">Speed:</h5>
+      <h5 id="wii" style="margin-left: 40px;">Speed:</h5>
 
       <div style="margin-left: 80px;">
-        Speed is controlled by buttons A (decelerate) and B
-        (accelerate)<br>
-        Note that buttons 1 and 2 are used for some speed presets,
-        from idle (speed 0 - button 2 twice), to slow (speed 0,3 -
-        button 2 once), to cruise (speed 0,8 - button 1 once), to
-        max (speed 1 - button 1 twice). Pressing buttons 1 and 2
-        will send an emergency stop and vibrate the Wiimote.
+        Speed is controlled by buttons A (decelerate) and B (accelerate)<br>
+        Note that buttons 1 and 2 are used for some speed presets, from idle (speed 0 - button 2
+        twice), to slow (speed 0,3 - button 2 once), to cruise (speed 0,8 - button 1 once), to max
+        (speed 1 - button 1 twice). Pressing buttons 1 and 2 will send an emergency stop and
+        vibrate the Wiimote.
       </div>
 
       <h5 style="margin-left: 40px;">Direction:</h5>
@@ -227,30 +196,23 @@
 
       <div style="margin-left: 80px;">
         Light (function 0) is controlled by Home button.<br>
-        And as there is no more buttons available, no other
-        function can be controlled by default, but as this is a
-        Jython script, feel free to customize, and if somebody is
-        able to do something with the accelerometers, you're very
-        welcome!
+        And as there is no more buttons available, no other function can be controlled by default,
+        but as this is a Jython script, feel free to customize, and if somebody is able to do
+        something with the accelerometers, you're very welcome!
       </div>
 
-      <h2>RailDriver</h2>See the <a href=
-      "../../hardware/raildriver/index.shtml">RailDriver Hardware
-      Help</a>.
-
-      <h2><a name="iphone" id="iphone">iPhone and iPod
-      Touch</a></h2>There's a third-party application called
-      <a href="http://withrottle.com/">WiThrottle</a> that works
-      with JMRI to let you control trains with your iPhone or iPod
-      Touch.
-
-      <p>You can also browse the <a href=
-      "../../web/index.shtml">JMRI webserver</a> from Safari on
+      <h2>RailDriver</h2>
+      See the <a href="../../hardware/raildriver/index.shtml">RailDriver Hardware Help</a>.
+      <h2 id="iphone">iPhone and iPod Touch</h2>
+      There's a third-party application called <a href="http://withrottle.com/">WiThrottle</a> that
+      works with JMRI to let you control trains with your iPhone or iPod Touch.
+      <p>You can also browse the <a href="../../web/index.shtml">JMRI webserver</a> from Safari on
       your iPhone or iPod Touch.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

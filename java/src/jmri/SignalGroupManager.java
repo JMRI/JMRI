@@ -18,8 +18,9 @@ import javax.annotation.Nonnull;
 public interface SignalGroupManager extends Manager<SignalGroup> {
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Locate via user name, then system name if needed.
+     * <p>
+     * Does not create a new one if nothing found
      *
      * @param name User Name or System Name to match
      * @return null if no match found
@@ -27,46 +28,57 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
     @CheckForNull
     public SignalGroup getSignalGroup(@Nonnull String name);
 
-    @CheckForNull public SignalGroup getBySystemName(@Nonnull String name);
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public SignalGroup getBySystemName(@Nonnull String name);
 
-    @CheckForNull public SignalGroup getByUserName(@Nonnull String name);
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public SignalGroup getByUserName(@Nonnull String name);
 
     /**
-     * Create a new Signal group if the group does not exist. Intended for use with
+     * Create a new Signal group if the group does not exist.
+     * <p>
+     * Intended for use with
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
+     * @deprecated since 4.25.2, use #newSignalGroupWithUserName(@Nonnull String userName)
      * @param userName User name for the new group
-     * @return null if a Group with the same userName already exists or if there
-     *         is trouble creating a new Group
+     * @return a Signal Group with the same userName if already exists
+     * @throws IllegalArgumentException if there is trouble creating a new Group
      */
+    @Deprecated // 4.25.2
     @Nonnull
-    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName);
+    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) throws IllegalArgumentException;
     
     /**
-     * Create a new Signal group if the group does not exist. Intended for use with
+     * Create a new Signal group if the group does not exist.
+     * <p>
+     * Intended for use with
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
      * @param userName User name for the new group
-     * @return null if a Group with the same userName already exists or if there
-     *         is trouble creating a new Group
-     * @deprecated 4.15.2 use newSignaGroupWithUserName
+     * @return a Signal Group with the same userName if already exists
+     * @throws IllegalArgumentException if there is trouble creating a new Group
      */
     @Nonnull
-    @Deprecated //  4.15.2 use newSignaGroupWithUserName
-    public SignalGroup newSignalGroup(@Nonnull String userName);
+    public SignalGroup newSignalGroupWithUserName(@Nonnull String userName) throws IllegalArgumentException;
 
     /**
      * Create a new SignalGroup if the group does not exist.
      *
      * @param systemName the system name for the group
      * @param userName   the user name for the group
-     * @return null if a Signal Group with the same systemName or userName already
-     *         exists or if there is trouble creating a new Group
+     * @return a Signal Group with the same systemName or userName if
+     *         already exists or
+     * @throws IllegalArgumentException if there is trouble creating a new Group.
      */
     @Nonnull
-    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
+    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * Delete Group by removing it from the manager. The Group must first be

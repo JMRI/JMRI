@@ -352,7 +352,7 @@
 
   
 <li>
-<a href="">Machines </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Machines </a>
 <ul></ul>
 </li>
 
@@ -391,12 +391,12 @@
 </li>
  
 <li>
-<a href="html/doc/Technical/FindBugs.shtml">SpotBugs </a>
+<a href="html/doc/Technical/SpotBugs.shtml">SpotBugs </a>
 <ul></ul>
 </li>
  
 <li>
-<a href="html/doc/Technical/FindBugs.shtml">FindBugs </a>
+<a href="html/doc/Technical/SpotBugs.shtml">FindBugs </a>
 <ul></ul>
 </li>
 
@@ -1103,7 +1103,7 @@
 
  
 <li>
-<a href="">Signaux LDT </a>
+<a href="html/tools/signaling/ldt/output.shtml">Signaux LDT </a>
 <ul></ul>
 </li>
 
@@ -1226,7 +1226,7 @@
 
   
 <li>
-<a href="">Tableau Lien </a>
+<a href="package/jmri/jmrit/automat/monitor/AutomattableFrame.shtml">Tableau Lien </a>
 <ul></ul>
 </li>
 
@@ -1253,7 +1253,7 @@
 
  
 <li>
-<a href="">Transits </a>
+<a href="package/jmri/jmrit/beantable/Transitable.shtml">Transits </a>
 <ul>
   
 <li>

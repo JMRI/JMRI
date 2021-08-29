@@ -1,336 +1,447 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Loading and Storing Your Work</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="Author" content="Jerry Grochow">
-  <!--#include virtual="/Style.shtml" -->
-</head>
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+  <meta name="Author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
+</head><!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
 
-  <div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-      <a id="TopOfPage" name="TopOfPage"></a>
-      <h1>JMRI: Loading and Storing Your Work</h1>
+    <div id="mainContent">
+      <h1 id="TopOfPage">JMRI: Loading and Storing Your Work</h1>
+
       <p class="subtitle">What Everyone Should Know</p>
 
-      <p class="noted">This page provides the basic information you should know about what commands are used to
-      load and store the data you create and update in JMRI. A companion page with more information for advanced
-      users about when, how, and where JMRI stores data is available <a href="DataManagement.shtml"> here.</a></p>
+      <p class="noted">This page provides the basic information you should know about what commands
+      are used to load and store the data you create and update in JMRI. A companion page with more
+      information for advanced users about when, how, and where JMRI stores data is available
+      <a href="DataManagement.shtml">here.</a></p>
 
-      <div class="noted"><span class="since">since 4.23.3</span>
+      <div class="noted">
+        <span class="since">since 4.23.3</span>
         <p>The main PanelPro menu has changed as of JMRI release 4.23.3.</p>
+
         <ul>
-          <li><strong>Panels &rArr; Load Panels...</strong> has moved to <strong>File &rArr; Load table content and panels...</strong></li>
-          <li><strong>Panels &rArr; Store Panels...</strong> has moved to <strong>File &rArr; Store ALL table content and panels...</strong></li>
-          <li><strong>Panels &rArr; Show History</strong> has moved to <strong>File &rArr; Show file history</strong></li>
-          <li><strong>Panels &rArr; Run Script...</strong> has moved to <strong>Scripting &rArr; Run Script...</strong></li>
-          <li><strong>Panels &rArr; Thread Monitor</strong> has moved to <strong>Scripting &rArr; Thread Moniitor</strong></li>
-          <li><strong>Panels &rArr; Script Output</strong> has moved to <strong>Scripting &rArr; Script Output</strong></li>
-          <li><strong>Panels &rArr; Script Entry</strong> has moved to <strong>Scripting &rArr; Script Entry</strong></li>
+          <li><strong>Panels ⇒ Load Panels...</strong> has moved to <strong>File ⇒ Load table
+          content and panels...</strong></li>
+
+          <li><strong>Panels ⇒ Store Panels...</strong> has moved to <strong>File ⇒ Store ALL table
+          content and panels...</strong></li>
+
+          <li><strong>Panels ⇒ Show History</strong> has moved to <strong>File ⇒ Show file
+          history</strong></li>
+
+          <li><strong>Panels ⇒ Run Script...</strong> has moved to <strong>Scripting ⇒ Run
+          Script...</strong></li>
+
+          <li><strong>Panels ⇒ Thread Monitor</strong> has moved to <strong>Scripting ⇒ Thread
+          Moniitor</strong></li>
+
+          <li><strong>Panels ⇒ Script Output</strong> has moved to <strong>Scripting ⇒ Script
+          Output</strong></li>
+
+          <li><strong>Panels ⇒ Script Entry</strong> has moved to <strong>Scripting ⇒ Script
+          Entry</strong></li>
         </ul>
 
-        <p>
-        The text for the panel and table specific File menus is now consistent.  The table store without panels is now
-        <strong>Store Only table content (No Panels)...</strong>.</p>
+        <p>The text for the panel and table specific File menus is now consistent. The table store
+        without panels is now <strong>Store Only table content (No Panels)...</strong>.</p>
 
-        <p>
-        The panel <strong>Close</strong> button <strong>hides</strong> the panel.  It can be shown using the Window menu or
-        <strong>Panels &rArr; Show Panel</strong>.  To delete a panel, use the panel's delete option in the panel's File menu or
-        the new <strong>Panels &rArr; Delete Panel...</strong> menu item.
+        <p>The panel <strong>Close</strong> button <strong>hides</strong> the panel. It can be
+        shown using the Window menu or <strong>Panels ⇒ Show Panel</strong>. To delete a panel, use
+        the panel's delete option in the panel's File menu or the new <strong>Panels ⇒ Delete
+        Panel...</strong> menu item.</p>
+
+        <p>The menu paths shown below are the new paths. The old paths are shown in braces.</p>
+      </div>
+
+      <p>JMRI's model for creating, updating, and storing (or discarding) the information it needs
+      to perform its various functions depends on which JMRI function you are dealing with. Certain
+      kinds of data are handled completely automatically. Others are created by you and updated by
+      JMRI. For still others, you have the ability to control whether or not to change or keep that
+      data from one run of JMRI to the next. For example, saving changes to roster entries is
+      separate from storing away your layout configuration.</p>
+
+      <p>Unfortunately, JMRI does not always notify you if there is unsaved data when it exits
+      (although the community of developers is constantly working to improve this). For example,
+      when you create a Sensor in the Sensor Table, it will appear in the Sensor Table Window, but
+      it will be gone if you close JMRI - unless you take one of the actions listed below to save
+      it.</p>
+
+      <p>To ensure that data you create (or is created and updated for you) is kept as you require,
+      you should understand when and how the different kinds of data get saved to a disk file, or
+      not, and, in the case of CVs, to your locomotives and other DCC decoders. This page is
+      intended to give you the basic information you need to know.</p>
+
+      <ul class="snav">
+        <li>
+          <a href="#uload">User initiated Load</a>
+        </li>
+
+        <li>
+          <a href="#usave">User initiated Store</a>
+        </li>
+
+        <li>
+          <a href="#autosave">Automatic Store</a>
+        </li>
+
+        <li>
+          <a href="#nosave">Not stored</a>
+        </li>
+      </ul>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="uload">Things you need to take action to "load" or "open"</h2>
+
+      <div class="para">
+        <ul>
+          <li>
+            <a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
+            <ul>
+              <li><strong>All Preferences items</strong>: Preferences are automatically loaded
+              during JMRI start up.</li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="DecoderPro/index.shtml">DecoderPro</a>
+            <ul>
+              <li>
+                <a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>: Select a
+                roster entry row, select the programming mode, <strong>Programming Track</strong>,
+                <strong>Programming on Main</strong> or <strong>Edit Only</strong>, click on
+                <strong>Program</strong>.
+              </li>
+
+              <li><strong>Roster Group</strong>: Roster groups are automatically loaded.</li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="PanelPro/index.shtml">PanelPro</a>
+            <ul>
+              <li>
+                <strong>File ⇒ Load table content and panels...</strong> {<em>Old: <strong>Panels ⇒
+                Load Panels...</strong></em>}
+                <ul>
+                  <li>Table content for the tables located at <strong>Tools ⇒ Tables</strong></li>
+
+                  <li>Panels</li>
+
+                  <li>Fast clock settings at <strong>Tools ⇒ Clocks</strong></li>
+                </ul>
+              </li>
+
+              <li>An alternate method for loading the table content and panels is to use a
+                <a href="#startAction">start up action</a>.
+              </li>
+
+              <li>
+                <a href=
+                "../../package/jmri/jmrit/display/IconAdder.shtml"><strong>Images/Icons</strong></a>:
+                Loaded automatically by the panel editor.
+              </li>
+
+              <li>
+                <a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
+                <ul>
+                  <li>Run script: <strong>Scripting ⇒ Run Script...</strong> {<em>Old:
+                  <strong>Panels ⇒ Run Script...</strong></em>}</li>
+
+                  <li>Load script: <strong>Scripting ⇒ Script Entry</strong> {<em>Old:
+                  <strong>Panels ⇒ Script Entry</strong></em>} and then <strong>Load</strong>.</li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>:
+                <strong>Tools ⇒ Throttles ⇒</strong>
+                <ul>
+                  <li><strong>Open Throttles Layout...</strong>
+                  </li>
+
+                  <li><strong>Load Default Throttles Layout</strong>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
+            <ul>
+              <li><strong>Tables (Sections, Transits)</strong>: Included in PanelPro tables.</li>
+
+              <li><strong>Dispatcher Options</strong>: Loaded automatically when Dispatcher
+              starts.</li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
+            <ul>
+              <li>All data: Loaded automatically</li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="SoundPro/SoundPro.shtml">SoundPro</a>
+            <ul>
+              <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: Included in PanelPro
+              tables.</li>
+            </ul>
+            <br>
+          </li>
+        </ul>
+
+        <h3 id="startAction">Loading table content and panels during startup</h3>
+
+        <p>The <strong>Preferences ⇒ Start Up</strong> option includes an <strong>Action</strong>
+        to load a file during the start up proces. Click on the <strong>Add</strong> button and
+        select <strong>Open File...</strong>. The operating system <strong>Open File</strong>
+        dialog will be displayed with the <strong>user file location</strong> selected. Select a
+        file and click on <strong>Open</strong>. The new action will be added to the action list.
+        Click on the Preferences <strong>Save</strong> button to retain the start up action
+        change.</p>
+
+        <p><a href="#TopOfPage">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="usave">Things you need to take action to "store" or "save"</h2>
+
+      <div class="para">
+        <p>JMRI will sometimes (but not always) notify you when you might want to "save" or
+        "store." These are the places user action may be required:</p>
+
+        <ul>
+          <li>
+            <a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
+            <ul>
+              <li><strong>All Preferences items</strong>: <em>Edit ⇒ Preferences</em>, Hit
+              <strong>Save</strong></li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="DecoderPro/index.shtml">DecoderPro</a>
+            <ul>
+              <li>
+                <a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>:
+                <ul>
+                  <li>On an individual roster entry window: Select <strong>File ⇒ Save</strong> or
+                  <strong>Save to Roster</strong></li>
+
+                  <li>On an individual roster entry window: Select <strong>Write</strong> to
+                  Decoder in order to change CVs</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Roster Group</strong>: <a href="#autosave">Stored Automatically</a>
+              </li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="PanelPro/index.shtml">PanelPro</a>
+            <ul>
+              <li>
+                <strong>Panels</strong>:
+                <ul>
+                  <li>From any panel editor: Select <strong>File ⇒ Store ALL table content and
+                  panels...</strong> {<em>Old: <strong>File ⇒ Store Panels...</strong></em>}.</li>
+
+                  <li>From the main PanelPro window: Select <strong>File ⇒ Store ALL table content
+                  and panels...</strong> {<em>Old: <strong>Panels ⇒ Store
+                  Panels...</strong></em>}.</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Tables</strong>: <em>Tools ⇒ Tables ⇒ [Specific Table]</em>, Select:
+                <ul>
+                  <li><strong>File ⇒ Store ⇒ Store Only table content (No Panels)...</strong>
+                  {<em>Old: <strong>Store configuration</strong></em>}.</li>
+
+                  <li><strong>File ⇒ Store ⇒ Store ALL table content and panels...</strong>
+                  {<em>Old: <strong>Store configuration and panels</strong></em>}.</li>
+                </ul>
+              </li>
+
+              <li><strong>Fast Clock</strong>: <em>Tools ⇒ Clocks ⇒ Set up Fast Clock...</em>, then
+              same as for Tables.</li>
+
+              <li>
+                <a href=
+                "../../package/jmri/jmrit/display/IconAdder.shtml"><strong>Images/Icons</strong></a>:
+                Hit <strong>Save Image Index</strong>
+              </li>
+
+              <li>
+                <a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
+                <strong>Scripting ⇒ Script Entry</strong> {<em>Old: <strong>Panel ⇒ Script
+                Entry</strong></em>}, Hit <strong>Store...</strong>
+              </li>
+
+              <li>
+                <a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>:
+                <strong>Tools ⇒ Throttles ⇒</strong>
+                <ul>
+                  <li><strong>Save Throttle Layout</strong>
+                  </li>
+
+                  <li><strong>New Throttle ⇒ File ⇒ Save Current Throttle</strong>
+                  </li>
+
+                  <li><strong>New Throttle ⇒ File ⇒ Save Current Throttle As...</strong>
+                  [additionally allows you to save custom function buttons]</li>
+                </ul>
+              </li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
+            <ul>
+              <li><strong>Tables (Sections, Transits)</strong>: <em>Tools ⇒ Tables ⇒ [Specific
+              Table]</em>, then same as PanelPro Tables.</li>
+
+              <li><strong>Dispatcher Options</strong>: <em>Tools ⇒ Dispatcher ⇒</em>
+              <strong>Options ⇒ Save Options</strong></li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
+            <ul>
+              <li>All data: <a href="#autosave">Stored Automatically</a>
+              </li>
+            </ul>
+            <br>
+          </li>
+
+          <li>
+            <a href="SoundPro/SoundPro.shtml">SoundPro</a>
+            <ul>
+              <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: <em>Tools ⇒ Tables ⇒
+              Audio</em>, then same as PanelPro Tables.</li>
+            </ul>
+            <br>
+          </li>
+        </ul>
+
+        <p>So make sure your hit <strong>"Save"</strong> and <strong>"Store"</strong> for all the
+        different tools you use within JMRI and you will always have what you worked on the next
+        time. And if there is a problem, remember that JMRI keeps backup files when it writes your
+        data to permanent storage, either automatically or by your command, so look for files with
+        the ".bak" suffix and you'll be able to recover from most missteps.</p>
+
+        <p><a href="#TopOfPage">[Go to top of page]</a>
         </p>
 
-        <p>
-        The menu paths shown below are the new paths.  The old paths are shown in braces.
+        <p class="important"><strong>Lost Panels:</strong> An issue commonly reported on <a href=
+        "https://groups.io/g/jmriusers">the JMRI user forum</a> is that panels have disappeared on
+        restarting PanelPro and opening a panel file. Often, this is because someone selected
+        "Store Only table content (No Panels)... {Store configuration}" rather than "Store ALL
+        table content and panels... {Store configuration and panels}" and overwrote an existing
+        panel file. Don't panic - the backup copy (in the directory "backupPanels" in the <a href=
+        "../doc/Technical/ProfileFileStructure.shtml">Profile Location</a>) is there. Best practice
+        in working with PanelPro is to almost always use <strong>"Store ALL table content and
+        panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
+        <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store
+        Panels...</strong></em>}" where it appears, and to rename the file you are saving so you
+        have multiple versions named by you to go back to if necessary.</p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="autosave">Things that are stored automatically</h2>
+
+      <div class="para">
+        <ul>
+          <li>Window positions and sizes (not all are saved)</li>
+
+          <li>
+            <a href="DecoderPro/index.shtml">DecoderPro</a>
+            <ul>
+              <li>
+                <a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>: Automatically
+                stored when changed on the main roster page
+              </li>
+
+              <li><strong>Roster Group</strong>: new, including changes to Roster Group Table
+              Association; also renaming and deletion of groups</li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a> data:
+            automatically stored when data is changed.
+          </li>
+
+          <li>Block values may be restored, dependant on block occupancy and track power
+          status.</li>
+
+          <li>ID Tags are stored on exit, with their Time last seen and last Reporter position.
+          When restored on startup, these Reporters will also be created.</li>
+
+          <li>Connection specific tools, e.g. MERG CBUS Event Table may also be have store /
+          restoration settings.</li>
+        </ul>
+        <br>
+
+        <p><a href="#TopOfPage">[Go to top of page]</a>
         </p>
-
       </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <p>JMRI's model for creating, updating, and storing (or discarding) the information it needs to perform its various functions
-      depends on which JMRI function you are dealing with. Certain kinds of data are handled completely automatically. Others are
-      created by you and updated by JMRI.  For still others, you have the ability to control whether or not to change or keep that
-      data from one run of JMRI to the next. For example, saving changes to roster entries is separate from storing away your
-      layout configuration.</p>
-
-      <p>Unfortunately, JMRI does not always notify you if there is unsaved data when it exits (although the community of developers
-      is constantly working to improve this).  For example, when you create a Sensor in the Sensor Table, it will appear in the Sensor
-      Table Window, but it will be gone if you close JMRI - unless you take one of the actions listed below to save it.</p>
-
-      <p>To ensure that data you create (or is created and updated for you) is kept as you require, you should
-      understand when and how the different kinds of data get saved to a disk file, or not, and, in the case of CVs, to your locomotives
-      and other DCC decoders.  This page is intended to give you the basic information you need to know.</p>
-
-       <ul class="snav">
-        <li><a href="#uload">User initiated Load</a></li>
-        <li><a href="#usave">User initiated Store</a></li>
-        <li><a href="#autosave">Automatic Store</a></li>
-        <li><a href="#nosave">Not stored</a></li>
-       </ul>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <a name="uload" id="uload"></a>
-      <h2>Things you need to take action to "load" or "open"</h2>
+      <h2 id="nosave">Things that are NOT stored after you quit JMRI</h2>
 
       <div class="para">
+        <p>Some data you will create during your JMRI session or that will be created via
+        communication with your layout is <em>NOT</em> saved after you quite JMRI. This is normal
+        as this data represents the current state of your trains and layout (e.g. turnout position)
+        so requires feedback from you or your layout. These transitory data are:</p>
 
-    <ul>
-     <li><a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
         <ul>
-          <li><strong>All Preferences items</strong>: Preferences are automatically loaded during JMRI start up.</li>
+          <li>Sensor state</li>
+
+          <li>Turnout state</li>
+
+          <li>DispatcherPro Trains</li>
+
+          <li>[Possibly incomplete list]</li>
         </ul>
-      <br>
-     </li>
+        <br>
 
-     <li><a href="DecoderPro/index.shtml">DecoderPro</a>
-        <ul>
-         <li><a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>: Select a roster entry
-         row, select the programming mode, <strong>Programming Track</strong>,
-         <strong>Programming on Main</strong> or <strong>Edit Only</strong>, click on <strong>Program</strong>.</li>
-         <li><strong>Roster Group</strong>: Roster groups are automatically loaded.</li>
-        </ul>
-      <br>
-     </li>
-
-     <li><a href="PanelPro/index.shtml">PanelPro</a>
-       <ul>
-        <li><strong>File &rArr; Load table content and panels...</strong> {<em>Old: <strong>Panels &rArr; Load Panels...</strong></em>}
-          <ul>
-            <li>Table content for the tables located at <strong>Tools &rArr; Tables</strong></li>
-            <li>Panels</li>
-            <li>Fast clock settings at <strong>Tools &rArr; Clocks</strong></li>
-          </ul>
-        </li>
-        <li>An alternate method for loading the table content and panels is to use a <a href="#startAction">start up action</a>.</li>
-        <li><a href="../../package/jmri/jmrit/display/IconAdder.shtml"><strong>Images/Icons</strong></a>: Loaded automatically by the panel editor.
-        <li><a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
-          <ul>
-            <li>Run script: <strong>Scripting &rArr; Run Script...</strong> {<em>Old: <strong>Panels &rArr; Run Script...</strong></em>}</li>
-            <li>Load script: <strong>Scripting &rArr; Script Entry</strong> {<em>Old: <strong>Panels &rArr; Script Entry</strong></em>}
-            and then <strong>Load</strong>.</li>
-          </ul>
-        </li>
-
-        <li><a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>: <strong>Tools &rArr; Throttles &rArr; </strong>
-          <ul>
-          <li><strong>Open Throttles Layout...</strong></li>
-          <li><strong>Load Default Throttles Layout</strong></li>
-          </ul>
-         </li>
-       </ul>
-       <br>
-      </li>
-
-      <li><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
-       <ul>
-        <li><strong>Tables (Sections, Transits)</strong>: Included in PanelPro tables.</li>
-        <li><strong>Dispatcher Options</strong>: Loaded automatically when Dispatcher starts.</li>
-       </ul>
-       <br>
-      </li>
-
-      <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
-       <ul>
-         <li>All data: Loaded automatically</li>
-       </ul>
-       <br>
-       </li>
-
-      <li><a href="SoundPro/SoundPro.shtml">SoundPro</a>
-       <ul>
-        <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: Included in PanelPro tables.</li>
-       </ul>
-       <br>
-      </li>
-
-    </ul>
-
-    <a name="startAction" id="startAction"></a>
-    <h3>Loading table content and panels during startup</h3>
-    <p>The <strong>Preferences &rArr; Start Up</strong> option includes an <strong>Action</strong>
-    to load a file during the start up proces.  Click on the <strong>Add</strong> button and select
-    <strong>Open File...</strong>.  The operating system <strong>Open File</strong> dialog will
-    be displayed with the <strong>user file location</strong> selected.  Select a file and
-    click on <strong>Open</strong>.  The new action will be added to the action list.  Click
-    on the Preferences <strong>Save</strong> button to retain the start up action change.
-
-  <p><a href="#TopOfPage">[Go to top of page]</a></p>
-
+        <p><a href="#TopOfPage">[Go to top of page]</a>
+        </p>
       </div>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <a name="usave" id="usave"></a>
-      <h2>Things you need to take action to "store" or "save"</h2>
-
-      <div class="para">
-
-     <p>JMRI will sometimes (but not always) notify you when you might want to "save" or "store."  These are the places
-     user action may be required:</p>
-
-    <ul>
-     <li><a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
-        <ul>
-          <li><strong>All Preferences items</strong>: <em>Edit &rArr; Preferences</em>, Hit <strong>Save</strong></li>
-        </ul>
-      <br>
-     </li>
-
-     <li><a href="DecoderPro/index.shtml">DecoderPro</a>
-        <ul>
-         <li><a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>:
-          <ul>
-           <li>On an individual roster entry window: Select <strong>File &rArr; Save</strong> or <strong>Save to Roster</strong></li>
-           <li>On an individual roster entry window: Select <strong>Write</strong> to Decoder in order to change CVs</li>
-          </ul>
-         </li>
-         <li><strong>Roster Group</strong>: <a href="#autosave">Stored Automatically</a></li>
-        </ul>
-      <br>
-     </li>
-
-     <li><a href="PanelPro/index.shtml">PanelPro</a>
-       <ul>
-        <li><strong>Panels</strong>:
-          <ul>
-            <li>From any panel editor: Select <strong>File &rArr; Store ALL table content and panels...</strong>
-            {<em>Old: <strong>File &rArr; Store Panels...</strong></em>}.</li>
-
-            <li>From the main PanelPro window: Select <strong>File &rArr; Store ALL table content and panels...</strong>
-            {<em>Old: <strong>Panels &rArr; Store Panels...</strong></em>}.</li>
-          </ul>
-        </li>
-
-        <li><strong>Tables</strong>: <em>Tools &rArr; Tables &rArr; [Specific Table]</em>, Select:
-          <ul>
-            <li><strong>File &rArr; Store &rArr; Store Only table content (No Panels)...</strong> {<em>Old: <strong>Store configuration</strong></em>}.</li>
-            <li><strong>File &rArr; Store &rArr; Store ALL table content and panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}.</li>
-          </ul>
-        </li>
-
-        <li><strong>Fast Clock</strong>:<em> Tools &rArr; Clocks &rArr; Set up Fast Clock...</em>, then same as for Tables.</li>
-
-        <li><a href="../../package/jmri/jmrit/display/IconAdder.shtml"><strong>Images/Icons</strong></a>: Hit <strong>Save Image Index</strong></li>
-        <li><a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a>:
-        <strong>Scripting &rArr; Script Entry</strong>
-        {<em>Old: <strong>Panel &rArr; Script Entry</strong></em>}, Hit <strong>Store...</strong></li>
-
-        <li><a href="../tools/throttle/ThrottleChapter1.shtml"><strong>Throttles</strong></a>: <strong>Tools &rArr; Throttles &rArr; </strong>
-          <ul>
-          <li><strong>Save Throttle Layout</strong></li>
-          <li><strong>New Throttle &rArr; File &rArr; Save Current Throttle</strong></li>
-          <li><strong>New Throttle &rArr; File &rArr; Save Current Throttle As...</strong> [additionally allows you to save custom function buttons]</li>
-          </ul>
-         </li>
-       </ul>
-       <br>
-      </li>
-
-      <li><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
-       <ul>
-        <li><strong>Tables (Sections, Transits)</strong>: <em>Tools &rArr; Tables &rArr; [Specific Table]</em>, then same as PanelPro Tables.</li>
-        <li><strong>Dispatcher Options</strong>: <em>Tools &rArr; Dispatcher &rArr; </em><strong>Options &rArr; Save Options</strong></li>
-       </ul>
-       <br>
-      </li>
-
-      <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
-       <ul>
-         <li>All data: <a href="#autosave">Stored Automatically</a></li>
-       </ul>
-       <br>
-       </li>
-
-      <li><a href="SoundPro/SoundPro.shtml">SoundPro</a>
-       <ul>
-        <li><strong>Audio Tables (Listener, Buffer, Sources)</strong>: <em>Tools &rArr; Tables &rArr; Audio</em>, then same as PanelPro Tables.</li>
-       </ul>
-       <br>
-      </li>
-
-    </ul>
-
-      <p>So make sure your hit <strong>"Save"</strong> and <strong>"Store"</strong> for all the different tools you use within JMRI and you will
-      always have what you worked on the next time.  And if there is a problem, remember that JMRI keeps backup files when it writes
-      your data to permanent storage, either automatically or by your command, so look for files with the ".bak" suffix
-      and you'll be able to recover from most missteps.</p>
-
-  <p><a href="#TopOfPage">[Go to top of page]</a></p>
-
-     <p class="important"><strong>Lost Panels:</strong> An issue commonly reported on <a href="https://groups.io/g/jmriusers">the JMRI
-      user forum</a> is that panels have disappeared on restarting PanelPro and opening a panel file.  Often, this is because someone selected "Store Only table content (No Panels)... {Store
-      configuration}" rather than "Store ALL table content and panels... {Store configuration and panels}" and overwrote an existing panel file.  Don't panic - the backup copy (in the directory
-      "backupPanels" in the <a href="../doc/Technical/ProfileFileStructure.shtml">Profile Location</a>) is there.  Best
-      practice in working with PanelPro is to almost always use
-      <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
-      <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store Panels...</strong></em>}"
-      where it appears, and to rename the file you are saving so you have multiple versions named by you to go back to if necessary.</p>
-
-      </div>
-
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="autosave" id="autosave"></a>
-      <h2>Things that are stored automatically</h2>
-      <div class="para">
-
-
-      <ul>
-       <li>Window positions and sizes (not all are saved)</li>
-       <li><a href="DecoderPro/index.shtml">DecoderPro</a>
-        <ul>
-         <li><a href="DecoderPro/Roster.shtml"><strong>Roster entry</strong></a>: Automatically stored when changed on the main roster page</li>
-         <li><strong>Roster Group</strong>: new, including changes to Roster Group Table Association; also renaming and deletion of groups</li>
-        </ul>
-       </li>
-       <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a> data: automatically stored when data is changed.</li>
-      <li>Block values may be restored, dependant on block occupancy and track power status.</li>
-      <li>ID Tags are stored on exit, with their Time last seen and last Reporter position.
-            When restored on startup, these Reporters will also be created.</li>
-      <li>Connection specific tools, e.g. MERG CBUS Event Table may also be have store / restoration settings.</li>
-      </ul>
-      <br>
-
-  <p><a href="#TopOfPage">[Go to top of page]</a></p>
-
-      </div>
-
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-     <a name="nosave" id="nosave"></a>
-     <h2>Things that are NOT stored after you quit JMRI</h2>
-      <div class="para">
-
-      <p>Some data you will create during your JMRI session or that will be created via communication with your layout is <em>NOT</em> saved
-      after you quite JMRI.  This is normal as this data represents the current state of your trains and layout (e.g. turnout position) so
-      requires feedback from you or your layout.  These transitory data are:</p>
-      <ul>
-       <li>Sensor state</li>
-       <li>Turnout state</li>
-       <li>DispatcherPro Trains</li>
-       <li>[Possibly incomplete list]</li>
-      </ul>
-      <br>
-
-  <p><a href="#TopOfPage">[Go to top of page]</a></p>
-      </div>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-
- <!--   <p><a href="#TopOfPage">[Go to top of page]</a></p>     -->
-
-
-   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <!--   <p><a href="#TopOfPage">[Go to top of page]</a></p>     -->
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

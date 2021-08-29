@@ -1,45 +1,37 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Code Button Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OS Indicator">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OS Indicator"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Code Button</h1><b>This is not fully implemented yet</b>
-
-      <p>A code button on a USS CTC panel starts the activity for
-      one section.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Code Button</h1>
+      <strong>This is not fully implemented yet</strong>
+      <p>A code button on a USS CTC panel starts the activity for one section.</p>
 
       <p>Inputs and outputs for this tool:</p>
 
       <dl>
         <dt>Button</dt>
 
-        <dd>Sensor that goes ACTIVE when the button is
-        pressed.</dd>
+        <dd>Sensor that goes ACTIVE when the button is pressed.</dd>
 
         <dt>Lamp</dt>
 
-        <dd>Turnout that is set THROWN while the code is being
-        processed.</dd>
+        <dd>Turnout that is set THROWN while the code is being processed.</dd>
       </dl>
 
-      <p>This is the help/jmri/jmrit/ussctc/CodeButtonFrame help
-      page</p>
+      <p>This is the help/jmri/jmrit/ussctc/CodeButtonFrame help page</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

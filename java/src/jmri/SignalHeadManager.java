@@ -38,7 +38,8 @@ public interface SignalHeadManager extends Manager<SignalHead> {
      * @return null if no match found
      */
     @CheckReturnValue
-    @CheckForNull public SignalHead getSignalHead(@Nonnull String name);
+    @CheckForNull
+    public SignalHead getSignalHead(@Nonnull String name);
 
     /**
      * Get an existing SignalHead or return null if it doesn't exist. 
@@ -49,7 +50,9 @@ public interface SignalHeadManager extends Manager<SignalHead> {
      * @return null if no match found
      */
     @CheckReturnValue
-    @CheckForNull public SignalHead getByUserName(@Nonnull String name);
+    @CheckForNull
+    @Override
+    public SignalHead getByUserName(@Nonnull String name);
 
     /**
      * Get an existing SignalHead or return null if it doesn't exist. 
@@ -60,6 +63,8 @@ public interface SignalHeadManager extends Manager<SignalHead> {
      * @return null if no match found
      */
     @CheckReturnValue
-    @CheckForNull public SignalHead getBySystemName(@Nonnull String name);
+    @CheckForNull
+    @Override
+    public SignalHead getBySystemName(@Nonnull String name);
 
 }

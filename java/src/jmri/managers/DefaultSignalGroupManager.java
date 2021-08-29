@@ -4,14 +4,17 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
+
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +46,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return 'G'; // according to JMRI: Names and Naming
     }
 
+    /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public SignalGroup getSignalGroup(@Nonnull String name) {
         SignalGroup t = getByUserName(name);
@@ -53,11 +58,15 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public SignalGroup getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
+    /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public SignalGroup getByUserName(@Nonnull String key) {
         return _tuser.get(key);
@@ -66,17 +75,19 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #newSignalGroup(String)},
+     * Keep autostring in line with {@link #newSignalGroupWithUserName(String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
     @Nonnull
-    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) {
+    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("provideGroup({})", systemName);
         SignalGroup r;
-        r = getByUserName(systemName);
-        if (r != null) {
-            return r;
+        if ( userName!=null ) {
+            r = getByUserName(userName);
+            if (r != null) {
+                return r;
+            }
         }
         r = getBySystemName(systemName);
         if (r != null) {
@@ -95,14 +106,16 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     /**
      * {@inheritDoc}
-     * @deprecated 4.15.2 use newSignaGroupWithUserName
+     *
+     * Keep autostring in line with {@link #provideSignalGroup(String, String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
+    @Deprecated // 4.25.2
     @Nonnull
     @Override
-    @Deprecated //  4.15.2 use newSignaGroupWithUserName
-    public SignalGroup newSignalGroup(@Nonnull String userName) {
-        jmri.util.LoggingUtil.deprecationWarning(log, "newSignalGroup");
-        return newSignaGroupWithUserName(userName);
+    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "newSignaGroupWithUserName");
+        return newSignalGroupWithUserName(userName);
     }
     
     /**
@@ -113,12 +126,12 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      */
     @Nonnull
     @Override
-    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) {
+    public SignalGroup newSignalGroupWithUserName(@Nonnull String userName) {
         return provideSignalGroup(getAutoSystemName(), userName);
     }
 
     List<String> getListOfNames() {
-        List<String> retval = new ArrayList<String>();
+        List<String> retval = new ArrayList<>();
         // first locate the signal system directory
         // and get names of systems
         File signalDir;
@@ -143,16 +156,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
             }
         }
         return retval;
-    }
-
-    /**
-     * 
-     * @return the default instance of DefaultSignalGroupManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultSignalGroupManager instance() {
-        return InstanceManager.getDefault(DefaultSignalGroupManager.class);
     }
 
     @Override

@@ -1674,6 +1674,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                         new Object[] { getName(), car.toString(),
                                                 getTerminationTrack().getLocation().getName(),
                                                 getTerminationTrack().getName(), status }));
+                        setServiceStatus(status);
                         continue;
                     }
                 } else {
@@ -3228,8 +3229,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
-        // create train icon if at departure or if program has been restarted
-        if (rl == getTrainDepartsRouteLocation() || _trainIcon == null) {
+        // create train icon if at departure, if program has been restarted, or removed
+        if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {
             createTrainIcon(rl);
         }
         // is the lead engine still in train

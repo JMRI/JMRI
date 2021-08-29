@@ -14,6 +14,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.AbstractThrottle;
 import jmri.util.FileUtil;
 import jmri.util.swing.WrapLayout;
 
@@ -60,6 +61,32 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         return Arrays.copyOf(functionButtons, functionButtons.length);
     }
 
+
+    /**
+     * Resize inner function buttons array
+     * 
+     */
+    private void resizeFnButonsArray(int n) {
+        FunctionButton[] newFunctionButtons = new FunctionButton[n];
+        System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, n));
+        if (n > functionButtons.length) {
+            for (int i=functionButtons.length;i<n;i++) {
+                newFunctionButtons[i] = new FunctionButton();
+                mainPanel.add(newFunctionButtons[i]);
+                resetFnButton(newFunctionButtons[i],i);
+                // Copy mouse and keyboard controls to new components
+                for (KeyListener kl:getKeyListeners()) {
+                    newFunctionButtons[i].addKeyListener(kl);
+                }
+                for (MouseWheelListener mwl:getMouseWheelListeners()) {
+                   newFunctionButtons[i].addMouseWheelListener(mwl);
+                }
+            }
+        }
+        functionButtons = newFunctionButtons;
+    }
+    
+
     /**
      * Get notification that a function has changed state.
      *
@@ -68,6 +95,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
+        log.debug("notifyFunctionStateChanged: fNumber={} isSet={} " ,functionNumber, isSet);
         if (mThrottle != null) {
             mThrottle.setFunction(functionNumber, isSet);
         }
@@ -84,7 +112,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         log.debug("notifyFnLockableChanged: fNumber={} isLockable={} " ,functionNumber, isLockable);
         if (mThrottle != null) {
-            // throttle can be null when loading throttle layout
             mThrottle.setFunctionMomentary(functionNumber, !isLockable);
         }
     }
@@ -99,7 +126,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButton.setEnabled(isEnabled);
         }
     }
-
+    
+    /**
+     * Enable or disable all the buttons depending on throttle status
+     * If a throttle is assigned, enable all, else disable all
+     */
     public void setEnabled() {
         setEnabled(mThrottle != null);
     }
@@ -177,30 +208,35 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
+    private void setUpDefaultLightFunctionButton() {
+        try {
+            functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+            functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+        } catch (Exception e) {
+            log.debug("Exception loading svg icon : " + e.getMessage());
+        } finally {
+            if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
+                log.debug("Issue loading svg icon, reverting to png");
+                functionButtons[0].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                functionButtons[0].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+            }
+        }
+    }
     
-    public void applyPreferences() {
+    /**
+     * Apply preferences
+     *   + global throttles preferences
+     *   + this throttle settings if any
+     */
+    public final void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         RosterEntry re = null;
-        if (mThrottle != null) {
-            if (addressPanel == null) {
-                return;
-            }
+        if (mThrottle != null && addressPanel != null) {
             re = addressPanel.getRosterEntry();
         }
-        for (int i = 0; i < functionButtons.length; i++) {            
+        for (int i = 0; i < functionButtons.length; i++) {
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                try {
-                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
-                } catch (Exception e) {
-                    log.debug("Exception loading svg icon : "+e.getMessage() );
-                } finally {
-                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
-                        log.debug("Issue loading svg icon, reverting to png" );
-                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
-                    }
-                }
+                setUpDefaultLightFunctionButton();
             } else {
                 functionButtons[i].setIconPath(null);
                 functionButtons[i].setSelectedIconPath(null);
@@ -219,97 +255,55 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     functionButtons[i].setIsLockable(re.getFunctionLockable(i));
                 } else {
                     functionButtons[i].setDisplay( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
-                    functionButtons[i].setVisible( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
                 }
             }
             functionButtons[i].updateLnF();
         }
     }
     
-    private void rebuildFnButons() {
+    /**
+     * Rebuild function buttons 
+     * 
+     */
+    private void rebuildFnButons(int n) {
         mainPanel.removeAll();
-        if (this.mThrottle == null) {
-            functionButtons = new FunctionButton[DEFAULT_FUNCTION_BUTTONS];
-        } else {
-            functionButtons = new FunctionButton[mThrottle.getFunctions().length];
-        }
+        functionButtons = new FunctionButton[n];
         for (int i = 0; i < functionButtons.length; i++) {
             functionButtons[i] = new FunctionButton();
+            resetFnButton(functionButtons[i],i);
             mainPanel.add(functionButtons[i]);
-            functionButtons[i].setThrottle(mThrottle);
             // Copy mouse and keyboard controls to new components
-            for (KeyListener kl:this.getKeyListeners()) {
+            for (KeyListener kl:getKeyListeners()) {
                 functionButtons[i].addKeyListener(kl);
             }
-            for (MouseWheelListener mwl:this.getMouseWheelListeners()) {
+            for (MouseWheelListener mwl:getMouseWheelListeners()) {
                 functionButtons[i].addMouseWheelListener(mwl);
             }
         }
     }
 
     /**
-     * Make sure that all function buttons are being displayed if buttons label
-     * loaded from a roster entry, update buttons accordingly
-     */
-    public void resetFnButtons() {
-        rebuildFnButons();
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
-        // Buttons names, ids,
-        for (int i = 0; i < functionButtons.length; i++) {  
-            functionButtons[i].setThrottle(mThrottle);
-            functionButtons[i].setIdentity(i);
-            functionButtons[i].addFunctionListener(this);
-            functionButtons[i].setButtonLabel( i<3 ?
-                Bundle.getMessage(Throttle.getFunctionString(i))
-                : Throttle.getFunctionString(i) );
-            functionButtons[i].setDisplay(true);
-            if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                try {
-                    functionButtons[i].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-                    functionButtons[i].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
-                } catch (Exception e) {
-                    log.debug("Exception loading svg icon : "+e.getMessage() );
-                } finally {
-                    if ((functionButtons[i].getIcon() == null) || (functionButtons[i].getSelectedIcon() == null)) {
-                        log.debug("Issue loading svg icon, reverting to png" );
-                        functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                        functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
-                    }
-                }
-            } else {
-                functionButtons[i].setIconPath(null);
-                functionButtons[i].setSelectedIconPath(null);
-            }
-            functionButtons[i].updateLnF();
-
-            // always display f0, F1 and F2
-            if (i < 3) {
-                functionButtons[i].setVisible(true);
-            }
-        }
-        setFnButtons();
-        repaint();
-    }
-
-    // Update buttons value from slot + load buttons definition from roster if any
-    private void setFnButtons() {
+     * Update function buttons
+     *    - from selected throttle setting and state
+     *    - from roster entry if any
+     */    
+    private void updateFnButtons() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        if (mThrottle != null) {
-            if (addressPanel == null) {
-                return;
-            }
+        if (mThrottle != null && addressPanel != null) {                
             RosterEntry rosterEntry = addressPanel.getRosterEntry();
             if (rosterEntry != null) {
                 log.debug("RosterEntry found: {}", rosterEntry.getId());
             }
             for (int i = 0; i < functionButtons.length; i++) {
+                // update from selected throttle setting
                 functionButtons[i].setEnabled(true);
                 functionButtons[i].setIdentity(i); // full reset of function
                 functionButtons[i].setThrottle(mThrottle);
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
                 functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
-                if (rosterEntry != null) { // from here, update button text with roster data
+                // update from roster entry if any
+                if (rosterEntry != null) { 
                     functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
                     boolean needUpdate = false;
                     String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
@@ -337,7 +331,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     } else if (preferences.isUsingExThrottle()
                             && preferences.isHidingUndefinedFuncButt()) {
                         functionButtons[i].setDisplay(false);
-                        functionButtons[i].setVisible(false);
+                        needUpdate = true;
                     }
                     String fontSize = rosterEntry.getAttribute("function"+i+"_ThrottleFontSize");
                     if (fontSize != null) {
@@ -354,6 +348,55 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 }                
             }
         }
+    }
+
+
+    private void resetFnButton(FunctionButton fb, int i) {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        fb.setThrottle(mThrottle);
+        if (mThrottle!=null) {
+            fb.setState(mThrottle.getFunction(i)); // reset button state
+            fb.setIsLockable(!mThrottle.getFunctionMomentary(i));
+        }
+        fb.setIdentity(i);
+        fb.addFunctionListener(this);
+        fb.setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
+        fb.setDisplay(true);
+        if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+            setUpDefaultLightFunctionButton();                
+        } else {
+            fb.setIconPath(null);
+            fb.setSelectedIconPath(null);
+        }
+        fb.updateLnF();
+
+        // always display f0, F1 and F2
+        if (i < 3) {
+            fb.setVisible(true);
+        }
+    }
+
+    /**
+     * Reset function buttons : 
+     *    - rebuild function buttons
+     *    - reset their properties to default
+     *    - update according to throttle and roster (if any)
+     * 
+     */
+    public void resetFnButtons() {
+        // rebuild function buttons
+        if (mThrottle == null) {
+            rebuildFnButons(DEFAULT_FUNCTION_BUTTONS);
+        } else {
+            rebuildFnButons(mThrottle.getFunctions().length);
+        }
+        // reset their properties to defaults
+        for (int i = 0; i < functionButtons.length; i++) {  
+            resetFnButton(functionButtons[i],i);
+        }
+        // update according to throttle and roster (if any)
+        updateFnButtons();
+        repaint();
     }
 
     /**
@@ -422,11 +465,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
         if (buttonElements != null && buttonElements.size() > 0) {
             // just in case
-            if ( buttonElements.size() > functionButtons.length) {
-                rebuildFnButons();
-            }
+            rebuildFnButons( buttonElements.size() );
             int i = 0;
-            for (Element buttonElement : buttonElements) {                
+            for (Element buttonElement : buttonElements) {
                 functionButtons[i++].setXml(buttonElement);
             }
         }
@@ -442,7 +483,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         log.debug("Throttle found");
         mThrottle = t;        
         mThrottle.addPropertyChangeListener(this);
-        resetFnButtons();
+        resizeFnButonsArray(mThrottle.getFunctions().length);
+        updateFnButtons();
         setEnabled(true);
     }
 

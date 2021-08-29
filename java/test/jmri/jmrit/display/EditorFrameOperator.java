@@ -52,7 +52,6 @@ public class EditorFrameOperator extends JFrameOperator {
                 bo.push();
             } catch (Exception e) {
                 // exceptions in this thread are not considered an error.
-                return;
             }
         });
         t.setName("Hide Dialog Close Thread");
@@ -68,7 +67,6 @@ public class EditorFrameOperator extends JFrameOperator {
                 bo.push();
             } catch (Exception e) {
                 // exceptions in this thread are not considered an error.
-                return;
             }
         });
         t2.setName("Delete Dialog Close Thread");

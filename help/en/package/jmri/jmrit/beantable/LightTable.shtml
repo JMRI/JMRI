@@ -1,134 +1,121 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Light Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Table lights enable disable">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Light Table</h1>
 
-      <p>Lights are digital output bits that function as on/off
-      switches. Lights were created to provide easy control for
-      fascia panel lights and scenery lighting. Lights can also be
-      used for any purpose that requires an on/off switch. </p>
+      <p>Lights are digital output bits that function as on/off switches. Lights were created to
+      provide easy control for fascia panel lights and scenery lighting. Lights can also be used
+      for any purpose that requires an on/off switch.</p>
 
-     <p>Lights may also be defined as variable intensity (not just on/off).
-      This will depend on the interface and the hardware driving the physical
-      light.</p>
+      <p>Lights may also be defined as variable intensity (not just on/off). This will depend on
+      the interface and the hardware driving the physical light.</p>
 
       <p>The Light Table contains the following columns:</p>
 
       <ul>
         <li>System Name</li>
+
         <li>User Name (optional)</li>
+
         <li>State</li>
+
         <li>Comment (optional, double click to edit)</li>
+
         <li>Enabled (Automated Light Control excl. Logix)</li>
+
         <li>Intensity (availble in certain hardware only)</li>
       </ul>
 
-      <p>The Light Table contains an 'Enabled' column. For a Light
-      to be triggered by its control Sensor, the Fast Clock, or its
-      control Turnout, it must be "Enabled", that is, its check box
-      in the 'Enabled' column must be checked. You can uncheck this
-      box to temporarily disable a Light from being triggered, i.e.
-      prevent it switching when its control mechanism fires.<br>
-      You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to
-      a column title.</p>
+      <p>The Light Table contains an 'Enabled' column. For a Light to be triggered by its control
+      Sensor, the Fast Clock, or its control Turnout, it must be "Enabled", that is, its check box
+      in the 'Enabled' column must be checked. You can uncheck this box to temporarily disable a
+      Light from being triggered, i.e. prevent it switching when its control mechanism fires.<br>
+      You may change the order of the columns by dragging their titles, and sort the rows by
+      clicking one of the sort triangles next to a column title.</p>
 
-    <p>Note that enabled / disabled column only applies to a Light's
-      automated Light Control mechanism.
-      <br>A 'disabled' state will not
-      prevent a Light from being turned On or Off using the button
-      in the Light Table or from being controlled by a Logix.</p>
-
-      <img src="images/LightTableGraphic.png" height="135" width="276"
-      alt="Graphic Light state column">
-      <p>Choose between textual and graphic display of the Light state
-      in the <a href="../../../apps/TabbedPreferences.shtml#Display"
-      title="Main JMRI Preferences"
-      >Display preferences</a>.</p>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <p>Note that enabled / disabled column only applies to a Light's automated Light Control
+      mechanism.<br>
+      A 'disabled' state will not prevent a Light from being turned On or Off using the button in
+      the Light Table or from being controlled by a Logix.</p>
+      <img src="images/LightTableGraphic.png" height="135" width="276" alt=
+      "Graphic Light state column">
+      <p>Choose between textual and graphic display of the Light state in the <a href=
+      "../../../apps/TabbedPreferences.shtml#Display" title="Main JMRI Preferences">Display
+      preferences</a>.</p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Creating New Lights</h2>
-      To define a new light, click the <a href="LightAddEdit.shtml">Add...</a> button
-      the Light Table. This will take you to a <a href= "LightAddEdit.shtml">new window</a>
-      for adding or editing Lights.
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      To define a new light, click the <a href="LightAddEdit.shtml">Add...</a> button the Light
+      Table. This will take you to a <a href="LightAddEdit.shtml">new window</a> for adding or
+      editing Lights. 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Turning Lights On/Off/Setting Intensity</h2>
 
       <p>Lights may be turned on or off by clicking the button/icon in the State column of the
       Light Table.</p>
 
-      <p>A Light may be set up in the Light Table to be controlled by  the state of a track
-      switch (Turnout), a block occupancy sensor, or one or two sensors. For example, the sensor
-      for a fascia panel button could be  specified as the control sensor for the light, turning
-      it on or off. Two sensor control is useful in controlling layout sounds or crossing gates.</p>
+      <p>A Light may be set up in the Light Table to be controlled by the state of a track switch
+      (Turnout), a block occupancy sensor, or one or two sensors. For example, the sensor for a
+      fascia panel button could be specified as the control sensor for the light, turning it on or
+      off. Two sensor control is useful in controlling layout sounds or crossing gates.</p>
 
       <p class="note">A Light ma also be controlled from a Logix, as the action of one of its
-      conditionals. If you need more powerful logic to control your Light, consider using a <a href=
-      "LogixTable.shtml">Logix</a>.</p>
+      conditionals. If you need more powerful logic to control your Light, consider using a
+      <a href="LogixTable.shtml">Logix</a>.</p>
 
-      <p>Note that Enabled/Disabled applies only to a Light's
-      automated control mechanism. A 'Disabled' state will not
-      prevent a Light from being turned on or off using the button
-      in the Light Table or from being controlled by a Logix.</p>
+      <p>Note that Enabled/Disabled applies only to a Light's automated control mechanism. A
+      'Disabled' state will not prevent a Light from being turned on or off using the button in the
+      Light Table or from being controlled by a Logix.</p>
 
-      <p>A variable Light may also be adjusted by entering a value
-      of 0.00 to 1.00 in the <b>intensity column</b> for the Light.
-      A Light that does not support variable intensities will
-      consider any non zero value as meaning On. If a Light has
-      transition effects enabled and configured, the Light will
-      respond according to those options.</p>
+      <p>A variable Light may also be adjusted by entering a value of 0.00 to 1.00 in the
+      <strong>intensity column</strong> for the Light. A Light that does not support variable
+      intensities will consider any non zero value as meaning On. If a Light has transition effects
+      enabled and configured, the Light will respond according to those options.</p>
 
-      <p>The status button for a variable Light will also be a
-      status indication of the variable Light. When it is not On or
-      Off it will show if the last change was moving higher or
-      lower. The intensity displayed will be the current intensity,
-      not the target intensity, when transition effects are
-      enabled.</p>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <p>The status button for a variable Light will also be a status indication of the variable
+      Light. When it is not On or Off it will show if the last change was moving higher or lower.
+      The intensity displayed will be the current intensity, not the target intensity, when
+      transition effects are enabled.</p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Saving Lights to Disk</h2>
 
-      <p>The Light Table is kept in your <i>layout configuration</i>, along
-      with Turnouts, Sensors, Signal Heads, control panel setup etc.
-      To store this information on disk, see <a href="../../../../html/apps/LoadStoreWork.shtml">
-      Loading and Storing Your Work</a>.</p>
-      <p>Note that the enabled/disabled state of
-      each Light is not saved in the configuration file. When Lights are loaded from
-      a configuration file, they are all enabled.</p>
+      <p>The Light Table is kept in your <em>layout configuration</em>, along with Turnouts,
+      Sensors, Signal Heads, control panel setup etc. To store this information on disk, see
+      <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <p>Note that the enabled/disabled state of each Light is not saved in the configuration file.
+      When Lights are loaded from a configuration file, they are all enabled.</p>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Other Light Reading</h2>
 
-      <p><a href="LightAddEdit.shtml#addLight">Add / </a><a href="LightAddEdit.shtml#editLight">
-        Edit Light</a> (including automated <a href="LightAddEdit.shtml#lightcontrol"> Light Controls</a>)</p>
+      <p><a href="LightAddEdit.shtml#addLight">Add /</a> <a href=
+      "LightAddEdit.shtml#editLight">Edit Light</a> (including automated <a href=
+      "LightAddEdit.shtml#lightcontrol">Light Controls</a>)</p>
 
-      <p><a href="../../../../html/tools/Lights.shtml">Lights General Documentation</a></p>
+      <p><a href="../../../../html/tools/Lights.shtml">Lights General Documentation</a>
+      </p>
 
-      <p><a href="../simplelightctrl/SimpleLightCtrl.shtml">Light Control Tool</a> (for manual Light operation)</p>
-
+      <p><a href="../simplelightctrl/SimpleLightCtrl.shtml">Light Control Tool</a> (for manual
+      Light operation)</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

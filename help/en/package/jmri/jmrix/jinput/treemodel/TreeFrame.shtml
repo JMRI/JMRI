@@ -1,69 +1,51 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: USB Input Control</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: USB Input Control</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h2>JMRI: USB Input Control</h2><a href=
-      "TreeFrame.jpg"><img src="TreeFrame.jpg" align="right"
-      height="132" width="325"></a> The USB Input Control window
-      lets you connect JMRI sensors and memories to USB input
-      devices on your computer. For example, you could have a JMRI
-      sensor go ACTIVE when when you type a key or press a joystick
-      button. You can then use <a href=
-      "../../../../../html/tools/Routes.shtml">Routes</a> and
-      <a href="../../../../../html/tools/Logix.shtml">Logix</a> to
-      use that USB input to control your layout.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h2>JMRI: USB Input Control</h2>
+      <a href="TreeFrame.jpg"><img src="TreeFrame.jpg" class="floatRight" height="132" width="325"
+      alt="usb info"></a> The USB Input Control window lets you connect JMRI sensors and memories
+      to USB input devices on your computer. For example, you could have a JMRI sensor go ACTIVE
+      when when you type a key or press a joystick button. You can then use <a href=
+      "../../../../../html/tools/Routes.shtml">Routes</a> and <a href=
+      "../../../../../html/tools/Logix.shtml">Logix</a> to use that USB input to control your
+      layout.
+      <p>On the left side of the window is a tree displaying the available USB controllers and
+      components within them. Depending on details of your computer, this tree might be completely
+      populated when the window opens, or you might have to change the inputs (e.g. click a button)
+      to have it show up. Devices that are plugged in after the program starts may or may not
+      appear, depending on the specifics of your computer setup.</p>
 
-      <p>On the left side of the window is a tree displaying the
-      available USB controllers and components within them.
-      Depending on details of your computer, this tree might be
-      completely populated when the window opens, or you might have
-      to change the inputs (e.g. click a button) to have it show
-      up. Devices that are plugged in after the program starts may
-      or may not appear, depending on the specifics of your
-      computer setup.</p>
+      <p>When you select a single component in the left-hand tree display, the right side pane will
+      show you the details of that component and it's current value.</p>
 
-      <p>When you select a single component in the left-hand tree
-      display, the right side pane will show you the details of
-      that component and it's current value.</p>
+      <p>Below that is an area for configuring the program to drive a JMRI <a href=
+      "../../../../../html/tools/Sensors.shtml">Sensor</a> and/or <a href=
+      "../../../../../html/tools/Memories.shtml">Memory</a> from the USB input. You can enter a
+      Sensor name in the top text field, and then check the "Copy to JMRI Sensor" box. When the
+      input goes On (for a digital input), or has a value greater than zero (for an analog input),
+      the Sensor will be set to ACTIVE, and it will otherwise be set to INACTIVE. You can watch
+      this work in the <a href="../../../jmrit/beantable/SensorTable.shtml">Sensor Table</a>.</p>
 
-      <p>Below that is an area for configuring the program to drive
-      a JMRI <a href=
-      "../../../../../html/tools/Sensors.shtml">Sensor</a> and/or
-      <a href="../../../../../html/tools/Memories.shtml">Memory</a>
-      from the USB input. You can enter a Sensor name in the top
-      text field, and then check the "Copy to JMRI Sensor" box.
-      When the input goes On (for a digital input), or has a value
-      greater than zero (for an analog input), the Sensor will be
-      set to ACTIVE, and it will otherwise be set to INACTIVE. You
-      can watch this work in the <a href=
-      "../../../jmrit/beantable/SensorTable.shtml">Sensor
-      Table</a>.</p>
+      <p>Note that you can't edit the sensor name while the box is checked; you have to uncheck the
+      box so the Sensor stops following the USB input before changing to a new Sensor Name.</p>
 
-      <p>Note that you can't edit the sensor name while the box is
-      checked; you have to uncheck the box so the Sensor stops
-      following the USB input before changing to a new Sensor
-      Name.</p>
-
-      <p>This feature was added on an experimental basis in JMRI
-      2.1.5. In that version, your configuration information isn't
-      restored after you quit and restart the program. That will be
+      <p>This feature was added on an experimental basis in JMRI 2.1.5. In that version, your
+      configuration information isn't restored after you quit and restart the program. That will be
       added in the next JMRI version.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

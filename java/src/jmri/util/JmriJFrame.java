@@ -88,6 +88,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         super();
         reuseFrameSavedPosition = savePosition;
         reuseFrameSavedSized = saveSize;
+        initFrame();
+    }
+    
+    final void initFrame() {
         addWindowListener(this);
         addComponentListener(this);
         windowInterface = new JmriJFrameInterface();
@@ -149,10 +153,14 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     public JmriJFrame(String name, boolean saveSize, boolean savePosition) {
         this(saveSize, savePosition);
+        setFrameTitle(name);
+    }
+    
+    final void setFrameTitle(String name) {
         setTitle(name);
         generateWindowRef();
         if (this.getClass().getName().equals(JmriJFrame.class.getName())) {
-            if ((this.getTitle() == null) || (this.getTitle().equals(""))) {
+            if ((this.getTitle() == null) || (this.getTitle().isEmpty())) {
                 return;
             }
         }
@@ -284,9 +292,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Represents the dimensions of an attached screen/display
      */
     public static class ScreenDimensions {
-        private Rectangle bounds;
-        private Insets insets;
-        private GraphicsDevice gd;
+        final Rectangle bounds;
+        final Insets insets;
+        final GraphicsDevice gd;
 
         public ScreenDimensions(Rectangle bounds, Insets insets, GraphicsDevice gd) {
             this.bounds = bounds;

@@ -280,6 +280,11 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
         int month = (r.getElement(3) >>> 4);
         int weekday = r.getElement(3) - ( month << 4);
         
+        // DateFormatSymbols.getInstance().getWeekdays()[] uses 1-7, not 0-6
+        if (weekday == 0){
+            weekday =7;
+        }
+        
         log.debug("bs tot   {}",Integer.toBinaryString(r.getElement(3)));
         log.debug("bs day       {} {}",Integer.toBinaryString(weekday),weekday);
         log.debug("bs month {} {}",Integer.toBinaryString(month),month);

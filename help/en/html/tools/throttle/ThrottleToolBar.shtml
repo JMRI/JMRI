@@ -1,60 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Throttle pane Toolbar</title>
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="description" content="Throttle documentation for JMRI project" />
-  <meta name="author" content="Lionel Jeanson" />
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="description" content="Throttle documentation for JMRI project">
+  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
-      <h1>Throttle pane Toolbar</h1><img src=
-      "images/ThrottleToolBar.png" alt="" /><br />
+      <h1>Throttle pane Toolbar</h1>
+      <img src="images/ThrottleToolBar.png" alt=""><br>
       The Throttle toolbar is accessible from the <a href=
-      "ThrottlesPreferencesPane.shtml">Throttles Preferences
-      pane</a>.<br />
-      When enabled, a Throttle pane can host a set of Throttles.
-      These Throttles are browsable using the:
-
-      <h2>Previous Button</h2>Move to previous Throttle for that
-      Throttle Window.
-
-      <h2>Next Button</h2>Move to next Throttle for that Throttle
-      Window.
-
-      <h2>New Button</h2>Add a new Throttle in that Throttle
-      Window.<br />
-      Once the number of Throttles in a Throttle Window is greater
-      than one (1) the Next, Previous and Trash buttons are
-      enabled.
-
-      <h2>Trash Button</h2>Remove the current Throttle from that
-      Throttle Window.<br />
-      When the number of Throttles in a Throttle Window is equal to
-      one, Next, Previous and Trash buttons are disabled.
-
-      <h2>Stop Button</h2>Send a stop message to all throttles
-      managed by JMRI.
-
-      <h2>Power Button</h2>Allows for layout power control if
-      possible (red icon is Off, green is On, yellow is status
+      "ThrottlesPreferencesPane.shtml">Throttles Preferences pane</a>.<br>
+      When enabled, a Throttle pane can host a set of Throttles. These Throttles are browsable
+      using the:
+      <h2>Previous Button</h2>
+      Move to previous Throttle for that Throttle Window.
+      <h2>Next Button</h2>
+      Move to next Throttle for that Throttle Window.
+      <h2>New Button</h2>
+      Add a new Throttle in that Throttle Window.<br>
+      Once the number of Throttles in a Throttle Window is greater than one (1) the Next, Previous
+      and Trash buttons are enabled.
+      <h2>Trash Button</h2>
+      Remove the current Throttle from that Throttle Window.<br>
+      When the number of Throttles in a Throttle Window is equal to one, Next, Previous and Trash
+      buttons are disabled.
+      <h2>Stop Button</h2>
+      Send a stop message to all throttles managed by JMRI.
+      <h2>Power Button</h2>
+      Allows for layout power control if possible (red icon is Off, green is On, yellow is status
       Unknown).
-
-      <h2>List Button</h2>Show/Hide the <a href=
-      "ThrottlesListWindow.shtml">Throttles List</a>. 
+      <h2>List Button</h2>
+      Show/Hide the <a href="ThrottlesListWindow.shtml">Throttles List</a>. 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

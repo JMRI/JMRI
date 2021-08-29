@@ -82,8 +82,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         // GpioFactory.setDefaultProvider(null);
         l.dispose();
 
-        JUnitUtil.clearShutDownManager();
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

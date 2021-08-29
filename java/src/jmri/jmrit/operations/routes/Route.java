@@ -16,6 +16,7 @@ import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -215,6 +216,13 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         return null;
     }
 
+    public String getDepartureDirection() {
+        if (getDepartsRouteLocation() != null) {
+            return getDepartsRouteLocation().getTrainDirectionString();
+        }
+        return NONE;
+    }
+
     /**
      * Get the last location in a route
      *
@@ -357,14 +365,13 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         rl.setBlockingOrder(order);
         setDirtyAndFirePropertyChange(ROUTE_BLOCKING_CHANGED_PROPERTY, order - 1, order);
     }
-    
+
     public void resetBlockingOrder() {
         for (RouteLocation rl : getLocationsByIdList()) {
             rl.setBlockingOrder(0);
         }
         setDirtyAndFirePropertyChange(ROUTE_BLOCKING_CHANGED_PROPERTY, "Order", "Reset");
     }
-
 
     /**
      * Places a RouteLocation earlier in the route.
@@ -415,7 +422,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         resetBlockingOrder();
         setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceNum));
     }
-    
+
     /**
      * 1st RouteLocation in a route starts at 1.
      * 
@@ -443,8 +450,13 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         if (routeList.size() == 0) {
             return ERROR;
         }
+        List<String> directions = Setup.getTrainDirectionList();
         for (RouteLocation rl : routeList) {
             if (rl.getName().equals(RouteLocation.DELETED)) {
+                return ERROR;
+            }
+            // did user eliminate the train direction for this route location?
+            if (!directions.contains(rl.getTrainDirectionString())) {
                 return ERROR;
             }
         }

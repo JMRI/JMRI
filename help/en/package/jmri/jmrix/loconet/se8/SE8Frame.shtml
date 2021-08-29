@@ -1,82 +1,72 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Configure Digitrax SE8c</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet SE8C">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <a href="SE8cConfigTool.png"><img src="SE8cConfigTool.png"
-      alt="SE8c Configuration Tool Screen Capture" 
-      style="float:right; margin: 5px;"></a>
-      
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <a href="SE8cConfigTool.png"><img src="SE8cConfigTool.png" alt=
+      "SE8c Configuration Tool Screen Capture" style="float:right; margin: 5px;"></a>
       <h1>Configure Digitrax SE8c</h1>
 
-      <p>The JMRI SE8c programming tool lets you configure the
-      internal options of a Digitrax SE8c Signaling Decoder Board
-      directly from your computer.</p>
+      <p>The JMRI SE8c programming tool lets you configure the internal options of a Digitrax SE8c
+      Signaling Decoder Board directly from your computer.</p>
 
-      <p>To open this tool from the JMRI pane select the
-      LocoNet menu and then find the tool on the list.</p>
+      <p>To open this tool from the JMRI pane select the LocoNet menu and then find the tool on the
+      list.</p>
 
-      <p>To use it, you put the address of an SE8c board in the
-      text field and click "Read from SE8c". The tool will read
-      back the current state of the various options, and set the
-      check boxes to correspond to their current values.</p>
+      <p>To use it, you put the address of an SE8c board in the text field and click "Read from
+      SE8c". The tool will read back the current state of the various options, and set the check
+      boxes to correspond to their current values.</p>
 
-      <p>You can then, if you wish, change the checkboxes and click
-      "Write to SE8c" to make your changes permanent.</p>
+      <p>You can then, if you wish, change the checkboxes and click "Write to SE8c" to make your
+      changes permanent.</p>
 
-      <p>The tool relies upon each SE8C board to have a unique "Board ID" (Board
-      Address) in order to configure each device individually.  While it is 
-      possible to change the Board ID number using JMRI, it cannot be done using 
-      this tool due to limitations of the SE8C design.  Instead, 
-      follow the instructions found <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-      here</a>, but you must consult the SE8C manual and modify the 
-      JMRI-based process to suit the SE8C device's buttons, button press time, 
-      and lamp flashes.</p>
+      <p>The tool relies upon each SE8C board to have a unique "Board ID" (Board Address) in order
+      to configure each device individually. While it is possible to change the Board ID number
+      using JMRI, it cannot be done using this tool due to limitations of the SE8C design. Instead,
+      follow the instructions found <a href=
+      "../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">here</a>, but you must
+      consult the SE8C manual and modify the JMRI-based process to suit the SE8C device's buttons,
+      button press time, and lamp flashes.</p>
 
       <h2>Limitations</h2>
 
       <ul>
-        <li>Because of the way the SE8c board works, this tool
-        can't change the basic address of the unit.  It is possible to change 
-              the Board ID number using JMRI by following the instructions found 
-              <a href="../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-              here</a>. Note that it is necessary to consult the SE8C manual and 
-              modify the JMRI-based process shown at the link above to suit the 
-              SE8C's buttons, button press time, and lamp flashes.</li>
+        <li>Because of the way the SE8c board works, this tool can't change the basic address of
+        the unit. It is possible to change the Board ID number using JMRI by following the
+        instructions found <a href=
+        "../../../../../html/hardware/loconet/Digitrax.shtml#deviceBoardId">here</a>. Note that it
+        is necessary to consult the SE8C manual and modify the JMRI-based process shown at the link
+        above to suit the SE8C's buttons, button press time, and lamp flashes.
+        </li>
 
-        <li>The SE8c can be configured to send Sensor status on the
-        LocoNet in response to a "track power on" command. The SE8c
-        does not send Turnout status in response to a "track power
-        on" command.</li>
+        <li>The SE8c can be configured to send Sensor status on the LocoNet in response to a "track
+        power on" command. The SE8c does not send Turnout status in response to a "track power on"
+        command.</li>
 
-        <li>This tool is able to access SE8c boards with addresses
-        between 1 and 36. Users are advised to avoid using the
-        factory default board address (board address 1) as it will
-        be difficult to program new boards with unique data if any
-        in-service board is using the factory default board
-        address.</li>
+        <li>This tool is able to access SE8c boards with addresses between 1 and 36. Users are
+        advised to avoid using the factory default board address (board address 1) as it will be
+        difficult to program new boards with unique data if any in-service board is using the
+        factory default board address.</li>
       </ul>
 
       <h2>See Also</h2>
 
       <p>Documentation for the SE8c can be found at the <a href=
-      "http://www.digitrax.com/tsd/product/SE8C/">Digitrax Web
-      Site</a>.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      "http://www.digitrax.com/tsd/product/SE8C/">Digitrax Web Site</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
