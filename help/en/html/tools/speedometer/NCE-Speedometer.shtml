@@ -1,258 +1,193 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Using The JMRI Speedometer with NCE</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Using The JMRI Speedometer with NCE</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Speedometer</h1>
 
       <h2>Using JMRI Speedometer with NCE</h2>
 
-      <h3>Installation</h3>The Speedometer function within Decoder
-      Pro is used to measure a train's scale speed. Once everything
-      is setup, the speed is automatically calculated based the
-      movements of an engine through distinct blocks.
+      <h3>Installation</h3>
+      The Speedometer function within Decoder Pro is used to measure a train's scale speed. Once
+      everything is setup, the speed is automatically calculated based the movements of an engine
+      through distinct blocks.
+      <p>Each block must have a means of detecting occupancy. The BD20 manufactured by NCE is a
+      simple and effective block detector. Three BD20s are recommended. As the blocks get longer it
+      is better to have another detector in the following section of track to sense when the engine
+      has entered that block. As described at the end of this document it is possible to use less
+      than 3 detectors.</p>
 
-      <p>Each block must have a means of detecting occupancy. The
-      BD20 manufactured by NCE is a simple and effective block
-      detector. Three BD20s are recommended. As the blocks get
-      longer it is better to have another detector in the following
-      section of track to sense when the engine has entered that
-      block. As described at the end of this document it is
-      possible to use less than 3 detectors.</p>
+      <p>Connecting each BD20 to the NCE Command Station is accomplished with the AIU (Auxiliary
+      Input Unit) manufactured by NCE as well. The AIU needs to be connected with the cab bus. Once
+      the AIU is connected into the cab bus, and thus into the Command Station, DecoderPro does the
+      rest.</p>
 
-      <p>Connecting each BD20 to the NCE Command Station is
-      accomplished with the AIU (Auxiliary Input Unit) manufactured
-      by NCE as well. The AIU needs to be connected with the cab
-      bus. Once the AIU is connected into the cab bus, and thus
-      into the Command Station, DecoderPro does the rest.</p>
+      <p>The track used must be connected to the mainline from the NCE system. Do NOT connect it to
+      the programming tracking wiring.</p>
 
-      <p>The track used must be connected to the mainline from the
-      NCE system. Do NOT connect it to the programming tracking
-      wiring.</p>
+      <p>The choice of track is up to the user and the space available. An independent section of
+      track or a long siding on an existing layout are both acceptable. The independent section of
+      track can be long and straight or it can be a loop. Each type has their advantages and
+      disadvantages.</p>
 
-      <p>The choice of track is up to the user and the space
-      available. An independent section of track or a long siding
-      on an existing layout are both acceptable. The independent
-      section of track can be long and straight or it can be a
-      loop. Each type has their advantages and disadvantages.</p>
+      <p>It is also possible to use this Speedometer while the rest of the layout is operating. If
+      you do, make sure you are not blocking the mainline or at least have the proper authorization
+      from the dispatcher.</p>
 
-      <p>It is also possible to use this Speedometer while the rest
-      of the layout is operating. If you do, make sure you are not
-      blocking the mainline or at least have the proper
-      authorization from the dispatcher.</p>
-
-      <p>Figure 1 shows the ideal setup for connecting the block
-      detectors into the NCE system with the BD20s and AIU.</p>
+      <p>Figure 1 shows the ideal setup for connecting the block detectors into the NCE system with
+      the BD20s and AIU.</p>
 
       <h3>Wiring</h3>
 
-      <p>Figure 1 shows how to integrate the sections of track,
-      block detectors and AIU into the Command Station.</p>
+      <p>Figure 1 shows how to integrate the sections of track, block detectors and AIU into the
+      Command Station.</p>
 
-      <p>Make sure there is a good solder connection between the
-      wire and the rail and that the rails are clean. It is
-      possible to have false readings on the speedometer if the DCC
-      signal is interrupted.</p>
+      <p>Make sure there is a good solder connection between the wire and the rail and that the
+      rails are clean. It is possible to have false readings on the speedometer if the DCC signal
+      is interrupted.</p>
 
-      <p>It is only necessary to put gaps into one of the rails. It
-      does not matter which rail is gapped.</p>
+      <p>It is only necessary to put gaps into one of the rails. It does not matter which rail is
+      gapped.</p>
 
-      <p>You can use a loop of track or a straight section of
-      track. For a loop, block 5 in the diagram is connected to
-      block 1 and the power feed to block 5 can be removed since it
-      is powered in block 1.</p><img width="496" height="429" src=
-      "./images/image001.gif"><br>
-      It is a good idea to have 3 independent blocks. Block 2 is
-      used to measure speeds for slow running engines. Block 3
-      should be quite a bit longer than Block 2 to allow for faster
-      running engines to reach their running speed. The length of
-      each block is a subjective answer. These values are not cast
-      in stone and each person's experience and available space may
-      dictate block lengths.
+      <p>You can use a loop of track or a straight section of track. For a loop, block 5 in the
+      diagram is connected to block 1 and the power feed to block 5 can be removed since it is
+      powered in block 1.</p>
+      <img width="496" height="429" src="./images/image001.gif" alt="wiring diagram"><br>
+      It is a good idea to have 3 independent blocks. Block 2 is used to measure speeds for slow
+      running engines. Block 3 should be quite a bit longer than Block 2 to allow for faster
+      running engines to reach their running speed. The length of each block is a subjective
+      answer. These values are not cast in stone and each person's experience and available space
+      may dictate block lengths.
+      <p>The BD20s should be located within a reasonable distance from the track.</p>
 
-      <p>The BD20s should be located within a reasonable distance
-      from the track.</p>
+      <p>The wire at each block should be soldered as close to the start of the block as
+      possible.</p>
 
-      <p>The wire at each block should be soldered as close to the
-      start of the block as possible.</p>
+      <p>Follow instructions for the BD-20 regarding number of turns.</p>
 
-      <p>Follow instructions for the BD-20 regarding number of
-      turns.</p>
+      <p>Follow the instructions for the AIU as well. As the AIU instructions state, it is a good
+      idea to change the default cab address from 4.</p>
 
-      <p>Follow the instructions for the AIU as well. As the AIU
-      instructions state, it is a good idea to change the default
-      cab address from 4.</p>
-
-      <p>All of the wires from each pin 1 of the BD20 must go to
-      GND pin on the AIU. The wires from each pin 2 on the BD20
-      goes to a unique pin on the AIU.</p>
+      <p>All of the wires from each pin 1 of the BD20 must go to GND pin on the AIU. The wires from
+      each pin 2 on the BD20 goes to a unique pin on the AIU.</p>
 
       <h3>Setting Up DecoderPro</h3>
-
-      <table cellpadding="0" cellspacing="0">
-        <tr>
-          <td width="13" height="0"></td>
-        </tr>
-
-        <tr>
-          <td></td>
-
-          <td><img width="415" height="284" src=
-          "../../../images/speedometer.gif"></td>
-        </tr>
-      </table><br>
-      Open DecoderPro. Under the Tools menu open Speedometer. See
-      Figure 2.
-
+      <img width="415" height="284" src="../../../images/speedometer.gif" alt=
+      "speedometer dialog"><br>
+      Open DecoderPro. Under the Tools menu open Speedometer. See Figure 2.
       <ol>
-        <li>Enter the sensor ID number into to boxes for Sensor #1,
-        #2 and #3. The sensor ID number can be found by using the
-        following formula:
+        <li>Enter the sensor ID number into to boxes for Sensor #1, #2 and #3. The sensor ID number
+        can be found by using the following formula:
+          <p>Sensor ID = (AIU Cab Address - 1) * 16 -1 + (Pin Number On AIU)</p>
 
-          <p>Sensor ID = (AIU Cab Address - 1) * 16 -1 + (Pin
-          Number On AIU)</p>
+          <p>For example: The AIU cab address is set to 50 and one of the BD20s is connected to pin
+          2. Therefore the Sensor ID would be:</p>
 
-          <p>For example: The AIU cab address is set to 50 and one
-          of the BD20s is connected to pin 2. Therefore the Sensor
-          ID would be:</p>
-
-          <p>Sensor ID = (<b>50</b> - 1) * 16 -1 +
-          (<b>2</b>)&gt;</p>
+          <p>Sensor ID = (<strong>50</strong> - 1) * 16 -1 + (<strong>2</strong>)&gt;</p>
 
           <p>Sensor ID = 785</p>
         </li>
 
-        <li>Based on Figure 2, all sensors should be set to
-        'Enter'. This means the internal timer either starts or
-        stops when the train enters the given block. If a sensor
-        were set to 'Exit' then the internal timer would start or
-        stop when the train exits the block.</li>
+        <li>Based on Figure 2, all sensors should be set to 'Enter'. This means the internal timer
+        either starts or stops when the train enters the given block. If a sensor were set to
+        'Exit' then the internal timer would start or stop when the train exits the block.</li>
 
-        <li>The light at the end of each sensor row gives the
-        indication of occupancy.
-
-          <p>Red: No reading, status unknown (typically if no value
-          for the sensor ID is entered)</p>
+        <li>The light at the end of each sensor row gives the indication of occupancy.
+          <p>Red: No reading, status unknown (typically if no value for the sensor ID is
+          entered)</p>
 
           <p>Yellow: Block occupied</p>
 
           <p>Green: Block unoccupied</p>
         </li>
 
-        <li>Enter the distance in scale feet. For example a 3 feet
-        long piece of HO flex track would be 261 scale feet.
+        <li>Enter the distance in scale feet. For example a 3 feet long piece of HO flex track
+        would be 261 scale feet.
+          <p>Distances 1 and 2 both start at the beginning of block 2 (or the end of block 1).</p>
 
-          <p>Distances 1 and 2 both start at the beginning of block
-          2 (or the end of block 1).</p>
-
-          <p>For metric units press the 'To Metric Units' button
-          and enter the information in the correct units.</p>
+          <p>For metric units press the 'To Metric Units' button and enter the information in the
+          correct units.</p>
         </li>
       </ol>
 
       <h2>Operating The Speedometer</h2>
 
-      <p>Now that everything is hooked up and the speedometer form
-      is open and the correct values entered as required we are
-      ready to use the speedometer.</p>
+      <p>Now that everything is hooked up and the speedometer form is open and the correct values
+      entered as required we are ready to use the speedometer.</p>
 
       <ol>
         <li>Place an engine in block 1.</li>
 
-        <li>Press the 'Start' button on the speedometer form to
-        tell it to start getting input from the AIU. All of the
-        lights should be gray.</li>
+        <li>Press the 'Start' button on the speedometer form to tell it to start getting input from
+        the AIU. All of the lights should be gray.</li>
 
-        <li>Start the train moving towards block 2. Increase the
-        speed to a given speed step. Keep it at that speed.</li>
+        <li>Start the train moving towards block 2. Increase the speed to a given speed step. Keep
+        it at that speed.</li>
 
-        <li>As the train moves through the blocks you should notice
-        the colors for each sensor change colors.</li>
+        <li>As the train moves through the blocks you should notice the colors for each sensor
+        change colors.</li>
 
-        <li>Once the condition for sensor #2 is met, meaning the
-        timer for distance 1 has stopped, you should see values for
-        Time 1 Speed and Time displayed on the Speedometer form.
-        Remember this is scale speed!</li>
+        <li>Once the condition for sensor #2 is met, meaning the timer for distance 1 has stopped,
+        you should see values for Time 1 Speed and Time displayed on the Speedometer form. Remember
+        this is scale speed!</li>
 
-        <li>Once the condition for sensor #3 is met, meaning the
-        timer for distance 2 has stopped, you should see values for
-        Time 2 Speed and Time displayed on the Speedometer form.
-        Remember this is scale speed!</li>
+        <li>Once the condition for sensor #3 is met, meaning the timer for distance 2 has stopped,
+        you should see values for Time 2 Speed and Time displayed on the Speedometer form. Remember
+        this is scale speed!</li>
 
-        <li>Once the train has reached the end of the track do not
-        immediately throw it back into reverse. This will cause the
-        timer to think trains are in one of the blocks and actually
-        restart or give another reading for the speed and time.
-        Record the values of speed and time. Now move the train
-        back into block 1.
-
-          <p>If you have a loop, once the train has reached block 5
-          (actually the beginning of block 1) stop the train as
-          well before it reaches the end of block 1. If you don't
-          the timer will restart.</p>
+        <li>Once the train has reached the end of the track do not immediately throw it back into
+        reverse. This will cause the timer to think trains are in one of the blocks and actually
+        restart or give another reading for the speed and time. Record the values of speed and
+        time. Now move the train back into block 1.
+          <p>If you have a loop, once the train has reached block 5 (actually the beginning of
+          block 1) stop the train as well before it reaches the end of block 1. If you don't the
+          timer will restart.</p>
         </li>
 
-        <li>To restart the timer, make sure the train is in block
-        1. Hit the 'Clear' button on the Speedometer. Continue with
-        step 3.</li>
+        <li>To restart the timer, make sure the train is in block 1. Hit the 'Clear' button on the
+        Speedometer. Continue with step 3.</li>
 
-        <li>Deciding when to switch to the longer block is up to
-        the user based on experience.</li>
+        <li>Deciding when to switch to the longer block is up to the user based on experience.</li>
       </ol>
 
       <h2>Uses for Speedometer</h2>
 
-      <p>Obviously the primary use for the Speedometer is to create
-      custom speed tables. Creating speed tables can be used so
-      different types of engines can run together as a consist.</p>
+      <p>Obviously the primary use for the Speedometer is to create custom speed tables. Creating
+      speed tables can be used so different types of engines can run together as a consist.</p>
 
-      <p>Everyone's method for implementing a speed table may be
-      different. But as a starting point here is some general guide
-      lines.</p>
+      <p>Everyone's method for implementing a speed table may be different. But as a starting point
+      here is some general guide lines.</p>
 
       <ol>
-        <li>Choose an engine that has the performance you want.
-        Look at low and high end speeds, how it accelerates, etc.
-        As an alternative, manually change the speed table of an
-        engine until you reach the desired performance.</li>
+        <li>Choose an engine that has the performance you want. Look at low and high end speeds,
+        how it accelerates, etc. As an alternative, manually change the speed table of an engine
+        until you reach the desired performance.</li>
 
-        <li>Use the speedometer to capture and document the speed
-        at each speed step. You can not just copy the CV value from
-        one engine to another. This is because the voltage one
-        engine requires to achieve the required speed is not
-        necessarily the same as another engine. This is why we're
-        creating the speed table using the speedometer in the first
-        place.
-
-          <p>Now is the time to match the other engine. This is
-          where programming on the mainline is the only way to go.
-          At each speed step document the speed of the engine.</p>
+        <li>Use the speedometer to capture and document the speed at each speed step. You can not
+        just copy the CV value from one engine to another. This is because the voltage one engine
+        requires to achieve the required speed is not necessarily the same as another engine. This
+        is why we're creating the speed table using the speedometer in the first place.
+          <p>Now is the time to match the other engine. This is where programming on the mainline
+          is the only way to go. At each speed step document the speed of the engine.</p>
         </li>
 
         <li>Adjust the CV value at that speed step.</li>
 
-        <li>Retest the speed. Keep adjusting the CV value until the
-        desired speed is achieved.</li>
+        <li>Retest the speed. Keep adjusting the CV value until the desired speed is achieved.</li>
 
-        <li>Move on to the next speed step. Repeat steps 5 through
-        7 until the desired speed achieved.</li>
+        <li>Move on to the next speed step. Repeat steps 5 through 7 until the desired speed
+        achieved.</li>
 
         <li>Go through each speed step.
-
-          <p>The engine should now perform as the template
-          engine.</p>
+          <p>The engine should now perform as the template engine.</p>
         </li>
       </ol>
 
@@ -260,20 +195,18 @@
 
       <h3>Using Less Than 3 Sensors</h3>
 
-      <p>If you have less than 3 sensors it is still possible to
-      use the Speedometer. For example, for short blocks a single
-      sensor can be used.</p>
+      <p>If you have less than 3 sensors it is still possible to use the Speedometer. For example,
+      for short blocks a single sensor can be used.</p>
 
-      <p>In this case the value on the Speedometer window for
-      Sensor #1 and Sensor #2 would be the same number. Sensor #1
-      would be set to 'Enter' and Sensor #2 would be set to
-      'Exit'.</p>
+      <p>In this case the value on the Speedometer window for Sensor #1 and Sensor #2 would be the
+      same number. Sensor #1 would be set to 'Enter' and Sensor #2 would be set to 'Exit'.</p>
 
-      <p>Back to the <a href="index.shtml">Speedometer main Help
-      page</a>.</p>
+      <p>Back to the <a href="index.shtml">Speedometer main Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

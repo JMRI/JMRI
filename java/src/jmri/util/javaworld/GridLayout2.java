@@ -1,15 +1,16 @@
 package jmri.util.javaworld;
 
-// From http://www.javaworld.com/javaworld/javatips/javatip121/GridLayout2.java
-// Javaworld article by Bogdan Dorohonceanu
-//
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
-// Grid Layout which allows components of differrent sizes
+/**
+ * Grid Layout which allows components of different sizes.
+ * From http://www.javaworld.com/javaworld/javatips/javatip121/GridLayout2.java
+ * Javaworld article by Bogdan Dorohonceanu.
+ */
 public class GridLayout2 extends GridLayout {
 
     public GridLayout2() {

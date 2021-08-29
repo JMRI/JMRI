@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -11,17 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Date;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import jmri.InstanceManager;
-import jmri.Timebase;
-import jmri.TimebaseRateException;
+
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
@@ -454,9 +453,9 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
                     jframe.repaint();
                 });
             } else {
-                jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(_url));
+                jmri.util.HelpUtil.openWebPage(_url);
             }
-        } catch (IOException | URISyntaxException t) {
+        } catch (JmriException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);

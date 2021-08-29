@@ -1,106 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Tables Table Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng tables editor">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
 
     <div id="mainContent">
-
       <h1>JMRI: LogixNG Tables Table Editor</h1>
 
-        <p>The tables editor displays the content of the currently loaded CSV file.</p>
+      <p>The tables editor displays the content of the currently loaded CSV file.</p>
 
-        <ul>
-          <li><a href="#tableContent">Table Content</a>
-          <li><a href="#copyToClipboard">Copy to clipboard buttons</a>
-          <li><a href="#buttonCancel">Cancel</a>
-          <li><a href="#buttonOk">OK</a>
-          <li><a href="#buttonDelete">Delete</a>
-        </ul>
+      <ul>
+        <li>
+          <a href="#tableContent">Table Content</a>
+        </li>
 
-      <a id="tableContent" name="tableContent"></a>
-      <h2>Table Content</h2>
+        <li>
+          <a href="#copyToClipboard">Copy to clipboard buttons</a>
+        </li>
 
-        <div style="margin-left: 2em">
-        <a href="images/TablesEditor.png">
-        <img src="images/TablesEditor.png"
-        alt="LogixNG TablesEditor" width="728" height="575" >
-        </a>
-        </div>
+        <li>
+          <a href="#buttonCancel">Cancel</a>
+        </li>
 
-        <dl>
-          <dt>System Name</dt>
-          <dd>The system name for the LogixNG table.  The system name cannot be changed.</dd>
+        <li>
+          <a href="#buttonOk">OK</a>
+        </li>
 
-          <dt>User Name</dt>
-          <dd>The user name for the LogixNG table.  This is a free form field that contains
-          a meaningful name. The name be can be changed.</dd>
+        <li>
+          <a href="#buttonDelete">Delete</a>
+        </li>
+      </ul>
 
-          <dt>Table Type</dt>
-          <dd>The table type cannot be changed.  Only CSV is currently implemented.</dd>
+      <h2 id="tableContent">Table Content</h2>
 
-          <dt>File name</dt>
-          <dd>The current file name.  This can be changed by either entering a new name
-          or using the file selector on the right side.  Note:  Once a CSV table has been
-          loaded, it stays active until PanelPro is stopped.  If the file name has been
-          changed and the configuration has been stored, it will take effect when
-          PanelPro has been started and the xml data file has been loaded.</dd>
-        </dl>
+      <div style="margin-left: 2em">
+        <a href="images/TablesEditor.png"><img src="images/TablesEditor.png" alt=
+        "LogixNG TablesEditor" width="728" height="575"></a>
+      </div>
 
-      <a id="copyToClipboard" name="copyToClipboard"></a>
-      <h2>Copy to clipboard buttons</h2>
+      <dl>
+        <dt>System Name</dt>
 
-        <p>When a cell in the CSV table is clicked, the two copy to clipboard buttons
-        will be active.  By clicking on one of the buttons, the cell content will be
-        copied to the <strong><em>OS</em></strong> clipboard.  Note:  This is
-        <strong>not</strong> the LogixNG clipboard.</p>
+        <dd>The system name for the LogixNG table. The system name cannot be changed.</dd>
 
-        <p>The top button uses the row/column number format.  The lower button uses the
-        row name/column name format.</p>
+        <dt>User Name</dt>
 
-        <p>After the data has been copied, the table reference can be pasted into an
-        expression or action reference.</p>
+        <dd>The user name for the LogixNG table. This is a free form field that contains a
+        meaningful name. The name be can be changed.</dd>
 
-        <div style="margin-left: 2em">
-        <a href="images/TableCellReference.png">
-        <img src="images/TableCellReference.png"
-        alt="LogixNG Table Cell Reference" width="406" height="94" >
-        </a>
-        </div>
+        <dt>Table Type</dt>
 
-      <a id="buttonCancel" name="buttonCancel"></a>
-      <h2>Cancel</h2>
+        <dd>The table type cannot be changed. Only CSV is currently implemented.</dd>
 
-        <p>When the <strong>Cancel</strong> button is pressed, the Edit LogixNG table window
-        will close. Pending changes to the user name or the CSV file name are discarded.</p>
+        <dt>File name</dt>
 
-      <a id="buttonOk" name="buttonOk"></a>
-      <h2>OK</h2>
+        <dd>The current file name. This can be changed by either entering a new name or using the
+        file selector on the right side. Note: Once a CSV table has been loaded, it stays active
+        until PanelPro is stopped. If the file name has been changed and the configuration has been
+        stored, it will take effect when PanelPro has been started and the xml data file has been
+        loaded.</dd>
+      </dl>
 
-        <p>When the <strong>OK</strong> button is pressed, the Edit LogixNG table window
-        will close after saving the changes to the user name or CSV file name.</p>
+      <h2 id="copyToClipboard">Copy to clipboard buttons</h2>
 
-      <a id="buttonDelete" name="buttonDelete"></a>
-      <h2>Delete</h2>
+      <p>When a cell in the CSV table is clicked, the two copy to clipboard buttons will be active.
+      By clicking on one of the buttons, the cell content will be copied to the
+      <strong><em>OS</em></strong> clipboard. Note: This is <strong>not</strong> the LogixNG
+      clipboard.</p>
 
-        <p>When the <strong>Delete</strong> button is pressed, the LogixNG table and its
-        content will be deleted.  The LogixNG table delete confirmation dialog will be
-        displayed.</p>
+      <p>The top button uses the row/column number format. The lower button uses the row
+      name/column name format.</p>
 
+      <p>After the data has been copied, the table reference can be pasted into an expression or
+      action reference.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/TableCellReference.png"><img src="images/TableCellReference.png" alt=
+        "LogixNG Table Cell Reference" width="406" height="94"></a>
+      </div>
+
+      <h2 id="buttonCancel">Cancel</h2>
+
+      <p>When the <strong>Cancel</strong> button is pressed, the Edit LogixNG table window will
+      close. Pending changes to the user name or the CSV file name are discarded.</p>
+
+      <h2 id="buttonOk">OK</h2>
+
+      <p>When the <strong>OK</strong> button is pressed, the Edit LogixNG table window will close
+      after saving the changes to the user name or CSV file name.</p>
+
+      <h2 id="buttonDelete">Delete</h2>
+
+      <p>When the <strong>Delete</strong> button is pressed, the LogixNG table and its content will
+      be deleted. The LogixNG table delete confirmation dialog will be displayed.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

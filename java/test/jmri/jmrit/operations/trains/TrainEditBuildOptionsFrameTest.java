@@ -4,8 +4,9 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.jupiter.api.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -154,11 +155,12 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         // test optional loco and caboose changes
         JemmyUtil.enterClickAndLeave(f.change1Engine);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
 
-        // clear dialogue box
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
 
@@ -181,11 +183,11 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         f.routePickup1Box.setSelectedIndex(0);
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         f.roadCaboose1Box.setSelectedItem(roadNames[2]);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-
-        // clear dialogue box
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2);
@@ -196,11 +198,11 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.helper1Service);
 
         f.routePickup1Box.setSelectedIndex(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-
-        // clear dialogue box
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2); // Should be "Test Train Location B"
@@ -219,11 +221,11 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         // now do the second set of locos and cabooses
         JemmyUtil.enterClickAndLeave(f.change2Engine);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-
-        // clear dialogue box
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
 
@@ -245,11 +247,11 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         f.routePickup2Box.setSelectedIndex(0);
         f.roadCaboose2Box.setSelectedItem(roadNames[2]);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-
-        // clear dialogue box
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
@@ -260,9 +262,9 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.helper2Service);
 
         f.routePickup2Box.setSelectedIndex(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
 
-        // clear dialogue box
+        // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());

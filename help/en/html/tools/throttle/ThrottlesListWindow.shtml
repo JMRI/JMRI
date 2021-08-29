@@ -1,48 +1,45 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Throttles List</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="description" content="Throttle documentation for JMRI project" />
-  <meta name="author" content="Lionel Jeanson" />
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="description" content="Throttle documentation for JMRI project">
+  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Throttles List</h1>
 
-      <p><img src="images/ThrottleListWindow.png" alt="" /></p>This
-      list is accessible from the <a href=
-      "ThrottleToolBar.shtml">Throttle pane toolbar.</a><br />
-      The Throttles List shows all currently opened Throttles in
-      JMRI. If an <a href="RostersMediaPane.shtml">icon is
-      available for the Rosters in the database</a>, it will be
-      automatically used.<br />
-      <br />
-      Clicking on a line will bring the matching throttle up.<br />
+      <p><img src="images/ThrottleListWindow.png" alt="">
+      </p>
+      This list is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
+      toolbar.</a><br>
+      The Throttles List shows all currently opened Throttles in JMRI. If an <a href=
+      "RostersMediaPane.shtml">icon is available for the Rosters in the database</a>, it will be
+      automatically used.<br>
+      <br>
+      Clicking on a line will bring the matching throttle up.<br>
 
-      <h2>New button</h2>This button creates a new Throttle window
-      (hence different from clicking the "New" button in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br />
+      <h2>New button</h2>
+      This button creates a new Throttle window (hence different from clicking the "New" button in
+      <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br>
 
-      <h2>Power button</h2>Same one as in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br />
+      <h2>Power button</h2>
+      Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
 
-      <h2>Stop button</h2>Same one as in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br />
+      <h2>Stop button</h2>
+      Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

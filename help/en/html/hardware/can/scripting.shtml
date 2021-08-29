@@ -1,42 +1,36 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - CAN Network - Scripting</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>Hardware Support: CAN - Scripting</h1>
 
-      <p>JMRI scripting can be used to send and receive CAN frames.
-      You can use this to create test routines for boards under
-      development, etc.</p>
+      <p>JMRI scripting can be used to send and receive CAN frames. You can use this to create test
+      routines for boards under development, etc.</p>
 
-      <p>This page describes the CAN extensions for JMRI scripting.
-      For more information on JMRI scripting itself, see the
-      <a href="../../tools/scripting/index.shtml">Scripting Help
+      <p>This page describes the CAN extensions for JMRI scripting. For more information on JMRI
+      scripting itself, see the <a href="../../tools/scripting/index.shtml">Scripting Help
       pages</a>.</p>
 
-      <p>There's a basic <a href=
-      "../../../../../jython/CanExample.py">CanExample.py</a>
-      sample script in the jython directory.</p>
+      <p>There's a basic <a href="../../../../../jython/CanExample.py">CanExample.py</a> sample
+      script in the jython directory.</p>
 
       <h2>Scripting Code Examples</h2>
 
       <h3>Sending CAN Frames</h3>
 
-      <p>CAN frames are created as objects, then queued for
-      transmission. The header (ID) and data are handled
-      separately.</p>
+      <p>CAN frames are created as objects, then queued for transmission. The header (ID) and data
+      are handled separately.</p>
+
       <pre style="font-family: monospace;">
 frame = jmri.jmrix.can.CanMessage(2)  # will load 2 bytes
 frame.setId(0x123)
@@ -44,14 +38,12 @@ frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
 </pre>
-
       <h3>Receiving CAN Frames</h3>
 
-      <p>A script can listen for CAN frames as they're received
-      from the bus, and separately for CAN frames that are being
-      transmitted on the bus by JMRI. The CanListener interface
-      provides these separately via "reply" and "message"
-      procedures, respectively.</p>
+      <p>A script can listen for CAN frames as they're received from the bus, and separately for
+      CAN frames that are being transmitted on the bus by JMRI. The CanListener interface provides
+      these separately via "reply" and "message" procedures, respectively.</p>
+
       <pre style="font-family: monospace;">
 class MyCanListener (jmri.jmrix.can.CanListener) :
     def message(self, msg) :
@@ -63,20 +55,22 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         print "ID: 0x"+java.lang.Integer.toHexString(msg.getId())
         print "content: ", msg.toString()
         return
-    
-jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</pre><a name="documentation" id="documentation"></a>
 
-      <h2>Documentation</h2>
+jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
+</pre>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <ul>
-        <li>Back to the <a href="index.shtml">Main CAN Network
-        Support Help page</a>.</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <li>Back to the <a href="index.shtml">Main CAN Network Support Help page</a>.
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

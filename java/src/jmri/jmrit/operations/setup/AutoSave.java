@@ -36,13 +36,13 @@ public class AutoSave {
     private static void saveFiles() {
         while (true) {
             synchronized (autoSave) {
+                if (!Setup.isAutoSaveEnabled()) {
+                    break;
+                }
                 try {
                     autoSave.wait(60000); // check every minute
                 } catch (InterruptedException e) {
                     break; // stop was called
-                }
-                if (!Setup.isAutoSaveEnabled()) {
-                    break;
                 }
                 if (OperationsXml.areFilesDirty()) {
                     log.debug("Detected dirty operation files");

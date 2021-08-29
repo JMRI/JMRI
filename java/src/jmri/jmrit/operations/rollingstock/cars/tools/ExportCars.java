@@ -33,8 +33,7 @@ public class ExportCars extends XmlFile {
     }
 
     /**
-     * Store the all of the operation car objects in the default place,
-     * including making a backup if needed
+     * Create CSV file based on the car list.
      */
     public void writeOperationsCarFile() {
         makeBackupFile(defaultOperationsFilename());
@@ -58,7 +57,13 @@ public class ExportCars extends XmlFile {
         }
     }
 
-    public void writeFile(String name) {
+    /**
+     * Any changes to the column order should also be made to the ImportCars.java
+     * file.
+     * 
+     * @param name file name
+     */
+    private void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
@@ -109,7 +114,7 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage( "RFID_Tag"));
 
-            // store car number, road, type, length, weight, color, owner, built date, location and track name
+            // store car attributes
             for (Car car : _carList) {
                 fileOut.printRecord(car.getNumber(),
                         car.getRoadName(),
@@ -159,10 +164,9 @@ public class ExportCars extends XmlFile {
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-                0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"),
-                    JOptionPane.ERROR_MESSAGE);
+                    MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"),
+                            new Object[] { 0, defaultOperationsFilename() }),
+                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

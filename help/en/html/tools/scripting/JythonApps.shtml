@@ -1,45 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: Jython Apps for JMRI</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Jython Apps for JMRI</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Jython Apps for JMRI</h1>
 
-      <p>Some JMRI users have implemented sophiticated capabilities using the JMRI jython scripting facilities. These are much more than the
-      relatively simple examples presented on <a href="Examples.shtml">the Scripting Examples</a> page.  The developers have provided more 
-      documentation for these "apps" (available in the <a href="../../scripthelp">"scripthelp" directory.</a>  In fact, the distinguishing feature 
-      of apps listed here versus examples listed on the Examples page is that the developers have provided that additional documentation!
+      <p>Some JMRI users have implemented sophiticated capabilities using the JMRI jython scripting
+      facilities. These are much more than the relatively simple examples presented on <a href=
+      "Examples.shtml">the Scripting Examples</a> page. The developers have provided more
+      documentation for these "apps" (available in the <a href="../../scripthelp">"scripthelp"
+      directory.</a> In fact, the distinguishing feature of apps listed here versus examples listed
+      on the Examples page is that the developers have provided that additional documentation!</p>
+
+      <p><a href="../../scripthelp/yaat/YAAT.shtml">YAAT (Yet Another Auto Train)</a>
       </p>
 
-      <p><a href=
-      "../../scripthelp/yaat/YAAT.shtml">YAAT (Yet Another Auto Train)</a></p>
+      <p>YetAnotherAutoTrain.py (YAAT) provides the ability to define train actions using text
+      files instead of writing Jython code. The text files contain English like phrases, such as
+      "Set speed to .5" or "Wait for 10 seconds".</p>
 
-      <p>YetAnotherAutoTrain.py (YAAT) provides the ability to define train actions using text files instead of writing Jython code.  
-      The text files contain English like phrases, such as "Set speed to .5" or "Wait for 10 seconds".
+      <p><a href="../../scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
       </p>
 
-      <p><a href=
-      "../../scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a></p>
-
-      <p>The Dispatcher System extends <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a>
-      to make it easier to run trains between locations of your choosing. It uses your panel that has signal logic and sections to generate
-      another panel that you can use to drive trains by pressing the created "Move To" buttons.  Additional features include 
-      stopping and fast mode, and station announcements.
-      </p>
-
+      <p>The Dispatcher System extends <a href=
+      "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a> to make it
+      easier to run trains between locations of your choosing. It uses your panel that has signal
+      logic and sections to generate another panel that you can use to drive trains by pressing the
+      created "Move To" buttons. Additional features include stopping and fast mode, and station
+      announcements.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

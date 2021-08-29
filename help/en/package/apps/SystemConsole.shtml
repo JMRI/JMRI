@@ -1,82 +1,70 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: System Console</title>
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="JMRI help System Console">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help System Console"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: System Console</h1>
-      <p>The JMRI System Console panel is where you
-        get system output from JMRI.</p>
+
+      <p>The JMRI System Console panel is where you get system output from JMRI.</p>
       <!-- Copied from NCE help -->
 
       <h2>Using the System Console</h2>
 
-      <p>JMRI provides connection information via the system console.
-        You can find the system console under the main menu header "Help"
-        then "System Console...". Below is an image of the console window
-        when the program is operating normally. Note that the window size
-        has been adjusted so we can read it a bit more easily.</p>
+      <p>JMRI provides connection information via the system console. You can find the system
+      console under the main menu header "Help" then "System Console...". Below is an image of the
+      console window when the program is operating normally. Note that the window size has been
+      adjusted so we can read it a bit more easily.</p>
 
-      <p><img src="../../html/hardware/images/jmriConsoleOk.jpg" alt="JMRI Console"></p>
+      <p><img src="../../html/hardware/images/jmriConsoleOk.jpg" alt="JMRI Console">
+      </p>
 
-      <p>If you're having problems, the console window can look like
-        the one below:</p>
+      <p>If you're having problems, the console window can look like the one below:</p>
 
-      <p><img src="../../html/hardware/images/jmriConsoleFail.jpg" alt=
-              "JMRI Console"></p>
+      <p><img src="../../html/hardware/images/jmriConsoleFail.jpg" alt="JMRI Console">
+      </p>
 
-      <p>To help you better understand what might be happening and to
-        possibly resolve your problem we'll explain some of the warning
-        and error messages displayed in the above console window.</p>
+      <p>To help you better understand what might be happening and to possibly resolve your problem
+      we'll explain some of the warning and error messages displayed in the above console
+      window.</p>
 
-      <p>The very first messages are information message labeled
-        "INFO". The first message occurs at time "0" which can be found
-        at the left side of the message. The next "INFO" message states
-        where this log file is stored. The next info provides the version
-        of JMRI and JAVA that you are using. And the last info message
-        provides the communication port that you've selected in
-        preferences, along with the baud rate or the speed of your
-        connection.</p>
+      <p>The very first messages are information message labeled "INFO". The first message occurs
+      at time "0" which can be found at the left side of the message. The next "INFO" message
+      states where this log file is stored. The next info provides the version of JMRI and JAVA
+      that you are using. And the last info message provides the communication port that you've
+      selected in preferences, along with the baud rate or the speed of your connection.</p>
 
-      <p>The first warning message states that there was a timeout to
-        message "AA". During startup, JMRI checks to see if your
-        Preferences match those in the NCE command station. Message "AA"
-        requests the EPROM revision of the command station. The response
-        is normally three characters, something like "6.2.1". A timeout
-        means that JMRI asked for something and the command station
-        didn't respond. When the connection is correct and the system is
-        powered up, you should not see any timeout messages.</p>
+      <p>The first warning message states that there was a timeout to message "AA". During startup,
+      JMRI checks to see if your Preferences match those in the NCE command station. Message "AA"
+      requests the EPROM revision of the command station. The response is normally three
+      characters, something like "6.2.1". A timeout means that JMRI asked for something and the
+      command station didn't respond. When the connection is correct and the system is powered up,
+      you should not see any timeout messages.</p>
 
-      <p>The next warning message states that because there was a
-        timeout, the program didn't get the information requested from
-        the command station. The next messages continue as the program
-        tries every 10 seconds to read the EPROM revision by issuing the
-        "AA" command. You can try and trouble shoot your connections
-        knowing that every 10 seconds JMRI will retest to see if you've
-        fixed the problem.</p>
+      <p>The next warning message states that because there was a timeout, the program didn't get
+      the information requested from the command station. The next messages continue as the program
+      tries every 10 seconds to read the EPROM revision by issuing the "AA" command. You can try
+      and trouble shoot your connections knowing that every 10 seconds JMRI will retest to see if
+      you've fixed the problem.</p>
 
-      <p>Whenever JMRI detects a problem with the connection or NCE
-        command station, it will request the EPROM revision to see if the
-        connection and command station is still operational. So if you
-        see timeouts and "AA" commands you have either poor or failed
-        connection, or a powered down or failed command station.</p>
+      <p>Whenever JMRI detects a problem with the connection or NCE command station, it will
+      request the EPROM revision to see if the connection and command station is still operational.
+      So if you see timeouts and "AA" commands you have either poor or failed connection, or a
+      powered down or failed command station.</p>
 
       <p>This is the apps.SystemConsole.shtml help page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

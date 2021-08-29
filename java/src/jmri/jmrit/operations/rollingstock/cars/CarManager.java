@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -19,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 
 /**
@@ -52,6 +54,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             register(car);
         }
         return car;
+    }
+    
+    @Override
+    public void deregister(Car car) {
+        super.deregister(car);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
     }
 
     /**
@@ -375,10 +383,15 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 out.add(car);
             }
         }
+        for (Car car : list) {
+            if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                out.add(car);
+            }
+        }
         // now load all of the remaining low priority cars
-        for (Car rs : list) {
-            if (!out.contains(rs)) {
-                out.add(rs);
+        for (Car car : list) {
+            if (!out.contains(car)) {
+                out.add(car);
             }
         }
         return out;
@@ -579,6 +592,21 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             }
         }
         return mias;
+    }
+    
+    /**
+     * Determines a car's weight in ounces based on car's scale length
+     * @param carLength Car's scale length
+     * @return car's weight in ounces
+     * @throws NumberFormatException if length isn't a number
+     */
+    public static String calculateCarWeight(String carLength) throws NumberFormatException {
+        double doubleCarLength = Double.parseDouble(carLength) * 12 / Setup.getScaleRatio();
+        double doubleCarWeight =
+                (Setup.getInitalWeight() + doubleCarLength * Setup.getAddWeight()) / 1000;
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(1);
+        return nf.format(doubleCarWeight); // car weight in ounces.
     }
 
     public void load(Element root) {

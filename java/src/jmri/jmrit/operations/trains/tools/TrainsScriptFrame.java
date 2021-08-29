@@ -50,15 +50,12 @@ public class TrainsScriptFrame extends OperationsFrame {
     public void initComponents() {
         // Set up script options in a Scroll Pane..
         startUpScriptPane = new JScrollPane(pStartUpScript);
-        startUpScriptPane
-                .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        startUpScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         startUpScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsStartUp")));
 
         shutDownScriptPane = new JScrollPane(pShutDownScript);
-        shutDownScriptPane
-                .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        shutDownScriptPane
-                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsShutDown")));
+        shutDownScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        shutDownScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsShutDown")));
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -199,21 +196,20 @@ public class TrainsScriptFrame extends OperationsFrame {
      * We always use the same file chooser in this class, so that the user's
      * last-accessed directory remains available.
      */
-    JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+    JFileChooser fc;
 
     private File selectFile() {
         if (fc == null) {
-            log.error("Could not find user directory");
-        } else {
+            fc = new JFileChooser(FileUtil.getUserFilesPath());
             fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("PythonScriptFiles"), "py")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
-            // when reusing the chooser, make sure new files are included
-            fc.rescanCurrentDirectory();
-            int retVal = fc.showOpenDialog(null);
-            // handle selection or cancel
-            if (retVal == JFileChooser.APPROVE_OPTION) {
-                return fc.getSelectedFile();
-            }
+        }
+        // when reusing the chooser, make sure new files are included
+        fc.rescanCurrentDirectory();
+        int retVal = fc.showOpenDialog(null);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            return fc.getSelectedFile();
         }
         return null;
     }
@@ -248,6 +244,5 @@ public class TrainsScriptFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScriptFrame.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsScriptFrame.class.getName());
 }

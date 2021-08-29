@@ -2758,6 +2758,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * The LE xml load uses the string version of setScroll which went directly to
+     * Editor.  The string version has been added here so that LE can set the scroll
+     * selection.
+     * @param value The new scroll value.
+     */
+    @Override
+    public void setScroll(String value) {
+        if (value != null) super.setScroll(value);
+        scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
+        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
+        scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
+        scrollVerticalMenuItem.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
+    }
+
+    /**
      * Add a layout turntable at location specified
      *
      * @param pt x,y placement for turntable
@@ -5407,7 +5422,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             case LEVEL_XING_D: {
                 try {
                     fromObject.setConnection(fromPointType, toObject, toPointType);
-                } catch (jmri.JmriException e) {
+                } catch (JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -6267,7 +6282,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             case LEVEL_XING_D: {
                 try {
                     o.setConnection(type, null, HitPointType.NONE);
-                } catch (jmri.JmriException e) {
+                } catch (JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -7484,7 +7499,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag));
 
             // thread this so it won't break the AppVeyor checks
-            jmri.util.ThreadingUtil.newThread(() -> {
+            ThreadingUtil.newThread(() -> {
                 if (highlightSelectedBlockFlag) {
                     // use the "Extra" color to highlight the selected block
                     if (!highlightBlockInComboBox(leToolBarPanel.blockIDComboBox)) {

@@ -148,63 +148,63 @@
         <decVal/>
         <label>Reverb Gain</label>
     </variable>
-    <variable CV="2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="42" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="42" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Bell Alt Volume</label>
     </variable>
-    <variable CV="2.297" mask="VVVVVVVV" item="Alt Sound Setting 9" default="64" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.297" mask="VVVVVVVV" item="Alt Sound Setting 9" default="64" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Coupler Alt Volume</label>
     </variable>
-    <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 12" default="50" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.299" mask="VVVVVVVV" item="Alt Sound Setting 12" default="50" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Independent Brake Apply Alt Volume</label>
     </variable>
-    <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="35" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="35" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Independent Brake Release Alt Volume</label>
     </variable>
-    <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 21" default="35" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.308" mask="VVVVVVVV" item="Alt Sound Setting 21" default="35" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>E-Brake App Alt Volume</label>
     </variable>
-    <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 22" default="75" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.309" mask="VVVVVVVV" item="Alt Sound Setting 22" default="75" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Glad Hand Release Alt Volume</label>
     </variable>
-    <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 23" default="96" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.310" mask="VVVVVVVV" item="Alt Sound Setting 23" default="96" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>All Aboard!/Coach Doors Alt Volume</label>
     </variable>
-    <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 30" default="25" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.317" mask="VVVVVVVV" item="Alt Sound Setting 30" default="25" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Wrenches Alt Volume</label>
     </variable>
-    <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 33" default="30" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="16.2.320" mask="VVVVVVVV" item="Alt Sound Setting 33" default="30" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Cab Chatter Alt Volume</label>
     </variable>
-    <variable item="DDE Filter Initial Frequency" CV="2.503" mask="VVVVVVVV" default="60" tooltip="determines the minimum load required by the motor to move the model">
+    <variable item="DDE Filter Initial Frequency" CV="16.2.503" mask="VVVVVVVV" default="60" tooltip="determines the minimum load required by the motor to move the model">
         <decVal/>
         <label>DDE Load Offset</label>
     </variable>
-    <variable item="DDE Filter Control Gain" CV="2.504" mask="VVVVVVVV" default="150" tooltip="determines the load required to increase the speed of the motor">
+    <variable item="DDE Filter Control Gain" CV="16.2.504" mask="VVVVVVVV" default="150" tooltip="determines the load required to increase the speed of the motor">
         <decVal/>
         <label>DDE Load Slope</label>
     </variable>
-    <variable item="Attack Time Constant" CV="2.509" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;      the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
+    <variable item="Attack Time Constant" CV="16.2.509" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;      the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Attack Time Constant</label>
     </variable>
-    <variable item="Release Time Constant" CV="2.510" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;      the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
+    <variable item="Release Time Constant" CV="16.2.510" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;      the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
         <decVal/>
         <label>Release Time Constant</label>
     </variable>
-    <variable item="Throttle Gain" CV="2.511" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;      setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
+    <variable item="Throttle Gain" CV="16.2.511" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;      setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Throttle Sensitivity</label>
     </variable>
-    <variable CV="3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1" >
+    <variable CV="16.3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1" >
         <enumVal>
             <enumChoice value="1">
                 <choice>2 axles per truck</choice>
@@ -215,7 +215,7 @@
         </enumVal>
         <label>Clickety-Clack Axles per Truck</label>
     </variable>
-    <variable CV="3.257" mask="XXXXVVXX" item="Sound Group 1 Option 2" default="1" >
+    <variable CV="16.3.257" mask="XXXXVVXX" item="Sound Group 1 Option 2" default="1" >
         <enumVal>
             <enumChoice>
                 <choice>1 truck per car</choice>
@@ -226,7 +226,7 @@
         </enumVal>
         <label>Clickety-Clack Trucks per Car</label>
     </variable>
-    <variable item="Sound Group 3 Option 8" CV="3.258" mask="VVVVVVVV" default="180" tooltip="Scale Speed (ft/s) = (Speed Step × CV 3.258) ÷ 100">
+    <variable item="Sound Group 3 Option 8" CV="16.3.258" mask="VVVVVVVV" default="180" tooltip="Scale Speed (ft/s) = (Speed Step × CV 3.258) ÷ 100">
         <decVal/>
         <label>Clickety-Clack Sound Scalar</label>
     </variable>

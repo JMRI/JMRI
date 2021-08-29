@@ -46,21 +46,26 @@
                 <choice>Banks Off</choice>
                 <choice xml:lang="de">Banks Aus</choice>
                 <choice xml:lang="nl">Banken UIT</choice>
+                <choice xml:lang="cs">Banky Vypnuto</choice>
             </enumChoice>
             <enumChoice choice="Banks Program" value="8">
                 <choice>Program</choice>
                 <choice xml:lang="de">Programmieren</choice>
                 <choice xml:lang="nl">Programmeren</choice>
+                <choice xml:lang="cs">Programování</choice>
             </enumChoice>
             <enumChoice choice="Banks Unknown" value="1">
                 <choice>Unknown</choice>
                 <choice xml:lang="de">Unbekannt</choice>
                 <choice xml:lang="nl">Onbekend</choice>
+                <choice xml:lang="cs">Neznámý</choice>
             </enumChoice>
         </enumVal>
         <label>State</label>
         <label xml:lang="de">Zustand</label>
+        <label xml:lang="cs">Stav</label>
         <tooltip>Reset to Off after programming</tooltip>
+        <tooltip xml:lang="cs">Po programování resetujte na Vypnuto</tooltip>
     </variable>
 
     <variable item="Bank switch 2" CV="32" default="255">
@@ -68,18 +73,22 @@
             <enumChoice choice="Extended Function Mapping 1-16" value="0">
                 <choice>1. Extended Function Mapping 1-16</choice>
                 <choice xml:lang="de">1. Erweitertes Fkt.-Mapping 1-16</choice>
+                <choice xml:lang="cs">1. Rozšířené mapování funkcí 1-16</choice>
             </enumChoice>
             <enumChoice choice="Extended Function Mapping 17-32" value="1">
                 <choice>2. Extended Function Mapping 17-32</choice>
                 <choice xml:lang="de">2. Erweitertes Fkt.-Mapping 17-32</choice>
+                <choice xml:lang="cs">1. Rozšířené mapování funkcí 17-32</choice>
             </enumChoice>
             <enumChoice choice="PWM Modulation 1-4" value="3">
                 <choice>3. PWM Modulation 1-4</choice>
                 <choice xml:lang="de">3. PWM Modulationen 1-4</choice>
+                <choice xml:lang="cs">3. PWM Modulace 1-4</choice>
             </enumChoice>
             <enumChoice choice="PWM Modulation 5-8" value="4">
                 <choice>4. PWM Modulation 5-8</choice>
                 <choice xml:lang="de">4. PWM Modulationen 5-8</choice>
+                <choice xml:lang="cs">3. PWM Modulace 5-8</choice>
             </enumChoice>
             <enumChoice choice="Intellimatic" value="5">
                 <choice>5. Intellimatic</choice>
@@ -87,10 +96,12 @@
             <enumChoice choice="None" value="255">
                 <choice>None</choice>
                 <choice xml:lang="de">Keine</choice>
+                <choice xml:lang="cs">Nic</choice>
             </enumChoice>
         </enumVal>
         <label>Bank</label>
         <label xml:lang="de">Bank</label>
+        <label xml:lang="cs">Banka</label>
     </variable>
 
     <!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
@@ -101,11 +112,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Forward</label>
         <label xml:lang="de">Vorwärts</label>
+        <label xml:lang="cs">Vpřed</label>
     </variable>
     <variable item="Z1 Moving Yes" CV="257.0" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Moving</label>
         <label xml:lang="de">Fahrend</label>
+        <label xml:lang="cs">Pohyb</label>
     </variable>
     <!--Line 1 Function Buttons On-->
     <variable item="Z1 F0 Cond On" CV="257.0" mask="XXXVXXXX" default="0">
@@ -200,11 +213,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Reverse</label>
         <label xml:lang="de">Rückwärts</label>
+        <label xml:lang="cs">Vzad</label>
     </variable>
     <variable item="Z1 Moving No" CV="263.0" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Not moving</label>
         <label xml:lang="de">Stehend</label>
+        <label xml:lang="cs">Bez pohybu</label>
     </variable>
     <!--Line 1 Function Buttons Off-->
     <variable item="Z1 F0 Cond Off" CV="263.0" mask="XXXVXXXX" default="0">
@@ -324,32 +339,38 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Shunting Mode</label>
         <label xml:lang="de">Rangiergang</label>
+        <label xml:lang="cs">Režim posun</label>
     </variable>
     <variable item="Z1 Out2 Braking" CV="270.0" mask="XVVVXXXX">
         <enumVal>
             <enumChoice choice="None">
                 <choice>None</choice>
                 <choice xml:lang="it">Non si ferma</choice>
-                <choice xml:lang="cs">Nezastavuje</choice>
+                <choice xml:lang="cs">Nic</choice>
                 <choice xml:lang="de">Keine</choice>
             </enumChoice>
             <enumChoice choice="Brake 1">
                 <choice>Brake step 1</choice>
                 <choice xml:lang="de">Stufe 1</choice>
+                <choice xml:lang="cs">Brzda krok 1</choice>
             </enumChoice>
             <enumChoice choice="Brake 2" value="2">
                 <choice>Brake step 2</choice>
                 <choice xml:lang="de">Stufe 2</choice>
+                <choice xml:lang="cs">Brzda krok 2</choice>
             </enumChoice>
             <enumChoice choice="Brake 3" value="4">
                 <choice>Brake step 3</choice>
                 <choice xml:lang="de">Stufe 3</choice>
+                <choice xml:lang="cs">Brzda krok 3</choice>
             </enumChoice>
         </enumVal>
         <label>Braking:</label>
         <label xml:lang="de">Bremsverzögerung:</label>
+        <label xml:lang="cs">Brždění:</label>
         <tooltip>Activate braking step 1-3</tooltip>
         <tooltip xml:lang="de">Bremsstufe 1 - 3 aktivieren</tooltip>
+        <tooltip xml:lang="cs">Brzdící krok 1 - 3 aktivován</tooltip>
     </variable>
     <variable item="Z1 Out2 Aux0_Front" CV="270.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -425,11 +446,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Forward</label>
         <label xml:lang="de">Vorwärts</label>
+        <label xml:lang="cs">Vpřed</label>
     </variable>
     <variable item="Z2 Moving Yes" CV="273.0" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Moving</label>
         <label xml:lang="de">Fahrend</label>
+        <label xml:lang="cs">Pohyb</label>
     </variable>
     <!--Line 2 Function Buttons On-->
     <variable item="Z2 F0 Cond On" CV="273.0" mask="XXXVXXXX" default="0">
@@ -524,11 +547,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Reverse</label>
         <label xml:lang="de">Rückwärts</label>
+        <label xml:lang="cs">Vzad</label>
     </variable>
     <variable item="Z2 Moving No" CV="279.0" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Not moving</label>
         <label xml:lang="de">Stehend</label>
+        <label xml:lang="cs">Bez pohybu</label>
     </variable>
     <!--Line 2 Function Buttons Off-->
     <variable item="Z2 F0 Cond Off" CV="279.0" mask="XXXVXXXX" default="0">
@@ -648,32 +673,38 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Shunting Mode</label>
         <label xml:lang="de">Rangiergang</label>
+        <label xml:lang="cs">Režim posun</label>
     </variable>
     <variable item="Z2 Out2 Braking" CV="286.0" mask="XVVVXXXX">
         <enumVal>
             <enumChoice choice="None">
                 <choice>None</choice>
                 <choice xml:lang="it">Non si ferma</choice>
-                <choice xml:lang="cs">Nezastavuje</choice>
+                <choice xml:lang="cs">Nic</choice>
                 <choice xml:lang="de">Keine</choice>
             </enumChoice>
             <enumChoice choice="Brake 1">
                 <choice>Brake step 1</choice>
                 <choice xml:lang="de">Stufe 1</choice>
+                <choice xml:lang="cs">Brzda krok 1</choice>
             </enumChoice>
             <enumChoice choice="Brake 2" value="2">
                 <choice>Brake step 2</choice>
                 <choice xml:lang="de">Stufe 2</choice>
+                <choice xml:lang="cs">Brzda krok 2</choice>
             </enumChoice>
             <enumChoice choice="Brake 3" value="4">
                 <choice>Brake step 3</choice>
                 <choice xml:lang="de">Stufe 3</choice>
+                <choice xml:lang="cs">Brzda krok 3</choice>
             </enumChoice>
         </enumVal>
         <label>Braking:</label>
         <label xml:lang="de">Bremsverzögerung:</label>
+        <label xml:lang="cs">Brždění:</label>
         <tooltip>Activate braking step 1-3</tooltip>
         <tooltip xml:lang="de">Bremsstufe 1 - 3 aktivieren</tooltip>
+        <tooltip xml:lang="cs">Brzdící krok 1 - 3 aktivován</tooltip>
     </variable>
     <variable item="Z2 Out2 Aux0_Front" CV="286.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -749,11 +780,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Forward</label>
         <label xml:lang="de">Vorwärts</label>
+        <label xml:lang="cs">Vpřed</label>
     </variable>
     <variable item="Z17 Moving Yes" CV="257.1" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Moving</label>
         <label xml:lang="de">Fahrend</label>
+        <label xml:lang="cs">Pohyb</label>
     </variable>
 
     <!-- Test with only 1 series TODO enter remaining CVs 259.1 - 512.1 -->
@@ -761,11 +794,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Forward</label>
         <label xml:lang="de">Vorwärts</label>
+        <label xml:lang="cs">Vpřed</label>
     </variable>
     <variable item="Z32 Moving Yes" CV="497.1" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Moving</label>
         <label xml:lang="de">Fahrend</label>
+        <label xml:lang="cs">Pohyb</label>
     </variable>
     <!-- End Bank 2 -->
 
@@ -778,243 +813,291 @@
         <tooltip>PWM Sequence 1 value 1</tooltip>
         <tooltip xml:lang="de">PWM Modulation 1 Wert 1</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 1 waarde 1</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 1</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.2" CV="258.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 2</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 2</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.3" CV="259.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 3</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 3</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.4" CV="260.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 4</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 4</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.5" CV="261.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 5</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 5</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.6" CV="262.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 6</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 6</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.7" CV="263.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 7</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 7</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.8" CV="264.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 8</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 8</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.9" CV="265.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 9</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 9</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.10" CV="266.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 10</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 10</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.11" CV="267.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 11</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 11</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.12" CV="268.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 12</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 12</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.13" CV="269.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 13</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 13</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.14" CV="270.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 14</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 14</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.15" CV="271.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 15</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 15</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.16" CV="272.2" default="3">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 16</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 16</tooltip>
     </variable>
     <!--17-32-->
     <variable item="Bank3 PWM Seq1.17" CV="273.2" default="3">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 17</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 17</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.18" CV="274.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 18</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 18</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.19" CV="275.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 19</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 19</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.20" CV="276.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 20</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 20</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.21" CV="277.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 21</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 21</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.22" CV="278.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 22</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 22</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.23" CV="279.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 23</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 23</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.24" CV="280.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 24</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 24</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.25" CV="281.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 25</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 25</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.26" CV="282.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 26</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 26</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.27" CV="283.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 27</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 27</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.28" CV="284.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 28</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 28</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.29" CV="285.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 29</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 29</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.30" CV="286.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 30</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 30</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.31" CV="287.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 31</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 31</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.32" CV="288.2" default="3">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 32</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 32</tooltip>
     </variable>
     <!--33-48-->
     <variable item="Bank3 PWM Seq1.33" CV="289.2" default="3">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 33</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 33</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.34" CV="290.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 34</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 34</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.35" CV="291.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 35</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 35</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.36" CV="292.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 36</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 36</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.37" CV="293.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 37</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 37</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.38" CV="294.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 38</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 38</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.39" CV="295.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 39</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 39</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.40" CV="296.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 40</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 40</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.41" CV="297.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 41</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 41</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.42" CV="298.2" default="63">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 42</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 42</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.43" CV="299.2" default="48">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 43</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 43</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.44" CV="300.2" default="32">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 44</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 44</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.45" CV="301.2" default="24">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 45</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 45</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.46" CV="302.2" default="16">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 46</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 46</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.47" CV="303.2" default="8">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 47</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 47</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq1.48" CV="304.2" default="3">
         <decVal min="0" max="63"/>
         <label>Sq 1</label>
         <tooltip>PWM Sequence 1 value 48</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 1 hodnota 48</tooltip>
     </variable>
 
     <!-- Test with only 1 series and a bit TODO enter remaining CVs 275.2 - 512.2 -->
@@ -1024,6 +1107,7 @@
         <tooltip>PWM Sequence 2 value 1</tooltip>
         <tooltip xml:lang="de">PWM Modulation 2 Wert 1</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 2 waarde 1</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 2 hodnota 1</tooltip>
     </variable>
     <variable item="Bank3 PWM Seq2.2" CV="322.2" default="0">
         <decVal min="0" max="63"/>
@@ -1031,6 +1115,7 @@
         <tooltip>PWM Sequence 2 value 2</tooltip>
         <tooltip xml:lang="de">PWM Modulation 2 Wert 2</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 2 waarde 2</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 2 hodnota 2</tooltip>
     </variable>
     <!-- End Bank 3 -->
 
@@ -1042,6 +1127,7 @@
         <tooltip>PWM Sequence 5 value 1</tooltip>
         <tooltip xml:lang="de">PWM Modulation 5 Wert 1</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 5 waarde 1</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 5 hodnota 1</tooltip>
     </variable>
     <variable item="Bank4 PWM Seq5.2" CV="258.3" default="8">
         <decVal min="0" max="63"/>
@@ -1049,6 +1135,7 @@
         <tooltip>PWM Sequence 5 value 2</tooltip>
         <tooltip xml:lang="de">PWM Modulation 5 Wert 2</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 5 waarde 2</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 5 hodnota 2</tooltip>
     </variable>
     <!-- Test with only 1 series TODO enter remaining CVs 259.3 - 512.3 -->
 
@@ -1058,6 +1145,7 @@
         <tooltip>PWM Sequence 6 value 1</tooltip>
         <tooltip xml:lang="de">PWM Modulation 6 Wert 1</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 6 waarde 1</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 6 hodnota 1</tooltip>
     </variable>
     <variable item="Bank4 PWM Seq6.2" CV="322.3" default="2">
         <decVal min="0" max="63"/>
@@ -1065,6 +1153,7 @@
         <tooltip>PWM Sequence 6 value 2</tooltip>
         <tooltip xml:lang="de">PWM Modulation 6 Wert 2</tooltip>
         <tooltip xml:lang="nl">PWM Cyclus 6 waarde 2</tooltip>
+        <tooltip xml:lang="cs">PWM Modulace 6 hodnota 2</tooltip>
     </variable>
     <!-- End Bank 4 -->
 
@@ -1077,12 +1166,14 @@
         <tooltip>Action 1.</tooltip>
         <tooltip xml:lang="de">Handlung 1.</tooltip>
         <tooltip xml:lang="nl">Actie 1.</tooltip>
+        <tooltip xml:lang="cs">Akce 1.</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 1.1 enum" CV="257.4" default="0">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
         <tooltip>Next enter value if choice ends with ":"</tooltip>
         <tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
         <tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+        <tooltip xml:lang="cs">Pokud volba končí na ":" zadejte další hodnotu</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 1.2" CV="258.4" default="0">
         <decVal/>
@@ -1090,6 +1181,7 @@
         <tooltip>Action/value 2</tooltip>
         <tooltip xml:lang="de">Handlung/Wert 2</tooltip>
         <tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+        <tooltip xml:lang="cs">Akce/hodnota 2</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 1.2 enum" CV="258.4" default="0">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
@@ -1144,12 +1236,14 @@
         <tooltip>Action 1.</tooltip>
         <tooltip xml:lang="de">Handlung 1.</tooltip>
         <tooltip xml:lang="nl">Actie 1.</tooltip>
+        <tooltip xml:lang="cs">Akce 1.</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 2.1 enum" CV="273.4" default="0">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
         <tooltip>Next enter value if choice ends with ":"</tooltip>
         <tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
         <tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+        <tooltip xml:lang="cs">Pokud volba končí na ":" zadejte další hodnotu</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 2.2" CV="274.4" default="0">
         <decVal/>
@@ -1157,6 +1251,7 @@
         <tooltip>Action/value 2</tooltip>
         <tooltip xml:lang="de">Handlung/Wert 2</tooltip>
         <tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+        <tooltip xml:lang="cs">Akce/hodnota 2</tooltip>
     </variable>
     <variable item="Bank5 Intellimatic 2.2 enum" CV="274.4" default="0">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>

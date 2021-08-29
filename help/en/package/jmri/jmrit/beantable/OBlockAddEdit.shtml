@@ -1,76 +1,63 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding OBlocks Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Block Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Block Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding OBlocks</h1>
 
       <p>To add a new OBlock in the tabbed interface, click the <strong>Add OBlock...</strong>
-      button at the bottom left edge of the Occupancy Tables
-      pane.</p><img src="images/OBlockAdd.png" width="723" height="274" alt="OBlock editing pane">
+      button at the bottom left edge of the Occupancy Tables pane.</p>
+      <img src="images/OBlockAdd.png" width="723" height="274" alt="OBlock editing pane">
+      <p>In the pane that opens, enter a valid System Name for the OBlock and if desired enter a
+      User Name. For example, a valid System Name for a LocoNet layout could be OB456.<br></p>
 
-      <p>In the pane that opens, enter a valid System Name for
-      the OBlock and if desired enter a User Name. For example, a
-      valid System Name for a LocoNet layout could be OB456.<br>
-      <p>The User Name is optional, unless you check "Automatically generate System Name",
-      and if you enter one it has to be unique in your JMRI
-      setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>"
-      Help page for more information.</p>
-      <p>Click [Create] to complete this step. Click [Cancel] to close the pane (don't worry, already created
-      items will stay).</p>
+      <p>The User Name is optional, unless you check "Automatically generate System Name", and if
+      you enter one it has to be unique in your JMRI setup. See the "<a href=
+      "../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
 
-      <p>Complete the definition of the new OBlock by closing the
-      Add New OBlock pane and clicking the <strong>Edit</strong>
-      button at the right of the newly created Block entry in the
+      <p>Click [Create] to complete this step. Click [Cancel] to close the pane (don't worry,
+      already created items will stay).</p>
+
+      <p>Complete the definition of the new OBlock by closing the Add New OBlock pane and clicking
+      the <strong>Edit</strong> button at the right of the newly created Block entry in the
       <a href="OBlockTable.shtml">OBlock Table</a>.<br>
-      Fill out all fields as described on the <a href="BlockEdit.shtml">Block
-      Attributes</a> Help page.</p>
+      Fill out all fields as described on the <a href="BlockEdit.shtml">Block Attributes</a> Help
+      page.</p>
 
       <h2>Creating a Number of OBlocks</h2>
 
-      <p>It is also possible to create a number of Blocks in one
-      go.<br>
-      Where supported, the "Add a sequential range" check box will be
-      enabled.</p>
+      <p>It is also possible to create a number of Blocks in one go.<br>
+      Where supported, the "Add a sequential range" check box will be enabled.</p>
 
-      <p>Checking the "Add a sequential range" box will enable
-      the "Number of items" field. Set the number of OBlocks that
-      you wish to add. Clicking [Create] will create a number of sequentially
-      numbered Blocks.<br>
-      If a User Name has been entered, a number will be added to
-      the end of that name (starting at #2) to keep each Block User
-      Name unique.</p>
+      <p>Checking the "Add a sequential range" box will enable the "Number of items" field. Set the
+      number of OBlocks that you wish to add. Clicking [Create] will create a number of
+      sequentially numbered Blocks.<br>
+      If a User Name has been entered, a number will be added to the end of that name (starting at
+      #2) to keep each Block User Name unique.</p>
 
       <h2>Adding OBlock Properties</h2>
 
-      <p>To add the details of a new OBlock, close the Add OBlock
-      pane by clicking Cancel or the Close/X button and click
-      <strong><a href="OBlockEdit.shtml">Edit</a></strong> to the
-      right of the new entry in the OBlock Table.</p>
+      <p>To add the details of a new OBlock, close the Add OBlock pane by clicking Cancel or the
+      Close/X button and click <strong><a href="OBlockEdit.shtml">Edit</a></strong> to the right of
+      the new entry in the OBlock Table.</p>
 
-      <p>See <a href=
-      "../../../../html/doc/Technical/Names.shtml">Names</a> under
-      General Help for more information on JMRI object naming.</p>
+      <p>See <a href="../../../../html/doc/Technical/Names.shtml">Names</a> under General Help for
+      more information on JMRI object naming.</p>
 
-      <p>Back to the <a href="OBlockTable.shtml">OBlock Table help
-      page</a>.</p>
-
+      <p>Back to the <a href="OBlockTable.shtml">OBlock Table help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

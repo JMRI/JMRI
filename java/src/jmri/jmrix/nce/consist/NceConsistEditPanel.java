@@ -7,27 +7,18 @@ import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.nce.*;
 
 /**
  * Pane for user edit of NCE Consists
@@ -1309,7 +1300,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             return;
         }
         int locoAddr = getLocoAddr(locoTextField1, adrButton1);
-        sendNceBinaryCommand(locoAddr, NceBinaryCommand.LOCO_CMD_KILL_CONSIST,
+        sendNceBinaryCommand(locoAddr, NceMessage.LOCO_CMD_KILL_CONSIST,
                 (byte) 0);
     }
 
@@ -1346,7 +1337,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // Looking for proper response
             int recChar = nceReply.getElement(0);
             log.debug("command reply: {}", recChar);
-            if (recChar == '!') {
+            if (recChar == NceMessage.NCE_OKAY) {
                 if (locoSearch && waiting == 0) {
                     readConsistMemory(consistNumVerify, LEAD);
                     consistStatus.setText(Bundle.getMessage("EditStateVERIFY"));
@@ -1413,11 +1404,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                             }
                         } else if (verifyType == VERIFY_MID_FWD) {
                             sendNceBinaryCommand(locoVerifyList[0],
-                                    NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID,
+                                    NceMessage.LOCO_CMD_FWD_CONSIST_MID,
                                     (byte) consistNum);
                         } else if (verifyType == VERIFY_MID_REV) {
                             sendNceBinaryCommand(locoVerifyList[0],
-                                    NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID,
+                                    NceMessage.LOCO_CMD_REV_CONSIST_MID,
                                     (byte) consistNum);
                         } else if (verifyType == VERIFY_ALL) {
                             fullLoad();
@@ -1669,7 +1660,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
         if (cmdButton.getText().equals(Bundle.getMessage("KeyDELETE"))) {
             sendNceBinaryCommand(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+                    NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 
         } else if (cmdButton.getText().equals(Bundle.getMessage("KeyREPLACE"))) {
 
@@ -1692,17 +1683,17 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             if (locoTextField == locoTextField1) {
                 // replace lead loco
                 sendNceBinaryCommand(LOC_ADR_REPLACE,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
+                        NceMessage.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
                 // no lead loco so we can't kill the consist
                 clearCancelButton.setEnabled(false);
             } else {
                 // replace rear loco
                 sendNceBinaryCommand(LOC_ADR_REPLACE,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
+                        NceMessage.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
             }
             // now delete lead or rear loco from layout
             sendNceBinaryCommand(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+                    NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
         } else {
             // ADD button has been pressed
             if (dirButton.getText().equals(Bundle.getMessage("KeyQUESTION"))) {
@@ -1717,7 +1708,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             }
             // delete loco from any existing consists
             sendNceBinaryCommand(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+                    NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 
             // check to see if loco is already a lead or rear in another consist
             verifyLocoAddr(locoAddr);
@@ -1727,21 +1718,21 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             if (locoTextField == locoTextField1) {
                 if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
+                            NceMessage.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
                 }
                 if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, consistNumber);
+                            NceMessage.LOCO_CMD_REV_CONSIST_LEAD, consistNumber);
                 }
                 // rear loco?
             } else if (locoTextField == locoTextField2) {
                 if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
+                            NceMessage.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
                 }
                 if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, consistNumber);
+                            NceMessage.LOCO_CMD_REV_CONSIST_REAR, consistNumber);
                 }
                 // must be mid loco
             } else {
@@ -1756,11 +1747,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 } else {
                     if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                         sendNceBinaryCommand(locoAddr,
-                                NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, consistNumber);
+                                NceMessage.LOCO_CMD_FWD_CONSIST_MID, consistNumber);
                     }
                     if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                         sendNceBinaryCommand(locoAddr,
-                                NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, consistNumber);
+                                NceMessage.LOCO_CMD_REV_CONSIST_MID, consistNumber);
                     }
                 }
             }
@@ -1813,43 +1804,43 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
         // delete loco from any existing consists
         sendNceBinaryCommand(locoAddr,
-                NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+                NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
         // now we need to determine if lead, rear, or mid loco
         // lead loco?
         if (locoTextField == locoTextField1) {
             // kill the consist first to clear NCE CS memory
             sendNceBinaryCommand(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
-            sendNceBinaryCommand(locoAddr, NceBinaryCommand.LOCO_CMD_KILL_CONSIST,
+                    NceMessage.LOCO_CMD_FWD_CONSIST_LEAD, cN);
+            sendNceBinaryCommand(locoAddr, NceMessage.LOCO_CMD_KILL_CONSIST,
                     (byte) 0);
             // now load
             if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
+                        NceMessage.LOCO_CMD_FWD_CONSIST_LEAD, cN);
             }
             if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
+                        NceMessage.LOCO_CMD_REV_CONSIST_LEAD, cN);
             }
             // rear loco?
         } else if (locoTextField == locoTextField2) {
             if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
+                        NceMessage.LOCO_CMD_FWD_CONSIST_REAR, cN);
             }
             if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
+                        NceMessage.LOCO_CMD_REV_CONSIST_REAR, cN);
             }
             // must be mid loco
         } else {
             if (dirButton.getText().equals(Bundle.getMessage("KeyFWD"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
+                        NceMessage.LOCO_CMD_FWD_CONSIST_MID, cN);
             }
             if (dirButton.getText().equals(Bundle.getMessage("KeyREV"))) {
                 sendNceBinaryCommand(locoAddr,
-                        NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
+                        NceMessage.LOCO_CMD_REV_CONSIST_MID, cN);
             }
         }
     }

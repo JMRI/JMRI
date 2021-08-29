@@ -1,165 +1,122 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Panel Editor Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Index Editor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Index Editor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>The Image Index Editor</h1>This window is used to create
-      an Image Index. The index may be organized according to any
-      taxonomy you wish. Using it allows you to access any image
-      file that is accessible from your computer without moving or
-      copying the file. It is similar to a table of contents or
-      index that you might find in a reference textbook.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>The Image Index Editor</h1>
+      This window is used to create an Image Index. The index may be organized according to any
+      taxonomy you wish. Using it allows you to access any image file that is accessible from your
+      computer without moving or copying the file. It is similar to a table of contents or index
+      that you might find in a reference textbook.
+      <h2>Contents of the Image Index Editor</h2>
+      <img src="ImageIndex.png" class="floatRight" alt="sample index">
+      <p>The window contains two panes side by side. The left side is your current Image Catalog.
+      This is what the Icon Editors have been using to change icons. The top panel of this pane
+      consists of one or more trees. The default tree is "Program Directory", the catalog of all
+      the image files downloaded with the version of JMRI you are using. These are files that were
+      encapsulated in "jmri.jar". Another default tree may be "Preferences Directory", the catalog
+      of all the image files contained in the "resources" directory in your JMRI preferences
+      directory. If you have not created a "resources" directory in your JMRI preferences directory
+      you will not see this tree. Other trees that you may see are those that you have installed
+      after using the <strong>Open File System Directory</strong> menu item in one of the Icon
+      Editor windows and pressed the <strong>Add to Catalog</strong> button there. (The "Add to
+      Catalog" button does not appear in this window.) Next to each tree is a "Preview" pane that
+      displays the images found in any node that you have selected from one of the above trees.
+      "Nodes" are the folder icons that appear when you click on the handle to the left of a folder
+      icon. Clicking on a node will open a pane that displays the icons contained in the node.</p>
 
-      <h2>Contents of the Image Index Editor</h2><img src=
-      "ImageIndex.png" align="right">
+      <p>The "Preview" pane has a label that states how many image files are referenced in the
+      node. Beneath each image (icon) is a label that states the "scale" at which the image is
+      displayed. <span class="since">since 4.9.7</span> Below the icons are "View on:" combo boxes
+      that allow you to choose a background for the icons. This may help you determine what parts
+      of the icon are opaque and what parts are transparent.</p>
 
-      <p>The window contains two panes side by side. The left side
-      is your current Image Catalog. This is what the Icon Editors
-      have been using to change icons. The top panel of this pane
-      consists of one or more trees. The default tree is "Program
-      Directory", the catalog of all the image files downloaded
-      with the version of JMRI you are using. These are files that
-      were encapsulated in "jmri.jar". Another default tree may be
-      "Preferences Directory", the catalog of all the image files
-      contained in the "resources" directory in your JMRI
-      preferences directory. If you have not created a "resources"
-      directory in your JMRI preferences directory you will not see
-      this tree. Other trees that you may see are those that you
-      have installed after using the <b>Open File System
-      Directory</b> menu item in one of the Icon Editor windows and
-      pressed the <b>Add to Catalog</b> button there. (The "Add to
-      Catalog" button does not appear in this window.) Next to each
-      tree is a "Preview" pane that displays the images found in
-      any node that you have selected from one of the above trees.
-      "Nodes" are the folder icons that appear when you click on
-      the handle to the left of a folder icon. Clicking on a node
-      will open a pane that displays the icons contained in the
-      node.</p>
-
-      <p>The "Preview" pane has a label that states how many image
-      files are referenced in the node. Beneath each image (icon)
-      is a label that states the "scale" at which the image is
-      displayed.
-      <span class="since">since 4.9.7</span>
-      Below the icons are "View on:" combo boxes
-      that allow you to choose a  background for the icons.
-      This may help you determine what parts of the icon are
-      opaque and what parts are transparent.</p>
-
-      <p>The right side is the <b>Image Index</b> you may edit. It
-      is similar to the left pane in that the left half shows the tree
-      of the Index you are creating. Likewise, the right half
-      displays the images found in any node of the tree that you
-      select. Initially, there will be just one node labeled "Image
-      Index". You are able to add additional nodes to this node by
+      <p>The right side is the <strong>Image Index</strong> you may edit. It is similar to the left
+      pane in that the left half shows the tree of the Index you are creating. Likewise, the right
+      half displays the images found in any node of the tree that you select. Initially, there will
+      be just one node labeled "Image Index". You are able to add additional nodes to this node by
       using the menus below.</p>
 
       <h2>The Menus</h2>
 
-      <p>The <b>File</b> menu shown with the Create/Edit Image Index
-      pane contains three items:</p>
+      <p>The <strong>File</strong> menu shown with the Create/Edit Image Index pane contains three
+      items:</p>
 
       <ul>
-        <li><b>Store Image Index</b>. This stores a permanent record
-        of the Image Index that will be restored the next time the
-        Panel Editor is opened. The Image Index will be included in
-        the Catalog trees used by the Icon Editors.
-        </li>
+        <li><strong>Store Image Index</strong>. This stores a permanent record of the Image Index
+        that will be restored the next time the Panel Editor is opened. The Image Index will be
+        included in the Catalog trees used by the Icon Editors.</li>
 
         <li>
-          <b>Open a File System Directory</b>. This opens a file
-          chooser dialog where you may open any directory that
-          has image files. To open the directory, select any image
-          file contained in it and a pane will attempt to display
-          all the image files found in that directory.
-          See <a href="../display/IconAdder.shtml">Icon
-          Editors</a> for more details on this menu item.
-
-          <br>The icons displayed in the "preview" panel of any
-          directory window opened from this menu item can be added
-          to the Image Index. How to do this is described
-          below.
+          <strong>Open a File System Directory</strong>. This opens a file chooser dialog where you
+          may open any directory that has image files. To open the directory, select any image file
+          contained in it and a pane will attempt to display all the image files found in that
+          directory. See <a href="../display/IconAdder.shtml">Icon Editors</a> for more details on
+          this menu item.<br>
+          The icons displayed in the "preview" panel of any directory window opened from this menu
+          item can be added to the Image Index. How to do this is described below.
         </li>
 
-        <li>
-        <b>Search File System for Icons</b>. Opens a file chooser
-        dialog to start a search for image files. A panel filled with
-        all found image files is shown as the search finishes.<br>
-        Drag one of the found icons to your Catalog.
-        </li>
+        <li><strong>Search File System for Icons</strong>. Opens a file chooser dialog to start a
+        search for image files. A panel filled with all found image files is shown as the search
+        finishes.<br>
+        Drag one of the found icons to your Catalog.</li>
       </ul>
 
-      <p>The <b>Edit</b> menu has three items:</p>
+      <p>The <strong>Edit</strong> menu has three items:</p>
 
       <ul>
-        <li><b>Add Node</b>. First select a node in the Image Index
-        tree. Then, use this menu item to add a sub-node the
-        selected node. A "sub-node" is a node that branches from
+        <li><strong>Add Node</strong>. First select a node in the Image Index tree. Then, use this
+        menu item to add a sub-node the selected node. A "sub-node" is a node that branches from
         under the selected node.</li>
 
-        <li><b>Delete Node</b>. First select a node in the Image
-        Index tree. Then, use this menu item to delete the node.
-        Since this will also delete the nodes and icon references
-        that branch off from under this node, a confirmation dialog
-        is opened with the total of all the items that will be
-        deleted.</li>
+        <li><strong>Delete Node</strong>. First select a node in the Image Index tree. Then, use
+        this menu item to delete the node. Since this will also delete the nodes and icon
+        references that branch off from under this node, a confirmation dialog is opened with the
+        total of all the items that will be deleted.</li>
 
-        <li><b>Rename Node</b>. First select a node in the Image
-        Index tree. Then, use this menu item to change the name of
-        the node.</li>
+        <li><strong>Rename Node</strong>. First select a node in the Image Index tree. Then, use
+        this menu item to change the name of the node.</li>
       </ul>
 
       <h2>Adding Icons to the Image Index</h2>
 
-      <p>Use "Drag and Drop" to copy an icon from either the
-      Catalog pane (left pane) or a File Directory window. Press
-      the mouse button down on any icon appearing in the "preview"
-      panel of either of these windows to "drag" the icon to a node
-      of the Image Index tree (right pane). (Dragging means holding
-      the mouse button down as you move the mouse pointer to a node
-      of the Image Index tree.) Actually, it is only the reference
-      to the location of the icon that is saved by the Image Index.
-      As long the file remains in place, it will be displayed by
-      the Catalog, the Image Index and your Panel (if you have
-      installed it there).</p>
+      <p>Use "Drag and Drop" to copy an icon from either the Catalog pane (left pane) or a File
+      Directory window. Press the mouse button down on any icon appearing in the "preview" panel of
+      either of these windows to "drag" the icon to a node of the Image Index tree (right pane).
+      (Dragging means holding the mouse button down as you move the mouse pointer to a node of the
+      Image Index tree.) Actually, it is only the reference to the location of the icon that is
+      saved by the Image Index. As long the file remains in place, it will be displayed by the
+      Catalog, the Image Index and your Panel (if you have installed it there).</p>
 
       <h2>Deleting and Renaming icons in the Image Index</h2>
 
-      <p>Pressing and releasing (clicking) the mouse button over an
-      icon in the preview pane of the Image Index activatea a
-      "pop-up" menu. Pop-Up menus display the name and reference
-      location of the icon. The pop-up also provides items to
-      modify icons in the Image Index.</p>
+      <p>Pressing and releasing (clicking) the mouse button over an icon in the preview pane of the
+      Image Index activatea a "pop-up" menu. Pop-Up menus display the name and reference location
+      of the icon. The pop-up also provides items to modify icons in the Image Index.</p>
 
       <ul>
-        <li><b>Rename Icon</b> opens a dialog box where a new name
-        can be entered.</li>
+        <li><strong>Rename Icon</strong> opens a dialog box where a new name can be entered.</li>
 
-        <li><b>Delete Icon</b> removes the icon from the Image
-        Index node.</li>
+        <li><strong>Delete Icon</strong> removes the icon from the Image Index node.</li>
 
         <li style="list-style: none">
-          <p>Note: <i>the "preview" pane will only show these
-          changes after leaving the node and then returning to the
-          node.</i></p>
+          <p>Note: <em>the "preview" pane will only show these changes after leaving the node and
+          then returning to the node.</em></p>
         </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

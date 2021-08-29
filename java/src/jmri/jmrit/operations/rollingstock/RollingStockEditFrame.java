@@ -28,6 +28,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.swing.NamedBeanComboBox;
 
 /**
@@ -445,7 +446,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             OperationsXml.save();
         }
         if (ae.getSource() == deleteButton) {
-            log.debug("car delete button activated");
+            log.debug("rolling stock delete button activated");
             // disable delete and save buttons
             deleteButton.setEnabled(false);
             saveButton.setEnabled(false);
@@ -477,6 +478,15 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     protected boolean check(RollingStock rs) {
         String roadNum = roadNumberTextField.getText();
+        // hyphen feature needs at least one character to work properly
+        if (roadNum.contains(TrainCommon.HYPHEN)) {
+            String[] s = roadNum.split(TrainCommon.HYPHEN);
+            if (s.length == 0) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"), Bundle.getMessage("roadNumNG"),
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
         if (!OperationsXml.checkFileName(roadNum)) { // NOI18N
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),

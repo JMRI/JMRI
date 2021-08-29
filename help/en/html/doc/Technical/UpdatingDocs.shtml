@@ -1,169 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>How to Update the JMRI Documentation</title>
-  <meta name="author" content=
-  "Joseph A. Ellis - TesserAct Studios">
-  <meta name="Revised_By" content=
-  "Bob Blackwell - afticarr@sympatico.ca">
+  <meta name="author" content="Joseph A. Ellis - TesserAct Studios">
+  <meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
   <meta name="Revised_By" content="Egbert Broerse">
   <meta name="Revision" content=
   "Updated instructions for GitHub instead of single file edit and ZIP">
-
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>How to update the JMRI Documentation</h1>
 
       <div class="toc">
         <ul>
-          <li><a href="#screenshots">Creating Images from Screen
-          Shots</a></li>
+          <li>
+            <a href="#screenshots">Creating Images from Screen Shots</a>
+          </li>
 
-          <li><a href="#sizing">Sizing and Saving the
-          Images</a></li>
+          <li>
+            <a href="#sizing">Sizing and Saving the Images</a>
+          </li>
 
-          <li><a href="#submitpage">Submitting to GitHub</a></li>
+          <li>
+            <a href="#submitpage">Submitting to GitHub</a>
+          </li>
         </ul>
       </div>
 
-      <p>JMRI's web pages and help screens are written in a
-      simple subset of HTML, the language that powers the web. The
-      most important part of the content is the plain text that
-      people will read, and the additional formatting information
-      is kept very minimal. To update a JMRI web page, you edit
-      these directly on GitHub web or on your computer with a plain
-      text editor.</p>
+      <p>JMRI's web pages and help screens are written in a simple subset of HTML, the language
+      that powers the web. The most important part of the content is the plain text that people
+      will read, and the additional formatting information is kept very minimal. To update a JMRI
+      web page, you edit these directly on GitHub web or on your computer with a plain text
+      editor.</p>
 
-      <p>Using a word processing app like MS Word or Front Page
-      to edit these .shtml documents
-      is not a good idea because they will probably add in their
-      own proprietary formatting codes that will mess things up,
-      possibly even to the point of being unusable by JMRI. Also,
-      don't rename existing files, or make changes to the
-      formatting information at the top or bottom.<br>
-      So you may concentrate on making editorial changes to the
-      text in the main body of a file, which is really what the
-      readers are paying attention to anyway.</p>
+      <p>Using a word processing app like MS Word or Front Page to edit these .shtml documents is
+      not a good idea because they will probably add in their own proprietary formatting codes that
+      will mess things up, possibly even to the point of being unusable by JMRI. Also, don't rename
+      existing files, or make changes to the formatting information at the top or bottom.<br>
+      So you may concentrate on making editorial changes to the text in the main body of a file,
+      which is really what the readers are paying attention to anyway.</p>
 
-      <p>To get started, you can drill down inside your computer's
-      JMRI program files to the folder for the DecoderPro manual.
-      On a Windows system, the location for this folder looks
-      something like this --
-      <code>C:\ProgramFiles\JMRI\help\en\manual</code>. In this
-      folder is a file called <code>index.shtml</code>. Open that
-      file with a text editor and look around. If you change
-      something, you can then open the page in the JMRI help system
-      and see how it looks (either keep a backup in case you want
-      the original page back, or you can reinstall JMRI to restore
-      it).</p>
+      <p>To get started, you can drill down inside your computer's JMRI program files to the folder
+      for the DecoderPro manual. On a Windows system, the location for this folder looks something
+      like this -- <code>C:\ProgramFiles\JMRI\help\en\manual</code>. In this folder is a file
+      called <code>index.shtml</code>. Open that file with a text editor and look around. If you
+      change something, you can then open the page in the JMRI help system and see how it looks
+      (either keep a backup in case you want the original page back, or you can reinstall JMRI to
+      restore it).</p>
 
-      <p>The most simple changes are just ones to the text itself:
-      To add a sentence or fix a wording, you just do that with the
-      editor. To add a break between paragraphs, e.g. to add a new
-      paragraph, you insert a "tag" that tells JMRI or a browser to
-      insert a paragraph break.</p>
+      <p>The most simple changes are just ones to the text itself: To add a sentence or fix a
+      wording, you just do that with the editor. To add a break between paragraphs, e.g. to add a
+      new paragraph, you insert a "tag" that tells JMRI or a browser to insert a paragraph
+      break.</p>
 
-      <h2><a name="screenshots" id="screenshots">Creating Images
-      from Screen Shots</a></h2>
+      <h2 id="screenshots">Creating Images from Screen Shots</h2>
 
       <h3>For Windows</h3>
-      To snag a screen shot in Windows, start by setting up the window
-      that holds what you want to capture. Make it take up as
-      little space on your screen as you can while it still shows
-      what you want. You can take a shot of the active window
-      (instead of your whole desktop), by pressing the
-      <code>&lt;Alt&gt;</code> key and the <code>&lt;Print
-      Screen&gt;</code> key at the same time. (Note: Depending on
-      your keyboard, you might need to press the
-      <code>&lt;Fn&gt;</code> or <code>&lt;Function-Lock&gt;</code>
-      key as well.) This puts the image on your "clipboard" and you
-      can paste it into an image-editing program such as Window's
+      To snag a screen shot in Windows, start by setting up the window that holds what you want to
+      capture. Make it take up as little space on your screen as you can while it still shows what
+      you want. You can take a shot of the active window (instead of your whole desktop), by
+      pressing the <code>&lt;Alt&gt;</code> key and the <code>&lt;Print Screen&gt;</code> key at
+      the same time. (Note: Depending on your keyboard, you might need to press the
+      <code>&lt;Fn&gt;</code> or <code>&lt;Function-Lock&gt;</code> key as well.) This puts the
+      image on your "clipboard" and you can paste it into an image-editing program such as Window's
       Paint or Photoshop.
-
       <h3>For Linux</h3>
-      If your
-      distro doesn't already have a default application that
-      supports the use of the &lt;<code>Print Screen></code>&gt; and
-      &lt;<code>Alt + Print Screen</code>&gt; keys you can install
-      <a href="http://www.kde.org/" target="_blank">KSnapshot</a> or your favorite
+      If your distro doesn't already have a default application that supports the use of the
+      &lt;<code>Print Screen&gt;</code>&gt; and &lt;<code>Alt + Print Screen</code>&gt; keys you
+      can install <a href="http://www.kde.org/" target="_blank">KSnapshot</a> or your favorite
       application to do your screen grabbing.
-
       <h3>For macOS</h3>
-      After setting up your shot, hold down
-      <code>&lt;Apple + Shift + 4&gt;</code> key.
-      When you release them at the same time, the
-      cursor becomes a plus sign, and you can drag it around the
-      area you want. When you let go, you will have an image file
-      on your desktop.
-
+      After setting up your shot, hold down <code>&lt;Apple + Shift + 4&gt;</code> key. When you
+      release them at the same time, the cursor becomes a plus sign, and you can drag it around the
+      area you want. When you let go, you will have an image file on your desktop.
       <h3>Using a Third-Party Application</h3>
-      <p>On macOS we nowadays often use Evernote
-      <a href="https://evernote.com/intl/nl/products/skitch" target="_blank">Skitch</a>
-      to grab and touch up screen shots. Here's an example of that style:<br>
-      <img src="../images/GitHubPencil.png" width="285" height="101" alt="GitHub Pencil">
-      </p>
-      <p>We also love <a href=
-      "http://www.irfanview.com" target="_blank">IrFanView</a>
-      for screenshots, and it is free. With it, you can also
-      include your mouse cursor in your snapshot. You can also take
-      a series of shots easily, and even make a slideshow of them.
-      You can tell it what file format you want the image files to
-      be AND where you want them to be saved before you take the
-      shot, and that makes it easier to work with them in a program
-      like Paint or Photoshop.</p>
 
-      <h2><a name="sizing" id="sizing">Sizing and Saving the
-      Images</a></h2>
-      Any changes you
-      make to your image should be done before you use Amaya to
-      insert it into your document. Remember that if you change it,
-      it needs to be re-inserted. Make sure you save the image as
-      one of the following filetypes: PNG, JPG, or JPEG (not BMP or
-      TIF), and do not use any spaces or capital letters in the
-      image file name. Generally, a good size for the width of an
-      image is 500 pixels or less, at a web resolution of 72 pixels
-      per inch. If you know how to resize your images, it would be
-      very helpful.
+      <p>On macOS we nowadays often use Evernote <a href=
+      "https://evernote.com/intl/nl/products/skitch" target="_blank">Skitch</a> to grab and touch
+      up screen shots. Here's an example of that style:<br>
+      <img src="images/GitHubPencil.png" width="285" height="101" alt="GitHub Pencil"></p>
 
-      <h2><a name="submitpage" id="submitpage">Submitting
-      to GitHub</a></h2>
+      <p>We also love <a href="http://www.irfanview.com" target="_blank">IrFanView</a> for
+      screenshots, and it is free. With it, you can also include your mouse cursor in your
+      snapshot. You can also take a series of shots easily, and even make a slideshow of them. You
+      can tell it what file format you want the image files to be AND where you want them to be
+      saved before you take the shot, and that makes it easier to work with them in a program like
+      Paint or Photoshop.</p>
 
-      <p>If you understand this, you
-      are ready to help us update the many JMRI documents that we
-      use for both the JMRI website and for the Help files in a
-      next software build.</p>
+      <h2>id="sizing"&gt;Sizing and Saving the Images</h2>
+      Any changes you make to your image should be done before you use Amaya to insert it into your
+      document. Remember that if you change it, it needs to be re-inserted. Make sure you save the
+      image as one of the following filetypes: PNG, JPG, or JPEG (not BMP or TIF), and do not use
+      any spaces or capital letters in the image file name. Generally, a good size for the width of
+      an image is 500 pixels or less, at a web resolution of 72 pixels per inch. If you know how to
+      resize your images, it would be very helpful.
+      <h2 id="submitpage">Submitting to GitHub</h2>
 
-      <p>When you submit your changes to be included in future JMRI
-      releases, they are given a quick check and then merged into
-      the previous content. The check is done by using GitHub tools
-      to find the parts of the file that have been changed.</p>
+      <p>If you understand this, you are ready to help us update the many JMRI documents that we
+      use for both the JMRI website and for the Help files in a next software build.</p>
 
-      <h3>Prepare the Files</h3>The proper filetype to use for JMRI
-      has the .shtml extension. If you have made a (new) .html or
-      .htm file, you should change the extension to .shtml. Don't
-      use spaces or capital letters in your filenames. If you are
-      not changing or adding images, just save the file with its
-      original name, i.e. <span style=
-      "font-family: monospace">"index.shtml"</span>, in a location
-      where you can find it easily when you're ready to copy them
-      to GitHub.
+      <p>When you submit your changes to be included in future JMRI releases, they are given a
+      quick check and then merged into the previous content. The check is done by using GitHub
+      tools to find the parts of the file that have been changed.</p>
 
+      <h3>Prepare the Files</h3>
+      The proper filetype to use for JMRI has the .shtml extension. If you have made a (new) .html
+      or .htm file, you should change the extension to .shtml. Don't use spaces, underscores or
+      capital letters in your filenames. If you are not changing or adding images, just save the
+      file with its original name, i.e. <span style="font-family: monospace">"index.shtml"</span>,
+      in a location where you can find it easily when you're ready to copy them to GitHub.
       <h3>Send to GitHub</h3>
 
-      <p>You can view the current <a href=
-      "https://github.com/JMRI/JMRI" target="_blank">JMRI repository on GitHub</a>.
-      To learn how to make changes to connect to GitHub and
-      contribute your changes, please read <a href=
-      "getgitcode.shtml">Using Git</a>.
-      </p>
+      <p>You can view the current <a href="https://github.com/JMRI/JMRI" target="_blank">JMRI
+      repository on GitHub</a>. To learn how to make changes to connect to GitHub and contribute
+      your changes, please read <a href="getgitcode.shtml">Using Git</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

@@ -1,487 +1,647 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta name="generator" content=
-              "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-        <meta name="keywords" content="CBUS supports JMRI help support">
-        <title>JMRI Hardware Support - CBUS Main Support</title>
-        <meta name="author" content="Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
-        <!--#include virtual="/Style.shtml" -->
-    </head>
-
-    <body>
-        <!--#include virtual="/Header.shtml" -->
-        <div id="mBody">
-            <!--#include virtual="Sidebar.shtml" -->
-            <div id="mainContent">
-
-                <h1>JMRI Hardware Support: CBUS&reg; Main Support Page</h1>
-                <ul class="snav">
-                    <li><a href="#introduction">Introduction</a></li>
-                    <li><a href="#connecting">Connecting</a></li>
-                    <li><a href="#tools">CBUS Tools</a></li>
-                    <li><a href="#cbusevents">CBUS Events</a></li>
-                    <li><a href="#dcc">DCC over CBUS</a></li>
-                    <li><a href="#signalling">Signalling</a></li>
-                    <li><a href="#thirdparty">Further Support</a></li>
-                </ul>
-
-                <h2><a name="introduction" id="introduction">Introduction</a></h2>
-                <div>
-
-                    <p>Originally named CBUS by co-founder Gil Fuchs, CBUS is an 'open' protocol for Model Railway
-                        use. The protocol and other useful information is hosted on the MERG public website 
-                        (see further support links). CBUS is not owned or controlled by MERG but the co-founders 
-                        Gil Fuchs and Mike Bolton are active members. MERG members are able to purchase a range 
-                        of CBUS kits.</p>
-
-                    <p>As support for CBUS continues to evolve, these help pages are not a definitive CBUS network guide
-                        and contain considerable simplification of the CBUS scheme. They are aimed at helping new users 
-                        to JMRI or CBUS, not systems developers who should consult the full protocol specification and
-                        Developer's Guide hosted by MERG.</p>
-                    
-                    <h3>Other JMRI CBUS Help Pages</h3>
-                    <ul>
-                        <li><a href="CbusFastClock.shtml">CBUS Fast Clock</a></li>
-                        <li><a href="../index.shtml">JMRI CAN Support</a></li>
-                        <li><a href="../scripting.shtml">JMRI Scripting for CAN Frames Using Jython</a></li>
-                    </ul>
-                </div>
-
-                <h2><a name="connecting" id="connecting">Connecting</a></h2>
-                <div>
-                    <p>For details of how to setup a connection to a CBUS network, you should refer to the
-                        JMRI help pages, or other documentation, for your chosen manufacturer's hardware.</p>
-
-                    <h3>Known CBUS hardware solutions (November 2020)</h3>
-                    <ul>
-                        <li><a href = ../../merg/index.shtml> MERG</a></li>
-                        <li><a href = ../../sproggen5/index.shtml> SPROG DCC Generation 5</a></li>
-                    </ul>
-
-                    <h2><a name="tools" id="tools">CBUS Tools</a></h2>
-                        <p>CBUS tools are accessed from the menu for your chosen system connection.The 
-                            example shows a connection to MERG hardware. The available tools may vary with
-                            the system connection</p>
-
-                        <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right"
-                             width="206" height="145">
-
-                        <ul>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
-                                    Console</a> - Tool for viewing and sending CAN frames / events.</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
-                                    Event Table</a> - Monitors events and presents them in a table full of statistics.</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
-                                    Node Manager</a> - Node Table and node configuration tools</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
-                                    Command Station Monitor</a> - Loco session monitoring and Command Station Tools.</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
-                                    Send Frame</a> - Send CAN frames or CBUS events</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
-                                   >Event Capture Tool</a> - Capture CBUS events</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml"
-                                   >Event Request Monitor</a> - Request Event status monitoring tool</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
-                                   >Network Item simulation</a> - Simulates Cbus Command stations and responds to event requests</li>
-                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml"> 
-                                    Firmware update </a> - to update CBUS module firmware</li>
-                            <li><a href="CbusMeters.shtml"> 
-                                    Voltage / Current meters </a> - Monitor track current/voltage</li>
-                        </ul>
-                </div>
-
-                <h2><a name="cbusevents" id="cbusevents">CBUS Events</a></h2>
-                <div>
-                    <a href="Names.shtml">CBUS Events in JMRI</a>
-                        <ul>
-                            <li><a href="Names.shtml#events">Event Name and Numbering</a></li>
-                            <li><a href="Names.shtml#sysname">System Names</a></li>
-                            <li><a href="Names.shtml#summary">Summary of CBUS Events</a></li>
-                            <li><a href="Names.shtml#namingspec">Event Naming Specification</a></li>
-                            <li><a href="Names.shtml#hex">Sending hex strings</a></li>
-                            <li><a href="Names.shtml#opc">Opcodes in JMRI</a></li>
-                        </ul>        
-
-                    <h3>CBUS Event Overview </h3>
-
-                    <p>CBUS events are transmitted as a one-to-many network. Connected modules receive all network messages and 
-                        choose whether or not to act on them. This enables multiple modules to act on a single event, eg: </p>
-
-                    <ul>
-                        <li>A physical turnout (UK - point) sensor is wired to a CBUS <b>producer</b> module. The module has been 
-                            taught to send a particular event when the switch is closed.</li>
-                        <li>This event is received by a relay driver (<b>consumer</b>), which changes the frog polarity.</li>
-                        <li>The event is also received by an LED module (<b>consumer</b>) which has not been taught the event, so does nothing.</li>
-                        <li>The event is also received by an LED module (<b>consumer</b>), lighting a LED on a mimic panel.</li>
-                        <li>The event is also received by JMRI (<b>consumer</b>)
-                        <li>A <a href="../../../tools/Sensors.shtml">JMRI sensor</a> has been created with the event number, 
-                            causing the sensor status to change
-                            <ul>
-                                <li>A <a href="../../../tools/Turnouts.shtml">JMRI turnout</a> (point) has its 
-                                    <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback"> 
-                                        turnout feedback</a> set by this sensor.</li>
-                                <li><a href="../../../apps/PanelPro/index.shtml">JMRI panel(s)</a>
-                                    update to reflect the new point position.</li>
-                            </ul>
-                        </li>
-                        <li><a href="../../../tools/signaling/SignalMastLogic.shtml"
-                               >JMRI Signalling Logic</a> recalculates, and on the JMRI panel, 
-                            a signal protecting the point changes from Red to Green.
-                        </li>
-
-                        <li>The <a href="../../../tools/signaling/SignalMasts.shtml">JMRI Signal Mast</a> 
-                            mapping is checked and the relevant CBUS event is sent to change 
-                            that on the layout (<b>producer</b>)</li>
-                        <li>This event is received by a module which changes a physical on-layout signal (<b>consumer</b>) </li>
-                        <li>This event is also received by a module which changes a signal 
-                            on a mimic panel (<b>consumer</b>)</li>
-
-                        <li>A train, controlled by (<a href="../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"
-                                                       >JMRI DispatcherPro</a> for a <a href="../../../../package/jmri/jmrit/display/LayoutEditor.shtml"
-                                                       >JMRI Layout Editor</a> Panel) or (
-                            <a href="../../../../package/jmri/jmrit/logix/Warrant.shtml">JMRI Warrants</a> for a <a 
-                                href="../../../../package/jmri/jmrit/display/ControlPanelEditor.shtml"
-                                >JMRI Control Panel Editor</a> panel), sees that the signal ahead 
-                            has cleared and can increase its speed.</li>
-                        <li>DCC commands are generated from JMRI and sent over CBUS using 
-                            special events (<b>producer</b>) </li>
-
-                        <li>These CBUS events are received by a <b>consumer</b>, e.g. a DCC command station, 
-                            which then sends the actual DCC command.
-                            <br>
-
-                            <br>This train had requested the section ahead of it, JMRI Dispactcher/Warrants 
-                            had allocated it (after checking occupancy and other rules), 
-                            then sent the turnout event (<b>producer</b>) to change the points.
-                            <br>The event was received by a Servo or solenoid module (<b>consumer</b>) 
-                            which had triggered correctly, changing the point sensor right at the top of this example.
-                        </li>
-
-                        <li>You can start small and think big, adding more modules as your time and experience allows.
-
-                            <br>Many people use CBUS and JMRI purely for displaying turnout positions, 
-                            adding things like track occupancy, on-layout signals, mimic panels etc. at a later date.
-
-                            <br>If you anticipate adding track occupancy, 
-                            especially track circuit electrical block (Train On Track Indicators),
-                            ideally plan the electrical scheme for this on your layout at any early stage.
-                        </li>
-                    </ul>
-
-                    <p>CBUS events generally come in two types: "ON" and "OFF".</p>
-
-                    <p>Events can be short (SLiM) events, eg <code>+11</code> for event 11 on.</p>
-
-                    <p>Events can be long (FLiM) events, eg <code>-N2E7</code> for node 2 event 7 off.</p>
-
-                    <p>JMRI, being both a <b>consumer</b> and <b>producer</b> of events, 
-                        can send and receive on any node number and any event.</p>
-
-                </div>
-
-                <h3>Adding events to JMRI</h3>
-                <div>
-                    <img src="images/web/merg-cbus-add-light-short-400x292.png" align="right"
-                         alt="cbus add light" width="400" height="292">
-
-                    <p>CBUS events are stored as </p>
-                    <ul>
-                        <li><a href="../../../tools/Sensors.shtml" title="JMRI Sensors">JMRI Sensors</a> (Inputs) 
-                        </li>
-                        <li><a href=
-                               "../../../tools/Turnouts.shtml" title="JMRI Turnouts">JMRI Turnouts</a> (Outputs)
-                        </li>
-                        <li><a href=
-                               "../../../tools/Lights.shtml" title="JMRI Lights">JMRI Lights</a> (Outputs).</li>
-                    </ul>
-
-                    <p>These are accessed via JMRI Tables, ie PanelPro > Tools > Tables > (
-
-                        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml" title="JMRI Sensor Table">Sensors</a>,
-                        <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml" title="JMRI Turnout Table">Turnouts</a> or
-                        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml" title="JMRI Light Table">Lights</a> ) .
-
-                        <br>When the table loads, click on " Add... " button at bottom left to create an item.</p>
-
-                    <img src="images/web/merg-cbus-add-sensor-short-781x187.png" alt="cbus add sensor" width="646" height="155">
-
-                    <p>For most short events, you just need to enter the number. Here are a few examples : </p>
-
-                    <img src="images/web/merg-cbus-turnout-long-400x118.png" alt="cbus add turnout" width="400" height="118" align="right">
-
-                    <table border="1">
-                        <tbody>
-                            <tr>
-                                <th>Hardware Address</th>
-                                <th>Meaning</th>
-                                <th>Event Consumed<br>as Sensor</th>
-                                <th>Event Produced<br>as Turnout</th>
-                                <th>Event Produced<br>as Light turned</th>
-                            </tr>
-                            <tr>
-                                <td><code>+18</code></td>
-                                <td>Event 18 On
-                                    <br>Event 18 Off</td>
-                                <td>Sets sensor Active<br>Sets sensor Inactive</td>
-                                <td>Thrown<br>Closed</td>
-                                <td>On<br>Off</td>
-                            </tr>
-                            <tr>
-                                <td><code>+18;+21</code></td>
-                                <td>Event 18 On
-                                    <br>Event 21 On</td>
-                                <td>Sets sensor Active<br>Sets sensor Inactive</td>
-                                <td>Thrown<br>Closed</td>
-                                <td>On<br>Off</td>
-                            </tr>
-                            <tr>
-                                <td><code>+18;-21</code></td>
-                                <td>Event 18 On 
-                                    <br>Event 21 Off</td>
-                                <td>Sets sensor Active<br>Sets sensor Inactive</td>
-                                <td>Thrown<br>Closed</td>
-                                <td>On<br>Off</td>
-                            </tr>
-                            <tr>
-                                <td><code>+N2E18</code></td>
-                                <td>Node 2 Event 18 On
-                                    <br>Node 2 Event 18 Off</td>
-                                <td>Sets sensor Active<br>Sets sensor Inactive</td>
-                                <td>Thrown<br>Closed</td>
-                                <td>On<br>Off</td>
-                            </tr>
-                        </tbody></table>
-
-                    <img src="images/web/merg-add-sensor-invalid-400x124.png" align="right" 
-                         alt="cbus add new invalid name" width="400" height="124">
-
-                    <p>You will need to enter the Hardware Address in a JMRI recognised format to create the event.
-                        <br>If the create button is grayed out, check your hardware naming format.</p>
-
-                    <p>Adding a User Name (using any characters) when creating a table item may 
-                        make accessing it easier in JMRI. </p>  
-                    <p>Remember to save your tables!</p>
-
-                    <p>For more on events, see 
-                        <a href="Names.shtml">JMRI system naming with CBUS</a>.</p> 
-                </div>
-
-                <h2><a name="dcc" id="dcc">DCC over CBUS</a></h2>
-                <div>
-                    <p>DCC is not a requirement for CBUS or JMRI. Many DC layouts use 
-                        CBUS + JMRI for route setting, signalling and track occupancy purposes.</p>
-
-                    <p>For full details of using CBUS in a DCC system you should refer to the JMRI help pages,
-                        or other documentation, for your chosen manufacturer's hardware. Some brief details
-                        are included below.</p>
-
-                    <p>JMRI will send and receive CBUS encoded DCC packets over the CBUS network. These
-                        and can be monitored with the CBUS console</p>
-
-                    <p>Loco sessions are best viewed with the 
-                        <a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml" 
-                           >CBUS Command Station Monitor</a>, which displays the sessions in a table format.</p>
-
-                    <h3>Throttles</h3>
-
-                    <p>All of the programs within the JMRI suite (including the JMRI WiThrottle server)
-                        internally share the same command station slot for a given loco address,
-                        so all of JMRI appears to the command station as a single throttle for any single address.</p>
-
-                    <p>JMRI (via the CBUS Node Manager) can tell if a command station is available which 
-                        supports the CBUS steal or share features, when throttles are requested which are already in use 
-                        by something external to JMRI (i.e. a CBUS connected throttle).</p>
-
-                    <p>When a JMRI application requests a loco (which is already in a CBUS session), 
-                        JMRI will check the main <a 
-                            href="../../../tools/throttle/ThrottlesPreferencesPane.shtml">Throttles Preferences</a>.</p>
-
-                    <p>If Silent Steal or Silent Share has been selected, this will be the default action.</p>
-
-                    <p>If neither have been checked and you are using the main JMRI Throttle, you will be asked
-                        if you want to Steal, Share, or cancel.</p>
-
-                    <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png"
-                         width="322" height="128" alt="JMRI CBUS Steal Share Dialogue">
-
-                    <p>If you are using an automation script and neither option is checked, the system will
-                        attempt to acquire a Share on the session.</p>
-
-                    <p>The command station may disable or enable steal / share at any point, 
-                        so even if you have a preferred option, an automation script may attempt to use
-                        the non-preferred option to obtain the session.</p>
-
-                    <h4>Throttles Stolen from JMRI</h4>
-
-                    <p>When a Throttle session has been stolen / cancelled from outside of JMRI, 
-                        any open JMRI throttle window for that loco
-                        will cease to accept commands, ie throttle slider and function keys greyed out.</p>
-
-                    <p>If Silent Share is enabled in the Throttle Preferences, 
-                        and share is available on the Command Station,
-                        after a short delay JMRI will attempt to share the throttle.</p>
-
-                    <p>For most users, silent sharing enables most layouts to operate with minimum of fuss.</p>
-
-                    <p>If Silent Steal is enabled in the Throttle Preferences, 
-                        and steal is available on the Command Station,
-                        after a short delay JMRI will attempt to steal the throttle back.</p>
-
-                    <p>Beware of creating Steal loops if more than 1 throttle is capable of auto-stealback!
-                        If you find this is happening, disable the Silent Stealing option to stop the loop.</p>
-
-                    <p>If neither option is enabled, or the steal / share is not possible, a notification will be displayed:</p>
-
-                    <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
-                         width="278" height="138" alt="JMRI CBUS Stolen Throttle Dialogue">
-
-                    <p>Ticking the checkbox before closing the popup will suppress loco steal notifications for
-                        the rest of the JMRI session, for all loco sessions.</p>
-
-                    <p>Relevant information can be viewed in the main JMRI Console log.</p>
-
-                    <p>Note that not all JMRI applications currently have a method for dealing with a stolen throttle.</p>
-
-                    <h4>Dispatch / Release</h4>
-                    <p>Dispatch is available according to Command Station features.</p>
-                    <p>Note that as dispatch availability for a single loco address may change, 
-                        this will be reflected by button availability in the main JMRI Throttle.</p>
-
-                    <h3>Consisting</h3>
-                    <p>Support for consisting depends on features of the connected hardware.</p>
-
-                    <p>Although the CBUS protocol supports Advanced Consisting, 
-                        this has not been implemented within JMRI at present.</p>
-
-                    <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
-                          title="JMRI Consisting">JMRI Consisting</a> 
-                        : Advanced Decoder Consisting (Decoder Assisted Consist) is currently unsupported,
-                        hence this is set to Internal in the CBUS preferences.</p>
-
-                    <p>Primary Address Consists are supported however.</p>
-
-
-                    <h3>Programming CV's</h3>
-                    <img src="images/web/merg-dcc-decoders-355x398.png"
-                         width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
-                    <p>Subject to support in the connected hardware, a CBUS connection fully supports programming 
-                        of decoders using DecoderPro and either or both service mode programming on a programming
-                        track and operations mode programming on the layout.</p>
-
-                </div>
-                <h2><a id="signalling" name="signalling">Signalling</a></h2>
-                <div>
-                    <p>There are multiple ways to interface 
-                        <a href="../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with CBUS modules.</p>
-                    <p>You are strongly advised to let JMRI control your signal logic, 
-                        however it's also possible to link JMRI with 3rd party signalling over CBUS.</p>
-
-                    <p>JMRI includes various signalling definitions, a popular choice for UK based layouts being  
-                        <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, however 
-                        for some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or <a 
-                            href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> may be more appropriate.</p>
-
-                    <h3>Sending JMRI Controlled Signal Logic to your layout</h3>
-
-                    <img src="images/web/signal-mast-turnout-contolled-400x454.png"
-                         width="400" height="454" alt="JMRI signal mast turnout controlled" align= "right">
-
-
-                    <p>There are multiple ways of sending cbus events from JMRI out to LED or servo 
-                        signal control modules, this is just one approach. </p>
-
-                    <ul>
-                        <li>Add all aspects to the signal in question to the Turnout Table.
-                            <br>eg. Signal 1 Red : <code>+N256E412</code> (only uses the ON event)
-                            <br>eg. Signal 1 Flashing Precautionary : <code>+N256E416</code> (only uses the ON event)
-                            <br>Signals which can only display 2 aspects (eg a Servo controlling a semaphore signal) 
-                            can be setup with 1 CBUS event, using the standard ON and OFF event status.
-                        </li>
-
-                        <li>Add a Signal Mast via the <a href="../../../../package/jmri/jmrit/beantable/SignalMastTable.shtml"
-                                                         title="JMRI Signal Mast Table">Signal Mast Table</a></li>
-                        <li>Specify type : <a href="../../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#turnoutCtl"
-                                              title="Turnout Controlled Signal Mast">Turnout Controlled</a></li>
-                        <li>Specify which Turnout output you wish to show to show for each aspect,
-                            eg. Signal 1 Red Thrown.
-                        </li>
-                    </ul>
-
-                    <p>This ensures that only 1 CBUS message is sent for flashing aspects, 
-                        specify this flashing in the module board, not JMRI!  
-                        Some Signal Mast types send 1 CBUS message for each flash.
-                        <br>A layout with 20 quad aspect signals could send 40 odd cbus events every 0.5seconds, 4,800 events per minute. 
-                        This could make network diagnosis awkward, although very unlikely to swamp a CBUS network.</p>
-                    <p>As stated previously, this is just one approach. 
-                        There are other methods of interfacing JMRI with CBUS signalling systems.</p>
-
-                    <p>There is initial support for the experimental CabData OPC available in 
-                        <a href="../../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml"
-                           >JMRI CabSignals</a></p>
-
-                    <h3>Receiving Module supplied or existing Signal Logic into JMRI</h3>
-                    <p>This is normally done the other way round, however people may have 
-                        existing systems in place which they do not want to change.</p>
-
-                    <ul>
-                        <li>Create a virtual Signal Mast, named something like SignalMast7</li>
-                        <li>Create incoming CBUS event(s) as sensor(s), eg "SignalMast7Red".</li>
-                        <li>For each signal state (eg. Stop or Proceed), 
-                            create a new <a href="../../../tools/Logix.shtml">JMRI Logix</a> 
-                            in the <a href="../../../../package/jmri/jmrit/beantable/LogixTable.shtml"
-                                      >JMRI Logix Table</a> to set the signal head or mast as appropriate, similar to
-                            <br>
-                            If SignalMast7Red is active, set SignalMast7 to Stop
-                        </li>
-                        <li>Repeat for each signal state</li>
-                    </ul>
-                </div>
-
-                <h2><a id="thirdparty" name="thirdparty">Further Support</a></h2>
-                <div>
-                    <ul>
-                        <li><a href="https://www.merg.org.uk/merg_resources/cbus.php"> MERG introduction to CBUS</a>.</li>
-
-                        <li><a href="https://www.merg.org.uk/merg_wiki/doku.php?id=software:start#cbus"
-                               > CBUS Wiki</a> hosted on the Model Electronic Ralway Group MERG public website,
-                            with full protocol specification.</li>
-
-                        <li><a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php"
-                               >https://www.merg.org.uk/merg_resources/cbus-dcc.php</a> 
-                            The Model Electronic Railway Group MERG-DCC help page.
-                        </li>
-
-                        <li><a href="https://www.merg.org.uk/kits.php#sect35"
-                               >MERG kits for CBUS</a>.</li>
-
-                        <li><a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a></li>
-
-                        <li>For extra logging while debugging, locate and edit the default.lcf file 
-                            in the root of the JMRI install, see the pattern at the end of the file.
-                            <br> General CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG
-                            <br> Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG
-                            <br>The extra logging will appear in the JMRI console, also the JMRI error logs.
-                        </li>
-
-                        <li><a href="https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
-                            CBUS implementation for Arduino. (+ have a look at Amauria's other CBUS Github projects)</li>
-
-                        <li><a href="http://www.oscale.net/?q=en/cbus">http://www.oscale.net/?q=en/cbus</a>
-                            CBUS on an Arduino using CAN BUS shields - See download links at bottom (in English + German)</li>
-
-                        <li><a href="https://www.npmjs.com/search?q=keywords:MERG">https://www.npmjs.com/search?q=keywords:MERG</a>
-                            node.js modules to create a CBUS module + Class to create a CBUS module conneted via ethernet.</li>
-
-                    </ul>
-                </div>
-
-                <h2></h2>
-                <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
-
-                <!--#include virtual="/Footer.shtml" -->
-            </div><!-- closes #mainContent-->
-        </div><!-- closes #mBody-->
-    </body>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content="CBUS supports JMRI help support">
+  <title>JMRI Hardware Support - CBUS Main Support</title>
+  <meta name="author" content=
+  "Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI Hardware Support: CBUS® Main Support Page</h1>
+
+      <ul class="snav">
+        <li>
+          <a href="#introduction">Introduction</a>
+        </li>
+
+        <li>
+          <a href="#connecting">Connecting</a>
+        </li>
+
+        <li>
+          <a href="#tools">CBUS Tools</a>
+        </li>
+
+        <li>
+          <a href="#cbusevents">CBUS Events</a>
+        </li>
+
+        <li>
+          <a href="#dcc">DCC over CBUS</a>
+        </li>
+
+        <li>
+          <a href="#signalling">Signalling</a>
+        </li>
+
+        <li>
+          <a href="#thirdparty">Further Support</a>
+        </li>
+      </ul>
+
+      <h2 id="introduction">Introduction</h2>
+
+      <div>
+        <p>Originally named CBUS by co-founder Gil Fuchs, CBUS is an 'open' protocol for Model
+        Railway use. The protocol and other useful information is hosted on the MERG public website
+        (see further support links). CBUS is not owned or controlled by MERG but the co-founders
+        Gil Fuchs and Mike Bolton are active members. MERG members are able to purchase a range of
+        CBUS kits.</p>
+
+        <p>As support for CBUS continues to evolve, these help pages are not a definitive CBUS
+        network guide and contain considerable simplification of the CBUS scheme. They are aimed at
+        helping new users to JMRI or CBUS, not systems developers who should consult the full
+        protocol specification and Developer's Guide hosted by MERG.</p>
+
+        <h3>Other JMRI CBUS Help Pages</h3>
+
+        <ul>
+          <li>
+            <a href="CbusFastClock.shtml">CBUS Fast Clock</a>
+          </li>
+
+          <li>
+            <a href="../index.shtml">JMRI CAN Support</a>
+          </li>
+
+          <li>
+            <a href="../scripting.shtml">JMRI Scripting for CAN Frames Using Jython</a>
+          </li>
+        </ul>
+      </div>
+
+      <h2 id="connecting">Connecting</h2>
+
+      <div>
+        <p>For details of how to setup a connection to a CBUS network, you should refer to the JMRI
+        help pages, or other documentation, for your chosen manufacturer's hardware.</p>
+
+        <h3>Known CBUS hardware solutions (November 2020)</h3>
+
+        <ul>
+          <li>
+            <a href="../../merg/index.shtml">MERG</a>
+          </li>
+
+          <li>
+            <a href="../../sproggen5/index.shtml">SPROG DCC Generation 5</a>
+          </li>
+        </ul>
+
+        <h2 id="tools">CBUS Tools</h2>
+
+        <p>CBUS tools are accessed from the menu for your chosen system connection.The example
+        shows a connection to MERG hardware. The available tools may vary with the system
+        connection</p>
+        <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" class="floatRight" width=
+        "206" height="145">
+        <ul>
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
+            - Tool for viewing and sending CAN frames / events.
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event
+            Table</a> - Monitors events and presents them in a table full of statistics.
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node
+            Manager</a> - Node Table and node configuration tools
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+            Command Station Monitor</a> - Loco session monitoring and Command Station Tools.
+          </li>
+
+          <li>
+            <a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send
+            Frame</a> - Send CAN frames or CBUS events
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event
+            Capture Tool</a> - Capture CBUS events
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml">
+            Event Request Monitor</a> - Request Event status monitoring tool
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Network
+            Item simulation</a> - Simulates Cbus Command stations and responds to event requests
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware
+            update</a> - to update CBUS module firmware
+          </li>
+
+          <li>
+            <a href="CbusMeters.shtml">Voltage / Current meters</a> - Monitor track current/voltage
+          </li>
+        </ul>
+      </div>
+
+      <h2 id="cbusevents">CBUS Events</h2>
+
+      <div>
+        <a href="Names.shtml">CBUS Events in JMRI</a>
+        <ul>
+          <li>
+            <a href="Names.shtml#events">Event Name and Numbering</a>
+          </li>
+
+          <li>
+            <a href="Names.shtml#sysname">System Names</a>
+          </li>
+
+          <li>
+            <a href="Names.shtml#summary">Summary of CBUS Events</a>
+          </li>
+
+          <li>
+            <a href="Names.shtml#namingspec">Event Naming Specification</a>
+          </li>
+
+          <li>
+            <a href="Names.shtml#hex">Sending hex strings</a>
+          </li>
+
+          <li>
+            <a href="Names.shtml#opc">Opcodes in JMRI</a>
+          </li>
+        </ul>
+
+        <h3>CBUS Event Overview</h3>
+
+        <p>CBUS events are transmitted as a one-to-many network. Connected modules receive all
+        network messages and choose whether or not to act on them. This enables multiple modules to
+        act on a single event, eg:</p>
+
+        <ul>
+          <li>A physical turnout (UK - point) sensor is wired to a CBUS <strong>producer</strong>
+          module. The module has been taught to send a particular event when the switch is
+          closed.</li>
+
+          <li>This event is received by a relay driver (<strong>consumer</strong>), which changes
+          the frog polarity.</li>
+
+          <li>The event is also received by an LED module (<strong>consumer</strong>) which has not
+          been taught the event, so does nothing.</li>
+
+          <li>The event is also received by an LED module (<strong>consumer</strong>), lighting a
+          LED on a mimic panel.</li>
+
+          <li>The event is also received by JMRI (<strong>consumer</strong>)</li>
+
+          <li>A <a href="../../../tools/Sensors.shtml">JMRI sensor</a> has been created with the
+          event number, causing the sensor status to change
+            <ul>
+              <li>A <a href="../../../tools/Turnouts.shtml">JMRI turnout</a> (point) has its
+              <a href=
+              "../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout
+              feedback</a> set by this sensor.
+              </li>
+
+              <li>
+                <a href="../../../apps/PanelPro/index.shtml">JMRI panel(s)</a> update to reflect
+                the new point position.
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="../../../tools/signaling/SignalMastLogic.shtml">JMRI Signalling Logic</a>
+            recalculates, and on the JMRI panel, a signal protecting the point changes from Red to
+            Green.
+          </li>
+
+          <li>The <a href="../../../tools/signaling/SignalMasts.shtml">JMRI Signal Mast</a> mapping
+          is checked and the relevant CBUS event is sent to change that on the layout
+          (<strong>producer</strong>)
+          </li>
+
+          <li>This event is received by a module which changes a physical on-layout signal
+          (<strong>consumer</strong>)</li>
+
+          <li>This event is also received by a module which changes a signal on a mimic panel
+          (<strong>consumer</strong>)</li>
+
+          <li>A train, controlled by (<a href=
+          "../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a> for a
+          <a href="../../../../package/jmri/jmrit/display/LayoutEditor.shtml">JMRI Layout
+          Editor</a> Panel) or ( <a href="../../../../package/jmri/jmrit/logix/Warrant.shtml">JMRI
+          Warrants</a> for a <a href=
+          "../../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">JMRI Control Panel
+          Editor</a> panel), sees that the signal ahead has cleared and can increase its speed.
+          </li>
+
+          <li>DCC commands are generated from JMRI and sent over CBUS using special events
+          (<strong>producer</strong>)</li>
+
+          <li>These CBUS events are received by a <strong>consumer</strong>, e.g. a DCC command
+          station, which then sends the actual DCC command.<br>
+          <br>
+          This train had requested the section ahead of it, JMRI Dispactcher/Warrants had allocated
+          it (after checking occupancy and other rules), then sent the turnout event
+          (<strong>producer</strong>) to change the points.<br>
+          The event was received by a Servo or solenoid module (<strong>consumer</strong>) which
+          had triggered correctly, changing the point sensor right at the top of this example.</li>
+
+          <li>You can start small and think big, adding more modules as your time and experience
+          allows.<br>
+          Many people use CBUS and JMRI purely for displaying turnout positions, adding things like
+          track occupancy, on-layout signals, mimic panels etc. at a later date.<br>
+          If you anticipate adding track occupancy, especially track circuit electrical block
+          (Train On Track Indicators), ideally plan the electrical scheme for this on your layout
+          at any early stage.</li>
+        </ul>
+
+        <p>CBUS events generally come in two types: "ON" and "OFF".</p>
+
+        <p>Events can be short (SLiM) events, eg <code>+11</code> for event 11 on.</p>
+
+        <p>Events can be long (FLiM) events, eg <code>-N2E7</code> for node 2 event 7 off.</p>
+
+        <p>JMRI, being both a <strong>consumer</strong> and <strong>producer</strong> of events,
+        can send and receive on any node number and any event.</p>
+      </div>
+
+      <h3>Adding events to JMRI</h3>
+
+      <div>
+        <img src="images/web/merg-cbus-add-light-short-400x292.png" class="floatRight" alt=
+        "cbus add light" width="400" height="292">
+        <p>CBUS events are stored as</p>
+
+        <ul>
+          <li>
+            <a href="../../../tools/Sensors.shtml" title="JMRI Sensors">JMRI Sensors</a> (Inputs)
+          </li>
+
+          <li>
+            <a href="../../../tools/Turnouts.shtml" title="JMRI Turnouts">JMRI Turnouts</a>
+            (Outputs)
+          </li>
+
+          <li>
+            <a href="../../../tools/Lights.shtml" title="JMRI Lights">JMRI Lights</a> (Outputs).
+          </li>
+        </ul>
+
+        <p>These are accessed via JMRI Tables, ie PanelPro &gt; Tools &gt; Tables &gt; ( <a href=
+        "../../../../package/jmri/jmrit/beantable/SensorTable.shtml" title=
+        "JMRI Sensor Table">Sensors</a>, <a href=
+        "../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml" title=
+        "JMRI Turnout Table">Turnouts</a> or <a href=
+        "../../../../package/jmri/jmrit/beantable/LightTable.shtml" title=
+        "JMRI Light Table">Lights</a> ) .<br>
+        When the table loads, click on " Add... " button at bottom left to create an item.</p>
+        <img src="images/web/merg-cbus-add-sensor-short-781x187.png" alt="cbus add sensor" width=
+        "646" height="155">
+        <p>For most short events, you just need to enter the number. Here are a few examples :</p>
+        <img src="images/web/merg-cbus-turnout-long-400x118.png" alt="cbus add turnout" width="400"
+        height="118" class="floatRight">
+        <table border="1">
+          <tbody>
+            <tr>
+              <th>Hardware Address</th>
+              <th>Meaning</th>
+              <th>Event Consumed<br>
+              as Sensor</th>
+              <th>Event Produced<br>
+              as Turnout</th>
+              <th>Event Produced<br>
+              as Light turned</th>
+            </tr>
+
+            <tr>
+              <td><code>+18</code>
+              </td>
+              <td>Event 18 On<br>
+              Event 18 Off</td>
+              <td>Sets sensor Active<br>
+              Sets sensor Inactive</td>
+              <td>Thrown<br>
+              Closed</td>
+              <td>On<br>
+              Off</td>
+            </tr>
+
+            <tr>
+              <td><code>+18;+21</code>
+              </td>
+              <td>Event 18 On<br>
+              Event 21 On</td>
+              <td>Sets sensor Active<br>
+              Sets sensor Inactive</td>
+              <td>Thrown<br>
+              Closed</td>
+              <td>On<br>
+              Off</td>
+            </tr>
+
+            <tr>
+              <td><code>+18;-21</code>
+              </td>
+              <td>Event 18 On<br>
+              Event 21 Off</td>
+              <td>Sets sensor Active<br>
+              Sets sensor Inactive</td>
+              <td>Thrown<br>
+              Closed</td>
+              <td>On<br>
+              Off</td>
+            </tr>
+
+            <tr>
+              <td><code>+N2E18</code>
+              </td>
+              <td>Node 2 Event 18 On<br>
+              Node 2 Event 18 Off</td>
+              <td>Sets sensor Active<br>
+              Sets sensor Inactive</td>
+              <td>Thrown<br>
+              Closed</td>
+              <td>On<br>
+              Off</td>
+            </tr>
+          </tbody>
+        </table>
+        <img src="images/web/merg-add-sensor-invalid-400x124.png" class="floatRight" alt=
+        "cbus add new invalid name" width="400" height="124">
+        <p>You will need to enter the Hardware Address in a JMRI recognised format to create the
+        event.<br>
+        If the create button is grayed out, check your hardware naming format.</p>
+
+        <p>Adding a User Name (using any characters) when creating a table item may make accessing
+        it easier in JMRI.</p>
+
+        <p>Remember to save your tables!</p>
+
+        <p>For more on events, see <a href="Names.shtml">JMRI system naming with CBUS</a>.</p>
+      </div>
+
+      <h2 id="dcc">DCC over CBUS</h2>
+
+      <div>
+        <p>DCC is not a requirement for CBUS or JMRI. Many DC layouts use CBUS + JMRI for route
+        setting, signalling and track occupancy purposes.</p>
+
+        <p>For full details of using CBUS in a DCC system you should refer to the JMRI help pages,
+        or other documentation, for your chosen manufacturer's hardware. Some brief details are
+        included below.</p>
+
+        <p>JMRI will send and receive CBUS encoded DCC packets over the CBUS network. These and can
+        be monitored with the CBUS console</p>
+
+        <p>Loco sessions are best viewed with the <a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">CBUS
+        Command Station Monitor</a>, which displays the sessions in a table format.</p>
+
+        <h3>Throttles</h3>
+
+        <p>All of the programs within the JMRI suite (including the JMRI WiThrottle server)
+        internally share the same command station slot for a given loco address, so all of JMRI
+        appears to the command station as a single throttle for any single address.</p>
+
+        <p>JMRI (via the CBUS Node Manager) can tell if a command station is available which
+        supports the CBUS steal or share features, when throttles are requested which are already
+        in use by something external to JMRI (i.e. a CBUS connected throttle).</p>
+
+        <p>When a JMRI application requests a loco (which is already in a CBUS session), JMRI will
+        check the main <a href="../../../tools/throttle/ThrottlesPreferencesPane.shtml">Throttles
+        Preferences</a>.</p>
+
+        <p>If Silent Steal or Silent Share has been selected, this will be the default action.</p>
+
+        <p>If neither have been checked and you are using the main JMRI Throttle, you will be asked
+        if you want to Steal, Share, or cancel.</p>
+        <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png" width="322" height=
+        "128" alt="JMRI CBUS Steal Share Dialogue">
+        <p>If you are using an automation script and neither option is checked, the system will
+        attempt to acquire a Share on the session.</p>
+
+        <p>The command station may disable or enable steal / share at any point, so even if you
+        have a preferred option, an automation script may attempt to use the non-preferred option
+        to obtain the session.</p>
+
+        <h4>Throttles Stolen from JMRI</h4>
+
+        <p>When a Throttle session has been stolen / cancelled from outside of JMRI, any open JMRI
+        throttle window for that loco will cease to accept commands, ie throttle slider and
+        function keys greyed out.</p>
+
+        <p>If Silent Share is enabled in the Throttle Preferences, and share is available on the
+        Command Station, after a short delay JMRI will attempt to share the throttle.</p>
+
+        <p>For most users, silent sharing enables most layouts to operate with minimum of fuss.</p>
+
+        <p>If Silent Steal is enabled in the Throttle Preferences, and steal is available on the
+        Command Station, after a short delay JMRI will attempt to steal the throttle back.</p>
+
+        <p>Beware of creating Steal loops if more than 1 throttle is capable of auto-stealback! If
+        you find this is happening, disable the Silent Stealing option to stop the loop.</p>
+
+        <p>If neither option is enabled, or the steal / share is not possible, a notification will
+        be displayed:</p>
+        <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png" width="278" height="138"
+        alt="JMRI CBUS Stolen Throttle Dialogue">
+        <p>Ticking the checkbox before closing the popup will suppress loco steal notifications for
+        the rest of the JMRI session, for all loco sessions.</p>
+
+        <p>Relevant information can be viewed in the main JMRI Console log.</p>
+
+        <p>Note that not all JMRI applications currently have a method for dealing with a stolen
+        throttle.</p>
+
+        <h4>Dispatch / Release</h4>
+
+        <p>Dispatch is available according to Command Station features.</p>
+
+        <p>Note that as dispatch availability for a single loco address may change, this will be
+        reflected by button availability in the main JMRI Throttle.</p>
+
+        <h3>Consisting</h3>
+
+        <p>Support for consisting depends on features of the connected hardware.</p>
+
+        <p>Although the CBUS protocol supports Advanced Consisting, this has not been implemented
+        within JMRI at present.</p>
+
+        <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" title=
+        "JMRI Consisting">JMRI Consisting</a> : Advanced Decoder Consisting (Decoder Assisted
+        Consist) is currently unsupported, hence this is set to Internal in the CBUS
+        preferences.</p>
+
+        <p>Primary Address Consists are supported however.</p>
+
+        <h3>Programming CV's</h3>
+        <img src="images/web/merg-dcc-decoders-355x398.png" width="355" height="398" alt=
+        "JMRI MERG DCC Decoders" class="floatRight">
+        <p>Subject to support in the connected hardware, a CBUS connection fully supports
+        programming of decoders using DecoderPro and either or both service mode programming on a
+        programming track and operations mode programming on the layout.</p>
+      </div>
+
+      <h2 id="signalling">Signalling</h2>
+
+      <div>
+        <p>There are multiple ways to interface <a href=
+        "../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with CBUS modules.</p>
+
+        <p>You are strongly advised to let JMRI control your signal logic, however it's also
+        possible to link JMRI with 3rd party signalling over CBUS.</p>
+
+        <p>JMRI includes various signalling definitions, a popular choice for UK based layouts
+        being <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, however for
+        some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or
+        <a href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> may be more
+        appropriate.</p>
+
+        <h3>Sending JMRI Controlled Signal Logic to your layout</h3>
+        <img src="images/web/signal-mast-turnout-contolled-400x454.png" width="400" height="454"
+        alt="JMRI signal mast turnout controlled" class="floatRight">
+        <p>There are multiple ways of sending cbus events from JMRI out to LED or servo signal
+        control modules, this is just one approach.</p>
+
+        <ul>
+          <li>Add all aspects to the signal in question to the Turnout Table.<br>
+          eg. Signal 1 Red : <code>+N256E412</code> (only uses the ON event)<br>
+          eg. Signal 1 Flashing Precautionary : <code>+N256E416</code> (only uses the ON event)<br>
+          Signals which can only display 2 aspects (eg a Servo controlling a semaphore signal) can
+          be setup with 1 CBUS event, using the standard ON and OFF event status.</li>
+
+          <li>Add a Signal Mast via the <a href=
+          "../../../../package/jmri/jmrit/beantable/SignalMastTable.shtml" title=
+          "JMRI Signal Mast Table">Signal Mast Table</a>
+          </li>
+
+          <li>Specify type : <a href=
+          "../../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#turnoutCtl" title=
+          "Turnout Controlled Signal Mast">Turnout Controlled</a>
+          </li>
+
+          <li>Specify which Turnout output you wish to show to show for each aspect, eg. Signal 1
+          Red Thrown.</li>
+        </ul>
+
+        <p>This ensures that only 1 CBUS message is sent for flashing aspects, specify this
+        flashing in the module board, not JMRI! Some Signal Mast types send 1 CBUS message for each
+        flash.<br>
+        A layout with 20 quad aspect signals could send 40 odd cbus events every 0.5seconds, 4,800
+        events per minute. This could make network diagnosis awkward, although very unlikely to
+        swamp a CBUS network.</p>
+
+        <p>As stated previously, this is just one approach. There are other methods of interfacing
+        JMRI with CBUS signalling systems.</p>
+
+        <p>There is initial support for the experimental CabData OPC available in <a href=
+        "../../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">JMRI CabSignals</a></p>
+
+        <h3>Receiving Module supplied or existing Signal Logic into JMRI</h3>
+
+        <p>This is normally done the other way round, however people may have existing systems in
+        place which they do not want to change.</p>
+
+        <ul>
+          <li>Create a virtual Signal Mast, named something like SignalMast7</li>
+
+          <li>Create incoming CBUS event(s) as sensor(s), eg "SignalMast7Red".</li>
+
+          <li>For each signal state (eg. Stop or Proceed), create a new <a href=
+          "../../../tools/Logix.shtml">JMRI Logix</a> in the <a href=
+          "../../../../package/jmri/jmrit/beantable/LogixTable.shtml">JMRI Logix Table</a> to set
+          the signal head or mast as appropriate, similar to<br>
+            If SignalMast7Red is active, set SignalMast7 to Stop
+          </li>
+
+          <li>Repeat for each signal state</li>
+        </ul>
+      </div>
+
+      <h2 id="thirdparty">Further Support</h2>
+
+      <div>
+        <ul>
+          <li>
+            <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG introduction to
+            CBUS</a>.
+          </li>
+
+          <li>
+            <a href="https://www.merg.org.uk/merg_wiki/doku.php?id=software:start#cbus">CBUS
+            Wiki</a> hosted on the Model Electronic Ralway Group MERG public website, with full
+            protocol specification.
+          </li>
+
+          <li>
+            <a href=
+            "https://www.merg.org.uk/merg_resources/cbus-dcc.php">https://www.merg.org.uk/merg_resources/cbus-dcc.php</a>
+            The Model Electronic Railway Group MERG-DCC help page.
+          </li>
+
+          <li>
+            <a href="https://www.merg.org.uk/kits.php#sect35">MERG kits for CBUS</a>.
+          </li>
+
+          <li>
+            <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>
+          </li>
+
+          <li>For extra logging while debugging, locate and edit the default.lcf file in the root
+          of the JMRI install, see the pattern at the end of the file.<br>
+          General CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG<br>
+          Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG<br>
+          The extra logging will appear in the JMRI console, also the JMRI error logs.</li>
+
+          <li>
+            <a href=
+            "https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
+            CBUS implementation for Arduino. (+ have a look at Amauria's other CBUS Github
+            projects)
+          </li>
+
+          <li>
+            <a href="http://www.oscale.net/?q=en/cbus">http://www.oscale.net/?q=en/cbus</a> CBUS on
+            an Arduino using CAN BUS shields - See download links at bottom (in English + German)
+          </li>
+
+          <li>
+            <a href=
+            "https://www.npmjs.com/search?q=keywords:MERG">https://www.npmjs.com/search?q=keywords:MERG</a>
+            node.js modules to create a CBUS module + Class to create a CBUS module conneted via
+            ethernet.
+          </li>
+        </ul>
+      </div>
+
+      <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
 </html>

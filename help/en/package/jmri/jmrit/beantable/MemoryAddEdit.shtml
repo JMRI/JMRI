@@ -1,56 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding Memory Variables Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Memory Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Memory Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding Memory Variables</h1>
-      <p>To create a Memory
-      Variable, click the "Add..." button on the <a href=
-      "MemoryTable.shtml">Memory Variable Table</a>. This will open
-      a new pane with space to enter a System Name and User Name
-      for the new Memory Variable, and a "Create" button at the bottom.</p>
-      <img src="images/MemoryAdd.png" width="594" height="162">
 
-      <p>You must enter a unique System Name. System Names for
-      Memory Variables have no set pattern. You can call them
-      whatever you want. There's a weak convention of starting them
-      with "IM" for "Internal Memory", but that's not required.</p>
+      <p>To create a Memory Variable, click the "Add..." button on the <a href=
+      "MemoryTable.shtml">Memory Variable Table</a>. This will open a new pane with space to enter
+      a System Name and User Name for the new Memory Variable, and a "Create" button at the
+      bottom.</p>
+      <img src="images/MemoryAdd.png" width="594" height="162" alt="add memory variable dialog">
+      <p>You must enter a unique System Name. System Names for Memory Variables have no set
+      pattern. You can call them whatever you want. There's a weak convention of starting them with
+      "IM" for "Internal Memory", but that's not required.</p>
 
-      <p>The User Name is optional, unless you check "Automatically generate System Name",
-      and if you enter one it has to be unique in your JMRI
-      setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>"
-      Help page for more information.</p>
+      <p>The User Name is optional, unless you check "Automatically generate System Name", and if
+      you enter one it has to be unique in your JMRI setup. See the "<a href=
+      "../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
 
       <h2>Creating a Number of Memories</h2>
 
-      <p>It is also possible to create a number of Memories in one
-      go.<br>
-      Checking the "Add a sequential range" box will enable
-      the "Number of items" field. Set the number of Memories that
-      you wish to add. Clicking [Create] will create a number of sequentially
-      numbered Memories.<br>
-      If a User Name has been entered, a number will be added to
-      the end of that name (starting with the second item) to keep each Memory User
-      Name unique.</p>
+      <p>It is also possible to create a number of Memories in one go.<br>
+      Checking the "Add a sequential range" box will enable the "Number of items" field. Set the
+      number of Memories that you wish to add. Clicking [Create] will create a number of
+      sequentially numbered Memories.<br>
+      If a User Name has been entered, a number will be added to the end of that name (starting
+      with the second item) to keep each Memory User Name unique.</p>
 
-      <p>Back to the <a href="MemoryTable.shtml">Memory Variable
-      Table help page</a>.</p>
+      <p>Back to the <a href="MemoryTable.shtml">Memory Variable Table help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

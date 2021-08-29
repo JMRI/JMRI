@@ -14,6 +14,7 @@ import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  * Test functioning of SwitchboardEditor.
@@ -25,7 +26,7 @@ import jmri.util.JUnitUtil;
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
-    EditorFrameOperator jfo;
+    private EditorFrameOperator jfo;
 
     @Override
     @Disabled("ChangeView is not applicable to SwitchBoards")
@@ -190,7 +191,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         e.getSwitch("IL1").doMouseClicked(null); // no result, so nothing to test
         Assertions.assertNull(e.getSwitch("IL1").getLight(), "Click on unconnected switch");
         Light light1 = ((LightManager) e.getManager('L')).provideLight("IL1");
-        Assertions.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
+        Assertions.assertNotNull(InstanceManager.lightManagerInstance().getLight("IL1"));
         e.updatePressed(); // connect switch IL1 to Light IL1
         Assertions.assertEquals(Light.OFF, light1.getState(), "IL1 is Off");
 
@@ -229,6 +230,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
         e = new SwitchboardEditor("Switchboard Editor Test");
         e.setVisible(true);
+        JemmyUtil.waitFor(e);
         jfo = new EditorFrameOperator(e);
     }
 

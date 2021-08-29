@@ -94,9 +94,9 @@ public class SwitchboardEditor extends Editor {
     final static int KEY = 2;
     final static int SYMBOL = 3;
     //final static int ICON = 4;
-    ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
-    ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
-    ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
     protected TurnoutManager turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     protected SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
     protected LightManager lightManager = InstanceManager.getDefault(LightManager.class);
@@ -181,7 +181,7 @@ public class SwitchboardEditor extends Editor {
      * @param name the title of the switchboard content frame
      */
     @Override
-    protected void init(String name) {
+    protected final void init(String name) {
         //memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
         // always available (?) and supports all types, not required now, will be set by listener
 
@@ -325,7 +325,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -349,7 +349,7 @@ public class SwitchboardEditor extends Editor {
         _iconSquare = SIZE_INIT;
         sizeDefault.setSelected(true);
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -529,8 +529,8 @@ public class SwitchboardEditor extends Editor {
             switchboardLayeredPane.add(bs);
         }
         ready = true; // reset flag
-        help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
-        help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
+        help3.setVisible(switchesOnBoard.isEmpty()); // show/hide help3 warning
+        help2.setVisible(!switchesOnBoard.isEmpty()); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         // update the title at the bottom of the switchboard to match (no) layout control
         if (beanTypeList.getSelectedIndex() >= 0) {
             border.setTitle(memoName + " " +
@@ -581,29 +581,29 @@ public class SwitchboardEditor extends Editor {
                 case 0:
                     try {
                         name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         log.error("Error creating range at turnout {}", i);
                         return;
                     }
-                    nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
+                    nb = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
                     try { // was: InstanceManager.getDefault(SensorManager.class)
                         name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException | NullPointerException ex) {
+                    } catch (JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
                     }
-                    nb = jmri.InstanceManager.getDefault(SensorManager.class).getSensor(name);
+                    nb = InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
                 case 2:
                     try {
                         name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         log.error("Error creating range at light {}", i);
                         return;
                     }
-                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
+                    nb = InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
                     log.error("addSwitchRange: cannot parse bean name. Prefix = {}; i = {}; type={}", prefix, i, beanType);
@@ -835,7 +835,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -1380,7 +1380,7 @@ public class SwitchboardEditor extends Editor {
                 log.debug("lightManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
         } catch (IllegalArgumentException e) {
-            log.error("invalid connection [{}] in Switchboard", manuPrefix);
+            log.error("invalid connection [{}] in Switchboard, {}", manuPrefix, e.getMessage());
         } catch (NullPointerException e) {
             log.error("NPE setting prefix to [{}] in Switchboard", manuPrefix);
         }

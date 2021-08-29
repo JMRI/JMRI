@@ -27,10 +27,10 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
     }
 
     @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
-        Reporter r;
+    @Nonnull
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        r = new JMRIClientReporter(addr, getMemo());
+        Reporter r = new JMRIClientReporter(addr, getMemo());
         r.setUserName(userName);
         return r;
     }

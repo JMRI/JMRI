@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -83,9 +83,10 @@ public class ScheduleEditFrameTest extends OperationsTestCase {
            Assert.assertTrue("type " + si.getTypeName() + " in list",flag);
         }
 
-        JemmyUtil.enterClickAndLeave(f.deleteScheduleButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteScheduleButton);
         // Yes to pop up
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 

@@ -6,6 +6,7 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.StringUtil;
 import jmri.util.swing.JComboBoxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,7 +116,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     boolean editMode = false;
     protected ArrayList<RouteTurnout> _includedTurnoutList;
     protected ArrayList<RouteSensor> _includedSensorList;
-    protected jmri.UserPreferencesManager pref;
+    protected UserPreferencesManager pref;
     private JRadioButton allButton = null;
     protected boolean routeDirty = false;  // true to fire reminder to save work
     private boolean showAll = true;   // false indicates show only included Turnouts
@@ -170,11 +171,11 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     public void initComponents() {
         super.initComponents();
 
-        pref = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(UserPreferencesManager.class);
         if (editMode) {
             cancelEdit();
         }
-        jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         _turnoutList = new ArrayList<>();
         for (Turnout t : tm.getNamedBeanSet()) {
             String systemName = t.getSystemName();
@@ -182,7 +183,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             _turnoutList.add(new RouteTurnout(systemName, userName));
         }
 
-        jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
+        SensorManager sm = InstanceManager.sensorManagerInstance();
         _sensorList = new ArrayList<>();
         for (Sensor s : sm.getNamedBeanSet()) {
             String systemName = s.getSystemName();
@@ -578,7 +579,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     protected void showReminderMessage() {
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+        InstanceManager.getDefault(UserPreferencesManager.class).
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
                         getClassName(), "remindSaveRoute"); // NOI18N
@@ -590,7 +591,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     int sensorModeFromString(String mode) {
-        int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
+        int result = StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
             log.warn("unexpected mode string in sensorMode: {}", mode);
@@ -600,13 +601,13 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     void setSensorModeBox(int mode, JComboBox<String> box) {
-        String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
+        String result = StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
         box.setSelectedItem(result);
     }
 
     private int turnoutModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
-        int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
+        int result = StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
             log.warn("unexpected mode string in turnoutMode: {}", mode);
@@ -616,7 +617,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     void setTurnoutModeBox(int mode, JComboBox<String> box) {
-        String result = jmri.util.StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
+        String result = StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
         box.setSelectedItem(result);
     }
 
