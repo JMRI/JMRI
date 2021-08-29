@@ -1,129 +1,107 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
 
-  <title>JMRI: DecoderPro Operations Mode Programmer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: DecoderPro Operations Mode Programmer</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: DecoderPro Operations Mode Programmer</h1><a name=
-      "contents" id="contents"></a>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: DecoderPro Operations Mode Programmer</h1>
 
-      <h2>Contents</h2>
+      <h2 id="contents">Contents</h2>
 
-      <p>This document explains some basic <b>programmer tabs</b>,
-      and ideas on how to use them</p>
+      <p>This document explains some basic <strong>programmer tabs</strong>, and ideas on how to
+      use them</p>
 
       <ul>
-        <li><a href="#Roster">Roster tab</a></li>
+        <li>
+          <a href="#Roster">Roster tab</a>
+        </li>
 
-        <li><a href="#Basic">Basic Tab</a></li>
+        <li>
+          <a href="#Basic">Basic Tab</a>
+        </li>
 
-        <li><a href="#Other%20Tabs">Other Tabs</a></li>
+        <li>
+          <a href="#Other%20Tabs">Other Tabs</a>
+        </li>
 
-        <li><a href="#Speed%20Table">Speed Table Tab</a></li>
+        <li>
+          <a href="#Speed%20Table">Speed Table Tab</a>
+        </li>
       </ul>
 
-      <a name="Roster" id="Roster"></a>
-      <h3>Roster tab</h3>
+      <h3 id="Roster">Roster tab</h3>
 
-      <p>A roster is a database of all locomotives that your
-      installation of DecoderPro has programmed. It includes the
-      information seen in the screen below:</p>
-
+      <p>A roster is a database of all locomotives that your installation of DecoderPro has
+      programmed. It includes the information seen in the screen below:</p>
       <img src="RosterTab.png" alt="DecoderPro Roster Tab">
+      <p>The first field "ID" becomes the file name in the Roster for the locomotive you are
+      programming.</p>
 
-      <p>The first field "ID" becomes the file name in the Roster
-      for the locomotive you are programming.</p>
+      <p>The DCC Address Field is the active DCC address for this loco, see the <a href=
+      "#Basic">Basic Pane</a>.</p>
 
-      <p>The DCC Address Field is the active DCC address for this
-      loco, see the <a href="#Basic">Basic Pane</a>.</p>
-
-      <p>The Throttle Speed Limit sets the Maximum throttle
-      percentage allowed.</p>
+      <p>The Throttle Speed Limit sets the Maximum throttle percentage allowed.</p>
 
       <p>You can put any thing you want in the other fields.</p>
 
-      <p>The Save button stores the current decoder information to
-      your Roster folder. The default storage is in the same
-      directory the Preferences are stored in.</p>
+      <p>The Save button stores the current decoder information to your Roster folder. The default
+      storage is in the same directory the Preferences are stored in.</p>
 
-      <p>The "Reset to Defaults" button, not a "factory reset",
-      returns the Decoder CVs to the Default value that was
-      programmed into the decoder xml file. It does NOT change the
-      values in the roster file on your hard disk, unless you Save
-      it The Values are not written to the decoder until you select
-      a to write them.</p>
+      <p>The "Reset to Defaults" button, not a "factory reset", returns the Decoder CVs to the
+      Default value that was programmed into the decoder xml file. It does NOT change the values in
+      the roster file on your hard disk, unless you Save it The Values are not written to the
+      decoder until you select a to write them.</p>
 
-      <p>Most decoders will activate the Reset Menu (next to the
-      File menu at the top of the page). This is the "Factory
-      Reset", some of the manufacturer has several reset routines.
-      It does this by writing directly to a CV in the decoder, CV8
-      in the case of Digitrax. All decoders may not support Factory
-      Rest and how they work is manufacturer and decoder
-      dependent.</p>
+      <p>Most decoders will activate the Reset Menu (next to the File menu at the top of the page).
+      This is the "Factory Reset", some of the manufacturer has several reset routines. It does
+      this by writing directly to a CV in the decoder, CV8 in the case of Digitrax. All decoders
+      may not support Factory Rest and how they work is manufacturer and decoder dependent.</p>
 
-      <a name="Basic" id="Basic"></a>
-      <h3>Basic Tab</h3>
-
+      <h3 id="Basic">Basic Tab</h3>
       <img src="BasicTab.png" alt="DecoderPro Basic Tab">
+      <p>The Basic pane is where you set the Decoder address, you can set the short and the long
+      address and then select which one is Active.</p>
 
-      <p>The Basic pane is where you set the Decoder address, you
-      can set the short and the long address and then select which
-      one is Active.</p>
+      <p>The items that displayed may be different for each decoder. It depends on how the decoder
+      definition file was written and what options the manufacture included in the decoder.</p>
 
-      <p>The items that displayed may be different for each
-      decoder. It depends on how the decoder definition file was
-      written and what options the manufacture included in the
-      decoder.</p>
+      <p>You can select the Locomotive Direction. If you want the loco to go in the other direction
+      set Reverse.</p>
 
-      <p>You can select the Locomotive Direction. If you want the
-      loco to go in the other direction set Reverse.</p>
+      <p>The Speed Steps for the Loco can be selected, usually its 28 steps.</p>
 
-      <p>The Speed Steps for the Loco can be selected, usually its
-      28 steps.</p>
-
-      <p>You can select wither the loco responds to DV voltage or
-      not.</p>
+      <p>You can select wither the loco responds to DV voltage or not.</p>
 
       <p>You can enter any number you want into the "User id's"</p>
 
-      <p>The Manufacture ID and the Manufacture Version ID are set
-      in the decoder by the Manufacture. JMRI uses these to
-      identify the decoder.</p>
+      <p>The Manufacture ID and the Manufacture Version ID are set in the decoder by the
+      Manufacture. JMRI uses these to identify the decoder.</p>
 
-      <a name="Other_Tabs" id="Other_Tabs"></a>
-      <h3>Other tabs</h3>The other tabs are dependent on what the
-      manufacture installed in the decoder, if the options were not
-      installed the panes are either gray or not enabled.
+      <h3 id="Other_Tabs">Other tabs</h3>
+      The other tabs are dependent on what the manufacture installed in the decoder, if the options
+      were not installed the panes are either gray or not enabled.
+      <h3 id="Speed_Table">Speed Table Tab</h3>
 
-      <a name="Speed_Table" id="Speed_Table"></a>
-      <h3>Speed Table Tab</h3>
+      <p><img src="SpeedTab.png" alt="DecoderPro Speed Tab">
+      </p>
 
-      <p><img src="SpeedTab.png" alt="DecoderPro Speed Tab"></p>
-
-      <p>This panel may look different depending on how the decoder
-      xml was built. To use the Speed Table CV's usually the basic
-      speed option needs to be turned off. The little boxes under
-      each slider are very useful. To see how they work check one
-      in the middle of the table then slide the last slider down.
-      Notice that the values do not change below the one you
-      checked. They also do not change for steps above if a lower
-      step is changed.</p>
-
+      <p>This panel may look different depending on how the decoder xml was built. To use the Speed
+      Table CV's usually the basic speed option needs to be turned off. The little boxes under each
+      slider are very useful. To see how they work check one in the middle of the table then slide
+      the last slider down. Notice that the values do not change below the one you checked. They
+      also do not change for steps above if a lower step is changed.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

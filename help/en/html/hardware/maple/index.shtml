@@ -1,161 +1,152 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Maple Systems</title>
-  <meta name="keywords" content="JMRI help Maple hardware">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Maple hardware"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: Maple Systems</h1>
-      <p><a href="http://www.maplesystems.com/">Maple Systems</a>
-      makes several series of touchscreen panels that can be very
-      useful on model railroads.</p>
 
-      <p>Each panel is really a standalone (Windows) computer. It is
-      configured and loaded using the <a href=
-      "http://www.maplesystems.com/products/graphic-hmi/tabmenu-features/faq/index.html#collapse-1-5">
-      EZware configuration program</a> provided by Maple Systems.
-      That configuration defines the displays, button labels and
-      locations, etc. <a name="limitations" id=
-      "limitations"></a></p>
+      <p><a href="http://www.maplesystems.com/">Maple Systems</a> makes several series of
+      touchscreen panels that can be very useful on model railroads.</p>
 
-      <h2>Limitations</h2>
+      <p class="noted">The following information is based on the orignal devices running EZWare.
+      The current devices use EPBro. The detail links do not work but are shown for reference.</p>
 
-      <p>This is still in the very early stages, so details are
-      changing rapidly. If you want to use these devices, please
-      contact the JMRI developers. <a name="connecting" id=
-      "connecting"></a></p>
+      <p>Each panel is really a standalone (Windows) computer. It is configured and loaded using
+      the <strong>EZware configuration program</strong>
+      (http://www.maplesystems.com/products/graphic-hmi/tabmenu-features/faq/index.html#collapse-1-5)
+      provided by Maple Systems. That configuration defines the displays, button labels and
+      locations, etc.</p>
 
-      <h2>Connecting</h2>
+      <h2 id="limitations">Limitations</h2>
+
+      <p>This is still in the very early stages, so details are changing rapidly. If you want to
+      use these devices, please contact the JMRI developers.</p>
+
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Settings</h3>
 
-      <p>JMRI interacts with the Maple panel through input and
-      output bits (called "coils", as in relay coils) within the
-      panel. The panel configuration can set these in response to
-      various events. JMRI provides Sensor objects that make them
-      available for triggering actions within JMRI. JMRI can
-      defines Turnout objects which can set them, in which case the
-      panel configuration can change what's being displayed.</p>
+      <p>JMRI interacts with the Maple panel through input and output bits (called "coils", as in
+      relay coils) within the panel. The panel configuration can set these in response to various
+      events. JMRI provides Sensor objects that make them available for triggering actions within
+      JMRI. JMRI can defines Turnout objects which can set them, in which case the panel
+      configuration can change what's being displayed.</p>
 
-      <p>You have to configure a Maple Systems Node into JMRI with
-      the "Configure Nodes" button on the JMRI Preferences pane. On
-      the pane that opens, enter the Node number (e.g. 1 or 2, etc)
-      into the "UA" field, and click "Add". Leave all the rest
-      alone; the Maple Support was created from the JMRI C/MRI
-      support, and as of JMRI version 2.3.7 the migration is not
-      complete.</p>
+      <p>You have to configure a Maple Systems Node into JMRI with the "Configure Nodes" button on
+      the JMRI Preferences pane. On the pane that opens, enter the Node number (e.g. 1 or 2, etc)
+      into the "UA" field, and click "Add". Leave all the rest alone; the Maple Support was created
+      from the JMRI C/MRI support, and as of JMRI version 2.3.7 the migration is not complete.</p>
 
-      <a name="naming" id="naming"></a>
-      <h4>Naming</h4>
+      <h4 id="naming">Naming</h4>
 
-      <p>The default system letter for Maple connections in JMRI is
-      "K".</p>
+      <p>The default system letter for Maple connections in JMRI is "K".</p>
 
-      <p>You configure the Maple Systems device to use one of the
-      supported speeds (set on the JMRI Preferences pane for Maple
-      connections), and to use the "Simple ASCII Protocol". More
-      information on the protocol and how to configure the Maple
-      Systems device is on Maple <a href=
-      "http://www.maplesystems.com/1033/10330073.PDF">PDF data
-      sheet</a>.</p>
+      <p>You configure the Maple Systems device to use one of the supported speeds (set on the JMRI
+      Preferences pane for Maple connections), and to use the "Simple ASCII Protocol". More
+      information on the protocol and how to configure the Maple Systems device is on Maple
+      <strong>PDF data sheet</strong> (http://www.maplesystems.com/1033/10330073.PDF).</p>
 
-      <p>JMRI communicates with the Maple Systems device by reading
-      and writing "discrete memory" locations, otherwise known as
-      "LB" registers.</p>
+      <p>JMRI communicates with the Maple Systems device by reading and writing "discrete memory"
+      locations, otherwise known as "LB" registers.</p>
 
-      <p>LB registers 1 through 48 are available to JMRI as input
-      "Sensors" 1 to 48.</p>
+      <p>LB registers 1 through 48 are available to JMRI as input "Sensors" 1 to 48.</p>
 
-      <p>LB registers 1001 through 1048 are available to JMRI as
-      output "Turnouts" 1 through 48.</p>
+      <p>LB registers 1001 through 1048 are available to JMRI as output "Turnouts" 1 through
+      48.</p>
 
-      <p>The Maple Systems node number (programmed into "Parameter
-      5", the "HMI station ID #") can be 1 through 99. It appears
-      as the thousands digit of JMRI Sensors and Turnouts System
-      Names. For example, KS3001 is the 1st sensor on node 3, and
-      would therefore be LB 1 in that Maple Systems unit. KT3001 is
-      the 1st turnout on that node, and would therefore be LB 101
-      in that unit.</p>
+      <p>The Maple Systems node number (programmed into "Parameter 5", the "HMI station ID #") can
+      be 1 through 99. It appears as the thousands digit of JMRI Sensors and Turnouts System Names.
+      For example, KS3001 is the 1st sensor on node 3, and would therefore be LB 1 in that Maple
+      Systems unit. KT3001 is the 1st turnout on that node, and would therefore be LB 101 in that
+      unit.</p>
 
-      <p>Here's a summary of the options per Connection, split up for
-      outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+      <p>Here's a summary of the options per Connection, split up for outputs (eg. Turnouts) and
+      inputs (eg. Sensors):</p>
+
       <table>
-        <tbody><tr>
-          <th>In/Out</th>
-          <th>Entry</th>
-          <th>Meaning</th>
-          <th>makes System Name</th>
-          <th>Mask</th>
-          <th>Equivalent</th>
-          <th>Minimum</th>
-          <th>Maximum</th>
-        </tr>
-      <tr>
-        <td>i</td>
-        <td>2010</td>
-        <td>Node 2 Input bit 10</td>
-        <td>KS2010</td>
-        <td> </td>
-        <td> </td>
-        <td>1</td>
-        <td>1000</td>
-      </tr>
-      <tr>
-        <td>o</td>
-        <td>1016</td>
-        <td>Node 1 Output (Turnout) 16</td>
-        <td>KT1016</td>
-        <td> </td>
-        <td> </td>
-        <td>1</td>
-        <td>8000</td>
-      </tr>
-        </tbody></table>
+        <tbody>
+          <tr>
+            <th>In/Out</th>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Equivalent</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+          </tr>
+
+          <tr>
+            <td>i</td>
+            <td>2010</td>
+            <td>Node 2 Input bit 10</td>
+            <td>KS2010</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>1</td>
+            <td>1000</td>
+          </tr>
+
+          <tr>
+            <td>o</td>
+            <td>1016</td>
+            <td>Node 1 Output (Turnout) 16</td>
+            <td>KT1016</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>1</td>
+            <td>8000</td>
+          </tr>
+        </tbody>
+      </table>
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
       by Egbert Broerse @silverailscolo July 2017 -->
 
-      <p><strong>It is very likely that we will rework and improve
-      the addressing soon.</strong></p>
+      <p><strong>It is very likely that we will rework and improve the addressing soon.</strong>
+      </p>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI Maple Systems Tools</h2>
+      <h2 id="tools">JMRI Maple Systems Tools</h2>
+
       <ul>
         <li>Maple network traffic can be viewed with <a href=
-          "../../../package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml">
-          Maple Monitor</a></li>
+        "../../../package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml">Maple Monitor</a>
+        </li>
 
-        <li>The <a href=
-          "../../../package/jmri/jmrix/maple/assignment/ListFrame.shtml">
-          Maple List Tool</a> lets you assign Maple Inputs and Outputs</li>
+        <li>The <a href="../../../package/jmri/jmrix/maple/assignment/ListFrame.shtml">Maple List
+        Tool</a> lets you assign Maple Inputs and Outputs
+        </li>
 
         <li>Nodes can be configured with the <a href=
-          "../../../package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml">
-          Configure Nodes</a> tool</li>
+        "../../../package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+        tool
+        </li>
       </ul>
 
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
-      <p><a href="http://www.maplesystems.com">Maple Systems
-      website</a></p>
-
+      <p><a href="http://www.maplesystems.com">Maple Systems website</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

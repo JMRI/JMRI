@@ -4399,8 +4399,8 @@ public class TrainBuilder extends TrainCommon {
      * to check if there's been a train assignment.
      * 
      * @param car the car in question
-     * @param rl  car's current route location
-     * @param rld car's destination route location
+     * @param rl  car's route location
+     * @param rld car's route location destination
      * @return true if car has a destination. Need to check if there's been a train
      *         assignment.
      * @throws BuildFailedException
@@ -4441,7 +4441,7 @@ public class TrainBuilder extends TrainCommon {
         for (int k = routeIndex; k < _routeList.size(); k++) {
             rld = _routeList.get(k);
             // if car can be picked up later at same location, skip
-            if (checkForLaterPickUp(rl, rld, car)) {
+            if (checkForLaterPickUp(car, rl, rld)) {
                 return true; // done
             }
             if (!rld.getName().equals(car.getDestinationName())) {
@@ -4595,7 +4595,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @param car        The car that is looking for a destination and destination
      *                   track.
-     * @param rl         The current route location for this car.
+     * @param rl         The route location for this car.
      * @param routeIndex Where in the train's route to begin a search for a
      *                   destination for this car.
      * @param routeEnd   Where to stop looking for a destination.
@@ -4618,7 +4618,7 @@ public class TrainBuilder extends TrainCommon {
                                     car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase() }));
         }
 
-        int start = routeIndex; // normally start looking after car's current location
+        int start = routeIndex; // normally start looking after car's route location
         RouteLocation rld = null; // the route location destination being checked for the car
         RouteLocation rldSave = null; // holds the best route location destination for the car
         Track trackSave = null; // holds the best track at destination for the car
@@ -4649,7 +4649,7 @@ public class TrainBuilder extends TrainCommon {
         for (int k = start; k < routeEnd; k++) {
             rld = _routeList.get(k);
             // if car can be picked up later at same location, set flag
-            if (checkForLaterPickUp(rl, rld, car)) {
+            if (checkForLaterPickUp(car, rl, rld)) {
                 multiplePickup = true;
             }
             if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
@@ -5020,11 +5020,16 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Returns true if car can be picked up later in a train's route
+     *  Returns true if car can be picked up later in a train's route
+     *  
+     * @param car the car
+     * @param rl car's route location
+     * @param rld car's route location destination
      * 
+     * @return true if car can be picked up later in a train's route
      * @throws BuildFailedException if coding issue
      */
-    private boolean checkForLaterPickUp(RouteLocation rl, RouteLocation rld, Car car) throws BuildFailedException {
+    private boolean checkForLaterPickUp(Car car, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
         if (rl != rld && rld.getName().equals(car.getLocationName())) {
             // don't delay adding a caboose, passenger car, or car with FRED
             if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
@@ -5049,7 +5054,6 @@ public class TrainBuilder extends TrainCommon {
                         new Object[] { car.toString(), rld.getName(), rld.getId() }));
                 return false;
             }
-            // log.debug("Car ({}) can be picked up later!", car.toString());
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterOkay"),
                     new Object[] { car.toString(), rld.getName(), rld.getId() }));
             return true;

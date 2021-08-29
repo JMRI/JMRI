@@ -1,70 +1,76 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Comprehensive Programmer - Function Mapping Pane</title>
   <!--#include virtual="/Style.shtml" -->
-</head>
+  <!-- DecoderPro Styles -->
 
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Function Mapping Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_Speed_Talble.shtml">Previous |</a>
-        <a href="Comp_LightFX.shtml">Next</a></p>
-
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
-      </div>
-      <hr>
-
-      <p>Some decoders allow you to change the function assigned to
-      each set of output wires (or pads). Multiple choices for
-      function assignments are shown by several check boxes. This
-      is more common in decoders with more than four functions, and
-      in sound decoders.</p>
-
-      <p>Some of the new sound decoders may have up to 28
-      functions, and your throttle may have a limited function
-      capability. So, here's your opportunity to pick which ones
-      you can operate from your throttle.</p>
-
-      <p>When this capability is present, the check boxes as shown
-      in the window below are active and allow you to choose to
-      which function key on the throttle each output responds.</p>
-
-      <h1 style="text-align: center;"><img style=
-      "width: 820px; height: 697px;" src="images/Comp_05_FMap.png"
-      alt="F Map"></h1>
-
-      <p>If a checkbox is dimmed that indicates that no changes in
-      function assignments are possible. Not all decoders allow you
-      to remap the functions and others have very limited
-      functions.</p>
-      <hr>
-
-      <div align="right">
-        <p><a href="Comp_FunctionLabel.shtml"></a> <a href=
-        "Comp_Speed_Talble.shtml">Previous |</a> <a href=
+      <div class="dp-right">
+        <p><a href="Comp_Speed_Talble.shtml">Previous |</a> <a href=
         "Comp_LightFX.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
+      </div>
+
+      <hr>
+
+      <p>Some decoders allow you to change the function assigned to each set of output wires (or
+      pads). Multiple choices for function assignments are shown by several check boxes. This is
+      more common in decoders with more than four functions, and in sound decoders.</p>
+
+      <p>Some of the new sound decoders may have up to 28 functions, and your throttle may have a
+      limited function capability. So, here's your opportunity to pick which ones you can operate
+      from your throttle.</p>
+
+      <p>When this capability is present, the check boxes as shown in the window below are active
+      and allow you to choose to which function key on the throttle each output responds.</p>
+
+      <h1 style="text-align: center;"><img style="width: 820px; height: 697px;" src=
+      "images/Comp_05_FMap.png" alt="F Map">
+      </h1>
+
+      <p>If a checkbox is dimmed that indicates that no changes in function assignments are
+      possible. Not all decoders allow you to remap the functions and others have very limited
+      functions.</p>
+
+      <hr>
+
+      <div class="dp-right">
+        <p><a href="Comp_FunctionLabel.shtml"></a> <a href="Comp_Speed_Talble.shtml">Previous |</a>
+        <a href="Comp_LightFX.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

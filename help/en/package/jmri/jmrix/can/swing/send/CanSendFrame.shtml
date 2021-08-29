@@ -1,100 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send CBUS packets long short can events frames event hex">
+  <meta name="keywords" content=
+  "JMRI help send CBUS packets long short can events frames event hex">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-     <h1>Send CAN Frame</h1>
-      <img src="../../../../../../html/hardware/can/images/can-send-can-frame-349x392.png"
-      width="349" height="392" alt="JMRI CBUS Send Frame Tool" align="right">
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Send CAN Frame</h1>
+      <img src="../../../../../../html/hardware/can/images/can-send-can-frame-349x392.png" width=
+      "349" height="392" alt="JMRI CBUS Send Frame Tool" class="floatRight">
       <p>The "Send CAN Frame" tool lets you directly send <a href=
-      "../../../../../../html/hardware/can/index.shtml">CAN
-      frames</a>.</p>
+      "../../../../../../html/hardware/can/index.shtml">CAN frames</a>.</p>
 
-      <p>The top section of the window lets you send a single
-      frame, the bottom section acts as a frame sequencer. </p>
-      
+      <p>The top section of the window lets you send a single frame, the bottom section acts as a
+      frame sequencer.</p>
+
       <p>You can enter packets in <a href=
-      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS&reg;
-      address format</a>, e.g. "+1", "-2" or "+n4e1" ( decimal, without the quotation marks ). 
-      <br>
-      Once you've entered the packet, just click "send" or press Enter.</p>      
-      
-      <p>You can enter the packet's data contents as hexadecimal
-      numbers, for example "83 7C".</p>
-      
+      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS® address format</a>, e.g. "+1",
+      "-2" or "+n4e1" ( decimal, without the quotation marks ).<br>
+      Once you've entered the packet, just click "send" or press Enter.</p>
+
+      <p>You can enter the packet's data contents as hexadecimal numbers, for example "83 7C".</p>
+
       <p>Any spaces in the packets will be removed before sending.</p>
-      
-      <p>If you want to specify header
-      contents, precede the packet data with the header in "( )"
-      characters or "[ ]" characters for a standard or extended
-      header, respectively.</p>
 
-      
+      <p>If you want to specify header contents, precede the packet data with the header in "( )"
+      characters or "[ ]" characters for a standard or extended header, respectively.</p>
+
       <p>This tool works well in combination with the <a href=
-      "../../cbus/swing/console/CbusConsoleFrame.shtml">CBUS
-      Console</a>, where the actual frames generated and received can be viewed.</p>
-      
+      "../../cbus/swing/console/CbusConsoleFrame.shtml">CBUS Console</a>, where the actual frames
+      generated and received can be viewed.</p>
+
       <p>If a message is unable to be created, a popup dialogue box will notify you.</p>
-      
-      <p>Remember, if sending out messages to a live CBUS network, these will be received and acted upon accordingly!</p>
-      
-      <h2><a name="sequencer" id="sequencer">Sequencer</a></h2>
+
+      <p>Remember, if sending out messages to a live CBUS network, these will be received and acted
+      upon accordingly!</p>
+
+      <h2 id="sequencer">Sequencer</h2>
       <img src="../../../../../../html/hardware/can/images/can-send-can-frame-sequence-352x393.gif"
-      width="352" height="393" alt="JMRI CBUS Send Frame Tool Sequencer" align="right">
-      
-      
-      
-      <p>The bottom section lets you enter from one to four frames
-      that will be repeatedly sent in sequence, with user-defined
-      delays in between.</p>
-      
-      <p>Press the "Go" button to start the
-      transmission sequence, and press it again to stop the
+      width="352" height="393" alt="JMRI CBUS Send Frame Tool Sequencer" class="floatRight">
+      <p>The bottom section lets you enter from one to four frames that will be repeatedly sent in
+      sequence, with user-defined delays in between.</p>
+
+      <p>Press the "Go" button to start the transmission sequence, and press it again to stop the
       sequence.</p>
-      
-      <p>You can alter the messages while it is running, those changes take effect 
-      the next time the frame is called in the sequence.</p>
-      
-      <p>The last frame to have been sent in the sequence is highlighted by 
-      a different background colour.</p>
-      
+
+      <p>You can alter the messages while it is running, those changes take effect the next time
+      the frame is called in the sequence.</p>
+
+      <p>The last frame to have been sent in the sequence is highlighted by a different background
+      colour.</p>
+
       <p>You will be notified if the sequencer is unable to send a can frame.</p>
-      
-      
+
       <h2>Options</h2>
+
       <p>CBUS priority - Adds a priority to the message header.</p>
-      <p>Send as outgoing CanMessage - Sends as if message originating from JMRI 
-      ( selected by default ).</p>
-      <p>Send as outgoing CanMessage - Sends as if message originating from outside of JMRI </p>
-      
-     <h3>JMRI Help</h3>
-      
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Send CAN Frame window.</p>
-      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
 
-      
-        <h2></h2>
-        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p>Send as outgoing CanMessage - Sends as if message originating from JMRI ( selected by
+      default ).</p>
 
-      
+      <p>Send as outgoing CanMessage - Sends as if message originating from outside of JMRI</p>
+
+      <h3>JMRI Help</h3>
+
+      <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
+      of the MERG Send CAN Frame window.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support
+      page</a>.</p>
+
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

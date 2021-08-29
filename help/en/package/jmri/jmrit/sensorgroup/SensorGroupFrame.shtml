@@ -1,76 +1,62 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Sensor Groups</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Sensor Groups">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Sensor Groups"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Sensor Groups</h1>
-      <p>The Sensor Group Tool window allows you
-      to define Sensor Groups, a group of sensors of which at most
-      one can be active. When a member of the group becomes active,
-      all others are set to inactive.</p>
-      
-      <p>The Sensor Group Tool can be accessed via PanelPro > Tools > Sensor Groups.</p>
 
-      <p>Generally, you would use something like this to simulate a
-      rotary switch on a real control panel. The real switch would
-      activate only one input as it was turned from position to
-      position; the previous input would become inactive as the
-      switch turned to the next position.</p>
-      
-      <p>On a PanelPro control
-      panel, each position might be shown by a separate sensor icon
-      which you click to activate. Putting that set of sensors in a
-      Sensor Group would then cause the sensor at the previous
-      position to go inactive when you clicked to change the
-      simulated rotary switch.</p>
-      
-      <img src="sensor-group-frame-626x500.png" alt="JMRI Sensor Groups"
-      width="626" height="500">
+      <p>The Sensor Group Tool window allows you to define Sensor Groups, a group of sensors of
+      which at most one can be active. When a member of the group becomes active, all others are
+      set to inactive.</p>
 
+      <p>The Sensor Group Tool can be accessed via PanelPro &gt; Tools &gt; Sensor Groups.</p>
+
+      <p>Generally, you would use something like this to simulate a rotary switch on a real control
+      panel. The real switch would activate only one input as it was turned from position to
+      position; the previous input would become inactive as the switch turned to the next
+      position.</p>
+
+      <p>On a PanelPro control panel, each position might be shown by a separate sensor icon which
+      you click to activate. Putting that set of sensors in a Sensor Group would then cause the
+      sensor at the previous position to go inactive when you clicked to change the simulated
+      rotary switch.</p>
+      <img src="sensor-group-frame-626x500.png" alt="JMRI Sensor Groups" width="626" height="500">
       <p>To define a group:</p>
 
       <ul>
-        <li>Check the "Included" box next to each sensor that you
-        want to include in the group. You can click on the titles
-        at the top of the columns to sort them if you have lots of
-        sensors to flip through.</li>
+        <li>Check the "Included" box next to each sensor that you want to include in the group. You
+        can click on the titles at the top of the columns to sort them if you have lots of sensors
+        to flip through.</li>
 
-        <li>Put a unique sensor group name in the box at the
-        bottom. No particular format is required, but it can't
-        duplicate one you've already defined.</li>
+        <li>Put a unique sensor group name in the box at the bottom. No particular format is
+        required, but it can't duplicate one you've already defined.</li>
 
         <li>Click add/update</li>
       </ul>
 
-      <p>To see a Sensor Group you've already defined, put it's
-      name in the Group Name box, and click View. You can then
-      change the checkboxes to add or remove sensors from the
-      group, and click Add/Update to make your changes.</p>
+      <p>To see a Sensor Group you've already defined, put it's name in the Group Name box, and
+      click View. You can then change the checkboxes to add or remove sensors from the group, and
+      click Add/Update to make your changes.</p>
 
-      <p>Remember to save your changes to a new configuration or
-      panel file before quitting the program!</p>
-      
+      <p>Remember to save your changes to a new configuration or panel file before quitting the
+      program!</p>
+
       <h2>JMRI Help</h2>
-      
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
-        Sensor Group Tool.</p>
-      
+
+      <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
+      of the Sensor Group Tool.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

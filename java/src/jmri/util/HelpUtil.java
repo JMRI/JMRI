@@ -4,8 +4,11 @@ import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.*;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -21,12 +24,12 @@ import jmri.web.server.WebServerPreferences;
  * This class was created to contain common Java Help information but is now
  * changed to use a web browser instead.
  *
- * @author Bob Jacobsen      Copyright 2007
- * @author Daniel Bergqvist  Copyright 2021
+ * @author Bob Jacobsen Copyright 2007
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class HelpUtil {
 
-    private HelpUtil(){
+    private HelpUtil() {
         // this is a class of static methods
     }
 
@@ -35,10 +38,10 @@ public class HelpUtil {
      *
      * @param menuBar the menu bar to add the help menu to
      * @param ref     context-sensitive help reference
-     * @param direct  true if this call should complete the help menu by adding
-     *                the general help
-     * @return new Help menu, in case user wants to add more items or null if
-     *         unable to create the help menu
+     * @param direct  true if this call should complete the help menu by adding the
+     *                general help
+     * @return new Help menu, in case user wants to add more items or null if unable
+     *         to create the help menu
      */
     public static JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
         JMenu helpMenu = makeHelpMenu(ref, direct);
@@ -82,11 +85,11 @@ public class HelpUtil {
     // https://coderanch.com/how-to/javadoc/javahelp-2.0_05/javax/help/HelpBroker.html#enableHelpOnButton(java.awt.Component,%20java.lang.String,%20javax.help.HelpSet)
     public static void enableHelpOnButton(java.awt.Component comp, String id) {
         if (comp instanceof javax.swing.AbstractButton) {
-            ((javax.swing.AbstractButton)comp).addActionListener((ignore) -> {
+            ((javax.swing.AbstractButton) comp).addActionListener((ignore) -> {
                 displayHelpRef(id);
             });
         } else if (comp instanceof java.awt.Button) {
-            ((java.awt.Button)comp).addActionListener((ignore) -> {
+            ((java.awt.Button) comp).addActionListener((ignore) -> {
                 displayHelpRef(id);
             });
         } else {
@@ -96,9 +99,8 @@ public class HelpUtil {
 
     public static void displayHelpRef(String ref) {
         // We only have English (en) and French (fr) help files.
-        Boolean isFrench = "fr".equals(
-                InstanceManager.getDefault(
-                        GuiLafPreferencesManager.class).getLocale().getLanguage());
+        Boolean isFrench = "fr"
+                .equals(InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale().getLanguage());
         String localeStr = isFrench ? "fr" : "en";
 
         HelpUtilPreferences preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
@@ -111,56 +113,78 @@ public class HelpUtil {
         }
 
         String url;
+        boolean webError = false;
+
+        // Use jmri.org if selected.
         if (preferences.getOpenHelpOnline()) {
             url = "https://www.jmri.org/" + file;
-        } else if (preferences.getOpenHelpOnJMRIWebServer()) {
-            WebServerPreferences webServerPreferences =
-                    InstanceManager.getDefault(WebServerPreferences.class);
+            if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
+            webError = true;
+        }
+
+        // Use the local JMRI web server if selected.
+        if (preferences.getOpenHelpOnJMRIWebServer()) {
+            WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
             String port = Integer.toString(webServerPreferences.getPort());
-            url = "http://localhost:"+port+"/" + file;
-        } else {    // Assume open help on file if no other option is selected
-            String fileName = FileUtil.getProgramPath().replace("\\", "/") + "help/" + localeStr + "/local/stub/" + ref + ".html";
-            File f = new File(fileName);
-            if (!f.exists()) {
-                log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
-                JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("HelpError_ReferenceNotFound", ref),
-                        Bundle.getMessage("HelpError_Title"),
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (SystemType.isWindows()) {
-                try {
-                    openWindowsFile(f);
-                } catch (JmriException e) {
-                    log.error("unable to show help page {} in Windows due to:", ref, e);
-                }
-                return;
-            }
-
-            url = "file://" + fileName;
+            url = "http://localhost:" + port + "/" + file;
+            if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
+            webError = true;
         }
 
-        try {
-            jmri.util.HelpUtil.openWebPage(url);
-        } catch (JmriException e) {
-            log.error("unable to show help page {} due to:", ref, e);
+        if (webError) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("HelpWeb_ServerError"),
+                    Bundle.getMessage("HelpWeb_Title"),
+                    JOptionPane.ERROR_MESSAGE);
         }
+
+        // Open a local help file by default or a failure of jmri.org or the local JMRI web server.
+        String fileName = FileUtil.getProgramPath().replace("\\",
+                "/") + "help/" + localeStr + "/local/stub/" + ref + ".html";
+        File f = new File(fileName);
+        if (!f.exists()) {
+            log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_ReferenceNotFound", ref),
+                    Bundle.getMessage("HelpError_Title"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (SystemType.isWindows()) {
+            try {
+                openWindowsFile(f);
+            } catch (JmriException e) {
+                log.error("unable to show help page {} in Windows due to:", ref, e);
+            }
+            return;
+        }
+
+        url = "file://" + fileName;
+        jmri.util.HelpUtil.showWebPage(ref, url);
     }
 
     public static void openWindowsFile(File file) throws JmriException {
         try {
-            if (Desktop.getDesktop().isSupported( Desktop.Action.OPEN) ) {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 Desktop.getDesktop().open(file);
             } else {
                 throw new JmriException(String.format(
                         "Failed to connect to browser. java.awt.Desktop in Windows doesn't suppport Action.OPEN"));
             }
         } catch (IOException ex) {
-            throw new JmriException(String.format(
-                    "Failed to connect to browser. Error loading help file %s", file.getName()), ex);
+            throw new JmriException(
+                    String.format("Failed to connect to browser. Error loading help file %s", file.getName()), ex);
         }
+    }
+
+    public static boolean showWebPage(String ref, String url) {
+        boolean result = false;
+        try {
+            jmri.util.HelpUtil.openWebPage(url);
+            result = true;
+        } catch (JmriException e) {
+            log.warn("unable to show help page {} due to:", ref, e);
+        }
+        return result;
     }
 
     public static void openWebPage(String url) throws JmriException {
@@ -171,22 +195,20 @@ public class HelpUtil {
                 request.setRequestMethod("GET");
                 request.connect();
                 if (request.getResponseCode() != 200) {
-                    throw new JmriException(String.format(
-                            "Failed to connect to web page: %d, %s",
+                    throw new JmriException(String.format("Failed to connect to web page: %d, %s",
                             request.getResponseCode(), request.getResponseMessage()));
                 }
             }
-            if ( Desktop.getDesktop().isSupported( Desktop.Action.BROWSE) ) {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 // Open browser to URL with draft report
                 Desktop.getDesktop().browse(uri);
             } else {
-                throw new JmriException(String.format(
-                        "Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
+                throw new JmriException(String
+                        .format("Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
             }
         } catch (IOException | URISyntaxException e) {
-            throw new JmriException(String.format(
-                    "Failed to connect to web page. Exception thrown: %s",
-                    e.getMessage()), e);
+            throw new JmriException(
+                    String.format("Failed to connect to web page. Exception thrown: %s", e.getMessage()), e);
         }
     }
 
@@ -205,8 +227,8 @@ public class HelpUtil {
     public interface MenuProvider {
 
         /**
-         * Get the menu items to include in the menu. Any menu item that is null
-         * will be replaced with a separator.
+         * Get the menu items to include in the menu. Any menu item that is null will be
+         * replaced with a separator.
          *
          * @return the list of menu items
          */

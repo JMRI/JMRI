@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Wangrow System One</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "Wangrow System One java model railroad JMRI install">
+  <meta name="keywords" content="Wangrow System One java model railroad JMRI install">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Wangrow System One</h1>
 
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
@@ -29,60 +24,50 @@
         <li>Wangrow System One (produced until 2003)</li>
       </ul>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
-      <p>To connect your computer to a Wangrow system, you can
-      usually just connect the command station to the computer's
-      serial port using a 9-pin serial cable.</p>
+      <p>To connect your computer to a Wangrow system, you can usually just connect the command
+      station to the computer's serial port using a 9-pin serial cable.</p>
 
-      <p>Some Wangrow command stations have an "optional analog
-      control circuit". In these, pins 5, 6, and 9 are used with an
-      analog voltage as a separate throttle. If you have one of
-      these Command Stations, <strong>a normal 9-pin serial cable
-      will not work!</strong> You'll need to make a custom cable
-      that just connects the "send data", "receive data" and
-      "ground" pins. See your Wangrow manual for details.</p>
+      <p>Some Wangrow command stations have an "optional analog control circuit". In these, pins 5,
+      6, and 9 are used with an analog voltage as a separate throttle. If you have one of these
+      Command Stations, <strong>a normal 9-pin serial cable will not work!</strong> You'll need to
+      make a custom cable that just connects the "send data", "receive data" and "ground" pins. See
+      your Wangrow manual for details.</p>
 
       <h3>Settings</h3>
 
       <ol>
-        <li>Open the Connections tab in the Preferences of a
-        JMRI-based program. This opens automatically the first time
-        a program is run, or you can select it from the "Edit"
+        <li>Open the Connections tab in the Preferences of a JMRI-based program. This opens
+        automatically the first time a program is run, or you can select it from the "Edit"
         menu.</li>
 
-        <li>Select "Wangrow" from the System Manufacturer drop-down
-        menu.</li>
+        <li>Select "Wangrow" from the System Manufacturer drop-down menu.</li>
 
-        <li>Select a serial port in the System Connection
-        drop-down.</li>
+        <li>Select a serial port in the System Connection drop-down.</li>
 
-        <li>The baud rate selection box will be fixed at 9600
-        baud.</li>
+        <li>The baud rate selection box will be fixed at 9600 baud.</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit; click "Yes".</li>
+        <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI Tools</h2>N/A <a name="documentation" id=
-      "documentation"></a>
-
-      <h2>Documentation</h2>
+      <h2 id="tools">JMRI Tools</h2>
+      N/A
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
-      <p><a href="http://www.dccwiki.com/Wangrow">Wangrow SystemOne
-      on DCC Wiki</a></p>
-
+      <p><a href="http://www.dccwiki.com/Wangrow">Wangrow SystemOne on DCC Wiki</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

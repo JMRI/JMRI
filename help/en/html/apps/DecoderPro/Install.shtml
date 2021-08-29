@@ -1,74 +1,66 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2015 -->
 
-  <title>JMRI: Downloading and Installing DecoderPro</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Downloading and Installing DecoderPro</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Downloading and installing</h2>
 
-      <p>DecoderPro is distributed as part of the free JMRI
-      downloads. The steps to getting it working are:</p>
+      <p>DecoderPro is distributed as part of the free JMRI downloads. The steps to getting it
+      working are:</p>
 
       <dl>
-        <dt class="left">Make sure DecoderPro can run on your
-        computer</dt>
+        <dt class="left">Make sure DecoderPro can run on your computer</dt>
 
-        <dd class="first">The DecoderPro software will work on
-        Windows, Linux, and Mac OS X. It will probably also work on
-        most other modern operating systems that have Java
-        available; contact us for help if you'd like to try it on
-        some other system. You need to have a serial port
-        available, either on the computer itself, or via a <a href=
-        "../../hardware/USBtoSerial.shtml">USB adapter</a>.</dd>
+        <dd class="first">
+          The DecoderPro software will work on Windows, Linux, and Mac OS X. It will probably also
+          work on most other modern operating systems that have Java available; contact us for help
+          if you'd like to try it on some other system. You need to have a serial port available,
+          either on the computer itself, or via a <a href="../../hardware/USBtoSerial.shtml">USB
+          adapter</a>.
+        </dd>
 
-        <dt class="left">Make sure JMRI works with your DCC
-        system</dt>
+        <dt class="left">Make sure JMRI works with your DCC system</dt>
 
-        <dd class="first">The <a href=
-        "../../hardware/index.shtml">hardware page</a> lists the
-        DCC systems compatible with DecoderPro, along with the
-        known limitations and the available tools.</dd>
+        <dd class="first">
+          The <a href="../../hardware/index.shtml">hardware page</a> lists the DCC systems
+          compatible with DecoderPro, along with the known limitations and the available tools.
+        </dd>
 
         <dt class="left">Download and install JMRI</dt>
 
         <dd class="first">
-          The <a href=
-          "https://jmri.org/download/index.shtml">Download page</a>
-          on the main JMRI web site provides links to download
-          various JMRI versions, along with links to release notes,
-          etc.
-
-          <p>Note that there are different downloads for different
-          types of computers (Macintosh, Windows, etc), and the
-          procedures for installing JMRI differ. You'll find all
-          that explained on the <a href=
-          "https://jmri.org/download/index.shtml">Download
-          page</a>.</p>
+          The <a href="https://jmri.org/download/index.shtml">Download page</a> on the main JMRI
+          web site provides links to download various JMRI versions, along with links to release
+          notes, etc.
+          <p>Note that there are different downloads for different types of computers (Macintosh,
+          Windows, etc), and the procedures for installing JMRI differ. You'll find all that
+          explained on the <a href="https://jmri.org/download/index.shtml">Download page</a>.</p>
         </dd>
 
         <dt class="left">Setup JMRI</dt>
 
-        <dd class="first">Please consult <a href=
-        "../../setup/index.shtml">JMRI Setup Help</a>. When Setup
-        is completed, you should have a working DecoderPro
-        installation.</dd>
-      </dl><!--#include virtual="/Footer.shtml" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+        <dd class="first">
+          Please consult <a href="../../setup/index.shtml">JMRI Setup Help</a>. When Setup is
+          completed, you should have a working DecoderPro installation.
+        </dd>
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

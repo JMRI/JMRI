@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - __System__</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - __System__</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: __System__</h1>
 
       <p>A template for new Hardware Help</p>
@@ -22,18 +18,28 @@
       <ul>
         <!-- TOC -->
 
-        <li><a href="#hardware">Hardware</a></li>
+        <li>
+          <a href="#hardware">Hardware</a>
+        </li>
 
-        <li><a href="#limitations">Limitations</a></li>
+        <li>
+          <a href="#limitations">Limitations</a>
+        </li>
 
-        <li><a href="#connecting">Connecting</a></li>
+        <li>
+          <a href="#connecting">Connecting</a>
+        </li>
 
-        <li><a href="#tools">JMRI Tools</a></li>
+        <li>
+          <a href="#tools">JMRI Tools</a>
+        </li>
 
-        <li><a href="#documentation">Documentation</a></li>
-      </ul><a name="hardware" id="hardware"></a>
+        <li>
+          <a href="#documentation">Documentation</a>
+        </li>
+      </ul>
 
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Stations</h3>
 
@@ -45,13 +51,13 @@
 
       <ul>
         <li>List</li>
-      </ul><a name="limitations" id="limitations"></a>
+      </ul>
 
-      <h2>Limitations</h2>
+      <h2 id="limitations">Limitations</h2>
 
-      <p>Text, version</p><a name="connecting" id="connecting"></a>
+      <p>Text, version</p>
 
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
@@ -59,21 +65,19 @@
 
       <h3>Software settings</h3>
 
-      <p>Text</p><a name="tools" id="tools"></a>
+      <p>Text</p>
 
-      <h2>JMRI __this system__ Tools</h2><img src="__System__Menu.png"
-      width="100" height="100" align="right" alt="Menu">
-
+      <h2 id="tools">JMRI __this system__ Tools</h2>
+      <img src="__System__Menu.png" width="100" height="100" class="floatRight" alt="Menu">
       <h4>Tool 1</h4>
 
       <p>Steps etc.</p>
 
       <h4>Tool 2</h4>
 
-      <p>Steps etc.</p><a name="documentation" id=
-      "documentation"></a>
+      <p>Steps etc.</p>
 
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
@@ -82,10 +86,11 @@
       <h3>Third Party info</h3>
 
       <p>Link to external web sites, downloads</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

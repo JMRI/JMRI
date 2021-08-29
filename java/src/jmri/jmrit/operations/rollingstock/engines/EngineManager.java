@@ -25,7 +25,8 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager<Engine> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class EngineManager extends RollingStockManager<Engine>
+        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
 
@@ -49,8 +50,8 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     }
 
     /**
-     * Finds an existing engine or creates a new engine if needed requires
-     * engine's road and number
+     * Finds an existing engine or creates a new engine if needed requires engine's
+     * road and number
      *
      * @param engineRoad   The engine's road initials
      * @param engineNumber The engine's road number
@@ -65,6 +66,12 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
             register(engine);
         }
         return engine;
+    }
+
+    @Override
+    public void deregister(Engine engine) {
+        super.deregister(engine);
+        InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
     }
 
     /**
@@ -205,8 +212,8 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     }
 
     /**
-     * return a list available engines (no assigned train) engines are ordered
-     * least recently moved to most recently moved.
+     * return a list available engines (no assigned train) engines are ordered least
+     * recently moved to most recently moved.
      *
      * @param train The Train requesting this list.
      *
@@ -226,8 +233,8 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     }
 
     /**
-     * Returns a list of locos sorted by blocking number for a train. This
-     * returns a list of consisted locos in the order that they were entered in.
+     * Returns a list of locos sorted by blocking number for a train. This returns a
+     * list of consisted locos in the order that they were entered in.
      *
      * @param train The Train requesting this list.
      * @return A list of sorted locos.
@@ -304,7 +311,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      *
      */
     public void store(Element root) {
-        //     root.addContent(new Element(Xml.OPTIONS)); // nothing to store under options
+        // root.addContent(new Element(Xml.OPTIONS)); // nothing to store under options
 
         Element values;
         List<String> names = getConsistNameList();
@@ -327,8 +334,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        InstanceManager.getDefault(EngineManagerXml.class
-        ).setDirty(true);
+        InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 

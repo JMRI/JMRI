@@ -1,92 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: RPS Tracking Frame</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: RPS Tracking Frame</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: RPS Tracking Frame</h1><a href=
-      "../../../../../html/hardware/rps/images/RpsTracker.jpg"><img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"
-      height="248" width="209" align="right" alt=
-      "screenshot"></a><br>
-      This frame displays a map of the <a href=
-      "../../../../../html/hardware/rps/index.shtml">RPS
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: RPS Tracking Frame</h1>
+      <a href="../../../../../html/hardware/rps/images/RpsTracker.jpg"><img src=
+      "../../../../../html/hardware/rps/images/RpsTracker.jpg" height="248" width="209" class=
+      "floatRight" alt="screenshot"></a><br>
+      This frame displays a map of the <a href="../../../../../html/hardware/rps/index.shtml">RPS
       system's</a> view of the layout.
-
-      <h2>Display</h2>There are two types of things drawn:
-
+      <h2>Display</h2>
+      There are two types of things drawn:
       <ul>
-        <li>The measured positions and paths of RPS
-        transmitters</li>
+        <li>The measured positions and paths of RPS transmitters</li>
 
-        <li>The "detection regions" used for RPS blocks and
-        <a href="../../../../../html/hardware/rps/sensors.shtml">sensors</a>.</li>
+        <li>The "detection regions" used for RPS blocks and <a href=
+        "../../../../../html/hardware/rps/sensors.shtml">sensors</a>.
+        </li>
       </ul>
 
-      <h3>Transmitter Positions</h3>When a good position reading is
-      made, it's drawn on the screen as a small circle
-      representative of the measurement's accuracy. A line is drawn
-      to this new position from the last position.
+      <h3>Transmitter Positions</h3>
+      When a good position reading is made, it's drawn on the screen as a small circle
+      representative of the measurement's accuracy. A line is drawn to this new position from the
+      last position.
+      <p>Different colors are assigned to different transmitters so you can tell them apart. If you
+      "hover" the cursor over a point, a tooltip will pop up that shows you which transmitter was
+      seen there and what position was measured.</p>
 
-      <p>Different colors are assigned to different transmitters so
-      you can tell them apart. If you "hover" the cursor over a
-      point, a tooltip will pop up that shows you which transmitter
-      was seen there and what position was measured.</p>
+      <p>Normally, bad measurements are just drawn as points, without connecting them to the next
+      measurement via a line. They often carry very large position values, and will result in lines
+      running off the panel. If you do want to see them connected, check the "Show error points"
+      checkbox.</p>
 
-      <p>Normally, bad measurements are just drawn as points,
-      without connecting them to the next measurement via a line.
-      They often carry very large position values, and will result
-      in lines running off the panel. If you do want to see them
-      connected, check the "Show error points" checkbox.</p>
+      <h3>Regions</h3>
+      JMRI can keep track of whether a region on the layout contains working RPS transmitters. This
+      is used e.g. for the <a href="../../../../../html/hardware/rps/sensors.shtml">RPS sensors</a>
+      that are used to control signals.
+      <p>These regions are displayed as blocks of color, possibly overlapping.</p>
 
-      <h3>Regions</h3>JMRI can keep track of whether a region on
-      the layout contains working RPS transmitters. This is used
-      e.g. for the <a href=
-      "../../../../../html/hardware/rps/sensors.shtml">RPS
-      sensors</a> that are used to control signals.
+      <p>To get the exact coordinates of a region, hover the cursor over it. After a short time, a
+      tooltip will display the coordinates of the corners.</p>
 
-      <p>These regions are displayed as blocks of color, possibly
-      overlapping.</p>
-
-      <p>To get the exact coordinates of a region, hover the cursor
-      over it. After a short time, a tooltip will display the
-      coordinates of the corners.</p>
-
-      <h2>Controls</h2>In the top part of the window are some
-      simple controls.
-
+      <h2>Controls</h2>
+      In the top part of the window are some simple controls.
       <ul>
-        <li>The "Clear" button erases the transmitter display,
-        leaving the regions visible.</li>
+        <li>The "Clear" button erases the transmitter display, leaving the regions visible.</li>
 
-        <li>The "Show error points" checkbox, mentioned above, will
-        include lines to lower-quality measurements.</li>
+        <li>The "Show error points" checkbox, mentioned above, will include lines to lower-quality
+        measurements.</li>
 
-        <li>"Show receivers", when checked, displays receiver
-        locations as slightly larger black dots.</li>
+        <li>"Show receivers", when checked, displays receiver locations as slightly larger black
+        dots.</li>
 
-        <li>"Show regions" controls whether the regions are drawn
-        or not.</li>
-      </ul>The four text boxes and "Set" button let you set the
-      coordinate mapping for the window. The top two set the RPS
-      position that corresponds to the upper-right corner of the
-      display frame, while the lower two set the RPS position that
-      corresponds to the lower left corner. The lower-left corner
-      is often set to 0,0, and the upper left set to large enough
-      values to show your entire layout, but you don't have to do
-      it like that. <!--#include virtual="/Footer.shtml" -->
+        <li>"Show regions" controls whether the regions are drawn or not.</li>
+      </ul>
+      The four text boxes and "Set" button let you set the coordinate mapping for the window. The
+      top two set the RPS position that corresponds to the upper-right corner of the display frame,
+      while the lower two set the RPS position that corresponds to the lower left corner. The
+      lower-left corner is often set to 0,0, and the upper left set to large enough values to show
+      your entire layout, but you don't have to do it like that. 
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

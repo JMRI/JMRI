@@ -1,129 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>JMRI: Applications</title>
- <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Applications</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Applications</h1>
 
-      <p>JMRI provides several applications that are optimized for
-      specific purposes. You can of course also <a href=
-      "../doc/Technical/index.shtml#writecode">write your
-      own</a>.</p>
+      <p>JMRI provides several applications that are optimized for specific purposes. You can of
+      course also <a href="../doc/Technical/index.shtml#writecode">write your own</a>.</p>
 
       <dl>
         <dt>
-          <a href="./DecoderPro/index.shtml">DecoderPro&reg;</a>
+          <a href="./DecoderPro/index.shtml">DecoderPro®</a>
         </dt>
 
-        <dd>A better tool for programming decoders. DecoderPro
-        simplifies the job of configuring complicated DCC decoders
-        by providing screens on which you can select the various
-        options and values you want.<br>
-        Open DecoderPro by double clicking its icon in the JMRI
-        installation folder.</dd>
+        <dd>A better tool for programming decoders. DecoderPro simplifies the job of configuring
+        complicated DCC decoders by providing screens on which you can select the various options
+        and values you want.<br>
+        Open DecoderPro by double clicking its icon in the JMRI installation folder.</dd>
 
         <dt>
-          <a href="./PanelPro/index.shtml">PanelPro&trade;</a>
+          <a href="./PanelPro/index.shtml">PanelPro™</a>
         </dt>
 
-        <dd>Operating CRT based CTC control panels that reflect the
-        real-time state of your railroad <em>and</em> let you
-        control it - almost like a Prototype dispatcher!<br>
-        Open PanelPro by double clicking its icon in the JMRI
-        installation folder.</dd>
+        <dd>Operating CRT based CTC control panels that reflect the real-time state of your
+        railroad <em>and</em> let you control it - almost like a Prototype dispatcher!<br>
+        Open PanelPro by double clicking its icon in the JMRI installation folder.</dd>
 
         <dt>
-          <a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a>
+          <a href="./DispatcherPro/index.shtml">DispatcherPro™</a>
         </dt>
 
-        <dd>A system for Dispatching, grouping your Roster and
-        Throttles.</dd>
+        <dd>A system for Dispatching a model railroad. The ability to automatically run trains is a
+        popular feature.</dd>
 
         <dt>
-          <a href="./OperationsPro/index.shtml">OperationsPro&trade;</a>
+          <a href="./OperationsPro/index.shtml">OperationsPro™</a>
         </dt>
 
-        <dd>Create Train Manifests that detail the work your train
-        crews will perform during an operations session. The
-        Manifest lists of car pick up and set outs, shows where the
-        cars are located, and provides the cars' destinations.</dd>
+        <dd>Create Train Manifests that detail the work your train crews will perform during an
+        operations session. The Manifest lists of car pick up and set outs, shows where the cars
+        are located, and provides the cars' destinations.</dd>
 
         <dt>
           <a href="./SoundPro/SoundPro.shtml">SoundPro</a>
         </dt>
 
-        <dd>A set of tools for using Audio with JMRI.<br>
-        Open SoundPro by double clicking its icon in the JMRI
-        installation folder.</dd>
+        <dd>A set of tools for using Audio with JMRI.</dd>
       </dl>
 
-      <h2><a name="addapp" id="addapp">Additional Applications with JMRI Connections...</a></h2>
-       <p>
-       Hobbyists have created applications that work with JMRI
-       to provide extra capabilities. In addition, some commercial vendors have
-       created applications that work with, add data to, or take data from JMRI</p>
-       <p>See the <a href="../../../../community/connections/CommunityConnectionsIndex.shtml">
-       community/connections directory</a> for a list and links.  
-       New applications can be added at any time!
-       </p>
+      <h2 id="addapp">Additional Applications with JMRI Connections...</h2>
 
-      <h2><a name="jythonapp" id="jythonapp">Jython Applications for JMRI...</a></h2>
-       <p>
-       Some JMRI users have implemented sophiticated capabilities using the <a href="../tools/scripting/index.shtml">JMRI jython scripting facilities.</a>  These are listed 
-       <a href="../tools/scripting/JythonApps.shtml">here</a>.
-      </p>
-       
-     
+      <p>Hobbyists have created applications that work with JMRI to provide extra capabilities. In
+      addition, some commercial vendors have created applications that work with, add data to, or
+      take data from JMRI</p>
+
+      <p>See the <a href=
+      "../../../../community/connections/CommunityConnectionsIndex.shtml">community/connections
+      directory</a> for a list and links. New applications can be added at any time!</p>
+
+      <h2 id="jythonapp">Jython Applications for JMRI...</h2>
+
+      <p>Some JMRI users have implemented sophiticated capabilities using the <a href=
+      "../tools/scripting/index.shtml">JMRI jython scripting facilities.</a> These are listed
+      <a href="../tools/scripting/JythonApps.shtml">here</a>.</p>
+
       <h2>JMRI Features and Tools</h2>
 
-        <p>JMRI software consists of a large library of functions divided into</p>
+      <p>JMRI software consists of a large library of functions divided into</p>
 
-        <ul>
-          <li>a system-specific part, with many subparts, each of which communicates with one
-          supported hardware system, like C/MRI, in a system specific way, and</li>
-          <li>a system-independent part where most of the features of JMRI are implemented.</li>
-         </ul>
-         
-         
-         <p>So, for example, if the user does something (perhaps setting a route) to
-          cause JMRI to throw a Turnout (track switch), that user action will occur in
-          the system-independent part of the software, and then JMRI will send out the
-          actual command via the system-dependent part appropriate to the hardware
-          system controlling the particular Turnout thrown. JMRI is designed so that
-          features are implemented in the system-independent part as much as possible,
-          with JMRI using system-dependent subparts only when really necessary. Access
-          to system-independent features is via the main JMRI menus, such as the Tools
-          menu.</p>
+      <ul>
+        <li>a system-specific part, with many subparts, each of which communicates with one
+        supported hardware system, like C/MRI, in a system specific way, and</li>
 
-          <ul>
-            <li>You can
-            find additional information about each of the JMRI "common" tools by clicking through the links in the sidebar or the 
-            <a href="../tools/index.shtml">tools index page.</a></li>
+        <li>a system-independent part where most of the features of JMRI are implemented.</li>
+      </ul>
 
-            <li>There are many <a href=
-            "../tools/index.shtml#systemSpecificTools">system-specific
-            tools</a> that are available within the JMRI applications. You can find additional information
-            about each by clicking through the links in the <a href="../tools/index.shtml#systemSpecificTools"> system-specific
-            tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
-            the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
-            
-          </ul>
- 
- 
-          <!--#include virtual="/Footer.shtml" -->
+      <p>So, for example, if the user does something (perhaps setting a route) to cause JMRI to
+      throw a Turnout (track switch), that user action will occur in the system-independent part of
+      the software, and then JMRI will send out the actual command via the system-dependent part
+      appropriate to the hardware system controlling the particular Turnout thrown. JMRI is
+      designed so that features are implemented in the system-independent part as much as possible,
+      with JMRI using system-dependent subparts only when really necessary. Access to
+      system-independent features is via the main JMRI menus, such as the Tools menu.</p>
 
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+      <ul>
+        <li>You can find additional information about each of the JMRI "common" tools by clicking
+        through the links in the sidebar or the <a href="../tools/index.shtml">tools index
+        page.</a>
+        </li>
+
+        <li>There are many <a href="../tools/index.shtml#systemSpecificTools">system-specific
+        tools</a> that are available within the JMRI applications. You can find additional
+        information about each by clicking through the links in the <a href=
+        "../tools/index.shtml#systemSpecificTools">system-specific tools index page</a>. The tools
+        themselves are invoked from their own menu pulldowns within the JMRI applications when you
+        have JMRI configured for each specific System Connection.
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

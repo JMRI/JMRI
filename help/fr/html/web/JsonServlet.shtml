@@ -1,19 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Servlet Json</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Servlet Json</title><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <style type="text/css">
@@ -27,29 +20,23 @@
             code {
                 white-space: normal;
             }
-  </style>
-  <!-- /Style -->
+  </style><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
       <h1>JMRI: Servlet Json</h1>
 
-      <p>Le <b>Servlet Json JMRI</b> fournit l'acc&egrave;s web
-      &agrave; des listes et des valeurs pour de nombreuses
-      entit&eacute;s JMRI d&eacute;finies, dans le format <a href=
-      "http://en.wikipedia.org/wiki/JSON">moderne
-      JSON</a>. Il fournit aussi une interface <a href=
+      <p>Le <strong>Servlet Json JMRI</strong> fournit l'accès web à des listes et des valeurs pour
+      de nombreuses entités JMRI définies, dans le format <a href=
+      "http://en.wikipedia.org/wiki/JSON">moderne JSON</a>. Il fournit aussi une interface <a href=
       "http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> pour faire changer les statuts de ces
-      entit&eacute;s, et &eacute;couter les changements
-      externes.</p>
-      La fonction <b>HTTP GET</b> du servlet
-      r&eacute;pond au mod&eacute;le URL suivant:
-
+      entités, et écouter les changements externes.</p>
+      La fonction <strong>HTTP GET</strong> du servlet répond au modéle URL suivant:
       <ul>
         <li>/json/cars</li>
 
@@ -58,129 +45,100 @@
         <li>/json/sensors</li>
 
         <li>/json/sensors/&lt;name&gt;</li>
-      </ul>actuellement, le servlet supporte wagons, machines,
-      lumi&egrave;res, emplacements, m&eacute;moiress,
-      m&eacute;tadata, panneau, alimentation, chemins de fer,
-      rapports, liste, itin&eacute;raires, capteurs, T&ecirc;tes
-      signal, M&acirc;ts signal, convois, et aiguillages.
-      Lafonction WebSocket de ce servlet actuellement g&egrave;re
-      les cha&icirc;nes JSON sous quatre formes diff&eacute;rentes:
-
+      </ul>
+      actuellement, le servlet supporte wagons, machines, lumières, emplacements, mémoiress,
+      métadata, panneau, alimentation, chemins de fer, rapports, liste, itinéraires, capteurs,
+      Têtes signal, Mâts signal, convois, et aiguillages. Lafonction WebSocket de ce servlet
+      actuellement gère les chaînes JSON sous quatre formes différentes:
       <ul>
-        <li>les demandes de liste dans le formulaire:
-        <code>{"type":"list","list":"trains"}</code> qui sont
-        pass&eacute;es &agrave; JsonLister pour gestion.</li>
+        <li>les demandes de liste dans le formulaire: <code>{"type":"list","list":"trains"}</code>
+        qui sont passées à JsonLister pour gestion.</li>
 
-        <li>status individuelle des &eacute;l&eacute;ments requis
-        dans le
-        formulaire<code>{"type":"turnout","data":{"name":"LT14"}}</code>
-        qui sont transmises aux gestionnaires sp&eacute;cifiques.
-        Ces demandes initieront les "auditeurs" qui enverront
-        r&eacute;ponses mises &agrave; jour &agrave; chaque
-        changement d'&eacute;tat de l'&eacute;l&eacute;ment.
-
+        <li>status individuelle des éléments requis dans le
+        formulaire<code>{"type":"turnout","data":{"name":"LT14"}}</code> qui sont transmises aux
+        gestionnaires spécifiques. Ces demandes initieront les "auditeurs" qui enverront réponses
+        mises à jour à chaque changement d'état de l'élément.
           <ul>
-            <li>l'&eacute;tat d'un &eacute;l&eacute;ment peut
-            &ecirc;tre r&eacute;gl&eacute; par l'ajout d'un
-            n&oelig;ud d'<strong>&eacute;tat</strong> au n&oelig;ud
-            <em>donn&eacute;es</em> dans une requ&ecirc;te HTTP
-            POST:
+            <li>l'état d'un élément peut être réglé par l'ajout d'un nœud d'<strong>état</strong>
+            au nœud <em>données</em> dans une requête HTTP POST:
             <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code></li>
 
-            <li>Des types diff&eacute;rents peuvent &ecirc;tre
-            cr&eacute;&eacute;s si la requ&ecirc;te est une
-            requ&ecirc;te HTTP PU.Notez que tous les types
-            supportent ceci</li>
+            <li>Des types différents peuvent être créés si la requête est une requête HTTP PU.Notez
+            que tous les types supportent ceci</li>
           </ul>
         </li>
 
-        <li>une pulsation dans le formulaire <code>*</code> ou
-        <code>{"type":"ping"}</code>. La <code>*</code> Pulsation
-        n'obtient pas de r&eacute;ponse, tandis que la pulsation
-        JSON provoque une<code>{"type":"pong"}</code>
-        r&eacute;ponse.</li>
+        <li>une pulsation dans le formulaire <code>*</code> ou <code>{"type":"ping"}</code>. La
+        <code>*</code> Pulsation n'obtient pas de réponse, tandis que la pulsation JSON provoque
+        une<code>{"type":"pong"}</code> réponse.</li>
 
-        <li>un signoff dans le formulaire:
-        <code>{"type":"goodbye"}</code> pour lequel une
-        r&eacute;ponse identique est envoy&eacute;e avant que la
-        connexion ne se ferme.</li>
-      </ul>La fonction <b>WebSocket</b> du Servlet peut &ecirc;tre
-      vue. en acc&eacute;dant &agrave; l' url <b>/JSON/</b>,
-      o&ugrave; une console <b>JSON</b> est fourni pour le
-      test.<br>
-      Exemple de commandes et r&eacute;ponses:
-
-      <table id="jsonResponses">
+        <li>un signoff dans le formulaire: <code>{"type":"goodbye"}</code> pour lequel une réponse
+        identique est envoyée avant que la connexion ne se ferme.</li>
+      </ul>
+      La fonction <strong>WebSocket</strong> du Servlet peut être vue. en accédant à l' url
+      <strong>/JSON/</strong>, où une console <strong>JSON</strong> est fourni pour le test.<br>
+      Exemple de commandes et réponses:
+      <table id="jsonResponses" summary="">
         <tr>
           <th>commande</th>
-
-          <th>r&eacute;ponse</th>
-
+          <th>réponse</th>
           <th>notes</th>
         </tr>
 
         <tr>
-          <td>
-          <code>{"type":"sensor","data":{"name":"IS2"}}</code></td>
-
-          <td>
-          <code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
-
-          <td>demande l'&eacute;tat actuel du capteur IS2</td>
+          <td><code>{"type":"sensor","data":{"name":"IS2"}}</code>
+          </td>
+          <td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code>
+          </td>
+          <td>demande l'état actuel du capteur IS2</td>
         </tr>
 
         <tr>
-          <td>
-          <code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
-
-          <td>
-          <code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
-
-          <td>D&eacute;finit le capteur IS2 &agrave; InActif
-          (4)</td>
+          <td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code>
+          </td>
+          <td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code>
+          </td>
+          <td>Définit le capteur IS2 à InActif (4)</td>
         </tr>
 
         <tr>
-          <td>
-          <code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td>
-
-          <td>
-          <code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td>
-
-          <td>Envoyer l'&eacute;tat=0 est aussi trait&eacute; comme
-          une requ&ecirc;te pour le statut actuel</td>
+          <td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code>
+          </td>
+          <td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code>
+          </td>
+          <td>Envoyer l'état=0 est aussi traité comme une requête pour le statut actuel</td>
         </tr>
 
         <tr>
-          <td><code>{"type":"power","data":{}}</code></td>
-
-          <td><code>{"type":"power","data":{"state":2}}</code></td>
-
-          <td>L'alimentation ne n&eacute;cessite pas de nom</td>
+          <td><code>{"type":"power","data":{}}</code>
+          </td>
+          <td><code>{"type":"power","data":{"state":2}}</code>
+          </td>
+          <td>L'alimentation ne nécessite pas de nom</td>
         </tr>
 
         <tr>
-          <td><code>{"type":"ping"}</code></td>
-
-          <td><code>{"type":"pong"}</code></td>
-
-          <td>ping Requ&ecirc;te et R&eacute;ponse</td>
+          <td><code>{"type":"ping"}</code>
+          </td>
+          <td><code>{"type":"pong"}</code>
+          </td>
+          <td>ping Requête et Réponse</td>
         </tr>
 
         <tr>
-          <td><code>{"type":"list","list":"panels"}</code></td>
-
+          <td><code>{"type":"list","list":"panels"}</code>
+          </td>
           <td><code>{"type":"list","list":[{"name":"Panel/Panel",
           "URL":"/panel/Panel/Panel?format=json","userName":"Panel","type":"Panel"},
           {"name":"Layout/Waccamaw%20Coast%20Line",
-          "URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=json",
-          "userName":"Waccamaw Coast
-          Line","type":"Layout"}]}</code></td>
-
-          <td>requi&egrave;re une liste de panneaux, r&eacute;pond
-          avec un ensemble des d&eacute;tails de deux panneaux</td>
+          "URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=json", "userName":"Waccamaw Coast
+          Line","type":"Layout"}]}</code>
+          </td>
+          <td>requière une liste de panneaux, répond avec un ensemble des détails de deux
+          panneaux</td>
         </tr>
-      </table><!--#include virtual="/Footer.shtml" -->
+      </table>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

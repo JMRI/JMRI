@@ -1,73 +1,53 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Send Problem Report</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Send Problem Report</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Upload Debugging Information</h1>
-      
-      <b>Note:  This tool is now obsolete.  Please 
-      see the new 
-      <a href="../../../apps/util/issuereporter/swing/IssueReporter.shtml">"Report Issue ..." menu item</a>
-      instead.</b>
-      <a href="SampleReportForm.png"><img src="SampleReportForm.png" height="25%" width="25%" align="right"></a>
-      <p>The "Upload
-      Debugging Information" item in JMRI Help menus lets you store
-      debugging information where the JMRI developers can easily
-      find it. The information contains all of the specific details
-      of your JMRI installation, including the log from the most
-      recent running of the program, but doesn't contain any of
-      your private information. You can see previous problem
-      reports on the <a href=
-      "https://sourceforge.net/p/jmri/mailman/jmri-reports/">jmri-reports
-      mailing list</a>.</p>
+      <strong>Note: This tool is now obsolete. Please see the new <a href=
+      "../../../apps/util/issuereporter/swing/IssueReporter.shtml">"Report Issue ..." menu item</a>
+      instead.</strong> <a href="SampleReportForm.png"><img src="SampleReportForm.png" height="25%"
+      width="25%" class="floatRight" alt="debug dialog"></a>
+      <p>The "Upload Debugging Information" item in JMRI Help menus lets you store debugging
+      information where the JMRI developers can easily find it. The information contains all of the
+      specific details of your JMRI installation, including the log from the most recent running of
+      the program, but doesn't contain any of your private information. You can see previous
+      problem reports on the <a href=
+      "https://sourceforge.net/p/jmri/mailman/jmri-reports/">jmri-reports mailing list</a>.</p>
 
-      <p>To make the information most useful, you should do the
-      upload as soon as possible after encountering the problem, so
-      that any useful information hasn't been overwritten.</p>
+      <p>To make the information most useful, you should do the upload as soon as possible after
+      encountering the problem, so that any useful information hasn't been overwritten.</p>
 
-      <p>The "Upload Debugging Information" help item will open a
-      new window with three fields and six checkboxes. Enter your
-      email address in the top line. It won't be made visible to
-      the public, but we do require a valid email address to cut
-      down on spam. In the next field, enter a one-line summary of
-      the problem that will appear as the subject of the upload.
-      Finally, type a few lines describing want went wrong, how to
-      recreate it, etc.</p>
+      <p>The "Upload Debugging Information" help item will open a new window with three fields and
+      six checkboxes. Enter your email address in the top line. It won't be made visible to the
+      public, but we do require a valid email address to cut down on spam. In the next field, enter
+      a one-line summary of the problem that will appear as the subject of the upload. Finally,
+      type a few lines describing want went wrong, how to recreate it, etc.</p>
 
-      <p>Normally, you leave the checkboxes marked so that the
-      report will contain the context information (JMRI version,
-      Java version, hardware types, etc) and the most recent log
-      files. If you don't want to include those for some reason,
-      just uncheck them.</p>
+      <p>Normally, you leave the checkboxes marked so that the report will contain the context
+      information (JMRI version, Java version, hardware types, etc) and the most recent log files.
+      If you don't want to include those for some reason, just uncheck them.</p>
 
-      <p>Finally, push send. If everything goes OK, the window will
-      close itself in a couple of seconds after the information has
-      been sent.</p>
+      <p>Finally, push send. If everything goes OK, the window will close itself in a couple of
+      seconds after the information has been sent.</p>
 
-      <p><b>Note: Uploading this information will not necessarily
-      result in somebody leaping up to fix your problem.</b> This
-      is not a support request, it's just a convenient way to get
-      your program information where people can see it.</p>
+      <p><strong>Note: Uploading this information will not necessarily result in somebody leaping
+      up to fix your problem.</strong> This is not a support request, it's just a convenient way to
+      get your program information where people can see it.</p>
 
-      <p>If you want quick help with a problem, you should talk
-      with some JMRI users in your area (it's always good to talk
-      to friends), or ask on the <a href=
-      "https://groups.io/g/jmriusers">JMRI
-      users group</a>.</p>
+      <p>If you want quick help with a problem, you should talk with some JMRI users in your area
+      (it's always good to talk to friends), or ask on the <a href=
+      "https://groups.io/g/jmriusers">JMRI users group</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

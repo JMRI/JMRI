@@ -1,95 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: XML DTD Usage</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
-
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-  <div id="mainContent">
+    <!--#include virtual="Sidebar.shtml" -->
 
-  <h1>JMRI: XML DTD Usage</h1>
+    <div id="mainContent">
+      <h1>JMRI: XML DTD Usage</h1>
 
-      <p class="important">This page describes the former usage
-      of XML DTDs in JMRI before version 2.9.4. The use of these
-      DTDs in JMRI was replaced with
-      <a href="XmlSchema.shtml">XML schema</a> in JMRI 2.9.4.</p>
+      <p class="important">This page describes the former usage of XML DTDs in JMRI before version
+      2.9.4. The use of these DTDs in JMRI was replaced with <a href="XmlSchema.shtml">XML
+      schema</a> in JMRI 2.9.4.</p>
 
-      <p>In the JMRI distributions, the DTDs are stored in the
-      <a href="/xml/DTD">xml/DTD</a> directory. Note that they are
-      not stored in each directory alongside the XML files. There
-      are just too many locations to keep such a set of DTD files
-      up to date. JMRI itself, via the jmri.jmrit.XmlFile class,
-      provides support for locating those files when the XML parser
-      needs them.</p>Each file contains a DOCTYPE line that
-      specifies a DTD name. There are three different methods used
-      to locate the actual DTD file:
-
+      <p>In the JMRI distributions, the DTDs are stored in the <a href="/xml/DTD">xml/DTD</a>
+      directory. Note that they are not stored in each directory alongside the XML files. There are
+      just too many locations to keep such a set of DTD files up to date. JMRI itself, via the
+      jmri.jmrit.XmlFile class, provides support for locating those files when the XML parser needs
+      them.</p>
+      Each file contains a DOCTYPE line that specifies a DTD name. There are three different
+      methods used to locate the actual DTD file:
       <ul>
-        <li>Web browsers look exactly where the DOCTYPE line
-        specifies, and must find the DTD there to function.</li>
+        <li>Web browsers look exactly where the DOCTYPE line specifies, and must find the DTD there
+        to function.</li>
 
-        <li>JMRI 1.8 and earlier assumes that the name is relative
-        to the program's xml/DTD directory, and looks for it using
-        that. In practice, this allows two forms for the DOCTYPE
+        <li>JMRI 1.8 and earlier assumes that the name is relative to the program's xml/DTD
+        directory, and looks for it using that. In practice, this allows two forms for the DOCTYPE
         line:
-
           <ul>
             <li>name.dtd</li>
 
             <li>../DTD/name.dtd</li>
-          </ul>Early XML files used both; the program itself could
-          generate either depending on the circumstances.
+          </ul>
+          Early XML files used both; the program itself could generate either depending on the
+          circumstances.
         </li>
 
-        <li>JMRI 1.9.2 and later provide a more powerful DTD search
-        procedure using the <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">
-          jmri.util.JmriLocalEntityResolver</a> class. It parses
-          the reference in the DOCTYPE and handles it in several
-          ways:
-
+        <li>JMRI 1.9.2 and later provide a more powerful DTD search procedure using the <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
+        class. It parses the reference in the DOCTYPE and handles it in several ways:
           <ul>
-            <li>If it's an HTTP URL, JMRI first attempts to find
-            the corresponding file in the local distribution. If
-            so, it uses the local copy, otherwise it attempts to
-            load a copy from the Internet using the URL.</li>
+            <li>If it's an HTTP URL, JMRI first attempts to find the corresponding file in the
+            local distribution. If so, it uses the local copy, otherwise it attempts to load a copy
+            from the Internet using the URL.</li>
 
-            <li>If it's a file path that starts with "../DTD/",
-            JMRI looks in it's local xml/DTD directory for the DTD
-            file.</li>
+            <li>If it's a file path that starts with "../DTD/", JMRI looks in it's local xml/DTD
+            directory for the DTD file.</li>
 
-            <li>If the path is just a filename, JMRI looks in it's
-            local xml/DTD directory for the DTD file.</li>
+            <li>If the path is just a filename, JMRI looks in it's local xml/DTD directory for the
+            DTD file.</li>
 
-            <li>In any other case, e.g. a local or absolute
-            pathname, JMRI looks there for the DTD file. Relative
-            pathnames are interpreted as starting from the JMRI
-            install directory.</li>
-          </ul>If the file can't be found, the XML file isn't
-          opened. These JMRI versions write just the DTD filename
-          in the DOCTYPE line when writing XML files. This provides
-          complete backward compatibility with existing files and
-          older versions of JMRI back to 1.7.1. At the same time,
-          since it can handle HTTP URLs even without an Internet
-          connection, it allows us to eventually move forward.
+            <li>In any other case, e.g. a local or absolute pathname, JMRI looks there for the DTD
+            file. Relative pathnames are interpreted as starting from the JMRI install
+            directory.</li>
+          </ul>
+          If the file can't be found, the XML file isn't opened. These JMRI versions write just the
+          DTD filename in the DOCTYPE line when writing XML files. This provides complete backward
+          compatibility with existing files and older versions of JMRI back to 1.7.1. At the same
+          time, since it can handle HTTP URLs even without an Internet connection, it allows us to
+          eventually move forward.
         </li>
       </ul>
-
-      <b>Starting with JMRI 2.9.4, JMRI uses <a href=
-      "XmlSchema.shtml">XML schema</a> instead of DTDs, and this
-      process is different.</b>
-
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <strong>Starting with JMRI 2.9.4, JMRI uses <a href="XmlSchema.shtml">XML schema</a> instead
+      of DTDs, and this process is different.</strong> <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

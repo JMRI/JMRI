@@ -429,6 +429,112 @@ public class IdentifyDecoderTest {
         jmri.util.JUnitAppender.assertWarnMessage("Stopping due to error: "
                             + p.decodeErrorCode(2));
     }
+    
+    /**
+     * Test TCS decoder with 4-digit productID.
+     * Should pass
+     */
+    @Test
+    public void testIdentifyTCSV5() {
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8, start 7
+        i.programmingOpReply(153, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7, start 249
+        i.programmingOpReply(5, 0);
+        Assert.assertEquals("step 3 reads CV ", 249, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV249, start 253
+        i.programmingOpReply(176, 0);
+        Assert.assertEquals("step 5 reads CV ", 253, cvRead);
+        Assert.assertEquals("running after 5 ", true, i.isRunning());
+        
+        // simulate CV read complete on CV253, start 254
+        i.programmingOpReply(1, 0);
+        Assert.assertEquals("step 6 reads CV ", 254, cvRead);
+        Assert.assertEquals("running after 6 ", true, i.isRunning());
+        
+        // simulate CV read complete on CV254, start 255
+        i.programmingOpReply(2, 0);
+        Assert.assertEquals("step 7 reads CV ", 255, cvRead);
+        Assert.assertEquals("running after 7 ", true, i.isRunning());
+        
+        // simulate CV read complete on CV255, start 256
+        i.programmingOpReply(3, 0);
+        Assert.assertEquals("step 8 reads CV ", 256, cvRead);
+        Assert.assertEquals("running after 8 ", true, i.isRunning());
+        
+        // simulate CV read complete on CV256, end
+        i.programmingOpReply(4, 0);
+
+        Assert.assertEquals("found mfg ID ", 153, i.mfgID);
+        Assert.assertEquals("found model ID ", 5, i.modelID);
+        Assert.assertEquals("found product ID ", 67305985, i.productID);
+    }
+    
+        /**
+     * Test TCS decoder with single byte, CV249 productID.
+     * Should pass
+     */
+    @Test
+    public void testIdentifyTCSV4() {
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8, start 7
+        i.programmingOpReply(153, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7, start 249
+        i.programmingOpReply(4, 0);
+        Assert.assertEquals("step 3 reads CV ", 249, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV249, end
+        i.programmingOpReply(80, 0);
+
+        Assert.assertEquals("found mfg ID ", 153, i.mfgID);
+        Assert.assertEquals("found model ID ", 4, i.modelID);
+        Assert.assertEquals("found product ID ", 80, i.productID);
+    }
 
     /**
      * Initialize the system.
