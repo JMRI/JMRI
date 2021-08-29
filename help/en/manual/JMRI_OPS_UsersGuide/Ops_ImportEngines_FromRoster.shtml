@@ -1,83 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI OperationsPro - Importing Engines from Roster</title>
   <!--#include virtual="/Style.shtml" -->
-</head>
+  <!-- OperationsPro Styles -->
 
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    <div id="mainContent">
+      <h1 id="Top">Using JMRI® to Operate Trains</h1>
 
       <h2>OperationsPro: Importing Locomotives from Roster</h2>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_Engines_menu.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
       <h3>Import locomotives from roster</h3>
 
-      <p>This menu opens a system Import dialog box. If you already
-      have a <span style="font-weight: bold;">DecoderPro&reg;
-      locomotive roster</span> created eg. when programming
-      decoders, you may import this roster into the OperationsPro
-      Roster. All Locomotives that are not already in your
-      OperationsPro Roster will be imported and a message will be
-      displayed informing you of how many locomotives were
-      imported:</p>
+      <p>This menu opens a system Import dialog box. If you already have a <span style=
+      "font-weight: bold;">DecoderPro® locomotive roster</span> created eg. when programming
+      decoders, you may import this roster into the OperationsPro Roster. All Locomotives that are
+      not already in your OperationsPro Roster will be imported and a message will be displayed
+      informing you of how many locomotives were imported:</p>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 313px; height: 122px;" alt=
-        "import dialog" src="images/Ops_Successful_Import.png">
+      <div style="margin-left: 40px;"><img style="width: 313px; height: 122px;" alt="import dialog"
+      src="images/Ops_Successful_Import.png">
       </div>
 
-      <p>This way you can use this tool any time you add
-      Locomotives to your DecoderPro&reg; locomotive roster. The
-      DecoderPro&reg; locomotive roster doesn't have the
-      locomotive's length, so a default length is entered for you.
-      You should manually correct the Locomotive Length in
-      OperationsPro if you want the program to correctly calculate
-      your Train lengths.</p>
+      <p>This way you can use this tool any time you add Locomotives to your DecoderPro® locomotive
+      roster. The DecoderPro® locomotive roster doesn't have the locomotive's length, so a default
+      length is entered for you. You should manually correct the Locomotive Length in OperationsPro
+      if you want the program to correctly calculate your Train lengths.</p>
 
-      <p>Now that we have imported your DecoderPro locomotive
-      roster into the OperationsPro Roster you will need to edit
-      the entries to add the attributes that are required for
-      OperationsPro but were not needed in the DecoderPro
-      locomotive roster file when you programmed the decoders.</p>
+      <p>Now that we have imported your DecoderPro locomotive roster into the OperationsPro Roster
+      you will need to edit the entries to add the attributes that are required for OperationsPro
+      but were not needed in the DecoderPro locomotive roster file when you programmed the
+      decoders.</p>
 
-      <p><img src="images/Ops_EngineRoster.png" alt="Engine Roster"
-      height="301" width="922"></p>
+      <p><img src="images/Ops_EngineRoster.png" alt="Engine Roster" height="301" width="922">
+      </p>
 
-      <p>These engines were imported from JMRI Roster, so we will
-      need to edit them to set the correct length, Consist,
-      Location as required. The <a href=
-      "Ops_EditEngines.shtml"><strong>Edit</strong></a> button in
-      the <strong>Edit</strong> column will open the <strong>Edit
-      Locomotives</strong> window and allow you to edit Locomotive
+      <p>These engines were imported from JMRI Roster, so we will need to edit them to set the
+      correct length, Consist, Location as required. The <a href=
+      "Ops_EditEngines.shtml"><strong>Edit</strong></a> button in the <strong>Edit</strong> column
+      will open the <strong>Edit Locomotives</strong> window and allow you to edit Locomotive
       attributes..</p>
 
-      <p>The <a style="font-weight: bold;" href=
-      "Ops_SetEngines.shtml">Set</a> button in the
-      <strong>Set</strong> column for each locomotive in the roster
-      will allow you to set the current Locomotive Location.</p>
+      <p>The <a style="font-weight: bold;" href="Ops_SetEngines.shtml">Set</a> button in the
+      <strong>Set</strong> column for each locomotive in the roster will allow you to set the
+      current Locomotive Location.</p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_Engines_menu.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

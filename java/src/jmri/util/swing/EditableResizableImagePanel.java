@@ -123,7 +123,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
             popUpMenu = new JPopupMenu();
-            removeMenuItem = new JMenuItem("Remove");
+            removeMenuItem = new JMenuItem(Bundle.getMessage("Remove"));
             removeMenuItem.addActionListener((ActionEvent e) -> {
                 resizableImagePanel.setImagePath(null);
             });

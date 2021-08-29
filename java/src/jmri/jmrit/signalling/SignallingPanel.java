@@ -33,14 +33,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastManager;
-import jmri.Turnout;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel;
@@ -951,14 +944,22 @@ public class SignallingPanel extends JmriPanel {
     }
     
     void setAssociatedSection(SignalMast destMast){
-        jmri.SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
+        SectionManager sm = InstanceManager.getDefault(SectionManager.class);
         if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty()) {
-            jmri.Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
-            if (sec == null) {
-                //A Section already exists, lets grab it and check that it is one used with the SML, if so carry on using that.
-                sec = sm.getSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
-                if (sec.getSectionType() != jmri.Section.SIGNALMASTLOGIC) {
+            String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
+            Section sec = sm.getSection(secUserName);
+            if (sec != null) {
+                //A Section already exists, lets check that it is one used with the SML, if so carry on using that.
+                if (sec.getSectionType() != Section.SIGNALMASTLOGIC) {
                     return;
+                }
+            }
+            else {
+                try {
+                    sec = sm.createNewSection(secUserName);
+                }
+                catch(IllegalArgumentException ex){
+                    log.warn("Could not create Section for {} {}",secUserName,ex.getMessage());
                 }
             }
             sml.setAssociatedSection(sec, destMast);
@@ -1482,12 +1483,13 @@ public class SignallingPanel extends JmriPanel {
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == INCLUDE_COLUMN) {
-                return Boolean.class;
-            } else if (c == STATE_COLUMN) {
-                return RowComboBoxPanel.class; // Use a JPanel containing a custom State ComboBox
-            } else {
-                return String.class;
+            switch (c) {
+                case INCLUDE_COLUMN:
+                    return Boolean.class;
+                case STATE_COLUMN:
+                    return RowComboBoxPanel.class; // Use a JPanel containing a custom State ComboBox
+                default:
+                    return String.class;
             }
         }
 
@@ -2117,7 +2119,7 @@ public class SignallingPanel extends JmriPanel {
             smlValid();
         }
 
-        void smlValid() {
+        final void smlValid() {
             if (sml != null) {
                 sml.addPropertyChangeListener(this);
             }

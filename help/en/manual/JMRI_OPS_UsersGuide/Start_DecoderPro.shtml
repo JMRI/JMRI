@@ -1,86 +1,82 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI OperationsPro Manual: Getting Started</title><!--#include virtual="/Style.shtml" -->
+  <!-- OperationsPro Styles -->
 
-  <title>JMRI OperationsPro Manual: Getting Started</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Getting Started with Operations</h1>
+    <div id="mainContent">
+      <h1 id="Top">Getting Started with Operations</h1>
 
       <h2>OperationsPro: How to start the program</h2>
 
-      <div align="right">
-        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href=
-        "Start_Preferences.shtml">| Next</a></p>
+      <div class="ops-right">
+        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">|
+        Next</a></p>
 
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
+        <p><a href="index.shtml#startOps">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>The Operations Program is run from the DecoderPro&reg;
-      Menu which is activated in the Operations Preferences.</p>
+      <p>The Operations Program is run from the DecoderPro® Menu which is activated in the
+      Operations Preferences.</p>
 
-      <p>Once you have downloaded the DecoderPro&reg; software and
-      installed it, simply open the program in the usual manner for
-      your operating system. On MS Windows the installer will place
-      an icon on your Desktop. For details please refer to the
-      <a href="../../html/setup/index.shtml">JMRI Setup
-      Help</a>.</p>
+      <p>Once you have downloaded the DecoderPro® software and installed it, simply open the
+      program in the usual manner for your operating system. On MS Windows the installer will place
+      an icon on your Desktop. For details please refer to the <a href=
+      "../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
 
-      <p><img src="images/DesktopIcons.png" width="223" height="79"
-      alt="desktop icons"></p>
+      <p><img src="images/DesktopIcons.png" width="223" height="79" alt="desktop icons">
+      </p>
 
-      <p>Double click on the icon for the program to open, in this
-      case we will open DecoderPro&reg;.</p>
+      <p>Double click on the icon for the program to open, in this case we will open
+      DecoderPro®.</p>
 
-      <p>The following dialog will appear briefly as the program is
-      loading:</p>
+      <p>The following dialog will appear briefly as the program is loading:</p>
 
-      <p><img src="images/StartDialog.png" width="170" height="167"
-      alt="Start dialog"></p>
+      <p><img src="images/StartDialog.png" width="170" height="167" alt="Start dialog">
+      </p>
 
-      <p>You should see this or a similar opening screen displayed
-      after one of the JMRI&reg; programs starts:</p>
+      <p>You should see this or a similar opening screen displayed after one of the JMRI® programs
+      starts:</p>
 
-      <h1><img src="images/Splash_Screen.png" width="496" height=
-      "282" alt="splash"></h1>
+      <h1><img src="images/Splash_Screen.png" width="496" height="282" alt="splash">
+      </h1>
 
-      <p>It may take a while for this screen to come up, especially
-      on older and slower computers. Remember that you are
-      essentially running the program on a Java emulator over your
-      native operating system software. New computers can do this
-      fairly quickly, but older ones will feel like they're taking
-      forever. <strong>Be patient</strong> - it will come up
-      eventually! Even on older computers, once the program is up
-      the response time is quite good.</p>
+      <p>It may take a while for this screen to come up, especially on older and slower computers.
+      Remember that you are essentially running the program on a Java emulator over your native
+      operating system software. New computers can do this fairly quickly, but older ones will feel
+      like they're taking forever. <strong>Be patient</strong> - it will come up eventually! Even
+      on older computers, once the program is up the response time is quite good.</p>
 
-      <p>If this is the first time you have run the program after
-      you installed the software, the <a href=
-      "Start_Preferences.shtml">Preferences</a> screen will come up
-      automatically to allow you to set up the system for your
-      particular configuration. Also if you change your system
-      configuration, OR if you have your laptop away from the
-      railroad, but you want to play with JMRI there is a simulator
-      mode you may want to try. So click next, and we"ll have a
-      look at Preferences.</p>
+      <p>If this is the first time you have run the program after you installed the software, the
+      <a href="Start_Preferences.shtml">Preferences</a> screen will come up automatically to allow
+      you to set up the system for your particular configuration. Also if you change your system
+      configuration, OR if you have your laptop away from the railroad, but you want to play with
+      JMRI there is a simulator mode you may want to try. So click next, and we"ll have a look at
+      Preferences.</p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href=
-        "Start_Preferences.shtml">| Next</a></p>
+      <div class="ops-right">
+        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">|
+        Next</a></p>
 
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
+        <p><a href="index.shtml#startOps">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

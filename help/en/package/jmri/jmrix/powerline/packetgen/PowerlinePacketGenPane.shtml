@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send Powerline Device message</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send Powerline message packet">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Send Powerline Device Message</h1>
 
-      <p>This is the
-      help/jmri/jmrix/powerline/packetgen/SerialPacketGenPane help
-      page</p>
-
+      <p>This is the help/jmri/jmrix/powerline/packetgen/SerialPacketGenPane help page</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

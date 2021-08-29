@@ -1,207 +1,133 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec le 203-10-15-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Panel Editor Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Index Editor">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Index Editor"><!-- Style -->
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>L'éditeur Index des Images</h1>
+      Cette fenêtre est utilisée pour créer un Index d'Image. L'index peut être organisé selon
+      toute classification que vous souhaitez. Son utilisation vous permet d'accéder à tout fichier
+      image qui est accessible à partir de votre ordinateur sans déplacement ou copie du fichier.
+      Il est semblable à une table des matières ou index que vous pourriez trouver dans un manuel
+      de référence.
+      <h2>Contenu de l'éditeur d'Index de Images</h2>
+      <img src="ImageIndex.png" align="right" alt="">
+      <p>La fenêtre contient deux volets côte à côte. Le côté gauche est votre position actuelle du
+      Catalogue d'Images. C'est ce que l'éditeur D'Icônes a utilisé pour changer d'icônes. Le
+      panneau supérieur de ce volet consiste en un ou plusieurs arbres. L'arborescence par défaut
+      est le "Répertoire des Programmes", le catalogue de tous les fichiers image téléchargés avec
+      le version de JMRI que vous utilisez. Ce sont des fichiers qui ont été encapsulés dans
+      "jmri.jar". Un autre arbre par défaut peut être "Préférences Directory", le catalogue de
+      toutes les fichiers images contenus dans les "ressources" dans votre répertoire des
+      préférences JMRI. Si vous n'avez pas créé de répertoire "ressources" dans votre répertoire
+      préférences JMRI vous ne verrez pas cet arbre. D'autres arbres que vous pouvez voir sont ceux
+      que vous avez installés après l'utilisation du menu <strong>Ouvrir Répertoire Fichier
+      Système</strong> dans l'un des fenêtres éditeur D'Icônes et appuyé sur le bouton
+      <strong>Ajouter au catalogue</strong>. (Le bouton "Ajouter au catalogue" n'apparaît pas dans
+      cette fenêtre.). En-dessous des arbres il y a un "Aperçu" du volet qui affiche les images
+      trouvées dans n'importe quel nœud que vous avez sélectionné à partir de l'un des arbres
+      au-dessus. Les "Nœuds" sont les icônes de dossier qui apparaissent lorsque vous cliquez sur
+      la poignée vers la gauche d'un dossier d'icône. Cliquer sur un nœud va ouvrir un volet qui
+      affiche les icônes contenues dans le nœud.</p>
 
-      <h1>L'&eacute;diteur Index des Images</h1>Cette fen&ecirc;tre
-      est utilis&eacute;e pour cr&eacute;er un Index d'Image.
-      L'index peut &ecirc;tre organis&eacute; selon toute
-      classification que vous souhaitez. Son utilisation vous
-      permet d'acc&eacute;der &agrave; tout fichier image qui est
-      accessible &agrave; partir de votre ordinateur sans
-      d&eacute;placement ou copie du fichier. Il est semblable
-      &agrave; une table des mati&egrave;res ou index que vous
-      pourriez trouver dans un manuel de r&eacute;f&eacute;rence.
+      <p>Le volet "Prévisualisation" comporte une étiquette qui indique combien de fichiers d'image
+      sont référencés dans le nœud. Sous chaque image (icône) il y a une étiquette qui indique
+      "l'échelle" à laquelle l'image est affichée. Sous les icônes se trouvent des boutons radio
+      qui fournissent trois de fond pour les icônes. Cela peut vous aider à déterminer quelles
+      parties de l'icône sont opaques et quelles parties sont transparentes.</p>
 
-      <h2>Contenu de l'&eacute;diteur d'Index de
-      Images</h2><img src="ImageIndex.png" align="right">
-
-      <p>La fen&ecirc;tre contient deux volets c&ocirc;te &agrave;
-      c&ocirc;te. Le c&ocirc;t&eacute; gauche est votre position
-      actuelle du Catalogue d'Images. C'est ce que l'&eacute;diteur
-      D'Ic&ocirc;nes a utilis&eacute; pour changer d'ic&ocirc;nes.
-      Le panneau sup&eacute;rieur de ce volet consiste en un ou
-      plusieurs arbres. L'arborescence par d&eacute;faut est le
-      "R&eacute;pertoire des Programmes", le catalogue de tous les
-      fichiers image t&eacute;l&eacute;charg&eacute;s avec le
-      version de JMRI que vous utilisez. Ce sont des fichiers qui
-      ont &eacute;t&eacute; encapsul&eacute;s dans "jmri.jar". Un
-      autre arbre par d&eacute;faut peut &ecirc;tre
-      "Pr&eacute;f&eacute;rences Directory", le catalogue de toutes
-      les fichiers images contenus dans les "ressources" dans votre
-      r&eacute;pertoire des pr&eacute;f&eacute;rences JMRI. Si vous
-      n'avez pas cr&eacute;&eacute; de r&eacute;pertoire
-      "ressources" dans votre r&eacute;pertoire
-      pr&eacute;f&eacute;rences JMRI vous ne verrez pas cet arbre.
-      D'autres arbres que vous pouvez voir sont ceux que vous avez
-      install&eacute;s apr&egrave;s l'utilisation du menu <b>Ouvrir
-      R&eacute;pertoire Fichier Syst&egrave;me</b> dans l'un des
-      fen&ecirc;tres &eacute;diteur D'Ic&ocirc;nes et appuy&eacute;
-      sur le bouton <b>Ajouter au catalogue</b>. (Le bouton
-      "Ajouter au catalogue" n'appara&icirc;t pas dans cette
-      fen&ecirc;tre.). En-dessous des arbres il y a un
-      "Aper&ccedil;u" du volet qui affiche les images
-      trouv&eacute;es dans n'importe quel n&oelig;ud que vous avez
-      s&eacute;lectionn&eacute; &agrave; partir de l'un des arbres
-      au-dessus. Les "N&oelig;uds" sont les ic&ocirc;nes de dossier
-      qui apparaissent lorsque vous cliquez sur la poign&eacute;e
-      vers la gauche d'un dossier d'ic&ocirc;ne. Cliquer sur un
-      n&oelig;ud va ouvrir un volet qui affiche les ic&ocirc;nes
-      contenues dans le n&oelig;ud.</p>
-
-      <p>Le volet "Pr&eacute;visualisation" comporte une
-      &eacute;tiquette qui indique combien de fichiers d'image sont
-      r&eacute;f&eacute;renc&eacute;s dans le n&oelig;ud. Sous
-      chaque image (ic&ocirc;ne) il y a une &eacute;tiquette qui
-      indique "l'&eacute;chelle" &agrave; laquelle l'image est
-      affich&eacute;e. Sous les ic&ocirc;nes se trouvent des
-      boutons radio qui fournissent trois de fond pour les
-      ic&ocirc;nes. Cela peut vous aider &agrave; d&eacute;terminer
-      quelles parties de l'ic&ocirc;ne sont opaques et quelles
-      parties sont transparentes.</p>
-
-      <p>Le c&ocirc;t&eacute; droit est l'<b>index d'image</b> que
-      vous pouvez modifier. Il est similaire au panneau gauche en
-      ce que le panneau sup&eacute;rieur est l'arbre de l'indice
-      que vous avez cr&eacute;&eacute;. De m&ecirc;me, la panneau
-      inf&eacute;rieur affiche les images trouv&eacute;es dans
-      n'importe quel n&oelig;ud de l'arbre que vous aves
-      s&eacute;lectionnez. Initialement, il y aura juste un
-      n&oelig;ud &eacute;tiquet&eacute; "index d'image". Vous
-      &ecirc;tes en mesure d'ajouter des n&oelig;uds
-      suppl&eacute;mentaires &agrave; ce n&oelig;ud en utilisant
-      les les menus ci-dessous.</p>
+      <p>Le côté droit est l'<strong>index d'image</strong> que vous pouvez modifier. Il est
+      similaire au panneau gauche en ce que le panneau supérieur est l'arbre de l'indice que vous
+      avez créé. De même, la panneau inférieur affiche les images trouvées dans n'importe quel nœud
+      de l'arbre que vous aves sélectionnez. Initialement, il y aura juste un nœud étiqueté "index
+      d'image". Vous êtes en mesure d'ajouter des nœuds supplémentaires à ce nœud en utilisant les
+      les menus ci-dessous.</p>
 
       <h2>Les Menus</h2>
 
-      <p>Le menu <b>Trouver des Ic&ocirc;nes</b> a deux
-      &eacute;l&eacute;ments:</p>
+      <p>Le menu <strong>Trouver des Icônes</strong> a deux éléments:</p>
 
       <ul>
-        <li><b>Stockage IndexImage</b>. Ceci stocke un
-        enregistrement permanent de l'index de l'image qui sera
-        restaur&eacute; la prochaine fois que l'&eacute;diteur de
-        panneau sera ouvert. L' Index des images sera inclus dans
-        les arbres utilis&eacute;s par le catalogue des Editeurs
-        d'Ic&ocirc;nes.</li>
+        <li><strong>Stockage IndexImage</strong>. Ceci stocke un enregistrement permanent de
+        l'index de l'image qui sera restauré la prochaine fois que l'éditeur de panneau sera
+        ouvert. L' Index des images sera inclus dans les arbres utilisés par le catalogue des
+        Editeurs d'Icônes.</li>
 
         <li>
-          <b>Ouvrir un R&eacute;pertoire Syst&egrave;me de
-          Fichiers</b>. Cela ouvre un s&eacute;lecteur de fichiers
-          o&ugrave; vous pouvez ouvrir n'importe quel
-          r&eacute;pertoire qui a des fichiers image. Pour ouvrir
-          le r&eacute;pertoire, s&eacute;lectionner n'importe quel
-          fichier image contenu et une fen&ecirc;tre va essayer
-          d'afficher tous les fichiers image dans le
-          r&eacute;pertoire. Voir
+          <strong>Ouvrir un Répertoire Système de Fichiers</strong>. Cela ouvre un sélecteur de
+          fichiers où vous pouvez ouvrir n'importe quel répertoire qui a des fichiers image. Pour
+          ouvrir le répertoire, sélectionner n'importe quel fichier image contenu et une fenêtre va
+          essayer d'afficher tous les fichiers image dans le répertoire. Voir
+          <p><a href="../display/IconAdder.shtml">éditeurs d'Icône</a> pour plus de détails sur cet
+          élément de menu.</p>
 
-          <p><a href="../display/IconAdder.shtml">&eacute;diteurs
-          d'Ic&ocirc;ne</a> pour plus de d&eacute;tails sur cet
-          &eacute;l&eacute;ment de menu.</p>
-
-          <p>Les ic&ocirc;nes affich&eacute;es dans la
-          "pr&eacute;visualisation" du panneau de n'importe quelle
-          fen&ecirc;tre r&eacute;pertoire ouverte &agrave; partir
-          de ce menu peuvent &ecirc;tre ajout&eacute;es &agrave;
-          l'index d'image. Comment faire cela est d&eacute;crit
-          ci-dessous.</p>
+          <p>Les icônes affichées dans la "prévisualisation" du panneau de n'importe quelle fenêtre
+          répertoire ouverte à partir de ce menu peuvent être ajoutées à l'index d'image. Comment
+          faire cela est décrit ci-dessous.</p>
         </li>
       </ul>
 
-      <p><b>Modifier</b> menu a trois &eacute;l&eacute;ments:</p>
+      <p><strong>Modifier</strong> menu a trois éléments:</p>
 
       <ul>
-        <li><b>Ajouter un N&oelig;ud</b>. S&eacute;lectionnez
-        d'abord un n&oelig;ud dans l'arbre d'index de l'image.
-        Ensuite, utilisez ce menu pour ajouter un sous-n&oelig;ud
-        au n&oelig;ud s&eacute;lectionn&eacute;. Un
-        "sous-n&oelig;ud" est un n&oelig;ud qui se branche sous le
-        n&oelig;ud s&eacute;lectionn&eacute;.</li>
+        <li><strong>Ajouter un Nœud</strong>. Sélectionnez d'abord un nœud dans l'arbre d'index de
+        l'image. Ensuite, utilisez ce menu pour ajouter un sous-nœud au nœud sélectionné. Un
+        "sous-nœud" est un nœud qui se branche sous le nœud sélectionné.</li>
 
-        <li><b>Supprimer un N&oelig;ud</b>. S&eacute;lectionnez
-        d'abord un n&oelig;ud dans l'arbre d'index de l'image.
-        Ensuite, utilisez ce menu pour supprimer le n&oelig;ud.
-        Puisque cela supprimera aussi des n&oelig;uds et
-        l'ic&ocirc;ne r&eacute;f&eacute;rence qui bifurquent sous
-        ce n&oelig;ud, un dialogue de confirmation s'affiche avec
-        le total de tous les &eacute;l&eacute;ments qui seront
-        supprim&eacute;s.</li>
+        <li><strong>Supprimer un Nœud</strong>. Sélectionnez d'abord un nœud dans l'arbre d'index
+        de l'image. Ensuite, utilisez ce menu pour supprimer le nœud. Puisque cela supprimera aussi
+        des nœuds et l'icône référence qui bifurquent sous ce nœud, un dialogue de confirmation
+        s'affiche avec le total de tous les éléments qui seront supprimés.</li>
 
-        <li><b>Renommer un N&oelig;ud</b>. S&eacute;lectionnez
-        d'abord un n&oelig;ud dans l'arbre d'index de l'image.
-        Ensuite, utilisez cet &eacute;l&eacute;ment de menu pour
-        changer le nom du n&oelig;ud.</li>
+        <li><strong>Renommer un Nœud</strong>. Sélectionnez d'abord un nœud dans l'arbre d'index de
+        l'image. Ensuite, utilisez cet élément de menu pour changer le nom du nœud.</li>
       </ul>
 
-      <h2>Ajout d'Ic&ocirc;nes aux l'Index d'Image</h2>
+      <h2>Ajout d'Icônes aux l'Index d'Image</h2>
 
-      <p>Utilisez "Glisser et D&eacute;poser" pour copier une
-      ic&ocirc;ne, depuis soit le volet Catalogue (volet gauche) ou
-      un fichier d'une Fen&ecirc;tre R&eacute;pertoire. Appuyez sur
-      le bouton de la souris sur n'importe quelle ic&ocirc;ne
-      apparaissant dans le volet "pr&eacute;visualisation" d'une de
-      ces fen&ecirc;tres pour "glisser" sur l'ic&ocirc;ne vers un
-      noeud de l'arbre Index des images (Volet de droite). (Glisser
-      signifie maintenir le bouton de la souris enfonc&eacute;
-      lorsque vous d&eacute;placez la souris pointeur sur un
-      n&oelig;ud de l'arbre d'index de l'image.) En fait, c'est
-      seulement la r&eacute;f&eacute;rence &agrave; l'emplacement
-      de l'ic&ocirc;ne qui est sauv&eacute; par l'Index des images.
-      Tant que le fichier reste en place, il sera affich&eacute;
-      par le catalogue, le Index des images et votre panneau (si
-      vous l'avez install&eacute;).</p>
+      <p>Utilisez "Glisser et Déposer" pour copier une icône, depuis soit le volet Catalogue (volet
+      gauche) ou un fichier d'une Fenêtre Répertoire. Appuyez sur le bouton de la souris sur
+      n'importe quelle icône apparaissant dans le volet "prévisualisation" d'une de ces fenêtres
+      pour "glisser" sur l'icône vers un noeud de l'arbre Index des images (Volet de droite).
+      (Glisser signifie maintenir le bouton de la souris enfoncé lorsque vous déplacez la souris
+      pointeur sur un nœud de l'arbre d'index de l'image.) En fait, c'est seulement la référence à
+      l'emplacement de l'icône qui est sauvé par l'Index des images. Tant que le fichier reste en
+      place, il sera affiché par le catalogue, le Index des images et votre panneau (si vous l'avez
+      installé).</p>
 
-      <h2>Suppression et Renommage d'ic&ocirc;nes l'Index
-      d'Image</h2>
+      <h2>Suppression et Renommage d'icônes l'Index d'Image</h2>
 
-      <p>Appuyer et rel&acirc;cher (cliquer) sur le bouton de la
-      souris sur une ic&ocirc;ne dans le panneau de
-      pr&eacute;visualisation de l'Index d'Image active un "Menu
-      contextuel" du menu. Les menus contextuels affichent le nom
-      et la r&eacute;f&eacute;rence de l' emplacement de
-      l'ic&ocirc;ne. Le Menu contextuel fournit &eacute;galement
-      des &eacute;l&eacute;ments pour modifier des ic&ocirc;nes
-      dans l'Index d'Image.</p>
+      <p>Appuyer et relâcher (cliquer) sur le bouton de la souris sur une icône dans le panneau de
+      prévisualisation de l'Index d'Image active un "Menu contextuel" du menu. Les menus
+      contextuels affichent le nom et la référence de l' emplacement de l'icône. Le Menu contextuel
+      fournit également des éléments pour modifier des icônes dans l'Index d'Image.</p>
 
       <ul>
-        <li><b>Renommer Ic&ocirc;ne</b> ouvre une bo&icirc;te de
-        dialogue o&ugrave; un nouveau nom peut &ecirc;tre
-        entr&eacute;.</li>
+        <li><strong>Renommer Icône</strong> ouvre une boîte de dialogue où un nouveau nom peut être
+        entré.</li>
 
-        <li><b>Supprimer l'Ic&ocirc;ne</b> supprime l'ic&ocirc;ne
-        du n&oelig;ud Index des Images.</li>
+        <li><strong>Supprimer l'Icône</strong> supprime l'icône du nœud Index des Images.</li>
 
         <li style="list-style: none">
-          <p>Note: <i>le panneau "pr&eacute;visualisation"
-          n'affiche que ces changements apr&egrave;s avoir
-          quitt&eacute; le n&oelig;ud et pour retourner ensuite au
-          n&oelig;ud.</i></p>
+          <p>Note: <em>le panneau "prévisualisation" n'affiche que ces changements après avoir
+          quitté le nœud et pour retourner ensuite au nœud.</em></p>
         </li>
-      </ul><!--#include virtual="/Footer.shtml" -->
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

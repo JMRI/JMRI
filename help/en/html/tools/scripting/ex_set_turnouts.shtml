@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Scripting Example - Setting Turnouts</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Scripting Example - Setting Turnouts</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -23,53 +21,41 @@
       <div class="section">
         <p>(Example contributed by Jerry Britton)</p>
 
-        <p>My layout, the <a href="http://jbritton.pennsyrr.com/"
-        target="new">Pennsylvania Railroad Eastern Region</a>,
-        already features over a hundred turnouts, with many more to
-        come. At this time, and for the foreseeable future, the
-        turnouts do not provide feedback; it's an expense I am not
-        ready to incur.</p>
+        <p>My layout, the <a href="http://jbritton.pennsyrr.com/" target="new">Pennsylvania
+        Railroad Eastern Region</a>, already features over a hundred turnouts, with many more to
+        come. At this time, and for the foreseeable future, the turnouts do not provide feedback;
+        it's an expense I am not ready to incur.</p>
 
-        <p>I've developed <a href=
-        "http://jbritton.pennsyrr.com/control_panels.ws4d" target=
-        "new">PanelPro panels</a> for a pair of dispatchers to use
-        to control the railroad. PanelPro issues turnout commands
-        via LocoNet (Digitrax system). Turnouts are powered by
-        Tortoise switch machines which are controlled by NCE
-        SwitchIt stationary decoders which monitor LocoNet for
-        commands.</p>
+        <p>I've developed <a href="http://jbritton.pennsyrr.com/control_panels.ws4d" target=
+        "new">PanelPro panels</a> for a pair of dispatchers to use to control the railroad.
+        PanelPro issues turnout commands via LocoNet (Digitrax system). Turnouts are powered by
+        Tortoise switch machines which are controlled by NCE SwitchIt stationary decoders which
+        monitor LocoNet for commands.</p>
 
-        <p>The problem is, without detection on the turnouts
-        themselves, every time PanelPro is opened for the first
-        time, all of the turnouts show a "?" state, meaning
-        PanelPro doesn't know their current state.</p>
+        <p>The problem is, without detection on the turnouts themselves, every time PanelPro is
+        opened for the first time, all of the turnouts show a "?" state, meaning PanelPro doesn't
+        know their current state.</p>
 
-        <p>Until now, I've invested a considerable amount of time
-        to manually click on each and every turnout to set its
-        state -- any state -- then set it to the desired state.
-        I've suggested that a default state field be added to the
-        Turnout Table -- and maybe we'll see that in the future --
-        but for now my need may be met via a script. Perhaps you'll
-        have a need it can meet as well.</p>
+        <p>Until now, I've invested a considerable amount of time to manually click on each and
+        every turnout to set its state -- any state -- then set it to the desired state. I've
+        suggested that a default state field be added to the Turnout Table -- and maybe we'll see
+        that in the future -- but for now my need may be met via a script. Perhaps you'll have a
+        need it can meet as well.</p>
 
-        <p>The reason for this web page is that I am a model
-        railroader that uses JMRI. Our very talented programming
-        team is made up of programmers that are also model
-        railroaders. When I asked "How do I...", I received far
-        more information than I needed or desired. I have no
-        interest in becoming a programmer or learning exactly how
-        it "works". I just have a need that I would like to be met
-        with a minimal amount of effort. It was a classic example
-        of asking for the time and being instructed how to build a
-        watch!</p>
+        <p>The reason for this web page is that I am a model railroader that uses JMRI. Our very
+        talented programming team is made up of programmers that are also model railroaders. When I
+        asked "How do I...", I received far more information than I needed or desired. I have no
+        interest in becoming a programmer or learning exactly how it "works". I just have a need
+        that I would like to be met with a minimal amount of effort. It was a classic example of
+        asking for the time and being instructed how to build a watch!</p>
 
-        <p>So here it is, a down and dirty script that you can
-        copy, make simple edits for your own use, and start using
-        immediately -- without having to know "how" it works.</p>
+        <p>So here it is, a down and dirty script that you can copy, make simple edits for your own
+        use, and start using immediately -- without having to know "how" it works.</p>
       </div>
 
       <div class="section">
         <h2>The Script</h2>
+
         <pre>
 import jmri
 class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
@@ -91,26 +77,22 @@ setStartup().start()          # create one of these, and start it running
       <div class="section">
         <h2>Making Use of the Script</h2>
 
-        <p>You should "copy" and "paste" the sample script into a
-        new text document. Be sure the file is indeed saved as a
-        generic text document, and not something like a Microsoft
-        Word file. The file suffix should be ".py" for Python, the
-        command language used by JMRI.</p>
+        <p>You should "copy" and "paste" the sample script into a new text document. Be sure the
+        file is indeed saved as a generic text document, and not something like a Microsoft Word
+        file. The file suffix should be ".py" for Python, the command language used by JMRI.</p>
 
-        <p>Save the file where JMRI can access it. I save mine in
-        the same directory as my PanelPro files.</p>
+        <p>Save the file where JMRI can access it. I save mine in the same directory as my PanelPro
+        files.</p>
 
-        <p>It is VERY IMPORTANT that you keep the formatting of the
-        script the way it is -- with leading tabs. The Python
-        language uses indentation as part of its command structure. 
-        [While this script is made with leading tabs, it is recommended
-        that scripts used with JMRI use four spaces instead as tabs sometimes
-        cause confusion.  And NEVER mix the use of tabs and spaces for
-        indentation as it will definitely cause confusion with program 
-        indentation and structure.] </p>
+        <p>It is VERY IMPORTANT that you keep the formatting of the script the way it is -- with
+        leading tabs. The Python language uses indentation as part of its command structure. [While
+        this script is made with leading tabs, it is recommended that scripts used with JMRI use
+        four spaces instead as tabs sometimes cause confusion. And NEVER mix the use of tabs and
+        spaces for indentation as it will definitely cause confusion with program indentation and
+        structure.]</p>
 
-        <p>This first part of the script you should include "as
-        is". No changes are necessary:</p>
+        <p>This first part of the script you should include "as is". No changes are necessary:</p>
+
         <pre>
 class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
    def init(self):
@@ -118,28 +100,21 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
    def handle(self):
      self.waitMsec(10000)         # time is in milliseconds
 </pre>
+        <p>The following part of the script is what you need to modify for your own use. Below are
+        commands to set the state for three turnouts; each consists of two lines.</p>
 
-        <p>The following part of the script is what you need to
-        modify for your own use. Below are commands to set the
-        state for three turnouts; each consists of two lines.</p>
+        <p>The first line includes a number in quotations which is the turnout number (decoder ID)
+        that you wish to send the command to. The state in parenthesis at the end of the line
+        (CLOSED or THROWN) is the position you want the turnout set to.</p>
 
-        <p>The first line includes a number in quotations which is
-        the turnout number (decoder ID) that you wish to send the
-        command to. The state in parenthesis at the end of the line
-        (CLOSED or THROWN) is the position you want the turnout set
-        to.</p>
+        <p>The second line adds a delay between commands, in milliseconds. If you have a lot of
+        turnouts to set, your power supply would likely not be able to handle throwing them all at
+        once. The delay allows the activations to be spread out over time. Dozens of turnouts may
+        be set over a period of a minute or two.</p>
 
-        <p>The second line adds a delay between commands, in
-        milliseconds. If you have a lot of turnouts to set, your
-        power supply would likely not be able to handle throwing
-        them all at once. The delay allows the activations to be
-        spread out over time. Dozens of turnouts may be set over a
-        period of a minute or two.</p>
+        <p>So "paste" multiple instances of the two line commands into your script as desired. You
+        may also add comment lines (beginning with a "#") to document sections of your layout.</p>
 
-        <p>So "paste" multiple instances of the two line commands
-        into your script as desired. You may also add comment lines
-        (beginning with a "#") to document sections of your
-        layout.</p>
         <pre>
      turnouts.provideTurnout("1").setState(CLOSED)
      self.waitMsec(1000)
@@ -148,9 +123,8 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
      turnouts.provideTurnout("9").setState(CLOSED)
      self.waitMsec(1000)
 </pre>
+        <p>The closing part of the script should also be left "as is":</p>
 
-        <p>The closing part of the script should also be left "as
-        is":</p>
         <pre>
      return False              # all done, don't repeat again
 setStartup().start()          # create one of these, and start it running                   
@@ -160,33 +134,32 @@ setStartup().start()          # create one of these, and start it running
       <div class="section">
         <h2>Implementing the Script</h2>
 
-        <p>With track power on, you can execute the script by
-        selecting Run Script from the PanelPro menu of JMRI. There
-        will be a delay before script execution begins, but then
-        you will see your turnouts throwing one by one.</p>
+        <p>With track power on, you can execute the script by selecting Run Script from the
+        PanelPro menu of JMRI. There will be a delay before script execution begins, but then you
+        will see your turnouts throwing one by one.</p>
 
-        <p>You can also select the script to run automatically when
-        PanelPro is launched by selecting the script file in
-        Advanced Preferences. Be sure track power is on before
+        <p>You can also select the script to run automatically when PanelPro is launched by
+        selecting the script file in Advanced Preferences. Be sure track power is on before
         launching PanelPro in this case.</p>
       </div>
 
       <div class="section">
         <h2>Credit Where Credit Is Due</h2>
 
-        <p>My unending praise goes to the many developers who
-        provide JMRI to the model railroad community. However, in
-        the case of meeting my need in setting the default state of
-        turnouts, I wish to extend my gratitude to "breezlys" of
-        the JMRI Forum community; he provided the sample script,
-        which I believe he interpreted and modified from JMRI's
-        sample scripts.</p>
-      </div><!--closes section-->
+        <p>My unending praise goes to the many developers who provide JMRI to the model railroad
+        community. However, in the case of meeting my need in setting the default state of
+        turnouts, I wish to extend my gratitude to "breezlys" of the JMRI Forum community; he
+        provided the sample script, which I believe he interpreted and modified from JMRI's sample
+        scripts.</p>
+      </div>
+      <!--closes section-->
 
       <p>-- Page authored by Jerry Britton, March 2006.</p>
       <!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

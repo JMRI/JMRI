@@ -1,70 +1,73 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Issue Reporter</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Issue Reporter">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Issue Reporter"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Issue Reporter</h1>
-      <p>The JMRI Issue Reporter allows you
-        to create an entry in JMRI's 
-        <a href="https://github.com/JMRI/JMRI/issues">Issue tracking system</a>
-        for either a Bug report or a Feature request.</p>
-        
-    <p>In order to create an entry, you need a (free)
-        GitHub account. If you don't have one yet, follow
-        <a href="https://github.com/join?ref_cta=Sign+up">this link</a>
-        and sign up for one first.</p>
-        
-    <a href="Report_Issue__Window.png"><img src="Report_Issue__Window.png" alt="The Report Issue window"
-       align="right" width="264" height="256" ></a>
-    <p>In your default web browser, sign on to the 
-        <a href="https://github.com/login">GitHub web site</a>.</p>
-    
-    <p>From the JMRI Help menu, select "Report Issue...".
-        A window like the one on the right will open (click the image to enlarge).
-        <ul>
-            <li>Select whether you're reporting a bug or making a feature request
-            <li>Leave "JMRI" selected as the report destination
-            <li>Add a useful title.  That really helps getting attention to your item.
-            <li>Add a detailed description.  (You can add screen shots to it later on)
-            <li>Click the check boxes for the information you want to send 
-                along with the report. We recommend you check all three. Be aware they
-                may contain information about you computer, such as your user name.
-            <li>Finally click the "Submit to GitHub" button.
-        </ul>
-        
-    <p>A GitHub window should open in your browser.
-    <p>If JMRI can't open your browser, it'll pop a window 
-        asking for permission to copy a URL to your clipboard (essentially, internally
-        doing a copy operation on the URL). Click "Copy" to do that, then
-        paste the URL you got into a new window of your browser and fetch the indicated page.
-    
-    <p>If you checked any of the attachment boxes,
-        a new Explorer/Finder window will open, showing some files on your computer.
-        These are the files that contain the contents you selected. Drag
-        and drop those files onto the GitHub page where indicated in the report text.
 
-    <a href="Issue_after_drag.png"><img src="Issue_after_drag.png" alt="GitHub Edit Issue
-    screen" align="right" width="465" height="326" ></a>
-    <p>You can also drag in screen shots or other files that you think will help.
-        
-    <p>Finally, pn GitHub click the "Submit new issue" button.
-    
-    <p>Thank you!  Your issue has been entered.  If somebody has additional
-        questions or a solution, they'll contact you through your GitHub account.
-        
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>The JMRI Issue Reporter allows you to create an entry in JMRI's <a href=
+      "https://github.com/JMRI/JMRI/issues">Issue tracking system</a> for either a Bug report or a
+      Feature request.</p>
+
+      <p>In order to create an entry, you need a (free) GitHub account. If you don't have one yet,
+      follow <a href="https://github.com/join?ref_cta=Sign+up">this link</a> and sign up for one
+      first.</p>
+      <a href="Report_Issue__Window.png"><img src="Report_Issue__Window.png" alt=
+      "The Report Issue window" class="floatRight" width="264" height="256"></a>
+      <p>In your default web browser, sign on to the <a href="https://github.com/login">GitHub web
+      site</a>.</p>
+
+      <p>From the JMRI Help menu, select "Report Issue...". A window like the one on the right will
+      open (click the image to enlarge).</p>
+
+      <ul>
+        <li>Select whether you're reporting a bug or making a feature request</li>
+
+        <li>Leave "JMRI" selected as the report destination</li>
+
+        <li>Add a useful title. That really helps getting attention to your item.</li>
+
+        <li>Add a detailed description. (You can add screen shots to it later on)</li>
+
+        <li>Click the check boxes for the information you want to send along with the report. We
+        recommend you check all three. Be aware they may contain information about you computer,
+        such as your user name.</li>
+
+        <li>Finally click the "Submit to GitHub" button.</li>
+      </ul>
+
+      <p>A GitHub window should open in your browser.</p>
+
+      <p>If JMRI can't open your browser, it'll pop a window asking for permission to copy a URL to
+      your clipboard (essentially, internally doing a copy operation on the URL). Click "Copy" to
+      do that, then paste the URL you got into a new window of your browser and fetch the indicated
+      page.</p>
+
+      <p>If you checked any of the attachment boxes, a new Explorer/Finder window will open,
+      showing some files on your computer. These are the files that contain the contents you
+      selected. Drag and drop those files onto the GitHub page where indicated in the report text.
+      <a href="Issue_after_drag.png"><img src="Issue_after_drag.png" alt="GitHub Edit Issue screen"
+      class="floatRight" width="465" height="326"></a></p>
+
+      <p>You can also drag in screen shots or other files that you think will help.</p>
+
+      <p>Finally, pn GitHub click the "Submit new issue" button.</p>
+
+      <p>Thank you! Your issue has been entered. If somebody has additional questions or a
+      solution, they'll contact you through your GitHub account. 
+      <!--#include virtual="/Footer.shtml" --></p>
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

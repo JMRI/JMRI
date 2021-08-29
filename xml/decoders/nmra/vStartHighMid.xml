@@ -63,7 +63,7 @@
     <label>Vstart</label>
     <label xml:lang="it">Velocità Partenza</label>
     <label xml:lang="fr">V démarr.</label>
-    <label xml:lang="cs">Rozjezdové napětí</label>
+    <label xml:lang="cs">Rozjezdová rychlost</label>
     <label xml:lang="de">Abfahrgeschwindigkeit</label>
     <label xml:lang="nl">Startsnelheid</label>
     <comment>A value of 255 corresponds to 100%</comment>
@@ -79,7 +79,7 @@
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit</label>
     <label xml:lang="nl">Max. snelheid</label>
-    <label xml:lang="cs">Maximální napětí</label>
+    <label xml:lang="cs">Maximální rychlost</label>
   </variable>
   <variable item="Vmid" CV="6">
     <decVal/>
@@ -88,6 +88,6 @@
     <label xml:lang="fr">Vmoy</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>
     <label xml:lang="nl">Min. snelheid</label>
-    <label xml:lang="cs">Střední napětí</label>
+    <label xml:lang="cs">Střední rychlost</label>
   </variable>
 </variables>

@@ -1,188 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>LogixNG Reference - Chapter 9</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference formula">
-
   <!--#include virtual="/Style.shtml" -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 9</h1>
 
       <h2>Formula</h2>
 
-      <p>LogixNG has native support for complex calculations with the tool "Formula".
-      Formula supports almost all the Java operators and you can use local variables and
-      functions with formula. In many cases, like the action Turnout, you can choose to
-      use formula to get the turnout you want to act on, or to get the new state you want
-      to set.</p>
+      <p>LogixNG has native support for complex calculations with the tool "Formula". Formula
+      supports almost all the Java operators and you can use local variables and functions with
+      formula. In many cases, like the action Turnout, you can choose to use formula to get the
+      turnout you want to act on, or to get the new state you want to set.</p>
 
-      <p>Local variables, which are explained in <a href="chapter8.shtml">chapter 8</a>,
-      can be used directly in formula. So if you have a local variable <em>index</em>, you
-      can for example have the formula <em>"IT" + str(index)</em>, which adds the string "IT"
-      and the value of <em>index</em>. This can be useful if you for example want to set
-      all the turnouts IT1, IT2, IT3, ..., IT10 to thrown. You can then use the
-      <strong>For</strong> action to iterate from 1 to 10 and to set each of these turnouts to
-      thrown.</p>
+      <p>Local variables, which are explained in <a href="chapter8.shtml">chapter 8</a>, can be
+      used directly in formula. So if you have a local variable <em>index</em>, you can for example
+      have the formula <em>"IT" + str(index)</em>, which adds the string "IT" and the value of
+      <em>index</em>. This can be useful if you for example want to set all the turnouts IT1, IT2,
+      IT3, ..., IT10 to thrown. You can then use the <strong>For</strong> action to iterate from 1
+      to 10 and to set each of these turnouts to thrown.</p>
 
       <h3>The Formula expressions</h3>
 
-      <p>There are three expressions for formula: Analog Formula, Digital Formula and
-      String Formula. They all work the same way, except that Analog Formula returns a
-      floating point number, Digital Formula returns a boolean value (true or false), and
-      String Formula returns a string. The expression Formula can have child expressions,
-      for example reading an analog value or reading the state of a sensor. You use the
-      result of the child expressions by using the name of the female socket in the formula.
-      So if you have an expression Formula which has a child E1 to which an expression
-      Sensor is connected, you can use the result of the expression Sensor in the formula
-      by the identifier E1 which points to the female socket and its connected expression.</p>
+      <p>There are three expressions for formula: Analog Formula, Digital Formula and String
+      Formula. They all work the same way, except that Analog Formula returns a floating point
+      number, Digital Formula returns a boolean value (true or false), and String Formula returns a
+      string. The expression Formula can have child expressions, for example reading an analog
+      value or reading the state of a sensor. You use the result of the child expressions by using
+      the name of the female socket in the formula. So if you have an expression Formula which has
+      a child E1 to which an expression Sensor is connected, you can use the result of the
+      expression Sensor in the formula by the identifier E1 which points to the female socket and
+      its connected expression.</p>
 
       <h3>Operators</h3>
 
-      <p>Formula supports most of the Java operators. A list of the Java operators,
-      together with the priority of them, is on
-      <a href="https://introcs.cs.princeton.edu/java/11precedence/">this page</a>.</p>
+      <p>Formula supports most of the Java operators. A list of the Java operators, together with
+      the priority of them, is on <a href=
+      "https://introcs.cs.princeton.edu/java/11precedence/">this page</a>.</p>
 
       <p>Currently supported operators are:</p>
+
       <div style="margin-left: 2em">
         <table>
-          <tr><th>Operator</th><th>Description</th><th>Associativity</th></tr>
-          <tr><td>-</td><td>unary minus</td><td>right to left</td></tr>
-          <tr><td>* / %</td><td>multiply, divide, modulo</td><td>left to right</td></tr>
-          <tr><td>+ -<br>+</td><td>additive<br>string concatenation</td><td>left to right</td></tr>
-          <tr><td>&lt; &lt;= <br> > >=</td><td>relational</td><td>not associative</td></tr>
-          <tr><td>==<br>!=</td><td>equality</td><td>left to right</td></tr>
-          <tr><td>&&</td><td>logical AND</td><td>left to right</td></tr>
-          <tr><td>||</td><td>logical OR</td><td>left to right</td></tr>
-          <tr><td>?:</td><td>ternary</td><td>right to left</td></tr>
-          <tr><td> =   +=   -= <br> *=   /=   %=</td><td>assignment</td><td>right to left</td></tr>
+          <tr>
+            <th>Operator</th>
+            <th>Description</th>
+            <th>Associativity</th>
+          </tr>
+
+          <tr>
+            <td>-</td>
+            <td>unary minus</td>
+            <td>right to left</td>
+          </tr>
+
+          <tr>
+            <td>* / %</td>
+            <td>multiply, divide, modulo</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>+ -<br>
+            +</td>
+            <td>additive<br>
+            string concatenation</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>&lt; &lt;=<br>
+            &gt; &gt;=</td>
+            <td>relational</td>
+            <td>not associative</td>
+          </tr>
+
+          <tr>
+            <td>==<br>
+            !=</td>
+            <td>equality</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>&amp;&</td>
+            <td>logical AND</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>||</td>
+            <td>logical OR</td>
+            <td>left to right</td>
+          </tr>
+
+          <tr>
+            <td>?:</td>
+            <td>ternary</td>
+            <td>right to left</td>
+          </tr>
+
+          <tr>
+            <td>= += -=<br>
+            *= /= %=</td>
+            <td>assignment</td>
+            <td>right to left</td>
+          </tr>
         </table>
       </div>
 
-      <p>Note that for the calculations to work, each operand must have the correct type.
-      For example, if you have a memory IM1 that has a number as a string and you want to
-      subtrack from it, like <code>IM1 - 1</code>, you need to convert the string in
-      IM1 to an integer or a float. Example: <code>int(IM1) - 1</code> or
-      <code>float(IM1) - 1</code>.  The same rules apply to concatenating a string and
-      an integer.  The integer has to be converted to a string.  <code>"IT" + str(index)</code></p>
+      <p>Note that for the calculations to work, each operand must have the correct type. For
+      example, if you have a memory IM1 that has a number as a string and you want to subtrack from
+      it, like <code>IM1 - 1</code>, you need to convert the string in IM1 to an integer or a
+      float. Example: <code>int(IM1) - 1</code> or <code>float(IM1) - 1</code>. The same rules
+      apply to concatenating a string and an integer. The integer has to be converted to a string.
+      <code>"IT" + str(index)</code></p>
 
-      <p>In this example, the <strong>A1</strong> section uses the <a href="chapter3.shtml">
-      For</a> action to toggle 5 turnouts.  The turnout user names are T1 thru T5.  The
-      <strong><em>index</em></strong> <a href="chapter8.shtml">local variable</a> is used
-      to supply the number.  The index value has to converted to a string before
-      concatenating with the "T"</p>
+      <p>In this example, the <strong>A1</strong> section uses the <a href="chapter3.shtml">For</a>
+      action to toggle 5 turnouts. The turnout user names are T1 thru T5. The
+      <strong><em>index</em></strong> <a href="chapter8.shtml">local variable</a> is used to supply
+      the number. The index value has to converted to a string before concatenating with the
+      "T"</p>
 
-      <p>The <strong>A2</strong> section is an example of a digital expression.  This a
-      simple one with just the "and" operator.</p>
+      <p>The <strong>A2</strong> section is an example of a digital expression. This a simple one
+      with just the "and" operator.</p>
 
       <div style="margin-left: 2em;">
-      <a href="images/chapter9/formula_example.png">
-      <img src="images/chapter9/formula_example.png"
-      alt="Chapter 9 formula_example" width="700" height="500">
-      </a>
+        <a href="images/chapter9/formula_example.png"><img src=
+        "images/chapter9/formula_example.png" alt="Chapter 9 formula_example" width="700" height=
+        "500"></a>
       </div>
-
 
       <h3>Functions</h3>
 
-      <p>Formula supports functions, like sin(x) and random(). Some functions takes one
-      or several parameters. A function has an identifier, for example "sin", followed by
-      a left parantheses, optional one or several parameters separated by comma, and then
-      closed by a right parantheses.</p>
+      <p>Formula supports functions, like sin(x) and random(). Some functions takes one or several
+      parameters. A function has an identifier, for example "sin", followed by a left parantheses,
+      optional one or several parameters separated by comma, and then closed by a right
+      parantheses.</p>
 
-      <p>The dialog boxes for editing an action or expression, and the dialog box for
-      editing variables, has a button "Formula functions". If you click on that button,
-      you get a new dialog box that shows the functions that are available and the
-      documentation on each of them.</p>
+      <p>The dialog boxes for editing an action or expression, and the dialog box for editing
+      variables, has a button "Formula functions". If you click on that button, you get a new
+      dialog box that shows the functions that are available and the documentation on each of
+      them.</p>
 
-      <p>One may notice that there is several modules with one or two functions in each
-      module. For example, the module Math has the functions random() and sin(). The
-      reason for so many modules for so few functions is that the number of functions
-      is expected to grow. For example, the Math module should have cos(), tan(), atan()
-      and sqrt(), but these are not implemented yet.</p>
+      <p>One may notice that there is several modules with one or two functions in each module. For
+      example, the module Math has the functions random() and sin(). The reason for so many modules
+      for so few functions is that the number of functions is expected to grow. For example, the
+      Math module should have cos(), tan(), atan() and sqrt(), but these are not implemented
+      yet.</p>
 
       <p>For JMRI developers: The functions are defined in the package
-      <em>jmri.jmrit.logixng.util.parser.functions</em> and each module has its own Java
-      class. Each function is its own class that implements the <em>Function</em> interface.</p>
+      <em>jmri.jmrit.logixng.util.parser.functions</em> and each module has its own Java class.
+      Each function is its own class that implements the <em>Function</em> interface.</p>
 
       <h4>Documentation of the functions</h4>
 
       <p>To make it easier to use the functions, each function has some documentation.</p>
 
-      <p>Each action/expression has a <strong>Formula functions</strong> button that opens
-      a dialog box with documentation of the functions.</p>
+      <p>Each action/expression has a <strong>Formula functions</strong> button that opens a dialog
+      box with documentation of the functions.</p>
 
       <div style="margin-left: 2em;">
-      <a href="images/chapter9/function_1.png">
-      <img src="images/chapter9/function_1.png"
-      alt="Chapter 9 function button" width="922" height="270">
-      </a>
+        <a href="images/chapter9/function_1.png"><img src="images/chapter9/function_1.png" alt=
+        "Chapter 9 function button" width="922" height="270"></a>
       </div>
 
-      <p>The functions are grouped in modules to make it easier to find the functions.
-      Select the module you are interested in.</p>
+      <p>The functions are grouped in modules to make it easier to find the functions. Select the
+      module you are interested in.</p>
 
       <div style="margin-left: 2em;">
-      <a href="images/chapter9/function_2.png">
-      <img src="images/chapter9/function_2.png"
-      alt="Chapter 9 select module" width="500" height="621">
-      </a>
+        <a href="images/chapter9/function_2.png"><img src="images/chapter9/function_2.png" alt=
+        "Chapter 9 select module" width="500" height="621"></a>
       </div>
 
       <p>Then select the function you are interested in.</p>
 
       <div style="margin-left: 2em;">
-      <a href="images/chapter9/function_3.png">
-      <img src="images/chapter9/function_3.png"
-      alt="Chapter 9 select function" width="500" height="621">
-      </a>
+        <a href="images/chapter9/function_3.png"><img src="images/chapter9/function_3.png" alt=
+        "Chapter 9 select function" width="500" height="621"></a>
       </div>
 
-      <p>In this case, the function <strong>fastClock()</strong> take a string parameter
-      which can have any of the values <em>hour</em>, <em>min</em> or <em>minOfDay</em>.</p>
+      <p>In this case, the function <strong>fastClock()</strong> take a string parameter which can
+      have any of the values <em>hour</em>, <em>min</em> or <em>minOfDay</em>.</p>
 
-
-      <p>Some functions, for example the function <strong>random()</strong>, can take
-      different numbers of parameters.  The default is <code>0.0 &lt;= x &lt; 1.0</code>.
-      Supplying <em>max</em> or <em>min and max</em> values can change the range.</p>
+      <p>Some functions, for example the function <strong>random()</strong>, can take different
+      numbers of parameters. The default is <code>0.0 &lt;= x &lt; 1.0</code>. Supplying
+      <em>max</em> or <em>min and max</em> values can change the range.</p>
 
       <div style="margin-left: 2em;">
-      <a href="images/chapter9/function_4.png">
-      <img src="images/chapter9/function_4.png"
-      alt="Chapter 9 random functions" width="500" height="621">
-      </a>
+        <a href="images/chapter9/function_4.png"><img src="images/chapter9/function_4.png" alt=
+        "Chapter 9 random functions" width="500" height="621"></a>
       </div>
-
 
       <h3>Advanced: Add new function with Jython</h3>
 
-      <p>It's possible to create a new function using Jython to be used by formula.
-      The code below gives an example that you can use as a template. A new function is
-      added by creating a new class that extends the class <strong>Function</strong>
-      and implements these methods:</p>
-
+      <p>It's possible to create a new function using Jython to be used by formula. The code below
+      gives an example that you can use as a template. A new function is added by creating a new
+      class that extends the class <strong>Function</strong> and implements these methods:</p>
 
       <div style="margin-left: 2em">
         <table>
-          <tr><th>Method</th><th>Description</th></tr>
-          <tr><td>getModule</td><td>The name of the module that the function belongs to</td></tr>
-          <tr><td>getName</td><td>The name of the function</td></tr>
-          <tr><td>calculate</td><td>Calculate the function</td></tr>
-          <tr><td>getDescription</td><td>Description of the function for the user</td></tr>
+          <tr>
+            <th>Method</th>
+            <th>Description</th>
+          </tr>
+
+          <tr>
+            <td>getModule</td>
+            <td>The name of the module that the function belongs to</td>
+          </tr>
+
+          <tr>
+            <td>getName</td>
+            <td>The name of the function</td>
+          </tr>
+
+          <tr>
+            <td>calculate</td>
+            <td>Calculate the function</td>
+          </tr>
+
+          <tr>
+            <td>getDescription</td>
+            <td>Description of the function for the user</td>
+          </tr>
         </table>
       </div>
 
-      <p>Example Jython script that defines the function <b>jythonTest</b> that takes one
+      <p>Example Jython script that defines the function <strong>jythonTest</strong> that takes one
       floating point parameter:</p>
 
       <div style="margin-left: 2em">
@@ -209,45 +263,45 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
         </pre>
       </div>
 
-        <h4>Calculate the function</h4>
+      <h4>Calculate the function</h4>
 
-          <p>The function <strong>calculate</strong> takes a number of arguments as a
-          <strong>List&lt;ExpressionNode&gt;</strong>. We first check the number
-          of arguments by calling the method <strong>size()</strong> and if that's correct,
-          we get the arguments by calling the method <strong>get(index)</strong> where
-          "index" is the index of the argument.</p>
+      <p>The function <strong>calculate</strong> takes a number of arguments as a
+      <strong>List&lt;ExpressionNode&gt;</strong>. We first check the number of arguments by
+      calling the method <strong>size()</strong> and if that's correct, we get the arguments by
+      calling the method <strong>get(index)</strong> where "index" is the index of the
+      argument.</p>
 
-          <p>But to do something useful with the arguments, we need to calculate each
-          argument we want to use. We do that by calling the method <b>calculate</b> on
-          each argument we want to use.</p>
+      <p>But to do something useful with the arguments, we need to calculate each argument we want
+      to use. We do that by calling the method <strong>calculate</strong> on each argument we want
+      to use.</p>
 
-          <p>We then do the calculation, which in this case multiplies the first argument
-          with 3.4 and then returns the value.</p>
+      <p>We then do the calculation, which in this case multiplies the first argument with 3.4 and
+      then returns the value.</p>
 
-        <h4>Important!</h4>
+      <h4>Important!</h4>
 
-          <p>A function may set turnouts, sensors, and other things on the layout. You may
-          for example create the function <strong>setTurnout(turnout, newState)</strong>.
-          But it's important to remember that a ConditionalNG runs on a separate thread so
-          if you set a turnout or a sensor, you must do that on the layout thread. Formula
-          is always run on the thread that the ConditionalNG is run on, so if a function
-          updates the layout or the GUI, it needs to do it on the layout thread or the
-          GUI thread.</p>
+      <p>A function may set turnouts, sensors, and other things on the layout. You may for example
+      create the function <strong>setTurnout(turnout, newState)</strong>. But it's important to
+      remember that a ConditionalNG runs on a separate thread so if you set a turnout or a sensor,
+      you must do that on the layout thread. Formula is always run on the thread that the
+      ConditionalNG is run on, so if a function updates the layout or the GUI, it needs to do it on
+      the layout thread or the GUI thread.</p>
 
-          <p>See the later chapter on threads (may not exist yet) for more information of
-          LogixNG threads.</p>
+      <p>See the later chapter on threads (may not exist yet) for more information of LogixNG
+      threads.</p>
 
       <hr>
-      <p><a href="chapter10.shtml">Chapter 10 - Modules</a></p>
-      <p><a href="index.shtml">Return to the Reference TOC</a></p>
 
+      <p><a href="chapter10.shtml">Chapter 10 - Modules</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
-
-
-
 </body>
 </html>

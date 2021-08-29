@@ -1,31 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Monitor Zimo Device Traffic</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help monitor powerline traffic message packet">
+  <meta name="keywords" content="JMRI help monitor powerline traffic message packet">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Monitor Zimo Device Traffic</h1>This is the
-      help/jmri/jmrix/zimo/swing/monitor/Mx1MonPanel help page
-
-      <p>For more information on the various controls and options,
-      please see the <a href=
-      "../../AbstractMonFrame.shtml">Communications Monitor Window
-      page</a>.</p><!--#include virtual="/Footer.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Monitor Zimo Device Traffic</h1>
+      This is the help/jmri/jmrix/zimo/swing/monitor/Mx1MonPanel help page
+      <p>For more information on the various controls and options, please see the <a href=
+      "../../../AbstractMonFrame.shtml">Communications Monitor Window page</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

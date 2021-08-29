@@ -254,9 +254,9 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
                 StringBuilder buf = new StringBuilder();
-                buf.append("Nce Simulator Thread received message: ");
+                buf.append("Nce simulator received message: ");
                 for (int i = 0; i < m.getNumDataElements(); i++) {
-                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
+                    buf.append(Integer.toHexString(0xFF & m.getElement(i)).toUpperCase()).append(" ");
                 }
                 log.debug(buf.toString());
             }
@@ -265,9 +265,9 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append("Nce Simulator Thread sent reply: ");
+                    buf.append("Nce simulator sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i)).toUpperCase()).append(" ");
                     }
                     log.debug(buf.toString());
                 }
@@ -321,8 +321,8 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             return reply;
         }
         switch (command) {
-            case NceMessage.SW_REV_CMD:  // Get Eprom revision
-                reply.setElement(0, 0x06);    // Send Eprom revision based on Preference setting
+            case NceMessage.SW_REV_CMD:  // Get EPROM revision
+                reply.setElement(0, 0x06);    // Send EPROM revision based on Preference setting
                 reply.setElement(1, 0x02);
                 reply.setElement(2, epromRevision);
                 break;
