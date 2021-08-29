@@ -3,19 +3,10 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.EntryPoint;
-import jmri.InstanceManager;
-import jmri.Section;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.ThrottleListener;
-import jmri.Timebase;
-import jmri.Turnout;
+
+import javax.annotation.CheckForNull;
+
+import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -92,7 +83,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public static final int BEGINNING_RESET = 0x02;     // Handle reseting beginning for back and forth running
 
     // operational instance variables
-    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
+    private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private ActiveTrain _activeTrain = null;
     private AutoTrainAction _autoTrainAction = null;
     private DccThrottle _throttle = null;
@@ -230,6 +221,10 @@ public class AutoActiveTrain implements ThrottleListener {
         _stopBySpeedProfileAdjust = adjust;
     }
 
+    /**
+     * Get current Signal DisplayName.
+     * @return empty String if no signal, otherwise Display Name.
+     */
     public String getCurrentSignal() {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             return  (_controllingSignal == null  ) ? "" : _controllingSignal.getDisplayName() ;
@@ -238,6 +233,10 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    /**
+     * Get current Signal UserName.
+     * @return empty String if no signal, otherwise UserName.
+     */
     public String getCurrentSignalUserName() {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             return  ( _controllingSignal == null || _controllingSignal.getUserName() == null) ? "" : _controllingSignal.getUserName();
@@ -668,18 +667,10 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     protected boolean isCurrentSignal() {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            if (_controllingSignal != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return _controllingSignal != null;
         } else {
             // SignalMast
-            if (_controllingSignalMast != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return _controllingSignalMast != null;
         }
     }
 
@@ -758,6 +749,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
         //if (((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
         //        && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()))) {
@@ -791,7 +783,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _previousAllocatedSection = _currentAllocatedSection;
             _currentAllocatedSection = as;
             _nextSection = as.getNextSection();
-            jmri.TransitSection ts = as.getTransitSection();
+            TransitSection ts = as.getTransitSection();
             if (ts != null) {
                 _autoTrainAction.addTransitSection(ts);
             }
@@ -899,13 +891,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     newSpeed = 0.0f;
                     break;
                 case 1:
-                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                    newSpeed = InstanceManager.getDefault(SignalSpeedMap.class)
                             .getSpeed("Medium");
                     // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
                     break;
                 default:
-                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                    newSpeed = InstanceManager.getDefault(SignalSpeedMap.class)
                             .getSpeed("Normal");
                     // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
@@ -968,11 +960,11 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
+        if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER).equals(displayedAspect))
                 || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
             checkForSignalPassedOrStop(_controllingSignalMast.getDisplayName(USERSYS));
-        } else if (_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE) != null
-                && _controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE).equals(displayedAspect)) {
+        } else if (_controllingSignalMast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE) != null
+                && _controllingSignalMast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE).equals(displayedAspect)) {
             setTargetSpeedState(RESTRICTED_SPEED);
             _activeTrain.setStatus(ActiveTrain.RUNNING);
         } else {
@@ -987,7 +979,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     speed = Float.parseFloat(aspectSpeedStr);
                 } catch (NumberFormatException nx) {
                     try {
-                        speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(aspectSpeedStr);
+                        speed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(aspectSpeedStr);
                         log.trace("{}: Signal {} speed from map for {} is {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS), aspectSpeedStr, speed);
                     } catch (IllegalArgumentException ex) {
                         //Considered Normal if the speed does not appear in the map
@@ -1000,7 +992,7 @@ public class AutoActiveTrain implements ThrottleListener {
             //get maximum speed for the route between current and next signalmasts
             float smLogicSpeed = -1.0f;
             String smDestinationName = "unknown";
-            jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
+            SignalMastLogic smLogic = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
             if (smLogic != null) {
                 SignalMast smDestination = smLogic.getActiveDestination();
                 if (smDestination != null) {
@@ -1059,19 +1051,19 @@ public class AutoActiveTrain implements ThrottleListener {
             // use least
             float blockSpeed = getSpeedFromBlock(_conSignalProtectedBlock);
 
-            float signalSpeed = -1.0f;
-            String signalSpeedName = "";
+            float signalSpeed;
+            String signalSpeedName;
             String displayedAspect = _controllingSignal.getAppearanceName();
             try {
                 signalSpeedName =
-                        jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(displayedAspect);
-                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(signalSpeedName);
+                        InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(displayedAspect);
+                signalSpeed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(signalSpeedName);
             } catch (Throwable ex) { // if _anything_ goes wrong, contain it
                 signalSpeed = -1.0f;
                 log.warn("{}: Block {} AppearanceSpeed {} not found in SignalSpeedMap",
                         _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS), displayedAspect);
             }
-            float useSpeed = 1.0f;
+            float useSpeed;
             if (blockSpeed < signalSpeed) {
                 useSpeed = blockSpeed;
             } else {
@@ -1154,7 +1146,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 blockSpeed = Float.parseFloat(blockSpeedName);
             } catch (NumberFormatException nx) {
                 try {
-                    blockSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
+                    blockSpeed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
                     log.debug("{}: block speed from map for {} is {}",
                             _activeTrain.getTrainName(), block.getDisplayName(USERSYS), blockSpeedName,
                             blockSpeed);
@@ -1227,7 +1219,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
-                    Block tBlock = null;
+                    Block tBlock;
                     // just because current section has one block does not mean the previous one did.
                     if (_previousAllocatedSection.getSection().getNumBlocks() == 1) {
                        tBlock = _previousAllocatedSection.getSection().getLastBlock();
@@ -1273,7 +1265,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     int tstLength = getBlockLength(tstBlock);
                     int tstBlockSeq = _currentAllocatedSection.getSection().getBlockSequenceNumber(tstBlock);
                     while ((tstLength < _maxTrainLength) && (tstBlock != enterBlock)) {
-                        int newSeqNumber = 0;
+                        int newSeqNumber;
                         if (_currentAllocatedSection.getDirection() == Section.REVERSE) {
                             newSeqNumber = tstBlockSeq + 1;
                         } else {
@@ -1448,7 +1440,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private void setDecreasedSpeedBeforeStop() {
         float signalSpeed = 25;
         try {
-            signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+            signalSpeed = InstanceManager.getDefault(SignalSpeedMap.class)
                     .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
         } catch (IllegalArgumentException ex) {
             log.error("Missing [{}] from Speed table - defaulting to 25",
@@ -1479,7 +1471,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return applyMaxThrottleAndFactor(throttleSetting);
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
-            float mls = 100.0F;
+            float mls;
             if (_controllingSignalMast != null) {
                 mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
             } else {
@@ -1917,7 +1909,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             }
                         }
                         // test if need to change speed
-                        if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.001) {
+                        if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.0004f) {
                             if (_currentRampRate == RAMP_NONE) {
                                 // set speed immediately
                                 _currentSpeed = _targetSpeed;
@@ -1989,7 +1981,7 @@ public class AutoActiveTrain implements ThrottleListener {
         public synchronized boolean isStopped() {
             // when stopping by speed profile you must refresh the throttle speed.
             _currentSpeed = _throttle.getSpeedSetting();
-            return _currentSpeed <= 0.005f;
+            return _currentSpeed <= 0.0004f;
         }
 
         /**

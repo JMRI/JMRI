@@ -1,13 +1,15 @@
 package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 public class AutomationTableFrameTest extends OperationsTestCase {
 
@@ -173,9 +175,10 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test delete button
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
-        JemmyUtil.enterClickAndLeave(f.deleteAutomationButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals(0, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);
@@ -205,9 +208,10 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test delete button
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
-        JemmyUtil.enterClickAndLeave(f.deleteAutomationButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
 
         JUnitUtil.dispose(f);

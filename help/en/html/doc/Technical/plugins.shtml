@@ -1,281 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Plug-in mechanisms</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code plugins extension plug-in">
+  <meta name="keywords" content="JMRI technical code plugins extension plug-in">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>JMRI: Extending the JMRI Programs</h1>
 
-    <h1>JMRI: Extending the JMRI Programs</h1>
+      <p>The original goal of the JMRI project was to produce a library upon which people could use
+      to build their own applications. Although some people do that, more use the existing
+      applications such as DecoderPro and PanelPro.<br>
+      We want to make this more flexible by providing a way to extend those programs without having
+      to rebuild them from scratch.</p>
 
-      <p>The original goal of the JMRI project was to produce a library upon
-      which people could use to build their own applications. Although some
-      people do that, more use the existing applications such as DecoderPro
-      and PanelPro.<br>
-      We want to make this more flexible by providing a way to
-      extend those programs without having to rebuild them from scratch.
-      </p>
-      <p>There are three supported mechanisms that can be used to plug
-        additional capabilities into JMRI:
-      </p>
+      <p>There are three supported mechanisms that can be used to plug additional capabilities into
+      JMRI:</p>
+
       <ul>
-        <li><a href="#script">Script JMRI</a></li>
-        <li><a href="#service">Implement a Service Provider</a></li>
-      </ul>
+        <li>
+          <a href="#script">Script JMRI</a>
+        </li>
 
-        See also the separate pages on
-        <a href="NewSystem.shtml">adding a new system</a> (i.e. another set of hardware that implements Turnouts, Sensors, clocks, etc)
-        and
-        <a href="NewType.shtml">adding a new type</a> (e.g. something in addition to Turnouts, Sensors, clocks, etc).
+        <li>
+          <a href="#service">Implement a Service Provider</a>
+        </li>
+      </ul>
+      See also the separate pages on <a href="NewSystem.shtml">adding a new system</a> (i.e.
+      another set of hardware that implements Turnouts, Sensors, clocks, etc) and <a href=
+      "NewType.shtml">adding a new type</a> (e.g. something in addition to Turnouts, Sensors,
+      clocks, etc).
       <h2 id="script">Script JMRI</h2>
 
-      <p><a href="../../tools/scripting">Scripting JMRI</a> is often the easiest
-        way to extend JMRI, however there are limitations to that which are
-        covered by the other mechanisms.
-      </p>
-      <p>The principal limitations to scripting JMRI are:
-      </p>
+      <p><a href="../../tools/scripting">Scripting JMRI</a> is often the easiest way to extend
+      JMRI, however there are limitations to that which are covered by the other mechanisms.</p>
+
+      <p>The principal limitations to scripting JMRI are:</p>
+
       <ul>
         <li>scripts can only be run late in the application start process</li>
+
         <li>scripts cannot be used to define new connection types</li>
+
         <li>scripts cannot be used to add items to the preferences window</li>
       </ul>
-      <p>The details of scripting are <a href="../../tools/scripting">covered
-        elsewhere</a>.
-      </p>
+
+      <p>The details of scripting are <a href="../../tools/scripting">covered elsewhere</a>.</p>
+
       <p>Examples of scripts that modify JMRI behavior are:</p>
+
       <ul>
-        <li><a href="https://jmri.org/jython/AddButton.py">AddButton.py</a>
-          sample script adds a script button to the main window.
+        <li>
+          <a href="https://jmri.org/jython/AddButton.py">AddButton.py</a> sample script adds a
+          script button to the main window.
         </li>
-        <li><a href="https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
-          shows how how to modify the main window to remove the ops-mode
-          programming button.
+
+        <li>
+          <a href="https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a> shows how how
+          to modify the main window to remove the ops-mode programming button.
         </li>
-        <li><a href="https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
-          sample script is an even more advanced example that changes
-          the appearance of items on panel screens.
+
+        <li>
+          <a href="https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+          sample script is an even more advanced example that changes the appearance of items on
+          panel screens.
         </li>
       </ul>
 
-    <h2 id="add">Adding Java Code</h2>
+      <h2 id="add">Adding Java Code</h2>
+      If you want to add a function that'll need significant code, ideally eventually as a part of
+      JMRI itself, the usual sequence is to write Java code
+      <ol>
+        <li>that creates objects to run as part of the <a href="IntroStructure.shtml">usual JMRI
+        structures</a>
+        </li>
 
-    If you want to add a function that'll need significant code, ideally eventually as a 
-    part of JMRI itself, the usual sequence is to write Java code
-    <ol>
-        <li>that creates objects to run as part of the 
-            <a href="IntroStructure.shtml">usual JMRI structures</a></li>
-        <li>which are stored and loaded via 
-            <a href="XmlPersistance.shtml">configurexml</a> 
-            classes that load and store those objects into standard panel files</li>
-        <li>optionally has a GUI that starts from an
-            <a href="Swing.shtml">action class</a>
-            fired from some button or menu item,</li>
-        <li>optionally can fire that action at startup to open the GUI by selecting
-            it under "Peform action.." in the Startup pane in Preferences,</li>
+        <li>which are stored and loaded via <a href="XmlPersistance.shtml">configurexml</a> classes
+        that load and store those objects into standard panel files
+        </li>
+
+        <li>optionally has a GUI that starts from an <a href="Swing.shtml">action class</a> fired
+        from some button or menu item,
+        </li>
+
+        <li>optionally can fire that action at startup to open the GUI by selecting it under
+        "Peform action.." in the Startup pane in Preferences,</li>
+
         <li>optionally can have its own preferences pane to store more info, and</li>
-        <li>eventually has 
-            <a href="JUnit.shtml">CI unit tests</a>,
-            <a href="Javadoc.shtml">documentation</a> and 
-            <a href="Help.shtml">help pages</a>.</li>
-    </ol>
 
-    Operationally, that's often the best order to develop new function: First, write the
-    code (item 1) so that it runs inside JMRI, and use a script to create and start those objects.
-    There are two places to put it:
-    <ul>
-        <li>In a top level package, i.e. a new <code>java/src/mycooltool</code> directory
-        alongside <code>java/src/jmri</code> and <code>java/src/apps</code>.  Your
-        Java files will start with "import mycooltool;" as a package declaration.</li>
-        <li>In a new tools package within the
-        <a href="IntroStructure.shtml">JMRI code structure</a>, 
-        i.e. a <code>java/src/jmri/jmrit/cooltool</code>
-        directory with your java files starting with 
-        <code>import jmri.jmrit.coolltool;</code>.</li>
-    </ul>
-    
-    <p>Next, write the 
-    <a href="XmlPersistance.shtml">configurexml</a>
-    load and store classes, so that once you've got the objects, you can store and reactivate them.
-    You still need the script (or an XML editor if the info is simple enough) to create
-    them the first time, though, so as a third step 
-    <a href="Swing.shtml">write a GUI</a>
-    to create that.
-    That can be invoked by a one-line script at first, and eventually attached to a menu button.
+        <li>eventually has <a href="JUnit.shtml">CI unit tests</a>, <a href=
+        "Javadoc.shtml">documentation</a> and <a href="Help.shtml">help pages</a>.
+        </li>
+      </ol>
+      Operationally, that's often the best order to develop new function: First, write the code
+      (item 1) so that it runs inside JMRI, and use a script to create and start those objects.
+      There are two places to put it:
+      <ul>
+        <li>In a top level package, i.e. a new <code>java/src/mycooltool</code> directory alongside
+        <code>java/src/jmri</code> and <code>java/src/apps</code>. Your Java files will start with
+        "import mycooltool;" as a package declaration.</li>
 
-    <p>Once those first three steps are working and you've created a 
-    <a href="Swing.shtml#display">GUI action class</a>,
-    you can connect that to "Peform action.." and "Add button to main window .."
-    in the Startup pane in Preferences
-    by having it extend 
-    <a href="#StartupActionFactory"><code>apps.startup.StartupActionFactory</code></a>.
-    
-    <p>
-    The 
-    <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample">jmri.jmrit.sample</a>
-    package is an example of this.  
-    (See <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) 
-    If contains:
-    <ul>
-        <li>A single functional class, 
-            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleFunctionalClass.java">SampleFunctionalClass</a>
-            who's only role is to save a sample string.  Classes like this 
-            would be built out to do the work of your project.</li>
-        <li>A
-            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/configurexml/SampleFunctionalClassXml.java">configurexml.SampleFunctionalClassXml</a>
-            class that stores and loads the SampleFunctionalClass object
-            contents to a panel file.</li>
-        <li>A
-            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/swing/SampleConfigPane.java">swing.SampleConfigPane</a>
-            class to provide the basis of a cGUI configuration pane.
-            This one just shows a label in it's window, but you
-            can build it out with whatever else is needed.
-            It's connected to the rest of JMRI so that you
-            can access configure connections to it in the Preferences.</li>
-        <li>
-            A complete set of basic test classes. They just
-            check the constructors now, but can be built out as needed.</li>
-    </ul>
-    
-        We encourage you to 
-        <a href="gitdeveloper.shtml">contribute your code to for inclusion in JMRI</a>.
-        That way, lots of people benefit.  But if you don't want to do that,
-        you can package it up as a separate .jar file which can
-        just be dropped into the JMRI lib/ directory. By using the 
-        approach listed above (and the services listed below), JMRI 
-        will automatically pick it up and use it.
+        <li>In a new tools package within the <a href="IntroStructure.shtml">JMRI code
+        structure</a>, i.e. a <code>java/src/jmri/jmrit/cooltool</code> directory with your java
+        files starting with <code>import jmri.jmrit.coolltool;</code>.
+        </li>
+      </ul>
 
+      <p>Next, write the <a href="XmlPersistance.shtml">configurexml</a> load and store classes, so
+      that once you've got the objects, you can store and reactivate them. You still need the
+      script (or an XML editor if the info is simple enough) to create them the first time, though,
+      so as a third step <a href="Swing.shtml">write a GUI</a> to create that. That can be invoked
+      by a one-line script at first, and eventually attached to a menu button.</p>
+
+      <p>Once those first three steps are working and you've created a <a href=
+      "Swing.shtml#display">GUI action class</a>, you can connect that to "Peform action.." and
+      "Add button to main window .." in the Startup pane in Preferences by having it extend
+      <a href="#StartupActionFactory"><code>apps.startup.StartupActionFactory</code></a>.</p>
+
+      <p>The <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample">jmri.jmrit.sample</a>
+      package is an example of this. (See <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) If
+      contains:</p>
+
+      <ul>
+        <li>A single functional class, <a href=
+        "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleFunctionalClass.java">
+          SampleFunctionalClass</a> who's only role is to save a sample string. Classes like this
+          would be built out to do the work of your project.
+        </li>
+
+        <li>A <a href=
+        "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/configurexml/SampleFunctionalClassXml.java">
+          configurexml.SampleFunctionalClassXml</a> class that stores and loads the
+          SampleFunctionalClass object contents to a panel file.
+        </li>
+
+        <li>A <a href=
+        "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/swing/SampleConfigPane.java">
+          swing.SampleConfigPane</a> class to provide the basis of a cGUI configuration pane. This
+          one just shows a label in it's window, but you can build it out with whatever else is
+          needed. It's connected to the rest of JMRI so that you can access configure connections
+          to it in the Preferences.
+        </li>
+
+        <li>A complete set of basic test classes. They just check the constructors now, but can be
+        built out as needed.</li>
+      </ul>
+      We encourage you to <a href="gitdeveloper.shtml">contribute your code to for inclusion in
+      JMRI</a>. That way, lots of people benefit. But if you don't want to do that, you can package
+      it up as a separate .jar file which can just be dropped into the JMRI lib/ directory. By
+      using the approach listed above (and the services listed below), JMRI will automatically pick
+      it up and use it.
       <h2 id="service">Implement a Service Provider</h2>
-      
-      Sometimes what you want to add provides a very specific technical function.
-      Many of those can be (though historically, perhaps weren't) written as 
-      Service Provider classes.  When they can be done that way, they should be, because
-      it simplifies their connection to the rest of the code.
+      Sometimes what you want to add provides a very specific technical function. Many of those can
+      be (though historically, perhaps weren't) written as Service Provider classes. When they can
+      be done that way, they should be, because it simplifies their connection to the rest of the
+      code.
+      <p>Java contains a <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
+      that allows classes implementing a specific API to provide a service to a Java application
+      without requiring that the application have prior dependencies defined for that service.</p>
 
-      <p>Java contains a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
-        that allows classes implementing a specific API to provide a service to
-        a Java application without requiring that the application have prior
-        dependencies defined for that service.
-      </p>
-      <p>Services are provided by creating a JAR for that service and appending
-        it to the JMRI classpath. See <a href="StartUpScripts.shtml">Startup Scripts</a>
-        for details on appending a JAR to the classpath and the
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
-        documentation concerning what needs to be in that JAR.
-      </p>
-      <p>JMRI uses Service Loaders to allow a JMRI application to be extended
-        in specific ways:
-      </p>
+      <p>Services are provided by creating a JAR for that service and appending it to the JMRI
+      classpath. See <a href="StartUpScripts.shtml">Startup Scripts</a> for details on appending a
+      JAR to the classpath and the <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
+      documentation concerning what needs to be in that JAR.</p>
+
+      <p>JMRI uses Service Loaders to allow a JMRI application to be extended in specific ways:</p>
+
       <dl>
-
-        <dt id="StartupActionFactory"><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
-        <a href="images/StartUpActionExample.png"><img src="images/StartUpActionExample.png" align="right" height="148" width="256"></a>
+        <dt id="StartupActionFactory">
+          <a href=
+          "https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
+          <a href="images/StartUpActionExample.png"><img src="images/StartUpActionExample.png"
+          class="floatRight" height="148" width="256" alt="startup action"></a>
         </dt>
-        <dd>Startup Actions can be run at application start or attached to the
-          application's main window as a button. Implementations of this factory class
-          appear as possible selections for the Perform Action.. 
-          and Attach Action to Button.. selections in the Add button on the Startup pane in Preferences.
-          <p>
-          One example is 
-          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/roster/swing/RosterFrameStartupActionFactory.java">the RosterFrameStartupActionFactory class</a>
-          which opens the DecoderPro roster window.
-          They can also expose additional startup actions that can be selected by the user, 
-          i.e. to select one of several possible connections to act on.
+
+        <dd>
+          Startup Actions can be run at application start or attached to the application's main
+          window as a button. Implementations of this factory class appear as possible selections
+          for the Perform Action.. and Attach Action to Button.. selections in the Add button on
+          the Startup pane in Preferences.
+          <p>One example is <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/roster/swing/RosterFrameStartupActionFactory.java">
+          the RosterFrameStartupActionFactory class</a> which opens the DecoderPro roster window.
+          They can also expose additional startup actions that can be selected by the user, i.e. to
+          select one of several possible connections to act on.</p>
         </dd>
 
-        <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
-            <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" align="right" height="182" width="197"></a>
-            </dt>
-        <dd>Startup Models provide a mechanism to define optional items to be 
-          automatically run during the startup process itself. 
-          They can take user-specified arguments.
-          Implementations of this class appear under the "Add" button 
-          in the Startup pane of the Preferences. 
-          <p>
-          One example is 
-          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/startup/PerformActionModelFactory.java">the PerformActionModelFactory class</a>
-          which provides the Perform Action... item.
-          PerformActionModelFactory makes the
-          <a href="#StartupActionFactory">StartupActionFactory</a>
-          implementations available for the user to select. A PerformActionModelFactory object then remembers that
-          selection, and during JMRI startup invokes that StartupActionFactory item to do that particular thing.
-          Similarly, 
-          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/startup/CreateButtonModelFactory.java">the CreateButtonModelFactory class</a>
-          will take a user StartupActionFactory selection and attach it to a button at startup, for
-          execution later.
-          <p>
-          Implementations of this factory class provide the hooks so that the
-          Startup preferences can allow a user to set the parameters for a
-          given action.
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
+          <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" class=
+          "floatRight" height="182" width="197" alt="startup model"></a>
+        </dt>
+
+        <dd>
+          Startup Models provide a mechanism to define optional items to be automatically run
+          during the startup process itself. They can take user-specified arguments.
+          Implementations of this class appear under the "Add" button in the Startup pane of the
+          Preferences.
+          <p>One example is <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/apps/startup/PerformActionModelFactory.java">
+          the PerformActionModelFactory class</a> which provides the Perform Action... item.
+          PerformActionModelFactory makes the <a href=
+          "#StartupActionFactory">StartupActionFactory</a> implementations available for the user
+          to select. A PerformActionModelFactory object then remembers that selection, and during
+          JMRI startup invokes that StartupActionFactory item to do that particular thing.
+          Similarly, <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/apps/startup/CreateButtonModelFactory.java">
+          the CreateButtonModelFactory class</a> will take a user StartupActionFactory selection
+          and attach it to a button at startup, for execution later.</p>
+
+          <p>Implementations of this factory class provide the hooks so that the Startup
+          preferences can allow a user to set the parameters for a given action.</p>
         </dd>
 
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a></dt>
-        <dd>Every manufacturer selectable when creating a configuration is
-          defined by a ConnectionTypeList service. Implement this (and other
-          required classes) to create a new system connection type. See
-          <a href="NewSystem.shtml">Adding a New System</a> for details.
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a>
+        </dt>
+
+        <dd>
+          Every manufacturer selectable when creating a configuration is defined by a
+          ConnectionTypeList service. Implement this (and other required classes) to create a new
+          system connection type. See <a href="NewSystem.shtml">Adding a New System</a> for
+          details.
         </dd>
-        
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
-        <dd>Add new factories for creating default instances of objects
-          managed by the <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+        </dt>
+
+        <dd>
+          Add new factories for creating default instances of objects managed by the <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
         </dd>
-        
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
-        <dd>The JMRI JSON services used in the JMRI web services can be extended
-          using service implementations of this class. See the
-          <a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory Javadocs</a> for details.
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a>
+        </dt>
+
+        <dd>
+          The JMRI JSON services used in the JMRI web services can be extended using service
+          implementations of this class. See the <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory
+          Javadocs</a> for details.
         </dd>
-        
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
-        <dd>Additional preferences can be displayed in the preferences window by
-          providing an implementation of this class.</dd>
-                  
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
-        <dd>Add a new preferences manager to JMRI. Preferences managers store,
-          retrieve, and validate preferences within a JMRI configuration
-          profile. If a plugin needs to take action very early in the JMRI
-          application startup sequence, it would need to provide a
-          PreferencesManager service.
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a>
+        </dt>
+
+        <dd>Additional preferences can be displayed in the preferences window by providing an
+        implementation of this class.</dd>
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a>
+        </dt>
+
+        <dd>Add a new preferences manager to JMRI. Preferences managers store, retrieve, and
+        validate preferences within a JMRI configuration profile. If a plugin needs to take action
+        very early in the JMRI application startup sequence, it would need to provide a
+        PreferencesManager service.</dd>
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">
+          SignalMastAddPaneProvider</a>
+        </dt>
+
+        <dd>
+          Provides the Add/Edit pane for a new type of SignalMast.
+          <p>If you define a new type of SignalMast in your code, also define a service class of
+          this type. It will automatically be used to add or edit signals of your new type in the
+          <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">SignalMast
+          Table</a>.</p>
+
+          <p>See the SignalMastAddPaneProvider class nested within the <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/beantable/signalmast/DccSignalMastAddPane.java">
+          DccSignalMastAddPane</a> class for an example.</p>
         </dd>
-        
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">SignalMastAddPaneProvider</a></dt>
-        <dd>Provides the Add/Edit pane for a new type of SignalMast.
-            <p>If you define a new type of SignalMast in your code, 
-            also define a service class of this type. It will automatically
-            be used to add or edit signals of your new type in the
-            <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">SignalMast Table</a>.
-            <p>
-            See the 
-            SignalMastAddPaneProvider class nested within the 
-            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/beantable/signalmast/DccSignalMastAddPane.java">DccSignalMastAddPane</a>
-            class for an example.
-            </dd>
-                  
-        <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServlet</a>
-            with <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">WebServlet</a> annotation</dt>
-        <dd>Additional servlets in the web server can be added using these
-            mechanisms. Note that the WebServlet annotation needs to provide a
-            name and urlPatterns.</dd>
-            
-        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
-        <dd>Additional file paths, redirections, explicitly blocked paths in the
-            JMRI web server can be specified by providing a service that
-            implements this.</dd>
+
+        <dt>
+          <a href=
+          "http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServlet</a>
+          with <a href=
+          "http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">WebServlet</a>
+          annotation
+        </dt>
+
+        <dd>Additional servlets in the web server can be added using these mechanisms. Note that
+        the WebServlet annotation needs to provide a name and urlPatterns.</dd>
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a>
+        </dt>
+
+        <dd>Additional file paths, redirections, explicitly blocked paths in the JMRI web server
+        can be specified by providing a service that implements this.</dd>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

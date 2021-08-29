@@ -1,165 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>
- 	  JMRI: JMRI.org Web Site Help
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code web site">
-
-    <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: JMRI.org Web Site Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code web site">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-    <div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
 
-	<div id="mainContent">
-	    <h1>JMRI: Web Site</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-        <p>This page discusses technical aspects behind the JMRI web site
-        at <a href="https://jmri.org">jmri.org</a> and also providing
-        parts of the help system in JMRI.</p>
-        <p>
-        If you just want to know how to make a small change to a web or
-        help page, please see the
-        <a href="UpdatingDocs.shtml">Updating JMRI Documentation instructions</a>.</p>
+    <div id="mainContent">
+      <h1>JMRI: Web Site</h1>
 
-        <h2>Structure of Information</h2>
+      <p>This page discusses technical aspects behind the JMRI web site at <a href=
+      "https://jmri.org">jmri.org</a> and also providing parts of the help system in JMRI.</p>
 
-        <p>We distinguish between three types of information on the main web site:</p>
-        <ol>
-            <li>User information which is useful at run time.
-            This is made available both via our <a href="Help.shtml">JavaHelp</a>,
-            and also directly by placing those files on the web.
-            <li>User information which is either not useful at run time, such as
-            instructions for installing the software, or is too large for inclusion
-            in releases, e.g. video clinics.
-            <li>Reference information from releases, such as decoder definitions, copies of scripts,
-            JavaDocs, etc.
-        </ol>
+      <p>If you just want to know how to make a small change to a web or help page, please see the
+      <a href="UpdatingDocs.shtml">Updating JMRI Documentation instructions</a>.</p>
 
-        <p>We provide these separately:</p>
-        <ol>
-            <li>Run-time user information is made available by putting the help system
-            on the web site.
-            <li>Other user information is stored in our
-            <a href="https://github.com/JMRI/website"><tt>JMRI/website</tt> GitHub repository</a>
-            and placed directly on the web site.
-            <li>Reference information is put on the web site from their own repository locations,
-            or created by automated Ant scripts during release builds.
-        </ol>
+      <h2>Structure of Information</h2>
 
-        <h2>Technology</h2>
-        <p>Page formatting is done using CSS, originally set up by John Plocher.
-        All pages should reference the CSS files for screen and printing
-        from the "/css" directory. This also means that you should leave the
-        formatting to the style sheets, and minimize the explicit formatting
-        that you do in HTML directly.</p>
+      <p>We distinguish between three types of information on the main web site:</p>
 
-        <p>
-        Because we use our web pages in JavaHelp, there are some restrictions
-        on use of tags.  See our <a href="Help.shtml">JavaHelp web page</a> for more on this.</p>
+      <ol>
+        <li>User information which is useful at run time. This is made available both via program
+        invoked <a href="Help.shtml">JmriHelp</a>, and also directly by placing those files on the
+        web.
+        </li>
 
-        <p>
-        We are using
-        <a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">server-side includes</a>
-        to provide consistent headers, sidebars and footers.
-        This allows us to share HTML
-        content between the web and the JavaHelp system
-        used by the program itself. Each page will contain just content,
-        plus includes for files named "Header", "Sidebar" and "Footer"
-        which contain the navigation information.
-        Eventually, all but a few index pages will have
-        ".shtml" extensions. (The remaining index.html pages keep that name
-        so that people who request just a directory URL will be served something useful).</p>
+        <li>User information which is either not useful at run time, such as instructions for
+        installing the software, or is too large for inclusion in releases, e.g. video
+        clinics.</li>
 
-        <p><a name="redirect"></a>
-        We are using .htaccess files to do redirects when a web page is removed.  This
-        lets older bookmarks continue to work.
-        The
-        <a href="https://github.com/JMRI/website/tree/master/hardware/.htaccess">hardware/.htaccess file</a> provides an example.
-        For more information on the syntax, see the
-        <a href="https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">Apache mod_rewrite documentation</a>.
+        <li>Reference information from releases, such as decoder definitions, copies of scripts,
+        JavaDocs, etc.</li>
+      </ol>
 
-        <h2>Directory Organization</h2>
+      <p>We provide these separately:</p>
 
-        <p>The web site contains several separate areas:</p>
-        <ul>
-        <li>jython, resources, xml, web - these are taken directly from the
-        directories of the same name in the
-        <a href="https://github.com/JMRI/website"><tt>JMRI/JMRI</tt> repository</a>
+      <ol>
+        <li>Run-time user information is made available by putting the help system on the web
+        site.</li>
+
+        <li>Other user information is stored in our <a href=
+        "https://github.com/JMRI/website"><code>JMRI/website</code> GitHub repository</a> and
+        placed directly on the web site.
+        </li>
+
+        <li>Reference information is put on the web site from their own repository locations, or
+        created by automated Ant scripts during release builds.</li>
+      </ol>
+
+      <h2>Technology</h2>
+
+      <p>Page formatting is done using CSS, originally set up by John Plocher. All pages should
+      reference the CSS files for screen and printing from the "/css" directory. This also means
+      that you should leave the formatting to the style sheets, and minimize the explicit
+      formatting that you do in HTML directly.</p>
+
+      <p>We are using <a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">server-side
+      includes</a> to provide consistent headers, sidebars and footers. This allows us to share
+      HTML content between the web and the JmriHelp system used by the program itself. Each page
+      will contain just content, plus includes for files named "Header", "Sidebar" and "Footer"
+      which contain the navigation information. Eventually, all but a few index pages will have
+      ".shtml" extensions. (The remaining index.html pages keep that name so that people who
+      request just a directory URL will be served something useful).</p>
+
+      <p id="redirect">We are using .htaccess files to do redirects when a web page is removed.
+      This lets older bookmarks continue to work. The <a href=
+      "https://github.com/JMRI/website/tree/master/hardware/.htaccess">hardware/.htaccess file</a>
+      provides an example. For more information on the syntax, see the <a href=
+      "https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">Apache mod_rewrite
+      documentation</a>.</p>
+
+      <h2>Directory Organization</h2>
+
+      <p>The web site contains several separate areas:</p>
+
+      <ul>
+        <li>jython, resources, xml, web - these are taken directly from the directories of the same
+        name in the <a href="https://github.com/JMRI/website"><code>JMRI/JMRI</code> repository</a>
         They are only occasionally referenced directly.
-        <li>help - also used for the JavaHelp system, this has the internal
-        structure described below and on our
-        <a href="Help.shtml">JavaHelp</a>
-        page.
-        </ul>
-        <p>Another group are from the
-        <a href="https://github.com/JMRI/website"><tt>JMRI/website</tt> repository</a>,
-        and are checked out at
-        the root of the web server.</p>
-        <ul>
-        <li>releasenotes - Specific information on each test and production release
-        <li>install - Information on how to install the JMRI software on various kinds of computers
-        <li>community - Clinics, web pages, and other community-contributed information
-        <li>images - (Images used by web pages)
-        <li>contact -
-        </ul>
-        <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in
-        the source.  The <a href="https://jmri.org/JavaDoc/doc/">Javadoc</a> is one such section, along with some of the
-        <a href="https://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.
+        </li>
 
-        <h2>Updating the jmri.org site</h2>
+        <li>help - also used for the JmriHelp system, this has the internal structure described
+        below and on our <a href="Help.shtml">JmriHelp</a> page.
+        </li>
+      </ul>
 
-        <p>Most of the web site contents is updated hourly from jobs running on one of the
-        project's Jenkins build servers.  The directories listed above constitute most of the site,
-        and this content is updated from the JMRI repository without any additional work.</p>
-        <ul>
-        <li><a href=
-        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
-        content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a></li>
-        <li><a href=
-        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
-        content from JMRI/website repository, e.g. website-only information</a></li>
-        <li><a href=
-        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
-        content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a></li>
-        </ul>
+      <p>Another group are from the <a href=
+      "https://github.com/JMRI/website"><code>JMRI/website</code> repository</a>, and are checked
+      out at the root of the web server.</p>
 
-        <p>The regeneration of the Javadoc and xml content involves
-        significantly more work than merely updating a directory, and so these are only done once per day, as needed,
-        by the
-        <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
-        job on the
-        <a href="https://builds.jmri.org/jenkins/">production Jenkins server</a>.</p>
+      <ul>
+        <li>releasenotes - Specific information on each test and production release</li>
 
-        <a name="local"></a><h2>Local Web Site: Mac OS X</h2>
+        <li>install - Information on how to install the JMRI software on various kinds of
+        computers</li>
 
-        <p>If you want to host a copy of the JMRI web site on your local
-        Mac OS X machine, follow these instructions to first configure
-        the Apache server to do server-side includes, and then make
-        a copy of the web site files available to the server.</p>
+        <li>community - Clinics, web pages, and other community-contributed information</li>
 
-        <p>A similar process may work for Linux (or even Windows) systems
-        with Apache installed.</p>
+        <li>images - (Images used by web pages)</li>
 
-        <ol>
-            <li>To make sure that your local server has the right options enabled, edit the Apache web server's configuration file.
-            <ul>
-                <li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
-                <li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
-            </ul>
-            Once you've located the file, open it with your favorite
-            editor (You'll need to authenticate with the administrator password to
-            modify this file).
-            <ul>
-            <li>
-            To turn on server-side includes, find the section that
-            looks like
-        <pre>
+        <li>contact -</li>
+      </ul>
+
+      <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being
+      contained in the source. The <a href="https://jmri.org/JavaDoc/doc/">Javadoc</a> is one such
+      section, along with some of the <a href="https://jmri.org/xml/XSLT">human-readable
+      information</a> about defined decoders.</p>
+
+      <h2>Updating the jmri.org site</h2>
+
+      <p>Most of the web site contents is updated hourly from jobs running on one of the project's
+      Jenkins build servers. The directories listed above constitute most of the site, and this
+      content is updated from the JMRI repository without any additional work.</p>
+
+      <ul>
+        <li>
+          <a href="https://builds.jmri.org/jenkins/job/website/job/jmri-repository/">static content
+          from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a>
+        </li>
+
+        <li>
+          <a href="https://builds.jmri.org/jenkins/job/website/job/website-repository/">static
+          content from JMRI/website repository, e.g. website-only information</a>
+        </li>
+
+        <li>
+          <a href=
+          "https://builds.jmri.org/jenkins/job/website/job/website-legal-repository/">static
+          content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal
+          case</a>
+        </li>
+      </ul>
+
+      <p>The regeneration of the Javadoc and xml content involves significantly more work than
+      merely updating a directory, and so these are only done once per day, as needed, by the
+      <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Generate
+      Website</a> job on the <a href="https://builds.jmri.org/jenkins/">production Jenkins
+      server</a>.</p>
+
+      <h2 id="local">Local Web Site: Mac OS X</h2>
+
+      <p>If you want to host a copy of the JMRI web site on your local Mac OS X machine, follow
+      these instructions to first configure the Apache server to do server-side includes, and then
+      make a copy of the web site files available to the server.</p>
+
+      <p>A similar process may work for Linux (or even Windows) systems with Apache installed.</p>
+
+      <ol>
+        <li>To make sure that your local server has the right options enabled, edit the Apache web
+        server's configuration file.
+          <ul>
+            <li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file</li>
+
+            <li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file</li>
+          </ul>
+          Once you've located the file, open it with your favorite editor (You'll need to
+          authenticate with the administrator password to modify this file).
+          <ul>
+            <li>To turn on server-side includes, find the section that looks like
+
+              <pre>
         # This may also be "None", "All", or any combination of "Indexes",
         # "Includes", "FollowSymLinks", "ExecCGI", or "MultiViews".
         #
@@ -167,135 +174,139 @@
         # doesn't give it to you.
         #
             Options Indexes FollowSymLinks MultiViews
-        </pre>
-        Add the word "Includes" to the last line so it looks like
-        <pre>
+        </pre>Add the word "Includes" to the last line so it looks like
+
+              <pre>
             Options Includes Indexes FollowSymLinks MultiViews
         </pre>
+            </li>
 
-            <li>Now, configure the server to handle files with ".shtml"
-            extensions.  Find the section that looks like (the leading comment
-            may be different):
-        <pre>
+            <li>Now, configure the server to handle files with ".shtml" extensions. Find the
+            section that looks like (the leading comment may be different):
+
+              <pre>
             #
             # To use server-parsed HTML files
             #
             #AddType text/html .shtml
             #AddHandler server-parsed .shtml
-        </pre>
-            and un-comment the last two lines so that it looks like
-        <pre>
+        </pre>and un-comment the last two lines so that it looks like
+
+              <pre>
             #
             # To use server-parsed HTML files
             #
             AddType text/html .shtml
             AddHandler server-parsed .shtml
-        </pre>
+        </pre>Then find the reference to the include_module and make sure it's loaded by a line
+like:
 
-                Then find the reference to the include_module and make sure it's loaded by a line like:
-        <pre>
+              <pre>
         LoadModule include_module libexec/apache2/mod_include.so
-        </pre>
-                By default, that's commented out with a leading # character.
+        </pre>By default, that's commented out with a leading # character.
+            </li>
 
-            <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.
-                We use this to allow people with old URLs in bookmarks to reach the right current pages.
-                <p>
-                Find a section that looks like:
-        <pre>
+            <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to
+            provide redirects</a>. We use this to allow people with old URLs in bookmarks to reach
+            the right current pages.
+              <p>Find a section that looks like:</p>
+
+              <pre>
         DocumentRoot "/Library/WebServer/Documents"
         Directory "/Library/WebServer/Documents"
-        </pre>
-                There's an indented section directly below that.  Find the part that looks like:
-        <pre>
+        </pre>There's an indented section directly below that. Find the part that looks like:
+
+              <pre>
             #
             # AllowOverride controls what directives may be placed in .htaccess files.
             # It can be "All", "None", or any combination of the keywords:
             #   AllowOverride FileInfo AuthConfig Limit
             #
             AllowOverride None
-        </pre>
-                Change the last line to allow overrides (which is what a .htaccess file does):
-        <pre>
-            AllowOverride All
-        </pre>
-                Then find the reference to the rewrite_module and make sure it's loaded by a line like:
-        <pre>
-        LoadModule rewrite_module libexec/apache2/mod_rewrite.so
-        </pre>
-                By default, that's commented out with a leading # character.
-        <p>
-                JMRI's web site uses index.shtml files as index pages.
-                To make sure that those will display by default,
-                e.g. if you use a partial URL like
-                <a href="https://jmri.org/download">https://jmri.org/download</a>,
-                find the line containing "DirectoryIndex" and add
-                "index.shtml" to the existing list of index-like file names.
+        </pre>Change the last line to allow overrides (which is what a .htaccess file does):
 
-        <p>
-                We also want PHP turned on, so that the indices for the resources pages will work.
-                Find the follow line and make sure it's not commented out:
-        <pre>
+              <pre>
+            AllowOverride All
+        </pre>Then find the reference to the rewrite_module and make sure it's loaded by a line
+like:
+
+              <pre>
+        LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+        </pre>By default, that's commented out with a leading # character.
+              <p>JMRI's web site uses index.shtml files as index pages. To make sure that those
+              will display by default, e.g. if you use a partial URL like <a href=
+              "https://jmri.org/download">https://jmri.org/download</a>, find the line containing
+              "DirectoryIndex" and add "index.shtml" to the existing list of index-like file
+              names.</p>
+
+              <p>We also want PHP turned on, so that the indices for the resources pages will work.
+              Find the follow line and make sure it's not commented out:</p>
+
+              <pre>
         LoadModule php5_module libexec/apache2/libphp5.so
         </pre>
             </li>
-        </ul>
-            </li>
-        <li>Install the JMRI files to be served:
-            <ul>
-            <li><a name="link"></a>Check out both the JMRI/JMRI
-                and JMRI/website repositories to somewhere on your computer.  It's OK for these
-                to be outside the web server's directory tree.
-            <li>Change to the web server directory
-        <pre>
-        cd /Library/WebServer/Documents
-        </pre>
-            <a name="locallink"></a>
-            <li>Set symbolic links to bring in content from the two repositories:
-        <pre>
-        ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
-        </pre>
-        where "~me/git/website" is the path to the JMRI/website repository that you just checked out,
-        and "~me/git/JMRI" is the path to the JMRI/website repository. setSymLinks.sh sets up
-        symbolic links that let your web server see the top of the JMRI web site as if the files
-        were directly present.
-        </ul>
-        <li>Restart your computer to reinitialize the web server.</li>
-        <li>Test it by trying to display the URL
-        <a href="http://localhost/">http://localhost/index.shtml</a>,
-        which should get you a JMRI top-level page.
+          </ul>
         </li>
-        </ol>
 
-        <a name="catalog"></a>
-        <h3>Installing a local XML catalog</h3>
+        <li>Install the JMRI files to be served:
+          <ul>
+            <li>
+              <a id="link"></a>Check out both the JMRI/JMRI and JMRI/website repositories to
+              somewhere on your computer. It's OK for these to be outside the web server's
+              directory tree.
+            </li>
 
-        Many JMRI XML files contain XIncludes that reference
-        other XML files with URLs like "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".
-        When a JMRI program encounters those, it automatically converts those to
-        a local file reference.  Other tools, like NetBeans and xmllint, don't know to do that.
-        <p>
-        Installing a local XML catalog, and then telling your tools to use it, can solve this.
-        <ul>
-            <li>
-            If you're not running a local webserver, you can provide a limited solution by
-            copying the xml/catalog.xml file from your JMRI directory to an /etc/xml/catalog file.
-            (Note that this is for Linux and Mac OS X and it's not clear what works for Windows;
-            you might have to sudo to do this; that there's no .xml suffix on the
-            resulting file; if there's already
-            a file there you'll have to manually merge the contents; you'll have to update
-            this periodically as JMRI continues to evolve)</li>
-            <li>
-            Alternately, if you're running a local server as
-            <a href="#local">described above</a>,
-            you can provide a more generic solution by copying
-            the following to a /etc/xml/catalog file
-            (Note that this is for Linux and Mac OS X and it's not clear what works for Windows;
-            you might have to sudo to do this; that there's no .xml suffix on the
-            created file; and if there's already
-            a file there you'll have to manually merge the contents; but at least you won't
-            have to update this in the future!):
-            <pre>
+            <li>Change to the web server directory
+
+              <pre>
+        cd /Library/WebServer/Documents
+        </pre><a id="locallink"></a>
+            </li>
+
+            <li>Set symbolic links to bring in content from the two repositories:
+
+              <pre>
+        ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
+        </pre>where "~me/git/website" is the path to the JMRI/website repository that you just
+checked out, and "~me/git/JMRI" is the path to the JMRI/website repository. setSymLinks.sh sets up
+symbolic links that let your web server see the top of the JMRI web site as if the files were
+directly present.
+            </li>
+          </ul>
+        </li>
+
+        <li>Restart your computer to reinitialize the web server.</li>
+
+        <li>Test it by trying to display the URL <a href=
+        "http://localhost/">http://localhost/index.shtml</a>, which should get you a JMRI top-level
+        page.
+        </li>
+      </ol>
+
+      <h3 id="catalog">Installing a local XML catalog</h3>
+      Many JMRI XML files contain XIncludes that reference other XML files with URLs like
+      "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd". When a JMRI program encounters those,
+      it automatically converts those to a local file reference. Other tools, like NetBeans and
+      xmllint, don't know to do that.
+      <p>Installing a local XML catalog, and then telling your tools to use it, can solve this.</p>
+
+      <ul>
+        <li>If you're not running a local webserver, you can provide a limited solution by copying
+        the xml/catalog.xml file from your JMRI directory to an /etc/xml/catalog file. (Note that
+        this is for Linux and Mac OS X and it's not clear what works for Windows; you might have to
+        sudo to do this; that there's no .xml suffix on the resulting file; if there's already a
+        file there you'll have to manually merge the contents; you'll have to update this
+        periodically as JMRI continues to evolve)</li>
+
+        <li>Alternately, if you're running a local server as <a href="#local">described above</a>,
+        you can provide a more generic solution by copying the following to a /etc/xml/catalog file
+        (Note that this is for Linux and Mac OS X and it's not clear what works for Windows; you
+        might have to sudo to do this; that there's no .xml suffix on the created file; and if
+        there's already a file there you'll have to manually merge the contents; but at least you
+        won't have to update this in the future!):
+
+          <pre>
             &lt;?xml version='1.0'?&gt;
             &lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
 
@@ -303,15 +314,15 @@
              rewritePrefix="http://localhost/xml/" /&gt;
 
             &lt;/catalog&gt;
-            </pre>
-
-            This catalog redirects all HTTP references to the "xml" directory at the JMRI website
-            to the "xml" directory on your local web server.</li>
-        </ul>
-
+            </pre>This catalog redirects all HTTP references to the "xml" directory at the JMRI
+website to the "xml" directory on your local web server.
+        </li>
+      </ul>
       <!--#include virtual="/Footer.shtml" -->
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

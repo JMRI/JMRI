@@ -29,6 +29,12 @@
                 <surname>Le Marchand</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Dave</firstname>
+                <surname>Heap</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -108,6 +114,12 @@
             <date>2020-08-18</date>
             <authorinitials>MM</authorinitials>
             <revremark>Add new models</revremark>
+         </revision>
+		<revision>
+            <revnumber>13</revnumber>
+            <date>2021-06-28</date>
+            <authorinitials>DH</authorinitials>
+            <revremark>Correct Handling of PI (CV31) and SI (CV32)</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
@@ -329,8 +341,8 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Indexed CV access</name>
-                <parameter name="PI">32</parameter>
-                <parameter name="SI">31</parameter>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
             </capability>
         </programming>
@@ -1575,7 +1587,7 @@
                 <tooltip>&lt;html&gt;Sets the status of automatic effects when in emergency stop.&lt;br&gt; Emergency Stop (ESTP) effects defined on Function Map&lt;/html&gt;</tooltip>
             </variable>
             <!-- Extended Function Map -->
-            <variable CV="1.259" item="Extended Function Map FX3 Effect" default="5" minOut="3">
+            <variable CV="16.1.259" item="Extended Function Map FX3 Effect" default="5" minOut="3">
                 <defaultItem default="6" include="853,854,855,856,921,922,928"/>
                 <defaultItem default="24" include="857,858,859,861,868,870,871,872,873,907,912,917,918,919,920,929"/>
                 <defaultItem default="255" include="805,835,884,908"/>
@@ -1583,7 +1595,7 @@
                 <label>FX3 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.260" item="Extended Function Map FX4 Effect" default="5" minOut="4">
+            <variable CV="16.1.260" item="Extended Function Map FX4 Effect" default="5" minOut="4">
                 <defaultItem default="6" include="813,814,835,852,855,856,884,908,921,922"/>
                 <defaultItem default="25" include="857,858,859,861,868,870,871,872,873,907,912,917,918,919,929"/>
                 <defaultItem default="255" include="783,805,806,853,854,928"/>
@@ -1591,7 +1603,7 @@
                 <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.261" item="Extended Function Map FX5 Effect" default="6" minOut="5">
+            <variable CV="16.1.261" item="Extended Function Map FX5 Effect" default="6" minOut="5">
                 <defaultItem default="5" include="797,798,799,800,802,803,804,815,816,817,820,829,835,836,845,855,856,872,873,884,907,912,919,921,922,929"/>
                 <defaultItem default="24" include="853,854,908,928"/>
                 <defaultItem default="255" include="786,788,794,813,814,859"/>
@@ -1599,7 +1611,7 @@
                 <label>FX5 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.262" item="Extended Function Map FX6 Effect" default="6" minOut="6">
+            <variable CV="16.1.262" item="Extended Function Map FX6 Effect" default="6" minOut="6">
                 <defaultItem default="5" include="797,800,802,803,804,815,816,817,835,836,845,855,856,859,872,873,884,907,912,918,919,921,922,929"/>
                 <defaultItem default="25" include="853,854,908,928"/>
                 <defaultItem default="255" include="787,813,814"/>
@@ -1607,12 +1619,12 @@
                 <label>FX6 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.263" item="Extended Function Map FX7 Effect" default="5" minOut="7">
+            <variable CV="16.1.263" item="Extended Function Map FX7 Effect" default="5" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX7 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.264" item="Extended Function Map FX8 Effect" default="5" minOut="8">
+            <variable CV="16.1.264" item="Extended Function Map FX8 Effect" default="5" minOut="8">
                 <defaultItem default="6" include="859,870,928"/>
                 <defaultItem default="25" include="920"/>
                 <defaultItem default="255" include="853,854"/>
@@ -1620,445 +1632,445 @@
                 <label>FX8 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.275" item="Extended Function Map Independent/Train Brake" default="11">
+            <variable CV="16.1.275" item="Extended Function Map Independent/Train Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Brake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.283" item="Extended Function Map Brake Select" default="12">
+            <variable CV="16.1.283" item="Extended Function Map Brake Select" default="12">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Brake Select</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.284" item="Extended Function Map Alternate Mixer" default="9">
+            <variable CV="16.1.284" item="Extended Function Map Alternate Mixer" default="9">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Alternate Mixer</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.301" item="Extended Function Map Straight-to-Eight" default="10">
+            <variable CV="16.1.301" item="Extended Function Map Straight-to-Eight" default="10">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Straight-to-Eight</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.302" item="Extended Function Map General Service" default="18">
+            <variable CV="16.1.302" item="Extended Function Map General Service" default="18">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>General Service</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.303" item="Extended Function Map HEP Mode" default="16">
+            <variable CV="16.1.303" item="Extended Function Map HEP Mode" default="16">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>HEP Mode</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.304" item="Extended Function Map Cab Chatter" default="7">
+            <variable CV="16.1.304" item="Extended Function Map Cab Chatter" default="7">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Cab Chatter</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.308" item="Extended Function Map Handbrake" default="15">
+            <variable CV="16.1.308" item="Extended Function Map Handbrake" default="15">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Handbrake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.309" item="Extended Function Map Sander Valve" default="10">
+            <variable CV="16.1.309" item="Extended Function Map Sander Valve" default="10">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Sander Valve</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.312" item="Extended Function Map Steam Generator" default="20">
+            <variable CV="16.1.312" item="Extended Function Map Steam Generator" default="20">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Steam Generator</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.313" item="Extended Function Map Fuel Loading" default="17">
+            <variable CV="16.1.313" item="Extended Function Map Fuel Loading" default="17">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Fuel Loading</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.314" item="Extended Function Map Straight-to-Idle" default="19" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,921,922,928,929">
+            <variable CV="16.1.314" item="Extended Function Map Straight-to-Idle" default="19" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,921,922,928,929">
                 <defaultItem default="255" include="912,929"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Straight-to-Idle</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <!-- Effect Auxiliary Map Registers -->
-            <variable CV="1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="0" minOut="3">
+            <variable CV="16.1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="0" minOut="3">
                 <defaultItem default="1" include="805,835,884,908"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.387" mask="XXXXXXVX" item="FX3 Effect Automatic Effects - REVD" default="0" minOut="3">
+            <variable CV="16.1.387" mask="XXXXXXVX" item="FX3 Effect Automatic Effects - REVD" default="0" minOut="3">
                 <defaultItem default="1" include="835,884,908"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.387" mask="XXXXXVXX" item="FX3 Effect Automatic Effects - FWDS" default="0" minOut="3">
+            <variable CV="16.1.387" mask="XXXXXVXX" item="FX3 Effect Automatic Effects - FWDS" default="0" minOut="3">
                 <defaultItem default="1" include="805,835,884,908"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.387" mask="XXXXVXXX" item="FX3 Effect Automatic Effects - REVS" default="0" minOut="3">
+            <variable CV="16.1.387" mask="XXXXVXXX" item="FX3 Effect Automatic Effects - REVS" default="0" minOut="3">
                 <defaultItem default="1" include="835,884,908"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.387" mask="XXXVXXXX" item="FX3 Effect Automatic Effects - ESTP" default="0" minOut="3">
+            <variable CV="16.1.387" mask="XXXVXXXX" item="FX3 Effect Automatic Effects - ESTP" default="0" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.388" mask="XXXXXXXV" item="FX4 Effect Automatic Effects - FWDD" default="0" minOut="4">
+            <variable CV="16.1.388" mask="XXXXXXXV" item="FX4 Effect Automatic Effects - FWDD" default="0" minOut="4">
                 <defaultItem default="1" include="805,853,854,928"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.388" mask="XXXXXXVX" item="FX4 Effect Automatic Effects - REVD" default="0" minOut="4">
+            <variable CV="16.1.388" mask="XXXXXXVX" item="FX4 Effect Automatic Effects - REVD" default="0" minOut="4">
                 <defaultItem default="1" include="853,854,928"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.388" mask="XXXXXVXX" item="FX4 Effect Automatic Effects - FWDS" default="0" minOut="4">
+            <variable CV="16.1.388" mask="XXXXXVXX" item="FX4 Effect Automatic Effects - FWDS" default="0" minOut="4">
                 <defaultItem default="1" include="805,853,854,928"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.388" mask="XXXXVXXX" item="FX4 Effect Automatic Effects - REVS" default="0" minOut="4">
+            <variable CV="16.1.388" mask="XXXXVXXX" item="FX4 Effect Automatic Effects - REVS" default="0" minOut="4">
                 <defaultItem default="1" include="853,854,928"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.388" mask="XXXVXXXX" item="FX4 Effect Automatic Effects - ESTP" default="0" minOut="4">
+            <variable CV="16.1.388" mask="XXXVXXXX" item="FX4 Effect Automatic Effects - ESTP" default="0" minOut="4">
                 <defaultItem default="1" include="783,806"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.389" mask="XXXXXXXV" item="FX5 Effect Automatic Effects - FWDD" default="0" minOut="5">
+            <variable CV="16.1.389" mask="XXXXXXXV" item="FX5 Effect Automatic Effects - FWDD" default="0" minOut="5">
                 <defaultItem default="1" include="813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.389" mask="XXXXXXVX" item="FX5 Effect Automatic Effects - REVD" default="0" minOut="5">
+            <variable CV="16.1.389" mask="XXXXXXVX" item="FX5 Effect Automatic Effects - REVD" default="0" minOut="5">
                 <defaultItem default="1" include="813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.389" mask="XXXXXVXX" item="FX5 Effect Automatic Effects - FWDS" default="0" minOut="5">
+            <variable CV="16.1.389" mask="XXXXXVXX" item="FX5 Effect Automatic Effects - FWDS" default="0" minOut="5">
                 <defaultItem default="1" include="813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.389" mask="XXXXVXXX" item="FX5 Effect Automatic Effects - REVS" default="0" minOut="5">
+            <variable CV="16.1.389" mask="XXXXVXXX" item="FX5 Effect Automatic Effects - REVS" default="0" minOut="5">
                 <defaultItem default="1" include="813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.389" mask="XXXVXXXX" item="FX5 Effect Automatic Effects - ESTP" default="0" minOut="5">
+            <variable CV="16.1.389" mask="XXXVXXXX" item="FX5 Effect Automatic Effects - ESTP" default="0" minOut="5">
                 <defaultItem default="1" include="786,788,794,859"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.390" mask="XXXXXXXV" item="FX6 Effect Automatic Effects - FWDD" default="0" minOut="6">
+            <variable CV="16.1.390" mask="XXXXXXXV" item="FX6 Effect Automatic Effects - FWDD" default="0" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.390" mask="XXXXXXVX" item="FX6 Effect Automatic Effects - REVD" default="0" minOut="6">
+            <variable CV="16.1.390" mask="XXXXXXVX" item="FX6 Effect Automatic Effects - REVD" default="0" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.390" mask="XXXXXVXX" item="FX6 Effect Automatic Effects - FWDS" default="0" minOut="6">
+            <variable CV="16.1.390" mask="XXXXXVXX" item="FX6 Effect Automatic Effects - FWDS" default="0" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.390" mask="XXXXVXXX" item="FX6 Effect Automatic Effects - REVS" default="0" minOut="6">
+            <variable CV="16.1.390" mask="XXXXVXXX" item="FX6 Effect Automatic Effects - REVS" default="0" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.390" mask="XXXVXXXX" item="FX6 Effect Automatic Effects - ESTP" default="0" minOut="6">
+            <variable CV="16.1.390" mask="XXXVXXXX" item="FX6 Effect Automatic Effects - ESTP" default="0" minOut="6">
                 <defaultItem default="1" include="787,813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.391" mask="XXXXXXXV" item="FX7 Effect Automatic Effects - FWDD" default="0" minOut="7">
+            <variable CV="16.1.391" mask="XXXXXXXV" item="FX7 Effect Automatic Effects - FWDD" default="0" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.391" mask="XXXXXXVX" item="FX7 Effect Automatic Effects - REVD" default="0" minOut="7">
+            <variable CV="16.1.391" mask="XXXXXXVX" item="FX7 Effect Automatic Effects - REVD" default="0" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.391" mask="XXXXXVXX" item="FX7 Effect Automatic Effects - FWDS" default="0" minOut="7">
+            <variable CV="16.1.391" mask="XXXXXVXX" item="FX7 Effect Automatic Effects - FWDS" default="0" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.391" mask="XXXXVXXX" item="FX7 Effect Automatic Effects - REVS" default="0" minOut="7">
+            <variable CV="16.1.391" mask="XXXXVXXX" item="FX7 Effect Automatic Effects - REVS" default="0" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.391" mask="XXXVXXXX" item="FX7 Effect Automatic Effects - ESTP" default="0" minOut="7">
+            <variable CV="16.1.391" mask="XXXVXXXX" item="FX7 Effect Automatic Effects - ESTP" default="0" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.392" mask="XXXXXXXV" item="FX8 Effect Automatic Effects - FWDD" default="0" minOut="8">
+            <variable CV="16.1.392" mask="XXXXXXXV" item="FX8 Effect Automatic Effects - FWDD" default="0" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.392" mask="XXXXXXVX" item="FX8 Effect Automatic Effects - REVD" default="0" minOut="8">
+            <variable CV="16.1.392" mask="XXXXXXVX" item="FX8 Effect Automatic Effects - REVD" default="0" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.392" mask="XXXXXVXX" item="FX8 Effect Automatic Effects - FWDS" default="0" minOut="8">
+            <variable CV="16.1.392" mask="XXXXXVXX" item="FX8 Effect Automatic Effects - FWDS" default="0" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.392" mask="XXXXVXXX" item="FX8 Effect Automatic Effects - REVS" default="0" minOut="8">
+            <variable CV="16.1.392" mask="XXXXVXXX" item="FX8 Effect Automatic Effects - REVS" default="0" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.392" mask="XXXVXXXX" item="FX8 Effect Automatic Effects - ESTP" default="0" minOut="8">
+            <variable CV="16.1.392" mask="XXXVXXXX" item="FX8 Effect Automatic Effects - ESTP" default="0" minOut="8">
                 <defaultItem default="1" include="853,854"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.403" mask="XXXXXXXV" item="Independent/Train Brake Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.403" mask="XXXXXXXV" item="Independent/Train Brake Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.403" mask="XXXXXXVX" item="Independent/Train Brake Automatic Effects - REVD" default="0">
+            <variable CV="16.1.403" mask="XXXXXXVX" item="Independent/Train Brake Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.403" mask="XXXXXVXX" item="Independent/Train Brake Automatic Effects - FWDS" default="1">
+            <variable CV="16.1.403" mask="XXXXXVXX" item="Independent/Train Brake Automatic Effects - FWDS" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.403" mask="XXXXVXXX" item="Independent/Train Brake Automatic Effects - REVS" default="1">
+            <variable CV="16.1.403" mask="XXXXVXXX" item="Independent/Train Brake Automatic Effects - REVS" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.403" mask="XXXVXXXX" item="Independent/Train Brake Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.403" mask="XXXVXXXX" item="Independent/Train Brake Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.411" mask="XXXXXXXV" item="Brake Select Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.411" mask="XXXXXXXV" item="Brake Select Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.411" mask="XXXXXXVX" item="Brake Select Automatic Effects - REVD" default="0">
+            <variable CV="16.1.411" mask="XXXXXXVX" item="Brake Select Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.411" mask="XXXXXVXX" item="Brake Select Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.411" mask="XXXXXVXX" item="Brake Select Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.411" mask="XXXXVXXX" item="Brake Select Automatic Effects - REVS" default="0">
+            <variable CV="16.1.411" mask="XXXXVXXX" item="Brake Select Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.411" mask="XXXVXXXX" item="Brake Select Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.411" mask="XXXVXXXX" item="Brake Select Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.412" mask="XXXXXXXV" item="Alternate Mixer Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.412" mask="XXXXXXXV" item="Alternate Mixer Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.412" mask="XXXXXXVX" item="Alternate Mixer Automatic Effects - REVD" default="0">
+            <variable CV="16.1.412" mask="XXXXXXVX" item="Alternate Mixer Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.412" mask="XXXXXVXX" item="Alternate Mixer Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.412" mask="XXXXXVXX" item="Alternate Mixer Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.412" mask="XXXXVXXX" item="Alternate Mixer Automatic Effects - REVS" default="0">
+            <variable CV="16.1.412" mask="XXXXVXXX" item="Alternate Mixer Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.412" mask="XXXVXXXX" item="Alternate Mixer Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.412" mask="XXXVXXXX" item="Alternate Mixer Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.429" mask="XXXXXXXV" item="Straight-to-Eight Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.429" mask="XXXXXXXV" item="Straight-to-Eight Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.429" mask="XXXXXXVX" item="Straight-to-Eight Automatic Effects - REVD" default="0">
+            <variable CV="16.1.429" mask="XXXXXXVX" item="Straight-to-Eight Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.429" mask="XXXXXVXX" item="Straight-to-Eight Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.429" mask="XXXXXVXX" item="Straight-to-Eight Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.429" mask="XXXXVXXX" item="Straight-to-Eight Automatic Effects - REVS" default="0">
+            <variable CV="16.1.429" mask="XXXXVXXX" item="Straight-to-Eight Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.429" mask="XXXVXXXX" item="Straight-to-Eight Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.429" mask="XXXVXXXX" item="Straight-to-Eight Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.430" mask="XXXXXXXV" item="General Service Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.430" mask="XXXXXXXV" item="General Service Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.430" mask="XXXXXXVX" item="General Service Automatic Effects - REVD" default="0">
+            <variable CV="16.1.430" mask="XXXXXXVX" item="General Service Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.430" mask="XXXXXVXX" item="General Service Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.430" mask="XXXXXVXX" item="General Service Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.430" mask="XXXXVXXX" item="General Service Automatic Effects - REVS" default="0">
+            <variable CV="16.1.430" mask="XXXXVXXX" item="General Service Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.430" mask="XXXVXXXX" item="General Service Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.430" mask="XXXVXXXX" item="General Service Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.431" mask="XXXXXXXV" item="HEP Mode Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.431" mask="XXXXXXXV" item="HEP Mode Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.431" mask="XXXXXXVX" item="HEP Mode Automatic Effects - REVD" default="0">
+            <variable CV="16.1.431" mask="XXXXXXVX" item="HEP Mode Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.431" mask="XXXXXVXX" item="HEP Mode Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.431" mask="XXXXXVXX" item="HEP Mode Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.431" mask="XXXXVXXX" item="HEP Mode Automatic Effects - REVS" default="0">
+            <variable CV="16.1.431" mask="XXXXVXXX" item="HEP Mode Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.431" mask="XXXVXXXX" item="HEP Mode Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.431" mask="XXXVXXXX" item="HEP Mode Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.432" mask="XXXXXXXV" item="Cab Chatter Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.432" mask="XXXXXXXV" item="Cab Chatter Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.432" mask="XXXXXXVX" item="Cab Chatter Automatic Effects - REVD" default="0">
+            <variable CV="16.1.432" mask="XXXXXXVX" item="Cab Chatter Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.432" mask="XXXXXVXX" item="Cab Chatter Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.432" mask="XXXXXVXX" item="Cab Chatter Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.432" mask="XXXXVXXX" item="Cab Chatter Automatic Effects - REVS" default="0">
+            <variable CV="16.1.432" mask="XXXXVXXX" item="Cab Chatter Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.432" mask="XXXVXXXX" item="Cab Chatter Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.432" mask="XXXVXXXX" item="Cab Chatter Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.436" mask="XXXXXXXV" item="Handbrake Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.436" mask="XXXXXXXV" item="Handbrake Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.436" mask="XXXXXXVX" item="Handbrake Automatic Effects - REVD" default="0">
+            <variable CV="16.1.436" mask="XXXXXXVX" item="Handbrake Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.436" mask="XXXXXVXX" item="Handbrake Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.436" mask="XXXXXVXX" item="Handbrake Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.436" mask="XXXXVXXX" item="Handbrake Automatic Effects - REVS" default="0">
+            <variable CV="16.1.436" mask="XXXXVXXX" item="Handbrake Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.436" mask="XXXVXXXX" item="Handbrake Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.436" mask="XXXVXXXX" item="Handbrake Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.437" mask="XXXXXXXV" item="Sander Valve Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.437" mask="XXXXXXXV" item="Sander Valve Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.437" mask="XXXXXXVX" item="Sander Valve Automatic Effects - REVD" default="0">
+            <variable CV="16.1.437" mask="XXXXXXVX" item="Sander Valve Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.437" mask="XXXXXVXX" item="Sander Valve Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.437" mask="XXXXXVXX" item="Sander Valve Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.437" mask="XXXXVXXX" item="Sander Valve Automatic Effects - REVS" default="0">
+            <variable CV="16.1.437" mask="XXXXVXXX" item="Sander Valve Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.437" mask="XXXVXXXX" item="Sander Valve Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.437" mask="XXXVXXXX" item="Sander Valve Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.440" mask="XXXXXXXV" item="Steam Generator Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.440" mask="XXXXXXXV" item="Steam Generator Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.440" mask="XXXXXXVX" item="Steam Generator Automatic Effects - REVD" default="0">
+            <variable CV="16.1.440" mask="XXXXXXVX" item="Steam Generator Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.440" mask="XXXXXVXX" item="Steam Generator Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.440" mask="XXXXXVXX" item="Steam Generator Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.440" mask="XXXXVXXX" item="Steam Generator Automatic Effects - REVS" default="0">
+            <variable CV="16.1.440" mask="XXXXVXXX" item="Steam Generator Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.440" mask="XXXVXXXX" item="Steam Generator Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.440" mask="XXXVXXXX" item="Steam Generator Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXXXV" item="Fuel Loading Automatic Effects - FWDD" default="0">
+            <variable CV="16.1.441" mask="XXXXXXXV" item="Fuel Loading Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXXVX" item="Fuel Loading Automatic Effects - REVD" default="0">
+            <variable CV="16.1.441" mask="XXXXXXVX" item="Fuel Loading Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXVXX" item="Fuel Loading Automatic Effects - FWDS" default="0">
+            <variable CV="16.1.441" mask="XXXXXVXX" item="Fuel Loading Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXVXXX" item="Fuel Loading Automatic Effects - REVS" default="0">
+            <variable CV="16.1.441" mask="XXXXVXXX" item="Fuel Loading Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXVXXXX" item="Fuel Loading Automatic Effects - ESTP" default="0">
+            <variable CV="16.1.441" mask="XXXVXXXX" item="Fuel Loading Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
+            <variable CV="16.1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
+            <variable CV="16.1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
+            <variable CV="16.1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
+            <variable CV="16.1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
+            <variable CV="16.1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="835,853,854,855,856,857,858,859,861,868,870,871,872,873,884,907,908,912,917,918,919,920,921,922,928,929">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="62" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="62" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="60" include="853,868,917,918,919,920"/>
                 <defaultItem default="75" include="815,816,817,828,829"/>
                 <defaultItem default="80" include="854,855,856,921,922,928"/>
@@ -2068,7 +2080,7 @@
                 <decVal/>
                 <label>Airhorn Alt Volume</label>
             </variable>
-            <variable CV="2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="29" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="29" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="18" include="806"/>
                 <defaultItem default="27" include="828,829,830,831,832,912,929"/>
                 <defaultItem default="33" include="813,814,853,854,855,856,868,917,918,919,920,921,922,928"/>
@@ -2076,7 +2088,7 @@
                 <decVal/>
                 <label>Bell Alt Volume</label>
             </variable>
-            <variable CV="2.291" mask="VVVVVVVV" item="Alt Sound Setting 3" default="128" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.291" mask="VVVVVVVV" item="Alt Sound Setting 3" default="128" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="70" include="778,779"/>
                 <defaultItem default="75" include="815,816,817"/>
                 <defaultItem default="78" include="813,814,853,854,855,856,868,917,918,919,920,921,922,928"/>
@@ -2086,7 +2098,7 @@
                 <decVal/>
                 <label>Prime Mover Alt Volume</label>
             </variable>
-            <variable CV="2.292" mask="VVVVVVVV" item="Alt Sound Setting 4" default="15" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.292" mask="VVVVVVVV" item="Alt Sound Setting 4" default="15" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="25" include="778,779,791,792,802,803,804,805,835,836,872,873,884,907,908"/>
                 <defaultItem default="57" include="830,831,832,912,929"/>
                 <defaultItem default="64" include="815,816,817,828,829"/>
@@ -2094,133 +2106,133 @@
                 <decVal/>
                 <label>Air Compressor Alt Volume</label>
             </variable>
-            <variable CV="2.293" mask="VVVVVVVV" item="Alt Sound Setting 5" default="75" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.293" mask="VVVVVVVV" item="Alt Sound Setting 5" default="75" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871,917"/>
                 <decVal/>
                 <label>Dynamic Brake Alt Volume</label>
             </variable>
-            <variable CV="2.294" mask="VVVVVVVV" item="Alt Sound Setting 6" default="37" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.294" mask="VVVVVVVV" item="Alt Sound Setting 6" default="37" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="20" include="791,792,802,803,804,805,806,815,816,817,835,836,872,873,884,907,908"/>
                 <decVal/>
                 <label>Radiator Fans Alt Volume</label>
             </variable>
-            <variable CV="2.295" mask="VVVVVVVV" item="Alt Sound Setting 7" default="7" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.295" mask="VVVVVVVV" item="Alt Sound Setting 7" default="7" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Alarm Bell Alt Volume</label>
             </variable>
-            <variable CV="2.297" mask="VVVVVVVV" item="Alt Sound Setting 9" default="64" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.297" mask="VVVVVVVV" item="Alt Sound Setting 9" default="64" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Coupler Alt Volume</label>
             </variable>
-            <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 10" default="64" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.298" mask="VVVVVVVV" item="Alt Sound Setting 10" default="64" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Train Brake Apply/Release Alt Volume</label>
             </variable>
-            <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 11" default="50" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.299" mask="VVVVVVVV" item="Alt Sound Setting 11" default="50" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Independent Brake Apply Alt Volume</label>
             </variable>
-            <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 12" default="35" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.300" mask="VVVVVVVV" item="Alt Sound Setting 12" default="35" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Independent Brake Release Alt Volume</label>
             </variable>
-            <variable CV="2.303" mask="VVVVVVVV" item="Alt Sound Setting 15" default="11" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.303" mask="VVVVVVVV" item="Alt Sound Setting 15" default="11" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="20" include="828,829,830,831,832,912,929"/>
                 <decVal/>
                 <label>Poppet Valve Alt Volume</label>
             </variable>
-            <variable CV="2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="0" include="835,854,855,856,857,859,861,868,870,871,872,873,884,907,908,917,918,919,920,921,922,928,929"/>
                 <decVal/>
                 <label>Steam Generator Alt Volume</label>
             </variable>
-            <variable CV="2.305" mask="VVVVVVVV" item="Alt Sound Setting 17" default="64" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.305" mask="VVVVVVVV" item="Alt Sound Setting 17" default="64" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Cab Doors Alt Volume</label>
             </variable>
-            <variable CV="2.307" mask="VVVVVVVV" item="Alt Sound Setting 19" default="64" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.307" mask="VVVVVVVV" item="Alt Sound Setting 19" default="64" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Relay Clicks Alt Volume</label>
             </variable>
-            <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 20" default="35" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.308" mask="VVVVVVVV" item="Alt Sound Setting 20" default="35" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>E-Brake App Alt Volume</label>
             </variable>
-            <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 21" default="75" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.309" mask="VVVVVVVV" item="Alt Sound Setting 21" default="75" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Glad Hand Release Alt Volume</label>
             </variable>
-            <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 22" default="96" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.310" mask="VVVVVVVV" item="Alt Sound Setting 22" default="96" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>All Aboard!/Coach Doors Alt Volume</label>
             </variable>
-            <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="62" include="824,837,838,857,858,859,861,870,871"/>
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
-            <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 26" default="5" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.314" mask="VVVVVVVV" item="Alt Sound Setting 26" default="5" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Sander Valve Alt Volume</label>
             </variable>
-            <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 27" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.315" mask="VVVVVVVV" item="Alt Sound Setting 27" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Fuel Loading Alt Volume</label>
             </variable>
-            <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 28" default="10" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.316" mask="VVVVVVVV" item="Alt Sound Setting 28" default="10" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Air Conditioner Alt Volume</label>
             </variable>
-            <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 29" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.317" mask="VVVVVVVV" item="Alt Sound Setting 29" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Wrenches Alt Volume</label>
             </variable>
-            <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 30" default="20" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.318" mask="VVVVVVVV" item="Alt Sound Setting 30" default="20" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Pneumatic Oilers Alt Volume</label>
             </variable>
-            <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 31" default="10" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.319" mask="VVVVVVVV" item="Alt Sound Setting 31" default="10" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Toilet Flush Alt Volume</label>
             </variable>
-            <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 32" default="7" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.320" mask="VVVVVVVV" item="Alt Sound Setting 32" default="7" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Cab Chatter Alt Volume</label>
             </variable>
             <!-- Dynamic Digital Exhaust Controls follow -->
-            <variable item="DDE Filter Initial Frequency" CV="2.503" mask="VVVVVVVV" default="60" tooltip="determines the minimum load required by the motor to move the model">
+            <variable item="DDE Filter Initial Frequency" CV="16.2.503" mask="VVVVVVVV" default="60" tooltip="determines the minimum load required by the motor to move the model">
                 <decVal/>
                 <label>DDE Load Offset</label>
             </variable>
-            <variable item="DDE Filter Control Gain" CV="2.504" mask="VVVVVVVV" default="186" tooltip="determines the load required to increase the speed of the motor">
+            <variable item="DDE Filter Control Gain" CV="16.2.504" mask="VVVVVVVV" default="186" tooltip="determines the load required to increase the speed of the motor">
                 <decVal/>
                 <label>DDE Load Slope</label>
             </variable>
-            <variable item="Exhaust Low Volume Limit" CV="2.507" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;      locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
+            <variable item="Exhaust Low Volume Limit" CV="16.2.507" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;      locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
                 <decVal/>
                 <label>Prime Mover Low Volume Limit</label>
             </variable>
-            <variable item="Exhaust High Volume Limit" CV="2.508" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;      locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+            <variable item="Exhaust High Volume Limit" CV="16.2.508" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;      locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
                 <decVal/>
                 <label>Prime Mover High Volume Limit</label>
             </variable>
-            <variable item="Attack Time Constant" CV="2.509" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;      the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
+            <variable item="Attack Time Constant" CV="16.2.509" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;      the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
                 <decVal max="255"/>
                 <label>Attack Time Constant</label>
             </variable>
-            <variable item="Release Time Constant" CV="2.510" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;      the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
+            <variable item="Release Time Constant" CV="16.2.510" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;      the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
                 <decVal/>
                 <label>Release Time Constant</label>
             </variable>
-            <variable item="Throttle Gain" CV="2.511" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;      setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
+            <variable item="Throttle Gain" CV="16.2.511" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;      setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
                 <decVal/>
                 <label>Throttle Sensitivity</label>
             </variable>
-            <variable item="Motor Load Gain" CV="2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+            <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
                 <decVal/>
                 <label>Load Sensitivity</label>
             </variable>
-            <variable CV="3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1">
+            <variable CV="16.3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1">
                 <defaultItem default="2" include="778,779,791,792,802,803,804,805,813,814,815,816,817,820,835,836,853,854,855,856,872,873,884,907,908,912,921,922,928"/>
                 <enumVal>
                     <enumChoice value="1">
@@ -2232,7 +2244,7 @@
                 </enumVal>
                 <label>Clickety-Clack Axles per Truck</label>
             </variable>
-            <variable CV="3.257" mask="XXXXVVXX" item="Sound Group 1 Option 2" default="1" >
+            <variable CV="16.3.257" mask="XXXXVVXX" item="Sound Group 1 Option 2" default="1" >
                 <enumVal>
                     <enumChoice>
                         <choice>1 truck per car</choice>
@@ -2243,7 +2255,7 @@
                 </enumVal>
                 <label>Clickety-Clack Trucks per Car</label>
             </variable>
-            <variable item="Sound Group 3 Option 8" CV="3.258" mask="VVVVVVVV" default="180" tooltip="Scale Speed (ft/s) = (Speed Step × CV 3.258) ÷ 100">
+            <variable item="Sound Group 3 Option 8" CV="16.3.258" mask="VVVVVVVV" default="180" tooltip="Scale Speed (ft/s) = (Speed Step × CV 3.258) ÷ 100">
                 <decVal/>
                 <label>Clickety-Clack Sound Scalar</label>
             </variable>

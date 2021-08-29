@@ -29,7 +29,11 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     /**
      * Record LocoNet messages sent, provide access for making sure they are OK.
      */
-    public Vector<LocoNetMessage> outbound = new Vector<LocoNetMessage>();  // public OK here, so long as this is a test class
+    public Vector<LocoNetMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
+
+    public void clearReceivedMessages() {
+        outbound = new Vector<>();
+    }
 
     @Override
     public void sendLocoNetMessage(LocoNetMessage m) {

@@ -1,101 +1,81 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Signal Head Table Help</title>
-  <meta name="author" content=
-  "Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help Signal Head Table">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>The Signal Head Table</h1><a href=
-      "images/SigHeadTable.png"><img src="images/SigHeadTable.png" align="right"
-      width="447" height="176" hspace="0" vspace="0" alt=
-      "Signal Head Table"></a>
-
-      <p>All the Signal Heads that JMRI knows about can be
-      referenced using the "Signal Head Table" tool in the Tools &gt; Tables
-      menu of most JMRI programs. Signal Heads may also be used
-      to build Signal Masts in a later step.<br>
-      You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a
-      column title.<br>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>The Signal Head Table</h1>
+      <a href="images/SigHeadTable.png"><img src="images/SigHeadTable.png" class="floatRight"
+      width="447" height="176" alt="Signal Head Table"></a>
+      <p>All the Signal Heads that JMRI knows about can be referenced using the "Signal Head Table"
+      tool in the Tools &gt; Tables menu of most JMRI programs. Signal Heads may also be used to
+      build Signal Masts in a later step.<br>
+      You may change the order of the columns by dragging their titles, and sort the rows by
+      clicking one of the sort triangles next to a column title.<br>
       There are eight columns in the Signal Head Table:</p>
 
       <ol>
-        <li>The System Name is assigned to the Signal Head when
-        it's created, and can't be changed later.</li>
+        <li>The System Name is assigned to the Signal Head when it's created, and can't be changed
+        later.</li>
 
-        <li>If you're interested in having your Signal Heads carry
-        "human readable" names, you can doubleclick in the "User
-        Name" column and change that information to whatever you
+        <li>If you're interested in having your Signal Heads carry "human readable" names, you can
+        doubleclick in the "User Name" column and change that information to whatever you
         want.</li>
 
-        <li>As the Signal Head changes, for whatever reason, the
-        current Appearance will show in the table in the "Appearance"
-        column. Change the Appearance of a head by choosing one of the
-        available states from the combo box: Red, Yellow, Green,
-        Flashing red, Flashing Yellow, Flashing Green, or Dark.
-        Some Signal Heads may also have Lunar and Flashing Lunar
+        <li>As the Signal Head changes, for whatever reason, the current Appearance will show in
+        the table in the "Appearance" column. Change the Appearance of a head by choosing one of
+        the available states from the combo box: Red, Yellow, Green, Flashing red, Flashing Yellow,
+        Flashing Green, or Dark. Some Signal Heads may also have Lunar and Flashing Lunar
         available.</li>
 
-        <li>The "Comment" column is for your use to record any
-        comment you may want to help keep track of your Signal
-        Heads. It is for information only. Doubleclick to edit the
+        <li>The "Comment" column is for your use to record any comment you may want to help keep
+        track of your Signal Heads. It is for information only. Doubleclick to edit the
         contents.</li>
 
-        <li>Click the "Delete" button in a specific row to delete
-        the Signal Head. Be sure to first remove any Signal Head
-        icons associated with this Signal Head, any associated
-        Simple Signal Logic, and all references to this Signal
-        Head. Use this button with caution!</li>
+        <li>Click the "Delete" button in a specific row to delete the Signal Head. Be sure to first
+        remove any Signal Head icons associated with this Signal Head, any associated Simple Signal
+        Logic, and all references to this Signal Head. Use this button with caution!</li>
 
-        <li>The check box in the "Lit" column lets you control
-        whether the Signal Head on the layout is lit (checked) or
-        stays dark (unchecked).</li>
+        <li>The check box in the "Lit" column lets you control whether the Signal Head on the
+        layout is lit (checked) or stays dark (unchecked).</li>
 
-        <li>The check box in the "Held" column shows the "held"
-        property of the Signal Head, and allows you to change it.
-        This property is used by e.g. CTC machine logic to say
-        "Don't change this Signal Head from red, even if it would
-        be safe to do so, because I want to hold a train
-        here".</li>
+        <li>The check box in the "Held" column shows the "held" property of the Signal Head, and
+        allows you to change it. This property is used by e.g. CTC machine logic to say "Don't
+        change this Signal Head from red, even if it would be safe to do so, because I want to hold
+        a train here".</li>
 
-        <li>Click the "Edit" button in a row to view or change
-        optional information for a Signal Head.<br>
-        Notes: System Name and Signal type cannot be changed. Only
-        one Signal Head may be edited at a time.</li>
+        <li>Click the "Edit" button in a row to view or change optional information for a Signal
+        Head.<br>
+        Notes: System Name and Signal type cannot be changed. Only one Signal Head may be edited at
+        a time.</li>
       </ol>
 
-      <p>To define a new Signal Head, click on the "<a href=
-      "SignalAddEdit.shtml">Add..."</a> button at the bottom of the
-      Signal Head Table. It will prompt you for the Signal Head
+      <p>To define a new Signal Head, click on the "<a href="SignalAddEdit.shtml">Add..."</a>
+      button at the bottom of the Signal Head Table. It will prompt you for the Signal Head
       connection type and whatever information is needed.</p>
 
-      <p>Use the Store item in the File menu to save signal
-      information to disk. For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
-      Loading and Storing Your Work</a>.</p>
+      <p>Use the Store item in the File menu to save signal information to disk. For details, see
+      <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
-      <p>For more information on creating and displaying panels,
-      including how to show signals on your panels, please see the
-      <a href="../../../../html/apps/PanelPro/Panels.shtml">Panels
+      <p>For more information on creating and displaying panels, including how to show signals on
+      your panels, please see the <a href="../../../../html/apps/PanelPro/Panels.shtml">Panels
       pages</a>.</p>
 
-      <p>Back to the <a href=
-      "../../../../html/tools/signaling/SignalHeads.shtml">Signal
-      Heads help page</a>.</p>
+      <p>Back to the <a href="../../../../html/tools/signaling/SignalHeads.shtml">Signal Heads help
+      page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

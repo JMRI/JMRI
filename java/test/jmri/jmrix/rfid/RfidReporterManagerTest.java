@@ -100,8 +100,9 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         memo = new RfidSystemConnectionMemo();
         l = new RfidReporterManager(memo){
             @Override
-            protected Reporter createNewReporter(@Nonnull String systemName, String userName){
-               return null;
+            @Nonnull
+            protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+               return new RfidReporter(systemName, userName);
             }
             @Override
             public void message(RfidMessage m){}

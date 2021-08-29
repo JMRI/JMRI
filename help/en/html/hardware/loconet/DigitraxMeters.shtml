@@ -1,105 +1,181 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax "Meters"</title>
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="Digitrax DCS Command Station Meters">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Digitrax "Meters"</h1>
+
       <table>
-          <tr><td><img src="images/TrackVoltageMeter.png" alt="Volt meter screen shot"/></td><td><img
-                  src="images/CurrentMeter.png" alt="Current meter screen shot"/></td></tr>
+        <tr>
+          <td><img src="images/TrackVoltageMeter.png" alt="Volt meter screen shot">
+          </td>
+          <td><img src="images/CurrentMeter.png" alt="Current meter screen shot">
+          </td>
+        </tr>
       </table>
+
       <div class="toc">
         <ul>
-          <li><a href="#Introduction">Introduction to JMRI Volt and Current Meters with Digitrax Hardware</a>
-          <li><a href="#SupportedHardware">Hardware which supports Digitrax "Meters"</a>
-          <li><a href="#Limitations">Limitations</a>
+          <li>
+            <a href="#Introduction">Introduction to JMRI Volt and Current Meters with Digitrax
+            Hardware</a>
+          </li>
+
+          <li>
+            <a href="#SupportedHardware">Hardware which supports Digitrax "Meters"</a>
+          </li>
+
+          <li>
+            <a href="#Limitations">Limitations</a>
+          </li>
         </ul>
       </div>
-      <h1><a id="Introduction" name="Introduction">
-      Introduction to JMRI Volt and Current Meters with Digitrax Hardware</a></h1>
 
-      <p>Under certain configurations, JMRI provides a "Voltage/Current Meter" tool 
-          under the "Tools" menu item.  This tool may be used to display information
-          reported by certain Digitrax hardware.</p>
-      <p>The Voltage/Current Meter tool can report voltage or current data from
-          any LocoNet device which reports voltage and current information using
-          special Loconet messages.  In order to help differentiate the possible
-          sources, each source's data is identified by a name which includes the
-          device type and the device serial number.  Each is individually selectable
-          in the Voltage/Current Meter tool.</p>
-      <p>It is helpful to re-configure the Voltage/Current Meter tool's "Settings"
-          for displaying "2 integer digits" and "1 decimal digit".  This matches
-          the tool's display to the precision of the data reported on LocoNet.</p>
-      <p>Note that the current reported by modern Digitrax boosters and command
-          stations tends to be the "power input" current, not the "DCC Track 
-          Current".  See <a href="#Limitations_Current">Limitations</a>,
-          below.</p>
-      
-      <h1><a id="SupportedHardware" name="SupportedHardware">Hardware which supports Digitrax "Meters"</a></h1>
-      <p>The JMRI's LocoNet functionality supports the voltage and current reporting
-          from the following Digitrax devices:</p>
+      <h1 id="Introduction">Introduction to JMRI Volt and Current Meters with Digitrax
+      Hardware</h1>
+
+      <p>Under certain configurations, JMRI provides a "Voltage/Current Meter" tool under the
+      "Tools" menu item. This tool may be used to display information reported by certain Digitrax
+      hardware.</p>
+
+      <p>The Voltage/Current Meter tool can report voltage or current data from any LocoNet device
+      which reports voltage and current information using special Loconet messages. In order to
+      help differentiate the possible sources, each source's data is identified by a name which
+      includes the device type and the device serial number. Each is individually selectable in the
+      Voltage/Current Meter tool.</p>
+
+      <p>It is helpful to re-configure the Voltage/Current Meter tool's "Settings" for displaying
+      "2 integer digits" and "1 decimal digit". This matches the tool's display to the precision of
+      the data reported on LocoNet.</p>
+
+      <p>Note that the current reported by modern Digitrax boosters and command stations tends to
+      be the "power input" current, not the "DCC Track Current". See <a href=
+      "#Limitations_Current">Limitations</a>, below.</p>
+
+      <h1 id="SupportedHardware">Hardware which supports Digitrax "Meters"</h1>
+
+      <p>The JMRI's LocoNet functionality supports the voltage and current reporting from the
+      following Digitrax devices:</p>
+
       <table border='2'>
-          <tr><td><strong>Device</strong><td>
-              <td><strong>Typical "name" of voltage meter</strong></td>
-              <td><strong>Typical "name" of current meter</strong></td></tr>
-          <tr><td>DCS210</td><td>TVDCS210(s/n130)Voltage</td><td>TVDCS210(s/n130)InputCurrent</td></tr>
-          <tr><td>DCS240</td><td>TVDCS240(s/n4567)Voltage</td><td>TVDCS240(s/n4567)InputCurrent</td></tr>
-          <tr><td>DCS52</td><td>TVDCS52(s/n100)Voltage</td><td>TVDCS52(s/n100)InputCurrent</td></tr>
-          <tr><td>DCS210+ *</td><td>TVDCS210+(s/n93)Voltage</td><td>TVDCS210+(s/n93)InputCurrent</td></tr>
-          <tr><td>DB210 **</td><td>TVDB210(s/n435)Voltage</td><td>TVDB210(s/n435)InputCurrent</td></tr>
-          <tr><td>DB220 **</td><td>TVDB220(s/n2117)Voltage</td><td>TVDB220(s/n2117)InputCurrent</td></tr>
-          <tr><td>DB210Opto **</td><td>TVDB210Opto(s/n435)Voltage</td><td>TVDB210Opto(s/n435)InputCurrent</td></tr>
-          <tr><td colspan="3">* At least some DCS210+ devices report inconsistent data.</td></tr>
-          <tr><td colspan="3">** It is suspected that these devices report voltage 
-                  and current data that is compatible with this tool, but this 
-                  has not yet been confirmed.</td></tr>
+        <tr>
+          <td><strong>Device</strong>
+          </td>
+          <td>
+          </td>
+          <td><strong>Typical "name" of voltage meter</strong>
+          </td>
+          <td><strong>Typical "name" of current meter</strong>
+          </td>
+        </tr>
+
+        <tr>
+          <td>DCS210</td>
+          <td>TVDCS210(s/n130)Voltage</td>
+          <td>TVDCS210(s/n130)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DCS240</td>
+          <td>TVDCS240(s/n4567)Voltage</td>
+          <td>TVDCS240(s/n4567)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DCS52</td>
+          <td>TVDCS52(s/n100)Voltage</td>
+          <td>TVDCS52(s/n100)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DCS210+ *</td>
+          <td>TVDCS210+(s/n93)Voltage</td>
+          <td>TVDCS210+(s/n93)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DB210 **</td>
+          <td>TVDB210(s/n435)Voltage</td>
+          <td>TVDB210(s/n435)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DB220 **</td>
+          <td>TVDB220(s/n2117)Voltage</td>
+          <td>TVDB220(s/n2117)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td>DB210Opto **</td>
+          <td>TVDB210Opto(s/n435)Voltage</td>
+          <td>TVDB210Opto(s/n435)InputCurrent</td>
+        </tr>
+
+        <tr>
+          <td colspan="3">* At least some DCS210+ devices report inconsistent data.</td>
+        </tr>
+
+        <tr>
+          <td colspan="3">** It is suspected that these devices report voltage and current data
+          that is compatible with this tool, but this has not yet been confirmed.</td>
+        </tr>
       </table>
-      <p>Other Digitrax devices which include the appropriate capabilities are
-          automatically supported.  However, where a specific device type is not 
-          understood by JMRI, the associated voltage meter and current meter data
-          will be available, via names which include a device number instead of
-          a device name.</p>
-      <h1><a id="Limitations" name="Limitations">Limitations</a></h1>
-      <p>The LocoNet implementation which supports reporting of voltage and 
-          current has the following limitations:
+
+      <p>Other Digitrax devices which include the appropriate capabilities are automatically
+      supported. However, where a specific device type is not understood by JMRI, the associated
+      voltage meter and current meter data will be available, via names which include a device
+      number instead of a device name.</p>
+
+      <h1 id="Limitations">Limitations</h1>
+
+      <p>The LocoNet implementation which supports reporting of voltage and current has the
+      following limitations:</p>
+
       <ul>
-          <li>The JMRI implementation of voltage and current measurement capabilities
-              applies to those devices which support "Query Mode" reporting of
-              voltage and current mesurements.</li>
-          <li>At least some versions of DCS210+ command stations seem to have 
-              problems in reporting reliable data.</li>
-          <li>Proper reporting of voltage and current measurements may only be 
-              available with certain firmware versions.  Be sure to update your 
-              LocoNet device firmware to help ensure proper measurement reporting.</li>
-          <li>When displaying LocoNet-reported Voltage and/or Current values, the
-              tools will generally receive new data about every 30 seconds.</li>
-          <li><a id="Limitations_Current" name="Limitations_Current">While the tool 
-              linked in the "Tools" menu calls one tool "Track Current"</a>, 
-              the LocoNet implementation does not report DCC track current exactly.  
-              Instead, the LocoNet implementation reports the "input power's current 
-              consumption".  This will generally be the DCC track current plus some 
-              "overhead" current which is consumed by the command station circuitry.</li>
-          <li>The LocoNet implementation relies upon the information reported by 
-              the "Query Mode" reporting of "Vtrk" (for the data used by the "Track 
-              Voltage" tool) and "Query Mode" reporting of "Iin" (for the data used
-              by the "Track Current" tool).</li>
+        <li>The JMRI implementation of voltage and current measurement capabilities applies to
+        those devices which support "Query Mode" reporting of voltage and current mesurements.</li>
+
+        <li>At least some versions of DCS210+ command stations seem to have problems in reporting
+        reliable data.</li>
+
+        <li>Proper reporting of voltage and current measurements may only be available with certain
+        firmware versions. Be sure to update your LocoNet device firmware to help ensure proper
+        measurement reporting.</li>
+
+        <li>When displaying LocoNet-reported Voltage and/or Current values, the tools will
+        generally receive new data about every 30 seconds.</li>
+
+        <li>
+          <a id="Limitations_Current">While the tool linked in the "Tools" menu calls one tool
+          "Track Current"</a>, the LocoNet implementation does not report DCC track current
+          exactly. Instead, the LocoNet implementation reports the "input power's current
+          consumption". This will generally be the DCC track current plus some "overhead" current
+          which is consumed by the command station circuitry.
+        </li>
+
+        <li>The LocoNet implementation relies upon the information reported by the "Query Mode"
+        reporting of "Vtrk" (for the data used by the "Track Voltage" tool) and "Query Mode"
+        reporting of "Iin" (for the data used by the "Track Current" tool).</li>
       </ul>
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

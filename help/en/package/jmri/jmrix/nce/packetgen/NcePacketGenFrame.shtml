@@ -1,224 +1,233 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator"
-    content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Command Generator</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Command Generator">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
- <!--#include virtual="/Header.shtml" -->
- <div class="nomenu" id="mBody">
-  <div id="mainContent">
-
-   <h1>NCE Command Generator</h1>
-   NCE binary commands are designed to work in a computer friendly mode.<br> Command format is:
-   (cmd number) (data) (data) ...<br> Commands range from 0x80 to 0xBF
-
-   <p>Select the "Binary" checkbox to send binary commands, deselect to send ASCII characters. For
-    example the binary command to read the software version of the command station is 0xAA. You
-    would enter "AA" in the text box and then press send. To view the response to the command open
-    the NCE Command Monitor before issuing the command.</p>
-
-   <p>The number of reply bytes is automatically calculated by the program. You can override the
-    number of expected bytes by entering a number in the text box located in the lower left hand
-    corner.</p>
-   <br>
-
-   <h2>NCE Binary Commands Supported by all Systems</h2>
-
-   <p>BINARY CMD FORMAT DESCRIPTION # OF BYTES RESPONSES RETURNED</p>
-
-   <p>0x80 NOP, dummy instruction (1) !</p>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>NCE Command Generator</h1>
+      NCE binary commands are designed to work in a computer friendly mode.<br>
+      Command format is: (cmd number) (data) (data) ...<br>
+      Commands range from 0x80 to 0xBF
+      <p>Select the "Binary" checkbox to send binary commands, deselect to send ASCII characters.
+      For example the binary command to read the software version of the command station is 0xAA.
+      You would enter "AA" in the text box and then press send. To view the response to the command
+      open the NCE Command Monitor before issuing the command.</p>
+
+      <p>The number of reply bytes is automatically calculated by the program. You can override the
+      number of expected bytes by entering a number in the text box located in the lower left hand
+      corner.</p>
+      <br>
+
+      <h2>NCE Binary Commands Supported by all Systems</h2>
+
+      <p>BINARY CMD FORMAT DESCRIPTION # OF BYTES RESPONSES RETURNED</p>
+
+      <p>0x80 NOP, dummy instruction (1) !</p>
+
+      <p>0x8C Dummy instruction returns "!" (3) !,0x0D,0x0A followed by CR/LF</p>
+
+      <p>0x9C xx Execute macro number xx (1) !,0,3</p>
+
+      <p>0x9E Enter Programming track mode (1) ! = success 3 = short circuit</p>
+
+      <p>0x9F Exit Programming track mode (1) ! = success</p>
+
+      <p>0xA0 aaaa xx Program CV aa with data xx in (1) ! = success paged mode 0 = program track
+      not enabled</p>
+
+      <p>0xA1 aaaa Read CV aa in paged mode (2) !,0,3<br>
+      NOTE: cv data followed ! for ok, 0xff followed by 3 for can't read</p>
+
+      <p>0xA2 (4 data bytes) Locomotive control command (1) !,1<br>
+      Sends a speed or function packet to a locomotive.<br>
+      Command Format: 0xA2 (addr_h) (addr_l) (op_1) (data_1)<br>
+      <br>
+      Addr_h and Addr_l are the loco address in DCC format.<br>
+      If a long address is in use, bits 6 and 7 of the high byte are set.<br>
+      Ex: Long address 3 = 0xc0 0x03<br>
+      Short address 3 = 0x00 0x03<br>
+      <br>
+      op_1 data_1 Operation description<br>
+      00 0-7f nop<br>
+      01 0-7f Reverse 28 speed command<br>
+      02 0-7f Forward 28 speed command<br>
+      03 0-7f Reverse 128 speed command<br>
+      04 0-7f Forward 128 speed command<br>
+      05 0 Estop reverse command<br>
+      06 0 Estop forward command<br>
+      07 0-1f Function group 1 (same format as DCC packet for FG1<br>
+      08 0-0f Function group 2 (same format as DCC packet for FG2<br>
+      09 0-0f Function group 3 (same format as DCC packet for FG3<br>
+      0a-14 not supported in PowerCab or SB3 version 1.28<br>
+      15 0-ff Functions 13-20 control (bit 0=F13, bit 7=F20)<br>
+      16 0-ff Functions 21-28 control (bit 0=F21, bit 7=F28)<br>
+      17-7f reserved reserved</p>
 
-   <p>0x8C Dummy instruction returns "!" (3) !,0x0D,0x0A followed by CR/LF</p>
+      <p>0xA6 rr xx Program register rr with data xx (1) ! = success in register mode 0 = program
+      track not enabled</p>
 
-   <p>0x9C xx Execute macro number xx (1) !,0,3</p>
+      <p>0xA7 rr Read register rr in register mode(2) !,3<br>
+      NOTE: cv data followed ! for ok, 0 = program track not enabled 0xff followed by 3 for can't
+      read</p>
 
-   <p>0x9E Enter Programming track mode (1) ! = success 3 = short circuit</p>
+      <p>0xA8 aaaa xx Program CV aaaa with data xx (1) ! = success in direct mode 0 = program track
+      not enabled</p>
 
-   <p>0x9F Exit Programming track mode (1) ! = success</p>
+      <p>0xA9 aaaa Read CV aaaa in direct mode (2) !,3<br>
+      NOTE: cv data followed ! for ok, 0 = program track not enabled 0xff followed by 3 for can't
+      read</p>
 
-   <p>0xA0 aaaa xx Program CV aa with data xx in (1) ! = success paged mode 0 = program track
-    not enabled</p>
+      <p>0xAA Return software revision number (3) (data1),(data2),(data3)<br>
+      FORMAT: VV.MM.mm</p>
 
-   <p>
-    0xA1 aaaa Read CV aa in paged mode (2) !,0,3<br> NOTE: cv data followed ! for ok, 0xff
-    followed by 3 for can't read
-   </p>
+      <p>0xAD (4 data bytes) Accy/signal and macro commands (1) !,1<br>
+      Command Format: 0xAD (addr_h) (addr_l) (op_1) (data_1)<br>
+      Addr_h and Addr_l are the accessory/signal address (NOT in DCC format).<br>
+      Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)<br>
+      NOTE: accy/signal address 0 is not a valid address<br>
+      SPECIAL NOTE: PowerCab/SB3 version 1.28 only supports up to accessory address 250<br>
+      <br>
+      Op_1 Data_1 Operation description<br>
+      01 0-255 NCE macro number 0-255<br>
+      02 0-255 Duplicate of Op_1 command<br>
+      03 0 Accessory Normal direction (ON)<br>
+      04 0 Accessory Reverse direction (OFF)<br>
+      05 0-1f Signal Aspect 0-31<br>
+      05-7f reserved reserved</p>
 
-   <p>
-    0xA2 (4 data bytes) Locomotive control command (1) !,1<br> Sends a speed or function packet
-    to a locomotive.<br> Command Format: 0xA2 (addr_h) (addr_l) (op_1) (data_1)<br> <br>
-    Addr_h and Addr_l are the loco address in DCC format.<br> If a long address is in use, bits
-    6 and 7 of the high byte are set.<br> Ex: Long address 3 = 0xc0 0x03<br> Short address
-    3 = 0x00 0x03<br> <br> op_1 data_1 Operation description<br> 00 0-7f nop<br>
-    01 0-7f Reverse 28 speed command<br> 02 0-7f Forward 28 speed command<br> 03 0-7f
-    Reverse 128 speed command<br> 04 0-7f Forward 128 speed command<br> 05 0 Estop reverse
-    command<br> 06 0 Estop forward command<br> 07 0-1f Function group 1 (same format as
-    DCC packet for FG1<br> 08 0-0f Function group 2 (same format as DCC packet for FG2<br>
-    09 0-0f Function group 3 (same format as DCC packet for FG3<br> 0a-14 not supported in
-    PowerCab or SB3 version 1.28<br> 15 0-ff Functions 13-20 control (bit 0=F13, bit 7=F20)<br>
-    16 0-ff Functions 21-28 control (bit 0=F21, bit 7=F28)<br> 17-7f reserved reserved
-   </p>
+      <p>0xAE (5 data bytes) OPs program loco CV (1) !,1,3<br>
+      Command Format: 0xAE (addr_h) (addr_l) (CV_h) (CV_l) (data)<br>
+      addr_h,addr_l are loco address (same as 0xA2 command)<br>
+      CV_h, CV_l are cv address high byte first data is 8 bit data for CV</p>
 
-   <p>0xA6 rr xx Program register rr with data xx (1) ! = success in register mode 0 = program
-    track not enabled</p>
+      <p>0xAF (5 data bytes) OPs program accessory/signal (1) !,1,3<br>
+      Command Format: 0xAF (addr_h) (addr_l) (CV_h) (CV_l) (data)<br>
+      addr_h,addr_l are accy/sig address (same as 0xAD command)<br>
+      CV_h, CV_l are CV address high byte first data is 8 bit data for CV<br>
+      <br>
+      NOTE: a single byte of 0 will be returned if not in programming mode<br>
+      for commands 0x9F,0xA0,0xA1 and 0xA6- 0xA9<br>
+      <br>
+      Errors returned: '0'= command not supported<br>
+      '1'= loco/accy/signal address out of range<br>
+      '2'= cab address or op code out of range<br>
+      '3'= CV address or data out of range<br>
+      '4'= byte count out of range<br>
+      '!'= command completed successfully</p>
+      <br>
 
-   <p>
-    0xA7 rr Read register rr in register mode(2) !,3<br> NOTE: cv data followed ! for ok, 0 =
-    program track not enabled 0xff followed by 3 for can't read
-   </p>
+      <h3>Additional NCE Binary Commands Supported by Power House</h3>
 
-   <p>0xA8 aaaa xx Program CV aaaa with data xx (1) ! = success in direct mode 0 = program track
-    not enabled</p>
+      <p>0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2</p>
 
-   <p>
-    0xA9 aaaa Read CV aaaa in direct mode (2) !,3<br> NOTE: cv data followed ! for ok, 0 =
-    program track not enabled 0xff followed by 3 for can't read
-   </p>
+      <p>0x82 read clock (2) (hours)(minutes)</p>
 
-   <p>
-    0xAA Return software revision number (3) (data1),(data2),(data3)<br> FORMAT: VV.MM.mm
-   </p>
+      <p>0x83 Clock stop (1) !</p>
 
-   <p>
-    0xAD (4 data bytes) Accy/signal and macro commands (1) !,1<br> Command Format: 0xAD
-    (addr_h) (addr_l) (op_1) (data_1)<br> Addr_h and Addr_l are the accessory/signal address
-    (NOT in DCC format).<br> Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)<br>
-    NOTE: accy/signal address 0 is not a valid address<br> SPECIAL NOTE: PowerCab/SB3 version
-    1.28 only supports up to accessory address 250<br> <br> Op_1 Data_1 Operation
-    description<br> 01 0-255 NCE macro number 0-255<br> 02 0-255 Duplicate of Op_1 command<br>
-    03 0 Accessory Normal direction (ON)<br> 04 0 Accessory Reverse direction (OFF)<br> 05
-    0-1f Signal Aspect 0-31<br> 05-7f reserved reserved
-   </p>
+      <p>0x84 Clock start (1) !</p>
 
-   <p>
-    0xAE (5 data bytes) OPs program loco CV (1) !,1,3<br> Command Format: 0xAE (addr_h)
-    (addr_l) (CV_h) (CV_l) (data)<br> addr_h,addr_l are loco address (same as 0xA2 command)<br>
-    CV_h, CV_l are cv address high byte first data is 8 bit data for CV
-   </p>
+      <p>0x85 xx xx Set clock hr./min (1) !,3</p>
 
-   <p>
-    0xAF (5 data bytes) OPs program accessory/signal (1) !,1,3<br> Command Format: 0xAF
-    (addr_h) (addr_l) (CV_h) (CV_l) (data)<br> addr_h,addr_l are accy/sig address (same as 0xAD
-    command)<br> CV_h, CV_l are CV address high byte first data is 8 bit data for CV<br> <br>
-    NOTE: a single byte of 0 will be returned if not in programming mode<br> for commands
-    0x9F,0xA0,0xA1 and 0xA6- 0xA9<br> <br> Errors returned: '0'= command not supported<br>
-    '1'= loco/accy/signal address out of range<br> '2'= cab address or op code out of range<br>
-    '3'= CV address or data out of range<br> '4'= byte count out of range<br> '!'= command
-    completed successfully
-   </p>
-   <br>
+      <p>0x86 xx Set clock 12/24 (1) !,3</p>
 
-   <h3>Additional NCE Binary Commands Supported by Power House</h3>
+      <p>0x87 xx Set clock ratio (1) !,3</p>
 
-   <p>0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2</p>
+      <p>0x88 xxxx Dequeue packet by loco addr (1) !, 1,2</p>
 
-   <p>0x82 read clock (2) (hours)(minutes)</p>
+      <p>0x89 Enable main trk, kill prog (1) !</p>
 
-   <p>0x83 Clock stop (1) !</p>
+      <p>0x8A yy Return status of AIU yy (4) (current hi byte) (current lo byte) (change hi byte)
+      (change lo byte)</p>
 
-   <p>0x84 Clock start (1) !</p>
+      <p>0x8B Kill main trk, enable prog (1) !</p>
 
-   <p>0x85 xx xx Set clock hr./min (1) !,3</p>
+      <p>0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !, 1,3 (speed
+      mode, 0 to 3)</p>
 
-   <p>0x86 xx Set clock 12/24 (1) !,3</p>
+      <p>0x8E aaaa nn (16 data bytes) Write nn bytes, start at aaaa Must have 16 data bytes, pad
+      them out to 16 if necessary (1) !,4</p>
 
-   <p>0x87 xx Set clock ratio (1) !,3</p>
+      <p>0x8F aaaa Read 16 bytes, start at aaaa (16) 16 bytes</p>
 
-   <p>0x88 xxxx Dequeue packet by loco addr (1) !, 1,2</p>
+      <p>0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2</p>
 
-   <p>0x89 Enable main trk, kill prog (1) !</p>
+      <p>0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2</p>
 
-   <p>0x8A yy Return status of AIU yy (4) (current hi byte) (current lo byte) (change hi byte)
-    (change lo byte)</p>
+      <p>0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2</p>
 
-   <p>0x8B Kill main trk, enable prog (1) !</p>
+      <p>0x93 ss (3 byte packet) Queue 3 byte packet to temp _Q send ss times (1) !</p>
 
-   <p>0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !, 1,3 (speed
-    mode, 0 to 3)</p>
+      <p>0x94 ss (4 byte packet) Queue 4 byte packet to temp _Q send ss times (1) !</p>
 
-   <p>0x8E aaaa nn (16 data bytes) Write nn bytes, start at aaaa Must have 16 data bytes, pad
-    them out to 16 if necessary (1) !,4</p>
+      <p>0x95 ss (5 byte packet) Queue 5 byte packet to temp _Q send ss times (1) !</p>
 
-   <p>0x8F aaaa Read 16 bytes, start at aaaa (16) 16 bytes</p>
+      <p>0x96 ss (6 byte packet) Queue 6 byte packet to temp _Q send ss times (1) !</p>
 
-   <p>0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2</p>
+      <p>0x97 aaaa xx Write 1 byte to aaaa (1) !</p>
 
-   <p>0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2</p>
+      <p>0x98 aaaa xx xx Write 2 bytes to aaaa (1) !</p>
 
-   <p>0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2</p>
+      <p>0x99 aaaa(4 data bytes) Write 4 bytes to aaaa (1) !</p>
 
-   <p>0x93 ss (3 byte packet) Queue 3 byte packet to temp _Q send ss times (1) !</p>
+      <p>0x9A aaaa(8 data bytes) Write 8 bytes to aaaa (1) !</p>
 
-   <p>0x94 ss (4 byte packet) Queue 4 byte packet to temp _Q send ss times (1) !</p>
+      <p>0x9B yy Return status of AIU yy (short form of command 0x8A) (2) (current hi byte)
+      (current lo byte)</p>
 
-   <p>0x95 ss (5 byte packet) Queue 5 byte packet to temp _Q send ss times (1) !</p>
+      <p>0x9C xx Execute macro number xx (1) !, 0,3</p>
 
-   <p>0x96 ss (6 byte packet) Queue 6 byte packet to temp _Q send ss times (1) !</p>
+      <p>0x9D aaaa Read 1 byte from aaaa (1) 1 byte</p>
 
-   <p>0x97 aaaa xx Write 1 byte to aaaa (1) !</p>
+      <p>0x9E Enter programming track mode (1) !=success 3=short circuit</p>
 
-   <p>0x98 aaaa xx xx Write 2 bytes to aaaa (1) !</p>
+      <p>0x9F Exit programming track mode (1) !=success</p>
 
-   <p>0x99 aaaa(4 data bytes) Write 4 bytes to aaaa (1) !</p>
+      <p>0xA0 aaaa xx Program CV aa with data xx in paged mode (1) !=success 0=program track no</p>
 
-   <p>0x9A aaaa(8 data bytes) Write 8 bytes to aaaa (1) !</p>
+      <p>0xA1 aaaa Read CV aaaa in paged mode Note: cv data followed by ! for OK. 0xFF followed by
+      3 for can't read CV (2) !, 0,3</p>
 
-   <p>0x9B yy Return status of AIU yy (short form of command 0x8A) (2) (current hi byte)
-    (current lo byte)</p>
+      <p>0xA2(4 data bytes) Locomotive control command (1) !,1</p>
 
-   <p>0x9C xx Execute macro number xx (1) !, 0,3</p>
+      <p>0xA3 (3 byte packet) Queue 3 byte packet to TRK _Q (replaces any packet with same address
+      if it exists) (1) !,1</p>
 
-   <p>0x9D aaaa Read 1 byte from aaaa (1) 1 byte</p>
+      <p>0xA4 xx xx... Queue 4 byte packet to TRK _Q (replaces any packet with same address if it
+      exists) (1) !,1</p>
 
-   <p>0x9E Enter programming track mode (1) !=success 3=short circuit</p>
+      <p>0xA5 xx xx... Queue 5 byte packet to TRK _Q (replaces any packet with same address if it
+      exists (1) !,1</p>
 
-   <p>0x9F Exit programming track mode (1) !=success</p>
+      <p>0xA6 rr dd Program register rr with dd (1) !=success 0=program track no</p>
 
-   <p>0xA0 aaaa xx Program CV aa with data xx in paged mode (1) !=success 0=program track no</p>
+      <p>0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't
+      read CV (2) !,3 0=program track no</p>
 
-   <p>0xA1 aaaa Read CV aaaa in paged mode Note: cv data followed by ! for OK. 0xFF followed by
-    3 for can't read CV (2) !, 0,3</p>
+      <p>0xA8 aaaa dd Program CV aaaa with dd in direct mode. (1) !=success 0=program track no</p>
 
-   <p>0xA2(4 data bytes) Locomotive control command (1) !,1</p>
+      <p>0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK. 0xFF followed
+      by 3 for can't read CV (2) !,3 0=program track no</p>
 
-   <p>0xA3 (3 byte packet) Queue 3 byte packet to TRK _Q (replaces any packet with same address
-    if it exists) (1) !,1</p>
+      <p>0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes</p>
 
-   <p>0xA4 xx xx... Queue 4 byte packet to TRK _Q (replaces any packet with same address if it
-    exists) (1) !,1</p>
+      <p>0xAB Perform soft reset of command station (like cycling power) (0) Returns nothing</p>
 
-   <p>0xA5 xx xx... Queue 5 byte packet to TRK _Q (replaces any packet with same address if it
-    exists (1) !,1</p>
+      <p>0xAC Perform hard reset of command station. Reset to factory defaults (Note: will change
+      baud rate to 9600) (0) Returns nothing</p>
 
-   <p>0xA6 rr dd Program register rr with dd (1) !=success 0=program track no</p>
-
-   <p>0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't
-    read CV (2) !,3 0=program track no</p>
-
-   <p>0xA8 aaaa dd Program CV aaaa with dd in direct mode. (1) !=success 0=program track no</p>
-
-   <p>0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK. 0xFF followed
-    by 3 for can't read CV (2) !,3 0=program track no</p>
-
-   <p>0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes</p>
-
-   <p>0xAB Perform soft reset of command station (like cycling power) (0) Returns nothing</p>
-
-   <p>0xAC Perform hard reset of command station. Reset to factory defaults (Note: will change
-    baud rate to 9600) (0) Returns nothing</p>
-
-   <p>0xAD (4 data bytes) Accy/signal and macro commands (1) !,1</p>
-   <!--#include virtual="/Footer.shtml" -->
+      <p>0xAD (4 data bytes) Accy/signal and macro commands (1) !,1</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
   </div>
- </div><!-- close #mBody -->
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

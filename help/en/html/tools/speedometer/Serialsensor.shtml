@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Speedometer - Using the serial port for block
-  sensors</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Speedometer - Using the serial port for block sensors</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Speedometer</h1>
 
-      <h2>Using the serial port for Block Sensors</h2>Jim Scorse
-      has provided a schematic for connecting an NCE block detector
-      to the serial port.<br>
-      <img src="images/speed0.jpg" width="400" height="300">
-
+      <h2>Using the serial port for Block Sensors</h2>
+      Jim Scorse has provided a schematic for connecting an NCE block detector to the serial
+      port.<br>
+      <img src="images/speed0.jpg" width="400" height="300" alt="circuit diagram">
       <h3>DB9 and DB25 connections</h3>
+
       <pre>
        DB9 pin      DB25 pin
        -------      --------
@@ -39,12 +35,12 @@ CTS      8             5
 RI       9            22
 
 </pre>
-
-      <p>Back to the <a href="index.shtml">Speedometer main Help
-      page</a>.</p>
+      <p>Back to the <a href="index.shtml">Speedometer main Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

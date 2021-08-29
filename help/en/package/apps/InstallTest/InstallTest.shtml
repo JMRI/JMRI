@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: InstallTest Main Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: InstallTest Main Window</h1>The InstallTest main
-      window is intended to show if you have Java and JMRI
-      correctly installed. You should not use it for normal
-      activity.
-
-      <p>If you've gotten to this page by running InstallTest and
-      selecting help, your JMRI installation is basically OK. You
-      can move on to configuring and running DecoderPro, PanelPro,
-      etc.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: InstallTest Main Window</h1>
+      The InstallTest main window is intended to show if you have Java and JMRI correctly
+      installed. You should not use it for normal activity.
+      <p>If you've gotten to this page by running InstallTest and selecting help, your JMRI
+      installation is basically OK. You can move on to configuring and running DecoderPro,
+      PanelPro, etc.</p>
 
       <p>This is the apps.InstallTest.InstallTest.shtml help page</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

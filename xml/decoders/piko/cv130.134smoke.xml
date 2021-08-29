@@ -38,19 +38,23 @@
             <enumChoice choice="None" value="0">
                 <choice>None</choice>
                 <choice xml:lang="de">Kein</choice>
+                <choice xml:lang="cs">Nic</choice>
             </enumChoice>
             <enumChoice choice="A1" value="2">
                 <choice>A1</choice>
                 <choice xml:lang="de">A1</choice>
+                <choice xml:lang="cs">A1</choice>
             </enumChoice>
             <enumChoice choice="A2" value="1">
                 <choice>A2</choice>
                 <choice xml:lang="de">A2</choice>
+                <choice xml:lang="cs">A2</choice>
             </enumChoice>
         </enumVal>
         <label>Smoke generator operation</label>
         <label xml:lang="de">Rauchgeneratorbetrieb</label>
         <label xml:lang="nl">Aansl. rookgenerator</label>
+        <label xml:lang="cs">Provoz kouřového generátoru</label>
     </variable>
     
     <variable item="Smoke generator option 3" CV="130" mask="VVVVXXXX" default="0" >
@@ -58,26 +62,31 @@
         <label>Smoke gen. duration</label>
         <label xml:lang="de">Rauchzeit (T2)</label>
         <label xml:lang="nl">Rookduur (T2)</label>
+        <label xml:lang="cs">Doba trvání kouřového generátoru (T2)</label>
         <tooltip>Value * 0.2s + Start delay (T1)</tooltip>
         <tooltip xml:lang="de">Wert * 0.2s + Anfahrwartezeit (T1)</tooltip>
         <tooltip xml:lang="nl">Waarde * 0.2s + Wegrijvertraging (T1)</tooltip>
+        <tooltip xml:lang="cs">Hodnota × 0,2 s + doba trvání spouštění (T1)</tooltip>
     </variable>
     <variable item="Smoke generator option 4" CV="131" default="5" ><!--IntelliDrive2-->
         <decVal/>
         <label>Smoke gen. control PWM - Load</label>
         <label xml:lang="de">Rauchgen. PWM - Lastschwelle</label>
+        <label xml:lang="cs">Kouřový generátor řízení PWM - Zatěž</label>
     </variable>
     <variable item="Smoke generator option 5" CV="132" default="16">
         <decVal max="63"/>
         <label>Smoke gen. control PWM - Normal</label>
         <label xml:lang="de">Rauchgen. PWM - Normalbetrieb</label>
         <label xml:lang="nl">Rookgen. PWM - Normaalbedrijf</label>
+        <label xml:lang="cs">Kouřový generátor řízení PWM - Normální</label>
     </variable>
     <variable item="Smoke generator option 6" CV="133" default="2">
         <decVal max="63"/>
         <label>Smoke gen. control PWM - Idle</label>
         <label xml:lang="de">Rauchgen. PWM - Leerlauf</label>
         <label xml:lang="nl">Rookgen. PWM - Vrijloop</label>
+        <label xml:lang="cs">Kouřový generátor řízení PWM - Nečinný</label>
     </variable>
     
     <variable item="Smoke generator option 7" CV="134" default="30">
@@ -85,8 +94,10 @@
         <label>Smoke generator - Start delay (T1)</label>
         <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
         <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
+        <label xml:lang="cs">Kouřový generátor - zpoždění startu (T1)</label>
         <tooltip>Value * 0.1s</tooltip>
         <tooltip xml:lang="de">Wert * 0.1s</tooltip>
         <tooltip xml:lang="nl">Waarde * 0.1s</tooltip>
+        <tooltip xml:lang="cs">hodnota × 0,1 s</tooltip>
     </variable>
 </variables>

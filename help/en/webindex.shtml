@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JMRI Help System: Index</title>
 <meta name="author" content="Bob Jacobsen">
 <meta name="keywords" content="JMRI Help Index">
@@ -203,7 +204,7 @@
 <ul>
   
 <li>
-<a href="">Connection Details </a>
+<a href="html/hardware/merg/Details.shtml">Connection Details </a>
 <ul></ul>
 </li>
 
@@ -485,7 +486,7 @@
 
  
 <li>
-<a href="package/jmri/jmrit/DebugMenu.shtml">Debug Menu </a>
+<a href="html/apps/PanelPro/DebugMenu.shtml">Debug Menu </a>
 <ul></ul>
 </li>
 
@@ -871,6 +872,12 @@
 
  
 <li>
+<a href="html/apps/PanelPro/HelpMenu.shtml">Help Menu </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/tools/IdTags.shtml">ID Tag </a>
 <ul></ul>
 </li>
@@ -936,7 +943,7 @@
 
  
 <li>
-<a href="">Issue Reporter </a>
+<a href="package/apps/util/issuereporter/swing/IssueReporter.shtml">Issue Reporter </a>
 <ul></ul>
 </li>
 
@@ -2296,7 +2303,7 @@
 
   
 <li>
-<a href="">USB Joypad as Throttle </a>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#joypad">USB Joypad as Throttle </a>
 <ul></ul>
 </li>
 
@@ -2329,7 +2336,7 @@
 
  
 <li>
-<a href="package/jmri/jmrit/ToolsMenu.shtml">Tools Menu </a>
+<a href="html/apps/PanelPro/ToolsMenu.shtml">Tools Menu </a>
 <ul></ul>
 </li>
 

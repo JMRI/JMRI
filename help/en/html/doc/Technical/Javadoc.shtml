@@ -1,107 +1,84 @@
-<!DOCTYPE html><html lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Use of Javadoc and UML</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code UML Javadoc">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>JMRI Code: Use of Javadoc and UML</h1>
 
-    <h1>JMRI Code: Use of Javadoc and UML</h1>
-
-      <p>The JMRI library provides the majority of its API
-      documentation via <a href=
-      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a>
-      and <a href=
+      <p>The JMRI library provides the majority of its API documentation via <a href=
+      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a> and <a href=
       "http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.</p>
 
       <p>We also use Java <a href=
-      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">
-      annotations</a> to document our code structure.</p>
+      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> to
+      document our code structure.</p>
 
-      <p>We use the <a href="http://www.umlgraph.org">UmlGraph</a>
-      doclet to automatically create the UML diagrams in our
-      Javadoc pages.</p>
+      <p>We use the <a href="http://www.umlgraph.org">UmlGraph</a> doclet to automatically create
+      the UML diagrams in our Javadoc pages.</p>
 
       <h2>Javadoc for Developers</h2>
-      
       The <a href=
-      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
-      Javadoc tutorial</a> is a good, but somewhat long, <a href=
-      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
-      introduction to Javadoc</a>. A brief summary of the
-      formatting and tags can be found in <a href=
+      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">Javadoc
+      tutorial</a> is a good, but somewhat long, <a href=
+      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction
+      to Javadoc</a>. A brief summary of the formatting and tags can be found in <a href=
       "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
       the reference</a>.
+      <p>It's <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">recommended</a>
+      that any significant Java package contain a <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment"><code>
+      package-info.java</code></a> file to contain any needed package-level documentation. It can
+      also contain any <a href=
+      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> you
+      want to apply to all classes in the package. If you don't have any annotations you want to
+      include, please include</p>
 
-      <p>
-      It's <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
-      recommended</a> that any significant Java package contain a
-      <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
-      <code>package-info.java</code></a> file 
-      to contain any needed
-      package-level documentation. 
-      It can also contain any 
-      <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a>
-      you want to apply to all classes in the package.
-      If you don't have any annotations you want to include, please include
-
-<pre style="font-family: monospace;">      
+      <pre style="font-family: monospace;">
       @edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
-</pre>
+</pre>which helps some of our build systems minimize recompilation. (For more on that annotation,
+see <a href=
+"https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">
+      here</a>)
+      <p>Previously, we used <code>package.html</code> files for this. It's not a high priority to
+      replace existing <code>package.html</code> files, but new packages should include a
+      <code>package-info.java</code> copied from <code>java/package-info.java</code> instead, see
+      above.</p>
 
-      which helps some of our build systems minimize recompilation.
-      (For more on that annotation, see 
-      <a href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">here</a>)
-      
-      <p>
-      Previously, we used <code>package.html</code> files 
-      for this. It's not a
-      high priority to replace existing <code>package.html</code>
-      files, but new packages should include a
-      <code>package-info.java</code> copied from
-      <code>java/package-info.java</code> instead, see above.</p>
+      <p>A nice discussion of how to use the "deprecated" label in documentation is available on
+      the <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How
+      and When To Deprecate APIs" page</a>.</p>
 
-      <p>A nice discussion of how to use the "deprecated" label in
-      documentation is available on the <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">
-      "How and When To Deprecate APIs" page</a>.</p>
+      <h3 id="html">HTML in Javadoc</h3>
 
-    <a name="html" id="html"></a>
-    <h3>HTML in Javadoc</h3>
-    
-      <p>The Java 8 Javadoc content is interpreted as HTML 4.01, so it
-      should be valid HTML 4.01. If it's not, it probably won't
-      display properly when somebody wants to understand your code,
-      so it's in your interest to get the Javadoc comments
-      right.  In addition, Java 11 will eventually require us to 
-      write HTML 5 Javadoc content; keeping it orderly now will
-      help with that migration later.</p>
-      
-      <p>We run the <code>ant scanhelp</code> job
-      during 
-      <a href="ContinuousIntegration.shtml">integration</a> to keep errors from 
-      accumulating; you can run that on your own changes to the
-      code to get feedback early.</p>
+      <p>The Java 8 Javadoc content is interpreted as HTML 4.01, so it should be valid HTML 4.01.
+      If it's not, it probably won't display properly when somebody wants to understand your code,
+      so it's in your interest to get the Javadoc comments right. In addition, Java 11 will
+      eventually require us to write HTML 5 Javadoc content; keeping it orderly now will help with
+      that migration later.</p>
 
-      <p>The rest of this section is hints and tips on HTML 4.01.
-      
-      <p>You have to properly escape the &gt;, &amp; and &lt;
-      characters, e.g. to show a generic type. 
-      To do that, either escape them individually
-      by writing 
-      &amp;gt;, &amp;amp; and &amp;lt;
-      (note the trailing semi-colon) or
-      place the entire bit of text in
-      {@literal ...} or {@code ...} blocks.</p>
+      <p>We run the <code>ant scanhelp</code> job during <a href=
+      "ContinuousIntegration.shtml">integration</a> to keep errors from accumulating; you can run
+      that on your own changes to the code to get feedback early.</p>
+
+      <p>The rest of this section is hints and tips on HTML 4.01.</p>
+
+      <p>You have to properly escape the &gt;, & and &lt; characters, e.g. to show a generic type.
+      To do that, either escape them individually by writing &amp;gt;, &amp;amp; and &amp;lt; (note
+      the trailing semi-colon) or place the entire bit of text in {@literal ...} or {@code ...}
+      blocks.</p>
 
       <p>Some error messages that can result from this and their translations:</p>
 
@@ -110,69 +87,65 @@
 
         <dt>"bad HTML entity"</dt>
 
-        <dd>Probably use of &amp;, &lt; or &gt; characters on the
-        indicated line</dd>
+        <dd>Probably use of &amp;, &lt; or &gt; characters on the indicated line</dd>
 
         <dt>"bad use of '&gt;'"</dt>
 
-        <dd>Probably using '&gt;' as a character, e.g. A -&gt; B.
-        If so, replace with "&amp;gt;" or wrap it with
-        @literal as in
+        <dd>
+          Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with "&amp;gt;" or
+          wrap it with @literal as in
 
-<pre style="font-family: monospace;">
+          <pre style="font-family: monospace;">
         {@literal 0.0 -&gt; 1.0.}
-</pre>
-        and
-<pre style="font-family: monospace;">
-        opcodes {@code &lt;opc, string description&gt;} via                
+</pre>and
+
+          <pre style="font-family: monospace;">
+        opcodes {@code &lt;opc, string description&gt;} via
 </pre>
         </dd>
       </dl>
 
-       <p>
-        Definitely use @code{...} in Javadoc comments
-        instead of trying to provide HTML-style 
-        elements like &lt;tt&gt; and &lt;code&gt;, as they 
-        won't format correctly.
+      <p>Definitely use @code{...} in Javadoc comments instead of trying to provide HTML-style
+      elements like &lt;tt&gt; and &lt;code&gt;, as they won't format correctly.</p>
 
-      <p>You also have to (sometimes) end your paragraph tags to
-      start another type of element, e.g. lists:</p>
- <pre style="font-family: monospace;">
+      <p>You also have to (sometimes) end your paragraph tags to start another type of element,
+      e.g. lists:</p>
+
+      <pre style="font-family: monospace;">
  * Some text that forms a paragraph
  * &lt;p&gt;
- * Some more text. 
+ * Some more text.
  * &lt;p&gt;
  * Last text, start list. Note end-paragraph tag.
  * &lt;/p&gt;&lt;ul&gt;
  *    &lt;li&gt;List item
  * &lt;/ul&gt;
-</pre>
-Note that HTML 4.01 wants paragraph tags to be ended with
-&lt;/p&gt;, and that you can't have a list inside a paragraph.
-      
-      <p>Finally, note that this Javadoc line is malformed:
- <pre style="font-family: monospace;">
+</pre>Note that HTML 4.01 wants paragraph tags to be ended with &lt;/p&gt;, and that you can't have
+a list inside a paragraph.
+      <p>Finally, note that this Javadoc line is malformed:</p>
+
+      <pre style="font-family: monospace;">
   * @param foo
-</pre>
-because it doesn't include any explanatory text. The line
-should include explanatory text:
- <pre style="font-family: monospace;">
+</pre>because it doesn't include any explanatory text. The line should include explanatory text:
+
+      <pre style="font-family: monospace;">
  * @param foo holds the latest Bar instance
 </pre>
+      <h3 id="inherit">Inheriting Javadoc comments</h3>
 
-    <a name="inherit" id="inherit"></a>
-    <h3>Inheriting Javadoc comments</h3>
-    <p>When you write a method that overrides a method (or signature) in a superclass,
-        you should always use the <code>@Overrides</code> annotation to 
-        indicate that:
-<pre style="font-family: monospace;">
+      <p>When you write a method that overrides a method (or signature) in a superclass, you should
+      always use the <code>@Overrides</code> annotation to indicate that:</p>
+
+      <pre style="font-family: monospace;">
   @Override
   public void methodName() {
     // doing something
   }
 </pre>
-      <p>If the method is similar enough to the superclass method, you can just "inherit" the Javadoc from the superclass:
-<pre style="font-family: monospace;">
+      <p>If the method is similar enough to the superclass method, you can just "inherit" the
+      Javadoc from the superclass:</p>
+
+      <pre style="font-family: monospace;">
   /**
    * {@inheritDoc}
    */
@@ -181,110 +154,94 @@ should include explanatory text:
     // doing something
   }
 </pre>
-    <p>(If there's no Javadoc in the superclass, consider adding your comments there 
-    instead of on your new method and inheriting them;
-    that kills two birds with one stone!)
-    <p> You can add or replace some of the documentation, e.g. 
-<pre style="font-family: monospace;">
+      <p>(If there's no Javadoc in the superclass, consider adding your comments there instead of
+      on your new method and inheriting them; that kills two birds with one stone!)</p>
+
+      <p>You can add or replace some of the documentation, e.g.</p>
+
+      <pre style="font-family: monospace;">
   /**
    * {@inheritDoc}
-   * 
+   *
    * This implementation uses the ReallyMarvelous algorithm for improved speed.
    */
   @Override
   public void methodName() {
     // doing something
   }
-</pre>             
-    <p>General comments add to the documentation from the superclass; 
-     @param and @return tags replace the documentation from the superclass.
-     
-    <a name="missing" id="missing"></a>
-    <h3>Reducing the Number of Missing Comments</h3>
-     <p>We are currently suppressing the "missing" class of
-      warnings, which warns of missing @param or @return tags. Note that
-      Javadoc will throw an error if the number of "missing" warnings
-      exceeds 2300 (as of 2017-10-01, down from 3975 on 2017-02-20; progress!). 
-      Once the number of these warnings
-      is reduced to a managable level, we will stop suppressing them.</p>
+</pre>
+      <p>General comments add to the documentation from the superclass; @param and @return tags
+      replace the documentation from the superclass.</p>
 
-      <p>For a summary of current Javadoc errors in the code, see
-      <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
-      Builds Jenkins job</a>.</p>
+      <h3 id="missing">Reducing the Number of Missing Comments</h3>
 
-      <h2>UML and UmlGraph for Developers</h2>UML is a broad and
-      deep language for describing the structure, design and
-      behavior of computing systems. JMRI primarly uses UML class
-      diagrams for documenting its structure. Many UML tutorials
-      are available on the web. In particular, a good starting
-      point is the <a href=
-      "http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">
-      Object Mentor introduction to class diagrams</a>. For more
-      detail, please see <a href=
+      <p>We are currently suppressing the "missing" class of warnings, which warns of missing
+      @param or @return tags. Note that Javadoc will throw an error if the number of "missing"
+      warnings exceeds 2300 (as of 2017-10-01, down from 3975 on 2017-02-20; progress!). Once the
+      number of these warnings is reduced to a managable level, we will stop suppressing them.</p>
+
+      <p>For a summary of current Javadoc errors in the code, see <a href=
+      "https://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">Builds
+      Jenkins job</a>.</p>
+
+      <h2>UML and UmlGraph for Developers</h2>
+      UML is a broad and deep language for describing the structure, design and behavior of
+      computing systems. JMRI primarly uses UML class diagrams for documenting its structure. Many
+      UML tutorials are available on the web. In particular, a good starting point is the <a href=
+      "http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor
+      introduction to class diagrams</a>. For more detail, please see <a href=
       "http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&amp;D/UML_tutorial/class.htm">
-      Atlas UML course</a> or <a href=
-      "http://edn.embarcadero.com/article/31863">Embarcadero
+      Atlas UML course</a> or <a href="http://edn.embarcadero.com/article/31863">Embarcadero
       Software introduction</a>.
+      <p>Our Ant Javadoc processing makes basic UML class diagrams automatically. For an example,
+      see the <a href="https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor interface Javadoc</a>,
+      then click the "Show UML Class Diagram link" to see the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram embedded in it</a>. For a more
+      complex example see <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">ProgModeSelector
+      class Javadoc</a> then click the "Show UML Class Diagram link" to see the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">class diagram
+      embedded in it</a>.</p>
 
-      <p>Our Ant Javadoc processing makes basic UML class diagrams
-      automatically. For an example, see the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
-      interface Javadoc</a>, then click the "Show UML Class Diagram
-      link" to see the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
-      embedded in it</a>. For a more complex example see <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
-      ProgModeSelector class Javadoc</a> then click the "Show UML
-      Class Diagram link" to see the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
-      class diagram embedded in it</a>.</p>
+      <p>You can also define custom UML diagrams using <a href="http://plantuml.com">PlantUML</a>.
+      For an example of the source syntax to define state and sequence diagrams, see the <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a>
+      file. The resulting diagrams are visible in the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">Javadoc output</a>.</p>
 
-      <p>You can also define custom UML diagrams using <a href=
-      "http://plantuml.com">PlantUML</a>. For an example of the
-      source syntax to define state and sequence diagrams, see the
-      <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">
-      java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
-      resulting diagrams are visible in the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
-      Javadoc output</a>.
-      <p>PlantUml can also be used for standalone diagrams, c.f.
-      <a href="SystemStructure.shtml">the connection sequence diagram</a>.
-      To do this, create a .txt file, and then manually process with
+      <p>PlantUml can also be used for standalone diagrams, c.f. <a href=
+      "SystemStructure.shtml">the connection sequence diagram</a>. To do this, create a .txt file,
+      and then manually process with</p>
+
       <pre>
       java -jar lib/plantuml.jar help/en/my/file/path/name
-      </pre>
-      A .png with the diagram will be created alongside the source.
-
+      </pre>A .png with the diagram will be created alongside the source.
       <h2>Processing</h2>
-      
-      The standard JMRI Ant build provides three
-      documentation targets:
-
+      The standard JMRI Ant build provides three documentation targets:
       <dl>
         <dt>javadoc</dt>
 
-        <dd>Create the text Javadocs in the local doc/ directory.
-        Open doc/index.html for access.</dd>
+        <dd>Create the text Javadocs in the local doc/ directory. Open doc/index.html for
+        access.</dd>
 
         <dt>javadoc-uml</dt>
 
-        <dd>Create the UML diagrams and Javadocs in the local doc/
-        directory. Open doc/index.html for access.</dd>
+        <dd>Create the UML diagrams and Javadocs in the local doc/ directory. Open doc/index.html
+        for access.</dd>
 
         <dt>uploadjavadoc</dt>
 
-        <dd>Upload the current documentation in the local doc/
-        directory to the jmri.org web site. This is done
-        automatically by the <a href=
-        "ContinuousIntegration.shtml">CI system</a>, so you
-        generally don't have to deal with it.</dd>
+        <dd>
+          Upload the current documentation in the local doc/ directory to the jmri.org web site.
+          This is done automatically by the <a href="ContinuousIntegration.shtml">CI system</a>, so
+          you generally don't have to deal with it.
+        </dd>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

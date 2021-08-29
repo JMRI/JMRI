@@ -1,161 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: GitHub Administration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Git Github">
-  <!--#include virtual="/Style.shtml" -->
-</head>
-<!--#include virtual="/Header.shtml" -->
+  <meta name="keywords" content="JMRI Git Github"><!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI Code: GitHub Administration</h1>
 
       <h2>Background</h2>
-      
-      JMRI uses
-      <a href="https://github.com">GitHub</a>
-      to host our 
-      <a href="https://github.com/JMRI/JMRI">main code repository</a>, 
-      <a href="https://github.com/JMRI/JMRI/releases">releases and downloads</a>
-      and 
-      <a href="https://github.com/JMRI/JMRI/issues">issues lists</a>.
-      It also hosts 
-      <a href="https://github.com/JMRI">several related repositories</a>.
-      
-      <p>
-      The rest of this page records how we configure and use GitHub,
-      along with associated procedures.
-      
-      <p>
-      Related info on other pages:
-      <ul>
-        <li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
-            - doesn't really talk about how GitHub is configured for this, nor how the services
-                are configured</li>
-        <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a></li>
-        <li>The
-            <a href="https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">release process</a>
-            works with GitHub repositories, Issues and releases.</li>
-      </ul>
-      
-      <a name="merge" id="merge"></a>
-      <h2>Merging a PR</h2>
+      JMRI uses <a href="https://github.com">GitHub</a> to host our <a href=
+      "https://github.com/JMRI/JMRI">main code repository</a>, <a href=
+      "https://github.com/JMRI/JMRI/releases">releases and downloads</a> and <a href=
+      "https://github.com/JMRI/JMRI/issues">issues lists</a>. It also hosts <a href=
+      "https://github.com/JMRI">several related repositories</a>.
+      <p>The rest of this page records how we configure and use GitHub, along with associated
+      procedures.</p>
 
-      JMRI's Github is configured with the following automations and requirements for merging a Pull Request:
+      <p>Related info on other pages:</p>
+
+      <ul>
+        <li>
+          <a href="ContinuousIntegration.shtml">Continuous Integration</a> - doesn't really talk
+          about how GitHub is configured for this, nor how the services are configured
+        </li>
+
+        <li>
+          <a href="gitdeveloper.shtml">Labels on Issues/PRs</a>
+        </li>
+
+        <li>The <a href=
+        "https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">release
+        process</a> works with GitHub repositories, Issues and releases.
+        </li>
+      </ul>
+
+      <h2 id="merge">Merging a PR</h2>
+      JMRI's Github is configured with the following automations and requirements for merging a
+      Pull Request:
       <ul>
         <li>All required CI tests have passed for the Pull Request</li>
-        <li>There has been at least one review from a non-author JMRI developer that accepts the Pull Request</li>
+
+        <li>There has been at least one review from a non-author JMRI developer that accepts the
+        Pull Request</li>
+
         <li>There are no reviews requesting changes</li>
-        <li>The Pull Request has been in-queue for at least a day to allow people to take a look at them</li>
+
+        <li>The Pull Request has been in-queue for at least a day to allow people to take a look at
+        them</li>
+
         <li>The original author of the Pull Request has been assigned to the Pull Request</li>
-        <li>These rules apply to all members of the development team, including administrators, with the 
-            exception when CI tests do not report back correctly. In these situations, they are able to override
-            the otherwise blocked PR but should add a note mentioning this fact. Inappropriate use of this
-            override can be challenged by JMRI developers on the jmri-developers list.</li>
+
+        <li>These rules apply to all members of the development team, including administrators,
+        with the exception when CI tests do not report back correctly. In these situations, they
+        are able to override the otherwise blocked PR but should add a note mentioning this fact.
+        Inappropriate use of this override can be challenged by JMRI developers on the
+        jmri-developers list.</li>
       </ul>
 
-      <p>
-      If you want a bit more time before somebody merges a PR, either start a review saying that
-      or set "WIP" in the title while explaining why in a comment.
+      <p>If you want a bit more time before somebody merges a PR, either start a review saying that
+      or set "WIP" in the title while explaining why in a comment.</p>
 
-      <p>
-      When reviewing a pull request, the focus should be on function and not style.  The following should be
-      considered when reviewing a pull request:
+      <p>When reviewing a pull request, the focus should be on function and not style. The
+      following should be considered when reviewing a pull request:</p>
+
       <ul>
-         <li>Does the Pull Request function as described by the author?</li>
-         <li>Does the Pull Request add something positive to JMRI?  This may include, but is not limited to:
-            <ul>
-              <li>New features</li>
-              <li>Fixing issues in existing code</li>
-              <li>Improve some the development or CI process</li>
-            </ul>
-         </li>
-         <li>Unless it has previously been discussed on
-                <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>,
-                and agreed to, 
-                the PR does not take anything away or make anything more difficult.
-                This may include, but is not limited to:
-            <ul>
-              <li>Removes features</li>
-              <li>Adds to developer workload</li>
-              <li>Is a incomplete change to structure or practice that will require future work by others</li>
-            </ul>
-            Before coding something that will do any of these, the pros and cons
-            should be discussed on the 
-            <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>.  
-            This can avoid hard feelings if the adverse impact is determined to be too high, 
-            and can help find alternate approaches if needed.
-         </li>
+        <li>Does the Pull Request function as described by the author?</li>
+
+        <li>Does the Pull Request add something positive to JMRI? This may include, but is not
+        limited to:
+          <ul>
+            <li>New features</li>
+
+            <li>Fixing issues in existing code</li>
+
+            <li>Improve some the development or CI process</li>
+          </ul>
+        </li>
+
+        <li>Unless it has previously been discussed on <a href=
+        "https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>, and agreed to, the PR
+        does not take anything away or make anything more difficult. This may include, but is not
+        limited to:
+          <ul>
+            <li>Removes features</li>
+
+            <li>Adds to developer workload</li>
+
+            <li>Is a incomplete change to structure or practice that will require future work by
+            others</li>
+          </ul>
+          Before coding something that will do any of these, the pros and cons should be discussed
+          on the <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>. This
+          can avoid hard feelings if the adverse impact is determined to be too high, and can help
+          find alternate approaches if needed.
+        </li>
       </ul>
 
-      <p>
-      If there are any concerns about any of the above, the reviewer should either ask a question about the pull
-      request or request changes. 
-      Significant discussions should move to the
-      <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>
-      to make sure people are aware of them.
+      <p>If there are any concerns about any of the above, the reviewer should either ask a
+      question about the pull request or request changes. Significant discussions should move to
+      the <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a> to make sure
+      people are aware of them.</p>
 
-      <p>
-      When restarting CI after a failure, please copy at least a few lines around the
-      relevant part of the log to a comment. It can be very useful to attach the entire 
-      raw log if the failure is obscure, novel or otherwise needs investigation.
-      
-      <p>
-      When merging a PR, please do the following:
+      <p>When restarting CI after a failure, please copy at least a few lines around the relevant
+      part of the log to a comment. It can be very useful to attach the entire raw log if the
+      failure is obscure, novel or otherwise needs investigation.</p>
+
+      <p>When merging a PR, please do the following:</p>
+
       <ul>
-        <li>Add any assignments beyond the original submitter.  
-            The original submitter may
-            be assigned automatically through a github action, but if not please add them.
-            Developers, Reviewers and Maintainers can be assigned to any PR, but 
-            other people who create PRs can only be assigned to their own.
-            By assigning the PR, we make it easy to find what non-developers 
-            have contributed.</li>
+        <li>Add any assignments beyond the original submitter. The original submitter may be
+        assigned automatically through a github action, but if not please add them. Developers,
+        Reviewers and Maintainers can be assigned to any PR, but other people who create PRs can
+        only be assigned to their own. By assigning the PR, we make it easy to find what
+        non-developers have contributed.</li>
+
         <li>Set the current milestone on the PR.</li>
       </ul>
-      
-      <a name="teams" id="teams"></a>
-      <h2>How we use GitHub teams</h2>
-      
-      <p>GitHub provides support for teams to control access to various GitHub features.
-        We use three different ones:
-        <dl>
-            <dt>Developers</dt><dd>Have the "Triage" permissions, which allows
-                    editing of PRs, including adding/changing labels, releases, 
-                    and other properties.</dd>
-            <dt>Reviewers</dt><dd>In addition to "Triage" permissions also has
-                    "Write" permissions which allows reviewing of PRs, but are blocked
-                    from merging to the "master" branch (subject to other
-                    rules and restrictions)</dd>
-            <dt>Maintainers</dt><dd>In addition to "Triage" permissions also has
-                    "Write" permissions which allows merging PRs (subject to other
-                    rules and restrictions)</dd>
-        </dl>
-                    
-      
-      <p>Terms for adding people to developer team - still being developed
-        <ul>
+
+      <h2 id="teams">How we use GitHub teams</h2>
+
+      <p>GitHub provides support for teams to control access to various GitHub features. We use
+      three different ones:</p>
+
+      <dl>
+        <dt>Developers</dt>
+
+        <dd>Have the "Triage" permissions, which allows editing of PRs, including adding/changing
+        labels, releases, and other properties.</dd>
+
+        <dt>Reviewers</dt>
+
+        <dd>In addition to "Triage" permissions also has "Write" permissions which allows reviewing
+        of PRs, but are blocked from merging to the "master" branch (subject to other rules and
+        restrictions)</dd>
+
+        <dt>Maintainers</dt>
+
+        <dd>In addition to "Triage" permissions also has "Write" permissions which allows merging
+        PRs (subject to other rules and restrictions)</dd>
+      </dl>
+
+      <p>Terms for adding people to developer team - still being developed</p>
+
+      <ul>
         <li>Have to have a real name on their GitHub account?</li>
+
         <li>Have to subscribe (and stay subscribed) to jmri-developers?</li>
+
         <li>Have to have worked on something other than their own projects?</li>
       </ul>
-      
-      <a name="branches" id="branches"></a>
-      <h2>Branches</h2>
-      
-      What do we keep as
-      <a href="https://github.com/JMRI/JMRI/branches">main repository branches</a>
-      (as opposed to in user repositories, which is not our problem)?
-      When do we clean them out?
-    
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+
+      <h2 id="branches">Branches</h2>
+      What do we keep as <a href="https://github.com/JMRI/JMRI/branches">main repository
+      branches</a> (as opposed to in user repositories, which is not our problem)? When do we clean
+      them out? <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

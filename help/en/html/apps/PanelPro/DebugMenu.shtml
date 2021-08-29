@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Debug Menu</title><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Debug Menu</h1>
+
+      <p>The JMRI "Debug" menu contains the following items:</p>
+
+      <dl style="margin-left: 2em">
+        <dt>
+          <a href="../../../package/jmri/jmrit/MemoryFrameAction.shtml">Memory Usage Monitor</a>
+        </dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>Import Decoder File</dt>
+
+        <dt>Import Decoder URL</dt>
+
+        <dt>Recreate Decoder Index</dt>
+
+        <dt>Rebuild Roster</dt>
+
+        <dt>Update Decoder Definitions</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>Validate XML file</dt>
+
+        <dt>Check Decoder Names</dt>
+
+        <dt>Check Programmer Names</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>Log Message</dt>
+
+        <dt>Display Log Categories</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>Load Logixs Disabled</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>PRICOM</dt>
+
+        <dt style="margin-left: 2em">PRICOM Pocket Tester ⇒ Connect</dt>
+
+        <dt style="margin-left: 2em">PRICOM Flash Updater</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>USB Input Control</dt>
+
+        <dt>USB Devices</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>RailDriver Throttle</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+
+      <dl style="margin-left: 2em">
+        <dt>Install TrainCrew Application</dt>
+
+        <dd>
+        </dd>
+        <!-- Prevent validation warnings -->
+      </dl>
+
+      <hr>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

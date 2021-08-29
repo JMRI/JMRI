@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE Booster</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI NCE Booster">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI NCE Booster"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>NCE Booster</h1>
 
-      <p>Under construction!</p><!--#include virtual="/Footer.shtml" -->
+      <p>Under construction!</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

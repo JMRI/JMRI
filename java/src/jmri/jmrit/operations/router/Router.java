@@ -233,6 +233,15 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         if (trainServicesCar) {
             testTrain = _train; // use the specified train
+            log.debug("Train ({}) can service car ({})", _train.getName(), car.toString());
+        } else if (!car.getTrack().isStaging() && _train != null &&
+                !_train.isServiceAllCarsWithFinalDestinationsEnabled() &&
+                !_train.getServiceStatus().equals(Train.NONE)) {
+            addLine(_buildReport, SEVEN,
+                    MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
+                            new Object[] { _train.getName(), car.toString(), car.getFinalDestinationName(),
+                                    car.getFinalDestinationTrackName(), _train.getServiceStatus() }));
+            return true; // temporary issue with train moves, length, or destination track length
         }
         // Determines if specified train can service car out of staging.
         // Note that the router code will try to route the car using

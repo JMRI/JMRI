@@ -71,6 +71,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox printValidCheckBox = new JCheckBox(Bundle.getMessage("PrintValid"));
     JCheckBox sortByTrackCheckBox = new JCheckBox(Bundle.getMessage("SortByTrack"));
     JCheckBox printHeadersCheckBox = new JCheckBox(Bundle.getMessage("PrintHeaders"));
+    JCheckBox printPageHeaderCheckBox = new JCheckBox(Bundle.getMessage("PrintPageHeader"));
     JCheckBox truncateCheckBox = new JCheckBox(Bundle.getMessage("Truncate"));
     JCheckBox departureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
     JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
@@ -145,6 +146,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         printValidCheckBox.setToolTipText(Bundle.getMessage("PrintValidTip"));
         sortByTrackCheckBox.setToolTipText(Bundle.getMessage("SortByTrackTip"));
         printHeadersCheckBox.setToolTipText(Bundle.getMessage("PrintHeadersTip"));
+        printPageHeaderCheckBox.setToolTipText(Bundle.getMessage("PrintPageHeaderTip"));
         truncateCheckBox.setToolTipText(Bundle.getMessage("TruncateTip"));
         departureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
         routeLocationCheckBox.setToolTipText(Bundle.getMessage("RouteLocationTip"));
@@ -271,16 +273,19 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         // Manifest and Switch List options
         JPanel pManifestSwtichListOptions = new JPanel();
+        pManifestSwtichListOptions.setLayout(new GridBagLayout());
         pManifestSwtichListOptions.setBorder(
                 BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestSwitchListOptions")));
-        pManifestSwtichListOptions.add(printValidCheckBox);
-        pManifestSwtichListOptions.add(printLoadsEmptiesCheckBox);
-        pManifestSwtichListOptions.add(printCabooseLoadCheckBox);
-        pManifestSwtichListOptions.add(printPassengerLoadCheckBox);
-        pManifestSwtichListOptions.add(use12hrFormatCheckBox);
-        pManifestSwtichListOptions.add(printTrainScheduleNameCheckBox);
-        pManifestSwtichListOptions.add(sortByTrackCheckBox);
-        pManifestSwtichListOptions.add(printHeadersCheckBox);
+        addItemLeft(pManifestSwtichListOptions, printValidCheckBox, 0, 0);
+        addItemLeft(pManifestSwtichListOptions, printLoadsEmptiesCheckBox, 1, 0);
+        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 2, 0);
+        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 3, 0);
+        addItemLeft(pManifestSwtichListOptions, use12hrFormatCheckBox, 4, 0);
+
+        addItemLeft(pManifestSwtichListOptions, printTrainScheduleNameCheckBox, 0, 1);
+        addItemLeft(pManifestSwtichListOptions, sortByTrackCheckBox, 1, 1);
+        addItemLeft(pManifestSwtichListOptions, printHeadersCheckBox, 2, 1);
+        addItemLeft(pManifestSwtichListOptions, printPageHeaderCheckBox, 3, 1);
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -356,6 +361,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
         printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
         sortByTrackCheckBox.setSelected(Setup.isSortByTrackNameEnabled());
+        printPageHeaderCheckBox.setSelected(Setup.isPrintPageHeaderEnabled());
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
         truncateCheckBox.setSelected(Setup.isPrintTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
@@ -833,6 +839,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
         Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
         Setup.setSortByTrackNameEnabled(sortByTrackCheckBox.isSelected());
+        Setup.setPrintPageHeaderEnabled(printPageHeaderCheckBox.isSelected());
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
         Setup.setPrintTrainScheduleNameEnabled(printTrainScheduleNameCheckBox.isSelected());
         Setup.setPrintTruncateManifestEnabled(truncateCheckBox.isSelected());
@@ -888,6 +895,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 Setup.isPrintValidEnabled() != printValidCheckBox.isSelected() ||
                 Setup.isSortByTrackNameEnabled() != sortByTrackCheckBox.isSelected() ||
                 Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
+                Setup.isPrintPageHeaderEnabled() != printPageHeaderCheckBox.isSelected() ||
                 Setup.isPrintTrainScheduleNameEnabled() != printTrainScheduleNameCheckBox.isSelected() ||
                 Setup.isPrintTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
                 Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected() ||

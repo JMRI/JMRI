@@ -1,52 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Panels Menu</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Panels Menu</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Panels Menu</h1>
-        <div class="noted">
+
+      <div class="noted">
         <span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed.
-        See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
-        The menu references below are the for the new menu structure.
-        </p>
-        </div>
+        <p>Note: The PanelPro main menu is being changed. See <a href=
+        "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
+        The menu references below are the for the new menu structure.</p>
+      </div>
 
       <p>The JMRI "Panels" menu contains the following items:</p>
 
       <ul>
-        <li>New Panel...: Select to create a new panel in either
-        <a href="PanelEditor.shtml">Panel Editor</a>,
-        <a href="ControlPanelEditor.shtml">Control Panel Editor</a>,
-        <a href="LayoutEditor.shtml">Layout Editor</a> or
-        <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</li>
+        <li>New Panel...: Select to create a new panel in either <a href="PanelEditor.shtml">Panel
+        Editor</a>, <a href="ControlPanelEditor.shtml">Control Panel Editor</a>, <a href=
+        "LayoutEditor.shtml">Layout Editor</a> or <a href="SwitchboardEditor.shtml">Switchboard
+        Editor</a>.
+        </li>
 
-        <li>Show Panel: Shows the list of all Panels
-        currently loaded in the program, and allows
+        <li>Show Panel: Shows the list of all Panels currently loaded in the program, and allows
         you to bring one to the front by selecting it.</li>
 
         <li>Delete Panel...: Select a panel to be deleted.</li>
       </ul>
 
-      <p>Continue to the help pages for
-      <a href="PanelEditor.shtml">Panel Editor</a>,
-      <a href="ControlPanelEditor.shtml">Control Panel Editor</a>,
-      <a href="LayoutEditor.shtml">Layout Editor</a> or
-      <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</p>
+      <p>Continue to the help pages for <a href="PanelEditor.shtml">Panel Editor</a>, <a href=
+      "ControlPanelEditor.shtml">Control Panel Editor</a>, <a href="LayoutEditor.shtml">Layout
+      Editor</a> or <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

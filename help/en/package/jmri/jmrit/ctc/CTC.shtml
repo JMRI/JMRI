@@ -1,955 +1,856 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: CTC</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CTC</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: CTC</h1>
 
-      <p>
-      CTC is a very complex system. An understanding of the goals of CTC and
-      how it functions is very helpful.  While this tool will describe various
-      CTC features, it is not a CTC course.  There are many books written on
-      the subject, for example Dr. Bruce Chubb's CTC manuals.  Other materials
-      (too numerous to list) exist on the Internet as well, such as Mike
-      Burgett's web site (since shut down, but may be active in the future again)
-      and Michael J. Burgett's <a href="http://www.ctcparts.com/about.htm">The
-      Engineering Basics of CTC</a>.<br>
-      As a starter, check our <a href="#ctcDefinitions">CTC Definitions</a> at
-      the bottom of this page.
-      </p>
+      <p>CTC is a very complex system. An understanding of the goals of CTC and how it functions is
+      very helpful. While this tool will describe various CTC features, it is not a CTC course.
+      There are many books written on the subject, for example Dr. Bruce Chubb's CTC manuals. Other
+      materials (too numerous to list) exist on the Internet as well, such as Mike Burgett's web
+      site (since shut down, but may be active in the future again) and Michael J. Burgett's
+      <a href="http://www.ctcparts.com/about.htm">The Engineering Basics of CTC</a>.<br>
+      As a starter, check our <a href="#ctcDefinitions">CTC Definitions</a> at the bottom of this
+      page.</p>
 
-      <p>
-      <strong>Important</strong>: A requirement of CTC is that a fully functional
-      ABS (Automatic Block Signaling) signaling system  already is in place on your
-      layout. As you may already know, CTC is just a layer on top of ABS.
-      </p>
+      <p><strong>Important</strong>: A requirement of CTC is that a fully functional ABS (Automatic
+      Block Signaling) signaling system already is in place on your layout. As you may already
+      know, CTC is just a layer on top of ABS.</p>
 
       <h2>Overview</h2>
-      <p>
-      The CTC system consists of three main components.  The first one is the
-      <strong>CTC Editor</strong> which is used to define the CTC system.  The
-      second component is <strong>CTCMain</strong>, which is a run time
-      component which executes the rules created by the editor.  These
-      components are started by using the PanelPro <strong>Tools</strong> menu
-      and/or including them as actions defined in <strong>Preferences >> Start
-      Up</strong>.
-      </p>
 
-      <p>
-      The last component is the layout configuration in JMRI. This includes
-      turnout definitions, occupancy sensors, blocks and signals.  The signals
-      can be defined as signal heads with SSL or signal masts using signal mast
-      logic. The signaling implementation needs to properly implement ABS
-      signaling before adding CTC. This includes proper block boundaries.
-      </p>
+      <p>The CTC system consists of three main components. The first one is the <strong>CTC
+      Editor</strong> which is used to define the CTC system. The second component is
+      <strong>CTCMain</strong>, which is a run time component which executes the rules created by
+      the editor. These components are started by using the PanelPro <strong>Tools</strong> menu
+      and/or including them as actions defined in <strong>Preferences &gt;&gt; Start
+      Up</strong>.</p>
 
-      <p>
-      I personally suggest that you use Layout Editor to generate your CTC panel, along
-      with using Signal Mast Logic (and at least <strong>one</strong> discovery
-      of same), along with signal masts placed at block boundaries, so that topology
-      information available in that system can be used to automatically
-      generate Traffic Locking rules for you.
-      </p>
+      <p>The last component is the layout configuration in JMRI. This includes turnout definitions,
+      occupancy sensors, blocks and signals. The signals can be defined as signal heads with SSL or
+      signal masts using signal mast logic. The signaling implementation needs to properly
+      implement ABS signaling before adding CTC. This includes proper block boundaries.</p>
+
+      <p>I personally suggest that you use Layout Editor to generate your CTC panel, along with
+      using Signal Mast Logic (and at least <strong>one</strong> discovery of same), along with
+      signal masts placed at block boundaries, so that topology information available in that
+      system can be used to automatically generate Traffic Locking rules for you.</p>
 
       <h3>CTC Editor</h3>
-      <p>
-      To start the CTC Editor, on the main PanelPro screen select <strong>Tools &rArr;
-      CTC &rArr; Open CTC Configuration Editor</strong>.
-      </p>
-      <p>
-      The CTC Editor is used to define the CTC components and the rules that will
-      be used by the run time component.  The resulting data is stored in the PanelPro XML
-      data file along with the JMRI tables and panels.  The previous version of CTC used the
-      <strong>CTCSystem.xml</strong> file.  This file was located at the
-      <em>user files location</em> in the <strong>ctc</strong> directory.
-      </p>
 
-      <p>
-      As an option to support creation of the GUI portion of the CTC machine,
-      an external Panel Editor panel file can be created by pressing a single button. This
-      facilitates the design of the full GUI CTC panel.
-      </p>
+      <p>To start the CTC Editor, on the main PanelPro screen select <strong>Tools ⇒ CTC ⇒ Open CTC
+      Configuration Editor</strong>.</p>
+
+      <p>The CTC Editor is used to define the CTC components and the rules that will be used by the
+      run time component. The resulting data is stored in the PanelPro XML data file along with the
+      JMRI tables and panels. The previous version of CTC used the <strong>CTCSystem.xml</strong>
+      file. This file was located at the <em>user files location</em> in the <strong>ctc</strong>
+      directory.</p>
+
+      <p>As an option to support creation of the GUI portion of the CTC machine, an external Panel
+      Editor panel file can be created by pressing a single button. This facilitates the design of
+      the full GUI CTC panel.</p>
 
       <h3>CTCMain</h3>
-      <p>
-      CTCMain is the run time component that provides all of the logic to
-      implement a CTC machine.  It responds to layout and panel inputs and
-      takes appropriate actions based on the definitions provided by the
-      CTC Editor.  It eliminates the need to create Logix or scripts.
-      </p>
+
+      <p>CTCMain is the run time component that provides all of the logic to implement a CTC
+      machine. It responds to layout and panel inputs and takes appropriate actions based on the
+      definitions provided by the CTC Editor. It eliminates the need to create Logix or
+      scripts.</p>
 
       <h2>Defining a CTC System</h2>
-      <p>
-      Use the following table of contents to jump to various topics. For new
-      CTC implementations, the topics should be reviewed/carried out in order.
-      </p>
+
+      <p>Use the following table of contents to jump to various topics. For new CTC
+      implementations, the topics should be reviewed/carried out in order.</p>
 
       <ol>
-        <li><a href="#editor">CTC Editor</a>
+        <li>
+          <a href="#editor">CTC Editor</a>
           <ol>
             <li>Menus
               <ol>
                 <li>File menu
                   <ol>
-                    <li><a href="#menuFile">New</a></li>
-                    <li><a href="#menuFile">Import old configuration</a></li>
+                    <li>
+                      <a href="#menuFile">New</a>
+                    </li>
+
+                    <li>
+                      <a href="#menuFile">Import old configuration</a>
+                    </li>
                   </ol>
                 </li>
+
                 <li>Edit menu
                   <ol>
-                    <li><a href="#menuEditFix">Fix Error(s)...</a></li>
+                    <li>
+                      <a href="#menuEditFix">Fix Error(s)...</a>
+                    </li>
                   </ol>
                 </li>
+
                 <li>Configure menu
                   <ol>
-                    <li><a href="#menuCfgDeb">Debugging</a></li>
-                    <li><a href="#menuCfgDef">Defaults</a></li>
-                    <li><a href="#menuCfgFlt">Fleeting</a></li>
-                    <li><a href="#menuCfgPat">Patterns</a></li>
-                    <li><a href="#menuCfgGui">GUI Design</a></li>
+                    <li>
+                      <a href="#menuCfgDeb">Debugging</a>
+                    </li>
+
+                    <li>
+                      <a href="#menuCfgDef">Defaults</a>
+                    </li>
+
+                    <li>
+                      <a href="#menuCfgFlt">Fleeting</a>
+                    </li>
+
+                    <li>
+                      <a href="#menuCfgPat">Patterns</a>
+                    </li>
+
+                    <li>
+                      <a href="#menuCfgGui">GUI Design</a>
+                    </li>
                   </ol>
                 </li>
               </ol>
             </li>
-            <li><a href="#osList">O.S. Sections List</a>
-              <!-- <ol>
+
+            <li>
+              <a href="#osList">O.S. Sections List</a> <!-- <ol>
               </ol> -->
             </li>
+
             <li>Edit Buttons
               <ol>
-                <li><a href="#frmCB">Code Button</a></li>
-                <li><a href="#frmSIDI">Signal direction indicators</a></li>
-                <li><a href="#frmSIDL">Signal direction lever</a></li>
-                <li><a href="#frmSWDI">Switch direction indicators</a></li>
-                <li><a href="#frmSWDL">Switch direction lever</a></li>
-                <li><a href="#frmCO">Call On</a></li>
-                <li><a href="#frmTRL">Traffic locking</a></li>
-                <li><a href="#frmTUL">Turnout locking</a></li>
-                <li><a href="#frmIL">Indication locking</a></li>
+                <li>
+                  <a href="#frmCB">Code Button</a>
+                </li>
+
+                <li>
+                  <a href="#frmSIDI">Signal direction indicators</a>
+                </li>
+
+                <li>
+                  <a href="#frmSIDL">Signal direction lever</a>
+                </li>
+
+                <li>
+                  <a href="#frmSWDI">Switch direction indicators</a>
+                </li>
+
+                <li>
+                  <a href="#frmSWDL">Switch direction lever</a>
+                </li>
+
+                <li>
+                  <a href="#frmCO">Call On</a>
+                </li>
+
+                <li>
+                  <a href="#frmTRL">Traffic locking</a>
+                </li>
+
+                <li>
+                  <a href="#frmTUL">Turnout locking</a>
+                </li>
+
+                <li>
+                  <a href="#frmIL">Indication locking</a>
+                </li>
               </ol>
             </li>
           </ol>
         </li>
-        <li><a href="#ctcFiles">Files</a></li>
-        <li><a href="#ctcMain">CTCMain</a></li>
-        <li><a href="#ctcDefinitions">Definitions</a></li>
+
+        <li>
+          <a href="#ctcFiles">Files</a>
+        </li>
+
+        <li>
+          <a href="#ctcMain">CTCMain</a>
+        </li>
+
+        <li>
+          <a href="#ctcDefinitions">Definitions</a>
+        </li>
       </ol>
 
-    <a name="editor" id="editor"></a>
-    <h2>CTC Editor</h2>
+      <h2 id="editor">CTC Editor</h2>
 
-    <p>
-    The CTC Editor consists of a menu bar, a section containing a list of the
-    defined OS sections with related buttons and a group of 9 buttons at the
-    bottom.  With the exception of the <strong>Code</strong> button, the
-    remaining buttons can be enabled to activate the selected CTC feature.
-    </p>
+      <p>The CTC Editor consists of a menu bar, a section containing a list of the defined OS
+      sections with related buttons and a group of 9 buttons at the bottom. With the exception of
+      the <strong>Code</strong> button, the remaining buttons can be enabled to activate the
+      selected CTC feature.</p>
 
-    <p>
-    After loading the PanelPro data file (aka panel xml file), the editor can be started.
-    It will use the current configuration that was included in the PanelPro data file.
-    If there is no CTC data, the OS section list will be empty but the basic configuration
-    will be created.  This will include defaults for the items in the CTC Configure menu.
-    When the PanelPro data file is stored, the CTC configuration will be included along with
-    the tables and panels.
-    </p>
+      <p>After loading the PanelPro data file (aka panel xml file), the editor can be started. It
+      will use the current configuration that was included in the PanelPro data file. If there is
+      no CTC data, the OS section list will be empty but the basic configuration will be created.
+      This will include defaults for the items in the CTC Configure menu. When the PanelPro data
+      file is stored, the CTC configuration will be included along with the tables and panels.</p>
 
       <h3>Editor Menus</h3>
 
-      <a name="menuFile" id="menuFile"></a>
-      <h4>File menu</h4>
-      <p>
-      The <strong>New</strong> menu item deletes the current configuration in
-      the editor.
-      </p>
+      <h4 id="menuFile">File menu</h4>
 
-      <p>
-      The <strong>Import old configuration</strong> menu item will replace the current CTC configuration
-      with the contents of an existing <strong>CTCSystem.xml</strong> file.  This provides
-      a one-time migration from the previous version of the CTC configuration.  When the
-      import is done, the orignal file name will be <strong>V1_Save_CTCSystem.xml</strong>.
-      </p>
+      <p>The <strong>New</strong> menu item deletes the current configuration in the editor.</p>
 
-      <a name="menuEditFind" id="menuEditFind"></a>
-      <h4>Edit menu</h4>
-        <a name="menuEditFix" id="menuEditFix"></a>
-        <h5>Fix Error(s)...</h5>
-        <p>If an attempt is made to close the editor window and the
-        <strong>***ERROR***</strong> indicator appears anywhere in the Columns
-        listing, the close will not occur.  A dialog will suggest doing this menu item.
-        Please read carefully the information in this menu item.</p>
+      <p>The <strong>Import old configuration</strong> menu item will replace the current CTC
+      configuration with the contents of an existing <strong>CTCSystem.xml</strong> file. This
+      provides a one-time migration from the previous version of the CTC configuration. When the
+      import is done, the orignal file name will be <strong>V1_Save_CTCSystem.xml</strong>.</p>
 
-      <a name="menuCfgDeb" id="menuCfgDeb"></a>
-      <h4>Configure menu</h4>
-        <h5>Debugging</h5>
-        <p>The defaults here are good enough, but may be modified if desired.</p>
+      <h4 id="menuEditFind">Edit menu</h4>
 
-        <p>
-        <strong>CTC system reload sensor</strong>: This sensor, when triggered
-        (set to active) will cause the entire CTC system to reload.  This makes
-        it possible to make CTC Editor changes and then test them immediately
-        without having to restart JMRI each time. See "Running the CTC system
-        under JMRI" for more information on this.
-        </p>
+      <h5 id="menuEditFix">Fix Error(s)...</h5>
 
-        <p>
-        <strong>CTC debug traffic locking rules triggered display sensor</strong>:
-        When active, the number of the Traffic Locking rule that was true is
-        logged when a Code Button is pressed.  It is logged as an INFO message
-        to the System Console.  In order to see the System Console within JMRI
-        select <strong>Help &rArr; System Console...</strong>  It's the "Green Screen".
-        </p>
+      <p>If an attempt is made to close the editor window and the <strong>***ERROR***</strong>
+      indicator appears anywhere in the Columns listing, the close will not occur. A dialog will
+      suggest doing this menu item. Please read carefully the information in this menu item.</p>
 
-        <a name="menuCfgDef" id="menuCfgDef"></a>
-        <h5>Defaults</h5>
-        <p><strong>Signal System Type</strong>: Select either Signal Heads or Signal Masts.</p>
+      <h4 id="menuCfgDeb">Configure menu</h4>
 
-        <p><strong>Turnout locks enabled at startup</strong> and <strong>Seconds
-        until all lockable turnouts locked</strong>:  The default is
-        checked and the CTC system will lock all of the turnouts automatically
-        at startup.  Some layouts require locks to be unlocked at CTC system
-        startup for other external (to CTC) initialization requirements.  You can then
-        have your dispatcher manually lock all of the locked turnouts before
-        the layout starts operation.  Or, you can set the "Seconds until all lockable
-        turnouts locked" to a value >0 (in seconds), and the CTC system will do
-        this automatically after that time period.  <strong>Note</strong>: each time JMRI
-        is started, it takes a variable amount of time to complete, so this value
-        may have to be set a bit higher than the quickest time, in order to give
-        the system a chance to stabilize before locking the turnouts.
-        Or you can invoke the following lines
-        (however you want) in a Jython script file in order to have this done
-        automatically by your script(s) after your special external
-        initialization requirements are done:</p>
+      <h5>Debugging</h5>
 
-        <div style="margin-left: 2em;"><pre>
+      <p>The defaults here are good enough, but may be modified if desired.</p>
+
+      <p><strong>CTC system reload sensor</strong>: This sensor, when triggered (set to active)
+      will cause the entire CTC system to reload. This makes it possible to make CTC Editor changes
+      and then test them immediately without having to restart JMRI each time. See "Running the CTC
+      system under JMRI" for more information on this.</p>
+
+      <p><strong>CTC debug traffic locking rules triggered display sensor</strong>: When active,
+      the number of the Traffic Locking rule that was true is logged when a Code Button is pressed.
+      It is logged as an INFO message to the System Console. In order to see the System Console
+      within JMRI select <strong>Help ⇒ System Console...</strong> It's the "Green Screen".</p>
+
+      <h5 id="menuCfgDef">Defaults</h5>
+
+      <p><strong>Signal System Type</strong>: Select either Signal Heads or Signal Masts.</p>
+
+      <p><strong>Turnout locks enabled at startup</strong> and <strong>Seconds until all lockable
+      turnouts locked</strong>: The default is checked and the CTC system will lock all of the
+      turnouts automatically at startup. Some layouts require locks to be unlocked at CTC system
+      startup for other external (to CTC) initialization requirements. You can then have your
+      dispatcher manually lock all of the locked turnouts before the layout starts operation. Or,
+      you can set the "Seconds until all lockable turnouts locked" to a value &gt;0 (in seconds),
+      and the CTC system will do this automatically after that time period. <strong>Note</strong>:
+      each time JMRI is started, it takes a variable amount of time to complete, so this value may
+      have to be set a bit higher than the quickest time, in order to give the system a chance to
+      stabilize before locking the turnouts. Or you can invoke the following lines (however you
+      want) in a Jython script file in order to have this done automatically by your script(s)
+      after your special external initialization requirements are done:</p>
+
+      <div style="margin-left: 2em;">
+        <pre>
         import jmri
         ctcMain = jmri.InstanceManager.getNullableDefault(jmri.jmrit.ctc.CTCMain)
         if ctcMain is not None: ctcMain.externalLockTurnout()
-        </pre></div>
+        </pre>
+      </div>
 
-        <p><strong>Time values</strong> (for Signal and Switch
-        directions): These are values that are given to
-        each CTC O.S. Section as default values when the CTC O.S. Section is
-        created. The timing values edit boxes are standard CTC values, refer to
-        Definitions for more information on each.</p>
+      <p><strong>Time values</strong> (for Signal and Switch directions): These are values that are
+      given to each CTC O.S. Section as default values when the CTC O.S. Section is created. The
+      timing values edit boxes are standard CTC values, refer to Definitions for more information
+      on each.</p>
 
-        <p><strong>No Code Button delay in milliseconds</strong>:  This is the
-        default for newly created O.S. Sections. Individual O.S. (for "On Sheet")
-        Sections can be changed if needed.  Background: Normal CTC panels always had a code
-        button for every O.S. Section which means a value of zero is appropriate.
-        Certain tower situations did not have a Code Button(s) present when some
-        or all of the O.S. Section(s) were local to the tower.  In this case,
-        the tower operator changing either the switch direction and/or signal
-        direction levers was enough to transmit the request to the field.  On
-        the prototype, there was a built in delay so that the tower operator
-        could change both the switch and signal levers before the code was
-        transmitted to the local O.S. Section. That delay is simulated with
-        this value.  Having a larger value will increase  this delay, and a
-        large enough value will allow the tower operator to change both the
-        switch and signal lever before the codes are transmitted to the field.
-        A reasonable value in this case might be 5000 (5 seconds).  Some towers
-        had virtually no delay, so enter a value such as 10 milliseconds.</p>
+      <p><strong>No Code Button delay in milliseconds</strong>: This is the default for newly
+      created O.S. Sections. Individual O.S. (for "On Sheet") Sections can be changed if needed.
+      Background: Normal CTC panels always had a code button for every O.S. Section which means a
+      value of zero is appropriate. Certain tower situations did not have a Code Button(s) present
+      when some or all of the O.S. Section(s) were local to the tower. In this case, the tower
+      operator changing either the switch direction and/or signal direction levers was enough to
+      transmit the request to the field. On the prototype, there was a built in delay so that the
+      tower operator could change both the switch and signal levers before the code was transmitted
+      to the local O.S. Section. That delay is simulated with this value. Having a larger value
+      will increase this delay, and a large enough value will allow the tower operator to change
+      both the switch and signal lever before the codes are transmitted to the field. A reasonable
+      value in this case might be 5000 (5 seconds). Some towers had virtually no delay, so enter a
+      value such as 10 milliseconds.</p>
 
-        <a name="menuCfgFlt" id="menuCfgFlt"></a>
-        <h5>Fleeting</h5>
-        <p><strong>Fleeting toggle sensor</strong>: The sensor used to
-        enable/disable fleeting.</p>
+      <h5 id="menuCfgFlt">Fleeting</h5>
 
-        <p><strong>Fleeting enabled at start</strong>: Default is to not enable
-        fleeting during startup.</p>
+      <p><strong>Fleeting toggle sensor</strong>: The sensor used to enable/disable fleeting.</p>
 
-        <a name="menuCfgPat" id="menuCfgPat"></a>
-        <h5>Patterns</h5>
-        <p>
-        Since there will probably be 100's if not 1,000's of JMRI internal
-        sensor objects (Prefix "IS:") that need to be created to support all
-        of the on-screen objects of a typical CTC installation, it is important
-        that you realize how this program works with these "patterns"".  By
-        using them, you do not have to spend dozens of hours to enter all of
-        this in manually, or make a mistake and have
-        the JMRI runtime system complain of problem(s) - back and forth, make a
-        change, run JMRI, find another problem, etc.  Using patterns prevents
-        this.
-        </p>
+      <p><strong>Fleeting enabled at start</strong>: Default is to not enable fleeting during
+      startup.</p>
 
-        <p>
-        Patterns are used for all of the internal sensors created by this
-        system.  When an O.S. Section is created, there are two numbers that
-        are associated with that O.S. Section: a switch number (always odd)
-        and the corresponding signal number (always even and always one more
-        than the switch number).
-        </p>
+      <h5 id="menuCfgPat">Patterns</h5>
 
-        <p>
-        The pattern format is IS#:XXX. The "#" character in the edit boxes are
-        substituted automatically when the CTC O.S. Section is first created.
-        The respective switch / signal areas use the respective switch # /
-        signal # given for the O.S. Section.  If more than one "#" appears, every "#"
-        will get the corresponding substituted number.
-        In this way you do not have to do all of the manual typing or selecting
-        associated with creating all of these sensor strings.
-        </p>
-        <p>
-        <strong>Patterns usage by this program and its advantages over other methods</strong>
-        </p>
+      <p>Since there will probably be 100's if not 1,000's of JMRI internal sensor objects (Prefix
+      "IS:") that need to be created to support all of the on-screen objects of a typical CTC
+      installation, it is important that you realize how this program works with these "patterns"".
+      By using them, you do not have to spend dozens of hours to enter all of this in manually, or
+      make a mistake and have the JMRI runtime system complain of problem(s) - back and forth, make
+      a change, run JMRI, find another problem, etc. Using patterns prevents this.</p>
 
-        <p>
-        Every time an O.S. Section is created, the program will apply a set
-        of patterns provided by the user: a default set of patterns is
-        automatically generated by the program at startup which the user can
-        override at will.  This will be explained in more detail later.
-        In order to see these default patterns, start the program and choose
-        the <strong>Configure &rArr; Patterns</strong> menu.
-        </p>
-        <p>
-        Changing anything on this screen has no effect on existing information
-        in the system.  It is only used when a <strong>new</strong> O.S. Section is
-        created (via the Add... button).<br>
-        However, you may selectively re-apply this pattern to the
-        whole system or individual pieces of the system.  Here's how:
-        </p>
-        <p>
-        <strong>Reapplying patterns to existing information:</strong><br>
-        Once you've changed this screen, you may want the new pattern to be selectively applied.
-        Get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
-        the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
-        so what follows may not appear.  You will then see a button at the bottom of the sub-system selected, called
-        "Reapply patterns - this form ONLY!". Pressing it will immediately show you the results of the new
-        pattern in the edit boxes of that screen.
-        </p>
+      <p>Patterns are used for all of the internal sensors created by this system. When an O.S.
+      Section is created, there are two numbers that are associated with that O.S. Section: a
+      switch number (always odd) and the corresponding signal number (always even and always one
+      more than the switch number).</p>
 
-        <a name="menuCfgGui" id="menuCfgGui"></a>
-        <h5>GUI Design</h5>
+      <p>The pattern format is IS#:XXX. The "#" character in the edit boxes are substituted
+      automatically when the CTC O.S. Section is first created. The respective switch / signal
+      areas use the respective switch # / signal # given for the O.S. Section. If more than one "#"
+      appears, every "#" will get the corresponding substituted number. In this way you do not have
+      to do all of the manual typing or selecting associated with creating all of these sensor
+      strings.</p>
 
-          <p>
-          <strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
-          An additional feature of this program is to be able to automatically create a "standard" USS CTC panel
-          from the parameters specified elsewhere in this program.  This screen configures the available options.
-          See <a href="#ctcFiles">"Files created for support..."</a> for more information and procedures for loading
-          them into the JMRI system.
-          Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI's Panel Editor
-          (or other) to reposition those items.
-          </p>
+      <p><strong>Patterns usage by this program and its advantages over other methods</strong>
+      </p>
 
-          <p>
-          <strong>Extra blank columns after last defined column to create:</strong>
-          Normally, if this is 0, this program creates after the last CTC O.S. Section column specified a "right
-          edge of CTC machine panel".  If you want additional blank column(s) between your last CTC O.S. Sections
-          column # and the right edge, enter that number here.
-          </p>
+      <p>Every time an O.S. Section is created, the program will apply a set of patterns provided
+      by the user: a default set of patterns is automatically generated by the program at startup
+      which the user can override at will. This will be explained in more detail later. In order to
+      see these default patterns, start the program and choose the <strong>Configure ⇒
+      Patterns</strong> menu.</p>
 
-          <p>
-          <strong>Type of CTC panel</strong>:
-          Presently only USS is available at this time (10/31/2018).  More may be available in the future.
-          </p>
+      <p>Changing anything on this screen has no effect on existing information in the system. It
+      is only used when a <strong>new</strong> O.S. Section is created (via the Add... button).<br>
+      However, you may selectively re-apply this pattern to the whole system or individual pieces
+      of the system. Here's how:</p>
 
-          <p>
-          <strong>Vertical size:</strong>
-          JMRI provides blank panel items in each of the sizes listed.  Choose one.
-          </p>
+      <p><strong>Reapplying patterns to existing information:</strong><br>
+      Once you've changed this screen, you may want the new pattern to be selectively applied. Get
+      to the main screen, and select a single O.S. Section. Then at the bottom of the screen, press
+      the "Edit" button for the sub-system you want to modify. NOTE: Some sub-systems are not
+      affected by this, so what follows may not appear. You will then see a button at the bottom of
+      the sub-system selected, called "Reapply patterns - this form ONLY!". Pressing it will
+      immediately show you the results of the new pattern in the edit boxes of that screen.</p>
 
-          <p>
-          <strong>Signals on panel</strong>
-          All O.S. Section signals - All of the signals specified in the Signal Direction Indicators sub-system are
-          created on the screen for you.  This is not a prototype practice, but will help in your development of
-          SSL (Simple Signal Logic) and CTC design.  You can see the state of the signals in the field with this.  Signal
-          heads or Signal masts will be created per your specification.
-          Green/off only (Future feature) - Not available at this time.  The prototype in certain installations have
-          a single green indicator indicating all signal(s) at that location are displaying stop (red) (green indicator
-          off) or permissive of some form (one or more signals at that location non-stop (non-red)).
-          </p>
+      <h5 id="menuCfgGui">GUI Design</h5>
 
-          <p>
-          <strong>Builder Plate</strong>
-          Check this if you want the builder plate on the machine face.
-          </p>
+      <p><strong>GUI Design - automatic creation of the JMRI GUI screen</strong>: An additional
+      feature of this program is to be able to automatically create a "standard" USS CTC panel from
+      the parameters specified elsewhere in this program. This screen configures the available
+      options. See <a href="#ctcFiles">"Files created for support..."</a> for more information and
+      procedures for loading them into the JMRI system. Everything is put in pre-determined
+      locations on the screen. It is an easy procedure in JMRI's Panel Editor (or other) to
+      reposition those items.</p>
 
-          <p>
-          <strong>Turnouts on panel</strong>
-          Normally you want to generate turnouts on the CTC track board, which is the default "Generate checked".  If
-          you don"t want this feature, uncheck this.
-          </p>
+      <p><strong>Extra blank columns after last defined column to create:</strong> Normally, if
+      this is 0, this program creates after the last CTC O.S. Section column specified a "right
+      edge of CTC machine panel". If you want additional blank column(s) between your last CTC O.S.
+      Sections column # and the right edge, enter that number here.</p>
 
-          <p>
-          <strong>Fleeting toggle switch (only if fleeting configured)</strong>
-          Create the toggle switch on the panel if checked.
-          </p>
+      <p><strong>Type of CTC panel</strong>: Presently only USS is available at this time
+      (10/31/2018). More may be available in the future.</p>
 
-          <p>
-          <strong>Analog clock and clock on toggle</strong>
-          Create an analog clock on the panel, along with above it a toggle switch to turn it on / off.
-          </p>
+      <p><strong>Vertical size:</strong> JMRI provides blank panel items in each of the sizes
+      listed. Choose one.</p>
 
-          <p>
-          <strong>Reload CTC system button</strong>
-          Create a button on the screen to perform this.
-          </p>
+      <p><strong>Signals on panel</strong> All O.S. Section signals - All of the signals specified
+      in the Signal Direction Indicators sub-system are created on the screen for you. This is not
+      a prototype practice, but will help in your development of SSL (Simple Signal Logic) and CTC
+      design. You can see the state of the signals in the field with this. Signal heads or Signal
+      masts will be created per your specification. Green/off only (Future feature) - Not available
+      at this time. The prototype in certain installations have a single green indicator indicating
+      all signal(s) at that location are displaying stop (red) (green indicator off) or permissive
+      of some form (one or more signals at that location non-stop (non-red)).</p>
 
-          <p>
-          <strong>CTC Debug on toggle</strong>
-          Ditto.
-          </p>
+      <p><strong>Builder Plate</strong> Check this if you want the builder plate on the machine
+      face.</p>
 
-          <p>
-          <strong>Create variety of track pieces</strong> (future feature):
-          A variety of track pieces are created on the screen, so that it is easier to "copy / paste" all of these objects as the designer desires.
-          </p>
+      <p><strong>Turnouts on panel</strong> Normally you want to generate turnouts on the CTC track
+      board, which is the default "Generate checked". If you don"t want this feature, uncheck
+      this.</p>
 
-          <p>
-          <strong>O.S. Occupancy sensor blinks red when unknown or inconsistent</strong>
-          Normally, JMRI will display an "X" or "?" on a sensor when its state is unknown or inconsistent.  By checking
-          this checkbox, the program will substitute a blinking indicator for these to draw better attention to them.
-          I personally use these for optical sensors on my layout because of the number of sensors on my layout causes
-          LocoNet to loose messages at system startup.
-          </p>
+      <p><strong>Fleeting toggle switch (only if fleeting configured)</strong> Create the toggle
+      switch on the panel if checked.</p>
 
+      <p><strong>Analog clock and clock on toggle</strong> Create an analog clock on the panel,
+      along with above it a toggle switch to turn it on / off.</p>
 
-      <a name="osList" id="osList"></a>
-      <h3>OS Section List</h3>
+      <p><strong>Reload CTC system button</strong> Create a button on the screen to perform
+      this.</p>
+
+      <p><strong>CTC Debug on toggle</strong> Ditto.</p>
+
+      <p><strong>Create variety of track pieces</strong> (future feature): A variety of track
+      pieces are created on the screen, so that it is easier to "copy / paste" all of these objects
+      as the designer desires.</p>
+
+      <p><strong>O.S. Occupancy sensor blinks red when unknown or inconsistent</strong> Normally,
+      JMRI will display an "X" or "?" on a sensor when its state is unknown or inconsistent. By
+      checking this checkbox, the program will substitute a blinking indicator for these to draw
+      better attention to them. I personally use these for optical sensors on my layout because of
+      the number of sensors on my layout causes LocoNet to loose messages at system startup.</p>
+
+      <h3 id="osList">OS Section List</h3>
 
       <h4>The Prototype CTC machine and this program</h4>
-      <p>
-      A prototype CTC machine is organized by columns (my term).  A single CTC machine column can be blank, or contain an O.S.
-      section and all of the associated controls.  I begin the numbering of my CTC machine columns with 1.  This column number
-      has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. Section.  You can create as many columns
-      as you like on the computer screen(s).
-      </p>
+
+      <p>A prototype CTC machine is organized by columns (my term). A single CTC machine column can
+      be blank, or contain an O.S. section and all of the associated controls. I begin the
+      numbering of my CTC machine columns with 1. This column number has no relation or correlation
+      at all to the Switch or Signal numbers of a normal O.S. Section. You can create as many
+      columns as you like on the computer screen(s).</p>
+
       <h4>OS Sections</h4>
-      <p>
-      A non-blank column always has an O.S. Section with a Code Button associated with it.  An O.S. Section always has an odd
-      switch number and an even signal number, where the signal number is always one more than the switch number.
-      Each O.S. Section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
-      They do not have to be in ascending sequence, their order has no impact on the program.  However, it is strongly suggested per
-      prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
-      you entered them out of order, which is described in another section.
-      </p>
+
+      <p>A non-blank column always has an O.S. Section with a Code Button associated with it. An
+      O.S. Section always has an odd switch number and an even signal number, where the signal
+      number is always one more than the switch number. Each O.S. Section as it is created does not
+      have to be 2 more than the prior switch number entry. Example: 1, 3, 7, 15, 17.... They do
+      not have to be in ascending sequence, their order has no impact on the program. However, it
+      is strongly suggested per prototype practice that they are in ascending sequence. You may
+      re-order them on the main screen using up/down buttons in case you entered them out of order,
+      which is described in another section.</p>
 
       <h4>Action buttons</h4>
-      <p>
-      These are located to the right of the "Presently defined CTC O.S. Sections:" list.<br>
+
+      <p>These are located to the right of the "Presently defined CTC O.S. Sections:" list.<br>
       The "Add..." button is always available.<br>
-      Other buttons are dynamically enabled or disabled based upon the selected item.
-      </p>
-        <h5>Add...</h5>
-        <p>
-        Allows you to add another column.
-        </p>
-        <p>
-        After pressing, configure the two values as needed.
-        </p>
-        <p>
-        The "GUI Generated before" checkbox is used to control which O.S. Sections will be included when using
-        the <strong>Write .xml file for JMRI GUI support</strong> button.  This is useful when a large CTC
-        configuration spans multiple panels.
-        </p>
-        <h5>Delete</h5>
-        <p>
-        Allows you to delete a column <strong>if</strong> there are no references to it.
-        </p>
-        <p>
-        If you notice in the column that you are deleting that there are items in parenthesis's, you will be prevented
-        from deleting that column with an error message.  Only when the parenthesis's disappear will you be allowed
-        to delete the column.
-        </p>
-        <p>
-        The general format is #/# indicating which switch and signal column entry is referencing this entry,
-        followed by the following letter possibilities:
-        "TrL:" Traffic Locking rule references this.  If there is an 'L' appended, it indicates left traffic rules, otherwise right traffic rules.
-          "Sw:" Switch Slaved references this.</p>
+      Other buttons are dynamically enabled or disabled based upon the selected item.</p>
 
-        <h5>Change Switch and Signal etc. #'s</h5>
-        <p>
-        See the Add button details.
-        </p>
+      <h5>Add...</h5>
 
-        <h5>Move Up</h5>
-        <p>
-        Move the select O.S. section up one row.  This action has no impact on the data.
-        </p>
+      <p>Allows you to add another column.</p>
 
-        <h5>Move Down</h5>
-        <p>
-        Move the select O.S. section down one row.  This action has no impact on the data.
-        </p>
+      <p>After pressing, configure the two values as needed.</p>
 
-        <h5>Write .xml file for JMRI GUI support</h5>
-        <p>
-        Create a <strong>GUIObjects.xml</strong> file.
-        </p>
+      <p>The "GUI Generated before" checkbox is used to control which O.S. Sections will be
+      included when using the <strong>Write .xml file for JMRI GUI support</strong> button. This is
+      useful when a large CTC configuration spans multiple panels.</p>
+
+      <h5>Delete</h5>
+
+      <p>Allows you to delete a column <strong>if</strong> there are no references to it.</p>
+
+      <p>If you notice in the column that you are deleting that there are items in parenthesis's,
+      you will be prevented from deleting that column with an error message. Only when the
+      parenthesis's disappear will you be allowed to delete the column.</p>
+
+      <p>The general format is #/# indicating which switch and signal column entry is referencing
+      this entry, followed by the following letter possibilities: "TrL:" Traffic Locking rule
+      references this. If there is an 'L' appended, it indicates left traffic rules, otherwise
+      right traffic rules. "Sw:" Switch Slaved references this.</p>
+
+      <h5>Change Switch and Signal etc. #'s</h5>
+
+      <p>See the Add button details.</p>
+
+      <h5>Move Up</h5>
+
+      <p>Move the select O.S. section up one row. This action has no impact on the data.</p>
+
+      <h5>Move Down</h5>
+
+      <p>Move the select O.S. section down one row. This action has no impact on the data.</p>
+
+      <h5>Write .xml file for JMRI GUI support</h5>
+
+      <p>Create a <strong>GUIObjects.xml</strong> file.</p>
 
       <h3>Edit Buttons</h3>
+
       <p>At the bottom of the screen are buttons to configure the selected entry in the list.</p>
-      <p>Note: For a new column, the CTC internal sensor name fields (IS#:XXX) will be used.  For
-      CTC implementations using a JMRI panel, these are the preferred names.  If a physical CTC
+
+      <p>Note: For a new column, the CTC internal sensor name fields (IS#:XXX) will be used. For
+      CTC implementations using a JMRI panel, these are the preferred names. If a physical CTC
       panel is being used, use the combo box to select the hardware sensor.</p>
 
-        <a name="frmCB" id="frmCB"></a>
-        <h4>Code Button</h4>
-        <p>
-        This provides the major information for a single O.S. Section. It is enabled as soon as an item is selected in
-        the list.
-        </p>
+      <h4 id="frmCB">Code Button</h4>
 
-        <p>
-        <strong>Code Button sensor</strong>: Required.  Select the sensor associated with this Code Button.  This name
-        is automatically generated by the patterns system.
-        </p>
+      <p>This provides the major information for a single O.S. Section. It is enabled as soon as an
+      item is selected in the list.</p>
 
-        <p>
-        <strong>Primary O.S. Section occupied sensor</strong>: Required.  So long as this sensor is active (indicating
-        that the O.S. Section is occupied), then the following cannot be changed: signals, turnout change,
-        lock/unlock turnout and call on.  This should be the main occupancy sensor.
-        </p>
+      <p><strong>Code Button sensor</strong>: Required. Select the sensor associated with this Code
+      Button. This name is automatically generated by the patterns system.</p>
 
-        <p>
-        <strong>Secondary O.S. Section occupied sensor</strong>: Optional.  Typically this is entered when a crossover
-        is in an O.S. Section and you have two sensors, one for each parallel track.  This is the non-primary route, for
-        instance the other side's track sensor.  When active, it prevents turnout change and lock/unlock turnout only.
-        </p>
+      <p><strong>Primary O.S. Section occupied sensor</strong>: Required. So long as this sensor is
+      active (indicating that the O.S. Section is occupied), then the following cannot be changed:
+      signals, turnout change, lock/unlock turnout and call on. This should be the main occupancy
+      sensor.</p>
 
-        <p>
-        <strong>Switch slaved to O.S. Section #</strong>: Optional.  Use this to slave another O.S. Section
-        with <strong> just </strong> a turnout in it to this O.S. Section.  Used primarily when one track goes
-        to 3 or more other tracks via multiple turnouts.
-        </p>
+      <p><strong>Secondary O.S. Section occupied sensor</strong>: Optional. Typically this is
+      entered when a crossover is in an O.S. Section and you have two sensors, one for each
+      parallel track. This is the non-primary route, for instance the other side's track sensor.
+      When active, it prevents turnout change and lock/unlock turnout only.</p>
 
-        <p>
-        <strong>No Code Button delay in milliseconds</strong>: Required.  If there is no Code Button (i.e. a tower
-        operation), then put in the delay between when either the turnout or traffic direction switches are changed
-        and when the action actually occurs.
-        </p>
+      <p><strong>Switch slaved to O.S. Section #</strong>: Optional. Use this to slave another O.S.
+      Section with <strong>just</strong> a turnout in it to this O.S. Section. Used primarily when
+      one track goes to 3 or more other tracks via multiple turnouts.</p>
 
-        <a name="frmSIDI" id="frmSIDI"></a>
-        <h4>Signal direction indicators</h4>
-        <p>
-        Defines all of the information required for displaying the signal direction indicators on the CTC panel, and which
-        signal(s) in the field control them.
-        </p>
+      <p><strong>No Code Button delay in milliseconds</strong>: Required. If there is no Code
+      Button (i.e. a tower operation), then put in the delay between when either the turnout or
+      traffic direction switches are changed and when the action actually occurs.</p>
 
-        <p>
-        <strong>Left, Normal and Right indicator sensors</strong>These names are automatically generated by the patterns
-        system.
-        </p>
+      <h4 id="frmSIDI">Signal direction indicators</h4>
 
-        <p>
-        <strong>Coding and response time milliseconds: and Time locking interval milliseconds</strong>: Required.  Values
-        are defaulted from the CTC Defaults screen.  Change as you see fit to make each section unique if you want.
-        </p>
+      <p>Defines all of the information required for displaying the signal direction indicators on
+      the CTC panel, and which signal(s) in the field control them.</p>
 
-        <p>
-        <strong>Traffic Direction</strong>: Select the direction of traffic.  The default is <strong>Both</strong>.  If
-        <strong>Left</strong> or <strong>Right</strong> is selected, the appropriate traffic signal list will be disabled.
-        </p>
+      <p><strong>Left, Normal and Right indicator sensors</strong>These names are automatically
+      generated by the patterns system.</p>
 
-        <p>
-        <strong>Left to right and Right to left traffic signal lists</strong>: Here you specify each of the
-        signal masts or individual signal heads associated in each direction with this O.S. Section.
-        There must be at least one entry in each, <strong>unless</strong> it is a uni-directional (Left or Right) O.S. Section.
-        </p>
+      <p><strong>Coding and response time milliseconds: and Time locking interval
+      milliseconds</strong>: Required. Values are defaulted from the CTC Defaults screen. Change as
+      you see fit to make each section unique if you want.</p>
 
-        <a name="frmSIDL" id="frmSIDL"></a>
-        <h4>Signal direction lever</h4>
-        <p>
-        Defines all of the sensors required for the JMRI MultiSensor object in order to select a signal direction.
-        </p>
+      <p><strong>Traffic Direction</strong>: Select the direction of traffic. The default is
+      <strong>Both</strong>. If <strong>Left</strong> or <strong>Right</strong> is selected, the
+      appropriate traffic signal list will be disabled.</p>
 
-        <p>
-        <strong>Left, Normal and Right lever sensors</strong>: These names are automatically generated by the patterns
-        system.  When panels are created by the GUI export process, the traffic direction selection in the Signal
-        Direction Indicators section will determine which sensors are used to create the multi-sensor icon.
-        </p>
+      <p><strong>Left to right and Right to left traffic signal lists</strong>: Here you specify
+      each of the signal masts or individual signal heads associated in each direction with this
+      O.S. Section. There must be at least one entry in each, <strong>unless</strong> it is a
+      uni-directional (Left or Right) O.S. Section.</p>
 
-        <a name="frmSWDI" id="frmSWDI"></a>
-        <h4>Switch direction indicators</h4>
-        <p>
-        Defines all of the information for displaying the switch direction indicators on the CTC panel, and
-        which switch in the field controls them.
-        </p>
+      <h4 id="frmSIDL">Signal direction lever</h4>
 
-        <p>
-        <strong>Normal and Reverse indicator sensors</strong>: Required.  The two indicators on the
-        panel.  These names are automatically generated by the patterns system.
-        </p>
+      <p>Defines all of the sensors required for the JMRI MultiSensor object in order to select a
+      signal direction.</p>
 
-        <p>
-        <strong>Actual turnout</strong>: Required.  The turnout who's information is being displayed.
-        </p>
+      <p><strong>Left, Normal and Right lever sensors</strong>: These names are automatically
+      generated by the patterns system. When panels are created by the GUI export process, the
+      traffic direction selection in the Signal Direction Indicators section will determine which
+      sensors are used to create the multi-sensor icon.</p>
 
-        <p>
-        <strong>Coding and response time milliseconds</strong>: Required.  Values are defaulted from
-        the CTC Defaults screen.  Change as you see fit to make each section unique if you want.
-        </p>
+      <h4 id="frmSWDI">Switch direction indicators</h4>
 
-        <p>
-        <strong>Feedback different</strong>: JMRI does not support backwards feedback values, i.e. turnout
-        is commanded to CLOSED, turnout reports THROWN.  Check this if your device's feedback is opposite
-        from the commanded value.
-        </p>
+      <p>Defines all of the information for displaying the switch direction indicators on the CTC
+      panel, and which switch in the field controls them.</p>
 
-        <p>
-        <strong>Optional GUI parameters</strong>: Ignore this if you are not generating GUI information.  Otherwise
-        select the type of turnout from the 3 radio buttons, Check "Left hand turnout" if so, and
-        if "Crossover" is selected, then check "Other turnout also left handed" if so.
-        </p>
+      <p><strong>Normal and Reverse indicator sensors</strong>: Required. The two indicators on the
+      panel. These names are automatically generated by the patterns system.</p>
 
-        <a name="frmSWDL" id="frmSWDL"></a>
-        <h4>Switch direction lever</h4>
-        <p>
-        Defines the one sensor associated with the Sensor icon lever.
-        </p>
+      <p><strong>Actual turnout</strong>: Required. The turnout who's information is being
+      displayed.</p>
 
-        <p>
-        <strong>Lever sensor</strong>: Required.  This name is automatically generated by the patterns system.
-        </p>
+      <p><strong>Coding and response time milliseconds</strong>: Required. Values are defaulted
+      from the CTC Defaults screen. Change as you see fit to make each section unique if you
+      want.</p>
 
-        <a name="frmCO" id="frmCO"></a>
-        <h4>Call On</h4>
-        <p>
-        Defines all of the information for controlling (allowing) call on aspect(s) to be displayed in the
-        field.
-        </p>
+      <p><strong>Feedback different</strong>: JMRI does not support backwards feedback values, i.e.
+      turnout is commanded to CLOSED, turnout reports THROWN. Check this if your device's feedback
+      is opposite from the commanded value.</p>
 
-        <p>
-        <strong>Toggle sensor</strong>: Required.  This name is automatically generated by the patterns system.  This
-        associates the toggle switch on the panel with this Call On.
-        </p>
+      <p><strong>Optional GUI parameters</strong>: Ignore this if you are not generating GUI
+      information. Otherwise select the type of turnout from the 3 radio buttons, Check "Left hand
+      turnout" if so, and if "Crossover" is selected, then check "Other turnout also left handed"
+      if so.</p>
 
-        <p>
-        When you first enter this screen, there is nothing in
-        the "Grouping list" area.  Once you have entered new entries, you may individually select an entry by
-        clicking on it, and then the "Edit Below" and "Delete" buttons become available, along with
-        various field(s) below being enabled for changing.  In order to get
-        started, press "Add New" the first time here, and various fields below will be enabled
-        based upon how you have configured you system for Signal Heads or Signal Masts via the
-        <strong>Configure &rArr; Defaults</strong> menu.  Below all fields are described, but some may
-        not be available based upon whether Signal Heads or Signal Masts is selected:
-        </p>
+      <h4 id="frmSWDL">Switch direction lever</h4>
 
-        <p>
-        <strong>Signal</strong>: Required.  Choose from the signals defined in your system already.  Then
-        select in the drop down to the right of this field whether the signal faces Left or Right.
-        </p>
+      <p>Defines the one sensor associated with the Sensor icon lever.</p>
 
-        <p>
-        <strong>Aspect</strong>: Required.  Choose from the available aspects in the drop down list.  <strong>Do not</strong>
-        choose flashing aspects for semaphores!  The semaphore will act weird as it tries and fails to keep up with
-        the stream of movements.
-        </p>
+      <p><strong>Lever sensor</strong>: Required. This name is automatically generated by the
+      patterns system.</p>
 
-        <p>
-        <strong>Called on sensor</strong>: Required for signal heads.  Choose from the sensors defined in your system already.
-        </p>
+      <h4 id="frmCO">Call On</h4>
 
-        <p>
-        <strong>Block</strong>: Required for signal masts.  Choose from the blocks defined
-        in your system.  The selected block must have the <strong>Permissive</strong> checkbox
-        enabled.  If it is not, a dialog will be displayed which will offer to set the value.
-        Select <strong>Yes</strong> to have it set.  If you select <strong>No</strong>,
-        you will need to do it yourself.  If you don't, Call-On will not work.
-        </p>
+      <p>Defines all of the information for controlling (allowing) call on aspect(s) to be
+      displayed in the field.</p>
 
-        <p>
-        <strong>--- Route ---</strong>  Choose up to 6 switch direction indicators that when lit specify the
-        route from the O.S. Section to the called on block (Signal Masts) or sensor associated with the block (Signal Heads).
-        </p>
+      <p><strong>Toggle sensor</strong>: Required. This name is automatically generated by the
+      patterns system. This associates the toggle switch on the panel with this Call On.</p>
 
-        <a name="frmTRL" id="frmTRL"></a>
-        <h4>Traffic Locking</h4>
-        <p>
-        Defines all of the allowed non conflicting routes from the selected O.S. Section in either direction from it.
-        This is the beating heart of the CTC system.  As such, it is the most complex part of CTC you will encounter.
-        However, if you are methodical and after some experience, you should find that this section is fairly straight
-        forward.
-        </p>
-        <p>
-        When you initially select Traffic Locking, the first screen that comes up will allow you to edit one of the
-        directions from this O.S. Section to other O.S. Section(s).  <strong>Note:</strong> Having no rules <strong>always</strong> allows
-        that direction of travel no matter any other condition, and may be valid in certain situations such as traveling
-        to staging where there is no O.S. Section.
-        </p>
+      <p>When you first enter this screen, there is nothing in the "Grouping list" area. Once you
+      have entered new entries, you may individually select an entry by clicking on it, and then
+      the "Edit Below" and "Delete" buttons become available, along with various field(s) below
+      being enabled for changing. In order to get started, press "Add New" the first time here, and
+      various fields below will be enabled based upon how you have configured you system for Signal
+      Heads or Signal Masts via the <strong>Configure ⇒ Defaults</strong> menu. Below all fields
+      are described, but some may not be available based upon whether Signal Heads or Signal Masts
+      is selected:</p>
 
-        <p>
-        A NEW feature is available with CTC version 1.05 and later:  IF (and only if) you have used Layout Editor to generate
-        your track plan, and used Signal Mast Logic (SML) defined for your signal masts (along with
-        a minimum of <strong>one</strong> auto-generation of SML), and Signal Masts at block boundaries, then this screen
-        can use the information available in them to generate all of the
-        Traffic Locking rules automatically.  You will know that this is possible because two new buttons will be displayed:
-        "Auto-Generate" and "Reverse Left/Right".  See "Auto-Generate details" below for more information.
-        </p>
+      <p><strong>Signal</strong>: Required. Choose from the signals defined in your system already.
+      Then select in the drop down to the right of this field whether the signal faces Left or
+      Right.</p>
 
-        <p>
-        Select either Left or Right to proceed.  On the next screen that appears, you will notice that the "Rules:"
-        area is blank, and that "Add New" is only button enabled.  Press "Add New" now, and notice how the bottom half of the
-        screen is enabled for editing of this new rule.
-        </p>
+      <p><strong>Aspect</strong>: Required. Choose from the available aspects in the drop down
+      list. <strong>Do not</strong> choose flashing aspects for semaphores! The semaphore will act
+      weird as it tries and fails to keep up with the stream of movements.</p>
 
-        <p>
-        Before we proceed to details on this rule, you will notice that "This rule ENABLED" is checked by default.  You
-        may enable / disable individual rules at your whim, you mostly disable ones so that the information is not lost,
-        and you may in the future want to re-enable it.
-        </p>
+      <p><strong>Called on sensor</strong>: Required for signal heads. Choose from the sensors
+      defined in your system already.</p>
 
-        <p>
-        Part of the design of your CTC system (which has nothing to do with this program) is determining where
-        the interlocking limits are in complex trackwork situations, such as parallel (or 3 or more) tracks with
-        multiple switches and crossovers.  It is beyond the scope of this help in guiding you in designing
-        interlocking plants.  For instance, it depends on how you want simultaneous moves to occur within
-        interlocking limits that may need to be considered.
-        </p>
+      <p><strong>Block</strong>: Required for signal masts. Choose from the blocks defined in your
+      system. The selected block must have the <strong>Permissive</strong> checkbox enabled. If it
+      is not, a dialog will be displayed which will offer to set the value. Select
+      <strong>Yes</strong> to have it set. If you select <strong>No</strong>, you will need to do
+      it yourself. If you don't, Call-On will not work.</p>
 
-        <p>
-        <strong>Auto-Generate details:</strong>
-        </p>
-        <p>
-        First, 3 Caveat Emptor's:
-        </p>
-        <p>
-        #1: As a prerequisite for CTC in general, you <strong>must</strong> have completed the track diagram
-        in Layout Editor, and have a <strong>properly</strong> operating Signal Mast Logic (SML)
-        signal system completed, along with at least <strong>one</strong> auto-generated SML.  Any
-        missing items in these will prevent proper auto-generation of
-        Traffic Locking rules.  However, you can always after fixing SML rules regenerate the Traffic
-        Locking rules for that O.S. section again.
-        </p>
-        <p>
-        #2: Auto-generation <strong>assumes</strong> a properly formatted track diagram.  Real CTC systems
-        (in my experience) always proceed left to right and right to left, with occasional 45 degree tracks at an angle.
-        However, Layout Editor and Control Panel Editor allow you to "willy nilly" put track in any orientation.
-        This <strong>will</strong> confuse the auto-generation operation, as to what rules are to the left and right
-        of the O.S. section.  Worst case, if this happens, press the "Reverse Left/Right" button.  The rules should
-        be correct even if the screen orientation is "invalid".
-        </p>
-        <p>
-        #3: As a reminder: When you auto-generate, <strong>all</strong> prior rules are <strong>deleted</strong> first.
-        </p>
-        <p>
-        After auto-generating, you may go and manually edit any of the auto-generated actions, if you feel
-        they are not needed or improper for some reason.
-        </p>
+      <p><strong>--- Route ---</strong> Choose up to 6 switch direction indicators that when lit
+      specify the route from the O.S. Section to the called on block (Signal Masts) or sensor
+      associated with the block (Signal Heads).</p>
 
-        <p>
-        <strong>Specifying a rule:</strong>
-        </p>
-        <p>
-        Under "--- ROUTE ---", you specify the O.S. Section(s) traversed, and the switch alignment associated with each
-        O.S. Section for that route.  Order of specified O.S. Section(s) is irrelevant.  For a simple route,
-        such as a passing siding, there will only be one switch.  A complex interlocking will normally have several
-        switches.  An O.S. Section that contains a turnout will have at least two routes, a closed route and a thrown route.
-        </p>
-        <p>
-        Under "Occupancy sensors ... allowed." you specify the sensor(s) that will be locked for that route.  For simple routes, the O.S.
-        section occupancy sensor and the occupancy sensor for the destination block will be specified.
-        </p>
-        <p>
-        Under "--- Optional sensors... valid ---", specify any sensors that must be ACTIVE to allow this rule to be valid.
-        You may (for instance) use JMRI Logix to create such a sensor for specific unusual situations.
-        <strong>Important:</strong> These optional sensors are <strong>not</strong> allocated as part of the rule.
-        They are just checked at the moment the dispatcher codes the O.S. Section.
-        </p>
-        <p>
-        <strong>Final result: </strong> When the dispatcher codes this O.S. Section,
-        the <strong>Left</strong> or <strong>Right</strong> rule set is selected based on
-        the position of the signal lever.  A specific rule is then selected based on the
-        turnout positions.  If all of the occupancy sensors defined in the rule are not already allocated to another route,
-        and all defined optional sensors are ACTIVE, then <strong>only</strong> the occupancy sensors are allocated.  The
-        allocation for each occupancy sensor is removed after it becomes unoccupied <strong>after</strong> becoming occupied.
-        </p>
-        <p>
-        In complex interlocking situations: as a train traverses the rule's occupancy sensor(s) and transited occupancy sensor(s) are released,
-        other rules that don't conflict with the remaining allocated occupancy sensors may be allowed before this train
-        has fully transited this whole rule, and the dispatcher may select these routes (rules) safely.
-        </p>
+      <h4 id="frmTRL">Traffic Locking</h4>
 
-        <a name="frmTUL" id="frmTUL"></a>
-        <h4>Turnout locking</h4>
-        <p>There are 3 types of turnouts on a layout</p>
-        <dl>
-          <dt>Controlled</dt>
-            <dd>
-            Controlled turnouts have levers and indicators on the panel.  These are defined
-            using the <strong>Switch direction indicators</strong> and the <strong>Switch
-            direction lever</strong> sections.
-            </dd>
-          <dt>Uncontrolled</dt>
-            <dd>
-            Uncontrolled turnouts do not have levers and indicators on the panel, but have been
-            assigned to a <strong><em>special</em></strong> O.S. section using <strong>Turnout locking</strong>.
-            </dd>
-          <dt>Unknown</dt>
-            <dd>
-            All other turnouts.
-            </dd>
-        </dl>
+      <p>Defines all of the allowed non conflicting routes from the selected O.S. Section in either
+      direction from it. This is the beating heart of the CTC system. As such, it is the most
+      complex part of CTC you will encounter. However, if you are methodical and after some
+      experience, you should find that this section is fairly straight forward.</p>
 
-        <p>
-        If the turnout position can be changed using local controls, there is a risk that the
-        dispatcher can authorize a train movement that can cause issues.  The goal is to detect those
-        changes and take corrective action.
-        </p>
+      <p>When you initially select Traffic Locking, the first screen that comes up will allow you
+      to edit one of the directions from this O.S. Section to other O.S. Section(s).
+      <strong>Note:</strong> Having no rules <strong>always</strong> allows that direction of
+      travel no matter any other condition, and may be valid in certain situations such as
+      traveling to staging where there is no O.S. Section.</p>
 
-        <p>
-        If the known state of a turnout is different than the CTC required state, a turnout command will
-        be issued to return the turnout to the CTC state.  Depending on the hardware used to change
-        the turnout position, a typical reaction might be that the turnout has started moving and then
-        reverses direction.  This is typical for Tortoise switch machines.
-        </p>
+      <p>A NEW feature is available with CTC version 1.05 and later: IF (and only if) you have used
+      Layout Editor to generate your track plan, and used Signal Mast Logic (SML) defined for your
+      signal masts (along with a minimum of <strong>one</strong> auto-generation of SML), and
+      Signal Masts at block boundaries, then this screen can use the information available in them
+      to generate all of the Traffic Locking rules automatically. You will know that this is
+      possible because two new buttons will be displayed: "Auto-Generate" and "Reverse Left/Right".
+      See "Auto-Generate details" below for more information.</p>
 
-        <p>
-        A related requirement is that the dispatcher may need to grant local control of turnouts.
-        This frequently occurs where switching actions need to occur.  Once local control has been
-        granted, the CTC machine needs to prevent dispacher actions with the exception of revoking
-        local control.
-        </p>
+      <p>Select either Left or Right to proceed. On the next screen that appears, you will notice
+      that the "Rules:" area is blank, and that "Add New" is only button enabled. Press "Add New"
+      now, and notice how the bottom half of the screen is enabled for editing of this new
+      rule.</p>
 
-        <p>
-        Another use for local control is having control of turnouts even if the computer is
-        not running.  This provides a backup mechanism to computer failures.  It also requires
-        that alternative procedures are available for dispatching, such as "captain may I"
-        and magnet boards.
-        </p>
+      <p>Before we proceed to details on this rule, you will notice that "This rule ENABLED" is
+      checked by default. You may enable / disable individual rules at your whim, you mostly
+      disable ones so that the information is not lost, and you may in the future want to re-enable
+      it.</p>
 
-        <p>Some possible scenarios:</p>
-        <ol>
-          <li>The turnout image on a JMRI panel is clicked.</li>
-          <li>The JMRI turnout table state is changed.</li>
-          <li>The switch machine is configured to respond to throttle turnout commands.</li>
-          <li>A local control panel is directly wired to switch machines.</li>
-        </ol>
+      <p>Part of the design of your CTC system (which has nothing to do with this program) is
+      determining where the interlocking limits are in complex trackwork situations, such as
+      parallel (or 3 or more) tracks with multiple switches and crossovers. It is beyond the scope
+      of this help in guiding you in designing interlocking plants. For instance, it depends on how
+      you want simultaneous moves to occur within interlocking limits that may need to be
+      considered.</p>
 
-        <p>
-        Items 1 and 2 are local to the JMRI environment.  The CTC machine will see the change and take
-        corrective action.  3 and 4 are external to JMRI.  Detection of these items will depend on
-        turnout state feedback.  If feedback has not been implemented, turnout locking will have no value.
-        </p>
+      <p><strong>Auto-Generate details:</strong>
+      </p>
 
-        <h5>Feedback</h5>
-        <p>
-        Feedback depends on the hardware used to change turnout positions.  A Tortoise switch machine
-        can do either 1 or 2 sensor feedback but requires other hardware to convert the TTL logic
-        state change to a sensor message.  A Digitrax DS64 running on a LocoNet can handle both
-        the local switch button and generate a feedback message.
+      <p>First, 3 Caveat Emptor's:</p>
 
-        <h5>Configuration</h5>
-        <p>
-        To configure turnout locking, select an O.S. section from the list, click on the <strong>Enable</strong> check box
-        and select <strong>Edit</strong> under the <em>Turnout Locking:</em> label.  The form contains two sensor
-        entries for the lever and indicator icons, 4 entries for turnouts, and 3 options.  The
-        <strong>Lock Implementation</strong> is fixed.  There are also 4 options for Feedback different.
-        </p>
+      <p>#1: As a prerequisite for CTC in general, you <strong>must</strong> have completed the
+      track diagram in Layout Editor, and have a <strong>properly</strong> operating Signal Mast
+      Logic (SML) signal system completed, along with at least <strong>one</strong> auto-generated
+      SML. Any missing items in these will prevent proper auto-generation of Traffic Locking rules.
+      However, you can always after fixing SML rules regenerate the Traffic Locking rules for that
+      O.S. section again.</p>
 
-        <p>The <strong>When locked, switch state is Closed</strong> option indicates whether the turnout should be
-        set to Closed or Thrown when the dispatcher regains control of the turnout.
-        </p>
+      <p>#2: Auto-generation <strong>assumes</strong> a properly formatted track diagram. Real CTC
+      systems (in my experience) always proceed left to right and right to left, with occasional 45
+      degree tracks at an angle. However, Layout Editor and Control Panel Editor allow you to
+      "willy nilly" put track in any orientation. This <strong>will</strong> confuse the
+      auto-generation operation, as to what rules are to the left and right of the O.S. section.
+      Worst case, if this happens, press the "Reverse Left/Right" button. The rules should be
+      correct even if the screen orientation is "invalid".</p>
 
-        <p>There are 4 locking styles.</p>
-          <h6>Controlled turnout with locking and unlocking</h6>
-          <p>
-          The turnout belongs to the O.S. section and will have Switch direction levers and indicators.
-          The <strong>Enable GUI Icons</strong> option is selected so that the locking lever and indicator icons are added
-          to the CTC panel.
-          </p>
+      <p>#3: As a reminder: When you auto-generate, <strong>all</strong> prior rules are
+      <strong>deleted</strong> first.</p>
 
-          <p>
-          This is the typical case, and requires nothing special be done.  The O.S. Section
-          <strong>must be</strong> unoccupied in order for a turnout to be unlocked or locked.
-          Depending on the available feedback, the local turnout changes might not be reported
-          to JMRI.  If that is the case, the dispatcher should use the CTC controls to set the
-          turnout to the desired state.
-          </p>
+      <p>After auto-generating, you may go and manually edit any of the auto-generated actions, if
+      you feel they are not needed or improper for some reason.</p>
 
-          <h6>Controlled turnout with no unlocking</h6>
-          <p>
-          The turnout belongs to the O.S. section and will have Switch direction levers and indicators.
-          The <strong>Enable GUI Icons</strong> option is <strong>NOT</strong> selected so that the
-          turnout locking lever and indicator icons arre not on the panel.  The turnout cannot be unlocked
-          since there are no icons.  This makes the turnout permanently under dispatcher control.
-          </p>
+      <p><strong>Specifying a rule:</strong>
+      </p>
 
-          <h6>Uncontrolled turnout with locking and unlocking</h6>
-          <p>
-          Create a special O.S. section that contains the turnout <strong>as if</strong> it was an O.S. Section.  Use a switch number
-          that is higher than the highest value that will used on the CTC machine, or for safety, use values starting with
-          1001.  For the GUI column #, use the proper number to create both the Code Button and the lock/unlock toggle
-          switch in the proper place.
-          </p>
+      <p>Under "--- ROUTE ---", you specify the O.S. Section(s) traversed, and the switch alignment
+      associated with each O.S. Section for that route. Order of specified O.S. Section(s) is
+      irrelevant. For a simple route, such as a passing siding, there will only be one switch. A
+      complex interlocking will normally have several switches. An O.S. Section that contains a
+      turnout will have at least two routes, a closed route and a thrown route.</p>
 
-          <p>
-          However, <strong>do not</strong> check any features except the Turnout Locking check box for this fake O.S.
-          section.  This is how this is differentiated from the above true O.S. Section lock.
-          </p>
+      <p>Under "Occupancy sensors ... allowed." you specify the sensor(s) that will be locked for
+      that route. For simple routes, the O.S. section occupancy sensor and the occupancy sensor for
+      the destination block will be specified.</p>
 
-          <p>
-          When configuring the Code Button, you will be required to enter an occupancy sensor.  Enter the
-          occupancy sensor for the block <Strong>containing</Strong> the turnout to be locked.
-          </p>
+      <p>Under "--- Optional sensors... valid ---", specify any sensors that must be ACTIVE to
+      allow this rule to be valid. You may (for instance) use JMRI Logix to create such a sensor
+      for specific unusual situations. <strong>Important:</strong> These optional sensors are
+      <strong>not</strong> allocated as part of the rule. They are just checked at the moment the
+      dispatcher codes the O.S. Section.</p>
 
-          <p>
-          On the Turnout Locking screen, select the turnout, the <strong>No Dispatcher control of switch</strong>
-          and the <strong>Enable GUI Icons</strong> options.  Since the dispatcher has no direct control of
-          the turnout, the turnout will be forced to the state based on the <strong>When locked, switch
-          state is "Closed"</strong> setting.  The default is Closed, uncheck for Thrown.
-          </p>
+      <p><strong>Final result:</strong> When the dispatcher codes this O.S. Section, the
+      <strong>Left</strong> or <strong>Right</strong> rule set is selected based on the position of
+      the signal lever. A specific rule is then selected based on the turnout positions. If all of
+      the occupancy sensors defined in the rule are not already allocated to another route, and all
+      defined optional sensors are ACTIVE, then <strong>only</strong> the occupancy sensors are
+      allocated. The allocation for each occupancy sensor is removed after it becomes unoccupied
+      <strong>after</strong> becoming occupied.</p>
 
-          <h6>Uncontrolled turnout with no unlocking</h6>
-          <p>
-          The special O.S. section and turnout locking are defined as above with one exception.  The
-          <strong>Enable GUI Icons</strong> option is NOT selected.  This makes the uncontrolled turnout
-          locked for the duration of the CTC session.  This is used for uncontrolled turnouts that must always be
-          in a known state during the CTC session, but have other uses when not running CTC.  For example,
-          a turnout to facilitate re-staging.
-          </p>
+      <p>In complex interlocking situations: as a train traverses the rule's occupancy sensor(s)
+      and transited occupancy sensor(s) are released, other rules that don't conflict with the
+      remaining allocated occupancy sensors may be allowed before this train has fully transited
+      this whole rule, and the dispatcher may select these routes (rules) safely.</p>
 
-        <h5>Feedback Different</h5>
-        <p>
-        Normally, the feedback value matches the commanded value.  JMRI allows for both being backwards, and in order to
-        fix that, you put a check the "Inverted" column in the Turnout Table in JMRI.  However, in case the feedback value
-        is different than the commanded value, then you put a check in that column.  The following table lists the possibilities:
-        </p>
-        <table>
-            <tr>
-                <th>Command:</th>
-                <th>Feedback:</th>
-                <th>JMRI Turnout inverted checked:</th>
-                <th>CTC Editor feedbacks different checked:</th>
-            </tr>
-            <tr>
-                <td>Normal</td>
-                <td>Normal</td>
-                <td>No</td>
-                <td>No</td>
-            </tr>
-            <tr>
-                <td>Reversed</td>
-                <td>Reversed</td>
-                <td>Yes</td>
-                <td>No</td>
-            </tr>
-            <tr>
-                <td>Normal</td>
-                <td>Reversed</td>
-                <td>No</td>
-                <td>Yes</td>
-            </tr>
-            <tr>
-                <td>Reversed</td>
-                <td>Normal</td>
-                <td>Yes</td>
-                <td>Yes</td>
-            </tr>
-        </table>
-<!--         <p> -->
-<!--
+      <h4 id="frmTUL">Turnout locking</h4>
+
+      <p>There are 3 types of turnouts on a layout</p>
+
+      <dl>
+        <dt>Controlled</dt>
+
+        <dd>Controlled turnouts have levers and indicators on the panel. These are defined using
+        the <strong>Switch direction indicators</strong> and the <strong>Switch direction
+        lever</strong> sections.</dd>
+
+        <dt>Uncontrolled</dt>
+
+        <dd>Uncontrolled turnouts do not have levers and indicators on the panel, but have been
+        assigned to a <strong><em>special</em></strong> O.S. section using <strong>Turnout
+        locking</strong>.</dd>
+
+        <dt>Unknown</dt>
+
+        <dd>All other turnouts.</dd>
+      </dl>
+
+      <p>If the turnout position can be changed using local controls, there is a risk that the
+      dispatcher can authorize a train movement that can cause issues. The goal is to detect those
+      changes and take corrective action.</p>
+
+      <p>If the known state of a turnout is different than the CTC required state, a turnout
+      command will be issued to return the turnout to the CTC state. Depending on the hardware used
+      to change the turnout position, a typical reaction might be that the turnout has started
+      moving and then reverses direction. This is typical for Tortoise switch machines.</p>
+
+      <p>A related requirement is that the dispatcher may need to grant local control of turnouts.
+      This frequently occurs where switching actions need to occur. Once local control has been
+      granted, the CTC machine needs to prevent dispacher actions with the exception of revoking
+      local control.</p>
+
+      <p>Another use for local control is having control of turnouts even if the computer is not
+      running. This provides a backup mechanism to computer failures. It also requires that
+      alternative procedures are available for dispatching, such as "captain may I" and magnet
+      boards.</p>
+
+      <p>Some possible scenarios:</p>
+
+      <ol>
+        <li>The turnout image on a JMRI panel is clicked.</li>
+
+        <li>The JMRI turnout table state is changed.</li>
+
+        <li>The switch machine is configured to respond to throttle turnout commands.</li>
+
+        <li>A local control panel is directly wired to switch machines.</li>
+      </ol>
+
+      <p>Items 1 and 2 are local to the JMRI environment. The CTC machine will see the change and
+      take corrective action. 3 and 4 are external to JMRI. Detection of these items will depend on
+      turnout state feedback. If feedback has not been implemented, turnout locking will have no
+      value.</p>
+
+      <h5>Feedback</h5>
+
+      <p>Feedback depends on the hardware used to change turnout positions. A Tortoise switch
+      machine can do either 1 or 2 sensor feedback but requires other hardware to convert the TTL
+      logic state change to a sensor message. A Digitrax DS64 running on a LocoNet can handle both
+      the local switch button and generate a feedback message.</p>
+
+      <h5>Configuration</h5>
+
+      <p>To configure turnout locking, select an O.S. section from the list, click on the
+      <strong>Enable</strong> check box and select <strong>Edit</strong> under the <em>Turnout
+      Locking:</em> label. The form contains two sensor entries for the lever and indicator icons,
+      4 entries for turnouts, and 3 options. The <strong>Lock Implementation</strong> is fixed.
+      There are also 4 options for Feedback different.</p>
+
+      <p>The <strong>When locked, switch state is Closed</strong> option indicates whether the
+      turnout should be set to Closed or Thrown when the dispatcher regains control of the
+      turnout.</p>
+
+      <p>There are 4 locking styles.</p>
+
+      <h6>Controlled turnout with locking and unlocking</h6>
+
+      <p>The turnout belongs to the O.S. section and will have Switch direction levers and
+      indicators. The <strong>Enable GUI Icons</strong> option is selected so that the locking
+      lever and indicator icons are added to the CTC panel.</p>
+
+      <p>This is the typical case, and requires nothing special be done. The O.S. Section
+      <strong>must be</strong> unoccupied in order for a turnout to be unlocked or locked.
+      Depending on the available feedback, the local turnout changes might not be reported to JMRI.
+      If that is the case, the dispatcher should use the CTC controls to set the turnout to the
+      desired state.</p>
+
+      <h6>Controlled turnout with no unlocking</h6>
+
+      <p>The turnout belongs to the O.S. section and will have Switch direction levers and
+      indicators. The <strong>Enable GUI Icons</strong> option is <strong>NOT</strong> selected so
+      that the turnout locking lever and indicator icons arre not on the panel. The turnout cannot
+      be unlocked since there are no icons. This makes the turnout permanently under dispatcher
+      control.</p>
+
+      <h6>Uncontrolled turnout with locking and unlocking</h6>
+
+      <p>Create a special O.S. section that contains the turnout <strong>as if</strong> it was an
+      O.S. Section. Use a switch number that is higher than the highest value that will used on the
+      CTC machine, or for safety, use values starting with 1001. For the GUI column #, use the
+      proper number to create both the Code Button and the lock/unlock toggle switch in the proper
+      place.</p>
+
+      <p>However, <strong>do not</strong> check any features except the Turnout Locking check box
+      for this fake O.S. section. This is how this is differentiated from the above true O.S.
+      Section lock.</p>
+
+      <p>When configuring the Code Button, you will be required to enter an occupancy sensor. Enter
+      the occupancy sensor for the block <strong>containing</strong> the turnout to be locked.</p>
+
+      <p>On the Turnout Locking screen, select the turnout, the <strong>No Dispatcher control of
+      switch</strong> and the <strong>Enable GUI Icons</strong> options. Since the dispatcher has
+      no direct control of the turnout, the turnout will be forced to the state based on the
+      <strong>When locked, switch state is "Closed"</strong> setting. The default is Closed,
+      uncheck for Thrown.</p>
+
+      <h6>Uncontrolled turnout with no unlocking</h6>
+
+      <p>The special O.S. section and turnout locking are defined as above with one exception. The
+      <strong>Enable GUI Icons</strong> option is NOT selected. This makes the uncontrolled turnout
+      locked for the duration of the CTC session. This is used for uncontrolled turnouts that must
+      always be in a known state during the CTC session, but have other uses when not running CTC.
+      For example, a turnout to facilitate re-staging.</p>
+
+      <h5>Feedback Different</h5>
+
+      <p>Normally, the feedback value matches the commanded value. JMRI allows for both being
+      backwards, and in order to fix that, you put a check the "Inverted" column in the Turnout
+      Table in JMRI. However, in case the feedback value is different than the commanded value,
+      then you put a check in that column. The following table lists the possibilities:</p>
+
+      <table>
+        <tr>
+          <th>Command:</th>
+          <th>Feedback:</th>
+          <th>JMRI Turnout inverted checked:</th>
+          <th>CTC Editor feedbacks different checked:</th>
+        </tr>
+
+        <tr>
+          <td>Normal</td>
+          <td>Normal</td>
+          <td>No</td>
+          <td>No</td>
+        </tr>
+
+        <tr>
+          <td>Reversed</td>
+          <td>Reversed</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+
+        <tr>
+          <td>Normal</td>
+          <td>Reversed</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+
+        <tr>
+          <td>Reversed</td>
+          <td>Normal</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+      </table>
+      <!--         <p> -->
+      <!--
         <strong>Background:</strong>
         On my layout for main line turnouts, I have a local push button for each DS-54 and DS-64 that locally requests
         the turnout to "flip" the other way.  By locally, I mean no computer involvement.  I originally designed it
@@ -965,8 +866,8 @@
         <strong>How "Lock implementation: Greg's" works in this situation (the ONLY supported possibility at this time):</strong>
         </p>
  -->
-        <p>
-<!--
+
+      <p><!--
         If the JMRI software monitored the LocoNet network for turnout commands, the switch could not
         be locked properly, because the local button generates no messages to LocoNet.  However, with the
         feedback available (INDIRECT), what my software does is when it sees a feedback message that disagrees
@@ -980,7 +881,7 @@
         since my layout has the push buttons right next to the switch it controls, hopefully an operator
         won't attempt to purposely derail a train.
  -->
-<!--
+      <!--
         </p>
         <p>
         There are two main situations that need to be considered separately:
@@ -1032,7 +933,7 @@
         it that way, thereby possibly causing a derailment sometime in the future, or for signals to not clear into this block
         </p>
  -->
-<!--
+      <!--
         <p>
         Feedbacks different check boxes:
         </p>
@@ -1074,428 +975,414 @@
             </tr>
         </table>
  -->
-
-        <a name="frmIL" id="frmIL"></a>
-        <h4>Indication locking</h4>
-        <p>
-        Defines any additional locking  of an O.S. Section above and beyond what is normally expected
-        by this system.
-        </p>
-        <p>
-        As indicated on the screen, specify the signal head(s) / signal mast(s) that when any are
-        non-red, the O.S. Section is considered indication locked.  When an O.S. Section is locked
-        this way, the turnout and turnout lock/unlock functions are disabled so long as any of these are non-red.
-        </p>
-
-    <a name="ctcFiles" id="ctcFiles"></a>
-    <h2>Files</h2>
-    <p>
-    All files for the CTC system are stored in the "ctc" directory under the User Files Location.
-    In order to access this directory, on the main JMRI screen, press "Help", then
-    select "Locations".  This will bring up a JMRI screen with all of the possible locations.  Press
-    "Open User Files Location".  That will open up the file manager at that location.  You should notice
-    a "ctc" directory under it.  Navigate to it.  What follows is a discussion of the files located there.
-    </p>
-
-    <h3>CTC Version 2</h3>
-      <p>
-      CTC was upgraded after JMRI 4.20.  The primary change is that the CTC configuration data is no longer
-      stored in the ProgramProperties.xml and CTCSystem.xml files.  The configuration data is included in
-      the standard PanelPro data files. This
-      change insures that the CTC configuration and the JMRI tables are always consistent.
       </p>
 
+      <h4 id="frmIL">Indication locking</h4>
+
+      <p>Defines any additional locking of an O.S. Section above and beyond what is normally
+      expected by this system.</p>
+
+      <p>As indicated on the screen, specify the signal head(s) / signal mast(s) that when any are
+      non-red, the O.S. Section is considered indication locked. When an O.S. Section is locked
+      this way, the turnout and turnout lock/unlock functions are disabled so long as any of these
+      are non-red.</p>
+
+      <h2 id="ctcFiles">Files</h2>
+
+      <p>All files for the CTC system are stored in the "ctc" directory under the User Files
+      Location. In order to access this directory, on the main JMRI screen, press "Help", then
+      select "Locations". This will bring up a JMRI screen with all of the possible locations.
+      Press "Open User Files Location". That will open up the file manager at that location. You
+      should notice a "ctc" directory under it. Navigate to it. What follows is a discussion of the
+      files located there.</p>
+
+      <h3>CTC Version 2</h3>
+
+      <p>CTC was upgraded after JMRI 4.20. The primary change is that the CTC configuration data is
+      no longer stored in the ProgramProperties.xml and CTCSystem.xml files. The configuration data
+      is included in the standard PanelPro data files. This change insures that the CTC
+      configuration and the JMRI tables are always consistent.</p>
+
       <p>The following changes to the version 1 files are listed below.</p>
+
       <ul>
-        <li><strong>AwtWindowProperties.txt</strong>: Obsolete, replaced by the standard JMRI window settings within the current profile.</li>
-        <li><strong>CTCSystem.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been
-        renamed to <strong>V1_Save_CTCSystem.xml</strong>.</li>
-        <li><strong>ProgramProperties.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been
-        renamed to <strong>V1_Save_ProgramProperties.xml</strong>.</li>
+        <li><strong>AwtWindowProperties.txt</strong>: Obsolete, replaced by the standard JMRI
+        window settings within the current profile.</li>
+
+        <li><strong>CTCSystem.xml</strong>: Obsolete. If <strong>File ⇒ Import</strong> was used,
+        it has been renamed to <strong>V1_Save_CTCSystem.xml</strong>.</li>
+
+        <li><strong>ProgramProperties.xml</strong>: Obsolete. If <strong>File ⇒ Import</strong> was
+        used, it has been renamed to <strong>V1_Save_ProgramProperties.xml</strong>.</li>
+
         <li><strong>GUIObjects.xml</strong>: No change.</li>
-        <li><strong>InternalSensors.xml</strong>: Obsolete.  The CTC <strong>IS#:XXX</strong> sensors are
-        automatically added to the JMRI Sensors table.</li>
+
+        <li><strong>InternalSensors.xml</strong>: Obsolete. The CTC <strong>IS#:XXX</strong>
+        sensors are automatically added to the JMRI Sensors table.</li>
+
         <li><strong>VirtualSignals.xml</strong>: Obsolete.</li>
       </ul>
 
-      <p> The following file descriptions are retained for historical purposes.</p>
+      <p>The following file descriptions are retained for historical purposes.</p>
 
-    <h3>CTCSystem.xml and all CTCSystem.xml?.bup files</h3>
-    CTCSystem.xml contains all of your information that you've entered for the CTC system.  The ".bup" files
-    are prior versions made each time you save the CTCSystem.xml file.
-    <h3>ProgramProperties.xml and all ProgramProperties.xml.?.bup files</h3>
-    ProgramProperties.xml contains all of the configurable parameters of the CTC system.  Primarily it contains
-    the parameters specfied under all of the "Configure" options on the main CTC Editor screen.
-    The "bup" files are prior versions of this file.
-    <h3>AwtWindowProperties.txt</h3>
-    This file contains location and size information for all CTC Editor dialogs, so that when you locate
-    a dialog on the screen, the next time you either resize or relocate it, it will be opened at this
-    same location and size.  You can freely delete it at any time.
-    <h3>Optional files</h3>
-    All of the following files may or may not exist.  Once the
-    "Write .xml files for JMRI GUI support" is pressed on the main CTC Editor screen, they are created.  They are created anew
-    each time the "Write .xml files for JMRI GUI support" is pressed.
-    <h3>GUIObjects.xml</h3>
-    It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the Panel
-    Editor.  It can be loaded at any time using the <strong>File &rArr; Load table content and panels...</strong>
-    {<em>Old: <strong>Panels &rArr; Load Panels...</strong></em>} <span class="since">since 4.23.3</span>
-    menu (on the main JMRI screen)
-    and specifying this location and filename to load.
-    <h3>InternalSensors.xml</h3>
-    It contains <strong>all</strong> of the sensors created by the CTC Editor.  These sensors are required
-    for proper operation of the CTC panel.
+      <h3>CTCSystem.xml and all CTCSystem.xml?.bup files</h3>
+      CTCSystem.xml contains all of your information that you've entered for the CTC system. The
+      ".bup" files are prior versions made each time you save the CTCSystem.xml file.
+      <h3>ProgramProperties.xml and all ProgramProperties.xml.?.bup files</h3>
+      ProgramProperties.xml contains all of the configurable parameters of the CTC system.
+      Primarily it contains the parameters specfied under all of the "Configure" options on the
+      main CTC Editor screen. The "bup" files are prior versions of this file.
+      <h3>AwtWindowProperties.txt</h3>
+      This file contains location and size information for all CTC Editor dialogs, so that when you
+      locate a dialog on the screen, the next time you either resize or relocate it, it will be
+      opened at this same location and size. You can freely delete it at any time.
+      <h3>Optional files</h3>
+      All of the following files may or may not exist. Once the "Write .xml files for JMRI GUI
+      support" is pressed on the main CTC Editor screen, they are created. They are created anew
+      each time the "Write .xml files for JMRI GUI support" is pressed.
+      <h3>GUIObjects.xml</h3>
+      It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the
+      Panel Editor. It can be loaded at any time using the <strong>File ⇒ Load table content and
+      panels...</strong> {<em>Old: <strong>Panels ⇒ Load Panels...</strong></em>} <span class=
+      "since">since 4.23.3</span> menu (on the main JMRI screen) and specifying this location and
+      filename to load.
+      <h3>InternalSensors.xml</h3>
+      It contains <strong>all</strong> of the sensors created by the CTC Editor. These sensors are
+      required for proper operation of the CTC panel.
+      <h3>VirtualSignals.xml</h3>
+      Deprecated and obsolete. You may freely delete it.
+      <h2>CTC integration of sensors and a populated Panel Editor panel</h2>
 
-    <h3>VirtualSignals.xml</h3>
-    Deprecated and obsolete.  You may freely delete it.
+      <p>There are two basic types of sensors needed by the CTC system: sensors that are backed by
+      real objects on the layout and are <strong>not</strong> created by this system, and "soft"
+      sensors that are created as needed by this program for objects on the CTC Panel Editor panel
+      (indicators, levers, toggles, push buttons, etc.). These "soft" sensors definitions are
+      automatically added to the JMRI Sensors table.</p>
 
-    <h2>CTC integration of sensors and a populated Panel Editor panel</h2>
-    <p>
-    There are two basic types of sensors needed by the CTC system: sensors that are backed by real objects
-    on the layout and are <strong>not</strong> created by this system, and "soft" sensors that are created
-    as needed by this program for objects on the CTC Panel Editor panel (indicators, levers, toggles, push
-    buttons, etc.).  These "soft" sensors definitions are automatically added to the JMRI Sensors table.
-    </p>
+      <h2>CTC integration of panel objects created in the GUIObjects.xml file</h2>
 
-    <h2>CTC integration of panel objects created in the GUIObjects.xml file</h2>
-    <p>
-    When <strong>Write .xml file for JMRI GUI support</strong> is selected, a minimal Panel Editor panel
-    will be created.  The O.S. sections with a column number greater than zero and have
-    <strong>GUI Generated before</strong> unchecked, will be included in the panel.
-    Use the standard <strong>Panels &rArr; Load Panels...</strong> to add the panel to JMRI.  This is one
-    of the few cases where it OK to load two xml files.
-    </p>
+      <p>When <strong>Write .xml file for JMRI GUI support</strong> is selected, a minimal Panel
+      Editor panel will be created. The O.S. sections with a column number greater than zero and
+      have <strong>GUI Generated before</strong> unchecked, will be included in the panel. Use the
+      standard <strong>Panels ⇒ Load Panels...</strong> to add the panel to JMRI. This is one of
+      the few cases where it OK to load two xml files.</p>
 
-    <p>
-    <strong>GUI Generated before</strong> is used to control which columns will be included in the new panel.
-    </p>
+      <p><strong>GUI Generated before</strong> is used to control which columns will be included in
+      the new panel.</p>
 
-    <h2>Proper development cycle</h2>
-    <p>
-    Using the CTC Editor, first define all of your O.S. Sections to the <strong>best</strong> of your knowledge,
-    then create and then load the GUIObjects.xml panel in, and review the results.  If you are not happy, then
-    <strong>delete</strong> the panel, save the panel file, and re-iterate the process
-    (i.e. CTC Editor, write files, etc.).
-    </p>
+      <h2>Proper development cycle</h2>
 
-    <a name="ctcMain" id="ctcMain"></a>
-    <h2>CTCMain</h2>
-    <h3>Starting it up</h3>
-    <p>
-    After defining the CTC system using the CTC Editor, you will need to start it up.
-    On the main PanelPro screen, select <strong>Tools &rArr; CTC &rArr; Run CTC Logic</strong>.
-    This will start it up right now (on demand real time).
-    </p>
+      <p>Using the CTC Editor, first define all of your O.S. Sections to the <strong>best</strong>
+      of your knowledge, then create and then load the GUIObjects.xml panel in, and review the
+      results. If you are not happy, then <strong>delete</strong> the panel, save the panel file,
+      and re-iterate the process (i.e. CTC Editor, write files, etc.).</p>
 
-    <p>
-    For ease of access during development, add buttons to the main PanelPro window.
-    From the main PanelPro screen, select <strong>Edit &rArr; Preferences...</strong>
-    (<strong>PanelPro &rArr; Preferences...</strong> on macOS), select the Start Up tab,
-    press <strong>Add &rArr; Add button to main window...</strong>, scroll to "Start CTC Runtime"
-    and select it.  To add a button that opens CTC Editor, do the same but instead scroll
-    to "CTC Editor" and select it.
-    </p>
+      <h2 id="ctcMain">CTCMain</h2>
 
-    <p>
-    To start it up as part of the startup of JMRI: Select <strong>Edit &rArr; Preferences...</strong>
-    (<strong>PanelPro &rArr; Preferences...</strong> on macOS), select the Start Up tab,
-    press <strong>Add &rArr; Perform Action</strong>, and select "Start CTC Runtime".  For this option,
-    the PanelPro data file which contains the tables, panels and CTC configuration must be loaded before
-    starting the CTC run time.
-    </p>
+      <h3>Starting it up</h3>
 
-    <h2>Global sensors and the icons associated with them</h2>
-    <p>
-    Debug (default: IS:DEBUGCTC), Reload (default: IS:RELOADCTC) and Fleeting (default: IS:FLEETING).
-    </p>
+      <p>After defining the CTC system using the CTC Editor, you will need to start it up. On the
+      main PanelPro screen, select <strong>Tools ⇒ CTC ⇒ Run CTC Logic</strong>. This will start it
+      up right now (on demand real time).</p>
 
-    <p>
-    Debug and Reload can be accessed via CTC Editor menu <strong>Configure &rArr; Debugging</strong>.
-    Fleeting can be accessed via CTC Editor menu <strong>Configure &rArr; Fleeting</strong>.
-    </p>
+      <p>For ease of access during development, add buttons to the main PanelPro window. From the
+      main PanelPro screen, select <strong>Edit ⇒ Preferences...</strong> (<strong>PanelPro ⇒
+      Preferences...</strong> on macOS), select the Start Up tab, press <strong>Add ⇒ Add button to
+      main window...</strong>, scroll to "Start CTC Runtime" and select it. To add a button that
+      opens CTC Editor, do the same but instead scroll to "CTC Editor" and select it.</p>
 
-    <p>
-    These are convenience functions, and can be removed at any time.
-    </p>
+      <p>To start it up as part of the startup of JMRI: Select <strong>Edit ⇒
+      Preferences...</strong> (<strong>PanelPro ⇒ Preferences...</strong> on macOS), select the
+      Start Up tab, press <strong>Add ⇒ Perform Action</strong>, and select "Start CTC Runtime".
+      For this option, the PanelPro data file which contains the tables, panels and CTC
+      configuration must be loaded before starting the CTC run time.</p>
 
-    <p>
-    For support of conditional preconditioning, there is sensor "IS:PRECONDITIONING_ENABLED" that is
-    automatically created.  If manually set to ACTIVE in the Sensors table, it allows preconditioning on all O.S. sections.
-    </p>
+      <h2>Global sensors and the icons associated with them</h2>
 
-    <h3>Debug</h3>
-    When this toggle switch is turned on (not off), it will dump out all of the
-    presently locked routes in the system, and for each route will list the
-    resource(s) still allocated to the route onto the JMRI System Console screen.
-    <p>
-    While this toggle is on, each time a Code Button is pressed and a signal direction
-    lever for that Code Button selects a direction of travel, the program will
-    list out the single rule that was satisfied (if any).  If none are listed,
-    then none were satisfied.  Note: Even if a rule is valid, the ABS system
-    may not clear up a signal in the direction indicated, and the CTC system
-    will re-lock that O.S. Section.
-    </p>
-    <h3>Reload</h3>
-    <p>
-    When this button is pressed, the CTC system will reload the current CTC configuration
-    based on the latest CTC Editor activity.
-    </p>
+      <p>Debug (default: IS:DEBUGCTC), Reload (default: IS:RELOADCTC) and Fleeting (default:
+      IS:FLEETING).</p>
 
-    <p>
-    After this button is pressed, the CTC system will be <strong>completely</strong>
-    re-initialized to it's starting position(s).  Also, remember to look at
-    the JMRI System Console for any new errors.
-    </p>
+      <p>Debug and Reload can be accessed via CTC Editor menu <strong>Configure ⇒
+      Debugging</strong>. Fleeting can be accessed via CTC Editor menu <strong>Configure ⇒
+      Fleeting</strong>.</p>
 
-    <p>
-    You <strong>should</strong> remove this button after all debugging is completed,
-    so that your dispatcher doesn't accidentally push it during a session.
-    </p>
+      <p>These are convenience functions, and can be removed at any time.</p>
 
-    <h3>Fleeting</h3>
-    <p>
-    Fleeting is a concept within "normal" CTC, and may not be useful.  Most
-    model (not prototype) dispatchers don't use it even if available, due to the
-    "speed" of the layout's status changing.
-    </p>
+      <p>For support of conditional preconditioning, there is sensor "IS:PRECONDITIONING_ENABLED"
+      that is automatically created. If manually set to ACTIVE in the Sensors table, it allows
+      preconditioning on all O.S. sections.</p>
 
-    <a name="ctcDefinitions" id="ctcDefinitions"></a>
-    <h2>Definitions</h2>
-    <dl>
-      <dt>Running time</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          When a dispatcher had previously cleared a route thru an interlocking or O.S. Section, and it is still clear,
-          and then the dispatcher now attempts to change their mind and bring signals to stop, the system will run time
-          and lock the route and signals during that time.  At the end of that time, the CTC system will release and
-          then allow a new route and signal state to be established.
-        </p>
-        <p style="margin: 10px 0">
-          Why? Locomotive engineers always expect a yellow
-          signal of some form before an absolute stop red signal at a Home signal of an O.S. Section.  This gives the
-          engineer time to begin slowing the train upon approaching the yellow approach signal expecting a possible
-          red signal at the next home signal.
-        </p>
-        <p style="margin: 10px 0">
-          If the dispatcher was allowed to immediately change a Green home
-          signal to a Red signal it is possible that a locomotive engineer just passed that prior approach signal
-          and saw Green, and now expects at worst to see Yellow at the home signal.  In this situation, the train
-          may be traveling too fast to stop in time at the Home signal's red signal, and actually overshoot it
-          and enter the interlocking.  By locking down the plant during this time, the route and signals already
-          established may allow this overshooting train to enter the interlocking in a safe manner.  The amount
-          time associated with this "running time" depends on many factors in real life: Train speed on the
-          segment of track, sighting distances, etc.
-        </p>
-        <p style="margin: 10px 0">
-          On a model railroad, due to such short distances and the fact that our models can "stop on a dime"
-          relative to a real train, and the fact that we are running typically with fast clocks, you may want
-          to limit this time to say (my default) 5 seconds.  Otherwise a busy layout may come to a screeching
-          halt.  Some layouts use 30 seconds or 1 minute to "force" Dispatchers to think ahead and prevent
-          this situation.  Your choice.
-        </p>
-      </dd>
-      <dt>Signal locking (route locking)</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          When a route is cleared thru an interlocking, no changes to the route or other signals may occur
-          so long as a signal protecting the interlocking allows movement thru that interlocking.
-        </p>
-      </dd>
-      <dt>Interlocking</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          An arrangement of signal apparatus that prevents conflicting movements through an arrangement
-          of tracks such as junctions or crossings.  The signaling appliances and tracks are sometimes
-          collectively referred to as an interlocking plant. An interlocking is designed so that it is
-          impossible to display a signal to proceed unless the route to be used is proven safe.  An
-          interlocking may consist of one or more O.S. Section(s).
-        </p>
-      </dd>
-      <dt>Interlocking plant</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          See Interlocking.  The terms are used interchangeably in this document.
-        </p>
-      </dd>
-      <dt>Indication locking</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Same as Signal locking
-        </p>
-      </dd>
-      <dt>Code Button</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Button to press to being the process of throwing switches / setting signals by sending
-          control codes to the field to effect those changes requested by the operator.  This
-          button may have no or partial effect if there are rule conflict(s) i.e. unsafe condition(s)
-          associated with the requested change(s).
-        </p>
-      </dd>
-      <dt>Call on</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Used to allow "back to train" movements.  Normally, CTC systems prevent signals being
-          cleared into an occupied section of track.  Example: When an engineer is attempting a
-          run around move, and as the last part of the run around attempts to rejoin their train.  The
-          CTC system and trackside signals (the vital signal logic) will actively prevent that.  Pressing
-          (or toggling) the Call on feature while pressing the Code Button bypasses the safety checks of
-          the Vital signal logic and CTC systems, and allows that signal to go to its most restrictive
-          aspect.  Now the engineer will get a non-red indication which allows them to rejoin their train.
-        </p>
-      </dd>
-      <dt>Vital signal logic</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          The trackside "relay" logic (on the prototype) that actively prevents unsafe situations in
-          the field.  CTC can only force signals to Red (their most restrictive aspect).  Other than
-          that, CTC has absolutely no effect on this Vital Signal Logic (except in a Call on situation).  CTC
-          systems "sit on top of" the Vital signal logic trackside.  CTC cannot clear a signal.  CTC can
-          only allow the vital signal logic to allow a signal to go "non-Red".  Most of the time this
-          vital signal logic is implemented by ABS or APB systems.  In JMRI, this is implemented
-          using signal heads and SSL (Simple Signal Logic) or signal masts and SML (Signal Mast Logic).
-        </p>
-      </dd>
-      <dt>Fleeting</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          When enabled, will allow interlocking signals to automatically maintain an already
-          established direction of traffic.  Normally, all signals in an interlocking drop to
-          red and remain there after train movement thru the interlocking.
-        </p>
-      </dd>
-      <dt>Signal Direction Indicators</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Summarizes the state of all the signals in the field associated with this O.S.
-          Section.  If the center red indicator is lit (indicating "signals normal"), all
-          entrances into the O.S. Section are displaying stop.  A green in either direction
-          indicates signal(s) in the indicated direction are not displaying stop, and
-          traffic may proceed in that direction.  If all 3 indicators are unlit
-          ("out of correspondence"), the signals are either running time, or the CTC
-          system has sent commands to the signals in the field and is waiting for
-          replies from those signals as to their status.
-        </p>
-      </dd>
-      <dt>Signals Normal</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          The "normal" state of an O.S. Section is "all stop", i.e. all home signals
-          protecting entry in the O.S. Section are at Red.
-        </p>
-      </dd>
-      <dt>Signal Direction Lever</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Lever used to establish a direction of traffic thru an O.S. Section.  Moving
-          this lever has no effect on the signal in the field <strong>until</strong> the
-          Code Button is pressed, and all rules are valid for allowing the change to occur.
-        </p>
-        <p style="margin: 10px 0">
-          It is <strong>not valid</strong> to attempt to change from one direction to the other.  The
-          CTC system instead will interpret this as a request for "Signals normal" (all
-          stop) first, and then (after probably running time) with <strong>another</strong> Code Button
-          press to change direction to the requested direction.
-        </p>
-      </dd>
-      <dt>Switch Direction Indicators</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Shows the current state of the turnout in the field.  Green indicator is lit
-          is for the normal route, and the yellow indicator is lit for the non-normal
-          route.  If both indicators are unlit ("out of correspondence"), the CTC
-          system has sent a command to the turnout to change and is awaiting the
-          acknowledgement of movement to the new position.
-        </p>
-      </dd>
-      <dt>Switch Direction Lever</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          Lever used to change the position of the indicated turnout.  Moving this
-          lever has no effect on the switch in the field <strong>until</strong> the Code Button is
-          pressed and all rules for allowing change in the switch orientation are valid.
-        </p>
-      </dd>
-      <dt>Traffic Locking</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          The set of rules that prevent adjacent O.S. Sections (reached by a possible
-          series of track switches, i.e. routes) from directing traffic in opposite
-          directions into the common track between them.
-        </p>
-      </dd>
-      <dt>Turnout Locking</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          When signals are cleared over a specific turnout, or the O.S. Section controlling
-          that turnout is occupied, that turnout is considered locked and its orientation cannot be changed.
-        </p>
-      </dd>
-      <dt>Coding District</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          A grouping of signals, track switches etc. that have a single CTC "wire" to
-          them.  Unused in my system, so I will not elaborate on this further.
-        </p>
-      </dd>
-      <dt>O.S. Section</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          A single (On Sheet, hence O.S.) control point on the CTC panel.  Contains at minimum a Code Button, and
-          other
-          assorted features.
-        </p>
-      </dd>
-      <dt>Home Signal(s)</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          All Signals that protect entry into an O.S. Section from all possible directions and routes.
-        </p>
-      </dd>
-      <dt>Coding and response time</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          A real CTC machine has a single wire set out to the field installation.  This time
-          delay simulates the delay between when a Code Button is pressed, and a response
-          from the field occurs.  During this time, all of the indicators for the changed
-          items (switch, signal) are "Out of correspondence".
-        </p>
-      </dd>
-      <dt>Out of correspondence</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          The state of display indicators (either switch or signal) whereby a command by
-          the CTC operator has been initiated by pressing the Code Button, and the CTC system
-          is awaiting response(s) from the field.  Also may be present for a long time
-          if "running time" as relates to a signal change.  This is indicated on the panel
-          by all indicators for the changed system (switch, signal) being out until the
-          response is received.
-        </p>
-      </dd>
-      <dt>Time locking</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          See "Running time" definition.
-        </p>
-      </dd>
+      <h3>Debug</h3>
+      When this toggle switch is turned on (not off), it will dump out all of the presently locked
+      routes in the system, and for each route will list the resource(s) still allocated to the
+      route onto the JMRI System Console screen.
+      <p>While this toggle is on, each time a Code Button is pressed and a signal direction lever
+      for that Code Button selects a direction of travel, the program will list out the single rule
+      that was satisfied (if any). If none are listed, then none were satisfied. Note: Even if a
+      rule is valid, the ABS system may not clear up a signal in the direction indicated, and the
+      CTC system will re-lock that O.S. Section.</p>
 
-      <dt>Preconditioning (A.K.A. Stacking)</dt>
-      <dd>
-        <p style="margin: 10px 0">
-          When enable: <strong>Only</strong> while a O.S. section is occupied,
-          a dispatcher can "code ahead" by setting the signal direction lever
-          and / or switch direction lever to the next move thru the O.S. section,
-          and when the O.S. section becomes unoccupied, the CTC machine will
-          automatically code the new arrangement <strong>if valid</strong>.
-          No "code ahead" for locking or call on is supported at this time,
-          nor is it considered (possibly due to the prototype CTC machine
-          not supporting it).
-        </p>
-      </dd>
-    </dl>
+      <h3>Reload</h3>
 
+      <p>When this button is pressed, the CTC system will reload the current CTC configuration
+      based on the latest CTC Editor activity.</p>
+
+      <p>After this button is pressed, the CTC system will be <strong>completely</strong>
+      re-initialized to it's starting position(s). Also, remember to look at the JMRI System
+      Console for any new errors.</p>
+
+      <p>You <strong>should</strong> remove this button after all debugging is completed, so that
+      your dispatcher doesn't accidentally push it during a session.</p>
+
+      <h3>Fleeting</h3>
+
+      <p>Fleeting is a concept within "normal" CTC, and may not be useful. Most model (not
+      prototype) dispatchers don't use it even if available, due to the "speed" of the layout's
+      status changing.</p>
+
+      <h2 id="ctcDefinitions">Definitions</h2>
+
+      <dl>
+        <dt>Running time</dt>
+
+        <dd>
+          <p style="margin: 10px 0">When a dispatcher had previously cleared a route thru an
+          interlocking or O.S. Section, and it is still clear, and then the dispatcher now attempts
+          to change their mind and bring signals to stop, the system will run time and lock the
+          route and signals during that time. At the end of that time, the CTC system will release
+          and then allow a new route and signal state to be established.</p>
+
+          <p style="margin: 10px 0">Why? Locomotive engineers always expect a yellow signal of some
+          form before an absolute stop red signal at a Home signal of an O.S. Section. This gives
+          the engineer time to begin slowing the train upon approaching the yellow approach signal
+          expecting a possible red signal at the next home signal.</p>
+
+          <p style="margin: 10px 0">If the dispatcher was allowed to immediately change a Green
+          home signal to a Red signal it is possible that a locomotive engineer just passed that
+          prior approach signal and saw Green, and now expects at worst to see Yellow at the home
+          signal. In this situation, the train may be traveling too fast to stop in time at the
+          Home signal's red signal, and actually overshoot it and enter the interlocking. By
+          locking down the plant during this time, the route and signals already established may
+          allow this overshooting train to enter the interlocking in a safe manner. The amount time
+          associated with this "running time" depends on many factors in real life: Train speed on
+          the segment of track, sighting distances, etc.</p>
+
+          <p style="margin: 10px 0">On a model railroad, due to such short distances and the fact
+          that our models can "stop on a dime" relative to a real train, and the fact that we are
+          running typically with fast clocks, you may want to limit this time to say (my default) 5
+          seconds. Otherwise a busy layout may come to a screeching halt. Some layouts use 30
+          seconds or 1 minute to "force" Dispatchers to think ahead and prevent this situation.
+          Your choice.</p>
+        </dd>
+
+        <dt>Signal locking (route locking)</dt>
+
+        <dd>
+          <p style="margin: 10px 0">When a route is cleared thru an interlocking, no changes to the
+          route or other signals may occur so long as a signal protecting the interlocking allows
+          movement thru that interlocking.</p>
+        </dd>
+
+        <dt>Interlocking</dt>
+
+        <dd>
+          <p style="margin: 10px 0">An arrangement of signal apparatus that prevents conflicting
+          movements through an arrangement of tracks such as junctions or crossings. The signaling
+          appliances and tracks are sometimes collectively referred to as an interlocking plant. An
+          interlocking is designed so that it is impossible to display a signal to proceed unless
+          the route to be used is proven safe. An interlocking may consist of one or more O.S.
+          Section(s).</p>
+        </dd>
+
+        <dt>Interlocking plant</dt>
+
+        <dd>
+          <p style="margin: 10px 0">See Interlocking. The terms are used interchangeably in this
+          document.</p>
+        </dd>
+
+        <dt>Indication locking</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Same as Signal locking</p>
+        </dd>
+
+        <dt>Code Button</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Button to press to being the process of throwing switches /
+          setting signals by sending control codes to the field to effect those changes requested
+          by the operator. This button may have no or partial effect if there are rule conflict(s)
+          i.e. unsafe condition(s) associated with the requested change(s).</p>
+        </dd>
+
+        <dt>Call on</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Used to allow "back to train" movements. Normally, CTC systems
+          prevent signals being cleared into an occupied section of track. Example: When an
+          engineer is attempting a run around move, and as the last part of the run around attempts
+          to rejoin their train. The CTC system and trackside signals (the vital signal logic) will
+          actively prevent that. Pressing (or toggling) the Call on feature while pressing the Code
+          Button bypasses the safety checks of the Vital signal logic and CTC systems, and allows
+          that signal to go to its most restrictive aspect. Now the engineer will get a non-red
+          indication which allows them to rejoin their train.</p>
+        </dd>
+
+        <dt>Vital signal logic</dt>
+
+        <dd>
+          <p style="margin: 10px 0">The trackside "relay" logic (on the prototype) that actively
+          prevents unsafe situations in the field. CTC can only force signals to Red (their most
+          restrictive aspect). Other than that, CTC has absolutely no effect on this Vital Signal
+          Logic (except in a Call on situation). CTC systems "sit on top of" the Vital signal logic
+          trackside. CTC cannot clear a signal. CTC can only allow the vital signal logic to allow
+          a signal to go "non-Red". Most of the time this vital signal logic is implemented by ABS
+          or APB systems. In JMRI, this is implemented using signal heads and SSL (Simple Signal
+          Logic) or signal masts and SML (Signal Mast Logic).</p>
+        </dd>
+
+        <dt>Fleeting</dt>
+
+        <dd>
+          <p style="margin: 10px 0">When enabled, will allow interlocking signals to automatically
+          maintain an already established direction of traffic. Normally, all signals in an
+          interlocking drop to red and remain there after train movement thru the interlocking.</p>
+        </dd>
+
+        <dt>Signal Direction Indicators</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Summarizes the state of all the signals in the field associated
+          with this O.S. Section. If the center red indicator is lit (indicating "signals normal"),
+          all entrances into the O.S. Section are displaying stop. A green in either direction
+          indicates signal(s) in the indicated direction are not displaying stop, and traffic may
+          proceed in that direction. If all 3 indicators are unlit ("out of correspondence"), the
+          signals are either running time, or the CTC system has sent commands to the signals in
+          the field and is waiting for replies from those signals as to their status.</p>
+        </dd>
+
+        <dt>Signals Normal</dt>
+
+        <dd>
+          <p style="margin: 10px 0">The "normal" state of an O.S. Section is "all stop", i.e. all
+          home signals protecting entry in the O.S. Section are at Red.</p>
+        </dd>
+
+        <dt>Signal Direction Lever</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Lever used to establish a direction of traffic thru an O.S.
+          Section. Moving this lever has no effect on the signal in the field
+          <strong>until</strong> the Code Button is pressed, and all rules are valid for allowing
+          the change to occur.</p>
+
+          <p style="margin: 10px 0">It is <strong>not valid</strong> to attempt to change from one
+          direction to the other. The CTC system instead will interpret this as a request for
+          "Signals normal" (all stop) first, and then (after probably running time) with
+          <strong>another</strong> Code Button press to change direction to the requested
+          direction.</p>
+        </dd>
+
+        <dt>Switch Direction Indicators</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Shows the current state of the turnout in the field. Green
+          indicator is lit is for the normal route, and the yellow indicator is lit for the
+          non-normal route. If both indicators are unlit ("out of correspondence"), the CTC system
+          has sent a command to the turnout to change and is awaiting the acknowledgement of
+          movement to the new position.</p>
+        </dd>
+
+        <dt>Switch Direction Lever</dt>
+
+        <dd>
+          <p style="margin: 10px 0">Lever used to change the position of the indicated turnout.
+          Moving this lever has no effect on the switch in the field <strong>until</strong> the
+          Code Button is pressed and all rules for allowing change in the switch orientation are
+          valid.</p>
+        </dd>
+
+        <dt>Traffic Locking</dt>
+
+        <dd>
+          <p style="margin: 10px 0">The set of rules that prevent adjacent O.S. Sections (reached
+          by a possible series of track switches, i.e. routes) from directing traffic in opposite
+          directions into the common track between them.</p>
+        </dd>
+
+        <dt>Turnout Locking</dt>
+
+        <dd>
+          <p style="margin: 10px 0">When signals are cleared over a specific turnout, or the O.S.
+          Section controlling that turnout is occupied, that turnout is considered locked and its
+          orientation cannot be changed.</p>
+        </dd>
+
+        <dt>Coding District</dt>
+
+        <dd>
+          <p style="margin: 10px 0">A grouping of signals, track switches etc. that have a single
+          CTC "wire" to them. Unused in my system, so I will not elaborate on this further.</p>
+        </dd>
+
+        <dt>O.S. Section</dt>
+
+        <dd>
+          <p style="margin: 10px 0">A single (On Sheet, hence O.S.) control point on the CTC panel.
+          Contains at minimum a Code Button, and other assorted features.</p>
+        </dd>
+
+        <dt>Home Signal(s)</dt>
+
+        <dd>
+          <p style="margin: 10px 0">All Signals that protect entry into an O.S. Section from all
+          possible directions and routes.</p>
+        </dd>
+
+        <dt>Coding and response time</dt>
+
+        <dd>
+          <p style="margin: 10px 0">A real CTC machine has a single wire set out to the field
+          installation. This time delay simulates the delay between when a Code Button is pressed,
+          and a response from the field occurs. During this time, all of the indicators for the
+          changed items (switch, signal) are "Out of correspondence".</p>
+        </dd>
+
+        <dt>Out of correspondence</dt>
+
+        <dd>
+          <p style="margin: 10px 0">The state of display indicators (either switch or signal)
+          whereby a command by the CTC operator has been initiated by pressing the Code Button, and
+          the CTC system is awaiting response(s) from the field. Also may be present for a long
+          time if "running time" as relates to a signal change. This is indicated on the panel by
+          all indicators for the changed system (switch, signal) being out until the response is
+          received.</p>
+        </dd>
+
+        <dt>Time locking</dt>
+
+        <dd>
+          <p style="margin: 10px 0">See "Running time" definition.</p>
+        </dd>
+
+        <dt>Preconditioning (A.K.A. Stacking)</dt>
+
+        <dd>
+          <p style="margin: 10px 0">When enable: <strong>Only</strong> while a O.S. section is
+          occupied, a dispatcher can "code ahead" by setting the signal direction lever and / or
+          switch direction lever to the next move thru the O.S. section, and when the O.S. section
+          becomes unoccupied, the CTC machine will automatically code the new arrangement
+          <strong>if valid</strong>. No "code ahead" for locking or call on is supported at this
+          time, nor is it considered (possibly due to the prototype CTC machine not supporting
+          it).</p>
+        </dd>
+      </dl>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

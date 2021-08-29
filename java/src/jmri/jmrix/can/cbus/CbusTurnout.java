@@ -219,12 +219,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
-    public void reply(CanReply f) {
-        if ( f.isExtended() || f.isRtr() ) {
+    public void reply(CanReply origf) {
+        if ( origf.extendedOrRtr()) {
             return;
         }
         // convert response events to normal
-        f = CbusMessage.opcRangeToStl(f);
+        CanReply f = CbusMessage.opcRangeToStl(origf);
         if (addrThrown.match(f)) {
             int state = (!getInverted() ? THROWN : CLOSED);
             newCommandedState(state);

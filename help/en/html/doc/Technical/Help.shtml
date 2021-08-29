@@ -1,492 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<title>JMRI: Creating Help Pages and Using JavaHelp</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Creating Help Pages and Using JmriHelp</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code Java Help JavaHelp">
-
+  <meta name="keywords" content="JMRI technical code Java Help JmriHelp">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-     <a name="helpTop" id="helpTop"></a>
-     <h1>JMRI Code: Creating Help Pages and Using JavaHelp</h1>
+      <h1 id="helpTop">JMRI Code: Creating Help Pages and Using JmriHelp</h1>
 
-    <div class="para">
-     <p>This page talks about technical aspects of how JMRI provides help information
-     using <a href="https://javahelp.java.net">JavaHelp</a> and <a href=
-      "https://sourceforge.net/projects/jhelpdev/">JHelpDev</a> as well as some suggestions on
-      common approaches for help pages.     </p>
+      <div>
+        <p>This page talks about technical aspects of how JMRI provides help information using
+        <strong>JmriHelp</strong> as well as some suggestions on common approaches for help
+        pages.</p>
 
-	    <ul class="snav">
-		<li><a href="#web">Web Access</a></li>
-		<li><a href="#limitations">Standards and Limitations</a></li>
-        <li><a href="#hwhelp">Creating Help/Web for New Hardware</a></li>
-    	<li><a href="#check">Checking Changes</a></li>
-        <li><a href="#tocAndIndex">TOC and Index</a></li>
-        <li><a href="#jhelpdev">Creating Control Files</a></li>
-        <li><a href="#code">Help Access in Code</a></li>
-        <li><a href="#site">Web Site Update</a></li>
-	    </ul>
+        <p><strong>JmriHelp</strong> replaces <strong>JavaHelp</strong>. The main difference is
+        that the help pages are displayed in the user's default browser. This removes the HTML 4
+        requirement along with the requirement for the <strong>name</strong> attribute in anchor
+        tags. Links within a page now use the <strong>id</strong> attribute which can be placed in
+        any HTML tag, such as the header tags. <strong>Preferences ⇒ Help</strong> is used by the
+        user to select the whether <strong>Window Help</strong> and <strong>General help</strong>
+        references are displayed using the distribution help files or <strong>jmri.org</strong>
+        help files. The later provides fully formatted help pages.</p>
 
-       </div>
+        <ul class="snav">
+          <li>
+            <a href="#web">Web Access</a>
+          </li>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <h2>Organization of the help Files</h2>
+          <li>
+            <a href="#standards">Standards</a>
+          </li>
 
-    <div class="para">
+          <li>
+            <a href="#code">Help Access in Code</a>
+          </li>
 
-      The help files are
-      located in the "help" directory within the JMRI distribution
-      directory.
+          <li>
+            <a href="#buildhelp">Configure JmriHelp</a>
+          </li>
 
-      <p>The master copy of this is stored in our repository as the
-      "help" directory in the JMRI code repository. This means to
-      get your own local copy, just follow the steps on the
-      "<a href="getgitcode.shtml">getting the code</a>" page.</p>
+          <li>
+            <a href="#tocAndIndex">TOC and Index</a>
+          </li>
 
-      <p>Within that, all the English-language files are located
-      within the "en" subdirectory. Eventually, this will let us
-      internationalize the help pages.</p>
+          <li>
+            <a href="#check">Checking Changes</a>
+          </li>
 
-      <p>Within that, there are several file trees:</p>
+          <li>
+            <a href="#site">Web Site Update</a>
+          </li>
 
-      <ul>
-        <li>package - organized like the source package tree, this
-        contains code-specific help files for e.g. a particular
-        window or component. For example, a window that's created
-        by the <code>jmri.jmrit.speedometer.SpeedometerFrame</code>
-        class (from the
-        <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code>
-        file) should have its window-specific help in a file at
-        <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.</li>
+          <li>
+            <a href="#hwhelp">Creating Help/Web for New Hardware</a>
+          </li>
 
-        <li>html - general descriptions, tutorials, etc. This in
-        turn in organized into directories that represent general
-        areas.</li>
+          <li>
+            <a href="#technical">JmriHelp Build Process</a>
+          </li>
+        </ul>
 
-        <li>manual - the most recent version of the DecoderPro et
-        al manuals reformatted for use in the help system. (Older
-        ones are stored in the <a href="WebSite.shtml">main web
-        site</a>)</li>
-      </ul>
+        <p>Note: The following content has references to directory paths. The language specific
+        portion of the path is displayed as <strong>**</strong>. The current language values are
+        <strong>en</strong> for English and <strong>fr</strong> for French.</p>
 
-      <p>While this is how we would LIKE our help files organized, help pages are created
-      by members of the community and sometimes general descriptions are put in the package
-      directory rather than the html directory and vice versa. [If you see something that
-      needs to be moved, please post a note to the jmri-developers online groups.io forum
-      as there are members who occassionally try to do some housekeeping.]</p>
+        <p>Since the goal is to update the JMRI repository, the following actions need to take
+        place within a <strong>git branch</strong> for the task, <strong>not</strong> the master
+        branch.</p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <p>In the long run, we want only two branches to the help file
-      structure: the "package" part of the tree for help
-      information that is specific to a particular piece of code,
-      and another part of the tree for more general information.
-      (It's a religious issue whether that 2nd part should be
-      called "html" or "manual"; the key thing is we end up with
-      just one). The web is meant to be a <em>web</em>, with many
-      paths through it to reach content. The second part of the
-      tree ("html") should also be organized as "one page, one topic", with
-      links to connect them as needed.</p>
+      <h2>Organization of the <strong>help</strong> files</h2>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+      <div>
+        <p>The help files are located in the <strong>help</strong> directory within the JMRI
+        distribution directory.</p>
 
+        <p>The master copy is stored in the <strong>help</strong> directory in the JMRI code
+        repository. This means to get your own local copy, follow the steps on the "<a href=
+        "getgitcode.shtml">getting the code</a>" page.</p>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="web" id="web"></a>
-      <h2>Web Access to Help Pages</h2>
+        <p>Within that, all the English-language files are located within the <strong>en</strong>
+        subdirectory. Eventually, this will let us internationalize the help pages.</p>
 
-    <div class="para">
+        <p>Within that, there are several file trees:</p>
 
-      It is inconvenient to have to maintain two separate web pages for the main web site and the help
-      system. To reduce the need for that, we use a particular form for the web pages in the help system.
-      [Additional information can also be found <a href="WebSite.shtml">here.</a>]
+        <ul>
+          <li><strong>package</strong> - organized like the source package tree, this contains
+          code-specific help files for e.g. a particular window or component. For example, a window
+          that's created by the <code>jmri.jmrit.speedometer.SpeedometerFrame</code> class (from
+          the <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code> file) should have its
+          window-specific help in a file at
+          <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.</li>
 
-      <ul>
-        <li>Use ".shtml" file extensions so that the main web
-        servers will search the files for <a href=
-        "https://httpd.apache.org/docs/1.3/howto/ssi.html">server-side
-        includes</a>.</li>
+          <li><strong>html</strong> - general descriptions, tutorials, etc. This in turn in
+          organized into directories that represent general areas.</li>
 
-        <li>When you create a new page, start with a copy of either the help/en/template-sidebar.shtml
-        or help/en/template-no-sidebar.shtml template file, depending on whether or not you want to include
-        a "sidebar" (via a file named Sidebar.shtml). This template will put the proper top and bottom
-        matter in place to get the page properly displayed.
-        </li>
+          <li>
+            <strong>manual</strong> - the most recent version of the DecoderPro et al manuals
+            reformatted for use in the help system. (Older ones are stored in the <a href=
+            "WebSite.shtml">main web site</a>)
+          </li>
+        </ul>
 
-        <li>In general, all help files in the html directory tree use a sidebar.  In general, files
-         in the package part of the tree do not. If you are using a sidebar, you may find one that suits
-         your purpose in the specific subdirectory in which you are working, in its parent directory, or,
-         in rare cases, you can use the one in the html directory itself (either /help/en/html or /help/fr/html).
+        <p>While this is how we would LIKE our help files organized, help pages are created by
+        members of the community and sometimes general descriptions are put in the package
+        directory rather than the html directory and vice versa. [If you see something that needs
+        to be moved, please post a note to the jmri-developers online groups.io forum as there are
+        members who occassionally try to do some housekeeping.]</p>
 
-        <p> If none of these meet your needs (or do not exist), you may create a Sidebar.shtml in the subdirectory,
-         in which case, you should follow the format of other Sidebar.shtml files in other subdirectories at the
-         same level or in the parent directory. In 2020, there was a major effort to standardize the sidebar files,
-         using server-side includes for common parts files in the <a href="../../../parts">
-         /help/en/parts directory</a>. Typically a Sidebar.shtml file in a terminal subdirectory (one with no lower
-         level) will further reference a "local part" in a file in the same subdirectory and named
-         Sidebar[type]LocalPart.shtml, where [type] would be based on the name of the parent directory, such
-         as Hardware or Tool. This use of local part files allows Sidebar.shtml files in terminal subdirectories
-         to use identical code, something that makes maintenance significantly easier.</p>
+        <p>In the long run, we want only two branches to the help file structure: the
+        <strong>package</strong> part of the tree for help information that is specific to a
+        particular piece of code, and another part of the tree for more general information. (It's
+        a religious issue whether that 2nd part should be called "html" or "manual"; the key thing
+        is we end up with just one). The web is meant to be a <em>web</em>, with many paths through
+        it to reach content. The second part of the tree ("html") should also be organized as "one
+        page, one topic", with links to connect them as needed.</p>
 
-        <p class="noted"> If you do not need a local part, you can include the Sidebar.shtml from the parent directory
-         but ONLY if that file does not have any relative URLs (URLs with "../" and similar). It is does, the sidebar
-         links will not work when incorporated into your page. Look at the contents of Sidebar.shtml in the parent
-         directory before attempting to reference it.</p>
-        </li>
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-        <li>All the page formatting on JMRI help and other web pages is done through included CSS
-        files, originally created by John Plocher. These are included from "/css" via Server-Side
-        Includes (SSI).  The main file is at <a href="../../../../../css/default.css">/css/default.css</a>
-        and works with a few other files in that same directory. Because JavaHelp ignores SSI, the
-        CSS formatting is ignored when JavaHelp is displaying the pages within the JMRI itself. In
-        that case, JavaHelp provides the formatting.
-        </li>
+      <h2 id="web">Web Access to Help Pages</h2>
 
-       </ul>
+      <div>
+        <p>It is inconvenient to have to maintain two separate web pages for the main web site and
+        the help system. To reduce the need for that, we use a particular form for the web pages in
+        the help system. [Additional information can also be found <a href=
+        "WebSite.shtml">here.</a>]</p>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+        <ul>
+          <li>Use ".shtml" file extensions so that the main web server will search the files for
+          <a href="https://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
+          </li>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="limitations" id="limitations"></a>
-      <h2>Standards for and Limitations of JavaHelp HTML</h2>
+          <li>When you create a new page, start with a copy of either the
+          <strong>help/en/template-sidebar.shtml</strong> or
+          <strong>help/en/template-no-sidebar.shtml</strong> template file, depending on whether or
+          not you want to include a "sidebar" (via a file named Sidebar.shtml). This template will
+          put the proper top and bottom content in place to get the page properly displayed.</li>
 
-    <div class="para">
+          <li>In general, all help files in the <strong>html</strong> directory tree use a sidebar
+          while files in the <strong>package</strong> part of the tree do not. If you are using a
+          sidebar, you may find one that suits your purpose in the specific subdirectory in which
+          you are working, in its parent directory, or, in rare cases, you can use the one in the
+          <strong>html</strong> directory itself.
+            <p>If none of these meet your needs (or do not exist), you may create a
+            <strong>Sidebar.shtml</strong> in the subdirectory, in which case, you should follow
+            the format of other Sidebar.shtml files in other subdirectories at the same level or in
+            the parent directory. In 2020, there was a major effort to standardize the sidebar
+            files, using server-side includes for common parts files in the <a href=
+            "../../../parts">/help/en/parts directory</a>. Typically a Sidebar.shtml file in a
+            terminal subdirectory (one with no lower level) will further reference a <strong>local
+            part</strong> in a file in the same subdirectory and named
+            <strong>Sidebar[type]LocalPart.shtml</strong>, where [type] would be based on the name
+            of the parent directory, such as Hardware or Tool. This use of local part files allows
+            Sidebar.shtml files in terminal subdirectories to use identical code, something that
+            makes maintenance significantly easier.</p>
 
-      JavaHelp displays "plain
-      old HTML 4.0", without providing some of the syntactic sugar
-      provided by many browsers to allow poor HTML to render.
-      Do not include any particular formatting options, specifically
-      including embedded CSS commands.
-      There are a couple of specific things to watch for:
+            <p class="noted">If you do not need a local part, you can include the Sidebar.shtml
+            from the parent directory but ONLY if that file does not have any relative URLs (URLs
+            with "../" and similar). If it is does, the sidebar links will not work when
+            incorporated into your page. Look at the contents of Sidebar.shtml in the parent
+            directory before attempting to reference it.</p>
+          </li>
 
-      <ul>
-        <li>Anchor tags need a specific format. Specifically, they should be written
-          <pre style="font-family: monospace;">
-&lt;a name="pull" id="pull"&gt;...&lt;/a&gt;
-</pre>
-          around text content only. It's OK to be empty between the open and close tags.
-          It's not OK to combine them into a single <code>&lt;a name="pull"/&gt;</code>
-          tag; don't do that, as it confuses JavaHelp.
+          <li>All the page formatting on JMRI help and other web pages is done through included CSS
+          files, originally created by John Plocher. These are included from "/css" via Server-Side
+          Includes (SSI). The main file is at <a href=
+          "../../../../../css/default.css">/css/default.css</a> and works with a few other files in
+          that same directory. Because JmriHelp ignores SSI, the CSS formatting is ignored when
+          JmriHelp is displaying the pages. In that case, JmriHelp and the browser's default CSS
+          provide the formatting.
+          </li>
+        </ul>
 
-          <p>For example, to put an anchor on a heading, do</p>
-          <pre style="font-family: monospace;">
-&lt;h2&gt;&lt;a name="foo" id="foo"&gt;Foo!&lt;/a&gt;&lt;/h2&gt;
-</pre>
+        <p>Note: The French web pages have not been updated to the new sidebar structure.</p>
 
-          <p>Note: Incorrectly structured anchor tags (not like the
-          above) often cause just a &lt; character appearing by
-          itself on the rendered help page.</p>
-        </li>
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-        <li>Anchors need to use the "name" attribute as well as the "id" attribute for future
-        compatibility. Name is recognized by JavaHelp but not by the latest versions of html while id
-        is not recognized by JavaHelp. See the item above for an example.</li>
+      <h2 id="standards">Standards for JmriHelp HTML</h2>
 
-        <li>Do not use spaces or <code>%20</code> in anchor names.
-        If you must use a phrase for a name, use the underscore character:
-        "This_Anchor", not "This Anchor.</li>
+      <div>
+        <p>JmriHelp uses standard HTML 5. Since the SSI includes look like comments, they are not
+        processed. The help pages will be displayed using the browser's default CSS. If additional
+        CSS is added to the help page, it will override the browser settings. It will also override
+        the site CSS settings when the page is displayed by the site server.</p>
 
-        <li>You can use the <code>&lt;code&gt;</code> element, or
-        the <code>&lt;pre&gt;</code> element, but you can't use
-        both together. <code>&lt;code&gt;</code> is good for
-        highlighting in-line text as being code (like we've used it
-        here); <code>&lt;pre&gt;</code> is good for making a block
-        of inline HTML or Java look right. To give a code-like
-        appearance to a block, wrap it in <code>&lt;pre
-        style="font-family: monospace;"&gt;</code></li>
+        <p>The file name cannot contain an underscore character. The file suffix is .shtml.</p>
 
-        <li>When describing a sequence of user actions or pulldowns, use the double right arrow to indicate
-        sequence, HTML 4 tag ampersand-rArr-semicolon, and label the whole sequence as "strong":
-        <br>
-        <strong>File &rArr; Store Panels</strong>
-        <br>
-        A non-blanking space can be used before the right arrow to control line breaks.
-        </li>
+        <p>The <strong>id</strong> attribute can assigned to HTML tags and then referenced by
+        JmriHelp. This makes it possible to display window specific help information within a
+        larger help document.</p>
 
-        <li>You cannot count on any particular location for your files on the local machine, so all links
-        to other help pages need to be relative. Links to XML contents also need to be relative even though
-        they are not displayed by JavaHelp.</li>
+        <p>Do not use spaces or <code>%20</code> in id names. If you must use a phrase for a name,
+        use the underscore character: "This_Anchor", not "This Anchor.</p>
 
-    <!--
-        <li>DEBATABLE: Use fully qualitifed URLs for references to JavaDocs
-        (e.g. https://www.jmri.org/JavaDoc/doc/jmri/managers/AbstractManager.html). These files are put in
-        different places at different times during the development process so relative addresses may or may
-        not work.</li>
-     -->
+        <p>When describing a sequence of user actions or pulldowns, use the double right arrow HTML
+        entity <strong>ampersand-rArr-semicolon</strong>, and label the whole sequence as "strong".
+        For example:<br>
+        <strong>File ⇒ Store Panels</strong><br>
+        A non-blanking space can be used before the right arrow to control line breaks.</p>
 
-        <li>Links to web pages outside the help system work and should be specified as fully qualified,
-        preferably with https://. In most cases they will be automatically opened in an external web browser.
-        [If you are already looking at the help page in an external browser, these pages may be opened in a
-        new tab or in the same tab (overwriting the current page), depending on how the person who wrote the
-        help page coded the reference. As of this writing (2020/04/04), there is an on-going debate as to the
-        prefered method.]</li>
-      </ul>
+        <p>You cannot count on any particular location for your files on the local machine, so all
+        links to other help pages need to be relative. Links to XML contents also need to be
+        relative even though they are not displayed by JmriHelp.</p>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+        <p>Links to web pages outside the help system work and should be specified as fully
+        qualified, preferably with https://. These pages may be opened in a new tab or in the same
+        tab (overwriting the current page), depending on how the person who wrote the help page
+        coded the reference. As of this writing (2020/04/04), there is an on-going debate as to the
+        prefered method.] The browser preferences might also affect the new tab / replace tab
+        behavior.</p>
 
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name= "hwhelp" id="hwhelp"></a>
-      <h2>Creating Help/Web Pages for New Hardware</h2>
+      <h2 id="code">Access To Help in the Code</h2>
 
-    <div class="para">
+      <div>
+        <p>Within the JMRI code, access to the help system comes via the
+        <strong>jmri.util.HelpUtil</strong> class. (For historical reasons, there's a little bit of
+        code in apps.Apps, but you should ignore that).</p>
 
-      <p>When you integrate support for new hardware into JMRI, you should also create a page or pages for the
-      help system and the web.  There are several steps involved to ensure that your new hardware help is integrated
-      into the JMRI Help system and its web site. All references below to files are to the
-      <a href="https://github.com/JMRI/JMRI"> JMRI Repository structure</a> in Github. Note use
-      of capitalization in references to (fictitious) product "X" from manufacturer "M":</p>
+        <p>The easiest way to add a help menu to a frame is to have it be a JmriJFrame (which you
+        should do anyway), and call addHelpMenu(<strong><em>&lt;helpkey&gt;</em></strong>) after
+        you've built any other menus.</p>
 
-      <ol>
-        <li>Create the general help page or pages for the new hardware:
-          <ul>
-            <li>See <a href="../../hardware/index.shtml">other hardware help pages linked off the Hardware Index page</a>
-            for examples before beginning.  There are a variety of styles based on how much information you want to provide.
-            You can also provide a link to external manufacturer pages.</li>
-            <li>Create your help page and put it into "/help/en/html/hardware", either directly as "X.shtml" if only a single
-            file or in its own subdirectory "/help/en/html/hardware/m/" if there are going to be multiple pages.  You should
-            name the first file "index.shtml" when in its own subdirectory.</li>
-            <li>If your help pages have images, create a subdirectory "/help/en/html/hardware/m/images" to store them.</li>
-            <li>Put in the standard sidebar by an "include" of "/help/en/html/hardware/Sidebar.shtml" (using
-            appropriate relative addressing) in your help page or pages.  [Some creators of hardware and hardware families
-            create their own "SidebarHardwareLocalPart.shtml" file in the "m" subdirectory to have custom information in the
-            sidebar. This also requires creating a file "Sidebar.shtml" in "standard format" in the "m" subdirectory. See
-            some exising hardware entries such as <a href="../../hardware/arduino/index.shtml">
-            this one</a> for examples.]</li>
-          </ul>
-        </li>
-        <li>Create any "code-specific" help page or pages for the new hardware:
-          <ul>
-            <li>As discussed in the first section of this page, "code-specific" help (i.e. related to a particular window or
-            component) should be in pages in a different part of the file directory tree. Any pages you create to
-            explain windows or code should be placed under "/help/en/package/" branch based on where the actual code is stored.</li>
-            <li>Make sure you provide links to these pages in your general help pages.</li>
-          </ul>
-        </li>
-        <li>Create entries in the Hardware Index page:
-          <ul>
-            <li>Add a hardware listing entry and paragraph in <a href="../../hardware/index.shtml">
-            "/help/en/html/hardware/index.shtml"</a> following the formats and categorization of other similar hardware.</li>
-            <li>Add an entry for "M X" to the Category/Alphabetic Index in the appropriate place near the top of
-            "hardware/index.shtml".</li>
-          </ul>
-        </li>
-        <li>Create an entry in the Supported Hardware "sidebar part":
-          <ul>
-            <li>Add an entry in alphabetic order for "M X" to the hardware sidebar part "/help/en/parts/SidebarSupportedHardware.shtml".</li>
-          </ul>
-        </li>
-        <li>Create Help TOC and Index entries:
-          <ul>
-            <li>Add an entry for "M X" under "Hardware Support" to the file "JMRIHelp_enTOC.xml" found in the /help/en/ directory. </li>
-            <li>Add one or more entries for "M X" such as "X (M)" or other helpful index items to the file "JMRIHelp_enindex.xml"
-            found in the /help/en/ directory.</li>
-            <li>See the section below on <a href="#tocAndIndex">Help Table of Contents and Index</a> for additional steps to update
-            the TOC and Index.</li>
-          </ul>
-        </li>
-      </ol>
+        <p>The <strong>helpkey</strong> is the dotted path to the help file, <em>without the .shtml
+        suffix</em>. If the helpkey refers to an <strong>id</strong> within the page, the path is
+        extended with an underscore and the name of the id.</p>
 
-        <p>Following all these steps will ensure that other users will be able to find and use the new hardware you have integrated
-        into JMRI.</p>
+        <p>By convention, we use a similar file tree for the source code and help files. For
+        example, the <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> class inherits from
+        JmriJFrame, and adds a help menu with the line</p>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+        <pre style=
+        "font-family: monospace;">addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
+        </pre>The help file is then located at
+<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
+        <p>You should add the new page to the JmriHelp index to have JMRI accept it as a Help
+        target (see the next heading).</p>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name= "check" id="check"></a>
+        <p>A number of help files have been put in place without any contents; hopefully some users
+        will edit them and contribute them back.</p>
+
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="buildhelp">Configure JmriHelp</h2>
+
+      <div>
+        <p><strong>HelpUtil</strong> is called when the <strong>Window Help</strong> or
+        <strong>General Help</strong> menu items are selected. The <strong>helpkey</strong>
+        specified in the JMRI code is used to display the appropriate help page in the browser.</p>
+
+        <p>Using <strong>Preferences ⇒ Help</strong>, the user can choose to have the local help
+        page or the <em>jmri.org</em> help page displayed. The local page is in the JMRI
+        distribution which means the page is at the same release level as the JMRI code.</p>
+
+        <p>If jmri.org is selected, HelpUtil will convert the helpkey into a URL and pass it to the
+        user's default browser.</p>
+
+        <h3>Creating the JmriHelp files</h3>
+
+        <p>When a new <strong>helpkey</strong> has been defined in the JMRI code, it needs to be
+        added to the index and/or the table contents. These files are used to build the necessary
+        content to link the helpkey to the local help page.</p>
+
+        <h4>Update JmriHelp_**Index.xml and/or JmriHelp_**TOC.xml</h4>
+
+        <p>These files reside at <strong>help/**</strong> (** is <strong>en</strong> for English or
+        <strong>fr</strong> for French).</p>
+
+        <p>These are xml files that can edited with any xml aware file editor. Each line in the
+        file consists of a user friendly <strong>text</strong> name and the <strong>target</strong>
+        helpkey.</p>
+        <code>&lt;indexitem text="Setting The Internal Clock "
+        target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/&gt;<br>
+        &lt;tocitem text="Setting the Internal Clock "
+        target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/&gt;</code>
+        <h4>Run buildhelp</h4>
+
+        <p>The JmriHelp configuration files are located at help/**/local. This directory contains
+        the following content:</p>
+
+        <ul>
+          <li><strong>index.html</strong> -- This is the web page loaded by the local browser when
+          <strong>Help ⇒ Window Help</strong> or <strong>Help ⇒ General Help</strong> is invoked by
+          JMRI. The page contains the table of contents in the left column and the selected help
+          page in an iframe on the right.</li>
+
+          <li><strong>jmri_map.xml</strong> -- This file contains the helpkeys and the actual URL
+          for the help pag from the JmriHelp_**TOC.xml and JmriHelp_**Index.xml files along with
+          other helpkeys that were not included in either the table of contents or index.</li>
+
+          <li><strong>alternate_map.txt</strong> -- This contains a list of non-standard helpkeys
+          and the target help page.</li>
+
+          <li><strong>stub_template.html</strong> -- This file is used to build the stub files in
+          the stub diretory.</li>
+
+          <li><strong>stub</strong> -- This directory contains the stub files which are used to
+          link a JMRI helpkey to the index.html.</li>
+        </ul>
+
+        <p>The Java process to pass a file name to a browser does not support query (?) or id (#)
+        parameters. The build process creates a stub file for each entry in jmri_map.xml. The file
+        name is <strong>&lt;helpkey&gt;.html</strong>. The stub file does a re-direct to
+        <strong>local/index.html#helpkey</strong>. The javascript in index.html converts the
+        helpkey into the file name to be loaded into the iframe.</p>
+
+        <p>After JmriHelp_**TOC.xml and JmriHelp_**Index.xml have been updated, run the ant
+        <strong>buildhelp</strong> target. This is run using the main JMRI ant build.xml file, not
+        the special build.xml in help/**.</p>
+
+        <p>After the build process has completed, test the new helpkeys and verify that they open
+        the proper pages.</p>
+
+        <h4>Update the JMRI Repository</h4>
+
+        <p>When the changes have been verified, commit the changes and create a pull request. For
+        details, see <a href="gitdeveloper.shtml">Developing with JMRI</a></p>
+
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="tocAndIndex">Help Table of Contents and Index</h2>
+
+      <div>
+        <p>JmriHelp includes a <a href="../../../webtoc.shtml">table of contents</a> and an
+        <a href="../../../webindex.shtml">index</a>. These are both available as hyperlinks on the
+        web. The table of contents is displayed by the JmriHelp browser page when invoked from the
+        JMRI Help menu.</p>
+
+        <p>These pages are created as part of the <strong>buildhelp</strong> process and will be
+        included in the PR process. Manual changes to these pages will be overwritten when
+        buildhelp is run.</p>
+
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="check"></a>
       <h2>Checking Your Changes</h2>
 
-    <div class="para">
+      <div>
+        <p>The <a href="ContinuousIntegration.shtml">Continuous Integration</a> process checks all
+        changes to JMRI Help files to make sure they're OK. If you'd like to run that same check
+        while you're working, do:</p>
 
-      <p>The <a href="ContinuousIntegration.shtml">Continuous Integration</a> process checks all
-      changes to JMRI Help files to make sure they're OK.  If you'd like to run that same check
-      while you're working, do:</p>
-<pre style="font-family: monospace;">
+        <pre style="font-family: monospace;">
     ant scanhelp
 </pre>
-      <p>If you do not have access to ant, you should use one of the HTML validation programs available
-      online, such as from <a href="https://validator.w3.org/">the W3C Markup Validation
-      Service.</a> These services will find many common errors (unmatched tags, etc.), but also sometimes
-      give warning or even error messages that do not impact JMRI integration.</p>
+        <p>If you do not have access to ant, you should use one of the HTML validation programs
+        available online, such as from <a href="https://validator.w3.org/">the W3C Markup
+        Validation Service.</a> These services will find many common errors (unmatched tags, etc.),
+        but also sometimes give warning or even error messages that do not impact JMRI
+        integration.</p>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="tocAndIndex" id= "tocAndIndex"></a>
-      <h2>Help Table of Contents and Index</h2>
+      <h2 id="site">Updating the JMRI.org Web Site</h2>
 
-    <div class="para">
+      <div>
+        <p>Changes to Help pages which have been merged should show up automatically on the
+        <a href="WebSite.shtml">JMRI.org web site</a> after a short while. There's a <a href=
+        "https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Jenkins job</a> that
+        handles periodic updates for the static (from repository, unlike e.g. Javadoc) pages.</p>
 
-      Java Help includes a
-      <a href="../../../webtoc.shtml">table of
-      contents</a> and an <a href=
-      "../../../webindex.shtml">index</a>. These are
-      both available as hyperlinks on the web, and provided via a
-      nicer user interface when using JavaHelp in the program.
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="hwhelp"></a>
+      <h2>Creating Help/Web Pages for New Hardware</h2>
 
-      <p>The underlying information must be maintained manually in
-      the help/en/JmriHelp_enTOC.xml and
-      help/en/JmriHelp_enIndex.xml files, respectively. JHelpDev
-      then makes the files that Java Help needs, and an "ant" step
-      in the directory makes the webtoc.shtml and webindex.shtml
-      files that are displayed on the web.</p>
+      <div>
+        <p>When you integrate support for new hardware into JMRI, you should also create a page or
+        pages for the help system and the web. There are several steps involved to ensure that your
+        new hardware help is integrated into the JMRI Help system and its web site. All references
+        below to files are to the <a href="https://github.com/JMRI/JMRI">JMRI Repository
+        structure</a> in Github. Note use of capitalization in references to (fictitious) product
+        "X" from manufacturer "M":</p>
 
-      <p>Note: This means you should not manually change the
-      webToc.shtml and webindex.shtml files, because those changes
-      will be overwritten by later steps.</p>
+        <ol>
+          <li>Create the general help page or pages for the new hardware:
+            <ul>
+              <li>See <a href="../../hardware/index.shtml">other hardware help pages linked off the
+              Hardware Index page</a> for examples before beginning. There are a variety of styles
+              based on how much information you want to provide. You can also provide a link to
+              external manufacturer pages.
+              </li>
 
-      <p>The JmriHelp_enTOC.xml and JmriHelp_enIndex.xml files are
-      straight-forward XML, and you can manually edit them. Make
-      sure to run the JHelpDev "create all" step and "ant" after
-      doing so.</p>
+              <li>Create your help page and put it into "/help/en/html/hardware", either directly
+              as "X.shtml" if only a single file or in its own subdirectory
+              "/help/en/html/hardware/m/" if there are going to be multiple pages. You should name
+              the first file "index.shtml" when in its own subdirectory.</li>
 
-      <p>You can also use the JHelpDev tool to add items to the
-      table of contents and index if you'd like. There's more info
-      on how to do that on the <a href=
-      "http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
-      Remember to run "ant" after that to include your updates on
-      the web versions.</p>
+              <li>If your help pages have images, create a subdirectory
+              "/help/en/html/hardware/m/images" to store them.</li>
 
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
+              <li>Put in the standard sidebar by an "include" of
+              "/help/en/html/hardware/Sidebar.shtml" (using appropriate relative addressing) in
+              your help page or pages. [Some creators of hardware and hardware families create
+              their own "SidebarHardwareLocalPart.shtml" file in the "m" subdirectory to have
+              custom information in the sidebar. This also requires creating a file "Sidebar.shtml"
+              in "standard format" in the "m" subdirectory. See some exising hardware entries such
+              as <a href="../../hardware/arduino/index.shtml">this one</a> for examples.]
+              </li>
+            </ul>
+          </li>
 
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="jhelpdev" id="jhelpdev"></a>
-      <h2>Creating the control files with JHelpDev</h2>
+          <li>Create any "code-specific" help page or pages for the new hardware:
+            <ul>
+              <li>As discussed in the first section of this page, "code-specific" help (i.e.
+              related to a particular window or component) should be in pages in a different part
+              of the file directory tree. Any pages you create to explain windows or code should be
+              placed under "/help/en/package/" branch based on where the actual code is
+              stored.</li>
 
-    <div class="para">
+              <li>Make sure you provide links to these pages in your general help pages.</li>
+            </ul>
+          </li>
 
-      JavaHelp
-      uses various XML files to control how the table of contents
-      and index are displayed. We create those with <a href=
-      "http://jhelpdev.sourceforge.net/">JHelpDev</a>. Please don't
-      edit them manually.
+          <li>Create entries in the Hardware Index page:
+            <ul>
+              <li>Add a hardware listing entry and paragraph in <a href=
+              "../../hardware/index.shtml">"/help/en/html/hardware/index.shtml"</a> following the
+              formats and categorization of other similar hardware.
+              </li>
 
-      <p>JHelpDev is now included in the JMRI dist. To use the
-      tool:</p>
+              <li>Add an entry for "M X" to the Category/Alphabetic Index in the appropriate place
+              near the top of "hardware/index.shtml".</li>
+            </ul>
+          </li>
 
-      <ol>
-        <li>Make sure you've updated to the most recent version in
-        the code repository before getting started.</li>
+          <li>Create an entry in the Supported Hardware "sidebar part":
+            <ul>
+              <li>Add an entry in alphabetic order for "M X" to the hardware sidebar part
+              "/help/en/parts/SidebarSupportedHardware.shtml".</li>
+            </ul>
+          </li>
 
-        <li>You can run in batch mode by running <code>ant</code>
-        from the command line in the <code>help/en/</code>
-        directory. It'll still pop windows, but should run
-        to completion by itself.  It might take a minute or so.</li>
+          <li>Create Help TOC and Index entries:
+            <ul>
+              <li>Add an entry for "M X" under "Hardware Support" to the file "JMRIHelp_enTOC.xml"
+              found in the /help/en/ directory.</li>
 
-        <li>If you'd like to operate it manually, please
-        follow the rest of these bullets.
-        (Or if using Eclipse, right-click on the
-        help/en/build.xml file and select Run As Ant Build.)</li>
+              <li>Add one or more entries for "M X" such as "X (M)" or other helpful index items to
+              the file "JMRIHelp_enIndex.xml" found in the /help/en/ directory.</li>
 
-        <li>Start the tool by clicking on the jhelpdev.jar file.
-        (If that doesn't work, try running either JHelpDev.csh or
-        JHelpDev.bat, depending on what kind of computer you
-        have)</li>
+              <li>See the section above on <a href="#buildhelp">Configure JmriHelp</a> for
+              additional steps to update the Window Help references, TOC, and Index.
+              </li>
+            </ul>
+          </li>
+        </ol>
 
-        <li>Once the window appears, select "Open Project" under
-        the "File" menu.</li>
+        <p>Following all these steps will ensure that other users will be able to find and use the
+        new hardware you have integrated into JMRI.</p>
 
-        <li>Navigate to the "help" directory in your checked out
-        copy of the code, then the "en" directory within that, then
-        select the "JHelpDev.xml" file and click "Open".</li>
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-        <li style="list-style: none">
-          <p>You may get a message about "[Fatal Error]
-          index.html:1:3: The markup declarations contained or
-          pointed to by the document type declaration must be
-          well-formed." Although it says it's fatal, it's really
-          not a problem. Just ignore it. On startup the Map (a file
-          containing the JHelpDev index of all anchors in the JMRI
-          help system) is regenerated.</p>
-        </li>
+      <h2 id="technical">JmriHelp Build Process</h2>
 
-        <li>By clicking the "Index Editor" tab or the "TOC Editor"
-        tab, review and update the Help entries. A red line marks a
-        hyperlink that JHelpDev can't locate on disk. Right-click
-        on such a line to open the Edit context menu.</li>
+      <div>
+        <p>The main component is <strong>java/test/jmri/util/BuildHelpFilesTest</strong>. The class
+        is nominally a test program, but it has a <code>public static main()</code> which makes it
+        possible to be called from ant. It is excluded from <strong>alltest</strong> .</p>
 
-        <li>Click the "Create All" button to recreate the TOC,
-        Index, etc.</li>
+        <p>The program uses the <strong>JmriHelp_**</strong> files, the
+        <strong>alternate_map.txt</strong> file and scans of the help tree to create the
+        <strong>jmri_map.xml</strong> file and the stub files.</p>
 
-        <li>Then, back on the command line and in the help/en
-        directory, invoke "ant index TOC" to create the web index and table
-        of contents pages. </li>
-      </ol>
+        <p>When the program is done, the <strong>buildhelp</strong> target calls
+        <strong>ant</strong> in each language location. The language specific ant process builds
+        the <strong>webtoc.shtml</strong> and <strong>webindex.shtml</strong> files from
+        JmriHelp_**TOC.xml, JmriHelp_**Index.xml and jmri_map.xml using <strong>format.xsl</strong>
+        . The third step builds the <strong>local/index.html</strong> file using the
+        <strong>JmriHelp_**TOC.xml</strong> and <strong>jmri_map.xml</strong> files using
+        <strong>formatLocalTOC.xsl</strong>.</p>
 
-      <p>The various control files that JavaHelp uses are stored in
-      our code repository, so once you've done this they will show
-      as modified. Please check them in when you check in new Help
-      files so other people don't have to recreate those control
-      files for themselves.</p>
-
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="code" id="code"></a>
-      <h2>Access To Help in the Code</h2>
-
-    <div class="para">
-
-      Within the JMRI code, access the
-      help system comes via the jmri.util.HelpUtil class. (For
-      historical reasons, there's a little bit of code in
-      apps.Apps, but you should ignore that).
-
-      <p>The easiest way to add a help menu to a frame is to have
-      it be a JmriJFrame (which you should do anyway), and call
-      addHelpMenu(...) after you've built any other menus.</p>
-
-      <p>By convention, we use a similar file tree for the source
-      code and help files. For example, the
-      <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> class
-      inherits from JmriJFrame, and adds a help menu with the
-      line</p>
-      <pre style="font-family: monospace;">
-  addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
-</pre>The help file is then located at
-<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
-      <p>You should add the new page to the JHelpDev index to have JMRI
-      accept it as a Help target (see next the heading).</p>
-      <p>A number of help files have been put in place without any
-      contents; hopefully some users will edit them and contribute
-      them back.</p>
-
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-       </div>
-
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <a name="site" id="site"></a>
-      <h2>Updating the JMRI.org Web Site</h2>
-
-    <div class="para">
-
-      <p>Changes to Help pages which are checked-in should show up automatically on the
-      <a href="WebSite.shtml">JMRI.org web site </a>after a short while. There's a <a href=
-      "https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">
-      Jenkins job</a> that handles periodic updates for the static
-      (from repository, unlike e.g. Javadoc) pages.</p>
-
-             <p><a href="#helpTop">[Go to top of page]</a></p>
-
-       </div>
-
+        <p><a href="#helpTop">[Go to top of page]</a>
+        </p>
+      </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
