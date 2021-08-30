@@ -55,6 +55,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         }
         return car;
     }
+    
+    @Override
+    public void deregister(Car car) {
+        super.deregister(car);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
+    }
 
     /**
      * @return requested Car object or null if none exists
