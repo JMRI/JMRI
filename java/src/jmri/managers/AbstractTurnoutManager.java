@@ -1,5 +1,8 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -22,18 +25,20 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     public AbstractTurnoutManager(SystemConnectionMemo memo) {
         super(memo);
         InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-
-        // set listener for changes in memo
-        memo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
-                    handleIntervalChange((Integer) e.getNewValue());
-                }
-            }
-        });
+        init();
     }
+    
+    final void init() {
+        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
+        // set listener for changes in memo
+        memo.addPropertyChangeListener(pcl);
+    }
+    
+    final PropertyChangeListener pcl = (PropertyChangeEvent e) -> {
+        if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
+            handleIntervalChange((Integer) e.getNewValue());
+        }
+    };
 
     /** {@inheritDoc} */
     @Override
@@ -368,6 +373,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             waitUntil = LocalDateTime.now().plus(turnoutInterval, ChronoUnit.MILLIS); // default interval = 250 Msec
         }
         return waitUntil;
+    }
+    
+    @Override
+    public void dispose(){
+        memo.removePropertyChangeListener(pcl);
+        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
