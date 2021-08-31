@@ -42,7 +42,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
+  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
 
 cache:
   directories:

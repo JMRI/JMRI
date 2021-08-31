@@ -1,59 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright ($Author$) 2008 -->
 
-  <title>JMRI: Memory Monitor Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Memory Monitor Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>JMRI: Memory Monitor Tool</h1><a href=
-      "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
-      width="194" height="56" align="right"></a> The Memory Monitor
-      Tool lets you see how much memory JMRI is using in your
-      computer.
-
+      <h1>JMRI: Memory Monitor Tool</h1>
+      <a href="MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg" width="194" height="56"
+      class="floatRight" alt="memory frame"></a> The Memory Monitor Tool lets you see how much
+      memory JMRI is using in your computer.
       <p>There are three columns in the display at the top:</p>
 
       <ul>
-        <li>"Update" - puts a new series of values in the
-        display</li>
+        <li>"Update" - puts a new series of values in the display</li>
 
-        <li>"Collect Memory" - reduce the amount of used memory to
-        the minimum possible by asking Java to run a garbage
-        collection</li>
+        <li>"Collect Memory" - reduce the amount of used memory to the minimum possible by asking
+        Java to run a garbage collection</li>
 
-        <li>"Test" - Run a test of the memory allocation and
-        collection process (not needed by regular users)</li>
+        <li>"Test" - Run a test of the memory allocation and collection process (not needed by
+        regular users)</li>
       </ul>
 
-      <p>The upper part displays information about memory. Each
-      time you press the "Update" button, the bottom line gets new
-      values and the older values are moved up.</p>
+      <p>The upper part displays information about memory. Each time you press the "Update" button,
+      the bottom line gets new values and the older values are moved up.</p>
 
       <ul>
-        <li>The left column is the amount of memory currently in
-        use.</li>
+        <li>The left column is the amount of memory currently in use.</li>
 
-        <li>The middle column shows the amount of memory currently
-        allocated to JMRI, but not in use. This is free for later
-        use.</li>
+        <li>The middle column shows the amount of memory currently allocated to JMRI, but not in
+        use. This is free for later use.</li>
 
-        <li>The right column is the total memory available to
-        JMRI.</li>
-      </ul>At the top of the left column, the maximum memory that
-      can be available to JMRI is displayed.
+        <li>The right column is the total memory available to JMRI.</li>
+      </ul>
+      At the top of the left column, the maximum memory that can be available to JMRI is displayed.
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

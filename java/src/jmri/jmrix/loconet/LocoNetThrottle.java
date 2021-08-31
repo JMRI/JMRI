@@ -320,7 +320,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             // the new speed is different - send a message
             sendLoconetMessage = true;
         } else if (allowDuplicates) {
-            // calling method wants a new mesage sent regardless
+            // calling method wants a new message sent regardless
             sendLoconetMessage = true;
         } else if (allowDuplicatesOnStop && new_spd <= 1) {
             // calling method wants a new message sent if the speed is idle or estop, which it is
@@ -336,7 +336,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             msg.setElement(2, new_spd);
             network.sendLocoNetMessage(msg);
         } else {
-            log.debug("setSpeedSetting: not sending LocoNet message to slot {}, new speed == old speed", slot.getSlot());
+            log.debug("setSpeedSetting: not sending LocoNet speed message to slot {}, new({})==old({})", slot.getSlot(), new_spd, layout_spd);
         }
 
         // reset timeout

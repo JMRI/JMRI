@@ -226,11 +226,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         });
     }
 
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameSignalMast");
-    }
-
     /**
      * Respond to change from bean.
      *

@@ -1,96 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Setup Support - Terminal Server
-  Connection</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
   <meta name="author" content="David D Zuhn">
   <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "EasyDCC Lantronix terminal server java model railroad JMRI install">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Setup Support: Terminal Server Connection</h1>
 
-      <p>A <strong>Terminal Server</strong> is a box that connects
-      one or more serial ports to a network so they can be accessed
-      from a remote computer. JMRI running on a computer with a
-      network connection can connect to an EasyDCC or NCE Command
-      Station or C/MRI nodes via one of these. This allows you to
-      put the computer and layout as far apart as you'd like.
-      <a name="hardware" id="hardware"></a></p>
+      <p>A <strong>Terminal Server</strong> is a box that connects one or more serial ports to a
+      network so they can be accessed from a remote computer. JMRI running on a computer with a
+      network connection can connect to an EasyDCC or NCE Command Station or C/MRI nodes via one of
+      these. This allows you to put the computer and layout as far apart as you'd like.</p>
 
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <p>This capability was originally created for david zuhn, who
-      has a <a href=
-      "http://stpaulterminal.org/software/jmri/lantronix.html">web
-      page</a> describing in detail how he set it up for
-      EasyDCC.</p>
+      <p>This capability was originally created for david zuhn, who has a <a href=
+      "http://stpaulterminal.org/software/jmri/lantronix.html">web page</a> describing in detail
+      how he set it up for EasyDCC.</p>
 
-      <p>The NCE and C/MRI set up processes are
-      similar.</p><a name="connecting" id="connecting"></a>
+      <p>The NCE and C/MRI set up processes are similar.</p>
 
-      <h2>Connecting</h2>To make this work, you have to configure
-      both JMRI and the Terminal Server, and make the appropriate
-      connections.
-
+      <h2 id="connecting">Connecting</h2>
+      To make this work, you have to configure both JMRI and the Terminal Server, and make the
+      appropriate connections.
       <h3>Settings</h3>
 
       <ul>
         <li>To configure JMRI:
-
           <ul>
-            <li>Select the "Connections" tab in the "Preferences"
-            from the "Edit" menu</li>
+            <li>Select the "Connections" tab in the "Preferences" from the "Edit" menu</li>
 
             <li>Select "Easy DCC" as the System Manufacturer</li>
 
-            <li>Select "EasyDCC over terminal server" as the System
-            Connection</li>
+            <li>Select "EasyDCC over terminal server" as the System Connection</li>
 
-            <li>Enter the IP address and TCP/UDP Port number
-            corresponding to the serial port on the terminal
-            server</li>
+            <li>Enter the IP address and TCP/UDP Port number corresponding to the serial port on
+            the terminal server</li>
 
-            <li>Click "Save" &amp; quit the program</li>
+            <li>Click "Save" & quit the program</li>
           </ul>
         </li>
 
-        <li>Configure the Terminal Server to connect to the command
-        station: 9600 baud, no parity, 8 bits.</li>
+        <li>Configure the Terminal Server to connect to the command station: 9600 baud, no parity,
+        8 bits.</li>
       </ul>
 
       <h3>Wiring</h3>
 
       <ul>
-        <li>Connect a serial cable from the Terminal Server to the
-        Command Station. Depending on the type of the Terminal
-        Server, this might require that you wire a custom cable to
-        get the right connectors. Note that you want the "Transmit
-        data" wire on one end to connect to the "Receive data" on
-        the other. Do this for both directions, and also include a
-        ground wire.</li>
+        <li>Connect a serial cable from the Terminal Server to the Command Station. Depending on
+        the type of the Terminal Server, this might require that you wire a custom cable to get the
+        right connectors. Note that you want the "Transmit data" wire on one end to connect to the
+        "Receive data" on the other. Do this for both directions, and also include a ground
+        wire.</li>
 
         <li>Make the network connections needed.</li>
       </ul>
 
-      <p>Start JMRI. If everything is OK, the application will
-      start and tell you on the splash screen it's properly
-      connected.</p>
+      <p>Start JMRI. If everything is OK, the application will start and tell you on the splash
+      screen it's properly connected.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1126,7 +1126,7 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     boolean restartPoint = false;
 
-    boolean holdAllocation = false;
+    private boolean holdAllocation = false;
 
     protected void holdAllocation(boolean boo) {
         holdAllocation = boo;

@@ -106,6 +106,7 @@
     <choice>Off</choice>
     <choice xml:lang="de">Aus</choice>
     <choice xml:lang="nl">Uit</choice>
+    <choice xml:lang="cs">Vypnuto</choice>
   </enumChoice>
 </enumVal>
 

@@ -2758,6 +2758,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * The LE xml load uses the string version of setScroll which went directly to
+     * Editor.  The string version has been added here so that LE can set the scroll
+     * selection.
+     * @param value The new scroll value.
+     */
+    @Override
+    public void setScroll(String value) {
+        if (value != null) super.setScroll(value);
+        scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
+        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
+        scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
+        scrollVerticalMenuItem.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
+    }
+
+    /**
      * Add a layout turntable at location specified
      *
      * @param pt x,y placement for turntable

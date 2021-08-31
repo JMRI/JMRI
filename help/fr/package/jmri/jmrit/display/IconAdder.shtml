@@ -1,341 +1,221 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Les &eacute;diteurs d'Ic&ocirc;nes</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Les éditeurs d'Icônes</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Les éditeurs d'Icônes</h1>
 
-      <h1>Les &eacute;diteurs d'Ic&ocirc;nes</h1>
+      <h2>Contenu des éditeurs d'Icône</h2>
+      <img src="AddPanel.png" align="right" alt="">
+      <p>Cinq des éditeurs d'Icône: (Aiguillage Droit, Aiguillage Gauche, Capteur, Signal,
+      Multicapteurs) affichent un groupe d'icônes au-dessus d'une table. Le tableau répertorie
+      l'ensemble des entités JMRI pour le type donné qui a été défini. Il y a une icône pour chaque
+      état que l'entité peut avoir. Les icônes affichées sont les icônes par défaut, mais vous
+      pouvez les changer.</p>
 
-      <h2>Contenu des &eacute;diteurs d'Ic&ocirc;ne</h2><img src=
-      "AddPanel.png" align="right">
+      <p>En dessous du tableau, deux boutons,<strong>Ajouter au Panneau</strong> et <strong>Changer
+      d'Icône ...</strong>. Le <strong>bouton Ajouter au Panneau</strong> est inactif jusqu'à ce
+      qu'un périphérique soit sélectionné dans le tableau. Puis il devient actif, et lorsqu'il est
+      pressé va installer le jeu d'icônes dans le panneau. L'appui sur l'icône
+      <strong>Modifier</strong> est discuté ci-dessous.</p>
 
-      <p>Cinq des &eacute;diteurs d'Ic&ocirc;ne: (Aiguillage Droit,
-      Aiguillage Gauche, Capteur, Signal, Multicapteurs) affichent
-      un groupe d'ic&ocirc;nes au-dessus d'une table. Le tableau
-      r&eacute;pertorie l'ensemble des entit&eacute;s JMRI pour le
-      type donn&eacute; qui a &eacute;t&eacute; d&eacute;fini. Il y
-      a une ic&ocirc;ne pour chaque &eacute;tat que l'entit&eacute;
-      peut avoir. Les ic&ocirc;nes affich&eacute;es sont les
-      ic&ocirc;nes par d&eacute;faut, mais vous pouvez les
-      changer.</p>
+      <p>Deux autres éditeurs d'Icône: (Valeur de la Mémoire et la Valeur Rapport) n'ont pas
+      d'icônes, et pas de bouton <strong>Changer d'Icône</strong> , mais vous avez des tables et un
+      bouton<strong>Ajouter au Panneau</strong>. Vous devez sélectionner une entité du Tableau
+      avant que le bouton <strong>Ajouter au Panneau</strong> devienne actif. Pas d'icônes
+      d'affichées pour ces entités JMRI parce ce que le fait d'appuyer sur <strong>Ajouter au
+      Panneau</strong> installe la valeur maintenue par l'entité dans le Panneau.</p>
 
-      <p>En dessous du tableau, deux boutons,<b>Ajouter au
-      Panneau</b> et <b>Changer d'Ic&ocirc;ne ...</b>. Le <b>bouton
-      Ajouter au Panneau</b> est inactif jusqu'&agrave; ce qu'un
-      p&eacute;riph&eacute;rique soit s&eacute;lectionn&eacute;
-      dans le tableau. Puis il devient actif, et lorsqu'il est
-      press&eacute; va installer le jeu d'ic&ocirc;nes dans le
-      panneau. L'appui sur l'ic&ocirc;ne <b>Modifier</b> est
-      discut&eacute; ci-dessous.</p>
+      <p>Deux autres éditeurs Icône: (Image de Fond et Icône (ordinaire)) affiche une icône par
+      défaut, mais aucun tableau, puisque ces éléments ne représentent pas un dispositif JMRI. Pour
+      ces éléments, le bouton <strong>Ajouter au Panneau</strong> est toujours actif.</p>
 
-      <p>Deux autres &eacute;diteurs d'Ic&ocirc;ne: (Valeur de la
-      M&eacute;moire et la Valeur Rapport) n'ont pas
-      d'ic&ocirc;nes, et pas de bouton <b>Changer d'Ic&ocirc;ne</b>
-      , mais vous avez des tables et un bouton<b>Ajouter au
-      Panneau</b>. Vous devez s&eacute;lectionner une entit&eacute;
-      du Tableau avant que le bouton <b>Ajouter au Panneau</b>
-      devienne actif. Pas d'ic&ocirc;nes d'affich&eacute;es pour
-      ces entit&eacute;s JMRI parce ce que le fait d'appuyer sur
-      <b>Ajouter au Panneau</b> installe la valeur maintenue par
-      l'entit&eacute; dans le Panneau.</p>
+      <p>Les deux autres choix pour les icônes: (Journal RPS et Horloge Rapide) installent leurs
+      icônes directement dans le Panneau.</p>
 
-      <p>Deux autres &eacute;diteurs Ic&ocirc;ne: (Image de Fond et
-      Ic&ocirc;ne (ordinaire)) affiche une ic&ocirc;ne par
-      d&eacute;faut, mais aucun tableau, puisque ces
-      &eacute;l&eacute;ments ne repr&eacute;sentent pas un
-      dispositif JMRI. Pour ces &eacute;l&eacute;ments, le bouton
-      <b>Ajouter au Panneau</b> est toujours actif.</p>
+      <h3>Ajout d'Entités JMRI au Panneau</h3>
 
-      <p>Les deux autres choix pour les ic&ocirc;nes: (Journal RPS
-      et Horloge Rapide) installent leurs ic&ocirc;nes directement
-      dans le Panneau.</p>
+      <p>Comme mentionné plus haut la sélection d'une entité de la table rend le bouton
+      <strong>Ajouter au Panneau</strong> actif. Appuyer sur ce bouton installe les icônes de
+      l'entité dans le Panneau.</p>
 
-      <h3>Ajout d'Entit&eacute;s JMRI au Panneau</h3>
+      <p>Si un champ de texte apparaît en dessous du bouton <strong>Ajouter au Panneau</strong> il
+      peut être utilisé pour saisir un nouvelle entité dans le tableau. Quand un Nom Système est
+      entré dans ce champ de texte, l'entité est créée, son nom entré dans le tableau, et le bouton
+      <strong>Ajouter au Panneau</strong> devient actif. Le fait d'appuyer sur le bouton installe
+      les icônes de la nouvelle entité dans le Panneau.</p>
 
-      <p>Comme mentionn&eacute; plus haut la s&eacute;lection d'une
-      entit&eacute; de la table rend le bouton <b>Ajouter au
-      Panneau</b> actif. Appuyer sur ce bouton installe les
-      ic&ocirc;nes de l'entit&eacute; dans le Panneau.</p>
+      <h2>Appui sur le Bouton Changer d'Icône</h2>
+      <img src="AddPanel2.png" align="right" alt="">
+      <p>L'appui sur ce bouton ajoute un volet étiqueté <strong>Catalogue</strong> à la fenêtre. Il
+      montrera un ou plusieurs "arbres" dans un panneau de défilement. L'expansion de l'arbre
+      affiche des "nœuds" ou branches de l'arbre qui, à son tour peut être étendu. Les nœuds
+      correspondent à des choses qui sont des répertoires fichiers systèmes ou sont semblables à
+      des répertoires de fichiers systèmes. Chaque fois que les fichiers image (icône) sont
+      rencontrés dans un nœud, les images sont affichées dans un panneau ci-dessous l'arborescence
+      du catalogue (s).</p>
 
-      <p>Si un champ de texte appara&icirc;t en dessous du bouton
-      <b>Ajouter au Panneau</b> il peut &ecirc;tre utilis&eacute;
-      pour saisir un nouvelle entit&eacute; dans le tableau. Quand
-      un Nom Syst&egrave;me est entr&eacute; dans ce champ de
-      texte, l'entit&eacute; est cr&eacute;&eacute;e, son nom
-      entr&eacute; dans le tableau, et le bouton <b>Ajouter au
-      Panneau</b> devient actif. Le fait d'appuyer sur le bouton
-      installe les ic&ocirc;nes de la nouvelle entit&eacute; dans
-      le Panneau.</p>
+      <p>Ce volet est un panneau de "Prévisualisation" du contenu du nœud et a une étiquette qui
+      indique combien de fichiers images ont été trouvés. Le panneau affiche toutes les images
+      qu'il a trouvées dans le nœud. Sous chaque image (icône) est une étiquette qui indique
+      "l'échelle" à laquelle le l'image est affichée. "échelle 1:1" indique que l'icône est
+      affichée en taille réelle. Si un fichier image volumineux avait été trouvé, l'échelle
+      pourrait être 0,25:1 pour indiquer que l'affichage est 1/4 de la taille réelle de l'image qui
+      pourrait être transféré au Panneau Sous les icônes il y a des boutons radio qui vous
+      permettent d'ajuster le fond des icônes. Cela peut aider à déterminer quelles parties de
+      l'icône sont opaques et quelles parties sont transparentes.</p>
 
-      <h2>Appui sur le Bouton Changer d'Ic&ocirc;ne</h2><img src=
-      "AddPanel2.png" align="right">
-
-      <p>L'appui sur ce bouton ajoute un volet
-      &eacute;tiquet&eacute; <b>Catalogue</b> &agrave; la
-      fen&ecirc;tre. Il montrera un ou plusieurs "arbres" dans un
-      panneau de d&eacute;filement. L'expansion de l'arbre affiche
-      des "n&oelig;uds" ou branches de l'arbre qui, &agrave; son
-      tour peut &ecirc;tre &eacute;tendu. Les n&oelig;uds
-      correspondent &agrave; des choses qui sont des
-      r&eacute;pertoires fichiers syst&egrave;mes ou sont
-      semblables &agrave; des r&eacute;pertoires de fichiers
-      syst&egrave;mes. Chaque fois que les fichiers image
-      (ic&ocirc;ne) sont rencontr&eacute;s dans un n&oelig;ud, les
-      images sont affich&eacute;es dans un panneau ci-dessous
-      l'arborescence du catalogue (s).</p>
-
-      <p>Ce volet est un panneau de "Pr&eacute;visualisation" du
-      contenu du n&oelig;ud et a une &eacute;tiquette qui indique
-      combien de fichiers images ont &eacute;t&eacute;
-      trouv&eacute;s. Le panneau affiche toutes les images qu'il a
-      trouv&eacute;es dans le n&oelig;ud. Sous chaque image
-      (ic&ocirc;ne) est une &eacute;tiquette qui indique
-      "l'&eacute;chelle" &agrave; laquelle le l'image est
-      affich&eacute;e. "&eacute;chelle 1:1" indique que
-      l'ic&ocirc;ne est affich&eacute;e en taille r&eacute;elle. Si
-      un fichier image volumineux avait &eacute;t&eacute;
-      trouv&eacute;, l'&eacute;chelle pourrait &ecirc;tre 0,25:1
-      pour indiquer que l'affichage est 1/4 de la taille
-      r&eacute;elle de l'image qui pourrait &ecirc;tre
-      transf&eacute;r&eacute; au Panneau Sous les ic&ocirc;nes il y
-      a des boutons radio qui vous permettent d'ajuster le fond des
-      ic&ocirc;nes. Cela peut aider &agrave; d&eacute;terminer
-      quelles parties de l'ic&ocirc;ne sont opaques et quelles
-      parties sont transparentes.</p>
-
-      <p>Le volet Catalogue affichera toujours au moins un arbre
-      intitul&eacute; "R&eacute;pertoire des programmes". Ceci est
-      le r&eacute;pertoire des ressources de jmri.jar qui a
-      &eacute;t&eacute; construit lorsque vous avez install&eacute;
-      cette version actuelle de JMRI. D'autres arbres que vous
-      pouvez voir sont: "R&eacute;pertoire Preferences", si vous
-      avez cr&eacute;&eacute; un r&eacute;pertoire "ressources"
-      dans votre r&eacute;pertoire JMRI pr&eacute;f&eacute;rences -
-      ou peut-&ecirc;tre voir, "Index des images" s'il a
-      d&eacute;j&agrave; &eacute;t&eacute; cr&eacute;&eacute; (voir
+      <p>Le volet Catalogue affichera toujours au moins un arbre intitulé "Répertoire des
+      programmes". Ceci est le répertoire des ressources de jmri.jar qui a été construit lorsque
+      vous avez installé cette version actuelle de JMRI. D'autres arbres que vous pouvez voir sont:
+      "Répertoire Preferences", si vous avez créé un répertoire "ressources" dans votre répertoire
+      JMRI préférences - ou peut-être voir, "Index des images" s'il a déjà été créé (voir
       ci-dessous pour plus d'informations).</p>
 
-      <h3>Modification de l'Ic&ocirc;ne</h3>
+      <h3>Modification de l'Icône</h3>
 
-      <p>La plupart des op&eacute;rations de l'&eacute;diteur
-      d'Ic&ocirc;ne sont faites par "Glisser et D&eacute;poser".
-      Pour changer une ic&ocirc;ne, glisser une ic&ocirc;ne depuis
-      le n&oelig;ud affich&eacute; dans le volet en bas de la
-      fen&ecirc;tre (c'est &agrave; dire appuyer sur le bouton de
-      la souris et maintenez le enfonc&eacute; tout en
-      d&eacute;pla&ccedil;ant la souris) &agrave; l'une des
-      entit&eacute;s ic&ocirc;nes JMRI au dessus de
-      l'&eacute;diteur d'Ic&ocirc;ne . Rel&acirc;chez le bouton de
-      la souris apr&egrave;s avoir recouvert l'ic&ocirc;ne que vous
-      souhaitez modifier et remplacer par l'ic&ocirc;ne que vous
-      avez d&eacute;plac&eacute;e. Vous pouvez aller &agrave;
-      d'autres n&oelig;uds et de faire glisser n'importe laquelle
-      des ic&ocirc;nes qui s'y trouvent jusqu'&agrave; ce que vous
-      soyez satisfait avec les &eacute;tats d'ic&ocirc;nes que vous
-      souhaitez installer dans le Panneau.</p>
+      <p>La plupart des opérations de l'éditeur d'Icône sont faites par "Glisser et Déposer". Pour
+      changer une icône, glisser une icône depuis le nœud affiché dans le volet en bas de la
+      fenêtre (c'est à dire appuyer sur le bouton de la souris et maintenez le enfoncé tout en
+      déplaçant la souris) à l'une des entités icônes JMRI au dessus de l'éditeur d'Icône .
+      Relâchez le bouton de la souris après avoir recouvert l'icône que vous souhaitez modifier et
+      remplacer par l'icône que vous avez déplacée. Vous pouvez aller à d'autres nœuds et de faire
+      glisser n'importe laquelle des icônes qui s'y trouvent jusqu'à ce que vous soyez satisfait
+      avec les états d'icônes que vous souhaitez installer dans le Panneau.</p>
 
-      <p>Les modifications que vous apportez aux ic&ocirc;nes d'une
-      entit&eacute; JMRI peuvent &ecirc;tre sauvegard&eacute;es et
-      rappel&eacute;es la prochaine fois que vous utiliserez
-      PanelPro en utilisant dans le menu l'Item <b>Index des Image
-      Stock&eacute;es</b> dans le menu <b>fichier</b> de
-      l'&eacute;diteur de Panneau. Le menu <b>Index des images
-      Stock&eacute;es</b> appara&icirc;t &eacute;galement dans le
-      menu <b>Fichier</b> de l'&eacute;diteur d'Index des
-      Images.</p>
+      <p>Les modifications que vous apportez aux icônes d'une entité JMRI peuvent être sauvegardées
+      et rappelées la prochaine fois que vous utiliserez PanelPro en utilisant dans le menu l'Item
+      <strong>Index des Image Stockées</strong> dans le menu <strong>fichier</strong> de l'éditeur
+      de Panneau. Le menu <strong>Index des images Stockées</strong> apparaît également dans le
+      menu <strong>Fichier</strong> de l'éditeur d'Index des Images.</p>
 
-      <h2>Menus &eacute;diteur d'Ic&ocirc;nes</h2>
+      <h2>Menus éditeur d'Icônes</h2>
 
-      <p>Le menu <b>Trouver des Ic&ocirc;nes</b> contient les
-      &eacute;l&eacute;ments suivants:</p>
+      <p>Le menu <strong>Trouver des Icônes</strong> contient les éléments suivants:</p>
 
       <ul>
-        <li><b>Cr&eacute;er/Modifier Index des images</b>. Ce menu
-        ouvre une fen&ecirc;tre o&ugrave; vous pouvez organiser les
-        ic&ocirc;nes dans un sch&eacute;ma qui les rend faciles
-        &agrave; trouver quand vous voulez utilisez un
-        &eacute;diteur d'ic&ocirc;nes. Voir la <a href=
-        "../catalog/ImageIndex.shtml">page &eacute;diteur d'Index
-        d'Images</a> pour comment utilis&eacute; cet
-        &eacute;l&eacute;ment de menu.</li>
+        <li><strong>Créer/Modifier Index des images</strong>. Ce menu ouvre une fenêtre où vous
+        pouvez organiser les icônes dans un schéma qui les rend faciles à trouver quand vous voulez
+        utilisez un éditeur d'icônes. Voir la <a href="../catalog/ImageIndex.shtml">page éditeur
+        d'Index d'Images</a> pour comment utilisé cet élément de menu.</li>
 
-        <li><b>Recherche de Fichier Syst&egrave;me pour les
-        Ic&ocirc;nes</b>. Cela ouvre un s&eacute;lecteur de
-        fichiers o&ugrave; vous pouvez ouvrir n'importe quel
-        r&eacute;pertoire qui a des fichiers image.
-        S&eacute;lectionnez n'importe quel r&eacute;pertoire vu par
-        votre ordinateur et une recherche d'ic&ocirc;nes va
-        commencer. Pour Cela visiter chaque sous/r&eacute;pertoire
-        dans ce r&eacute;pertoire et quand il rencontre l'un des
-        fichiers image, il va ouvrir une fen&ecirc;tre et essayer
-        d'afficher toutes les images qu'il trouve. Remarque: Cela
-        peut prendre <i>un certain temps.</i><br>
-        Selon la quantit&eacute; de m&eacute;moire qui est
-        n&eacute;cessaire pour afficher tous les fichiers, l'une
-        des deux s&eacute;quences suivantes
-        d'&eacute;v&eacute;nements se produiront.</li>
+        <li><strong>Recherche de Fichier Système pour les Icônes</strong>. Cela ouvre un sélecteur
+        de fichiers où vous pouvez ouvrir n'importe quel répertoire qui a des fichiers image.
+        Sélectionnez n'importe quel répertoire vu par votre ordinateur et une recherche d'icônes va
+        commencer. Pour Cela visiter chaque sous/répertoire dans ce répertoire et quand il
+        rencontre l'un des fichiers image, il va ouvrir une fenêtre et essayer d'afficher toutes
+        les images qu'il trouve. Remarque: Cela peut prendre <em>un certain temps.</em><br>
+        Selon la quantité de mémoire qui est nécessaire pour afficher tous les fichiers, l'une des
+        deux séquences suivantes d'événements se produiront.</li>
 
         <li style="list-style: none">
           <ul>
-            <li>S'il y a suffisamment de m&eacute;moire pour
-            afficher les fichiers, la fen&ecirc;tre les affiche
-            avec les boutons radio pour ajuster leurs
-            arri&egrave;res-plans. En outre, trois boutons seront
-            affich&eacute;s au-dessus des images - <b>Ajouter au
-            catalogue</b>, <b>Poursuivre la Recherche</b> et
-            <b>Annuler</b>.
-
+            <li>S'il y a suffisamment de mémoire pour afficher les fichiers, la fenêtre les affiche
+            avec les boutons radio pour ajuster leurs arrières-plans. En outre, trois boutons
+            seront affichés au-dessus des images - <strong>Ajouter au catalogue</strong>, <strong>
+              Poursuivre la Recherche</strong> et <strong>Annuler</strong>.
               <ul>
-                <li>L'appui sur <b>Ajouter au catalogue</b> fera de
-                ce r&eacute;pertoire un des arbres dans le volet
-                Catalogue. Dans ce cas, vous pouvez ensuite
-                l'utiliser pour s&eacute;lectionner les
-                ic&ocirc;nes pour changer les ic&ocirc;nes dans
-                l'un des &eacute;diteurs d'Ic&ocirc;ne.</li>
+                <li>L'appui sur <strong>Ajouter au catalogue</strong> fera de ce répertoire un des
+                arbres dans le volet Catalogue. Dans ce cas, vous pouvez ensuite l'utiliser pour
+                sélectionner les icônes pour changer les icônes dans l'un des éditeurs
+                d'Icône.</li>
 
-                <li>L'appui sur <b>Poursuivre la Recherche</b> fera
-                continuer la recherche dans le r&eacute;pertoire
-                suivant trouv&eacute; avec des fichiers image.</li>
+                <li>L'appui sur <strong>Poursuivre la Recherche</strong> fera continuer la
+                recherche dans le répertoire suivant trouvé avec des fichiers image.</li>
 
-                <li>L'appui sur <b>Annuler</b> fermera la
-                fen&ecirc;tre sans suite.</li>
+                <li>L'appui sur <strong>Annuler</strong> fermera la fenêtre sans suite.</li>
               </ul>
             </li>
 
-            <li>S'il n'y a pas assez de m&eacute;moire pour
-            afficher tous les fichiers image trouv&eacute;s dans le
-            r&eacute;pertoire, un message indiquera le nombre de
-            fichiers qui peut &ecirc;tre affich&eacute;. Pressez
-            <b>OK</b> et il est probable qu'un autre message sera
-            affich&eacute; expliquant que si vous voulez ajouter
-            une de ces images dans le catalogue, vous devez
-            d&eacute;placer ou copier celles que vous voulez dans
-            un autre r&eacute;pertoire. Encore une fois pressez <b>
-              OK</b> et la fen&ecirc;tre affichera ce qu'elle peut.
-              Dans ce cas, les trois boutons sont <b>Voir Plus</b>,
-              <b>Poursuivre la Recherche</b> et <b>Annuler</b>.
-
+            <li>S'il n'y a pas assez de mémoire pour afficher tous les fichiers image trouvés dans
+            le répertoire, un message indiquera le nombre de fichiers qui peut être affiché.
+            Pressez <strong>OK</strong> et il est probable qu'un autre message sera affiché
+            expliquant que si vous voulez ajouter une de ces images dans le catalogue, vous devez
+            déplacer ou copier celles que vous voulez dans un autre répertoire. Encore une fois
+            pressez <strong>OK</strong> et la fenêtre affichera ce qu'elle peut. Dans ce cas, les
+            trois boutons sont <strong>Voir Plus</strong>, <strong>Poursuivre la Recherche</strong>
+            et <strong>Annuler</strong>.
               <ul>
-                <li>L'appui sur <b>Voir Plus</b> affiche le
-                prochain groupe de fichiers image &agrave; partir
-                du r&eacute;pertoire qu'elle est capable
-                d'afficher.</li>
+                <li>L'appui sur <strong>Voir Plus</strong> affiche le prochain groupe de fichiers
+                image à partir du répertoire qu'elle est capable d'afficher.</li>
 
-                <li>L'appui sur <b>Poursuivre la Recherche</b> fera
-                poursuivre la recherche sur le r&eacute;pertoire
-                suivant trouv&eacute; avec des fichiers image.</li>
+                <li>L'appui sur <strong>Poursuivre la Recherche</strong> fera poursuivre la
+                recherche sur le répertoire suivant trouvé avec des fichiers image.</li>
 
                 <li style="list-style: none">L'appui sur</li>
 
-                <li><b>Annuler</b> ferme la fen&ecirc;tre sans
-                suite.</li>
-              </ul>Remarque ce dernier cas se produit
-              g&eacute;n&eacute;ralement lorsque vous ouvrez un
-              r&eacute;pertoire d'album de photos important.
+                <li><strong>Annuler</strong> ferme la fenêtre sans suite.</li>
+              </ul>
+              Remarque ce dernier cas se produit généralement lorsque vous ouvrez un répertoire
+              d'album de photos important.
             </li>
           </ul>
         </li>
       </ul>
 
-      <p>Ceci est une caract&eacute;ristique a utilis&eacute; avec
-      parcimonie, mais de nombreuses ic&ocirc;nes
-      int&eacute;ressantes peuvent &ecirc;tre trouv&eacute;es, en
-      particulier celles mises en cache par le navigateur. Vous
-      pourriez avoir un emploi pour elles.</p>
+      <p>Ceci est une caractéristique a utilisé avec parcimonie, mais de nombreuses icônes
+      intéressantes peuvent être trouvées, en particulier celles mises en cache par le navigateur.
+      Vous pourriez avoir un emploi pour elles.</p>
 
-      <h3>Faire de Nouvelles Ic&ocirc;nes Disponibles pour le
-      Panneau</h3>
+      <h3>Faire de Nouvelles Icônes Disponibles pour le Panneau</h3>
 
-      <p>Vous pouvez &eacute;galement cr&eacute;er vos propres
-      ic&ocirc;nes. Il y a deux fa&ccedil;ons pour que vous les
-      rendiez en permanence disponibles pour l'&eacute;diteur de
-      Panneau.</p>
+      <p>Vous pouvez également créer vos propres icônes. Il y a deux façons pour que vous les
+      rendiez en permanence disponibles pour l'éditeur de Panneau.</p>
 
       <ul>
-        <li>Cr&eacute;er un Catalogue Index des Images qui sont
-        enregistr&eacute;es sur le disque et apparaissent
-        automatiquement dans le volet Catalogue. Utilisez
-        l'&eacute;l&eacute;ment <b>Cr&eacute;er/Modifier un
-        Catalogue Index Image</b> du menu pour cr&eacute;er et
-        &eacute;diter un Index Image. L'Index Image sera
-        pr&eacute;serv&eacute; inchang&eacute; durant une mise
-        &agrave; niveau. Voir la <a href=
-        "../catalog/ImageIndex.shtml">Page &eacute;diteur d'Index
-        Image</a> pour plus de d&eacute;tails.</li>
+        <li>Créer un Catalogue Index des Images qui sont enregistrées sur le disque et apparaissent
+        automatiquement dans le volet Catalogue. Utilisez l'élément <strong>Créer/Modifier un
+        Catalogue Index Image</strong> du menu pour créer et éditer un Index Image. L'Index Image
+        sera préservé inchangé durant une mise à niveau. Voir la <a href=
+        "../catalog/ImageIndex.shtml">Page éditeur d'Index Image</a> pour plus de détails.</li>
 
-        <li>Cr&eacute;er un nouveau dossier nomm&eacute;
-        "ressources" dans votre r&eacute;pertoire JMRI
-        Pr&eacute;f&eacute;rences. Ajoutez vos nouvelles
-        ic&ocirc;nes de ce dossier. Cela permettra d'&eacute;viter
-        tout conflits &eacute;ventuels ou perte de donn&eacute;es
-        lors d'une mise &agrave; niveau. Ces nouveaux
-        &eacute;l&eacute;ments apparaitront automatiquement sous la
-        rubrique "Annuaire Pr&eacute;f&eacute;rences" dans le
-        Catalogue d'ic&ocirc;ne.</li>
+        <li>Créer un nouveau dossier nommé "ressources" dans votre répertoire JMRI Préférences.
+        Ajoutez vos nouvelles icônes de ce dossier. Cela permettra d'éviter tout conflits éventuels
+        ou perte de données lors d'une mise à niveau. Ces nouveaux éléments apparaitront
+        automatiquement sous la rubrique "Annuaire Préférences" dans le Catalogue d'icône.</li>
       </ul>
 
-      <h3>Changer les ic&ocirc;nes par d&eacute;faut</h3>
+      <h3>Changer les icônes par défaut</h3>
 
-      <p>Les ic&ocirc;nes affich&eacute;es lorsque vous ouvrez un
-      &eacute;diteur d'ic&ocirc;nes sont les ic&ocirc;nes par
-      d&eacute;faut. Vous pouvez modifier ces param&egrave;tres par
-      d&eacute;faut par des ic&ocirc;nes stock&eacute;es de votre
-      choix pour l'affichage des ic&ocirc;nes par d&eacute;faut
-      pour chaque &eacute;diteur d'Ic&ocirc;nes.</p>
+      <p>Les icônes affichées lorsque vous ouvrez un éditeur d'icônes sont les icônes par défaut.
+      Vous pouvez modifier ces paramètres par défaut par des icônes stockées de votre choix pour
+      l'affichage des icônes par défaut pour chaque éditeur d'Icônes.</p>
 
       <ul>
-        <li>Apr&egrave;s avoir modifi&eacute; les ic&ocirc;nes en
-        les faisant glisser les ic&ocirc;nes depuis le "volet
-        catalogue" et en les d&eacute;posant sur les ic&ocirc;nes
-        par d&eacute;faut, utilisez l'"Index Image Stock&eacute;es"
-        dans l'&eacute;l&eacute;ment de menu sous le menu "Fichier"
-        sur la fen&ecirc;tre de l'&eacute;diteur de Panneau.</li>
+        <li>Après avoir modifié les icônes en les faisant glisser les icônes depuis le "volet
+        catalogue" et en les déposant sur les icônes par défaut, utilisez l'"Index Image Stockées"
+        dans l'élément de menu sous le menu "Fichier" sur la fenêtre de l'éditeur de Panneau.</li>
 
-        <li>Alternativement, si vous fermez l'&eacute;diteur
-        d'Ic&ocirc;ne, vous serez invit&eacute; &agrave; un
-        dialogue vous demandant si vous souhaitez enregistrer ces
-        choix d'ic&ocirc;ne comme vos choix par d&eacute;fauts. Ce
-        dialogue s'affiche &eacute;galement si des modifications
-        ont &eacute;t&eacute; apport&eacute;es &agrave; l'Index
-        Image. La bo&icirc;te de dialogue pr&eacute;sente trois
-        options:
-
+        <li>Alternativement, si vous fermez l'éditeur d'Icône, vous serez invité à un dialogue vous
+        demandant si vous souhaitez enregistrer ces choix d'icône comme vos choix par défauts. Ce
+        dialogue s'affiche également si des modifications ont été apportées à l'Index Image. La
+        boîte de dialogue présente trois options:
           <ul>
-            <li><b>Oui</b> - Enregistrer les modifications qui ont
-            &eacute;t&eacute; faites pour les ic&ocirc;nes par
-            d&eacute;faut ou l'index d'images</li>
+            <li><strong>Oui</strong> - Enregistrer les modifications qui ont été faites pour les
+            icônes par défaut ou l'index d'images</li>
 
-            <li><b>Non</b> - Et ne montrent plus d'invite sur les
-            changements</li>
+            <li><strong>Non</strong> - Et ne montrent plus d'invite sur les changements</li>
 
-            <li><b>Annuler</b> - Pas maintenant, mais me demander
-            plus tard</li>
+            <li><strong>Annuler</strong> - Pas maintenant, mais me demander plus tard</li>
           </ul>
         </li>
-      </ul><!--#include virtual="/Footer.shtml" -->
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

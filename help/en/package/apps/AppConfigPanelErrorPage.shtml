@@ -1,38 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Setting Preferences</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI: Setting The JMRI Preferences</h1>This Help screen
-      opens automatically when the JMRI Preferences have not been
-      set, or there was a Preferences-related error while the
-      program was starting up.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Setting The JMRI Preferences</h1>
+      This Help screen opens automatically when the JMRI Preferences have not been set, or there
+      was a Preferences-related error while the program was starting up.
+      <p>Once the Preferences are set properly, this screen won't display. The Help pane for
+      setting your Preferences is at <a href="./TabbedPreferences.shtml">Preferences Help (v2.9 and
+      up)</a> or <a href="./AppConfigPanel.shtml">Preferences Help (older)</a>. You can also open
+      the help by selecting "Window Help" in the Help menu of the Preferences pane.</p>
 
-      <p>Once the Preferences are set properly, this screen won't
-      display. The Help pane for setting your Preferences is at
-      <a href="./TabbedPreferences.shtml">Preferences Help (v2.9
-      and up)</a> or <a href="./AppConfigPanel.shtml">Preferences
-      Help (older)</a>. You can also open the help by selecting
-      "Window Help" in the Help menu of the Preferences pane.</p>
-      <p>This
-      is the help\en\package\apps\AppConfixPanelErrorPage.shtml
-      pane</p>
+      <p>This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

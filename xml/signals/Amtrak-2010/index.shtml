@@ -1,57 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author: Suzie_Tall $) 2010 -->
-<title>JMRI: Amtrak 2010 Signaling Definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author: Suzie_Tall $) 2010 -->
 
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: Amtrak 2010 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1> 
-JMRI: Amtrak-2010 Signalling Definition
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-This system contains signalling definitions coresponding to the Amtrak signal aspects used on the North East Corridor and shown on the Railroad Signals of the US website. 
-<p>
-A non-JMRI web page covering the aspects can be referenced here:-
-<p>
-<a href="http://www.railroadsignals.us/rulebooks/amtraknec/index.htm">Amtrak signal aspects</a>.
+      <h1>JMRI: Amtrak-2010 Signalling Definition</h1>
+      This system contains signalling definitions coresponding to the Amtrak signal aspects used on
+      the North East Corridor and shown on the Railroad Signals of the US website.
+      <p>A non-JMRI web page covering the aspects can be referenced here:-</p>
 
-<p>
-Some aspect sequences can be controlled by setting appropriate speeds on blocks. A 'Limited' speed block will cause a signal to be proceeded by an Approach Limited indication in most cases and a 'Medium' speed block Approach Medium. A Restricting speed block will force a restricting indiction to be shown if available.
+      <p><a href="http://www.railroadsignals.us/rulebooks/amtraknec/index.htm">Amtrak signal
+      aspects</a>.</p>
 
-<p>
-An additional non-flashing icon set has been provided for where the flashing icons cause display problems. Choosing the non flashing representations does not affect the aspect displayed on the physical signal. Right click on the signal icon when editing the panel to select the alternate icon set for that signal.
+      <p>Some aspect sequences can be controlled by setting appropriate speeds on blocks. A
+      'Limited' speed block will cause a signal to be proceeded by an Approach Limited indication
+      in most cases and a 'Medium' speed block Approach Medium. A Restricting speed block will
+      force a restricting indiction to be shown if available.</p>
 
-<p>
-Since this is a relatively simple speed signalling system there are no signal indications to go from one speed to another directly so at least two double head masts will be required between interlockings to allow the correct aspects to be displayed for both interlockings.
+      <p>An additional non-flashing icon set has been provided for where the flashing icons cause
+      display problems. Choosing the non flashing representations does not affect the aspect
+      displayed on the physical signal. Right click on the signal icon when editing the panel to
+      select the alternate icon set for that signal.</p>
 
-<p>
-For the JMRI definitions, see the 
-<a href="aspects.xml">aspect page</a>.
-<p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-Single.xml">Single</a>
-<li><a href="appearance-Double.xml">Double</a>
-<li><a href="appearance-Permissive.xml">Permissive</a>
-</ul>
+      <p>Since this is a relatively simple speed signalling system there are no signal indications
+      to go from one speed to another directly so at least two double head masts will be required
+      between interlockings to allow the correct aspects to be displayed for both
+      interlockings.</p>
 
+      <p>For the JMRI definitions, see the <a href="aspects.xml">aspect page</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <p>Signal Mast definitions:</p>
 
+      <ul>
+        <li>
+          <a href="appearance-Single.xml">Single</a>
+        </li>
+
+        <li>
+          <a href="appearance-Double.xml">Double</a>
+        </li>
+
+        <li>
+          <a href="appearance-Permissive.xml">Permissive</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

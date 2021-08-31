@@ -1,46 +1,37 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Renumber Grapevine Node</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help configure grapevine node">
+  <meta name="keywords" content="JMRI help configure grapevine node">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Change Grapevine Board Address</h1>
+
       <p>This tool lets you change the address of a Grapevine board.</p>
+      <img src="../images/GrapevineNodeConfigToolPane.png" width="442" height="189" class=
+      "floatRight" alt="Grapevine Node Renumer Tool Interface">
+      <p>The board remembers the change, even through power off/on cycles, until you change it
+      again.</p>
 
-      <img src="../images/GrapevineNodeConfigToolPane.png" width=
-              "442" height="189" align="right"
-           alt="Grapevine Node Renumer Tool Interface">
+      <p>Enter the original node number, the new node number, and press "Change The Node
+      Number".</p>
 
-      <p>The board remembers the change, even through power off/on
-      cycles, until you change it again.</p>
+      <p>You might want to open the <a href="NodeTableFrame.shtml">Node Table</a> and click "Check"
+      to see if the renumbering has worked.</p>
 
-      <p>Enter the original node number, the new node number, and
-      press "Change The Node Number".</p>
-
-      <p>You might want to open the <a href=
-      "NodeTableFrame.shtml">Node Table</a> and click "Check" to
-      see if the renumbering has worked.</p>
-
-      <p>Back to the <a href=
-      "../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
-      page.</p>
-
+      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine
+      Hardware Help</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

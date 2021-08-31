@@ -5,14 +5,18 @@
     <factReset label="Reset CVs 0-257" CV="59" default="1">
         <label xml:lang="it">Reset CV 0-257 ai valori di fabbrica</label>
         <label xml:lang="nl">Zet CV's 0-257 terug naar fabrieksinstelling</label>
+        <label xml:lang="cs">Reset CV 0-257 do továrního nastavení</label>
     </factReset>
     <factReset label="Reset CV 257 - 512 (RailCom Plus® Banks 5 &amp; 6)" CV="59" default="2">
         <label xml:lang="de">Reset CV 257 - 512 (RailCom Plus® Banken 5 &amp; 6)</label>
+        <label xml:lang="cs">Reset CV 257 - 512 (RailCom Plus® Banky 5 &amp; 6)</label>
     </factReset>
     <factReset label="Reset CV 257 - 512 (extended Function Mapping Banks 1 &amp; 2)" CV="59" default="3">
         <label xml:lang="de">Reset CV 257 - 512 (erweitertes Function Mapping Banken 1 &amp; 2)</label>
+        <label xml:lang="cs">Reset CV 257 - 512 (Rozšířené mapování funkcí Banky 1 &amp; 2)</label>
     </factReset>
     <factReset label="Reset CV 257 - 512 (PWM-Modulation Funktions outputs Banks 3 &amp; 4)" CV="59" default="4">
         <label xml:lang="de">Reset CV 257 - 512 (PWM-Modulation Funktionsausgänge Banken 3 &amp; 4)</label>
+        <label xml:lang="cs">Reset CV 257 - 512 (PWM Modulace funkční výstupy Banky 3 &amp; 4)</label>
     </factReset>
 </resets>

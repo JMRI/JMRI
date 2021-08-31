@@ -2,6 +2,7 @@ package jmri.jmrix.nce;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import jmri.ProgrammingMode;
@@ -255,8 +256,8 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             progState = NOTPROGRAMMING;
             // check for errors
             if ((m.match("NO FEEDBACK DETECTED") >= 0)
-                    || (m.isBinary() && !_progRead && (m.getElement(0) != '!'))
-                    || (m.isBinary() && _progRead && (m.getElement(1) != '!'))) {
+                    || (m.isBinary() && !_progRead && (m.getElement(0) != NceMessage.NCE_OKAY))
+                    || (m.isBinary() && _progRead && (m.getElement(1) != NceMessage.NCE_OKAY))) {
                 if (log.isDebugEnabled()) {
                     log.debug("handle NO FEEDBACK DETECTED");
                 }

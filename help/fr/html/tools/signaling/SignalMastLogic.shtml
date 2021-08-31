@@ -1,196 +1,235 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
-<!-- Copyright Kevin Dickerson 2011 -->
-<!-- Updated by Blorec Herv&#233; 2016-09-13-->
-<title>JMRI: Signal Mast Logic introduction</title>
-<META name="Author" content="Bob Jacobsen, Egbert Broerse">
-<META name="Date.Modified" content="20140614">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright Kevin Dickerson 2011 -->
+  <!-- Updated by Blorec Herv&#233; 2016-09-13-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Signal Mast Logic introduction</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20140614"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Logique M&#226;t de Signalisation</h1>
+      <h1>JMRI: Logique Mât de Signalisation</h1>
 
-<p class="subtitle">
-    Informations g&#233;n&#233;rales sur la Logique M&#226;t de Signalisation
-</p>
+      <p class="subtitle">Informations générales sur la Logique Mât de Signalisation</p>
 
-<div class="para">
-La Logique M&#226;t de Signalisation JMRI vous permet de construire un ensemble de crit&#232;res pour un
-M&#226;t de Signalisation pour savoir quel Aspect il faut afficher pour un itin&#233;raire sp&#233;cifique
-vers un M&#226;t de Signalisation de destination.
-<p>
-Chaque Logique M&#226;t de Signalisation est construite &#224; partir d'une paire de M&#226;ts de Signalisation, source et destination
-ainsi qu'une s&#233;rie de Cantons, d'Aiguillages et de Capteurs entre les deux Logique M&#226;ts de Signalisation et l'&#233;tat qu'ils
-doivent avoir pour que la Logique M&#226;t de Signalisation de la source soit lib&#233;r&#233; d'un Aspect "Danger" ou "Stop".
-<p>
-<img src="images/logic1.png" height="92" width="437"><br>Exemple 1
-<p>
-Dans l'exemple ci-dessus, vous avez un M&#226;t de Signalisation source  SM20, il y a alors deux
-M&#226;t de Signalisation destination  SM22 et SM23. <br>
-La logique derri&#232;re la paire de signalisation, SM20 et SM23, veut que les cantons 2 &amp; 3 doivent &#234;tre
-inoccup&#233;s, et l'aiguillage IT1 doit &#234;tre r&#233;gl&#233; sur "Directe". Une fois que les crit&#232;res sont respect&#233;s,
-alors le M&#226;t de Signalisation SM20, passera  de "Danger" &#224; "Avertissement", si le M&#226;t de Signalisationl SM23 a &#233;t&#233; mis
-&#224; "Avertissement" alors SM20 serait mis &#224; "Libre" et montrera un Aspect Vert. D&#232;s
-que les Canton 2 ou 3 deviennent Actifs ou si l'Aiguillage est D&#233;vi&#233;, le signal SM20 est
-remis sur "Danger".
-<p>
-Chaque M&#226;t de Signalisation de la paire doit &#234;tre directement accessible &#224; depuis l'autre, sans aucun autre
-M&#226;t de Signalisation entre les deux dans la m&#234;me direction.
-<p>
-<img src="images/logic2.png" height="93" width="511"><br>Exemple 2
-<p>
-Dans l'exemple ci-dessus, une Logique M&#226;t de Signalisation depuis SM20 &#224; SM24 serait invalide
-si SM23 est entre les deux. Vous avez &#224; cr&#233;er deux Logique M&#226;t de Signalisation distinctes, l'une comme
-ci-dessus pour SM20 &#224; SM23, la seconde pour SM23 &#224; SM24.
-<hr>
-L'Aspect que notre M&#226;t de Signalisation source affiche apr&#232;s avoir &#233;t&#233; lib&#233;r&#233; de "Danger" est d'abord
-d&#233;termin&#233; par l'Aspect de la disposition qui a &#233;t&#233; d&#233;fini dans le fichierde d&#233;finition Apparence du M&#226;t
-de Signalisation . S'il y a un seul aspect qui pourrait &#234;tre affich&#233;e, alors le M&#226;t de Signalisation
-	sera fix&#233; &#224; cet Aspect.
-Cependant, s'il y a  de multiples Aspects qui pourraient &#234;tre potentiellement affich&#233;s, alors
-	la logique regarde deux z&#244;nes afin de d&#233;terminer l'Aspect r&#233;sultant qui sera affich&#233;:
-<ul><li>Itin&#233;raire Divergent
-		<ul>
-<li>S'il y a des Aspects pour un itin&#233;raire D&#233;vi&#233; et les Aiguillages sur le chemin sont D&#233;vi&#233;s,
-il utilisera alors l'Aspect d'un itin&#233;raire D&#233;vi&#233;.</li>
-<li>Si aucun des Aiguillages sur l'itin&#233;raire n'est D&#233;vi&#233;s, alors l'Aspect qui n'est pas
-d&#233;sign&#233;e comme un Aspect D&#233;vi&#233; sera utilis&#233; </li>
-</ul></li>
+      <div class="para">
+        La Logique Mât de Signalisation JMRI vous permet de construire un ensemble de critères pour
+        un Mât de Signalisation pour savoir quel Aspect il faut afficher pour un itinéraire
+        spécifique vers un Mât de Signalisation de destination.
+        <p>Chaque Logique Mât de Signalisation est construite à partir d'une paire de Mâts de
+        Signalisation, source et destination ainsi qu'une série de Cantons, d'Aiguillages et de
+        Capteurs entre les deux Logique Mâts de Signalisation et l'état qu'ils doivent avoir pour
+        que la Logique Mât de Signalisation de la source soit libéré d'un Aspect "Danger" ou
+        "Stop".</p>
 
-<li>Canton/Signal de Vitesse<br>
-<ul><li>
-Si l'itin&#233;raire D&#233;vi&#233; n'est pas disponible sur les Aspects du signal, ou il ne
-retourne pas un simple Aspect potentiel, alors la vitesse du Canton et la vitesse de
-l'Aspect sont utilis&#233;.
-<br>
-Chaque Aspect et Canton peut &#234;tre configur&#233; avec une valeur de Vitesse, la Logique M&#226;t de Signalisation utilisera
-la  plus faible Vitesse d&#233;finie sur les Cantons dans l'itin&#233;raire et choisira l'aspect avec
-la Vitesse la plus &#233;lev&#233;e qui est sous la plus basse vitesse des itin&#233;raires. C'est &#224; dire si la Vitesse
-minimale est 65&nbsp;mph, ( 105 kmh ), alors il va choisir l'Aspect qui a une vitesse &#233;gale ou
-inf&#233;rieure &#224; 65&nbsp;mph ( 105 kmh ).
-</li></ul>
-</li>
-</ul>
-<p>
-En plus d'&#234;tre en mesure de pr&#233;ciser les Aiguillages, les Cantons et les Capteurs qui composent
-une Logique M&#226;t de Signalisation, vous pouvez aussi sp&#233;cifier quels autres M&#226;ts de Signalisation doivent &#234;tre
-configur&#233;s pour un Aspect sp&#233;cifique avant que le Logique M&#226;t de Signalisation source soit lib&#233;r&#233;. En g&#233;n&#233;ral, il ne devrait
-pas y avoir  besoin d'ajouter de M&#226;ts de Signalisation suppl&#233;mentaires dans la Logique M&#226;t de Signalisation car l'itin&#233;raire entre tous les
-diff&#233;rents M&#226;ts de Signalisation sources destination doit avoir un crit&#232;re unique. Cependant, il y a certaine situation,
-comme deux voies se croisant au m&#234;me niveau o&#249; un itin&#233;raire en conflit
-pourrait &#234;tre d&#233;fini. Par cons&#233;quent, pour contourner ce probl&#232;me, le M&#226;t de Signalisation ou les M&#226;ts qui sont
-pour prot&#233;ger le croisement devraientt faire partie de chacun des autres crit&#232;res.
+        <p><img src="images/logic1.png" height="92" width="437" alt=""><br>
+        Exemple 1</p>
 
-<h2>Information G&#233;n&#233;r&#233;e Manuellement et Automatiquement</h2>
-		La fen&#234;tre Logique M&#226;t de Signalisation d&#233;tient deux zones montrant les information Canton et Aiguillage: le
-premier est g&#233;n&#233;r&#233; par l'utilisateur, le deuxi&#232;me est celui o&#248; un outil tel que celui utilis&#233; avec l'&#233;diteur
-de TCO (<a href="#autologic">voir ci dessous</a>) a automatiquement mis en place un ensemble de Cantons ou d'Aiguillages depuis
-le panneau du r&#233;seau comme crit&#232;re de signalisation. <p>
-Les deux ensembles d'information sont utilis&#233;s par JMRI afin de d&#233;terminer si un M&#226;t de Signalisation
-peut &#234;tre lib&#233;r&#233; ou pas, cependant les informations cr&#233;&#233;es manuellement ont une plus grande
-priorit&#233; sur les informations g&#233;n&#233;r&#233;es automatiquement, Permettant ainsi &#224; l'utilisateur de l'emporter
-sur ce que le syst&#232;me a d&#233;termin&#233;.
-<p>
-Les informations g&#233;n&#233;r&#233;es automatiquement ne sont pas enregistr&#233;es avec le reste des informations
-du panneau,
-mais les informations utilisateurs g&#233;n&#233;r&#233;es manuellement le sont. Si l'&#233;diteur de r&#233;seau
-est utilis&#233; comme base de la Logique M&#226;t de Signalisation (<a href="#autologic">Voir ci-dessous</a>), alors
-la logique de signalisation red&#233;couvrira ces informations depuis le panneau &#224; chaque fois qu'il est charg&#233;, donc si des changements ont &#233;t&#233; enregistr&#233;s dans l'intervalle, elles seront d&#233;couvertes. S'il vous pla&#238;t notez que cette
-nouvelle r&#233;g&#233;n&#233;ration d'informations n'est pas faite au "vol" quand le panneau de l'&#233;diteur de
-TCO est modifi&#233;e et enregistrer sans quitter JMRI..
+        <p>Dans l'exemple ci-dessus, vous avez un Mât de Signalisation source SM20, il y a alors
+        deux Mât de Signalisation destination SM22 et SM23.<br>
+        La logique derrière la paire de signalisation, SM20 et SM23, veut que les cantons 2 &amp; 3
+        doivent être inoccupés, et l'aiguillage IT1 doit être réglé sur "Directe". Une fois que les
+        critères sont respectés, alors le Mât de Signalisation SM20, passera de "Danger" à
+        "Avertissement", si le Mât de Signalisationl SM23 a été mis à "Avertissement" alors SM20
+        serait mis à "Libre" et montrera un Aspect Vert. Dès que les Canton 2 ou 3 deviennent
+        Actifs ou si l'Aiguillage est Dévié, le signal SM20 est remis sur "Danger".</p>
 
-<h2>Logique d'une Zone Non Signal&#233;e ou Heurtoirs</h2>
-La Logique M&#226;t de Signalisation ne fonctionne qu'entre un M&#226;t de Signalisation source et M&#226;t de
-	Signalisation destination,
-si vous avez un itin&#233;raire valide pour un Heurtoir/z&#244;ne d'arr&#234;t/zone sans surveillance, alors il n'y a
-pas de M&#226;t de Signalisation de destination sp&#233;cifique. Dans ce cas, vous devez cr&#233;er un M&#226;t de
-Signalisation "factice" de type Virtuel dans le Tableau M&#226;t de Signalisation pour agir en tant que M&#226;t de
-	Signalisation de votre destination, il n'a pas besoin de repr&#233;senter un signal
-r&#233;el sur le r&#233;seau ou Feux de Signalisation  associ&#233;s. Tout ce que ce  M&#226;t de Signalisation
-	Virtuel a &#224; faire est d'afficher un Aspect "Danger".
+        <p>Chaque Mât de Signalisation de la paire doit être directement accessible à depuis
+        l'autre, sans aucun autre Mât de Signalisation entre les deux dans la même direction.</p>
 
-<h2>Utilisation de l'&#233;diteur de r&#233;seau pour la Logique  M&#226;t de Signalisation </h2>
-En utilisant l'&#201;diteur de Canton du R&#233;seau , il est possible d'avoir la Logique  M&#226;t de Signalisation
-qui d&#233;termine les paires de signalisation, ainsi que les Cantons et les Aiguillages qui forment
-les crit&#232;res. Cela peut &#234;tre fait dans tous les  M&#226;t de Signalisation sur l'&#201;diteur R&#233;seau
-ou sur une source de M&#226;t de Signalisation.
-<p>Il a l'avantage que si le panneau de l'&#201;diteur de R&#233;seau est modifi&#233;, la Logique de signalisation d&#233;couvrira ce changement lorsque le panneau est recharg&#233;
-et utilise le nouveau canton et l'information de l'aiguillage.
-S'il vous pla&#238;t soyez conscient que l'actualisation lors du chargement du panneau ne fera pas d&#233;couvrir toutes les nouvelles
-paires de M&#226;ts de Signalisation ou d'enlever des paires de M&#226;t de Signalisation invalides, il fera tout simplement une actualisation
-des informations entre les paires existantes.
+        <p><img src="images/logic2.png" height="93" width="511" alt=""><br>
+        Exemple 2</p>
 
-<h3>Placement des M&#226;t de Signalisation </h3>
-Les M&#226;ts de Signalisation peuvent &#234;tre plac&#233;s pr&#232;s des Aiguillages, des points d'ancrage et les croisements,
-mais seulement o&#248; il y a une fronti&#232;re entre deux cantons diff&#233;rent sur le r&#233;seau .<p>
-Pour ajouter un M&#226;t de Signalisation en utilisant l'&#201;diteur de R&#233;seau, un clic droit sur l'Aiguillage, le croisement ou le point d'ancrage
-et si une limite de canton existe, il vous sera donn&#233; la possibilit&#233; de "D&#233;finir un M&#226;t de Signalisation ..." <p>
-<img src="images/popup.png" height="316" alt="Exemple" width="300"> <br>
-<p>
-Il Vous sera alors pr&#233;sent&#233; une fen&#234;tre rafraichie qui vous permet d'entrer le
-nom du M&#226;t de Signalisation qui va prot&#233;ger une fronti&#232;re entre deux cantons. <br>
-Pour les aiguillages et les croisement, vous pouvez seulement ajouter un M&#226;t de Signalisation pour la
-limite allant vers l'aiguillage ou le croisement, il n'est pas possible d'ajouter un M&#226;t de Signalisation pour la
-limite de sortie de l'aiguillage ou de la travers&#233;e. Par exemple, si le canton A est la section
-de voie reli&#233;e &#224; l'aiguillage et que l'aiguillage est dans le canton B, vous pouvez seulement ajouter
-un M&#226;t de Signalisation qui fait face dans le canton A, qui prot&#232;ge le canton B, vous ne pouvez pas ajouter un
-M&#226;t de Signalisation qui fait face au canton B pour prot&#233;ger le canton A.
-<p>Utilisant l'&#201;diteur de Panneau et n'ayant pas de cantons d&#233;finis, la Logique M&#226;t de Signalisation ne
-peut pas &#234;tre trouv&#233;e automatiquement, car ce type dePanneau affiche seulement les ic&#244;nes
-individuelles sur un r&#233;seau graphique, de sorte que vous devez ajouter manuellement les connexions
-comme &#233;tant des Cantons &#224; l'aide de l'Outil Cantons ou ajouter les Paires de M&#226;t de Signalisation
-dans le Tableau Logique Signaux pour toutes les connexions possibles.<br>Ajoutez manuellement les Ic&#244;nes
-Signaux sur votre panneau par Clic-Droit et en choisissant "Ajouter Ic&#244;ne".
+        <p>Dans l'exemple ci-dessus, une Logique Mât de Signalisation depuis SM20 à SM24 serait
+        invalide si SM23 est entre les deux. Vous avez à créer deux Logique Mât de Signalisation
+        distinctes, l'une comme ci-dessus pour SM20 à SM23, la seconde pour SM23 à SM24.</p>
 
-<a name="autologic"></a><h3>G&#233;n&#233;rer la Logique M&#226;t de Signalisation</h3>
+        <hr>
+        L'Aspect que notre Mât de Signalisation source affiche après avoir été libéré de "Danger"
+        est d'abord déterminé par l'Aspect de la disposition qui a été défini dans le fichierde
+        définition Apparence du Mât de Signalisation . S'il y a un seul aspect qui pourrait être
+        affichée, alors le Mât de Signalisation sera fixé à cet Aspect. Cependant, s'il y a de
+        multiples Aspects qui pourraient être potentiellement affichés, alors la logique regarde
+        deux zônes afin de déterminer l'Aspect résultant qui sera affiché:
+        <ul>
+          <li>Itinéraire Divergent
+            <ul>
+              <li>S'il y a des Aspects pour un itinéraire Dévié et les Aiguillages sur le chemin
+              sont Déviés, il utilisera alors l'Aspect d'un itinéraire Dévié.</li>
 
-	Logique M&#226;t de Signalisation peut &#234;tre g&#233;n&#233;rer automatiquement de trois fa&#231;ons diff&#233;rentes:
-	<ul>
-		<li>La premi&#232;re m&#233;thode est de le construire sur un M&#226;t de Signalisation � partire d'un M&#226;t de Signalisation basique. Ceci peut &#234;tre fait
-		en s&#233;lectionnant "Logique M&#226;t de Signalisation" depuis le menu contextuel pour l'ic&#244;ne M&#226;t de Signalisation sur
-		le panneau. Apr&#232;s un clic sur le bouton "D&#233;couvrir", le syst&#232;me d&#233;marre et
-		trouve tous les M&#226;t de Signalisation destination qui sont valides pour le M&#226;t de Signalisation s&#233;lectionn&#233;.
-		<img src="images/discover.png" width="502" height="209">
-		<li>La seconde m&#233;thode est le menu <b>Outils --> Paires de Signalisation Auto G&#233;n&#233;r&#233;es</b> dans le Tableau Logique M&#226;t de Signalisation. Ceci g&#233;n&#233;rera la Logique M&#226;t de Signalisation bas&#233; sur tous les M&#226;ts de Signalisation sur le panneau de l'&#201;diteur de R&#233;seau. Si n&#233;cessaire, ceci vous donnera l'option pour activer le Routage de Cantons.
-		<img src="images/pairs.png" width="308" height="125">
-		<br>S'il vous pla&#238;t soyez conscient que sur de grand sch&#233;ma avec un grand nombre de M&#226;ts de Signalisation configur&#233;es, ceci
-		peut prendre du temps.
-		<li>Il est encore plus facile si vous utilisez du mat&#233;riel comme <a href="http://www.rr-cirkits.com">RR-Circuits Signalman</a> ou m&#234;me plus facile en utilisant <a href="http://signalist.co.uk">Signalist SC1</a> pr&#233;-configur&#233; qui supporte les commandes Aspect Signal NMRA. Vous pouvez sauter les &#233;tapes M&#226;t de Signalisation et &#201;diteur de R&#233;seau et aller directement &#224; la cr&#233;ation de M&#226;t de Signalisation comme une simple entr&#233;e et le mat&#233;riel g&#232;re tout l'&#233;clairage LED/lampe, etc.</li>
-	</ul>
+              <li>Si aucun des Aiguillages sur l'itinéraire n'est Déviés, alors l'Aspect qui n'est
+              pas désignée comme un Aspect Dévié sera utilisé</li>
+            </ul>
+          </li>
 
-	<!-- JMRI groups message -->
-L'acc&#232;s &#224; la configuration des Logique M&#226;t de Signalisation peut &#234;tre donn&#233; depuis trois emplacements diff&#233;rents:
-	<ul>
-		<li>Dans le <a href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation</a> o&#249; il y a un bouton Modifier pour chaque paire de Logique M&#226;t de Signalisation</li>
-		<li>Depuis le <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau M&#226;t de Signalisation</a>, o&#249; il y a un bouton Modifier pour chaque M&#226;t de Signalisation, qui ouvre une fen&#234;tre qui vous permet de s&#233;lectionner une des Paires de Signalisation configur&#233;e pour ce M&#226;t de Signalisation.</li>
-		<li>Depuis le menu contextuel qui appara&#238;t quand vous cliquez-droit sur une Ic&#244;ne M&#226;t de Signalisation sur le panneau &#201;diteur de R&#233;seau, il y a un &#233;l&#233;ment de menu pour Logique M&#226;t de Signalisation</li>
-	</ul>
+          <li>Canton/Signal de Vitesse<br>
 
-Vous pouvez manuellement ajouter de nouvelles paires de Logiques M&#226;ts de Signalisation avec le boton "Ajouter..."en bas de chaqu'un des tableaux, qui ouvre une fen&#234;tre
-<a href="../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">"Ajouter Modifier Logique M&#226;t de Signalisation</a>.
+            <ul>
+              <li>Si l'itinéraire Dévié n'est pas disponible sur les Aspects du signal, ou il ne
+              retourne pas un simple Aspect potentiel, alors la vitesse du Canton et la vitesse de
+              l'Aspect sont utilisé.<br>
+              Chaque Aspect et Canton peut être configuré avec une valeur de Vitesse, la Logique
+              Mât de Signalisation utilisera la plus faible Vitesse définie sur les Cantons dans
+              l'itinéraire et choisira l'aspect avec la Vitesse la plus élevée qui est sous la plus
+              basse vitesse des itinéraires. C'est à dire si la Vitesse minimale est 65&nbsp;mph, (
+              105 kmh ), alors il va choisir l'Aspect qui a une vitesse égale ou inférieure à
+              65&nbsp;mph ( 105 kmh ).</li>
+            </ul>
+          </li>
+        </ul>
 
-<p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a></p>
-</div>
+        <p>En plus d'être en mesure de préciser les Aiguillages, les Cantons et les Capteurs qui
+        composent une Logique Mât de Signalisation, vous pouvez aussi spécifier quels autres Mâts
+        de Signalisation doivent être configurés pour un Aspect spécifique avant que le Logique Mât
+        de Signalisation source soit libéré. En général, il ne devrait pas y avoir besoin d'ajouter
+        de Mâts de Signalisation supplémentaires dans la Logique Mât de Signalisation car
+        l'itinéraire entre tous les différents Mâts de Signalisation sources destination doit avoir
+        un critère unique. Cependant, il y a certaine situation, comme deux voies se croisant au
+        même niveau où un itinéraire en conflit pourrait être défini. Par conséquent, pour
+        contourner ce problème, le Mât de Signalisation ou les Mâts qui sont pour protéger le
+        croisement devraientt faire partie de chacun des autres critères.</p>
 
-<!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+        <h2>Information Générée Manuellement et Automatiquement</h2>
+        La fenêtre Logique Mât de Signalisation détient deux zones montrant les information Canton
+        et Aiguillage: le premier est généré par l'utilisateur, le deuxième est celui oø un outil
+        tel que celui utilisé avec l'éditeur de TCO (<a href="#autologic">voir ci dessous</a>) a
+        automatiquement mis en place un ensemble de Cantons ou d'Aiguillages depuis le panneau du
+        réseau comme critère de signalisation.
+        <p>Les deux ensembles d'information sont utilisés par JMRI afin de déterminer si un Mât de
+        Signalisation peut être libéré ou pas, cependant les informations créées manuellement ont
+        une plus grande priorité sur les informations générées automatiquement, Permettant ainsi à
+        l'utilisateur de l'emporter sur ce que le système a déterminé.</p>
+
+        <p>Les informations générées automatiquement ne sont pas enregistrées avec le reste des
+        informations du panneau, mais les informations utilisateurs générées manuellement le sont.
+        Si l'éditeur de réseau est utilisé comme base de la Logique Mât de Signalisation (<a href=
+        "#autologic">Voir ci-dessous</a>), alors la logique de signalisation redécouvrira ces
+        informations depuis le panneau à chaque fois qu'il est chargé, donc si des changements ont
+        été enregistrés dans l'intervalle, elles seront découvertes. S'il vous plaît notez que
+        cette nouvelle régénération d'informations n'est pas faite au "vol" quand le panneau de
+        l'éditeur de TCO est modifiée et enregistrer sans quitter JMRI..</p>
+
+        <h2>Logique d'une Zone Non Signalée ou Heurtoirs</h2>
+        La Logique Mât de Signalisation ne fonctionne qu'entre un Mât de Signalisation source et
+        Mât de Signalisation destination, si vous avez un itinéraire valide pour un Heurtoir/zône
+        d'arrêt/zone sans surveillance, alors il n'y a pas de Mât de Signalisation de destination
+        spécifique. Dans ce cas, vous devez créer un Mât de Signalisation "factice" de type Virtuel
+        dans le Tableau Mât de Signalisation pour agir en tant que Mât de Signalisation de votre
+        destination, il n'a pas besoin de représenter un signal réel sur le réseau ou Feux de
+        Signalisation associés. Tout ce que ce Mât de Signalisation Virtuel a à faire est
+        d'afficher un Aspect "Danger".
+        <h2>Utilisation de l'éditeur de réseau pour la Logique Mât de Signalisation</h2>
+        En utilisant l'Éditeur de Canton du Réseau , il est possible d'avoir la Logique Mât de
+        Signalisation qui détermine les paires de signalisation, ainsi que les Cantons et les
+        Aiguillages qui forment les critères. Cela peut être fait dans tous les Mât de
+        Signalisation sur l'Éditeur Réseau ou sur une source de Mât de Signalisation.
+        <p>Il a l'avantage que si le panneau de l'Éditeur de Réseau est modifié, la Logique de
+        signalisation découvrira ce changement lorsque le panneau est rechargé et utilise le
+        nouveau canton et l'information de l'aiguillage. S'il vous plaît soyez conscient que
+        l'actualisation lors du chargement du panneau ne fera pas découvrir toutes les nouvelles
+        paires de Mâts de Signalisation ou d'enlever des paires de Mât de Signalisation invalides,
+        il fera tout simplement une actualisation des informations entre les paires existantes.</p>
+
+        <h3>Placement des Mât de Signalisation</h3>
+        Les Mâts de Signalisation peuvent être placés près des Aiguillages, des points d'ancrage et
+        les croisements, mais seulement oø il y a une frontière entre deux cantons différent sur le
+        réseau .
+        <p>Pour ajouter un Mât de Signalisation en utilisant l'Éditeur de Réseau, un clic droit sur
+        l'Aiguillage, le croisement ou le point d'ancrage et si une limite de canton existe, il
+        vous sera donné la possibilité de "Définir un Mât de Signalisation ..."</p>
+
+        <p><img src="images/popup.png" height="316" width="300" alt=""><br>
+        </p>
+
+        <p>Il Vous sera alors présenté une fenêtre rafraichie qui vous permet d'entrer le nom du
+        Mât de Signalisation qui va protéger une frontière entre deux cantons.<br>
+        Pour les aiguillages et les croisement, vous pouvez seulement ajouter un Mât de
+        Signalisation pour la limite allant vers l'aiguillage ou le croisement, il n'est pas
+        possible d'ajouter un Mât de Signalisation pour la limite de sortie de l'aiguillage ou de
+        la traversée. Par exemple, si le canton A est la section de voie reliée à l'aiguillage et
+        que l'aiguillage est dans le canton B, vous pouvez seulement ajouter un Mât de
+        Signalisation qui fait face dans le canton A, qui protège le canton B, vous ne pouvez pas
+        ajouter un Mât de Signalisation qui fait face au canton B pour protéger le canton A.</p>
+
+        <p>Utilisant l'Éditeur de Panneau et n'ayant pas de cantons définis, la Logique Mât de
+        Signalisation ne peut pas être trouvée automatiquement, car ce type dePanneau affiche
+        seulement les icônes individuelles sur un réseau graphique, de sorte que vous devez ajouter
+        manuellement les connexions comme étant des Cantons à l'aide de l'Outil Cantons ou ajouter
+        les Paires de Mât de Signalisation dans le Tableau Logique Signaux pour toutes les
+        connexions possibles.<br>
+        Ajoutez manuellement les Icônes Signaux sur votre panneau par Clic-Droit et en choisissant
+        "Ajouter Icône". <a name="autologic" id="autologic"></a></p>
+
+        <h3>Générer la Logique Mât de Signalisation</h3>
+        Logique Mât de Signalisation peut être générer automatiquement de trois façons différentes:
+        <ul>
+          <li>La première méthode est de le construire sur un Mât de Signalisation � partire d'un
+          Mât de Signalisation basique. Ceci peut être fait en sélectionnant "Logique Mât de
+          Signalisation" depuis le menu contextuel pour l'icône Mât de Signalisation sur le
+          panneau. Après un clic sur le bouton "Découvrir", le système démarre et trouve tous les
+          Mât de Signalisation destination qui sont valides pour le Mât de Signalisation
+          sélectionné. <img src="images/discover.png" width="502" height="209" alt=""></li>
+
+          <li>La seconde méthode est le menu <strong>Outils --&gt; Paires de Signalisation Auto
+          Générées</strong> dans le Tableau Logique Mât de Signalisation. Ceci générera la Logique
+          Mât de Signalisation basé sur tous les Mâts de Signalisation sur le panneau de l'Éditeur
+          de Réseau. Si nécessaire, ceci vous donnera l'option pour activer le Routage de Cantons.
+          <img src="images/pairs.png" width="308" height="125" alt=""><br>
+          S'il vous plaît soyez conscient que sur de grand schéma avec un grand nombre de Mâts de
+          Signalisation configurées, ceci peut prendre du temps.</li>
+
+          <li>Il est encore plus facile si vous utilisez du matériel comme <a href=
+          "http://www.rr-cirkits.com">RR-Circuits Signalman</a> ou même plus facile en utilisant
+          <a href="http://signalist.co.uk">Signalist SC1</a> pré-configuré qui supporte les
+          commandes Aspect Signal NMRA. Vous pouvez sauter les étapes Mât de Signalisation et
+          Éditeur de Réseau et aller directement à la création de Mât de Signalisation comme une
+          simple entrée et le matériel gère tout l'éclairage LED/lampe, etc.</li>
+        </ul>
+        <!-- JMRI groups message -->
+        L'accès à la configuration des Logique Mât de Signalisation peut être donné depuis trois
+        emplacements différents:
+        <ul>
+          <li>Dans le <a href=
+          "../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Tableau Logique Mât de
+          Signalisation</a> où il y a un bouton Modifier pour chaque paire de Logique Mât de
+          Signalisation</li>
+
+          <li>Depuis le <a href=
+          "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau Mât de
+          Signalisation</a>, où il y a un bouton Modifier pour chaque Mât de Signalisation, qui
+          ouvre une fenêtre qui vous permet de sélectionner une des Paires de Signalisation
+          configurée pour ce Mât de Signalisation.</li>
+
+          <li>Depuis le menu contextuel qui apparaît quand vous cliquez-droit sur une Icône Mât de
+          Signalisation sur le panneau Éditeur de Réseau, il y a un élément de menu pour Logique
+          Mât de Signalisation</li>
+        </ul>
+        Vous pouvez manuellement ajouter de nouvelles paires de Logiques Mâts de Signalisation avec
+        le boton "Ajouter..."en bas de chaqu'un des tableaux, qui ouvre une fenêtre <a href=
+        "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">"Ajouter Modifier
+        Logique Mât de Signalisation</a>.
+        <p>Retour à la <a href="index.shtml#tools">page principale d'aide Signalisation</a></p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

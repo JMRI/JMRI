@@ -1,83 +1,104 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Comprehensive Programmer - Sound FX Pane</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>Comprehensive Programmer - Sound FX Pane</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-ctr {
+      text-align: center;
+    }
+
+    .dp-mid {
+      text-align: middle;
+    }
+
+    .dp-right {
+      text-align: right;
+    }
+
+    .dp-none {
+      list-style-type: none;
+    }
+
+    .dp-sq {
+      list-style-type: square;
+    }
+
+    .dp-ua {
+      list-style-type: upper-alpha
+    }
+
+    .dp-la {
+      list-style-type: lower-alpha
+    }
+
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro® Comprehensive Programmer</h1>
 
       <h2>Sound FX Pane</h2>
 
-      <div align="right">
-        <p><a href="Comp_Analog.shtml">Previous |</a> <a href=
-        "Comp_SoundLevels.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_Analog.shtml">Previous |</a> <a href="Comp_SoundLevels.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>Several manufacturers now offer decoders that include
-      sound functions. This pane is designed to control those CVs.
-      The screen shot below is from a programmer for SoundTraxx
-      steam sound decoders. There are also diesel sound decoders
-      available.</p>
+      <p>Several manufacturers now offer decoders that include sound functions. This pane is
+      designed to control those CVs. The screen shot below is from a programmer for SoundTraxx
+      steam sound decoders. There are also diesel sound decoders available.</p>
 
-      <p>These sounds can be coordinated with the mechanism of the
-      locomotive, and appropriate sounds can be triggered from the
-      function keys of the throttle. Others can be set to be
+      <p>These sounds can be coordinated with the mechanism of the locomotive, and appropriate
+      sounds can be triggered from the function keys of the throttle. Others can be set to be
       triggered at startup or to run in the background.</p>
 
-      <p>This pane allows for the selection of sound effects from
-      sound decoders, and the <a href=
-      "Comp_SoundLevels.shtml"><strong>Sound Levels
-      Pane</strong></a> allows for setting the loudness levels of
-      those sounds when they play back.</p>
+      <p>This pane allows for the selection of sound effects from sound decoders, and the <a href=
+      "Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a> allows for setting the
+      loudness levels of those sounds when they play back.</p>
 
-      <h1 style="text-align: center;"><img style=
-      "width: 852px; height: 503px;" src="images/Comp_09_Sound.png"
-      alt="sound"></h1>
+      <h1 class="dp-ctr"><img style="width: 852px; height: 503px;" src="images/Comp_09_Sound.png"
+      alt="sound">
+      </h1>
 
-      <p>For specific function options, see your decoder
-      documentation and the programmer for the specific decoder.
-      Sometimes (depending on the volunteer that wrote the decoder
-      definition file) there are "tool tips" that appear if you
-      hover over a selection entry box.</p>
+      <p>For specific function options, see your decoder documentation and the programmer for the
+      specific decoder. Sometimes (depending on the volunteer that wrote the decoder definition
+      file) there are "tool tips" that appear if you hover over a selection entry box.</p>
 
-      <p>Here are is a sampling of sound functions on some other
-      decoders:</p>
+      <p>Here are is a sampling of sound functions on some other decoders:</p>
 
-      <p><strong>Athearn N Scale Big Boy and
-      Challenger</strong></p><img src="images/Comp_09a_Sound.png"
-      alt="Athearn Sound" border="5" height="178" width="798">
+      <p><strong>Athearn N Scale Big Boy and Challenger</strong>
+      </p>
+      <img src="images/Comp_09a_Sound.png" alt="Athearn Sound" height="178" width="798">
+      <p><strong>Digitrax F40PH</strong>
+      </p>
+      <img src="images/Comp_09b_Sound.png" alt="Digitrax Sound">
 
-      <p><strong>Digitrax F40PH</strong></p><img src=
-      "images/Comp_09b_Sound.png" alt="Digitrax Sound" border="5">
       <hr>
 
-      <div align="right">
-        <p><a href="Comp_SoundLevels.shtml"></a> <a href=
-        "Comp_Analog.shtml">Previous |</a> <a href=
-        "Comp_SoundLevels.shtml">Next</a></p>
+      <div class="dp-right">
+        <p><a href="Comp_SoundLevels.shtml"></a> <a href="Comp_Analog.shtml">Previous |</a>
+        <a href="Comp_SoundLevels.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

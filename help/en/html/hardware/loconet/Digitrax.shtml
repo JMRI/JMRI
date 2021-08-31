@@ -1,109 +1,137 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
   <meta name="keywords" content=
   "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
   <!--#include virtual="/Style.shtml" -->
-</head>
 
+  <style>
+    .ctr {
+        text-align: center;
+    }
+  </style>
+</head>
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>Support: Digitrax LocoNet&reg;</h1>
+    <div id="mainContent">
+      <h1>Support: Digitrax LocoNet®</h1>
 
       <div class="toc">
         <ul>
           <li>
             <a href="#LocoNetConnect">Supported Hardware</a>
-
             <ul>
-              <li><a href="#Programmer">PR2, PR3, and PR4 acting as Decoder Programmers</a></li>
+              <li>
+                <a href="#Programmer">PR2, PR3, and PR4 acting as Decoder Programmers</a>
+              </li>
             </ul>
           </li>
 
-          <li><a href="#Limitation">Hardware Interface and Command Station Limitations</a></li>
+          <li>
+            <a href="#Limitation">Hardware Interface and Command Station Limitations</a>
+          </li>
 
           <li>
             <a href="#Setup">Connecting</a>
-
             <ul>
-              <li><a href="#Using">Using JMRI with
-              LocoNet&reg;</a>
+              <li>
+                <a href="#Using">Using JMRI with LocoNet®</a>
                 <ul>
-                  <li><a href="#LocoNetAddressing">LocoNet Device Addressing</a></li>
+                  <li>
+                    <a href="#LocoNetAddressing">LocoNet Device Addressing</a>
+                  </li>
 
-                  <li><a href="#LocoNetTools">LocoNet Tools</a></li>
+                  <li>
+                    <a href="#LocoNetTools">LocoNet Tools</a>
+                  </li>
                 </ul>
               </li>
-              <li><a href="#Network">Networked Computers and
-              LocoNet&reg;</a></li>
+
+              <li>
+                <a href="#Network">Networked Computers and LocoNet®</a>
+              </li>
             </ul>
           </li>
 
           <li>
             <a href="#Debugging">Debugging</a>
-
             <ul>
-              <li><a href="#ErraticReadback">Erratic or
-              Non-Functioning CV Readback</a></li>
+              <li>
+                <a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a>
+              </li>
 
               <li>
-                <a href="#TurnoutCmdHandling">Command Station
-                Turnout Command Rejection and JMRI Turnout Command
-                Handling</a>
-
+                <a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection and JMRI
+                Turnout Command Handling</a>
                 <ul>
-                  <li><a href="#turncmdhandsettings">Turnout
-                  Command Handling Settings</a></li>
+                  <li>
+                    <a href="#turncmdhandsettings">Turnout Command Handling Settings</a>
+                  </li>
 
-                  <li><a href="#alternatives">Command Station Turnout Command
-                  Rejection Avoidance Strategies</a></li>
+                  <li>
+                    <a href="#alternatives">Command Station Turnout Command Rejection Avoidance
+                    Strategies</a>
+                  </li>
 
-                  <li><a href="#cmdStationTrkPwrOff">Turnout
-                  command rejection when track power is
-                  off</a></li>
+                  <li>
+                    <a href="#cmdStationTrkPwrOff">Turnout command rejection when track power is
+                    off</a>
+                  </li>
 
-                  <li><a href="#multConnTurnoutReject">Turnout
-                  command rejection and multiple active LocoNet
-                  connections</a></li>
+                  <li>
+                    <a href="#multConnTurnoutReject">Turnout command rejection and multiple active
+                    LocoNet connections</a>
+                  </li>
                 </ul>
               </li>
             </ul>
           </li>
 
-          <li><a href="#SeeAlso">JMRI information and tools for LocoNet-specific hardware and features</a>
-          <ul>
-              <li><a href="#devicetoolhelp">JMRI LocoNet-specific Help pages</a>
+          <li>
+            <a href="#SeeAlso">JMRI information and tools for LocoNet-specific hardware and
+            features</a>
+            <ul>
+              <li>
+                <a href="#devicetoolhelp">JMRI LocoNet-specific Help pages</a>
+              </li>
 
-              <li><a href="#loconetRoster">Configuring some LocoNet devices via "Roster" entries</a></li>
-              <li><a href="#deviceBoardId">Programming Board ID (Board Address) for some Digitrax devices</a></li>
-              <li><a href="#devicetoollimits">Some JMRI LocoNet-specific device and feature limitations</a></li>
-          </ul></li>
-          <li><a href="#Support">Support</a></li>
+              <li>
+                <a href="#loconetRoster">Configuring some LocoNet devices via "Roster" entries</a>
+              </li>
+
+              <li>
+                <a href="#deviceBoardId">Programming Board ID (Board Address) for some Digitrax
+                devices</a>
+              </li>
+
+              <li>
+                <a href="#devicetoollimits">Some JMRI LocoNet-specific device and feature
+                limitations</a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#Support">Support</a>
+          </li>
         </ul>
-      </div><a name="LocoNetConnect" id=
-      "LocoNetConnect"></a><a name="hardware" id="hardware"></a>
+      </div>
+      <a id="LocoNetConnect"></a>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <h2>Supported Hardware</h2>
-
-      <p>JMRI software, including DecoderPro and PanelPro, works
-      with your Digitrax command station to program decoders. To do
-      this, it communicates with the command station over the
-      LocoNet&reg; using one of several types of <a href=
-      "#adapters">adapter</a>.</p>
+      <p>JMRI software, including DecoderPro and PanelPro, works with your Digitrax command station
+      to program decoders. To do this, it communicates with the command station over the LocoNet®
+      using one of several types of <a href="#adapters">adapter</a>.</p>
 
       <h3>Command Stations</h3>
 
-      <p>JMRI software supports the following LocoNet-based command
-      stations:</p>
+      <p>JMRI software supports the following LocoNet-based command stations:</p>
 
       <ul>
         <li>Zephyr Starter Set</li>
@@ -132,1235 +160,1206 @@
 
         <li>DCS240 Advanced Command Station/Booster</li>
 
-        <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock
-        Central Unit</a></li>
+        <li>
+          <a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a>
+        </li>
 
-        <li><a href="Uhlenbrock.shtml">Intellibox II or
-        IB-Com</a></li>
+        <li>
+          <a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a>
+        </li>
 
-        <li>DCC-Mux: DCC data combiner with built-in LocoNet
-        command station</li>
+        <li>DCC-Mux: DCC data combiner with built-in LocoNet command station</li>
       </ul>
 
-      <p>For systems which do not provide a real LocoNet Command
-      Station, two additional options are supported. When a layout
-      uses LocoNet peripheral devices but not a LocoNet-based
-      command station, a "<a href="StandaloneLocoNet.shtml">Standalone
-      LocoNet</a>" is used.<br>
-      In addition, JMRI software may be configured to use a simulated
-      LocoNet connection instead of a real LocoNet connection. This
-      is the "<a href="LocoNetSim.shtml">LocoNet&reg; Simulator</a>".</p>
+      <p>For systems which do not provide a real LocoNet Command Station, two additional options
+      are supported. When a layout uses LocoNet peripheral devices but not a LocoNet-based command
+      station, a "<a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>" is used.<br>
+      In addition, JMRI software may be configured to use a simulated LocoNet connection instead of
+      a real LocoNet connection. This is the "<a href="LocoNetSim.shtml">LocoNet®
+      Simulator</a>".</p>
 
-      <a name="adapters" id="adapters"></a>
-      <h3>Computer Interfaces</h3>
+      <h3 id="adapters">Computer Interfaces</h3>
 
-      <p>To connect your computer to the LocoNet, and hence to the
-      command station, you need one of the following adapters:</p>
+      <p>To connect your computer to the LocoNet, and hence to the command station, you need one of
+      the following adapters:</p>
 
       <ul>
-        <li><a title="RR-CirKits USB interface" href=
-        "LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
+        <li>
+          <a title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>
+        </li>
 
-        <li><a title="Digitrax PR3 and PR3 Xtra USB interface" href=
-        "PR3.shtml">PR3, PR3 Xtra</a></li>
+        <li>
+          <a title="Digitrax PR3 and PR3 Xtra USB interface" href="PR3.shtml">PR3, PR3 Xtra</a>
+        </li>
 
-        <li><a title="Digitrax PR4 USB interface" href=
-        "PR4.shtml">PR4</a></li>
+        <li>
+          <a title="Digitrax PR4 USB interface" href="PR4.shtml">PR4</a>
+        </li>
 
-        <li><a title="RR-CirKits Serial interface" href=
-        "LocoBufferII.shtml">LocoBuffer II</a></li>
+        <li>
+          <a title="RR-CirKits Serial interface" href="LocoBufferII.shtml">LocoBuffer II</a>
+        </li>
 
-        <li><a title="Original Kit Version" href=
-        "LocoBuffer.shtml">LocoBuffer</a></li>
+        <li>
+          <a title="Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a>
+        </li>
 
-        <li><a title="Digitrax Serial interface" href=
-        "MS100.shtml">MS-100</a></li>
+        <li>
+          <a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a>
+        </li>
 
-        <li><a title="BT LocoBridge" href=
-        "BTLocoBridge.shtml">Bluetooth LocoBridge</a></li>
+        <li>
+          <a title="BT LocoBridge" href="BTLocoBridge.shtml">Bluetooth LocoBridge</a>
+        </li>
       </ul>
-      <p>(Note: The Digitrax DSC240 has a built-in adapter that's
-      similar to the Digitrax PR3; if you have a DCS240 and connect
-      the computer via the DCS240's integrated USB interface, see
-      <a href="DCS240.shtml">this DCS240 page</a>.  Similarly, the Digitrax
-      DSC52 has a built-in adapter that's similar to the Digitrax PR3; if you
-      have a DCS52 and connect the computer via the DCS52's integrated USB
-      interface, see <a href="DCS52.shtml">this DCS52 page</a>.</p>
 
-      <p>Generally, any of these can be used with any type of
-      computer to communicate with any type of command station.
-      Currently, the LocoBuffer-USB , PR3, and PR4 are the recommended
-      computer interface solutions. The LocoBuffer II and original
-      LocoBuffer are no longer commercially available; their
-      primary advantage now is that they use a traditional serial
-      port, which may be the only suitable connection type
-      available on some older computers.</p>
+      <p>(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3; if
+      you have a DCS240 and connect the computer via the DCS240's integrated USB interface, see
+      <a href="DCS240.shtml">this DCS240 page</a>. Similarly, the Digitrax DSC52 has a built-in
+      adapter that's similar to the Digitrax PR3; if you have a DCS52 and connect the computer via
+      the DCS52's integrated USB interface, see <a href="DCS52.shtml">this DCS52 page</a>.</p>
 
-      <p>The MS100 is <em>not</em> recommended; it sometimes fails to
-      provide reliable communications, and it cannot be used with
-      JMRI if you are using Mac OS X or on most Windows Vista
-      machines. If you have problems with the MS100, you might not
-      be able to fix them, and nobody may be able to help you.</p>
+      <p>Generally, any of these can be used with any type of computer to communicate with any type
+      of command station. Currently, the LocoBuffer-USB , PR3, and PR4 are the recommended computer
+      interface solutions. The LocoBuffer II and original LocoBuffer are no longer commercially
+      available; their primary advantage now is that they use a traditional serial port, which may
+      be the only suitable connection type available on some older computers.</p>
 
-      <p>The Uhlenbrock Intellibox command stations can also be
-      controlled directly through it's serial port or USB
-      connection; there's a <a href="Uhlenbrock.shtml">separate
-      page</a> on how to do this.</p>
+      <p>The MS100 is <em>not</em> recommended; it sometimes fails to provide reliable
+      communications, and it cannot be used with JMRI if you are using Mac OS X or on most Windows
+      Vista machines. If you have problems with the MS100, you might not be able to fix them, and
+      nobody may be able to help you.</p>
 
-      <h4><a name="Programmer" id="Programmer">PR2, PR3, and PR4 acting as Decoder
-      Programmers</a></h4>JMRI can also use a <a title=
-      "Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>, the
-      <a title="Digitrax Programmer/USB interface" href=
-         "PR3.shtml">Digitrax PR3</a>, or the <a title="PR4.shtml">Digitrax PR4</a>
-         to program and test decoders. The PR2 is
-      a stand-alone decoder programming unit which does not connect
-      to the rest of the layout, the command station, nor to a
-      LocoNet. For more information on using a PR2 with DecoderPro,
-      please see the <a href="PR2.shtml">PR2 setup page</a>. The
-      PR3 and PR4 devices can be configured in JMRI to operate as either a stand-
-      alone programmer, or as an interface to to a LocoNet. There
-      is more information on the <a href="PR3.shtml">PR3 setup
-          page</a> and the <a href="PR4.shtml">PR4 setup page</a>.
+      <p>The Uhlenbrock Intellibox command stations can also be controlled directly through it's
+      serial port or USB connection; there's a <a href="Uhlenbrock.shtml">separate page</a> on how
+      to do this.</p>
 
-      <h2><a name="Limitation" id="Limitation">Hardware Interface and Command Station Limitations</a></h2>
+      <h4 id="Programmer">PR2, PR3, and PR4 acting as Decoder Programmers</h4>
+      JMRI can also use a <a title="Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>, the
+      <a title="Digitrax Programmer/USB interface" href="PR3.shtml">Digitrax PR3</a>, or the
+      <a title="PR4.shtml">Digitrax PR4</a> to program and test decoders. The PR2 is a stand-alone
+      decoder programming unit which does not connect to the rest of the layout, the command
+      station, nor to a LocoNet. For more information on using a PR2 with DecoderPro, please see
+      the <a href="PR2.shtml">PR2 setup page</a>. The PR3 and PR4 devices can be configured in JMRI
+      to operate as either a stand- alone programmer, or as an interface to to a LocoNet. There is
+      more information on the <a href="PR3.shtml">PR3 setup page</a> and the <a href=
+      "PR4.shtml">PR4 setup page</a>.
+      <h2 id="Limitation">Hardware Interface and Command Station Limitations</h2>
 
-      <p><strong>Uhlenbrock Intellibox</strong> - The Intellibox has two
-      LocoNet connections, called LocoNet-T and LocoNet-B. The
-      LocoNet-T connection can drive more devices, but does not
-      provide the Rail-Synch signals that some LocoNet devices
-      (particularly boosters and the BDL16, BDL162 and BDL168)
-      require. A LocoBuffer should be connected to the LocoNet-T
+      <p><strong>Uhlenbrock Intellibox</strong> - The Intellibox has two LocoNet connections,
+      called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more devices, but does not
+      provide the Rail-Synch signals that some LocoNet devices (particularly boosters and the
+      BDL16, BDL162 and BDL168) require. A LocoBuffer should be connected to the LocoNet-T
       connection.</p>
 
-      <p><strong>Uhlenbrock Intellibox II and IB-Com</strong> - The
-      Intellibox II and IB-Com have two LocoNet connections, called
-      LocoNet-T and LocoNet-B. The LocoNet-T connection can drive
-      more devices, but does not provide the Rail-Synch signals
-      that some LocoNet devices (particularly boosters and the
-      BDL16, BDL162 and BDL168) require. A LocoBuffer should be
+      <p><strong>Uhlenbrock Intellibox II and IB-Com</strong> - The Intellibox II and IB-Com have
+      two LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive
+      more devices, but does not provide the Rail-Synch signals that some LocoNet devices
+      (particularly boosters and the BDL16, BDL162 and BDL168) require. A LocoBuffer should be
       connected to the LocoNet-T connection.</p>
 
-      <p><strong>PR-1 not supported</strong> - Note that DecoderPro
-      cannot directly program decoders via a PR1 programmer. JMRI
-      supports decoder programming either via the PR3 as a
+      <p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly program
+      decoders via a PR1 programmer. JMRI supports decoder programming either via the PR3 as a
       stand-alone programmer or via a command station.</p>
 
-      <p><strong>Mac OS X and the MS100</strong> - Because Mac OS X can't
-      communicate at the special baud rate used by the MS100, the
-      MS100 won't work with Mac OS X. You should get a
+      <p><strong>Mac OS X and the MS100</strong> - Because Mac OS X can't communicate at the
+      special baud rate used by the MS100, the MS100 won't work with Mac OS X. You should get a
       LocoBuffer-USB instead.</p>
 
-      <p><strong>Microsoft Vista and the MS100</strong> - It has been
-      reported that Vista does not support the special baud rate
-      used by the MS100. If you find that your MS100 does not work
-      on your Vista machine you should get a LocoBuffer-USB, PR3, or PR4
-      instead.</p><a name="Setup" id="Setup"></a>
+      <p><strong>Microsoft Vista and the MS100</strong> - It has been reported that Vista does not
+      support the special baud rate used by the MS100. If you find that your MS100 does not work on
+      your Vista machine you should get a LocoBuffer-USB, PR3, or PR4 instead.</p>
+      <a id="Setup"></a>
+      <h2 id="ConnectingAdapter">Connecting</h2>
 
-      <h2><a name="ConnectingAdapter" id="ConnectingAdapter">Connecting</a></h2>
+      <p>To connect your computer to a Digitrax DCC system, you need either a USB-equipped Command
+      station (DCS240 or DCS52), or a computer-to-LocoNet adapter device such as a <a title=
+      "RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>, <a title=
+      "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title="Digitrax PR4 USB interface"
+      href="PR4.shtml">PR4</a>, <a title="RR-CirKits Serial interface" href=
+      "LocoBufferII.shtml">LocoBuffer-II</a>, <a title="Original Kit Version" href=
+      "LocoBuffer.shtml">LocoBuffer</a> or <a title="Digitrax Serial interface" href=
+      "MS100.shtml">MS100</a>. The LocoBuffer-USB is a highly recommended computer-to-LocoNet
+      adapter. See <a href="#adapters">below</a> for more on adapters.</p>
 
-      <p>To connect your computer to a Digitrax DCC system, you
-      need either a USB-equipped Command station (DCS240 or DCS52),
-      or a computer-to-LocoNet
-      adapter device such as a <a title="RR-CirKits USB interface" href=
-      "LocoBufferUSB.shtml">LocoBuffer-USB</a>, <a title=
-      "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title=
-      "Digitrax PR4 USB interface" href="PR4.shtml">PR4</a>, <a title=
-      "RR-CirKits Serial interface" href=
-      "LocoBufferII.shtml">LocoBuffer-II</a>, <a title=
-      "Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a>
-      or <a title="Digitrax Serial interface" href=
-      "MS100.shtml">MS100</a>. The LocoBuffer-USB is a highly
-      recommended computer-to-LocoNet adapter. See <a href="#adapters">below</a> for more on
-      adapters.</p>
-
-      <p>Note that except for the PR3 and PR4, these are only LocoNet
-      interfaces, not stand alone programmers like the Digitrax PR2.
-      The Digitrax PR3 and PR4 devices may act either as a standalone
-      programmer or as a LocoNet interface.  Readback of decoder CVs
-      is possible when using a programming track controlled by a PR3 or PR4
-      (in stand-alone programming mode) or when using a programming track
-      controlled by a Chief, Zephyr, Advanced (DCS210) or Evolution (DCS240)
-      command station. The Empire Builder (DB150) command station does not allow
-      Readback of decoder CVs; users of the Empire Builder can add CV Readback
-      capability by using a programming track connected to a PR3 or PR4 when
-      operating in stand-alone programming mode.</p>
+      <p>Note that except for the PR3 and PR4, these are only LocoNet interfaces, not stand alone
+      programmers like the Digitrax PR2. The Digitrax PR3 and PR4 devices may act either as a
+      standalone programmer or as a LocoNet interface. Readback of decoder CVs is possible when
+      using a programming track controlled by a PR3 or PR4 (in stand-alone programming mode) or
+      when using a programming track controlled by a Chief, Zephyr, Advanced (DCS210) or Evolution
+      (DCS240) command station. The Empire Builder (DB150) command station does not allow Readback
+      of decoder CVs; users of the Empire Builder can add CV Readback capability by using a
+      programming track connected to a PR3 or PR4 when operating in stand-alone programming
+      mode.</p>
 
       <h3>Basic steps to connect to LocoNet</h3>
 
-      <p>If connecting to a DCS240 command station via its integrated USB port,
-      see these instructions for configuring JMRI for <a href="DCS240.shtml#ConnectingDCS240">
-      the DCS240</a>.</p>
+      <p>If connecting to a DCS240 command station via its integrated USB port, see these
+      instructions for configuring JMRI for <a href="DCS240.shtml#ConnectingDCS240">the
+      DCS240</a>.</p>
 
-      <p>If connecting to a DCS52 command station via its integrated USB port,
-      see these instructions for configuring JMRI for <a href="DCS52.shtml#ConnectingDCS52">
-      the DCS52</a>.</p>
+      <p>If connecting to a DCS52 command station via its integrated USB port, see these
+      instructions for configuring JMRI for <a href="DCS52.shtml#ConnectingDCS52">the
+      DCS52</a>.</p>
 
-      <p>The steps below show how to add a connection to JMRI
-      (DecoderPro, PanelPro, etc.) for a LocoNet-based system.</p>
+      <p>The steps below show how to add a connection to JMRI (DecoderPro, PanelPro, etc.) for a
+      LocoNet-based system.</p>
 
       <ol>
         <li>If using a LocoNet adapter, connect your adapter to the LocoNet, and connect your
-        computer to it with the appropriate serial or USB
-        cable.</li>
-        <li>If using a command station's USB connection, connect your computer to
-            your command station with the appropriate USB cable.</li>
-        <li>Mac and Windows users should install the proper USB
-        drivers if they are using USB devices.</li>
+        computer to it with the appropriate serial or USB cable.</li>
 
-        <li>Linux and Mac users should be sure that the correct
-        Java communications packages have been installed.</li>
+        <li>If using a command station's USB connection, connect your computer to your command
+        station with the appropriate USB cable.</li>
 
-        <li>Open a JMRI program and go to the "Preferences" panel.
-        This normally opens automatically the first time each
-        program is run, or you can select it from the "Edit"
-        menu.  Alternately, if you already have two or more connections
-        established and at start-up you get a selection box for the connection
-        profiles, you may choose to establish a new connection profile and the
-        "Connections" window will automatically open (so you may skip the next
-        step).</li>
+        <li>Mac and Windows users should install the proper USB drivers if they are using USB
+        devices.</li>
 
-        <li>Select the "Connections" item in the window at the
-        left.</li>
+        <li>Linux and Mac users should be sure that the correct Java communications packages have
+        been installed.</li>
+
+        <li>Open a JMRI program and go to the "Preferences" panel. This normally opens
+        automatically the first time each program is run, or you can select it from the "Edit"
+        menu. Alternately, if you already have two or more connections established and at start-up
+        you get a selection box for the connection profiles, you may choose to establish a new
+        connection profile and the "Connections" window will automatically open (so you may skip
+        the next step).</li>
+
+        <li>Select the "Connections" item in the window at the left.</li>
 
         <li>Select "Digitrax" in the "System Manufacturer" box.</li>
 
-        <li>Select the appropriate adapter type (or command station type, if using
-            a computer-to-command station USB port connection) in the "System
-        Connection" box.</li>
+        <li>Select the appropriate adapter type (or command station type, if using a
+        computer-to-command station USB port connection) in the "System Connection" box.</li>
 
-        <li>You can then configure the proper settings in the
-        "Settings" box. The "Serial Port" must be properly selected
-        and the connection settings properly configured in order
-        for JMRI to talk to the adapter hardware. On some systems
-        with some system connection adapter types, the "Serial
-        Port" setting will be automatically selected. In other
-        cases the first possible "Serial Port" connection will be
-        selected by default. It may be necessary to use tools
-        provided with the computer operating system to determine
-        which "Serial Port" is appropriate for your particular
-        situation.</li>
+        <li>You can then configure the proper settings in the "Settings" box. The "Serial Port"
+        must be properly selected and the connection settings properly configured in order for JMRI
+        to talk to the adapter hardware. On some systems with some system connection adapter types,
+        the "Serial Port" setting will be automatically selected. In other cases the first possible
+        "Serial Port" connection will be selected by default. It may be necessary to use tools
+        provided with the computer operating system to determine which "Serial Port" is appropriate
+        for your particular situation.</li>
 
         <li>Select the appropriate "Command Station Type":
+          <p>When the "Connection Type" is set for the PR3 or PR4, the "Command Station Type" can
+          be set to "PRx in stand-alone programming mode" or set to one of the command station
+          types. When set for stand-alone programming, the PR3/PR4 will not communicate with
+          LocoNet. When set for a specific command station type, the PR3/PR4 programming track is
+          not used; instead, decoder programming is done through the mechanisms provided by the
+          selected command station, and its programming track connections.</p>
 
-          <p>When the "Connection Type" is set for the PR3 or PR4, the
-          "Command Station Type" can be set to "PRx in stand-alone
-          programming mode" or set to one of the command station
-          types. When set for stand-alone programming, the PR3/PR4 will
-          not communicate with LocoNet. When set for a specific
-          command station type, the PR3/PR4 programming track is not
-          used; instead, decoder programming is done through the
-          mechanisms provided by the selected command station, and its
-          programming track connections.</p>
-
-          <p>When "DB150 (Empire Builder)" is selected, JMRI
-          decoder programming is done via the DB150 programming
-          mechanisms. The DB150 is not capable of reading decoder
-          CV values, so JMRI will not be able to read decoder CV
-          values via the DB150 programming mechanisms. Empire
-          Builder users can use a PR3/PR4 in stand-alone programmer
-          mode, instead of the Empire Builder programming track, to
-          allow decoder CV readback. Some users configure
-          DecoderPro for programming decoders using the PR3/PR4 in
-          stand-alone programming mode, and then configure PanelPro
-          to use the PR3/PR4 in LocoNet interface mode (also called
-          "MS100 mode") to allow PanelPro to communicate with the
-          Empire Builder command station and LocoNet-connected
-          peripherals. More PR3 setup information can be found on
-          the <a href="PR3.shtml">PR3 setup page</a>.  More PR4 setup
-          information can be found on the <a href="PR4.shtml">PR4
-          setup page</a>.</p>
+          <p>When "DB150 (Empire Builder)" is selected, JMRI decoder programming is done via the
+          DB150 programming mechanisms. The DB150 is not capable of reading decoder CV values, so
+          JMRI will not be able to read decoder CV values via the DB150 programming mechanisms.
+          Empire Builder users can use a PR3/PR4 in stand-alone programmer mode, instead of the
+          Empire Builder programming track, to allow decoder CV readback. Some users configure
+          DecoderPro for programming decoders using the PR3/PR4 in stand-alone programming mode,
+          and then configure PanelPro to use the PR3/PR4 in LocoNet interface mode (also called
+          "MS100 mode") to allow PanelPro to communicate with the Empire Builder command station
+          and LocoNet-connected peripherals. More PR3 setup information can be found on the
+          <a href="PR3.shtml">PR3 setup page</a>. More PR4 setup information can be found on the
+          <a href="PR4.shtml">PR4 setup page</a>.</p>
         </li>
 
-        <li>The "Connection Prefix" is used to help JMRI
-        communicate separately with multiple "connections" to
-        layout hardware. Each "connection" must have a unique
-        identifier, which is specified as the "Connection Prefix".
-        By default, the first LocoNet connection is given a prefix
-        of "L", and additional LocoNet are given prefixes like
-        "L1", "L2", ... Most users should be able to use the
-        default "Connection Prefix" value provided by the JMRI
-        tools.
-        <br>
-        It is recommended that all connections for LocoNet
-        hardware use a prefix that begins with "L", as other
-        characters are normally associated with other hardware
-        connection types.
-        </li>
+        <li>The "Connection Prefix" is used to help JMRI communicate separately with multiple
+        "connections" to layout hardware. Each "connection" must have a unique identifier, which is
+        specified as the "Connection Prefix". By default, the first LocoNet connection is given a
+        prefix of "L", and additional LocoNet are given prefixes like "L1", "L2", ... Most users
+        should be able to use the default "Connection Prefix" value provided by the JMRI tools.<br>
+        It is recommended that all connections for LocoNet hardware use a prefix that begins with
+        "L", as other characters are normally associated with other hardware connection types.</li>
 
-        <li>When a JMRI tool is configured for more than one
-        connection, each connection gets a menu item on the main
-        JMRI tool window. To help users differentiate between their
-        different connections, each connection has a "Connection
-        Name", which is used as the name of the associated menu
-        item on the main JMRI tool window. Users may change the
-        "Connection Name" for any connection to suit their
-        needs.</li>
+        <li>When a JMRI tool is configured for more than one connection, each connection gets a
+        menu item on the main JMRI tool window. To help users differentiate between their different
+        connections, each connection has a "Connection Name", which is used as the name of the
+        associated menu item on the main JMRI tool window. Users may change the "Connection Name"
+        for any connection to suit their needs.</li>
 
-        <li>Some adapters may have addition configuration options,
-        which appear by checking the "Additional Connection
-        Settings". This may show additional settings applicable for
-        some adapter types. These include, but are not limited to,
-        the options listed here.
-        <br>
-        <img src="images/LoconetAdditionalSettings.png" alt="Connection Settings Additional settings"
-             width="515" height="219">
-
+        <li>Some adapters may have addition configuration options, which appear by checking the
+        "Additional Connection Settings". This may show additional settings applicable for some
+        adapter types. These include, but are not limited to, the options listed here.<br>
+          <img src="images/LoconetAdditionalSettings.png" alt=
+          "Connection Settings Additional settings" width="515" height="219">
           <ul>
-            <li>The "Baud rate" setting. When multiple settings are
-            available, this must be set to match the needs of the
-            particular hardware adapter specified in the "System
-            Connection" setting. This setting will be pre-set and
-            unchangeable you have selected a LocoBuffer-USB, PR3, PR4,
-            or MS100 "System Connection". There are two speed
-            choices for the LocoBuffer and LocoBuffer-II; select
-            the one that corresponds to the jumper settings on your
-            LocoBuffer unit. We recommend that you start with the
-            19,200 choice for the LocoBuffer or LocoBuffer-II; see
-            the <a href="LocoBufferII.shtml">LocoBuffer-II</a> and
-            <a href="LocoBuffer.shtml">LocoBuffer</a> pages for
-            more information.</li>
+            <li>The "Baud rate" setting. When multiple settings are available, this must be set to
+            match the needs of the particular hardware adapter specified in the "System Connection"
+            setting. This setting will be pre-set and unchangeable you have selected a
+            LocoBuffer-USB, PR3, PR4, or MS100 "System Connection". There are two speed choices for
+            the LocoBuffer and LocoBuffer-II; select the one that corresponds to the jumper
+            settings on your LocoBuffer unit. We recommend that you start with the 19,200 choice
+            for the LocoBuffer or LocoBuffer-II; see the <a href=
+            "LocoBufferII.shtml">LocoBuffer-II</a> and <a href="LocoBuffer.shtml">LocoBuffer</a>
+            pages for more information.
+            </li>
 
-            <li>The "(Serial) Connection Uses" selection determines how
-              "flow control" is implemented in software. This
-              selection should be configured for "hardware flow
-              control" unless you later consistently get a JMRI
-              console message about the LocoBuffer control leads
-              being improperly set up, in which case you might want
-              to try to bypass that by selecting "no flow control".<br>
-              This box will be blank if you've selected
-              LocoBuffer-USB, PR3, PR4 or MS100.</li>
+            <li>The "(Serial) Connection Uses" selection determines how "flow control" is
+            implemented in software. This selection should be configured for "hardware flow
+            control" unless you later consistently get a JMRI console message about the LocoBuffer
+            control leads being improperly set up, in which case you might want to try to bypass
+            that by selecting "no flow control".<br>
+            This box will be blank if you've selected LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
             <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
 
-            <li>"Transponding Present" allows you indicate whether
-                certain special hardware is present and configured.
-                If you have LocoNet-attached boards that configure
-                in "ops mode", or if you have Digitrax Transponding
-                installed, set this to "Yes". Otherwise, set it to
-                "No". </li>
+            <li>"Transponding Present" allows you indicate whether certain special hardware is
+            present and configured. If you have LocoNet-attached boards that configure in "ops
+            mode", or if you have Digitrax Transponding installed, set this to "Yes". Otherwise,
+            set it to "No".</li>
 
-            <li>The <a href="#TurnoutCmdHandling">"Command Station
-              Turnout Command Rejection and JMRI Turnout Command
-              Handling"</a> settings are described <a href="#TurnoutCmdHandling">below</a>.
+            <li>The <a href="#TurnoutCmdHandling">"Command Station Turnout Command Rejection and
+            JMRI Turnout Command Handling"</a> settings are described <a href=
+            "#TurnoutCmdHandling">below</a>.
             </li>
 
-            <li>Output Interval sets a configurable (minimum) interval for all turnout outputs
-              that are part of a Route or Output Matrix Signal Mast on this same connection.<br>
-              Use the [Reset] button to restore the default of 250 ms.
-              No restart is required after a change.</li>
+            <li>Output Interval sets a configurable (minimum) interval for all turnout outputs that
+            are part of a Route or Output Matrix Signal Mast on this same connection.<br>
+            Use the [Reset] button to restore the default of 250 ms. No restart is required after a
+            change.</li>
           </ul>
         </li>
 
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
-        <li style="text-align:left;">Restart JMRI. You should be up
-        and running.<br></li>
+        <li style="text-align:left;">Restart JMRI. You should be up and running.<br></li>
       </ol>
 
-      <p>If you are going to control Turnouts, Signals or other
-      devices on your layout from JMRI or another program, we
-      recommend that you disable, where available, the command
-      station's "Meter route/switch output when not in trinary"
-      feature.  When enabled, this option greatly reduces the number of
-      commands the LocoNet can handle each second, which can cause
-      significant delays when you're controlling signals, etc. To
-      disable it, you can use the "Configure Command Station" tool
-      in the <strong>LocoNet</strong> menu, or the Roster-based mechanism, or
-      the throttle-based programming mechanisms as described in the
-      manual for your command station.  The command station may not
-      immediately accept OpSw setting changes, so it may be necessary
-      to "power-cycle" the command station, or to "put the command
-      station to sleep" via the command station front-panel switch.</p>
+      <p>If you are going to control Turnouts, Signals or other devices on your layout from JMRI or
+      another program, we recommend that you disable, where available, the command station's "Meter
+      route/switch output when not in trinary" feature. When enabled, this option greatly reduces
+      the number of commands the LocoNet can handle each second, which can cause significant delays
+      when you're controlling signals, etc. To disable it, you can use the "Configure Command
+      Station" tool in the <strong>LocoNet</strong> menu, or the Roster-based mechanism, or the
+      throttle-based programming mechanisms as described in the manual for your command station.
+      The command station may not immediately accept OpSw setting changes, so it may be necessary
+      to "power-cycle" the command station, or to "put the command station to sleep" via the
+      command station front-panel switch.</p>
 
-      <p>Note that some command stations disable metering (i.e.
-      provide faster turnout command handling) when OpSw31="t" and
-      others when OpSw31="c".  Here's a list of command stations
-      and the OpSw31 setting which will speed-up command station
-      turnout command handling:</p>
+      <p>Note that some command stations disable metering (i.e. provide faster turnout command
+      handling) when OpSw31="t" and others when OpSw31="c". Here's a list of command stations and
+      the OpSw31 setting which will speed-up command station turnout command handling:</p>
+
       <ul>
-        <li>DCS100/DCS200 - OpSw31="t" for faster turnout command handling
-        (i.e. disables metering)</li>
+        <li>DCS100/DCS200 - OpSw31="t" for faster turnout command handling (i.e. disables
+        metering)</li>
+
         <li>DCS240 - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
+
         <li>DCS210 - OpSw31="c" for faster turnout command handling(i.e. disables metering)</li>
+
         <li>DB150 - does not provide a way to control "metering"</li>
+
         <li>DCS50 - does not provide a way to control "metering"</li>
+
         <li>DCS51 - does not provide a way to control "metering"</li>
+
         <li>DCS52 - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
-        <li>DT200 acting as command station with DB100 - does not provide a way to control "metering"</li>
+
+        <li>DT200 acting as command station with DB100 - does not provide a way to control
+        "metering"</li>
       </ul>
 
-      <p>If you will have multiple connections, the "Defaults" tab
-      in the "Preferences" panel may be used to direct certain
-      types of operations to different connections. A good example
-      of this is a system with two PR3 connections, one in
-      stand-alone programmer mode for programming decoder CVs, and
-      the other for communication with a layout LocoNet and command
-      station. In this case, use the "Defaults" settings to select
-      one LocoNet connection only for "Programmer" and the other
-      LocoNet connection for "Throttles", "Power Control", and
-      "Command Station".</p>
+      <p>If you will have multiple connections, the "Defaults" tab in the "Preferences" panel may
+      be used to direct certain types of operations to different connections. A good example of
+      this is a system with two PR3 connections, one in stand-alone programmer mode for programming
+      decoder CVs, and the other for communication with a layout LocoNet and command station. In
+      this case, use the "Defaults" settings to select one LocoNet connection only for "Programmer"
+      and the other LocoNet connection for "Throttles", "Power Control", and "Command Station".</p>
 
-      <h2><a name="Using" id="Using">Using JMRI with
-      LocoNet&reg;</a></h2>JMRI provides a number of features which
-      allow it to interact with LocoNet.  Some key things to know about
-      are included here.
+      <h2 id="Using">Using JMRI with LocoNet®</h2>
+      JMRI provides a number of features which allow it to interact with LocoNet. Some key things
+      to know about are included here.
+      <h3 id="LocoNetAddressing">LocoNet Device Addressing</h3>
 
-      <h3><a name="LocoNetAddressing" id="LocoNetAddressing">LocoNet Device Addressing</a></h3>
-      <p>Many LocoNet devices can be directly addressed by JMRI,
-        such as the individual turnout outputs on a DS54, or the
-        individual block detection inputs on a BDL16x. For more
-        information on how to find those addresses, see <a href=
-        "Addressing.shtml">this page</a>.</p>
+      <p>Many LocoNet devices can be directly addressed by JMRI, such as the individual turnout
+      outputs on a DS54, or the individual block detection inputs on a BDL16x. For more information
+      on how to find those addresses, see <a href="Addressing.shtml">this page</a>.</p>
 
-      <h3><a name="LocoNetTools" id="LocoNetTools">LocoNet Tools</a></h3>
-        <p>JMRI provides a variety of LocoNet-related tools. These
-        primarily allow configuration of LocoNet device
-        functionality, but also include some tools for status
-        monitoring. Information on these tools can be found at the
-        <a href="LocoNetTools.shtml">LocoNet&reg; tools
-        page</a>.</p>
+      <h3 id="LocoNetTools">LocoNet Tools</h3>
 
-      <h2><a name="Network" id="Network">Networked Computers and
-      LocoNet&reg;</a></h2>There are several mechanisms available
-      to allow multiple computers to communicate with LocoNet.
-      These communicate via standard TCP/IP protocols, and can even
-      work remotely. At least one of the networked computers must
-      have a functioning LocoNet interface. See <a href=
+      <p>JMRI provides a variety of LocoNet-related tools. These primarily allow configuration of
+      LocoNet device functionality, but also include some tools for status monitoring. Information
+      on these tools can be found at the <a href="LocoNetTools.shtml">LocoNet® tools page</a>.</p>
+
+      <h2 id="Network">Networked Computers and LocoNet®</h2>
+      There are several mechanisms available to allow multiple computers to communicate with
+      LocoNet. These communicate via standard TCP/IP protocols, and can even work remotely. At
+      least one of the networked computers must have a functioning LocoNet interface. See <a href=
       "LocoNetworking.shtml">this page</a> for more information.
-
-      <h2><a name="Debugging" id="Debugging">Debugging</a></h2>
+      <h2 id="Debugging">Debugging</h2>
 
       <ul>
-        <li>When using the LocoBuffer or LocoBuffer-II, be sure
-        that the JMRI preferences for the connection are set to use
-        the same Baud rate as the LocoBuffer or LocoBuffer-II.</li>
+        <li>When using the LocoBuffer or LocoBuffer-II, be sure that the JMRI preferences for the
+        connection are set to use the same Baud rate as the LocoBuffer or LocoBuffer-II.</li>
 
-        <li>On Windows O/S machines, be sure that the JMRI
-        connection is set to use the correct COM port. Use Windows
-        "Device Manager" to help determine which COM port your
-        interface hardware is using, then verify that JMRI is
-        configured to use that COM port.</li>
+        <li>On Windows O/S machines, be sure that the JMRI connection is set to use the correct COM
+        port. Use Windows "Device Manager" to help determine which COM port your interface hardware
+        is using, then verify that JMRI is configured to use that COM port.</li>
 
-        <li>On Windows platforms, the COM port assignment can
-        change if the interface hardware is moved from one USB port
-        on the computer to another USB port. Avoid changing how
-        your LocoNet-to-computer interface is connected to the
-        computer.</li>
+        <li>On Windows platforms, the COM port assignment can change if the interface hardware is
+        moved from one USB port on the computer to another USB port. Avoid changing how your
+        LocoNet-to-computer interface is connected to the computer.</li>
 
-        <li>On Windows platforms, the COM port assignment can
-        change if the interface hardware is connected via a USB
-        hub. At Windows start-up, the computer can assign different
-        COM port numbers to devices downstream of USB hubs, even if
-        all of the USB hardware connected in the system has not
-        been changed. Avoid connecting your LocoNet-to-computer
-        hardware downstream of a hub. Note that a computer monitor
-        which has USB connectors, and which is connected to a PC
-        using a USB cable is considered to have a built-in USB
-        hub.</li>
+        <li>On Windows platforms, the COM port assignment can change if the interface hardware is
+        connected via a USB hub. At Windows start-up, the computer can assign different COM port
+        numbers to devices downstream of USB hubs, even if all of the USB hardware connected in the
+        system has not been changed. Avoid connecting your LocoNet-to-computer hardware downstream
+        of a hub. Note that a computer monitor which has USB connectors, and which is connected to
+        a PC using a USB cable is considered to have a built-in USB hub.</li>
 
-        <li>Some PR3 devices were shipped with poor quality USB
-        cables. These cables have been known to cause a computer to
-        fail to communicate with the PR3 or to have intermittent
-        communication. Users should consider replacing the original
-        USB cable from the PR3 with a known-good USB cable.</li>
+        <li>Some PR3 devices were shipped with poor quality USB cables. These cables have been
+        known to cause a computer to fail to communicate with the PR3 or to have intermittent
+        communication. Users should consider replacing the original USB cable from the PR3 with a
+        known-good USB cable.</li>
       </ul>
 
-      <h4><a name="ErraticReadback" id="ErraticReadback">Erratic or
-      Non-Functioning CV Readback</a></h4>
+      <h4 id="ErraticReadback">Erratic or Non-Functioning CV Readback</h4>
 
       <ul>
-        <li>Some mobile decoders will only allow proper Readback of
-        CV values when there is a sufficient electrical load
-        connected to the F0F (front headlamp) output connections or
-        the motor connections. This means that an incandescent lamp
-        or LED is properly connected to the front headlamp
-        connection and functional. Other mobile decoders will only
-        provide proper CV Readback when a motor is connected to the
-        mobile decoder motor connections. Consult the documentation
-        for your mobile decoder to determine what connections are
-        required to allow proper CV readback.</li>
+        <li>Some mobile decoders will only allow proper Readback of CV values when there is a
+        sufficient electrical load connected to the F0F (front headlamp) output connections or the
+        motor connections. This means that an incandescent lamp or LED is properly connected to the
+        front headlamp connection and functional. Other mobile decoders will only provide proper CV
+        Readback when a motor is connected to the mobile decoder motor connections. Consult the
+        documentation for your mobile decoder to determine what connections are required to allow
+        proper CV readback.</li>
 
-        <li>Some Digitrax hardware is capable of successful CV read
-        and write operations on some mobile decoders but is unable
-        to reliably read and/or write CVs for other mobile
-        decoders. This problem is most obvious with sound decoders
-        from some manufacturers. Some suggestions are listed here.
-
+        <li>Some Digitrax hardware is capable of successful CV read and write operations on some
+        mobile decoders but is unable to reliably read and/or write CVs for other mobile decoders.
+        This problem is most obvious with sound decoders from some manufacturers. Some suggestions
+        are listed here.
           <ul>
-            <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51),
-            enable its "Blast Mode" programming feature. This will
-            often allow correct writing of mobile decoder CV
+            <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its "Blast Mode"
+            programming feature. This will often allow correct writing of mobile decoder CV
             values.</li>
 
-            <li>"Programming on the main" can allow a Chief (DCS100
-            or DCS200) to properly write to difficult mobile
-            decoder's CV values.</li>
+            <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to properly write to
+            difficult mobile decoder's CV values.</li>
 
-            <li>A programming booster, such as the
-            <i>SoundTraxx</i> <strong>PTB-100</strong> or the <i>DCC
-            Specialties</i> <strong>Power Pax</strong> can often be used
-            between the command station programming track
-            connections and the programming track to allow
-            successful read and write access of CVs on mobile
-            decoders which do not allow Readback on a programming
-            track connected directly to the programming
-            hardware.</li>
+            <li>A programming booster, such as the <em>SoundTraxx</em> <strong>PTB-100</strong> or
+            the <em>DCC Specialties</em> <strong>Power Pax</strong> can often be used between the
+            command station programming track connections and the programming track to allow
+            successful read and write access of CVs on mobile decoders which do not allow Readback
+            on a programming track connected directly to the programming hardware.</li>
 
-            <li>Some PR3 users report that the PR3 programming
-            track can successfully read and program sound decoders
-            when the PR3 is powered using an 18 Volts DC power
-            supply instead of a lower-voltage power supply such as
-            the PS12 or PS14. <strong>Do this at your own
-            risk!</strong> <em>Current Digitrax documentation for
-            the PR3 defines a maximum input voltage of 15 Volts DC,
-            where previously the maximum voltage was listed as 20
-            Volts DC. Use of input voltages higher than 15 Volts DC
-            could damage the PR3 hardware.</em></li>
+            <li>Some PR3 users report that the PR3 programming track can successfully read and
+            program sound decoders when the PR3 is powered using an 18 Volts DC power supply
+            instead of a lower-voltage power supply such as the PS12 or PS14. <strong>Do this at
+            your own risk!</strong> <em>Current Digitrax documentation for the PR3 defines a
+            maximum input voltage of 15 Volts DC, where previously the maximum voltage was listed
+            as 20 Volts DC. Use of input voltages higher than 15 Volts DC could damage the PR3
+            hardware.</em></li>
           </ul>
         </li>
       </ul>
 
-      <h4><a name="TurnoutCmdHandling" id=
-      "TurnoutCmdHandling">Command Station Turnout Command
-      Rejection and JMRI Turnout Command Handling</a></h4>
+      <h4 id="TurnoutCmdHandling">Command Station Turnout Command Rejection and JMRI Turnout
+      Command Handling</h4>
 
-      <p>Digitrax command stations pass LocoNet switch command
-      messages to the DCC track signal so that track-connected
-      accessory decoders can receive the switch commands. Digitrax
-      command stations seem to buffer the switch requests and
-      forward them to the DCC track signal in a way that does not
-      have a noticeable impact on mobile decoder response to
-      throttle control operations. This buffer is limited, and
-      under conditions of heavy LocoNet switch command traffic, can
-      overflow. When this happens, the command station will respond
-      with a message (a <code>\&lt;LONG_ACK\&gt;</code> opcode)
-      saying that it rejected (did not accept) the switch command.
-      When the command station gives this response, the switch
-      command is not placed into the buffer and is forgotten.<br>
-      This can be problematic, depending on how the device which
-      sent the switch command responds to the rejection message on
-      LocoNet. Many LocoNet devices do not notice the rejection
-      message, so do not attempt to re-send the switch command.
-      Other LocoNet devices can pay attention to the rejection
-      message and can wait a while before re-sending the message.
-      Some LocoNet devices can be programmed either to resend the
-      switch command if the rejection message is seen, or to not
-      resend if the rejection message is seen.<br>
-      This wide variety of behaviors can cause inconsistent or
-      unreliable behavior of any device which relies on stationary
-      decoder messages on the DCC track signal. Note that this can
-      include devices which connect to LocoNet and which monitor
-      the DCC track signal which is available on the LocoNet cable
-      "RailSync" wires.</p>
+      <p>Digitrax command stations pass LocoNet switch command messages to the DCC track signal so
+      that track-connected accessory decoders can receive the switch commands. Digitrax command
+      stations seem to buffer the switch requests and forward them to the DCC track signal in a way
+      that does not have a noticeable impact on mobile decoder response to throttle control
+      operations. This buffer is limited, and under conditions of heavy LocoNet switch command
+      traffic, can overflow. When this happens, the command station will respond with a message (a
+      <code>\&lt;LONG_ACK\&gt;</code> opcode) saying that it rejected (did not accept) the switch
+      command. When the command station gives this response, the switch command is not placed into
+      the buffer and is forgotten.<br>
+      This can be problematic, depending on how the device which sent the switch command responds
+      to the rejection message on LocoNet. Many LocoNet devices do not notice the rejection
+      message, so do not attempt to re-send the switch command. Other LocoNet devices can pay
+      attention to the rejection message and can wait a while before re-sending the message. Some
+      LocoNet devices can be programmed either to resend the switch command if the rejection
+      message is seen, or to not resend if the rejection message is seen.<br>
+      This wide variety of behaviors can cause inconsistent or unreliable behavior of any device
+      which relies on stationary decoder messages on the DCC track signal. Note that this can
+      include devices which connect to LocoNet and which monitor the DCC track signal which is
+      available on the LocoNet cable "RailSync" wires.</p>
 
       <ul>
         <li>
-          <a name="turncmdhandsettings" id=
-          "turncmdhandsettings">Turnout Command Handling
-          Settings</a>
-
-          <p>JMRI has various mechanisms to help handle these
-          temporary LocoNet switch command buffer overloads. These
-          mechanisms are controlled by the "Turnout Command
-          Handling" option for each LocoNet-based connection. The
-          four JMRI Turnout Command Handling options are described
-          below.</p>
+          <a id="turncmdhandsettings">Turnout Command Handling Settings</a>
+          <p>JMRI has various mechanisms to help handle these temporary LocoNet switch command
+          buffer overloads. These mechanisms are controlled by the "Turnout Command Handling"
+          option for each LocoNet-based connection. The four JMRI Turnout Command Handling options
+          are described below.</p>
 
           <ul>
-            <li>Normal - the default setting, is recommended for
-            the vast majority of layouts. In this mode of
-            operation, JMRI will quickly retry the last LocoNet
-            switch command seen before the command station's switch
-            command rejection message, and will continue to repeat
-            the switch command until a switch command is accepted
-            by the command station. This quick retry can cause
-            extremely high levels of activity on LocoNet.</li>
+            <li>Normal - the default setting, is recommended for the vast majority of layouts. In
+            this mode of operation, JMRI will quickly retry the last LocoNet switch command seen
+            before the command station's switch command rejection message, and will continue to
+            repeat the switch command until a switch command is accepted by the command station.
+            This quick retry can cause extremely high levels of activity on LocoNet.</li>
 
-            <li>Spread - This mode is the same as "Normal",
-            described above, except that JMRI implements additional
-            delay between any switch commands which it sends to
-            LocoNet. This should reduce the likelihood that JMRI
-            commands would cause an overflow of the Digitrax
-            command station switch command buffer, but does not
-            have any effect on other LocoNet devices which generate
-            LocoNet switch commands. The retry mechanism described
-            above for the "Normal" mode is enabled.</li>
+            <li>Spread - This mode is the same as "Normal", described above, except that JMRI
+            implements additional delay between any switch commands which it sends to LocoNet. This
+            should reduce the likelihood that JMRI commands would cause an overflow of the Digitrax
+            command station switch command buffer, but does not have any effect on other LocoNet
+            devices which generate LocoNet switch commands. The retry mechanism described above for
+            the "Normal" mode is enabled.</li>
 
-            <li>One Only - This disables the JMRI retry mechanism
-            for rejected switch commands. JMRI will not retry any
-            LocoNet switch command messages. The amount of delay
-            between any two JMRI-generated switch commands sent to
-            LocoNet is the same as "Normal" mode.</li>
+            <li>One Only - This disables the JMRI retry mechanism for rejected switch commands.
+            JMRI will not retry any LocoNet switch command messages. The amount of delay between
+            any two JMRI-generated switch commands sent to LocoNet is the same as "Normal"
+            mode.</li>
 
-            <li>Both - This option both disables the JMRI rejected
-            switch command retry mechanism and increases the delay
-            between any two switch commands sent by JMRI to
-            LocoNet.</li>
+            <li>Both - This option both disables the JMRI rejected switch command retry mechanism
+            and increases the delay between any two switch commands sent by JMRI to LocoNet.</li>
           </ul>
 
-          <p>These options do not take effect until the preferences
-          are saved and JMRI is restarted.<br>
-          None of these options can <i>guarantee</i> that
-          <i>all</i> LocoNet switch messages <i>will</i> be passed
-          to the DCC track signal.</p>
+          <p>These options do not take effect until the preferences are saved and JMRI is
+          restarted.<br>
+          None of these options can <em>guarantee</em> that <em>all</em> LocoNet switch messages
+          <em>will</em> be passed to the DCC track signal.</p>
         </li>
 
         <li>
-          <a name="alternatives" id="alternatives">Command Station Turnout Command
-          Rejection Avoidance Strategies</a>
-          <p>There are a number of strategies which can be used to avoid the
-          "turnout command retry storms" which can occur with JMRI.
+          <a id="alternatives">Command Station Turnout Command Rejection Avoidance Strategies</a>
+          <p>There are a number of strategies which can be used to avoid the "turnout command retry
+          storms" which can occur with JMRI.</p>
 
           <ul>
-              <li>Do not use "flashing" signal aspects when signal hardware does
-              not provide the flashing mechanism.  When the hardware does not
-              provide an appropriate flashing mechanism, JMRI must manually
-              change the signal head aspect from "a lit color" to "dark" and
-              repeat for the duration that the signal head displays a flashing
-              aspect.  This is a problem that occurs with JMRI when using SE8C
-              signal heads, and can occur with other signal head types.
-              <p>Alternatively, in some cases it may be possible to configure the
-              signaling hardware so that JMRI need not send frequent individual
-              turnout commands to implement flashing aspects.  While this option
-              may be useful with some signaling hardware, this option does
-              not apply to JMRI when using SE8C signal heads.</li>
+            <li>Do not use "flashing" signal aspects when signal hardware does not provide the
+            flashing mechanism. When the hardware does not provide an appropriate flashing
+            mechanism, JMRI must manually change the signal head aspect from "a lit color" to
+            "dark" and repeat for the duration that the signal head displays a flashing aspect.
+            This is a problem that occurs with JMRI when using SE8C signal heads, and can occur
+            with other signal head types.
+              <p>Alternatively, in some cases it may be possible to configure the signaling
+              hardware so that JMRI need not send frequent individual turnout commands to implement
+              flashing aspects. While this option may be useful with some signaling hardware, this
+              option does not apply to JMRI when using SE8C signal heads.</p>
+            </li>
 
-              <li>Some users find it possible to take advantage of the JMRI
-              "automation" feature which uses a different mechanism to control
-              switches.  With a LocoNet connection, this mechanism uses LocoNet
-              messages which are specifically sent to the DCC track signal.  These
-              messages are neither the "normal" LocoNet turnout control messages
-              nor the "alternate" LocoNet turnout control messages used with the
-              command station "Bushby" feature, described below.
-              <p>See <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#automation">
-              Turnout Table "automation"</a>help for more information on this
-              mechanism.
-              <p>When using this mechanism with LocoNet connections, the turnout
-              must not be configured for "MONITORING" feedback mode, as the
-              messaging used with this mechanism does not use the messages required
-              by "MONITORING" feedback mode.
-              This may be done in the JMRI <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-              "Turnout Table"</a> by setting a turnout's  "Feedback" mode to one
-              of "Direct", "OneSensor", "TwoSensor", "Indirect" or "Exact" (choose
-              one depending on the usable mode), and then configure the "Turnout
-              Automation" mode to "RAW".
-              <p>The image below shows one possible configuration which takes
-              advantage of this JMRI feature for a LocoNet turnout.
-              <p><a href="images/LnTurnoutFeedbackAutomationSettings.png">
-              <img width="558" src="images/LnTurnoutFeedbackAutomationSettings.png"
-              alt="Image showing JMRI turnout entry with feecback and
-              automation settings visible"></a>
-              <p>(Click the image for a larger version of the image.)
-              <p>The effect of this setting is to (potentially) reduce the maximum
-              rate at which the command station must forward LocoNet turnout
-              control messages to the DCC track signal.  This (potentially) reduces
-              the demands on the command station's buffering, thus potentially
-              reducing the likelihood of the command station's buffer filling.
-              <p>When this mode is used for a given turnout, JMRI does not make
-              any use of the "Bypass Bushby Bit" or the "Send ON and OFF"
-              configuration information.
-              <p>This type of JMRI configuration does not affect those LocoNet
-              turnout control messages generated by other LocoNet devices.
-              <p>There is some
-              question about how Digitrax command stations handle the messages
-              associated with this mechanism, which must be buffered by the
-              command station, and whether that command station buffering is any
-              different than the buffering used with "normal" and "alternate"
-              LocoNet turnout messages.
-              </li>
-              <li>JMRI normally sends an "ON" LocoNet message followed by an
-              "OFF" LocoNet message when controlling switches, just like Digitrax
-              throttles do.  <span class="since">Since
-              <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
-              JMRI 4.15.7</a></span>, it is possible to configure JMRI to send
-              only "ON" messages to turnouts, without sending "OFF" messages.  Many
-              accessory decoders work well when only receiving "ON" messages.
-              <p>Using this JMRI feature reduces the number of LocoNet switch
-              control messages which need to be forwarded to the DCC track signal,
-              which reduces the probability that any given LocoNet switch command
-              will arrive at the command station when its buffer is already full.
-              <p>To configure this JMRI operating mode, it is necessary to
-              configure each individual JMRI turnout, via the JMRI
-              <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-              "Turnout Table"</a>.  The image below shows that turnouts
-              LT10 and LT12 are configured to send both "ON" and "OFF" messages -
-              each of these turnouts have the "Send ON and OFF" checkbox checked.
-              In the image, turnouts LT11 and LT13 have the checkbox unchecked, so
-              JMRI will only send "ON" messages when JMRI controls these turnouts.
-              <p><a href="images/LnTurnoutBushbySettings.png">
-              <img src="images/LnTurnoutBushbySettings.png" alt="sample display
-              of LocoNet turnouts configured for various JMRI Bushby modes" width="499"></a>.
-              <p>(Click the image for a larger version of the image.)
-              <p>If the "Send ON and OFF" column is not visible, you may check the
-              "Show System-specific columns" checkbox at the bottom of the window, or
-              you may "right-click" while pointing to any visible header and then
-              check the "Send ON and OFF" checkbox.
-              <p>When a new JMRI turnout is created, the "Send ON and OFF" checkbox
-              is checked by default.
-              <p>Note that the "Send ON and OFF" checkbox settings have no effect LocoNet
-              switch control messages sent by other LocoNet agents.</li>
+            <li>Some users find it possible to take advantage of the JMRI "automation" feature
+            which uses a different mechanism to control switches. With a LocoNet connection, this
+            mechanism uses LocoNet messages which are specifically sent to the DCC track signal.
+            These messages are neither the "normal" LocoNet turnout control messages nor the
+            "alternate" LocoNet turnout control messages used with the command station "Bushby"
+            feature, described below.
+              <p>See <a href=
+              "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#automation">Turnout Table
+              "automation"</a>help for more information on this mechanism.</p>
 
-              <li>It is possible to configure Digitrax command stations so that they
-              do not forward <i>"regular"</i> LocoNet turnout control messages to
-              the DCC track signal (and RailSync wires on the LocoNet cable).  This
-              may be done by enabling the command station's "Bushby" feature, typically
-              done by configuring the command station's OpSw27 to "c"losed.  JMRI
-              provides two methods for modifying Digitrax command station OpSw
-              settings.  Both are described in this <a href="CommandStationConfig.shtml">
-              Command Station Configuration</a> help page.
-              <p>When the command station "Bushby" feature is enabled, only turnout
-              commands using a special LocoNet message type will be forwarded to
-              the DCC track signal.  This can be used in a few different ways.
+              <p>When using this mechanism with LocoNet connections, the turnout must not be
+              configured for "MONITORING" feedback mode, as the messaging used with this mechanism
+              does not use the messages required by "MONITORING" feedback mode. This may be done in
+              the JMRI <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">"Turnout
+              Table"</a> by setting a turnout's "Feedback" mode to one of "Direct", "OneSensor",
+              "TwoSensor", "Indirect" or "Exact" (choose one depending on the usable mode), and
+              then configure the "Turnout Automation" mode to "RAW".</p>
+
+              <p>The image below shows one possible configuration which takes advantage of this
+              JMRI feature for a LocoNet turnout.</p>
+
+              <p><a href="images/LnTurnoutFeedbackAutomationSettings.png"><img width="558" src=
+              "images/LnTurnoutFeedbackAutomationSettings.png" alt=
+              "Image showing JMRI turnout entry with feecback and automation settings visible"></a>
+              </p>
+
+              <p>(Click the image for a larger version of the image.)</p>
+
+              <p>The effect of this setting is to (potentially) reduce the maximum rate at which
+              the command station must forward LocoNet turnout control messages to the DCC track
+              signal. This (potentially) reduces the demands on the command station's buffering,
+              thus potentially reducing the likelihood of the command station's buffer filling.</p>
+
+              <p>When this mode is used for a given turnout, JMRI does not make any use of the
+              "Bypass Bushby Bit" or the "Send ON and OFF" configuration information.</p>
+
+              <p>This type of JMRI configuration does not affect those LocoNet turnout control
+              messages generated by other LocoNet devices.</p>
+
+              <p>There is some question about how Digitrax command stations handle the messages
+              associated with this mechanism, which must be buffered by the command station, and
+              whether that command station buffering is any different than the buffering used with
+              "normal" and "alternate" LocoNet turnout messages.</p>
+            </li>
+
+            <li>JMRI normally sends an "ON" LocoNet message followed by an "OFF" LocoNet message
+            when controlling switches, just like Digitrax throttles do. <span class="since">Since
+            <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+            4.15.7</a></span>, it is possible to configure JMRI to send only "ON" messages to
+            turnouts, without sending "OFF" messages. Many accessory decoders work well when only
+            receiving "ON" messages.
+              <p>Using this JMRI feature reduces the number of LocoNet switch control messages
+              which need to be forwarded to the DCC track signal, which reduces the probability
+              that any given LocoNet switch command will arrive at the command station when its
+              buffer is already full.</p>
+
+              <p>To configure this JMRI operating mode, it is necessary to configure each
+              individual JMRI turnout, via the JMRI <a href=
+              "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">"Turnout Table"</a>. The
+              image below shows that turnouts LT10 and LT12 are configured to send both "ON" and
+              "OFF" messages - each of these turnouts have the "Send ON and OFF" checkbox checked.
+              In the image, turnouts LT11 and LT13 have the checkbox unchecked, so JMRI will only
+              send "ON" messages when JMRI controls these turnouts.</p>
+
+              <p><a href="images/LnTurnoutBushbySettings.png"><img src=
+              "images/LnTurnoutBushbySettings.png" alt=
+              "sample display of LocoNet turnouts configured for various JMRI Bushby modes" width=
+              "499"></a>.</p>
+
+              <p>(Click the image for a larger version of the image.)</p>
+
+              <p>If the "Send ON and OFF" column is not visible, you may check the "Show
+              System-specific columns" checkbox at the bottom of the window, or you may
+              "right-click" while pointing to any visible header and then check the "Send ON and
+              OFF" checkbox.</p>
+
+              <p>When a new JMRI turnout is created, the "Send ON and OFF" checkbox is checked by
+              default.</p>
+
+              <p>Note that the "Send ON and OFF" checkbox settings have no effect LocoNet switch
+              control messages sent by other LocoNet agents.</p>
+            </li>
+
+            <li>It is possible to configure Digitrax command stations so that they do not forward
+            <em>"regular"</em> LocoNet turnout control messages to the DCC track signal (and
+            RailSync wires on the LocoNet cable). This may be done by enabling the command
+            station's "Bushby" feature, typically done by configuring the command station's OpSw27
+            to "c"losed. JMRI provides two methods for modifying Digitrax command station OpSw
+            settings. Both are described in this <a href="CommandStationConfig.shtml">Command
+            Station Configuration</a> help page.
+              <p>When the command station "Bushby" feature is enabled, only turnout commands using
+              a special LocoNet message type will be forwarded to the DCC track signal. This can be
+              used in a few different ways.</p>
+
               <ul>
-                  <li>Some users simply enable the command station "Bushby" feature,
-                  without re-configuring any LocoNet device or JMRI features.  In
-                  this case, no turnout control messages are forwarded to the DCC
-                  track signal by the command station, and those devices which get
-                  their control information from turnout commands on the DCC track
-                  signal (or the low-power version on the RailSync wires on the
-                  LocoNet cable) will not be controllable.
-                  <p>This option is only suitable for layouts where there are no
-                  devices which are controlled solely by the DCC track signal (or
-                  its low-power equivalent on the LocoNet cable.
-                  <p>Note that some devices get their control messages from the
-                  low-power DCC track signal on the LocoNet RailSync wires <i>or</i>
-                  from the LocoNet Data wires.  If this type of device must be
-                  controllable when the command station's Bushby feature is enabled,
-                  the device must be configured to get control messages from the
-                  LocoNet Data wires.  An example is the SE8C, which defaults to
-                  receive control messages from the low-power DCC track signal on
-                  the LocoNet cable.  To configure the SE8C to be controlled by
-                  LocoNet messages, set the SE8C OpSw14 to "C"losed.  Other device
-                  types may require similar re-configuration to be controllable.
-                  </li>
-                  <li><span class="since">Since
-                  <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
-                  JMRI 4.15.7</a></span>, JMRI provides a feature which "bypasses"
-                  the command station's "Bushby" feature and therefore allows JMRI
-                  to control those devices which are controlled by turnout control
-                  information on the DCC track signal.  This requires configuration
-                  of individual JMRI Turnouts (via the
-                  <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-                  "Turnout Table"</a>) to have their "Bypass Bushby Bit" checkbox
-                  checked.  This enables JMRI to send "alternate" LocoNet Turnout
-                  control messages to the command station, and these "alternate"
-                  messages will be buffered so that they may be passed to the DCC
-                  track signal, regardless of the state of the command station's
-                  "Bushby" feature.
-                  <p>To configure this JMRI feature for a turnout, define the
-                  turnout (if necessary) in the JMRI <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-                  "Turnout Table"</a>, and place a check in the turnout's "Bypass
-                  Bushby Bit" checkbox.  If the "Bypass Bushby Bit" column is not
-                  visible in the table, you may right-click on the table column header
-                  row and check "Bypass Bushby Bit", or check the "Show system-specific
-                  settings" checkbox at the bottom of the window.
-                  <p>In the image above, turnouts LT12 and LT13 show the "Bypass Bushby
-                  Bit" checked.  When JMRI attempts to control either of these two
-                  turnouts, JMRI will send an alternate LocoNet turnout control message
-                  ("OPC_SW_ACK"), which will bypass the command station's "Bushby"
-                  blocking of "regular" LocoNet turnout control messages ("OPC_SW_REQ").
-                  <p>Note that the command station still buffers the "alternate"
-                  LocoNet turnout control messages, and turnout message rejection
-                  can occur.  As such, it is important to configure the "Bypass Bushby
-                  Bit" option only on those turnouts which require conrol via the
-                  DCC track signal or the low-power version that is available on
-                  the LocoNet cable's RailSync wires.
-                  <p>Also note that setting the JMRI "Bushby Bit Bypass" feature
-                  a given turnout does <em>not</em> affect how turnout control
-                  messages from other LocoNet are encoded.  Unless another LocoNet
-                  device uses the "alternate" LocoNet turnout control message, that
-                  LocoNet device will not be able to pass turnout control messages
-                  to the DCC track signal when the command station "Bushby" feature
-                  is enabled.
-                  </li>
-                  <li><span class="since">Since
-                  <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">
-                  JMRI 4.25.2</a></span>, JMRI includes a simple script to provide
-                  forwarding of "normal" LocoNet turnout control messages, for
-                  certain user-defined addresses, as equivalent "special" LocoNet
-                  turnout control messages.  This can be useful when the command
-                  station's Bushby feature is enabled, and certain devices get their
-                  control messages from the DCC track signal or from the "RailSync"
-                  signals.  See the <a href="../../../html/scripts/LnBushbyForwarder.py">
-                  LnBushbyForwarder.py</a> script help page for details and
-                  information on how to configure it for your layout.</li>
- 
+                <li>Some users simply enable the command station "Bushby" feature, without
+                re-configuring any LocoNet device or JMRI features. In this case, no turnout
+                control messages are forwarded to the DCC track signal by the command station, and
+                those devices which get their control information from turnout commands on the DCC
+                track signal (or the low-power version on the RailSync wires on the LocoNet cable)
+                will not be controllable.
+                  <p>This option is only suitable for layouts where there are no devices which are
+                  controlled solely by the DCC track signal (or its low-power equivalent on the
+                  LocoNet cable.</p>
+
+                  <p>Note that some devices get their control messages from the low-power DCC track
+                  signal on the LocoNet RailSync wires <em>or</em> from the LocoNet Data wires. If
+                  this type of device must be controllable when the command station's Bushby
+                  feature is enabled, the device must be configured to get control messages from
+                  the LocoNet Data wires. An example is the SE8C, which defaults to receive control
+                  messages from the low-power DCC track signal on the LocoNet cable. To configure
+                  the SE8C to be controlled by LocoNet messages, set the SE8C OpSw14 to "C"losed.
+                  Other device types may require similar re-configuration to be controllable.</p>
+                </li>
+
+                <li>
+                  <span class="since">Since <a href=
+                  "https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+                  4.15.7</a></span>, JMRI provides a feature which "bypasses" the command station's
+                  "Bushby" feature and therefore allows JMRI to control those devices which are
+                  controlled by turnout control information on the DCC track signal. This requires
+                  configuration of individual JMRI Turnouts (via the <a href=
+                  "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">"Turnout Table"</a>)
+                  to have their "Bypass Bushby Bit" checkbox checked. This enables JMRI to send
+                  "alternate" LocoNet Turnout control messages to the command station, and these
+                  "alternate" messages will be buffered so that they may be passed to the DCC track
+                  signal, regardless of the state of the command station's "Bushby" feature.
+                  <p>To configure this JMRI feature for a turnout, define the turnout (if
+                  necessary) in the JMRI <a href=
+                  "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">"Turnout Table"</a>,
+                  and place a check in the turnout's "Bypass Bushby Bit" checkbox. If the "Bypass
+                  Bushby Bit" column is not visible in the table, you may right-click on the table
+                  column header row and check "Bypass Bushby Bit", or check the "Show
+                  system-specific settings" checkbox at the bottom of the window.</p>
+
+                  <p>In the image above, turnouts LT12 and LT13 show the "Bypass Bushby Bit"
+                  checked. When JMRI attempts to control either of these two turnouts, JMRI will
+                  send an alternate LocoNet turnout control message ("OPC_SW_ACK"), which will
+                  bypass the command station's "Bushby" blocking of "regular" LocoNet turnout
+                  control messages ("OPC_SW_REQ").</p>
+
+                  <p>Note that the command station still buffers the "alternate" LocoNet turnout
+                  control messages, and turnout message rejection can occur. As such, it is
+                  important to configure the "Bypass Bushby Bit" option only on those turnouts
+                  which require conrol via the DCC track signal or the low-power version that is
+                  available on the LocoNet cable's RailSync wires.</p>
+
+                  <p>Also note that setting the JMRI "Bushby Bit Bypass" feature a given turnout
+                  does <em>not</em> affect how turnout control messages from other LocoNet are
+                  encoded. Unless another LocoNet device uses the "alternate" LocoNet turnout
+                  control message, that LocoNet device will not be able to pass turnout control
+                  messages to the DCC track signal when the command station "Bushby" feature is
+                  enabled.</p>
+                </li>
+
+                <li>
+                  <span class="since">Since <a href=
+                  "https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">JMRI
+                  4.25.2</a></span>, JMRI includes a simple script to provide forwarding of
+                  "normal" LocoNet turnout control messages, for certain user-defined addresses, as
+                  equivalent "special" LocoNet turnout control messages. This can be useful when
+                  the command station's Bushby feature is enabled, and certain devices get their
+                  control messages from the DCC track signal or from the "RailSync" signals. See
+                  the <a href=
+                  "../../../html/scripthelp/LnBushbyForwarder/LnBushbyForwarder.shtml">LnBushbyForwarder.py</a>
+                  script help page for details and information on how to configure it for your
+                  layout.
+                </li>
               </ul>
-              </li>
-          <li>The best turnout command rejection avoidance strategy is one in
-          which the command station never even sees the LocoNet turnout control
-          messages. This can be done by using only devices which send and/or
-          receive switch control messages via the LocoNet data bus, and placing
-          all of those devices on a  <i>"Standalone"</i> LocoNet for use by those
-          devices. This standalone LocoNet can be separately connected to JMRI
-          (on a second connection) so that JMRI can access the command station,
-          throttles, fast clock, and other resources via one LocoNet connection,
-          and access signals and turnouts via another LocoNet connection. This
-          requires a separate LocoNet interface device for each connection.
-          <p>See the JMRI <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a>
-          page for background, ideas, and suggestions for implementing a
-          Standalone LocoNet.</li>
+            </li>
+
+            <li>The best turnout command rejection avoidance strategy is one in which the command
+            station never even sees the LocoNet turnout control messages. This can be done by using
+            only devices which send and/or receive switch control messages via the LocoNet data
+            bus, and placing all of those devices on a <em>"Standalone"</em> LocoNet for use by
+            those devices. This standalone LocoNet can be separately connected to JMRI (on a second
+            connection) so that JMRI can access the command station, throttles, fast clock, and
+            other resources via one LocoNet connection, and access signals and turnouts via another
+            LocoNet connection. This requires a separate LocoNet interface device for each
+            connection.
+              <p>See the JMRI <a href="StandaloneLocoNet.shtml">Standalone LocoNet®</a> page for
+              background, ideas, and suggestions for implementing a Standalone LocoNet.</p>
+            </li>
           </ul>
-
         </li>
 
         <li>
-          <a name="cmdStationTrkPwrOff" id=
-          "cmdStationTrkPwrOff">Turnout command rejection when
-          track power is off</a>
-
-          <p>Some more recent Digitrax command stations will refuse
-          to accept switch commands when track power is turned off.
-          This can result in a "storm" of repeated switch messages
-          on LocoNet if track power is off when switch messages are
-          sent. This problem can be avoided by ensuring that track
-          power is on when switch messages are to be sent.</p>
+          <a id="cmdStationTrkPwrOff">Turnout command rejection when track power is off</a>
+          <p>Some more recent Digitrax command stations will refuse to accept switch commands when
+          track power is turned off. This can result in a "storm" of repeated switch messages on
+          LocoNet if track power is off when switch messages are sent. This problem can be avoided
+          by ensuring that track power is on when switch messages are to be sent.</p>
         </li>
 
         <li>
-          <a name="multConnTurnoutReject" id=
-          "multConnTurnoutReject">Turnout command rejection and
-          multiple active LocoNet connections</a>
-
-          <p>When JMRI has multiple active connections to a single
-          LocoNet, it may be necessary to configure all but one of
-          the active LocoNet connections for "Turnout Command
-          Handling" type of "Only One", with one active LocoNet
-          connection configured for one of the other "Turnout
-          Command Handling" types. Failure to do this could cause
-          the various JMRI LocoNet connection instances to
-          independently attempt to resolve any turnout messages
-          which have been rejected by the command station. This
-          could result in a storm of turnout command retries on
-          LocoNet.<br>
-          Similarly, when multiple JMRI instances are working with
-          the same LocoNet, only one JMRI connection to the LocoNet
-          should be configured for a "Turnout Command Handling"
-          type other than "Only One". Failure to do this could
-          cause the various JMRI LocoNet connection instances to
-          independently attempt to resolve any turnout messages
-          which have been rejected by the command station. This
-          could result in a storm of turnout command retries on
-          LocoNet.</p>
+          <a id="multConnTurnoutReject">Turnout command rejection and multiple active LocoNet
+          connections</a>
+          <p>When JMRI has multiple active connections to a single LocoNet, it may be necessary to
+          configure all but one of the active LocoNet connections for "Turnout Command Handling"
+          type of "Only One", with one active LocoNet connection configured for one of the other
+          "Turnout Command Handling" types. Failure to do this could cause the various JMRI LocoNet
+          connection instances to independently attempt to resolve any turnout messages which have
+          been rejected by the command station. This could result in a storm of turnout command
+          retries on LocoNet.<br>
+          Similarly, when multiple JMRI instances are working with the same LocoNet, only one JMRI
+          connection to the LocoNet should be configured for a "Turnout Command Handling" type
+          other than "Only One". Failure to do this could cause the various JMRI LocoNet connection
+          instances to independently attempt to resolve any turnout messages which have been
+          rejected by the command station. This could result in a storm of turnout command retries
+          on LocoNet.</p>
         </li>
       </ul>
 
-      <a name="SeeAlso" id="SeeAlso"></a>
-      <h2>JMRI information and tools for LocoNet-specific hardware and features</h2>
+      <h2 id="SeeAlso">JMRI information and tools for LocoNet-specific hardware and features</h2>
 
-      <p>JMRI supports a wide variety of LocoNet hardware and features.  JMRI provides
-      a wide variety of hardware-specific tools to assist in configuring the devices.
-      And JMRI provides a number of tools to monitor the operation of LocoNet.  Most
-      of these features are described in the JMRI "Help" pages linked below (also refer to the sidebar).</p>
+      <p>JMRI supports a wide variety of LocoNet hardware and features. JMRI provides a wide
+      variety of hardware-specific tools to assist in configuring the devices. And JMRI provides a
+      number of tools to monitor the operation of LocoNet. Most of these features are described in
+      the JMRI "Help" pages linked below (also refer to the sidebar).</p>
 
-      <a name="devicetoolhelp" id="devicetoolhelp"></a><h3>JMRI LocoNet-specific Help pages</h3>
+      <h3 id="devicetoolhelp">JMRI LocoNet-specific Help pages</h3>
 
       <ul>
-        <li>Computer-to-LocoNet&reg; Interface Hardware
-
+        <li>Computer-to-LocoNet® Interface Hardware
           <ul>
-            <li><a href="LocoBufferUSB.shtml">RR-CirKits
-            LocoBuffer-USB</a></li>
+            <li>
+              <a href="LocoBufferUSB.shtml">RR-CirKits LocoBuffer-USB</a>
+            </li>
 
-            <li><a href="LocoBufferII.shtml">RR-CirKits
-            LocoBuffer-II</a></li>
+            <li>
+              <a href="LocoBufferII.shtml">RR-CirKits LocoBuffer-II</a>
+            </li>
 
-            <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
+            <li>
+              <a href="LocoBuffer.shtml">LocoBuffer</a>
+            </li>
 
-            <li><a href="PR4.shtml">Digitrax PR4</a></li>
+            <li>
+              <a href="PR4.shtml">Digitrax PR4</a>
+            </li>
 
-            <li><a href="PR3.shtml">Digitrax PR3</a></li>
+            <li>
+              <a href="PR3.shtml">Digitrax PR3</a>
+            </li>
 
-            <li><a href="PR2.shtml">Digitrax PR2</a></li>
+            <li>
+              <a href="PR2.shtml">Digitrax PR2</a>
+            </li>
 
-            <li><a href="BTLocoBridge.shtml">Bluetooth
-            LocoBridge</a></li>
+            <li>
+              <a href="BTLocoBridge.shtml">Bluetooth LocoBridge</a>
+            </li>
 
-            <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly
-            not recommended)</li>
+            <li>
+              <a href="MS100.shtml">Digitrax MS100</a> (Strongly not recommended)
+            </li>
 
-            <li><a href="DCS52.shtml">Digitrax DCS52 via its
-            integrated USB port</a></li>
+            <li>
+              <a href="DCS52.shtml">Digitrax DCS52 via its integrated USB port</a>
+            </li>
 
-            <li><a href="DCS240.shtml">Digitrax DCS240 via its
-            integrated USB port</a></li>
-
+            <li>
+              <a href="DCS240.shtml">Digitrax DCS240 via its integrated USB port</a>
+            </li>
           </ul>
         </li>
 
         <li>
-          <a name="tools" id="tools"></a>LocoNet-related Tools
-
+          <a id="tools"></a>LocoNet-related Tools
           <ul>
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">
-            Monitor LocoNet</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor
+              LocoNet</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">
-            Monitor Slots</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor
+              Slots</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">
-            Monitor Clock</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">Monitor
+              Clock</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
-            Monitor LocoNet Stats</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">Monitor
+              LocoNet Stats</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">
-            Configure BDL16x</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">Configure
+              BDL16x</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">
-            Configure DS64</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">Configure
+              DS64</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">
-            Configure PM4x</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configure PM4x</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">
-            Configure SE8C</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configure SE8C</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">
-            Configure LocoIO</a> (No longer supported, preferred
-            method is via <a href=
-            "../../apps/DecoderPro/index.shtml">DecoderPro3</a>)</li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure
+              LocoIO</a> (No longer supported, preferred method is via <a href=
+              "../../apps/DecoderPro/index.shtml">DecoderPro3</a>)
+            </li>
 
-            <li><a href=
-            "CommandStationConfig.shtml">
-            Roster-based Command Station Configuration</a> (recommended), or the <a href=
-            "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-            Configure Command Station Tool</a></li>
+            <li>
+              <a href="CommandStationConfig.shtml">Roster-based Command Station Configuration</a>
+              (recommended), or the <a href=
+              "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure
+              Command Station Tool</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">
-            Configure LocoNet ID</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configure
+              LocoNet ID</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
-            Configure Duplex Group</a>.  (Note that this tool can have an effect on LNWI devices.)</li>
+            <li>
+              <a href=
+              "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure
+              Duplex Group</a>. (Note that this tool can have an effect on LNWI devices.)
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">
-            Send Throttle Message</a></li>
+            <li>
+              <a href=
+              "../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">Send
+              Throttle Message</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">
-            Send LocoNet Packet</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">Send LocoNet
+              Packet</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">
-            Select PR3 Mode</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">Select PR3
+              Mode</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">
-            Download Firmware</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Download
+              Firmware</a>
+            </li>
 
-            <li><a href=
-            "../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">
-            Download Sounds</a></li>
-            
-            <li><a href="./DigitraxMeters.shtml">Voltage and Current Meters</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Download
+              Sounds</a>
+            </li>
+
+            <li>
+              <a href="./DigitraxMeters.shtml">Voltage and Current Meters</a>
+            </li>
           </ul>
         </li>
 
         <li>3rd-party Command Stations
-
           <ul>
-            <li><a href="Fleischmann.shtml">Fleischmann Twin
-            Centre</a></li>
+            <li>
+              <a href="Fleischmann.shtml">Fleischmann Twin Centre</a>
+            </li>
 
-            <li><a href="Uhlenbrock.shtml">Uhlenbrock Command
-            Station</a></li>
+            <li>
+              <a href="Uhlenbrock.shtml">Uhlenbrock Command Station</a>
+            </li>
           </ul>
         </li>
 
         <li>Other LocoNet-related information and features
-
           <ul>
-            <li><a href="Addressing.shtml">JMRI addressing</a> of
-            LocoNet&reg; Turnouts, Sensors and Transponding
-            zones</li>
-
-            <li><a href="LocoNetSim.shtml">LocoNet&reg;
-            Simulator</a></li>
+            <li>
+              <a href="Addressing.shtml">JMRI addressing</a> of LocoNet® Turnouts, Sensors and
+              Transponding zones
+            </li>
 
             <li>
-              <a href="LocoNetworking.shtml">Connecting multiple
-              computers to a LocoNet&reg; layout</a>
+              <a href="LocoNetSim.shtml">LocoNet® Simulator</a>
+            </li>
 
+            <li>
+              <a href="LocoNetworking.shtml">Connecting multiple computers to a LocoNet® layout</a>
               <ul>
-                <li><a href="LbServer.shtml">Connecting Multiple
-                Computers to LocoNet&reg; via LBServer</a></li>
+                <li>
+                  <a href="LbServer.shtml">Connecting Multiple Computers to LocoNet® via
+                  LBServer</a>
+                </li>
 
-                <li><a href="LocoNetServer.shtml">Connecting
-                Multiple Computers to LocoNet via LocoNet&reg;
-                Server</a></li>
+                <li>
+                  <a href="LocoNetServer.shtml">Connecting Multiple Computers to LocoNet via
+                  LocoNet® Server</a>
+                </li>
               </ul>
             </li>
 
-            <li><a href="StandaloneLocoNet.shtml">Standalone
-            LocoNet</a></li>
+            <li>
+              <a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>
+            </li>
 
-            <li><a href="LocoNetClasses.shtml">JMRI High-level
-            Structures for LocoNet&reg; Interfacing</a></li>
+            <li>
+              <a href="LocoNetClasses.shtml">JMRI High-level Structures for LocoNet®
+              Interfacing</a>
+            </li>
 
-            <li>A technically-oriented study of <a href=
-            "DigitraxPower.shtml">Power Supply issues</a> in
-            some Digitrax products</li>
-
+            <li>A technically-oriented study of <a href="DigitraxPower.shtml">Power Supply
+            issues</a> in some Digitrax products
+            </li>
           </ul>
         </li>
       </ul>
-      <a name="loconetRoster" id="loconetRoster"></a><h3>Configuring some LocoNet
-          devices via "Roster" entries</h3>
-      <p>Some LocoNet devices can be configured via JMRI a "roster" entry.  Simply
-          select the appropriate "decoder" name when creating a new roster entry.
-          These include:</p>
-      <ul>
-          <li>DCS100/DCS200/DCS50/DCS51/DCS52/DB150/DCS210/DCS240 (only when acting as
-              a command station)</li>
-          <li>BDL16/BDL162/BDL168</li>
-          <li>DS64</li>
-          <li>PM4/PM42</li>
-          <li>SE8C</li>
-      </ul>
-      <p>Often, these "decoder" definitions have some limitations on which features
-          can be configured, and, where appropriate, limitations on the supported
-          range of "board id" values.  These limitations are documented on a "Notes"
-          tab within the "comprehensive" programmer window.
 
-      <p>Note that JMRI generally provides other (historical) tools which are able to
-        configure the same set of features via tools in the "LocoNet" menu.  Any
-        changes made to device configuration using the historical tools will
-        <strong>not</strong> be reflected in a roster entry for the device.  If you wish to
-        keep the roster updated with any changes made via historical tools or using
-        other tools or processes, it will be necessary to manually update the
-        roster entry.</p>
+      <h3 id="loconetRoster">Configuring some LocoNet devices via "Roster" entries</h3>
 
-      <a name="deviceBoardId" id="deviceBoardId"></a><h3>Programming Board ID (Board Address) for some Digitrax devices</h3>
-      <p>Some Digitrax devices can be configured for "Board ID" number (sometimes called 
-          Board Address).  This value is typically used to influence which Turnout, 
-          Sensor, Reporter, and/or Power Manager section numbers are used by the 
-          device.</p>
-      <p>Digitrax devices which make use of "Board ID" numbers, but which cannot be
-      programatically configured, include:</p>
+      <p>Some LocoNet devices can be configured via JMRI a "roster" entry. Simply select the
+      appropriate "decoder" name when creating a new roster entry. These include:</p>
+
       <ul>
-          <li>Digitrax DS64</li>
-          <li>Digitrax BDL16, BDL162, and BDL168</li>
-          <li>Digitrax PM4, PM42</li>
-          <li>Digitrax SE8C</li>
-          <li>Digitrax BXPA1</li>
-          <li>Digitrax BXP88</li>
+        <li>DCS100/DCS200/DCS50/DCS51/DCS52/DB150/DCS210/DCS240 (only when acting as a command
+        station)</li>
+
+        <li>BDL16/BDL162/BDL168</li>
+
+        <li>DS64</li>
+
+        <li>PM4/PM42</li>
+
+        <li>SE8C</li>
       </ul>
-      <p>For these devices, JMRI cannot configure the Board ID number under JMRI's
-          control without user intervention.  It is, however, possible to configure 
-          the Board ID number using JMRI and manual intervention.  The process is
-          to follow the directions found in the device manual for changing Board 
-          Address (Board ID), but use JMRI's "Turnout Control" tool instead of a 
-          LocoNet throttle.</p>
-      <p>Below is a table showing, on the left, the Digitrax instructions copied 
-          from the BDL168 manual, and, on the right, the instructions when using JMRI.  
-          Similar instructions may be used to configure other the Board Address 
-          (Board ID) on other Digitrax devices.</p>
+
+      <p>Often, these "decoder" definitions have some limitations on which features can be
+      configured, and, where appropriate, limitations on the supported range of "board id" values.
+      These limitations are documented on a "Notes" tab within the "comprehensive" programmer
+      window.</p>
+
+      <p>Note that JMRI generally provides other (historical) tools which are able to configure the
+      same set of features via tools in the "LocoNet" menu. Any changes made to device
+      configuration using the historical tools will <strong>not</strong> be reflected in a roster
+      entry for the device. If you wish to keep the roster updated with any changes made via
+      historical tools or using other tools or processes, it will be necessary to manually update
+      the roster entry.</p>
+
+      <h3 id="deviceBoardId">Programming Board ID (Board Address) for some Digitrax devices</h3>
+
+      <p>Some Digitrax devices can be configured for "Board ID" number (sometimes called Board
+      Address). This value is typically used to influence which Turnout, Sensor, Reporter, and/or
+      Power Manager section numbers are used by the device.</p>
+
+      <p>Digitrax devices which make use of "Board ID" numbers, but which cannot be programatically
+      configured, include:</p>
+
+      <ul>
+        <li>Digitrax DS64</li>
+
+        <li>Digitrax BDL16, BDL162, and BDL168</li>
+
+        <li>Digitrax PM4, PM42</li>
+
+        <li>Digitrax SE8C</li>
+
+        <li>Digitrax BXPA1</li>
+
+        <li>Digitrax BXP88</li>
+      </ul>
+
+      <p>For these devices, JMRI cannot configure the Board ID number under JMRI's control without
+      user intervention. It is, however, possible to configure the Board ID number using JMRI and
+      manual intervention. The process is to follow the directions found in the device manual for
+      changing Board Address (Board ID), but use JMRI's "Turnout Control" tool instead of a LocoNet
+      throttle.</p>
+
+      <p>Below is a table showing, on the left, the Digitrax instructions copied from the BDL168
+      manual, and, on the right, the instructions when using JMRI. Similar instructions may be used
+      to configure other the Board Address (Board ID) on other Digitrax devices.</p>
+
       <table border="3">
-          <tr><th style="width: 6%">Step/th>
-              <th style="width: 47%">Digitrax Instructions 
-                      for changing BDL168 Board Address</th>
-              <th style="width: 47%">Instructions for 
-                      changing Board Address (Board ID) when using JMRI</th></tr>
-          <tr><td align="center">0</td><td colspan="2"><strong>(A step <em>not</em> 
-                  included in Digitrax documentation, but one that is necessary 
-                  regardless of what method you use!)</strong><br><br>0. Ensure 
-                  that <em>NO OTHER ACTIVITY</em> is occurring on LocoNet!<br><br>
-                  If <em>anything</em> causes generation of a LocoNet Turnout Control 
-                  message after the device button has been pressed, but before you 
-                  issue the turnout control message to the specific number you 
-                  desire, then the board will be configured to use that unexpected 
-                  turnout number, leaving the board unmanageable at the Board ID 
-                  number you are expecting!<br><br>Be aware that movement of trains on 
-                  layouts where signaling is implemented can cause generation of
-                  LocoNet Turnout control messages!</td></tr>
-          <tr><td align="center">0.25</td><td></td><td>Configure JMRI to 
-                  communicate with with your LocoNet hardware.</td></tr>
-          <tr><td align="center">0.5</td><td colspan="2">See <a href="#BoardIdNote1">
-                  Note 1</a> below before proceeding. This step applies <em>both</em>
-                  for the Digitrax procedure and the JMRI-based procedure.</td></tr>
-          <tr><td rowspan="2" align="center">1</td><td align="center">Note: Steps 
-                  1 thru 4 of the Digitrax instructions are from Section "<em>8.1
-                  To set up the BDL168 board address</em>" of the Digitrax BDL168 
-                  manual, with some comments added by JMRI developers.)</td>
-              <td rowspan="2">Power up your layout, BDL168, and start JMRI.</td></tr>
-          <tr><td>Power up your BDL168.</td></tr>
-          <tr><td align="center">2</td><td>Press the switch behind the green ID 
-                  LED for about 1 second, then release it. The green ID LED will 
-                  blink. The red option LED will not light. This let's you know 
-                  that you are in board address set up mode.<br><br><em>(Note: 
-                  These instructions apply to BDL16, BDL162, and BDL168 devices.  
-                  Other instructions, buttons, and LED color/flashing conditions 
-                  may apply for other device types.  See the appropriate manual 
-                  for device-specific instructions!)</em></td>
-              <td>Same as per Digitrax instructions.</td></tr>
-          <tr><td align="center">3</td><td>Connect a DT or UT series Digitrax 
-                  throttle to the BDL168's LocoNet connector. (This can only be 
-                  done with a Digitrax LocoNet throttle or equivalent software).</td>
-              <td>Open JMRI's "Turnout Control" tool, via "Tools->Turnout Control"</td></tr>
-          <tr><td align="center">4</td><td>Go into SWITCH mode on the throttle. 
-                  Select the switch number that corresponds to the board address 
-                  you want to set and issue a closed "c" command to set the 
-                  board address. The board address is changed as soon as you 
-                  issue the SWITCH command. See following instructions for using 
-                  specific Digitrax throttles for setting the address. <em>(Those 
-                  instructions omitted here.)</em></td>
-              <td>Enter the switch number which corresponds to the board address
-                  you want to set in the number entry box below "Turnout" at the top
-                  of the JMRI "Turnout Control" tool.  As an example, to set Board 
-                  Address (Board ID) to 4, enter "4" (without quotes".  Then 
-                  activate the window's "Closed" button.</td></tr>
-          <tr><td align="center">5</td><td colspan="2">(A JMRI-specific step, not 
-                  included in Digitrax documentation, which applies regardless of 
-                  which method you use.)<br><br>See <a href="#BoardIdNote2">Note 
-                  2</a> below for important information on JMRI behaviors which 
-                  may influence how JMRI sees the device and which may require 
-                  changes to any pre-existing JMRI uses of affected Turnout, 
-                  Sensor, and/or Reporter configurations, and/or customized 
-                  scripts monitoring for LocoNet Power Management messages.</td></tr>
-          <tr><td align="center">6</td><td></td><td>Quit and Restart JMRI.  See <a href="#BoardIdNote3">
-                  Note 3</a> below, for more information on why this can be 
-                  important.</td></tr>
-          <tr><td align="center"><a name="BoardIdNote1" id="BoardIdNote1"><strong>Note 1</strong></a></td>
-              <td colspan="2">Some devices, 
-              by default, get their turnout control messages from 
-              the DCC track signal, and rely upon the command station to forward
-              the LocoNet turnout control messages as DCC track signal stationary 
-              decoder packets.  
-              <ul>
-                  <li>If you are connected via a Digitrax command station, then 
-                      it may be necessary to turn track power "On" (and <em>not</em> 
-                      "IdlE"!) before performing the steps shown above.</li>
-                  <li>If you are connected via a "Standalone LocoNet", then it 
-                      may be necessary to configure the device to get its control
-                      messages from LocoNet instead of RailSync.  This can be done 
-                      using the appropriate JMRI tool in the LocoNet directory, 
-                      if one is available for the device type, or, using the JMRI
-                      Roster, if the device type is supported in the Roster.</li></ul></td></tr>
-          <tr><td align="center"><a name="BoardIdNote2" id="BoardIdNote2"><strong>Note 2</strong></a></td>
-              <td colspan="2">The Board ID 
-              number typically implies the Turnout, Sensor, Reporter, 
-          and/or power management "addresses" used by the device.  Changing the 
-          Board ID number typically forces the device to use different addresses.
-          This can mean a disruption to the JMRI functionality which worked before
-          the Board ID number was changed.  If you have used "User Names" to 
-          reference those items, it is usually sufficient to give a similar User Name
-          to each "relocated" Turnout, Sensor, or Reporter object, and then change
-          each reference to the old object User Name to reflect the new User Name.</td></tr>
-          <tr><td align="center"><a name="BoardIdNote3" id="BoardIdNote3"><strong>Note 3</strong></a></td>
-              <td colspan="2">If JMRI has 
-              "pre-populated" the Turnouts or Sensors table with information about 
-              the device, it will be necessary to quit and restart JMRI so that 
-              any information that was "pre-populated" from the device based on 
-              its old Board ID value will _not_ be remembered.  Restarting JMRI 
-              causes JMRI to request the "pre-population" information, and if the
-          device responds to the request, the device should respond with its information
-          and the Turnouts and/or Sensors table should be pre-populated.</td></tr>
-          
+        <tr>
+          <th style="width: 6%">Step/th&gt;</th>
+          <th style="width: 47%">Digitrax Instructions for changing BDL168 Board Address</th>
+          <th style="width: 47%">Instructions for changing Board Address (Board ID) when using
+          JMRI</th>
+        </tr>
+
+        <tr>
+          <td class="ctr">0</td>
+          <td colspan="2"><strong>(A step <em>not</em> included in Digitrax documentation, but one
+          that is necessary regardless of what method you use!)</strong><br>
+          <br>
+          0. Ensure that <em>NO OTHER ACTIVITY</em> is occurring on LocoNet!<br>
+          <br>
+          If <em>anything</em> causes generation of a LocoNet Turnout Control message after the
+          device button has been pressed, but before you issue the turnout control message to the
+          specific number you desire, then the board will be configured to use that unexpected
+          turnout number, leaving the board unmanageable at the Board ID number you are
+          expecting!<br>
+          <br>
+          Be aware that movement of trains on layouts where signaling is implemented can cause
+          generation of LocoNet Turnout control messages!</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">0.25</td>
+          <td>
+          </td>
+          <td>Configure JMRI to communicate with with your LocoNet hardware.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">0.5</td>
+          <td colspan="2">
+            See <a href="#BoardIdNote1">Note 1</a> below before proceeding. This step applies
+            <em>both</em> for the Digitrax procedure and the JMRI-based procedure.
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2" class="ctr">1</td>
+          <td class="ctr">Note: Steps 1 thru 4 of the Digitrax instructions are from Section
+          "<em>8.1 To set up the BDL168 board address</em>" of the Digitrax BDL168 manual, with
+          some comments added by JMRI developers.)</td>
+          <td rowspan="2">Power up your layout, BDL168, and start JMRI.</td>
+        </tr>
+
+        <tr>
+          <td>Power up your BDL168.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">2</td>
+          <td>Press the switch behind the green ID LED for about 1 second, then release it. The
+          green ID LED will blink. The red option LED will not light. This let's you know that you
+          are in board address set up mode.<br>
+          <br>
+          <em>(Note: These instructions apply to BDL16, BDL162, and BDL168 devices. Other
+          instructions, buttons, and LED color/flashing conditions may apply for other device
+          types. See the appropriate manual for device-specific instructions!)</em></td>
+          <td>Same as per Digitrax instructions.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">3</td>
+          <td>Connect a DT or UT series Digitrax throttle to the BDL168's LocoNet connector. (This
+          can only be done with a Digitrax LocoNet throttle or equivalent software).</td>
+          <td>Open JMRI's "Turnout Control" tool, via "Tools-&gt;Turnout Control"</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">4</td>
+          <td>Go into SWITCH mode on the throttle. Select the switch number that corresponds to the
+          board address you want to set and issue a closed "c" command to set the board address.
+          The board address is changed as soon as you issue the SWITCH command. See following
+          instructions for using specific Digitrax throttles for setting the address. <em>(Those
+          instructions omitted here.)</em></td>
+          <td>Enter the switch number which corresponds to the board address you want to set in the
+          number entry box below "Turnout" at the top of the JMRI "Turnout Control" tool. As an
+          example, to set Board Address (Board ID) to 4, enter "4" (without quotes". Then activate
+          the window's "Closed" button.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">5</td>
+          <td colspan="2">
+            (A JMRI-specific step, not included in Digitrax documentation, which applies regardless
+            of which method you use.)<br>
+            <br>
+            See <a href="#BoardIdNote2">Note 2</a> below for important information on JMRI
+            behaviors which may influence how JMRI sees the device and which may require changes to
+            any pre-existing JMRI uses of affected Turnout, Sensor, and/or Reporter configurations,
+            and/or customized scripts monitoring for LocoNet Power Management messages.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="ctr">6</td>
+          <td>
+          </td>
+          <td>
+            Quit and Restart JMRI. See <a href="#BoardIdNote3">Note 3</a> below, for more
+            information on why this can be important.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="ctr">
+            <a id="BoardIdNote1"><strong>Note 1</strong></a>
+          </td>
+          <td colspan="2">
+            Some devices, by default, get their turnout control messages from the DCC track signal,
+            and rely upon the command station to forward the LocoNet turnout control messages as
+            DCC track signal stationary decoder packets.
+            <ul>
+              <li>If you are connected via a Digitrax command station, then it may be necessary to
+              turn track power "On" (and <em>not</em> "IdlE"!) before performing the steps shown
+              above.</li>
+
+              <li>If you are connected via a "Standalone LocoNet", then it may be necessary to
+              configure the device to get its control messages from LocoNet instead of RailSync.
+              This can be done using the appropriate JMRI tool in the LocoNet directory, if one is
+              available for the device type, or, using the JMRI Roster, if the device type is
+              supported in the Roster.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="ctr">
+            <a id="BoardIdNote2"><strong>Note 2</strong></a>
+          </td>
+          <td colspan="2">The Board ID number typically implies the Turnout, Sensor, Reporter,
+          and/or power management "addresses" used by the device. Changing the Board ID number
+          typically forces the device to use different addresses. This can mean a disruption to the
+          JMRI functionality which worked before the Board ID number was changed. If you have used
+          "User Names" to reference those items, it is usually sufficient to give a similar User
+          Name to each "relocated" Turnout, Sensor, or Reporter object, and then change each
+          reference to the old object User Name to reflect the new User Name.</td>
+        </tr>
+
+        <tr>
+          <td class="ctr">
+            <a id="BoardIdNote3"><strong>Note 3</strong></a>
+          </td>
+          <td colspan="2">If JMRI has "pre-populated" the Turnouts or Sensors table with
+          information about the device, it will be necessary to quit and restart JMRI so that any
+          information that was "pre-populated" from the device based on its old Board ID value will
+          _not_ be remembered. Restarting JMRI causes JMRI to request the "pre-population"
+          information, and if the device responds to the request, the device should respond with
+          its information and the Turnouts and/or Sensors table should be pre-populated.</td>
+        </tr>
       </table>
-      <p>After completing the instructions as noted above, the device <em>should</em> be 
-          configured for the selected Device address.</p>
-     
-      <a name="devicetoollimits" id="devicetoollimits"></a><h3>Some JMRI LocoNet-specific device and feature limitations</h3>
+
+      <p>After completing the instructions as noted above, the device <em>should</em> be configured
+      for the selected Device address.</p>
+
+      <h3 id="devicetoollimits">Some JMRI LocoNet-specific device and feature limitations</h3>
 
       <ul>
+        <li>
+          <p>At this time, Digitrax "expanded" slots are not directly supported. This has several
+          implicaitons:</p>
 
-          <li><p>At this time, Digitrax "expanded" slots are not directly supported.
-                  This has several implicaitons:
-              <ul>
-                  <li>The
-           <a href=
-            "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">
-            Monitor Slots</a> tool is only able to display information for "standard"
-      slots.  It is possible when using a DCS240 that a loco can be shown as
-      occupying a "standard" slot when it actually is being controlled by an
-      "extended" slot.  When this occurs, the display will generallly be "corrected" within a few minutes.</li>
-                  <li>JMRI can have difficulty acquiring and/or dispatching a loco
-                      when the loco has been acquired into an "expanded" slot by
-                      a throttle with enabled "expanded" slot capability.</li>
-              </ul>
-              <p>As such, many users find that disabling DCS240 "expanded" slot
-              capability can improve some aspects of JMRI "throttle" functionality,
-              including WiThrottle Server funcitonality.</p>
-              <p>Additional discussion may be found <a href="EnhancedSlots.shtml">
-              here</a>.</p>
-          </li>
+          <ul>
+            <li>The <a href=
+            "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor Slots</a> tool
+            is only able to display information for "standard" slots. It is possible when using a
+            DCS240 that a loco can be shown as occupying a "standard" slot when it actually is
+            being controlled by an "extended" slot. When this occurs, the display will generallly
+            be "corrected" within a few minutes.
+            </li>
 
+            <li>JMRI can have difficulty acquiring and/or dispatching a loco when the loco has been
+            acquired into an "expanded" slot by a throttle with enabled "expanded" slot
+            capability.</li>
+          </ul>
 
-          <li><p>At this time, the Digitrax BXP88 and BXPA1 devices do not support a
-      mechanism to allow JMRI to program individual device OpSw settings via
-      LocoNet messaging.</p>
-              <p>While JMRI cannot provide mechanisms to configure these
-      devices, for their block detection and transponding features, their
-      behavior is similar to the BDL16x device.  JMRI's existing support for
-      BDL16x block detection and transponding features provides appropriate
-      support for the BXP88/BXPA1 detection and transponding operational
-      features.  JMRI's existing support for PM4x power management features
-      provides appropriate support for the BXP88/BXPA1 power management
-      operational features.</p></li>
+          <p>As such, many users find that disabling DCS240 "expanded" slot capability can improve
+          some aspects of JMRI "throttle" functionality, including WiThrottle Server
+          funcitonality.</p>
 
-          <li><p> The LNWI similarly does not provide mechanisms to allow JMRI configuration
-            of individual LNWI OpSw settings.  However, some LNWI "SSID" information
-            may be influenced by the operations performed by the <a href=
-            "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
-            Configure Duplex Group</a>
-            tool.  Note that some specific LNWI OpSw settings are able to block the effect
-            of that tool upon the LNWI's SSID configuration.</p></li>
-          <li>LocoNet does not provide any good way to allow JMRI to configure the
-            settings of any "booster".  Configure boosters using the mechanisms
-            documented by the booster manufacturer.</li>
-          <li>The LocoNet "Command Station Configure" tool does not give access to OpSw
-            settings for OpSw 49 and above.  This prevents the tool from accessing
-            some OpSw settings on DCS240, DCS210, and DCS52 command stations.
-            JMRI's "<a href="../../apps/DecoderPro/Roster.shtml">Roster</a>"-based
-            command station configuration does not have this limitation.  Both
-            mechanisms are described in <a href="CommandStationConfig.shtml">this page</a>.</li>
+          <p>Additional discussion may be found <a href="EnhancedSlots.shtml">here</a>.</p>
+        </li>
+
+        <li>
+          <p>At this time, the Digitrax BXP88 and BXPA1 devices do not support a mechanism to allow
+          JMRI to program individual device OpSw settings via LocoNet messaging.</p>
+
+          <p>While JMRI cannot provide mechanisms to configure these devices, for their block
+          detection and transponding features, their behavior is similar to the BDL16x device.
+          JMRI's existing support for BDL16x block detection and transponding features provides
+          appropriate support for the BXP88/BXPA1 detection and transponding operational features.
+          JMRI's existing support for PM4x power management features provides appropriate support
+          for the BXP88/BXPA1 power management operational features.</p>
+        </li>
+
+        <li>
+          <p>The LNWI similarly does not provide mechanisms to allow JMRI configuration of
+          individual LNWI OpSw settings. However, some LNWI "SSID" information may be influenced by
+          the operations performed by the <a href=
+          "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure
+          Duplex Group</a> tool. Note that some specific LNWI OpSw settings are able to block the
+          effect of that tool upon the LNWI's SSID configuration.</p>
+        </li>
+
+        <li>LocoNet does not provide any good way to allow JMRI to configure the settings of any
+        "booster". Configure boosters using the mechanisms documented by the booster
+        manufacturer.</li>
+
+        <li>The LocoNet "Command Station Configure" tool does not give access to OpSw settings for
+        OpSw 49 and above. This prevents the tool from accessing some OpSw settings on DCS240,
+        DCS210, and DCS52 command stations. JMRI's "<a href=
+        "../../apps/DecoderPro/Roster.shtml">Roster</a>"-based command station configuration does
+        not have this limitation. Both mechanisms are described in <a href=
+        "CommandStationConfig.shtml">this page</a>.
+        </li>
       </ul>
 
-      <a name="Support" id="Support"></a>
-      <h3>Third Party/Support</h3>
+      <h3 id="Support">Third Party/Support</h3>
+
       <ul>
-      <li>For JMRI-specific questions, including questions about how
-      JMRI and Digitrax hardware interact, the <a href=
-      "https://groups.io/g/jmriusers">JMRI
-      users "groups.io" group</a> is very helpful.  This is the first place to
-      go for JMRI-specific help.</li>
+        <li>For JMRI-specific questions, including questions about how JMRI and Digitrax hardware
+        interact, the <a href="https://groups.io/g/jmriusers">JMRI users "groups.io" group</a> is
+        very helpful. This is the first place to go for JMRI-specific help.
+        </li>
 
-      <li>Support for Digitrax hardware products is available
-      through <a href="http://www.digitrax.com">Digitrax, Inc.</a>
-      Digitrax product manuals may be found <a href=
-      "http://www.digitrax.com/support/manuals/">here</a>. Note
-      that Digitrax generally does not provide support for JMRI software or
-      third-party LocoNet devices.</li>
+        <li>Support for Digitrax hardware products is available through <a href=
+        "http://www.digitrax.com">Digitrax, Inc.</a> Digitrax product manuals may be found
+          <a href="http://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax generally
+          does not provide support for JMRI software or third-party LocoNet devices.
+        </li>
 
-      <li>Many knowledgeable Digitrax users contribute to the
-      <a href=
-      "https://groups.io/g/Digitrax-Users">Digitrax
-      users "groups.io" group</a>. If you have a problem with Digitrax
-      equipment, this is a good place to pose your
-      Digitrax-specific problems. This user's group is run by and
-      for Digitrax users. It is not directly supported by
-      Digitrax.</li>
-
+        <li>Many knowledgeable Digitrax users contribute to the <a href=
+        "https://groups.io/g/Digitrax-Users">Digitrax users "groups.io" group</a>. If you have a
+        problem with Digitrax equipment, this is a good place to pose your Digitrax-specific
+        problems. This user's group is run by and for Digitrax users. It is not directly supported
+        by Digitrax.
+        </li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

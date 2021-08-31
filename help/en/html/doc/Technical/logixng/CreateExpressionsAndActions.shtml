@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LogixNG Documentation</title>
   <meta name="author" content="Daniel Bergqvist">
-  <meta name="keywords" content=
-  "logixng model railroad JMRI LogixNG PanelPro">
-
+  <meta name="keywords" content="logixng model railroad JMRI LogixNG PanelPro">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <div id="container">
     <!--#include virtual="/Header" -->
@@ -22,231 +19,215 @@
 
         <h1>LogixNG - Create Expressions, Actions, and so on</h1>
 
-		<h2>The structure of LogixNG</h2>
+        <h2>The structure of LogixNG</h2>
 
-		<p>LogixNG is a tree structure, where the root is a LogixNG.
-		The LogixNG can have ConditionalNGs as children.</p>
+        <p>LogixNG is a tree structure, where the root is a LogixNG. The LogixNG can have
+        ConditionalNGs as children.</p>
 
-		<p>A ConditionalNG have a female digital action socket
-		to which an digital action can be connected.</p>
-		
-		Each
-		ConditionalNG can have digital actions
+        <p>A ConditionalNG have a female digital action socket to which an digital action can be
+        connected.</p>
+        Each ConditionalNG can have digital actions
+        <h2>The locking mechanism</h2>
 
-		<h2>The locking mechanism</h2>
-
-		<p>LogixNG has a lock that has three possible values.</p>
+        <p>LogixNG has a lock that has three possible values.</p>
 
         <ul>
           <li>NONE - The item is not locked.</li>
 
           <li>USER_LOCK - The item is locked by the user and can be unlocked by the user.</li>
 
-          <li>HARD_LOCK - The item is locked by a hard lock that cannot be unlocked by the
-		  user by the user interface. But it can be removed by editing the xml file. This
-		  lock is used for items that normally shouldn't be changed.</li>
+          <li>HARD_LOCK - The item is locked by a hard lock that cannot be unlocked by the user by
+          the user interface. But it can be removed by editing the xml file. This lock is used for
+          items that normally shouldn't be changed.</li>
         </ul>
 
+        <h2>The Base interface</h2>
 
-		<h2>The Base interface</h2>
+        <p>Expressions, Actions, and others, all implements the Base interface. It has methods that
+        are common to everything in LogixNG.</p>
 
-		<p>Expressions, Actions, and others, all implements the Base interface. It
-		has methods that are common to everything in LogixNG.</p>
+        <h3>Methods</h3>
 
-		<h3>Methods</h3>
+        <h4>getSystemName</h4>
 
-		<h4>getSystemName</h4>
+        <p>This is the same method as NamedBean.getSystemName(). It's included here to give the XML
+        classes access to this method having MaleSocket extend NamedBean.</p>
 
-		<p>This is the same method as NamedBean.getSystemName(). It's included here
-		to give the XML classes access to this method having MaleSocket extend
-		NamedBean.</p>
+        <h4>getConfiguratorClassName</h4>
 
-		<h4>getConfiguratorClassName</h4>
+        <p>Returns the fully qualified class name of the class that is used to configurate this
+        class. That class needs to implement the
+        jmri.jmrit.logixng.swing.PluginConfiguratorInterface interface.</p>
 
-		<p>Returns the fully qualified class name of the class that is used to
-		configurate this class. That class needs to implement the
-		jmri.jmrit.logixng.swing.PluginConfiguratorInterface interface.</p>
+        <h4>getShortDescription</h4>
 
-		<h4>getShortDescription</h4>
+        <p>Get a short description of this item.</p>
 
-		<p>Get a short description of this item.</p>
+        <h4>getLongDescription</h4>
 
-		<h4>getLongDescription</h4>
+        <p>Get a long description of this item.</p>
 
-		<p>Get a long description of this item.</p>
+        <h4>getChild</h4>
 
-		<h4>getChild</h4>
+        <p>Get a child of this item.</p>
 
-		<p>Get a child of this item.</p>
+        <h4>getChildCount</h4>
 
-		<h4>getChildCount</h4>
+        <p>Get the number of children.</p>
 
-		<p>Get the number of children.</p>
+        <h4>getCategory</h4>
 
-		<h4>getCategory</h4>
+        <p>Get the category.</p>
 
-		<p>Get the category.</p>
+        <h4>isExternal</h4>
 
-		<h4>isExternal</h4>
+        <p>Is this external? Does it affects or is dependent on external things, like turnouts and
+        sensors? Timers are considered as internal since they behavies the same on every computer
+        on every layout.</p>
 
-		<p>Is this external? Does it affects or is dependent on external things,
-		like turnouts and sensors? Timers are considered as internal since they
-		behavies the same on every computer on every layout.</p>
+        <h4>getLock</h4>
 
-		<h4>getLock</h4>
+        <p>Get the status of the lock.</p>
 
-		<p>Get the status of the lock.</p>
+        <h4>setLock</h4>
 
-		<h4>setLock</h4>
+        <p>Set the status of the lock.</p>
 
-		<p>Set the status of the lock.</p>
+        <h2>Creating an Expression</h2>
 
-		<h2>Creating an Expression</h2>
+        <p>An expression must implement the <strong>Expression</strong> interface, that in turn
+        inherits the <strong>NamedBean</strong> interface. It's recommended that expression classes
+        extends the <strong>AbstractExpression</strong> class which has a default implementation of
+        the NamedBean interface.</p>
 
-		<p>An expression must implement the <strong>Expression</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that expression classes extends the
-		<strong>AbstractExpression</strong> class which has a default implementation
-		of the NamedBean interface.</p>
+        <h3>Methods</h3>
 
-		<h3>Methods</h3>
+        <h4>evaluate</h4>
 
-		<h4>evaluate</h4>
+        <p>Evaluates the expression and returns the result of the expression.</p>
 
-		<p>Evaluates the expression and returns the result of the expression.</p>
+        <h4>reset</h4>
 
-		<h4>reset</h4>
+        <p>Resets the evaluation. The method <strong>reset()</strong> is called then when the
+        closest ancestor Action is activated. An example is a timer who is used to delay the
+        execution of an action's child action.</p>
 
-		<p>Resets the evaluation. The method <strong>reset()</strong> is called then when
-		the closest ancestor Action is activated. An example is a timer who is used to
-		delay the execution of an action's child action.</p>
-		<p>A parent expression must to call <strong>reset()</strong> on its children when
-		the method <strong>reset()</strong> is called on the parent.</p>
+        <p>A parent expression must to call <strong>reset()</strong> on its children when the
+        method <strong>reset()</strong> is called on the parent.</p>
 
+        <h2>Creating an Action</h2>
 
+        <p>An action must implement the <strong>Action</strong> interface, that in turn inherits
+        the <strong>NamedBean</strong> interface. It's recommended that action classes extends the
+        <strong>AbstractAction</strong> class which has a default implementation of the NamedBean
+        interface.</p>
 
-		<h2>Creating an Action</h2>
+        <h3>Methods</h3>
 
-		<p>An action must implement the <strong>Action</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that action classes extends the
-		<strong>AbstractAction</strong> class which has a default implementation
-		of the NamedBean interface.</p>
+        <p><strong>executeStart</strong>
+        </p>
 
-		<h3>Methods</h3>
+        <p>Start execution of this Action.</p>
 
-		<p><strong>executeStart</strong></p>
+        <p><strong>executeContinue</strong>
+        </p>
 
-		<p>Start execution of this Action.</p>
+        <p>Continue execution of this Action.</p>
 
-		<p><strong>executeContinue</strong></p>
+        <p><strong>executeRestart</strong>
+        </p>
 
-		<p>Continue execution of this Action.</p>
+        <p>Restart the execute of this Action.</p>
 
-		<p><strong>executeRestart</strong></p>
+        <p><strong>abort</strong>
+        </p>
 
-		<p>Restart the execute of this Action.</p>
+        <p>Abort this action.</p>
 
-		<p><strong>abort</strong></p>
+        <h2>Creating an AnalogExpression</h2>
 
-		<p>Abort this action.</p>
+        <p>An analog expression must implement the <strong>AnalogExpression</strong> interface,
+        that in turn inherits the <strong>NamedBean</strong> interface. It's recommended that
+        expression classes extends the <strong>AbstractAnalogExpression</strong> class which has a
+        default implementation of the NamedBean interface.</p>
 
+        <h3>Methods</h3>
 
+        <h4>evaluate</h4>
 
-		<h2>Creating an AnalogExpression</h2>
+        <p>Evaluates the expression and returns the result of the expression.</p>
 
-		<p>An analog expression must implement the <strong>AnalogExpression</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that expression classes extends the
-		<strong>AbstractAnalogExpression</strong> class which has a default implementation
-		of the NamedBean interface.</p>
+        <h2>Creating an AnalogAction</h2>
 
-		<h3>Methods</h3>
+        <p>An analog action must implement the <strong>AnalogAction</strong> interface, that in
+        turn inherits the <strong>NamedBean</strong> interface. It's recommended that analog action
+        classes extends the <strong>AbstractAnalogAction</strong> class which has a default
+        implementation of the NamedBean interface.</p>
 
-		<h4>evaluate</h4>
+        <h3>Methods</h3>
 
-		<p>Evaluates the expression and returns the result of the expression.</p>
+        <p><strong>setValue</strong>
+        </p>
 
+        <p>Set an analog value.</p>
 
+        <h2>Creating an StringExpression</h2>
 
-		<h2>Creating an AnalogAction</h2>
+        <p>A string expression must implement the <strong>Expression</strong> interface, that in
+        turn inherits the <strong>NamedBean</strong> interface. It's recommended that string
+        expression classes extends the <strong>AbstractStringExpression</strong> class which has a
+        default implementation of the NamedBean interface.</p>
 
-		<p>An analog action must implement the <strong>AnalogAction</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that analog action classes extends the
-		<strong>AbstractAnalogAction</strong> class which has a default implementation
-		of the NamedBean interface.</p>
+        <h3>Methods</h3>
 
-		<h3>Methods</h3>
+        <h4>evaluate</h4>
 
-		<p><strong>setValue</strong></p>
+        <p>Evaluates the string expression and returns the result of the string expression.</p>
 
-		<p>Set an analog value.</p>
+        <h2>Creating an StringAction</h2>
 
+        <p>A string action must implement the <strong>StringAction</strong> interface, that in turn
+        inherits the <strong>NamedBean</strong> interface. It's recommended that string action
+        classes extends the <strong>AbstractStringAction</strong> class which has a default
+        implementation of the NamedBean interface.</p>
 
+        <h3>Methods</h3>
 
-		<h2>Creating an StringExpression</h2>
+        <p><strong>setValue</strong>
+        </p>
 
-		<p>A string expression must implement the <strong>Expression</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that string expression classes extends the
-		<strong>AbstractStringExpression</strong> class which has a default implementation
-		of the NamedBean interface.</p>
+        <p>Set a string value.</p>
 
-		<h3>Methods</h3>
+        <h2>Register an expression or an action</h2>
 
-		<h4>evaluate</h4>
-
-		<p>Evaluates the string expression and returns the result of the string expression.</p>
-
-
-
-		<h2>Creating an StringAction</h2>
-
-		<p>A string action must implement the <strong>StringAction</strong>
-		interface, that in turn inherits the <strong>NamedBean</strong> interface.
-		It's recommended that string action classes extends the
-		<strong>AbstractStringAction</strong> class which has a default implementation
-		of the NamedBean interface.</p>
-
-		<h3>Methods</h3>
-
-		<p><strong>setValue</strong></p>
-
-		<p>Set a string value.</p>
-
-
-
-		<h2>Register an expression or an action</h2>
-
-		<p>In order for JMRI to be able to use the expression or the action, it needs to be
-		told about it. That is done by implementing a ExpressionFactory or a
-		ActionFactory that can tell JMRI about the expressions or actions and then
-		mark it with the <a href="../plugins.shtml">@ServiceProvider</a>
-		annotation. A single factory can register many classes. For classes that are supplied
-		with JMRI, it's recommended to use the <strong>DefaultExpressionFactory</strong>
-		and the <strong>DefaultActionFactory</strong>.
-
-
+        <p>In order for JMRI to be able to use the expression or the action, it needs to be told
+        about it. That is done by implementing a ExpressionFactory or a ActionFactory that can tell
+        JMRI about the expressions or actions and then mark it with the <a href=
+        "../plugins.shtml">@ServiceProvider</a> annotation. A single factory can register many
+        classes. For classes that are supplied with JMRI, it's recommended to use the
+        <strong>DefaultExpressionFactory</strong> and the
+        <strong>DefaultActionFactory</strong>.</p>
 
         <h2>AbstractExpression and AbstractAction vs AbstractNamedBean</h2>
 
-		<p>The <strong>NamedBean</strong> interface has the methods <strong>setState()</strong>
-		and <strong>getState()</strong>. These should never be implemented in expressions
-		and actions.</p>
-		<p>For expressions, <strong>getState()</strong> returns
-		<strong>Expression.TRUE</strong> or <strong>Expression.FALSE</strong>
-		dependent on the last result of the expression, but this is handled automaticly by
-		<strong>InternalExpression</strong>. The method <strong>setState()</strong> has no
-		impact on expressions.</p>
-		<p>For actions, neither of <strong>setState()</strong> or <strong>getState()</strong>
-		will ever be called since <strong>InternalAction</strong> will prevent that.</p>
+        <p>The <strong>NamedBean</strong> interface has the methods <strong>setState()</strong> and
+        <strong>getState()</strong>. These should never be implemented in expressions and
+        actions.</p>
 
+        <p>For expressions, <strong>getState()</strong> returns <strong>Expression.TRUE</strong> or
+        <strong>Expression.FALSE</strong> dependent on the last result of the expression, but this
+        is handled automaticly by <strong>InternalExpression</strong>. The method
+        <strong>setState()</strong> has no impact on expressions.</p>
 
+        <p>For actions, neither of <strong>setState()</strong> or <strong>getState()</strong> will
+        ever be called since <strong>InternalAction</strong> will prevent that.</p>
         <!--#include virtual="/Footer" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
   <script src="/js/main.js"></script>
 </body>
 </html>
