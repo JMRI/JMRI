@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Protrak Grapevine System</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Protrak Grapevine System</h1>
 
-      <h1>Hardware Support: Protrak Grapevine System</h1><a name=
-      "hardware" id="hardware"></a>
-
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Modules</h3>
 
       <ul>
         <li>Protrak Grapevine Nodes (1-127)</li>
-
-      </ul><a name="limitations" id="limitations"></a>
-      <h2>Limitations</h2>
-
-      <ul>
-        <li>Fast Clocks are not yet supported. If you have one and
-        want to test it with JMRI, let us know.</li>
       </ul>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+      <h2 id="limitations">Limitations</h2>
+
+      <ul>
+        <li>Fast Clocks are not yet supported. If you have one and want to test it with JMRI, let
+        us know.</li>
+      </ul>
+
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Settings</h3>
 
@@ -43,92 +38,89 @@
       <ul>
         <li>Open the JMRI "Preferences" under the "Edit" menu</li>
 
-        <li>On the Connections tab, select "Protrak" as the System
-        Manufacturer</li>
+        <li>On the Connections tab, select "Protrak" as the System Manufacturer</li>
 
         <li>As the System Connection select either
-        <ul>
-          <li>Grapevine (ProTrak) Layout Bus</li>
-          <li>Grapevine Simulator</li>
-        </ul>
+          <ul>
+            <li>Grapevine (ProTrak) Layout Bus</li>
+
+            <li>Grapevine Simulator</li>
+          </ul>
         </li>
 
-        <li>Click "Save" &amp; restart</li>
+        <li>Click "Save" & restart</li>
       </ul>
 
-      <p>Before you can access a Grapevine Node in JMRI, you have
-      to define it to the program. You can do this either from the
-      <a href=
-      "../../../package/apps/TabbedPreferences.shtml">Preferences
-      window</a> (under Edit in the main menu, click "Configure Nodes")
-      or using the <a href=
-      "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">
-      Configure Nodes</a> tool in the <strong>Grapevine</strong>
-      menu.</p>
+      <p>Before you can access a Grapevine Node in JMRI, you have to define it to the program. You
+      can do this either from the <a href=
+      "../../../package/apps/TabbedPreferences.shtml">Preferences window</a> (under Edit in the
+      main menu, click "Configure Nodes") or using the <a href=
+      "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+      tool in the <strong>Grapevine</strong> menu.</p>
 
-      <p>Grapevine Systems Names start with a system letter of "G",
-      optionally followed by an integer to form a unique System Prefix.
-      After the prefix, there's a <a href=
-      "../../doc/Technical/Names.shtml#type">type letter</a>, then
-      a node number and a pin number.<br>
-      Naming and input/output connectors are described on a
-      <a href="Names.shtml">separate page</a>.
+      <p>Grapevine Systems Names start with a system letter of "G", optionally followed by an
+      integer to form a unique System Prefix. After the prefix, there's a <a href=
+      "../../doc/Technical/Names.shtml#type">type letter</a>, then a node number and a pin
+      number.<br>
+      Naming and input/output connectors are described on a <a href="Names.shtml">separate
+      page</a>. <img src="images/GrapevineConfig.png" width="340" height="160" class="floatRight"
+      alt="Grapevine Configuration Option"></p>
 
-      <img src="images/GrapevineConfig.png" width=
-      "340" height="160" align="right" alt="Grapevine Configuration Option">
-      <p>If desired, check "Additional Conection Settings" and select an option
-      for "Auto-initialize" to have Simulator generate automatic replies from node
-      inputs/outputs:
+      <p>If desired, check "Additional Conection Settings" and select an option for
+      "Auto-initialize" to have Simulator generate automatic replies from node inputs/outputs:</p>
+
       <ul>
         <li>Disabled</li>
+
         <li>All possible</li>
+
         <li>First 4 per bank</li>
       </ul>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI Grapevine Tools</h2>
+      <h2 id="tools">JMRI Grapevine Tools</h2>
 
       <p>The <strong>Grapevine</strong> menu gives access to:</p>
 
       <ul>
-
         <li>Communications Monitor</li>
 
         <li>Send Command</li>
 
-        <li>The <a href=
-        "../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">
-        Node Table</a> tool to check whether your Grapevine is
-        working and configure the connected Nodes.</li>
+        <li>The <a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node
+        Table</a> tool to check whether your Grapevine is working and configure the connected
+        Nodes.
+        </li>
 
         <li>The <a href=
-        "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">
-        Configure Nodes</a> tool.</li>
-
+        "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure
+        Nodes</a> tool.
+        </li>
       </ul>
 
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
       <ul>
-        <li>More information on the Grapevine hardware can be found
-        on the <a href="http://protrak.org/wpt/">ProTrak web
-        site</a>, including the</li>
+        <li>More information on the Grapevine hardware can be found on the <a href=
+        "http://protrak.org/wpt/">ProTrak web site</a>, including the
+        </li>
 
-        <li><a href=
-        "http://protrak.org/wpt/support/the-manual/">Protrak
-        Manual</a></li>
-        <li>The <a href=
-        "http://www.protrak.org/old_site/">Older Protrak Site</a></li>
-        <li>The <a href=
-        "http://protrak.org/wpt/forum/">Protrak Forum</a></li>
+        <li>
+          <a href="http://protrak.org/wpt/support/the-manual/">Protrak Manual</a>
+        </li>
+
+        <li>The <a href="http://www.protrak.org/old_site/">Older Protrak Site</a>
+        </li>
+
+        <li>The <a href="http://protrak.org/wpt/forum/">Protrak Forum</a>
+        </li>
       </ul>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

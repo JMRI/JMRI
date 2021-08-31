@@ -1,78 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Audio</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Audio</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: Audio Documentation</h1>
-      JMRI Audio objects hold information about sounds that can be played-back by the
-      computer.
-      
-      <ul class="snav"> <!-- Pull out links to items on this page -->  
-      <li><a href="#table">Audio Table</a></li>
-      <li><a href="#objects">Audio Objects</a></li>
-      <li><a href="#using">Using Audio Objects</a></li>
-      <li><a href="#playing">Playing Audio</a></li>
+      JMRI Audio objects hold information about sounds that can be played-back by the computer.
+      <ul class="snav">
+        <!-- Pull out links to items on this page -->
+
+        <li>
+          <a href="#table">Audio Table</a>
+        </li>
+
+        <li>
+          <a href="#objects">Audio Objects</a>
+        </li>
+
+        <li>
+          <a href="#using">Using Audio Objects</a>
+        </li>
+
+        <li>
+          <a href="#playing">Playing Audio</a>
+        </li>
       </ul>
-      
 
-      <h2><a name="table" id="table">The Audio Table</a></h2>
-      The <a href=
-      "../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio
-      Table</a> lets you see what Audio objects 
-      (<a href="#listeners">Audio Listeners, </a>
-       <a href="#buffers">Audio Buffers, </a>
-       and <a href="#sources">Audio Sources</a>) have been defined
-      and what information they currently contain.<br>
-      <a href=
-      "../../package/jmri/jmrit/beantable/AudioTable.jpg"><img src=
-      "../../package/jmri/jmrit/beantable/AudioTable.jpg" height=
-      "178" width="420"></a>
-
+      <h2 id="table">The Audio Table</h2>
+      The <a href="../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table</a> lets you
+      see what Audio objects (<a href="#listeners">Audio Listeners,</a> <a href="#buffers">Audio
+      Buffers,</a> and <a href="#sources">Audio Sources</a>) have been defined and what information
+      they currently contain.<br>
+      <a href="../../package/jmri/jmrit/beantable/AudioTable.jpg"><img src=
+      "../../package/jmri/jmrit/beantable/AudioTable.jpg" height="178" width="420" alt=
+      "audio table"></a>
       <h4>Audio Table controls</h4>
 
-      <p>At the bottom of the Audio Table window are buttons "Add
-      Source..." and "Add Buffer..." to <a href=
-      "../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create
-      new Audio objects</a>.  At the current time, only a single listener can
-      be defined through the table interface (IAL$ is defaulted).</p>
+      <p>At the bottom of the Audio Table window are buttons "Add Source..." and "Add Buffer..." to
+      <a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create new Audio objects</a>.
+      At the current time, only a single listener can be defined through the table interface (IAL$
+      is defaulted).</p>
 
-      <h2><a name="objects" id="objects">Audio Objects</a></h2>
+      <h2 id="objects">Audio Objects</h2>
       The JMRI audio framework consists of three distinct types of object:
-
       <ul>
-        <li><a href="#listeners">Audio Listeners</a></li>
+        <li>
+          <a href="#listeners">Audio Listeners</a>
+        </li>
 
-        <li><a href="#buffers">Audio Buffers</a></li>
+        <li>
+          <a href="#buffers">Audio Buffers</a>
+        </li>
 
-        <li><a href="#sources">Audio Sources</a></li>
+        <li>
+          <a href="#sources">Audio Sources</a>
+        </li>
       </ul>
 
-
-      <h3><a name="listeners" id="listeners">Audio Listener</a></h3>
+      <h3 id="listeners">Audio Listener</h3>
       The Audio Listener defines where the person hearing the sounds is located.
+      <p><a href="images/EditAudioListener.png"><img src="images/EditAudioListener.png" height=
+      "187" width="122" alt="audio listener"></a>
+      </p>
 
-      <p><a href="images/EditAudioListener.png"><img src=
-      "images/EditAudioListener.png" height="187" width=
-      "122"></a></p>
+      <p>The defined listener position is then used to calculate the actual pan and gain of each
+      audio source when played back.</p>
 
-      <p>The defined listener position is then used to calculate
-      the actual pan and gain of each audio source when played
-      back.</p>
-
-      <p>The orientation settings define the co-ordinate system in
-      use. The default values transpose to:</p>
+      <p>The orientation settings define the co-ordinate system in use. The default values
+      transpose to:</p>
 
       <ul>
         <li>x - left-to-right (-ve to +ve)</li>
@@ -80,155 +82,127 @@
         <li>y - front-to-back (-ve to +ve)</li>
 
         <li>z - down-to-up (-ve to +ve)</li>
-      </ul>With the default position, 'y' values would be positive,
-      measured from the front-edge of the layout and 'x' values to
-      be negative to the left of the layout centre-line and
-      positive to the right of the layout centre-line. Positive 'z'
-      values would be measured from layout level upwards.
+      </ul>
+      With the default position, 'y' values would be positive, measured from the front-edge of the
+      layout and 'x' values to be negative to the left of the layout centre-line and positive to
+      the right of the layout centre-line. Positive 'z' values would be measured from layout level
+      upwards.
+      <p>Unless modified by changing 'Meters per unit', all distance and velocity units are
+      measured in real-world meters.</p>
 
-      <p>Unless modified by changing 'Meters per unit', all
-      distance and velocity units are measured in real-world
-      meters.</p>
+      <p>Only one Audio Listener can exist, and it is already present in the Audio Table where it
+      may be configured by clicking its <strong>Edit</strong> button.</p>
 
-      <p>Only one Audio Listener can exist, and it is already
-      present in the Audio Table where it may be configured by
-      clicking its <b>Edit</b> button.</p>
-
-      <h3><a name="buffers" id="buffers">Audio Buffers</a></h3>
+      <h3 id="buffers">Audio Buffers</h3>
       An Audio Buffer holds the actual sound sample data.
+      <p><a href="images/AddEditAudioBuffer.png"><img src="images/AddEditAudioBuffer.png" height=
+      "93" width="176" alt="audio buffer"></a>
+      </p>
 
-      <p><a href="images/AddEditAudioBuffer.png"><img src=
-      "images/AddEditAudioBuffer.png" height="93" width=
-      "176"></a></p>
-
-      <p>To load an Audio Buffer with sound data, click the
-      'Browse...' button and select the appropriate '.wav'
-      file.</p>
+      <p>To load an Audio Buffer with sound data, click the 'Browse...' button and select the
+      appropriate '.wav' file.</p>
 
       <p>One Audio Buffer object can be used by many Audio Sources.</p>
-      
-      <p class="noted">NOTE: Loop Points are not yet implemented.  
-      "End" is set when an audio file is loaded and the table saved
-      but cannot be edited.</p>
-            <!-- See user group #168905 02/01/2020 -->
 
-      <h3><a name="sources" id="sources">Audio Sources</a></h3>
+      <p class="noted">NOTE: Loop Points are not yet implemented. "End" is set when an audio file
+      is loaded and the table saved but cannot be edited.</p>
+      <!-- See user group #168905 02/01/2020 -->
+
+      <h3 id="sources">Audio Sources</h3>
       An Audio Source controls the playback of sound sample data and controls the position.
+      <p><a href="images/AddEditAudioSource.png"><img src="images/AddEditAudioSource.png" height=
+      "241" width="123" alt="audio source"></a>
+      </p>
 
-      <p><a href="images/AddEditAudioSource.png"><img src=
-      "images/AddEditAudioSource.png" height="241" width=
-      "123"></a></p>
-
-      <p>To actually play a sound, an Audio Source must be linked
-      to an existing Audio Buffer - choose one from the drop-down
-      list. Buffers are allowed to be shared between Audio Sources,
+      <p>To actually play a sound, an Audio Source must be linked to an existing Audio Buffer -
+      choose one from the drop-down list. Buffers are allowed to be shared between Audio Sources,
       in which case they will be played back independently.</p>
 
-      <p>As with the Audio Listener, an Audio Source should be
-      positioned in 3d-space. If required to 'move' whilst playing,
-      set the velocity in x, y and z directions. This will move the
-      position of the Audio Source in the direction and speed
-      specified by the velocity vector at the defined rate while
-      the Audio Source is playing.</p>
+      <p>As with the Audio Listener, an Audio Source should be positioned in 3d-space. If required
+      to 'move' whilst playing, set the velocity in x, y and z directions. This will move the
+      position of the Audio Source in the direction and speed specified by the velocity vector at
+      the defined rate while the Audio Source is playing.</p>
 
-      <p><em>Example:</em> An 'x' value of 2 will move the Audio
-      Source 2 units (meters) per second towards the right whilst
-      playing.</p>
+      <p><em>Example:</em> An 'x' value of 2 will move the Audio Source 2 units (meters) per second
+      towards the right whilst playing.</p>
 
-      <p><em>Note:</em> The Audio Source position is only relevant
-      when bound to a mono buffer - those holding multi-channel
-      sounds (i.e. stereo) will not be affected by changes in
-      position and played as-is.</p>
+      <p><em>Note:</em> The Audio Source position is only relevant when bound to a mono buffer -
+      those holding multi-channel sounds (i.e. stereo) will not be affected by changes in position
+      and played as-is.</p>
 
-      <p>If it is necessary to turn-down the volume of a specific
-      Audio Source, this can be achieved by changing the 'Gain'
-      setting. Similarly, the pitch can be modified by changing the
+      <p>If it is necessary to turn-down the volume of a specific Audio Source, this can be
+      achieved by changing the 'Gain' setting. Similarly, the pitch can be modified by changing the
       'Pitch' parameter.</p>
 
-      <p>Normal behavior is for the volume of an Audio Source to be
-      altered by the distance from the Audio Listener. This
-      behavior can be modified by altering the Reference Distance
-      and Maximum Distance settings. The Reference Distance
-      determines the distance at which the volume will start to
-      decrease - at distances smaller than the reference distance,
-      the volume of the Audio Source will be as defined by the gain
-      setting. The Maximum Distance determines the distance at
-      which the volume is zero. Roll-off Factor determines the
-      rate-of-change of the gain with respect to distance - larger
-      values denote a faster rate-of-change.</p>
+      <p>Normal behavior is for the volume of an Audio Source to be altered by the distance from
+      the Audio Listener. This behavior can be modified by altering the Reference Distance and
+      Maximum Distance settings. The Reference Distance determines the distance at which the volume
+      will start to decrease - at distances smaller than the reference distance, the volume of the
+      Audio Source will be as defined by the gain setting. The Maximum Distance determines the
+      distance at which the volume is zero. Roll-off Factor determines the rate-of-change of the
+      gain with respect to distance - larger values denote a faster rate-of-change.</p>
 
-      <p>Finally, the fade-in and fade-out times of the Audio
-      Source can be defined - these are specified in milli-seconds.
-      Fading-in and out of an Audio Source is achieved by using the
-      fadeIn and fadeOut methods of the Audio Source; play, stop
-      and pause methods do not utilize fade times.</p>
+      <p>Finally, the fade-in and fade-out times of the Audio Source can be defined - these are
+      specified in milli-seconds. Fading-in and out of an Audio Source is achieved by using the
+      fadeIn and fadeOut methods of the Audio Source; play, stop and pause methods do not utilize
+      fade times.</p>
 
-      <p>Unless modified by changing the 'Meters per unit'
-      parameter of the Audio Listener, all distance and velocity
-      units are measured in real-world meters.</p>
+      <p>Unless modified by changing the 'Meters per unit' parameter of the Audio Listener, all
+      distance and velocity units are measured in real-world meters.</p>
 
-      <h2><a name="using" id="using">Using Audio Objects with Logix and Scripts</a></h2>
-      A Logix can be defined to control audio objects. Currently, it is possible to play,
-      pause, stop, rewind, fade-in and fade-out audio sources.
-      <br>
+      <h2 id="using">Using Audio Objects with Logix and Scripts</h2>
+      A Logix can be defined to control audio objects. Currently, it is possible to play, pause,
+      stop, rewind, fade-in and fade-out audio sources.<br>
       You can also directly manipulate Audio Objects with scripts. There's an <a href=
-      "https://jmri.org/jython/AudioExample.py">example script</a>
-      in the distribution, along with documentation for the
-      <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">
-      AudioBuffer</a>, <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">
-      AudioSource</a> and <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">
-      AudioListener</a> classes that control the audio processing.
-
-      <h2><a name="playing" id="playing">Playing Audio</a></h2>
+      "https://jmri.org/jython/AudioExample.py">example script</a> in the distribution, along with
+      documentation for the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">AudioBuffer</a>, <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">AudioSource</a> and <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">AudioListener</a> classes
+      that control the audio processing.
+      <h2 id="playing">Playing Audio</h2>
       The JMRI audio framework makes use of either of the following audio libraries:
-
       <ul>
-        <li><a href=
-        "http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a>
-        - for basic audio functions (limited to stereo)<br>
-        JavaSound is normally available with a Sun Microsystems
-        Java Runtime Environment; other vendors, such as OpenJDK,
-        do not include JavaSound.</li>
+        <li>
+          <a href="http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a> - for
+          basic audio functions (limited to stereo)<br>
+          JavaSound is normally available with a Sun Microsystems Java Runtime Environment; other
+          vendors, such as OpenJDK, do not include JavaSound.
+        </li>
 
-        <li><a href="http://www.openal.org/">OpenAL</a> - for
-        full-featured audio functions (including support for up-to
-        7.1 surround)<br>
-        OpenAL may already be included with your operating
-        system:</li>
+        <li>
+          <a href="http://www.openal.org/">OpenAL</a> - for full-featured audio functions
+          (including support for up-to 7.1 surround)<br>
+          OpenAL may already be included with your operating system:
+        </li>
       </ul>
 
-      <h4>macOS</h4>Those versions of macOS (aka Mac OS X) that are
-      suitable for JMRI already have a suitable version of OpenAL
-      installed.
-
+      <h4>macOS</h4>
+      Those versions of macOS (aka Mac OS X) that are suitable for JMRI already have a suitable
+      version of OpenAL installed.
       <h4>MS Windows</h4>
-      <p>By default, OpenAL will require installing
-      on your system. Certain sound cards, notably those
-      manufactured by Creative Labs and NVidia, will normally
-      already come with suitable OpenAL drivers. If OpenAL is not
-      installed, <a href="http://www.openal.org/downloads/">it
-      should be downloaded</a> from OpenAL.org and then installed
-      on your system.</p>
+
+      <p>By default, OpenAL will require installing on your system. Certain sound cards, notably
+      those manufactured by Creative Labs and NVidia, will normally already come with suitable
+      OpenAL drivers. If OpenAL is not installed, <a href="http://www.openal.org/downloads/">it
+      should be downloaded</a> from OpenAL.org and then installed on your system.</p>
 
       <h4>Linux</h4>
-      <p>Depending on the provider of your Linux
-      distribution, OpenAL might already be included in the default
-      package. If not, the 'libopenal-dev' package should be
-      installed using the package manager on your system. For
-      Debian-based distributions, this will typically be achieved
-      by the command:</p>
+
+      <p>Depending on the provider of your Linux distribution, OpenAL might already be included in
+      the default package. If not, the 'libopenal-dev' package should be installed using the
+      package manager on your system. For Debian-based distributions, this will typically be
+      achieved by the command:</p>
+
       <pre>
       $ sudo apt-get install libopenal-dev
       </pre>
-
       <p>For Ubuntu, the 'Universe' repository should be enabled.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
-

@@ -1,40 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <title>JMRI Hardware Support - LocoBuffer-II to
-  LocoNet&reg;</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - LocoBuffer-II to LocoNet®</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Connecting a LocoBuffer-II to LocoNet®</h1>
 
-      <h1>Hardware Support: Connecting a LocoBuffer-II to
-      LocoNet&reg;</h1>
-
-      <p>The LocoBuffer-II provides a very reliable way to connect
-      a computer serial port to a LocoNet&reg;. It was produced by
-      Dick Bronson's <a href=
-      "http://www.rr-cirkits.com">RR-CirKits</a> company, based in
-      part on the original LocoBuffer design, but is currently out
-      of production. You might be able to find one in a local hobby
-      shop. It's been replaced by the <a href=
-      "LocoBufferUSB.shtml">LocoBuffer-USB</a>, which uses a USB
-      connection.</p>
+      <p>The LocoBuffer-II provides a very reliable way to connect a computer serial port to a
+      LocoNet®. It was produced by Dick Bronson's <a href=
+      "http://www.rr-cirkits.com">RR-CirKits</a> company, based in part on the original LocoBuffer
+      design, but is currently out of production. You might be able to find one in a local hobby
+      shop. It's been replaced by the <a href="LocoBufferUSB.shtml">LocoBuffer-USB</a>, which uses
+      a USB connection.</p>
 
       <h2>Recommended setup</h2>
 
-      <p>The recommended LocoBuffer-II option switch settings
-      are:</p>
+      <p>The recommended LocoBuffer-II option switch settings are:</p>
 
       <ul>
         <li>19,200 baud or 57,600 baud</li>
@@ -47,28 +39,26 @@
 
         <li>Boot Program Mode off</li>
 
-        <li>Isolated power (<a href="#locoBufferIIPower">see
-        below</a>)</li>
+        <li>Isolated power (<a href="#locoBufferIIPower">see below</a>)
+        </li>
       </ul>
 
       <p>The recommended JMRI setup for the LocoBuffer-II is:</p>
 
       <ul>
-        <li>Set all switches off (toward the front label
-        side).</li>
+        <li>Set all switches off (toward the front label side).</li>
 
-        <li>Connect the LocoBuffer-II to a suitable power supply,
-        for example a wall-wart of the correct voltage.</li>
+        <li>Connect the LocoBuffer-II to a suitable power supply, for example a wall-wart of the
+        correct voltage.</li>
 
         <li>Start DecoderPro or other program and configure it for:
-
           <ul>
             <li>LocoNet LocoBuffer-II</li>
 
             <li>Select your port</li>
 
-            <li>19,200 baud or 57,600 baud, to match the
-            LocoBuffer-II internal option switch settings</li>
+            <li>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch
+            settings</li>
 
             <li>Hardware flow control</li>
           </ul>
@@ -77,72 +67,62 @@
 
       <h2>Loop-back testing</h2>
 
-      <p>The LocoBuffer-II input circuit and code actually reads
-      from the LocoNet output jack, so if you install the LocoNet
-      terminator (the small circuit that was shipped with the
-      LocoBuffer-II) and set SW7-8 to ON (down) so that the input
-      circuitry gets it's power from the wall-wart, then you have
-      created a loop back test. The only thing that is not tested
-      is the LocoNet jack itself.</p>
+      <p>The LocoBuffer-II input circuit and code actually reads from the LocoNet output jack, so
+      if you install the LocoNet terminator (the small circuit that was shipped with the
+      LocoBuffer-II) and set SW7-8 to ON (down) so that the input circuitry gets it's power from
+      the wall-wart, then you have created a loop back test. The only thing that is not tested is
+      the LocoNet jack itself.</p>
 
       <p>Steps:</p>
 
       <ol>
         <li>Unplug The LocoNet cable</li>
 
-        <li>Open case (use a small screw driver to work open the
-        latches at the small slots on the sides)</li>
+        <li>Open case (use a small screw driver to work open the latches at the small slots on the
+        sides)</li>
 
         <li>Install terminator</li>
 
         <li>Set Sw 7-8 ON, all other switches OFF</li>
 
-        <li>Set the JMRI LocoBuffer options to 19,200 baud and
-        hardware handshaking enabled</li>
+        <li>Set the JMRI LocoBuffer options to 19,200 baud and hardware handshaking enabled</li>
 
         <li>Open the JMRI LocoNet Monitor window.</li>
 
-        <li>Using JMRI send some commands (e.g. switch
-        commands)</li>
+        <li>Using JMRI send some commands (e.g. switch commands)</li>
 
-        <li>The commands should appear in the LocoNet monitor
-        window and the LocoBuffer-II activity LED should blink</li>
+        <li>The commands should appear in the LocoNet monitor window and the LocoBuffer-II activity
+        LED should blink</li>
 
-        <li>Remove the terminator (unless your application requires
-        it)</li>
+        <li>Remove the terminator (unless your application requires it)</li>
 
-        <li>Restore the LocoBuffer-II option switches to their
-        normal settings for your application</li>
+        <li>Restore the LocoBuffer-II option switches to their normal settings for your
+        application</li>
       </ol>
 
-      <h2><a name="locoBufferIIPower" id=
-      "locoBufferIIPower">LocoBuffer-II Power</a></h2>When powered
-      by an external supply, the LocoBuffer-II completely isolates
-      your computer from the LocoNet, removing the possibility of
-      ground currents flowing through the LocoNet cable.
+      <h2 id="locoBufferIIPower">LocoBuffer-II Power</h2>
+      When powered by an external supply, the LocoBuffer-II completely isolates your computer from
+      the LocoNet, removing the possibility of ground currents flowing through the LocoNet cable.
+      <p>If you are using an isolated computer, for example a laptop that's not connected to any
+      peripherals, you can configure the LocoBuffer-II for "Local Power" so that it doesn't need an
+      external power supply. It will then get it's power from the RailSync leads in the
+      LocoNet.</p>
 
-      <p>If you are using an isolated computer, for example a
-      laptop that's not connected to any peripherals, you can
-      configure the LocoBuffer-II for "Local Power" so that it
-      doesn't need an external power supply. It will then get it's
-      power from the RailSync leads in the LocoNet.</p>
+      <p>It is strongly advised that you get your computer connection working properly with an
+      external power source in "Isolated Power" mode before you do this. That way, if any problems
+      arise when you try to use Internal Power, you'll know what caused them and they'll be much
+      easier to diagnose.</p>
 
-      <p>It is strongly advised that you get your computer
-      connection working properly with an external power source in
-      "Isolated Power" mode before you do this. That way, if any
-      problems arise when you try to use Internal Power, you'll
-      know what caused them and they'll be much easier to
-      diagnose.</p>
+      <p>To configure the LocoBuffer-II for "Local Power", remove the power connection and set
+      switches 7 and 8 to ON (down, toward the switch illustration).</p>
 
-      <p>To configure the LocoBuffer-II for "Local Power", remove
-      the power connection and set switches 7 and 8 to ON (down,
-      toward the switch illustration).</p>
-
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

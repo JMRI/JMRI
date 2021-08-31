@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head><title>JMRI: Redirected Page</title>
-<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
-<META HTTP-EQUIV="Refresh" CONTENT="6; URL=LoadStoreWork.shtml ">
-</head>
-<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Redirected Page</title>
+  <meta http-equiv="PRAGMA" content="NO-CACHE">
+  <meta http-equiv="Refresh" content="6; URL=LoadStoreWork.shtml">
+</head><!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
 <body>
-<p>This page has been moved to another location
-(<a href="LoadStoreWork">LoadStoreWork.shtml</a>)
-as part of updating our web site.</p>
-<p>Please update your bookmarks.</p>
-<p>If you got to this page from another JMRI page, please let us know so we can fix it.</p>
-<p>You should be redirected to the new location within 6 seconds, or click the link above.</p>
+  <p>This page has been moved to another location (<a href="LoadStoreWork.shtml">LoadStoreWork.shtml</a>)
+  as part of updating our web site.</p>
+
+  <p>Please update your bookmarks.</p>
+
+  <p>If you got to this page from another JMRI page, please let us know so we can fix it.</p>
+
+  <p>You should be redirected to the new location within 6 seconds, or click the link above.</p>
 </body>
 </html>

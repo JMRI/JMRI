@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: OS Indicator Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OS Indicator">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OS Indicator"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>OS Indicator</h1><img src="images/OsIndicatorFrame.jpg"
-      alt="Screen shot" align="right"><br>
-      This tool makes it easy to drive an occupancy indicator lamp
-      on a CTC panel from an occupancy sensor, while allowing for
-      the indicator to be forced on when the track section is
-      unlocked into manual mode.
-
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>OS Indicator</h1>
+      <img src="images/OsIndicatorFrame.jpg" alt="Screen shot" class="floatRight"><br>
+      This tool makes it easy to drive an occupancy indicator lamp on a CTC panel from an occupancy
+      sensor, while allowing for the indicator to be forced on when the track section is unlocked
+      into manual mode.
       <p>Fields and buttons:</p>
 
       <dl>
         <dt>Output Name</dt>
 
-        <dd>Enter the system name or user name of the Turnout the
-        follower will control</dd>
+        <dd>Enter the system name or user name of the Turnout the follower will control</dd>
 
         <dt>Sensor Name</dt>
 
-        <dd>Enter the system name or user name of the Sensor the
-        followe will watch</dd>
+        <dd>Enter the system name or user name of the Sensor the followe will watch</dd>
 
         <dt>Lock Name</dt>
 
-        <dd>If a sensor is added here, the output turnout will be
-        set THROWN (on) when the sensor is INACTIVE. This can be
-        used e.g. to indicate that a particular track section has
-        been unlocked.</dd>
+        <dd>If a sensor is added here, the output turnout will be set THROWN (on) when the sensor
+        is INACTIVE. This can be used e.g. to indicate that a particular track section has been
+        unlocked.</dd>
 
         <dt>View</dt>
 
-        <dd>Enter an output turnout name and click this button to
-        see any existing follower configuration.</dd>
+        <dd>Enter an output turnout name and click this button to see any existing follower
+        configuration.</dd>
 
         <dt>Add/Update</dt>
 
-        <dd>File out fields as desired and press Add/Update to
-        create a new follower or modify an existing one.</dd>
+        <dd>File out fields as desired and press Add/Update to create a new follower or modify an
+        existing one.</dd>
       </dl>
-
       page <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

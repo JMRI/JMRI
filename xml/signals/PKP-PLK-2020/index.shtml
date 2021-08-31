@@ -1,352 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<title>JMRI: Instruction E1 - Polish railroads standard PKP PLK</title>
-<meta name="keywords" content="JMRI: Instruction E1 - Polish railroads standard PKP PLK">
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<STYLE type="text/css">
-.pad30 { margin:30px; }
-.rotate90 { transform:rotate(90deg); }
-.blackbg { background-color:black; }
-.greybg { background-color:darkgrey; }
-</STYLE>
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
+
+  <title>JMRI: Instruction E1 - Polish railroads standard PKP PLK</title>
+  <meta name="keywords" content="JMRI: Instruction E1 - Polish railroads standard PKP PLK">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-<h1> JMRI: Instruction E1 - Polish railroads standard PKP PLK</h1>
-    <img src="../../../resources/icons/BritishRailSignals/Large/cls4PriCaution(wc).gif"
-    width="50" height="304" align="left" class="pad30" alt="BR2003 signalling 4 aspect preliminary caution">
-    <img src="../../../resources/icons/BritishRailSignals/Large/semaHomeDistantClear.gif"
-    width="64" height="304" align="right" class="pad30" alt="BR2003 semaphore signalling home distant clear">
-    
-    <p>This directory contains signalling definitions corresponding to 
-    the GE/RT8000 - S1 Rule Book as described in the 
-    June 2003 version of the "Signals and indicators controlling train movements", 
-    Module S1. </p>
-    
+  <!--#include virtual="/Header.shtml" -->
 
-    <p>All definitions are suitable for Signal Mast Logic.</p>
-   
-    <p>The signal masts are added to Layout Editor Block changes,
-    with the exception of Buffer stops and Feather aspects.</p>
-   
-    <p>The 2011 tutorial on Signal Mast Logic by Nigel Cliffe and Kevin Dickerson 
-    uses BR2003, the video demonstrations are particularly helpful.
-    <a href="http://jmri.org/community/clinics/UK2011/index.shtml"
-    >http://jmri.org/community/clinics/UK2011/index.shtml</a>
-    <br>Note that the method for adding feathers has changed slightly since 
-    this clinic, however the logic follows the same method.
-    </p>
-   
-    <p>
-    Junction (Feather) indicators can be described using a Signal Mast.
-    although its behaviour needs to be set up manually, 
-    using either <a href="../../../help/en/html/tools/Routes.shtml">Routes</a> or 
-    <a href="../../../help/en/html/tools/Logix.shtml">Logix</a>. 
-    <br>
-    When creating the mast disable any unused aspect positions.
-    The mast needs at least 2 aspects so always include the Zero aspect.
-    as it will be used as an unlit status.
-    <br>Add to a LE panel via the Signal Mast Icon button in the add item bar.
-    <br>The Logix for the feather needs to have both the signal aspect AND
-    turnout position(s) as conditions.
-    <br>Have the Logix acting on the feather signal mast, 
-    not the turnout which is controlling any physical hardware.
-    </p>
-    
-    <p>These masts do not cover route (Theatre) indicators. 
-    They should be created via signal heads and controlled via logixs.</p>
-   
-    <p>For three and four aspect signals, there are two options on how they can be built using Signal Heads
-    , the first is to use a single JMRI Signal Head to represent the main Signal. 
-    <br>
-    The second option is to build the signals using individual JMRI Signal Heads for each aspect.  
-    Depending upon the configuration in both JMRI and the hardware, 
-    will depend upon whether all the "flash" aspects are available.</p>
-    
-    <p>Layouts using a CAN event-based system may be better off using Output Matrix or Turnout Controlled Signal Masts, 
-    see an example at <a href="../../../help/en/html/hardware/can/cbus/index.shtml#signalling">MERG CBUS Signalling</a></p>
-    
-    <p>The images used for BR2003 can be found 
-    <a href="../../../resources/icons/BritishRailSignals/">in this folder</a>,
-     all have a transparent background.</p>
-     
-    <p>The images are of 2 types, Aspects which show a Green / Red / Yellow signal mast icon,<br>
-    along with Large which show a more prototypical graphic.</p>
-    
-    <table cellpadding="10">
-    <tr><th>Aspect Name</th><th>Speed</th><th></th></tr>
-    <tr><td>Proceed</td><td>Normal</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/Proceed-4.gif"
-     alt="Proceed" class="rotate90"></td>
-     </tr>
-    <tr><td>Preliminary Caution</td><td>Medium</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/PriCaution-4.gif"
-     alt="Preliminary Caution 4 Aspect" class="rotate90"></td>
-     </tr>
-    <tr><td>Flash Preliminary Caution</td><td>Medium</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/FlashPriCaution-4.gif"
-     alt="Flash Preliminary Caution 4 aspect" class="rotate90"></td>
-     </tr>
-    <tr><td>Caution</td><td>Slow</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/Caution-4.gif"
-     alt="Caution" class="rotate90"></td>
-     </tr>
-    <tr><td>Flash Caution</td><td>Slow</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/FlashCaution-4.gif"
-     alt="Flash Caution" class="rotate90"></td>
-     </tr>
-    <tr><td>Danger</td><td>Stop</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/Danger-4.gif"
-     alt="Danger" class="rotate90"></td>
-     </tr>
-    <tr><td>Off</td><td>RestrictedSlow</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/PLOff.gif"
-     alt="Off" width="18" height="18" ></td>
-     </tr>
-    <tr><td>On</td><td>Stop</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Aspects/PLROn.gif"
-     alt="On" width="18" height="18"></td>
-    </tr>
-    </table>    
-    
-    <p>Aspect Names within these XML Files, Speed refers to speed set in PanelPro > Edit > Preferences > Warrants for Auto-Running.</p>
-    
-    
-    <a name="xml" id="xml"></a>
-    <h3> Aspect Files in XML Format :</h3>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-    <p>Many browsers are unable to display the XML file when viewing these files offline. <br>
-    You could use the links from the <a href="http://jmri.org/xml/signals/BR-2003/index.shtml#xml">online version</a>, or 
-    view the XML source ( Shortcut Ctrl &amp; U ) . </p>
+      <h1>JMRI: Instruction E1 - Polish railroads standard PKP PLK</h1>
 
-    <p>See the <a href="aspects.xml">aspect page</a>.</p>
-    
-    <h4>
-    Colour Light Signal Mast definitions:</h4>
-    <ul>
-    <li><a href="appearance-buffer-stop.xml">Buffer Stop</a></li>
-    <li><a href="appearance-2-d.xml">2 Aspect Distant Signal</a></li>
-    <li><a href="appearance-2-h.xml">2 Aspect Home Signal</a></li>
-    <li><a href="appearance-2-h-c.xml">2 Aspect Home Signal With Call On</a></li>
-    <li><a href="appearance-3.xml">3 Aspect Signal</a></li>
-    <li><a href="appearance-3-c.xml">3 Aspect Signal With Call On</a></li>
-    <li><a href="appearance-3-i.xml">3 Aspect Signal - Built using individual heads for each aspect</a></li>
-    <li><a href="appearance-3-i-c.xml">3 Aspect Signal With Call On  - Built using individual heads for each aspect</a></li>
-    <li><a href="appearance-4.xml">4 Aspect Signal</a></li>
-    <li><a href="appearance-4-c.xml">4 Aspect Signal With Call On</a></li>
-    <li><a href="appearance-4-i.xml">4 Aspect Signal - Built using individual heads for each aspect</a></li>
-    <li><a href="appearance-4-i-c.xml">4 Aspect Signal With Call On  - Built using individual heads for each aspect</a></li>
-    </ul>
-    
-    <p>Examples in no particular order:</p>
-    
-    <table cellpadding="10">
-    <tr valign="bottom" class="greybg">
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls3Proceed.gif"
-        alt="proceed" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls4PriCaution(wc).gif"
-        alt="pri caution" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls2Caution.gif"
-        alt="2 caution" ></td>        
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls2Danger(wc).gif"
-        alt="2 danger" ></td> 
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls3DangerCallOn.gif"
-        alt="3 call on" ></td> 
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution.gif"
-        alt="3 flash caution" ></td> 
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/cls4FlashPriCaution.gif"
-        alt="4 flash preliminary caution" ></td> 
-    </tr>
-     
-    <tr valign="top">
-    <td>Proceed<br>3 Aspect</td>
-    <td>Preliminary Caution<br>4 Aspect<br>with Call-On</td>
-    <td>Caution<br>2 Aspect</td>
-    <td>Danger<br>2 Aspect<br>with Call-On</td>
-    <td>Off<br>3 Aspect<br>with Call-On</td>
-    <td>Flashing Caution<br>3 Aspect</td>
-    <td>Flashing Preliminary Caution<br>4 Aspect</td>
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
-    </tr>    
-    </table>
-    
-    <h4>Semaphore Signal Mast definitions: </h4>
-    
-    <ul>
-    <li><a href="appearance-2-d-sema.xml">Distant Signal</a></li>
-    <li><a href="appearance-2-h-sema.xml">Home Signal</a></li>
-    <li><a href="appearance-2-h-sema-sub.xml">Home Signal With Subsidiary Signal</a></li>
-    <li><a href="appearance-2-h-d-sema.xml">Home/Distant Signal</a></li>
-    </ul>
-    <p>Examples in no particular order:</p>
-    <table cellpadding="10">
-    <tr valign="bottom" class="greybg">
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaDistantClear.gif"
-        alt="semaphore distant clear" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaDistantCaution.gif"
-        alt="semaphore distant caution" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaHomeDistantClear.gif"
-        alt="semaphore distant clear" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaHomeDistantCaution.gif"
-        alt="semaphore home distant caution" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaHomeDanger.gif"
-        alt="semaphore home danger" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaHomeDanger(ws).gif"
-        alt="semaphore home danger subsidiary" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/semaHomeCallOn(ws).gif"
-        alt="semaphore home call-on subsidiary" ></td>         
-    </tr>
-    
-    <tr valign="top">
-    <td>Proceed<br>Distant</td>
-    <td>Caution<br>Distant</td>
-    <td>Proceed<br>Home Distant</td>
-    <td>Caution<br>Home Distant</td>
-    <td>Danger<br>Home</td>    
-    <td>Danger<br>Home Subsidiary</td>
-    <td>Off<br>Home Subsidiary</td>
-    </tr>    
-    </table>
-    
-    
-    <h4>Position Light Signals definitions ( aka Shunt or Shunting Signals ):</h4>
-    <ul>
-    <li><a href="appearance-plr.xml">Position Light Signal Red White Apperance</a></li>
-    <li><a href="appearance-ply.xml">Position Light Signal Yellow White Apperance</a></li>
-    </ul>
-    <p>Examples in no particular order:</p>
-    
-    <table cellpadding="10">
-    <tr valign="bottom" class="greybg">
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/clsPLDanger.gif"
-        alt="ground dangerOff" ></td>
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/clsPLOff.gif"
-        alt="ground Off" ></td>        
-    <td ><img src="../../../resources/icons/BritishRailSignals/Large/clsPLYOn.gif"
-        alt="ground on" ></td>  
-    </tr>
-    
-    <tr valign="top">
-    <td>On<br>Position<br>Red White</td>
-    <td>Off<br>Position<br></td>
-    <td>On<br>Position<br>Yellow White</td>
-    </tr>    
-    </table>    
-    
-    
-    <h4><a name="feather" id="feather">Junction (Feather) indicator definitions:</a></h4>
-    
-    <ul>
-    <li><a href="appearance-feather.xml">Feather with up to 6 positions</a></li>
-    </ul>
-    <table>
-    <tr><th>Aspect Name</th><th>Feather Direction</th><th>Icon</th></tr>
-    <tr><td>Zero</td><td>Unlit</td><td></td></tr>
-    <tr><td>One</td><td>North West</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position1.gif"
-     alt="1" ></td></tr>
-    <tr><td>Two</td><td>West</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position2.gif"
-     alt="2" ></td></tr>
-    <tr><td>Three</td><td>South West</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position3.gif"
-     alt="3" ></td></tr>
-    <tr><td>Four</td><td>North East</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position4.gif"
-     alt="4" ></td></tr>
-    <tr><td>Five</td><td>East</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position5.gif"
-     alt="5" ></td></tr>
-    <tr><td>Six</td><td>South East</td><td class="blackbg"><img 
-    src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position6.gif"
-     alt="6" ></td></tr>
-    </table>
-    
-    <p>Suitable backgrounds for the feathers can be found in the 
-    <a href="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds"
-    >Backgrounds folder</a> for large icons.</p>
-    
-    <table>
-    <tr><td>1</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1.gif"
-     alt="1" ></td>
-     </tr>
-    <tr><td>1+2</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1+2.gif"
-     alt="1+2" ></td>
-    </tr>
-    <tr><td>1-3</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1-3.gif"
-     alt="1-3" ></td>
-    </tr>
-    <tr><td>1+4</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1+4.gif"
-     alt="1+4" ></td>
-    </tr>
-    <tr><td>1+2+4</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/poistion1+2+4.gif"
-     alt="1+2+4" ></td>       
-    </tr>
-    <tr><td>1-4</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1-4.gif"
-     alt="1-4" ></td>
-    </tr>
-    <tr><td>1-5</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1-5.gif"
-     alt="1-5" ></td> 
-    </tr>
-    <tr><td>1-6</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1-6.gif"
-     alt="1-6" ></td> 
-    </tr>
-    <tr><td>1+2+4-6</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1+2+4-6.gif"
-     alt="1+2+4-6" ></td> 
-    </tr>
-    <tr><td>1+4-6</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1+4-6.gif"
-     alt="1+4-6" ></td> 
-    </tr>
-    <tr><td>1+4+5</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position1+4+5.gif"
-     alt="1+4+5" ></td> 
-    </tr>
-    <tr><td>4-6</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position4-6.gif"
-     alt="4-6" ></td> 
-    </tr>
-    <tr><td>4+5</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position4+5.gif"
-     alt="4+5" ></td>
-    </tr>
-    <tr><td>4</td>
-    <td><img src="../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/Backgrounds/position4.gif"
-     alt="4" ></td>
-    </tr>
-    </table>
+      <p>Signal Mast definitions:</p>
 
-    <h4>Further Signalling Support</h4>
-    
-    <p><a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml"
-    >JMRI Aspect Signalling</a></p>
-    
-    
-        </div>
+      <ul>
+        <li>
+          <a href="appearance-sbl2.xml">Samoczynna blokada linowa 2-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-sbl3.xml">Samoczynna blokada linowa 3-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-sbl4.xml">Samoczynna blokada linowa 4-stawna</a>
+        </li>
+
+        <li>
+          <a href="appearance-shunting.xml">Sygnalizacja świetlna dla jazdy manewrowej.</a>
+        </li>
+
+        <li>
+          <a href="appearance-spa4.xml">Sygnalizacja półautomatyczna 4-komorowa</a>
+        </li>
+
+        <li>
+          <a href="appearance-spa5.xml">Sygnalizacja półautomatyczna 5-komorowa</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-<!--#include virtual="/Footer" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,363 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2020, 2021 Jerry Grochow -->
+
   <title>Hardware Support: Using Arduinos with JMRI</title>
-  
   <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="JMRI arduino DCC++ CMRI serial">
-
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1 id="top">Hardware Support: Using Arduinos with JMRI</h1>
+      <img src="images/JMRIArduinoTitlepicBrackstone.jpg" alt="Benson Valley Railway" height="192"
+      width="360">
+      <p style="font-size:60%">Picture Credit: <a href=
+      "http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target=
+      "_blank">http://www.motorhomesites.org.uk</a></p>
 
-    <h1><a name="top" id="top">Hardware Support: Using Arduinos with JMRI</a></h1>
-    
-    <img src="images/JMRIArduinoTitlepicBrackstone.jpg" 
-    alt="Benson Valley Railway" align="middle" height="192" width="360">
-    <p style="font-size:60%">Picture Credit:<a href="http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">
-    http://www.motorhomesites.org.uk</a></p>
-    
-    <p>
-    <a href="https://en.wikipedia.org/wiki/arduino" target="_blank">Arduino micro controllers</a>
-    are special purpose computers that, with appropriate sensors and other electronics,
-    can be used to emulate DCC command stations and decoders, control turnout machines, light buildings and scenery, 
-    and animate just about anything on your layout -- all under control of JMRI.
-    </p>
-    
-    <ul class="snav">
-        <li><a href="#intro">Introduction</a></li>
-        <li><a href="#connect">Connecting</a></li>
-        <li><a href="#using">Using JMRI Features</a></li>
-        <li><a href="#example-CMRI">Step-by-Step CMRI Node</a></li>
-    </ul>
- 
- <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->    
-    <h2><a name="intro" id="intro">Introduction to Using Arduinos with JMRI </a></h2>
+      <p><a href="https://en.wikipedia.org/wiki/arduino" target="_blank">Arduino micro
+      controllers</a> are special purpose computers that, with appropriate sensors and other
+      electronics, can be used to emulate DCC command stations and decoders, control turnout
+      machines, light buildings and scenery, and animate just about anything on your layout -- all
+      under control of JMRI.</p>
 
-    <p>
-    Using arduinos on your layout is no harder than you want it to be.  You can get a block
-    occupancy system up and operating and communicating with your sensors and panels in JMRI
-    in just a couple of hours.  You can also design a custom layout animation that is
-    triggered by Logix or a Jython script and take days to work out all the kinks.  You can even 
-    use an arduino as your DCC command station with<a href="../dccpp/index.shtml"> DCC++</a>. It's up to you.
-    </p>
+      <ul class="snav">
+        <li>
+          <a href="#intro">Introduction</a>
+        </li>
 
-    <p>
-    Software to develop code on your arduino is free online at <a href="https://www.arduino.cc/" target="_blank">
-    arduino.cc</a>. 
-    </p>
- 
-    <p>
-    There are many ways that arduinos can be used on your railroad with JMRI:
-    </p>
-    
-    <ul>
+        <li>
+          <a href="#connect">Connecting</a>
+        </li>
+
+        <li>
+          <a href="#using">Using JMRI Features</a>
+        </li>
+
+        <li>
+          <a href="#example-CMRI">Step-by-Step CMRI Node</a>
+        </li>
+      </ul>
+      <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+      <h2 id="intro">Introduction to Using Arduinos with JMRI</h2>
+
+      <p>Using arduinos on your layout is no harder than you want it to be. You can get a block
+      occupancy system up and operating and communicating with your sensors and panels in JMRI in
+      just a couple of hours. You can also design a custom layout animation that is triggered by
+      Logix or a Jython script and take days to work out all the kinks. You can even use an arduino
+      as your DCC command station with <a href="../dccpp/index.shtml">DCC++</a>. It's up to
+      you.</p>
+
+      <p>Software to develop code on your arduino is free online at <a href=
+      "https://www.arduino.cc/" target="_blank">arduino.cc</a>.</p>
+
+      <p>There are many ways that arduinos can be used on your railroad with JMRI:</p>
+
+      <ul>
         <li>As a DCC command station</li>
+
         <li>As a DCC decoder installed in a locomotive</li>
+
         <li>As a DCC decoder attached to an auxiliary device, including turnouts and lights</li>
-        <li>To detect block occupancy using current sensing, infra-red, photo-optical or other sensors</li>
+
+        <li>To detect block occupancy using current sensing, infra-red, photo-optical or other
+        sensors</li>
+
         <li>To control a relay to turn accessories on or off</li>
+
         <li>To directly control lights and create various lighting effects</li>
-        <li>To control motors of various types (via optional motor control boards), such as for moving signs, Ferris wheels, etc.</li>
+
+        <li>To control motors of various types (via optional motor control boards), such as for
+        moving signs, Ferris wheels, etc.</li>
+
         <li>To combine block occupancy and motor control to create triggered animations</li>
-        <li>To control servo motors to create other types of animations, including turnout operation, crossing gates, and many others.</li>
-    </ul>
 
-    <p>
-    JMRI provides support to use an arduino as a DCC command station (<a href="../dccpp/index.shtml">
-    DCC++</a>) or as a DCC decoder (by setting up a <a href="../../apps/DecoderPro/CreateDecoder.shtml">decoder definition file</a>. 
-    You can also use arduinos to control one or more auxiliary devices on your railroad by connecting the 
-    arduino to your computer running JMRI either through the tracks (in which case it will 
-    receive commands as any other decoder) or through an auxiliary network such as<a href="../cmri/CMRI.shtml"> C/MRI </a>
-    or <a href="../loconet/Digitrax.shtml">Loconet </a>in which case they will communicate with JMRI
-    by following the rules of that protocol.  Sections below will help you get started.
-    </p>
-    
+        <li>To control servo motors to create other types of animations, including turnout
+        operation, crossing gates, and many others.</li>
+      </ul>
 
-    <h3>Additional Reference Material</h3>
-    
-    <p>
-    You can find information about typical projects in a variety of places on the web.  Some to look at include:
-    </p>
-    
-    <ul>
-        <li>For questions about using arduinos with model railroading (including use with JMRI), go to the <a href="https://groups.io/g/arduini" target="_blank">"arduini" discussion group</a></li>
-        <li>For examples of animations, DCC decoders, and the like, see <a href="https://model-railroad-hobbyist.com/blog/geoff-bunza" target="_blank">
-        Geoff Bunza's blog</a>. [Many of these can easily be adapted to communicate with JMRI.]</li>
-        <li>For arduino code to implement a number of the topics listed above, go to 
-        <a href="https://github.com/Arduini-Projects" target="_blank">this page in Github.</a>
-        Also, type in search terms like "arduino," "model railroad," "DCC," and, of course, "JMRI."  
-        <li>For just about anything having to do with arduinos and JMRI, go to <a href="https://www.youtube.com/results?search_query=model+railroading+jmri+arduino" target="_blank">
-        YouTube for hundreds of videos</a>, some with very detailed descriptions of how to set up JMRI to interact with arduinos.</li>
-    </ul>
-    
-    <p>
-    New blogs and videos are being created almost daily describing additional uses for arduinos on the railroad. 
-    With the steady introduction of new sensors and controllers to connect to the pins on an arduino, there is 
-    hardly an electronically controllable item that cannot be controlled via JMRI.
-    </p>
+      <p>JMRI provides support to use an arduino as a DCC command station ( <a href=
+      "../dccpp/index.shtml">DCC++</a>) or as a DCC decoder (by setting up a <a href=
+      "../../apps/DecoderPro/CreateDecoder.shtml">decoder definition file</a>. You can also use
+      arduinos to control one or more auxiliary devices on your railroad by connecting the arduino
+      to your computer running JMRI either through the tracks (in which case it will receive
+      commands as any other decoder) or through an auxiliary network such as <a href=
+      "../cmri/CMRI.shtml">C/MRI</a> or <a href="../loconet/Digitrax.shtml">Loconet</a> in which
+      case they will communicate with JMRI by following the rules of that protocol. Sections below
+      will help you get started.</p>
 
-    <p><a href="#top">[Go to top of page]</a></p>     
- 
- <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
-    <h2><a name="connect" id="connect">Connecting to JMRI </a></h2>
+      <h3>Additional Reference Material</h3>
 
-    <ul class="snav">
-        <li><a href="#CMRI">CMRI</a></li>
-        <li><a href="#serial">Serial</a></li>
-        <li><a href="#multi">RS485</a></li>
-    </ul>
- 
+      <p>You can find information about typical projects in a variety of places on the web. Some to
+      look at include:</p>
 
-    <p>
-    Arduinos communicate with your Windows, Mac, or Linux computer in a variety of ways 
-    depending on the function they are performing:
-    </p>
-    
-    <ul>
-    <li>via a USB port if acting as a <a href="../dccpp/index.shtml">DCC command station.</a></li>
-    <li>via connection to the track or a connection to <a href="../loconet/Digitrax.shtml">Loconet </a>
-    (requires additional circuitry) or <a href="../can/cbus/index.shtml#thirdpary">CBUS&reg;</a> network if
-    acting as a DCC decoder (see, for example, this<a href="https://github.com/mrrwa/NmraDcc" target="_blank">
-    arduino library on Github</a>)</li>
-    <li>via a USB port if emulating a <a href="#CMRI">CMRI node</a></li>
-    <li>via TCP/IP using the <a href="../mqtt/index.shtml">MQTT protocol</a></li>
-    <li>via a USB port for direct <a href="#serial">serial communications</a></li>
-    <li>via a USB-to-RS485 connector if <a href="#multi">multiple arduinos are connected</a> via an RS485 network</li>
-    </ul>
-    
-    <p>The following sections provide hints for using some of the different communication approaches.</p>
+      <ul>
+        <li>For questions about using arduinos with model railroading (including use with JMRI), go
+        to the <a href="https://groups.io/g/arduini" target="_blank">"arduini" discussion group</a>
+        </li>
 
-    
-    <h3><a name="CMRI" id="CMRI">Emulating a CMRI node</a></h3>
-    
-    <p>
-    One of the simplest ways to have your arduino communicate with JMRI is to install software that
-    allows it to emulate a CMRI node. [See <a href="../cmri/CMRI.shtml">the CMRI help page</a> for  
-    information about using CMRI nodes with JMRI.] On the arduino, install one of the arduino 
-    C/MRI libraries and include it in your sketch (for example, the library by Michael Adams
-    <a href="https://github.com/madleech/ArduinoCMRI" target="blank_"> available on Github</a> (
-    see also <a href="http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">
-    Stephen Brackstone's web site </a>for an example of its use). See also<a href="#example-CMRI">
-     below </a>for a set of steps to get up and operating with an arduino as CMRI node with JMRI.
-    </p>
-    
-    <p>Some notes of interest when programming your arduino as a CMRI node:</p>
-    
-    <ul>
-    <li>
-    Be sure to set the communication speed (baud rate) the same in your arduino sketch and in
-    the JMRI <a href="../cmri/CMRI.shtml#L215">CMRI system connection</a>.  The baud rate will only 
-    be visible on the JMRI Preferences->Connections window if you check the box for "Additional
-    Connection Settings."
-    </li>
-    <li>
-    When defining JMRI objects such as sensors and turnouts that are identified with 
-    CMRI bits, JMRI starts numbering CMRI bits with 1 while common CMRI software for arduinos
-    starts with 0.  Writing ("setting") CMRI bit 0 within an arduino sketch sets JMRI CMRI input bit 1
-    for the appropriate node.  Thus, a JMRI Sensor named CS2001 (bit 1 on
-    node 2) will be controlled by setting CMRI bit 0 in the code in an arduino sketch.  Reading ("getting")
-    CMRI bit 0 within an arduino sketch will read the bit controlling the JMRI Turnout or Light attached
-    to CMRI output bit 1 in JMRI, e.g. CT2001 or CL2001 (note that you cannot have both a Light and a Turnout
-    controlling the same output bit). See also the<a href="#example-CMRI"> example setup below</a>.
-    </li>
-    <li>
-    When using arduinos to control JMRI turnouts, be mindful that JMRI's behavior is different if the turnout
-    is defined to have steady-state output vs. pulsed output 
-    (see <a href="../cmri/CMRI.shtml#L519"> CMRI Turnout Options</a> for more information). It is easier to set
-    the JMRI turnout to have steady output and use the arduino programming to take appropriate action
-    depending on the type of turnout switch machine you are using.
-    </li>
-    <li>
-    Turnout feedback works differently for CMRI than other networks when also using fascia panel
-    switches as part of your operation.  It is easy to program an arduino to have switches throw your
-    turnouts, however, JMRI behavior may not be what you expect (if you attempt to send feedback to JMRI,
-    JMRI will effectively ignore that and attempt to set the turnout back to what the JMRI turnout table
-    says it should be).  See the<a href="../cmri/CMRI.shtml#L519"> CMRI Turnout Options </a>for the correct information. 
-    </li>
-    <li>
-    The <a href="../cmri/CMRI.shtml#L568">CMRI Network Manager</a> can be used to turn on and off communication
-    to any CMRI node that you want, something that is useful if one or more are temporarily taken
-    out of service or being tested.
-    </li>
-    <li>
-    When you change the state of more than one CMRI-connected device (say two turnouts) in one 
-    <a href="../../tools/Routes.shtml">Route</a> or <a href="../../tools/Logix.shtml">Logix</a>, 
-    you can't be sure whether you will get both bits the first time your arduino program asks for them. After a
-    while (typically a fraction of a second), you will, but program your arduino sketch to be sensitive to this issue.    
-    </li>
-    </ul>
-     
-    <p>See also the section below for a <a href="#example-CMRI">Step-by-Step example of creating
-    an arduino-based CMRI Node.</a></p>
-     
-    <p><a href="#top">[Go to top of page]</a></p>     
+        <li>For examples of animations, DCC decoders, and the like, see <a href=
+        "https://model-railroad-hobbyist.com/blog/geoff-bunza" target="_blank">Geoff Bunza's
+        blog</a>. [Many of these can easily be adapted to communicate with JMRI.]
+        </li>
 
+        <li>For arduino code to implement a number of the topics listed above, go to <a href=
+        "https://github.com/Arduini-Projects" target="_blank">this page in Github.</a> Also, type
+        in search terms like "arduino," "model railroad," "DCC," and, of course, "JMRI."
+        </li>
 
-    <h3><a name="serial" id="serial">Serial communication</a></h3>
-    
-    <p>
-    Arduinos can be directly connected to a USB port and use serial communications via a
-    <a href="../../tools/scripting/index.shtml">Jython script</a> executed in JMRI.  An    
-    example is included in <a href="../../../../../jython/SerialPortTest.py">the JMRI Jython directory.</a>
-    Geoff Bunza describes a <a href="https://model-railroad-hobbyist.com/node/34392"
-    target="_blank">serial communication script for collecting sensor data</a> from an arduino.
-    It is not necessary to configure a JMRI system connection to use direct serial communications.
-    </p>
+        <li>For just about anything having to do with arduinos and JMRI, go to <a href=
+        "https://www.youtube.com/results?search_query=model+railroading+jmri+arduino" target=
+        "_blank">YouTube for hundreds of videos</a>, some with very detailed descriptions of how to
+        set up JMRI to interact with arduinos.
+        </li>
+      </ul>
 
-    <p><a href="#top">[Go to top of page]</a></p>     
+      <p>New blogs and videos are being created almost daily describing additional uses for
+      arduinos on the railroad. With the steady introduction of new sensors and controllers to
+      connect to the pins on an arduino, there is hardly an electronically controllable item that
+      cannot be controlled via JMRI.</p>
 
- 
-    <h3><a name="multi" id="multi">Using multiple arduinos via RS-485</a></h3>
-    
-    <p class="im">
-    <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" align="right" height="211" width="396">
-    Although JMRI permits more than one CMRI connection to be configured for a layout, it is often 
-    convenient to connect multiple arduinos on a single CMRInet connection. This eliminates the need to have
-    individual USB cables going from each arduino to separate USB ports on your computer.  Instead, multiple
-    arduinos can be connected via an RS-485 adapter to an RS-485 two wire cable in a "daisy chain" (each arduino
-    connected to the next), ending in an RS-485-to-USB adapter to connect to the JMRI computer as shown in
-    this diagram:
-    </p>
-    
-    <p>
-    Connect each arduino to an RS-485 communication board via the serial pins on your arduino.
-    There are multiple sources for the RS485 communication board that
-    range in price from a few dollars to upwards of $30.  You will also need a single USB-RS485
-    converter, also available from multiple sources.
-    </p>
-    
-    <p>See <a href="http://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target="_blank">
-    Stephen Brackstone again </a>for a good description of how to do this setup.
-    </p>
-    
-    <p>Then include a RS-485 library in your arduino sketch (for example, 
-    <a href="https://github.com/madleech/Auto485" target="_blank">
-    this one by Michael Adams</a>).  Make sure each arduino is assigned a different CMRI node
-    number.  You do not need any additional software on your computer.
-    Simply tell JMRI what USB port the converter is connected to and all arduinos on the RS485
-    network will be seen by JMRI.
-    </p>
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+      <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
 
-    <p><a href="#top">[Go to top of page]</a></p>     
-  
+      <h2 id="connect">Connecting to JMRI</h2>
 
- <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->     
-    <h2><a name="using" id="using">Using JMRI Features and Tools with Arduinos</a></h2>
-    
-    <p>
-    Arduinos can be connected to almost any electronic component used on a model railroad, including
-    turnout motors, turnout relays, led lighting, and a wide variety of sensors.  You can, for 
-    example, define a <a href="../../tools/Sensors.shtml">sensor within JMRI </a>
-    that is identified with a CMRI input bit and a <a href="../../tools/Turnouts.shtml">turnout</a> identified
-    with a CMRI output bit, both of which are processed by an arduino for controlling a turnout motor.  Or, you
-    can identify those sensors and turnouts as "internal" (JMRI objects not associated with  
-    hardware on your layout) and use a <a href="../../tools/scripting/index.shtml">script</a> to process the 
-    data flow back and forth to the arduino.
-    </p>
-    
-    <p>Here are some examples with links to explanatory articles and/or arduino code that you can learn from:</p>
-    
-    <ul>
-    <li>Block occupancy detectors: Connect an arduino to several block occupancy detectors and define JMRI sensors to report whether blocks are occupied.
-    Layout panels will show tracks changing color as blocks go from unoccupied to occupied and back again.</li>
-    <li>Location detectors: Connect an arduino to a "point" sensor such as a photooptical module, infrared module, Hall effect reader, RFID reader,
-    etc.  Define a JMRI sensor that goes active when the physical sensor is active and use this to control routes,
-    Logix, or other JMRI "triggered" action.</li>
-    <li>Turnout control: Connect an arduino to a turnout motor or switch machine (will require using an auxiliary circuit board to power these devices).
-    Define a turnout in JMRI and a sensor for feedback. When the arduino receives a request from JMRI to thrown the
-    turnout (via whatever network protocol you have chosen - see <a href="#connect">above</a>), have the arduino throw
-    the turnout and set the sensor.</li>
-    <li>Multiple turnout control via serial communications: See step-by-step and code from Geoff Bunza 
-    <a href="https://model-railroad-hobbyist.com/node/34417" target="_blank"> here.</a></li>
-    <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a JMRI sensor that is used to trigger a Logix to
-    do something (perhaps throw some turnouts, set some lights, etc.).  Program the arduino to set the sensor when the switch or
-    pushbutton is activated.</li>
-    <li>Light or animation control: Add a motor controller to your arduino, create a <a href="../../tools/Lights.shtml">JMRI light object</a>
-    to send a control command,
-    create a few sensors in JMRI for feedback, and use this <a href="https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">
-    sketch to control an auxiliary motor,</a> such as would be in a Ferris wheel.  Use <a href="../../tools/Lights.shtml">JMRI light objects</a>
-    to send commands to change speed or other characteristics of the animation either via serial communications or using
-    the byte communication techniques discussed on <a href="ArduinoCMRIByteComm.shtml">this page.</a></li>
-    <li>Speedometer: monitor the time it takes for a locomotive to trigger between two (or more sensors), and using 
-    the distance between them, compute its speed.  Send that information to JMRI either via serial communications or using
-    the byte communication techniques discussed on <a href="ArduinoCMRIByteComm.shtml">this page.</a></li>
-    <li>Car counter: using location detectors placed above the level of trucks and couplers, write an arduino sketch
-    to count cars as they go by. Connect to JMRI via <a href="#serial">serial communications </a> and write a 
-    <a href="../../tools/scripting/index.shtml">script </a>to write the number to a <a href="../../tools/Memories.shtml">JMRI memory object</a>
-    which can be display on a <a href="../../apps/PanelPro/index.shtml">panel showing your layout.</a></li>
-    <li>DCC Decoder: Turn your arduino into an <a href="https://github.com/mrrwa/NmraDcc" target="_blank">NMRI compatible decoder</a>.  
-    Use <a href="../../apps/DecoderPro/index.shtml">DecoderPro </a>to change the configuration variables.</li>
-    </ul>
-    
-    <p>
-    The possibilities are nearly endless.
-    </p>
+      <ul class="snav">
+        <li>
+          <a href="#CMRI">CMRI</a>
+        </li>
 
-    <p><a href="#top">[Go to top of page]</a></p>     
+        <li>
+          <a href="#serial">Serial</a>
+        </li>
 
-  
-<!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
- 
-    <h2><a name="example-CMRI" id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</a></h2>
-      
-    <p>
-    This example will walk through main steps of using an arduino to monitor a block occupancy sensor and 
-    and JMRI using that sensor to change the color of the track of the occupied section on a layout panel.
-    This is not meant to be a tutorial on either arduinos or JMRI, but rather to provide a guide for someone generally
-    familiar with both but just trying to use them together.  Much more can be found by checking some of the 
-    references listed in <a href="#intro">the Introduction above.</a>
-    </p>
-    
-    <ul>
-    <li>First connect whichever block occupancy detector (BOD) you are using to appropriate pins on the arduino.</li>
-    <li>Using the <a href="https://www.arduino.cc/en/main/software" target="_blank">arduino IDE 
-    (integrated development environment)</a> or other development environment, create (or download) a
-    sketch (arduino program) that includes the CMRI library.</li>
-    <li>In the sketch, assign this emulated CMRI node as Node 1.</li>
-    <li>In the sketch, use bit 0 for sending the sensor state (unoccupied=0 or occupied=1).  Some sensors will
-    indicate an occupied block by a LOW signal on the arduino pin while others will go HIGH - be sure
-    you know which is which for your particular sensor so you set the CMRI bit appropriately.</li>
-    <li>Connect the USB port of your arduino to a USB cable and then to your computer.</li>
-    <li>Note which USB port the arduino is connected to (on a Windows machine, for example, go to Device Manager and see
-    which port number pops up when you plug the arduino cable into a USB port).</li>
-    <li>Upload the sketch from your development environment to your arduino.</li>
-    <li>Open <a href="../../apps/PanelPro/index.shtml">JMRI PanelPro.</a></li>
-    <li>Select Edit->Preferences->Connections from the pull-down menus and then "+" to add a new connection.</li>
-    <li>Select "CMRI" and "Serial" and then the serial port that your arduino is connected to as shown 
-    <a href="../cmri/CMRI.shtml#L215"> here.</a>
-    NOTE: you will not be able to simultaneously run the arduino IDE serial monitor and JMRI as whichever if opened
-    second will see that the port is in use.</li>
-    <li>Check "Additional Connection Settings" and select the same "Baud rate" (serial communications speed) that
-    you used in the arduino sketch.</li>
-    <li>Click on "Configure Nodes" and then "Add Node."  When the "Add Node" window opens, change the "Node Address"
-    to 1 and click "Add Node" as shown<a href="../cmri/CMRI.shtml#L296"> here.</a>
-    Close this window and click "Done."  BE SURE TO HIT "Save" on the Preferences window.</li>
-    <li>Open the <a href="../../tools/Sensors.shtml">sensor table </a>and create a CMRI sensor with system name 1001 
-    (first CMRI bit on node 1)</li>
-    <li>Open the <a href="../../tools/Blocks.shtml">block table </a>and create a block.  Set the occupancy sensor
-    to the sensor you just created.</li>
-    <li>Go to a panel you have created and assign the block you just created to appropriate track section.</li>
-    <li>Run trains and watch the action!</li> 
-    </ul>
-     
-    <p><a href="#top">[Go to top of page]</a></p>
-    
+        <li>
+          <a href="#multi">RS485</a>
+        </li>
+      </ul>
 
-        <h2></h2>
-        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p>Arduinos communicate with your Windows, Mac, or Linux computer in a variety of ways
+      depending on the function they are performing:</p>
 
+      <ul>
+        <li>via a USB port if acting as a <a href="../dccpp/index.shtml">DCC command station.</a>
+        </li>
+
+        <li>via connection to the track or a connection to <a href=
+        "../loconet/Digitrax.shtml">Loconet</a> (requires additional circuitry) or <a href=
+        "../can/cbus/index.shtml#thirdpary">CBUS®</a> network if acting as a DCC decoder (see, for
+        example, this <a href="https://github.com/mrrwa/NmraDcc" target="_blank">arduino library on
+        Github</a>)
+        </li>
+
+        <li>via a USB port if emulating a <a href="#CMRI">CMRI node</a>
+        </li>
+
+        <li>via TCP/IP using the <a href="../mqtt/index.shtml">MQTT protocol</a>
+        </li>
+
+        <li>via a USB port for direct <a href="#serial">serial communications</a>
+        </li>
+
+        <li>via a USB-to-RS485 connector if <a href="#multi">multiple arduinos are connected</a>
+        via an RS485 network
+        </li>
+      </ul>
+
+      <p>The following sections provide hints for using some of the different communication
+      approaches.</p>
+
+      <h3 id="CMRI">Emulating a CMRI node</h3>
+
+      <p>One of the simplest ways to have your arduino communicate with JMRI is to install software
+      that allows it to emulate a CMRI node. [See <a href="../cmri/CMRI.shtml">the CMRI help
+      page</a> for information about using CMRI nodes with JMRI.] On the arduino, install one of
+      the arduino C/MRI libraries and include it in your sketch (for example, the library by
+      Michael Adams <a href="https://github.com/madleech/ArduinoCMRI" target="blank_">available on
+      Github</a> ( see also <a href=
+      "http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">Stephen
+      Brackstone's web site</a> for an example of its use). See also <a href=
+      "#example-CMRI">below</a> for a set of steps to get up and operating with an arduino as CMRI
+      node with JMRI.</p>
+
+      <p>Some notes of interest when programming your arduino as a CMRI node:</p>
+
+      <ul>
+        <li>Be sure to set the communication speed (baud rate) the same in your arduino sketch and
+        in the JMRI <a href="../cmri/CMRI.shtml#L215">CMRI system connection</a>. The baud rate
+        will only be visible on the JMRI Preferences-&gt;Connections window if you check the box
+        for "Additional Connection Settings."
+        </li>
+
+        <li>When defining JMRI objects such as sensors and turnouts that are identified with CMRI
+        bits, JMRI starts numbering CMRI bits with 1 while common CMRI software for arduinos starts
+        with 0. Writing ("setting") CMRI bit 0 within an arduino sketch sets JMRI CMRI input bit 1
+        for the appropriate node. Thus, a JMRI Sensor named CS2001 (bit 1 on node 2) will be
+        controlled by setting CMRI bit 0 in the code in an arduino sketch. Reading ("getting") CMRI
+        bit 0 within an arduino sketch will read the bit controlling the JMRI Turnout or Light
+        attached to CMRI output bit 1 in JMRI, e.g. CT2001 or CL2001 (note that you cannot have
+        both a Light and a Turnout controlling the same output bit). See also the <a href=
+        "#example-CMRI">example setup below</a>.
+        </li>
+
+        <li>When using arduinos to control JMRI turnouts, be mindful that JMRI's behavior is
+        different if the turnout is defined to have steady-state output vs. pulsed output (see
+        <a href="../cmri/CMRI.shtml#L519">CMRI Turnout Options</a> for more information). It is
+        easier to set the JMRI turnout to have steady output and use the arduino programming to
+        take appropriate action depending on the type of turnout switch machine you are using.
+        </li>
+
+        <li>Turnout feedback works differently for CMRI than other networks when also using fascia
+        panel switches as part of your operation. It is easy to program an arduino to have switches
+        throw your turnouts, however, JMRI behavior may not be what you expect (if you attempt to
+        send feedback to JMRI, JMRI will effectively ignore that and attempt to set the turnout
+        back to what the JMRI turnout table says it should be). See the <a href=
+        "../cmri/CMRI.shtml#L519">CMRI Turnout Options</a> for the correct information.
+        </li>
+
+        <li>The <a href="../cmri/CMRI.shtml#L568">CMRI Network Manager</a> can be used to turn on
+        and off communication to any CMRI node that you want, something that is useful if one or
+        more are temporarily taken out of service or being tested.
+        </li>
+
+        <li>When you change the state of more than one CMRI-connected device (say two turnouts) in
+        one <a href="../../tools/Routes.shtml">Route</a> or <a href=
+        "../../tools/Logix.shtml">Logix</a>, you can't be sure whether you will get both bits the
+        first time your arduino program asks for them. After a while (typically a fraction of a
+        second), you will, but program your arduino sketch to be sensitive to this issue.
+        </li>
+      </ul>
+
+      <p>See also the section below for a <a href="#example-CMRI">Step-by-Step example of creating
+      an arduino-based CMRI Node.</a></p>
+
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+
+      <h3 id="serial">Serial communication</h3>
+
+      <p>Arduinos can be directly connected to a USB port and use serial communications via a
+      <a href="../../tools/scripting/index.shtml">Jython script</a> executed in JMRI. An example is
+      included in <a href="../../../../../jython/SerialPortTest.py">the JMRI Jython directory.</a>
+      Geoff Bunza describes a <a href="https://model-railroad-hobbyist.com/node/34392" target=
+      "_blank">serial communication script for collecting sensor data</a> from an arduino. It is
+      not necessary to configure a JMRI system connection to use direct serial communications.</p>
+
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+
+      <h3 id="multi">Using multiple arduinos via RS-485</h3>
+
+      <p class="im"><img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" class="floatRight"
+      height="211" width="396"> Although JMRI permits more than one CMRI connection to be
+      configured for a layout, it is often convenient to connect multiple arduinos on a single
+      CMRInet connection. This eliminates the need to have individual USB cables going from each
+      arduino to separate USB ports on your computer. Instead, multiple arduinos can be connected
+      via an RS-485 adapter to an RS-485 two wire cable in a "daisy chain" (each arduino connected
+      to the next), ending in an RS-485-to-USB adapter to connect to the JMRI computer as shown in
+      this diagram:</p>
+
+      <p>Connect each arduino to an RS-485 communication board via the serial pins on your arduino.
+      There are multiple sources for the RS485 communication board that range in price from a few
+      dollars to upwards of $30. You will also need a single USB-RS485 converter, also available
+      from multiple sources.</p>
+
+      <p>See <a href=
+      "http://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target=
+      "_blank">Stephen Brackstone again</a> for a good description of how to do this setup.</p>
+
+      <p>Then include a RS-485 library in your arduino sketch (for example, <a href=
+      "https://github.com/madleech/Auto485" target="_blank">this one by Michael Adams</a>). Make
+      sure each arduino is assigned a different CMRI node number. You do not need any additional
+      software on your computer. Simply tell JMRI what USB port the converter is connected to and
+      all arduinos on the RS485 network will be seen by JMRI.</p>
+
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+      <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+      <h2 id="using">Using JMRI Features and Tools with Arduinos</h2>
+
+      <p>Arduinos can be connected to almost any electronic component used on a model railroad,
+      including turnout motors, turnout relays, led lighting, and a wide variety of sensors. You
+      can, for example, define a <a href="../../tools/Sensors.shtml">sensor within JMRI</a> that is
+      identified with a CMRI input bit and a <a href="../../tools/Turnouts.shtml">turnout</a>
+      identified with a CMRI output bit, both of which are processed by an arduino for controlling
+      a turnout motor. Or, you can identify those sensors and turnouts as "internal" (JMRI objects
+      not associated with hardware on your layout) and use a <a href=
+      "../../tools/scripting/index.shtml">script</a> to process the data flow back and forth to the
+      arduino.</p>
+
+      <p>Here are some examples with links to explanatory articles and/or arduino code that you can
+      learn from:</p>
+
+      <ul>
+        <li>Block occupancy detectors: Connect an arduino to several block occupancy detectors and
+        define JMRI sensors to report whether blocks are occupied. Layout panels will show tracks
+        changing color as blocks go from unoccupied to occupied and back again.</li>
+
+        <li>Location detectors: Connect an arduino to a "point" sensor such as a photooptical
+        module, infrared module, Hall effect reader, RFID reader, etc. Define a JMRI sensor that
+        goes active when the physical sensor is active and use this to control routes, Logix, or
+        other JMRI "triggered" action.</li>
+
+        <li>Turnout control: Connect an arduino to a turnout motor or switch machine (will require
+        using an auxiliary circuit board to power these devices). Define a turnout in JMRI and a
+        sensor for feedback. When the arduino receives a request from JMRI to thrown the turnout
+        (via whatever network protocol you have chosen - see <a href="#connect">above</a>), have
+        the arduino throw the turnout and set the sensor.
+        </li>
+
+        <li>Multiple turnout control via serial communications: See step-by-step and code from
+        Geoff Bunza <a href="https://model-railroad-hobbyist.com/node/34417" target=
+        "_blank">here.</a>
+        </li>
+
+        <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a
+        JMRI sensor that is used to trigger a Logix to do something (perhaps throw some turnouts,
+        set some lights, etc.). Program the arduino to set the sensor when the switch or pushbutton
+        is activated.</li>
+
+        <li>Light or animation control: Add a motor controller to your arduino, create a <a href=
+        "../../tools/Lights.shtml">JMRI light object</a> to send a control command, create a few
+        sensors in JMRI for feedback, and use this <a href=
+        "https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">sketch to
+        control an auxiliary motor,</a> such as would be in a Ferris wheel. Use <a href=
+        "../../tools/Lights.shtml">JMRI light objects</a> to send commands to change speed or other
+        characteristics of the animation either via serial communications or using the byte
+        communication techniques discussed on <a href="ArduinoCMRIByteComm.shtml">this page.</a>
+        </li>
+
+        <li>Speedometer: monitor the time it takes for a locomotive to trigger between two (or more
+        sensors), and using the distance between them, compute its speed. Send that information to
+        JMRI either via serial communications or using the byte communication techniques discussed
+        on <a href="ArduinoCMRIByteComm.shtml">this page.</a>
+        </li>
+
+        <li>Car counter: using location detectors placed above the level of trucks and couplers,
+        write an arduino sketch to count cars as they go by. Connect to JMRI via <a href="#serial">
+          serial communications</a> and write a <a href=
+          "../../tools/scripting/index.shtml">script</a> to write the number to a <a href=
+          "../../tools/Memories.shtml">JMRI memory object</a> which can be display on a <a href=
+          "../../apps/PanelPro/index.shtml">panel showing your layout.</a>
+        </li>
+
+        <li>DCC Decoder: Turn your arduino into an <a href="https://github.com/mrrwa/NmraDcc"
+        target="_blank">NMRI compatible decoder</a>. Use <a href=
+        "../../apps/DecoderPro/index.shtml">DecoderPro</a> to change the configuration variables.
+        </li>
+      </ul>
+
+      <p>The possibilities are nearly endless.</p>
+
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+      <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+      <h2 id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</h2>
+
+      <p>This example will walk through main steps of using an arduino to monitor a block occupancy
+      sensor and and JMRI using that sensor to change the color of the track of the occupied
+      section on a layout panel. This is not meant to be a tutorial on either arduinos or JMRI, but
+      rather to provide a guide for someone generally familiar with both but just trying to use
+      them together. Much more can be found by checking some of the references listed in <a href=
+      "#intro">the Introduction above.</a></p>
+
+      <ul>
+        <li>First connect whichever block occupancy detector (BOD) you are using to appropriate
+        pins on the arduino.</li>
+
+        <li>Using the <a href="https://www.arduino.cc/en/main/software" target="_blank">arduino IDE
+        (integrated development environment)</a> or other development environment, create (or
+        download) a sketch (arduino program) that includes the CMRI library.
+        </li>
+
+        <li>In the sketch, assign this emulated CMRI node as Node 1.</li>
+
+        <li>In the sketch, use bit 0 for sending the sensor state (unoccupied=0 or occupied=1).
+        Some sensors will indicate an occupied block by a LOW signal on the arduino pin while
+        others will go HIGH - be sure you know which is which for your particular sensor so you set
+        the CMRI bit appropriately.</li>
+
+        <li>Connect the USB port of your arduino to a USB cable and then to your computer.</li>
+
+        <li>Note which USB port the arduino is connected to (on a Windows machine, for example, go
+        to Device Manager and see which port number pops up when you plug the arduino cable into a
+        USB port).</li>
+
+        <li>Upload the sketch from your development environment to your arduino.</li>
+
+        <li>Open <a href="../../apps/PanelPro/index.shtml">JMRI PanelPro.</a>
+        </li>
+
+        <li>Select Edit-&gt;Preferences-&gt;Connections from the pull-down menus and then "+" to
+        add a new connection.</li>
+
+        <li>Select "CMRI" and "Serial" and then the serial port that your arduino is connected to
+        as shown <a href="../cmri/CMRI.shtml#L215">here.</a> NOTE: you will not be able to
+        simultaneously run the arduino IDE serial monitor and JMRI as whichever if opened second
+        will see that the port is in use.
+        </li>
+
+        <li>Check "Additional Connection Settings" and select the same "Baud rate" (serial
+        communications speed) that you used in the arduino sketch.</li>
+
+        <li>Click on "Configure Nodes" and then "Add Node." When the "Add Node" window opens,
+        change the "Node Address" to 1 and click "Add Node" as shown <a href=
+        "../cmri/CMRI.shtml#L296">here.</a> Close this window and click "Done." BE SURE TO HIT
+        "Save" on the Preferences window.
+        </li>
+
+        <li>Open the <a href="../../tools/Sensors.shtml">sensor table</a> and create a CMRI sensor
+        with system name 1001 (first CMRI bit on node 1)
+        </li>
+
+        <li>Open the <a href="../../tools/Blocks.shtml">block table</a> and create a block. Set the
+        occupancy sensor to the sensor you just created.
+        </li>
+
+        <li>Go to a panel you have created and assign the block you just created to appropriate
+        track section.</li>
+
+        <li>Run trains and watch the action!</li>
+      </ul>
+
+      <p><a href="#top">[Go to top of page]</a>
+      </p>
+
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -312,6 +312,7 @@ public class PositionablePopupUtil {
             setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
+            _parent.setOpaque(true);
             if (!_suppressRecentColor) {
                 JmriColorChooser.addRecentColor(color);
             }
@@ -321,7 +322,7 @@ public class PositionablePopupUtil {
         }
         _parent.updateSize();
     }
-    
+
     public void setSuppressRecentColor(boolean b) {
         _suppressRecentColor = b;
     }

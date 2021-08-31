@@ -1,104 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: OBlock Table Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OBlock Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help OBlock Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Occupancy Block (OBlock) Tables</h1>
-      <p class="important">Under development, see <a href="../logix.OBlockEdit.shtml">OBlock Help</a></p>
 
-      <p>OBlocks may be set up manually in the OBlock Table, using a
-      script, or automatically in a Control Panel Editor - Circuit Builder. When a
-      Block is defined in a Layout Editor Panel, a new Block is
-      created if one does not already exist.</p>
-      <p class="important">In Layout Editor, Blocks are identified
-      by their <b>User Name</b>, so if a Block shown
-      in the Block Table is used in a Layout Editor Panel, its User
-      Name should not be changed here.<br>
-      If you want to change the User Name of a Block used in a
-      Layout Editor Panel, make the change in the Layout Editor,
-      not in the Block Table.</p>
+      <p class="important">Under development, see <a href="../logix/OBlockEdit.shtml">OBlock
+      Help</a></p>
 
-      <a name="blockPaths" id="blockPaths"></a>
-      <h2>Blocks &amp; Paths</h2>
-      <p>To complete the definition of a Block, Paths and Bean
-      Settings must be attached to each Block.<br>
-      <strong>Paths</strong> describe entry points
-      to the Block. Each Block has one or more Paths associated
-      with it. Sometimes a Turnout must be set a certain way to use
-      a Path; Bean Settings carry that information. Paths and Bean
-      Settings are set up automatically for Blocks defined in a
-      Layout Editor Panel. They can also be set up in a script.
-      There is currently no way to manually enter Paths or Bean
-      Settings. Paths and Bean Settings are not shown in the Block
-      Table, and are mentioned here only for completeness.</p>
+      <p>OBlocks may be set up manually in the OBlock Table, using a script, or automatically in a
+      Control Panel Editor - Circuit Builder. When a Block is defined in a Layout Editor Panel, a
+      new Block is created if one does not already exist.</p>
 
-      <p>For use in automatically running Trains, a Length
-      attribute and a Curvature attribute may optionally be
-      assigned to a Block. These optional attributes are entered
-      manually in this Table. If Trains will not be run
-      automatically through a Block, there is no need to add these
+      <p class="important">In Layout Editor, Blocks are identified by their <strong>User
+      Name</strong>, so if a Block shown in the Block Table is used in a Layout Editor Panel, its
+      User Name should not be changed here.<br>
+      If you want to change the User Name of a Block used in a Layout Editor Panel, make the change
+      in the Layout Editor, not in the Block Table.</p>
+
+      <h2 id="blockPaths">Blocks & Paths</h2>
+
+      <p>To complete the definition of a Block, Paths and Bean Settings must be attached to each
+      Block.<br>
+      <strong>Paths</strong> describe entry points to the Block. Each Block has one or more Paths
+      associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean
+      Settings carry that information. Paths and Bean Settings are set up automatically for Blocks
+      defined in a Layout Editor Panel. They can also be set up in a script. There is currently no
+      way to manually enter Paths or Bean Settings. Paths and Bean Settings are not shown in the
+      Block Table, and are mentioned here only for completeness.</p>
+
+      <p>For use in automatically running Trains, a Length attribute and a Curvature attribute may
+      optionally be assigned to a Block. These optional attributes are entered manually in this
+      Table. If Trains will not be run automatically through a Block, there is no need to add these
       attributes.</p>
 
       <h2>Columns in the Block Table</h2>
-      (You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a column title)
+      (You may change the order of the columns by dragging their titles, and sort the rows by
+      clicking one of the sort triangles next to a column title)
       <ul>
         <li>
-          <p><b>System Name</b> - The System Name of the Block.
-          There is no functional requirement for a type letter in
-          the System Name of a Block, but by convention we use 'B'
-          for 'Block'. The default implementation is not
-          system-specific, so a system letter of 'I' is
-          appropriate. This leads to system names like "IB201".</p>
+          <p><strong>System Name</strong> - The System Name of the Block. There is no functional
+          requirement for a type letter in the System Name of a Block, but by convention we use 'B'
+          for 'Block'. The default implementation is not system-specific, so a system letter of 'I'
+          is appropriate. This leads to system names like "IB201".</p>
         </li>
 
         <li>
-          <p><b>User Name</b> - The User Name of the Block. The
-          User Name of a Block created here may be set to any text.
-          The User Name for a Block created by Layout Editor is set
-          by Layout Editor and should not be changed.</p>
+          <p><strong>User Name</strong> - The User Name of the Block. The User Name of a Block
+          created here may be set to any text. The User Name for a Block created by Layout Editor
+          is set by Layout Editor and should not be changed.</p>
         </li>
 
         <li>
-          <p><b>Value</b> - This is the string value of whatever
-          object the Block is carrying. Usually, this will either
-          be a message or a Throttle object. If you modify this,
-          it's stored in the Block as a string. There is currently
-          no way to manually add a Throttle object to a Block from
-          the table. <a href=
-          "../../../../html/tools/tracker/index.shtml">More
-          information on Block tracking</a></p>
+          <p><strong>Value</strong> - This is the string value of whatever object the Block is
+          carrying. Usually, this will either be a message or a Throttle object. If you modify
+          this, it's stored in the Block as a string. There is currently no way to manually add a
+          Throttle object to a Block from the table. <a href=
+          "../../../../html/tools/tracker/index.shtml">More information on Block tracking</a></p>
         </li>
 
         <li>
-          <p><b>Comment</b> - You may enter any text in this field
-          that will help you distinguish this Block from other
-          Blocks, or provide useful notes about its use.</p>
+          <p><strong>Comment</strong> - You may enter any text in this field that will help you
+          distinguish this Block from other Blocks, or provide useful notes about its use.</p>
         </li>
 
         <li>
-          <p><b>Delete</b> - Click the <b>Delete</b> button in any
-          row to delete the Block in that row from the list of
-          Blocks in the program. You must save your configuration
-          (and any Panels present) to disk to make the deletion
-          permanent. Deletion can not be undone. <b>Caution: Make
-          sure you remove all references to a Block before deleting
-          it. JMRI will show a warning if you haven't done so.</b>
-          Blocks are referenced in the Paths of other Blocks, in
-          some scripts, and in Layout Editor Panels.</p>
+          <p><strong>Delete</strong> - Click the <strong>Delete</strong> button in any row to
+          delete the Block in that row from the list of Blocks in the program. You must save your
+          configuration (and any Panels present) to disk to make the deletion permanent. Deletion
+          can not be undone. <strong>Caution: Make sure you remove all references to a Block before
+          deleting it. JMRI will show a warning if you haven't done so.</strong> Blocks are
+          referenced in the Paths of other Blocks, in some scripts, and in Layout Editor
+          Panels.</p>
         </li>
       </ul>
-<!--        <li>
+      <!--        <li>
           <p><b>Direction</b> - The current direction stored in the
           Block.</p>
         </li>
@@ -135,11 +119,11 @@
           <p><b>State</b> Shows the current state of the block,</p>
           <ul>
           <li>Occupied</li>
-          <li>UnOccupied</li>          
-          <li>Unknown</li>          
-          <li>Inconsistent</li>          
+          <li>UnOccupied</li>
+          <li>Unknown</li>
+          <li>Inconsistent</li>
           </ul>
-          <p>Choose between textual and graphic display in the 
+          <p>Choose between textual and graphic display in the
           <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
           </p>
         </li>
@@ -200,7 +184,7 @@
         </li>
 
         <li>
-          <p><a name="BlockSpeed" id="BlockSpeed"></a><b>Block
+          <p><a id="BlockSpeed"></a><b>Block
           Speed</b> The Block Speed is used with certain automation
           tools and logic, to help determine the speed at which a
           train can be set through the Block. It is also used by
@@ -226,41 +210,39 @@
       <dl>
         <dt>Add OBlock...</dt>
 
-        <dd>Push this button to <a href="BlockAddEdit.shtml">create
-          a new OBlock</a>.</dd>
+        <dd>
+          Push this button to <a href="BlockAddEdit.shtml">create a new OBlock</a>.
+        </dd>
 
         <dt>Block Length Units</dt>
 
-        <dd>Choose between showing the Block Length (measured in real world
-        units on the layout) in either inches or centimeters.<br>
+        <dd>Choose between showing the Block Length (measured in real world units on the layout) in
+        either inches or centimeters.<br>
         Existing values will be converted.</dd>
       </dl>
 
-      <a name="addBlock" id="addBlock"></a>
-      <h2>Adding a new OBlock</h2>
+      <h2 id="addBlock">Adding a new OBlock</h2>
 
-      <p>To add a new OBlock, see <a href=
-      "BlockAddEdit.shtml">Adding Blocks</a>.</p>
+      <p>To add a new OBlock, see <a href="BlockAddEdit.shtml">Adding Blocks</a>.</p>
 
       <h2>Editing an existing OBlock</h2>
 
-      <p>To check or change the properties of a Block, click the
-      <strong><a href="BlockEdit.shtml">Edit</a></strong> button to
-      the right of a Block entry in the OBlock Table, see <a href=
-      "BlockEdit.shtml">Edit Block</a>.</p>
+      <p>To check or change the properties of a Block, click the <strong><a href=
+      "BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the OBlock Table,
+      see <a href="BlockEdit.shtml">Edit Block</a>.</p>
 
-      <p><a href="../../../../html/tools/tracker/index.shtml">More
-      on Block Tracking</a></p>
+      <p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a>
+      </p>
 
-      <p><a href="../display/ControlPanelEditor.shtml">Using OBlocks with
-      Control Panel Editor</a></p>
+      <p><a href="../display/ControlPanelEditor.shtml">Using OBlocks with Control Panel Editor</a>
+      </p>
 
-      <p>Back to the <a href=
-      "../../../../html/tools/Blocks.shtml">Blocks Help
-      page</a></p>
+      <p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

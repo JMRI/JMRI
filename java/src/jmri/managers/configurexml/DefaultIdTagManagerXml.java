@@ -28,7 +28,7 @@ import jmri.util.FileUtil;
  */
 public class DefaultIdTagManagerXml extends XmlFile {
 
-    private IdTagManager manager;
+    private final IdTagManager manager;
 
     public DefaultIdTagManagerXml(IdTagManager tagMan, String baseFileName){
          manager = tagMan;

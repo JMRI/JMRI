@@ -1,132 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Structure of External System Connections</title>
   <meta name="author" content="Bob Jacoben">
-  <meta name="keywords" content="JMRI technical system add">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI technical system add"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI Code: Structure of External System Connections</h1>
 
-      <p>This page is about how JMRI connects to external systems, e.g.
-      DCC systems.
+      <p>This page is about how JMRI connects to external systems, e.g. DCC systems.</p>
 
-      <p>There's a lot of variation within JMRI on this, so
-      you'll have to go through any specific implementation.
-      Specifically, older systems weren't always arranged this way, so
-      existing code may not be a good example.</p>
+      <p>There's a lot of variation within JMRI on this, so you'll have to go through any specific
+      implementation. Specifically, older systems weren't always arranged this way, so existing
+      code may not be a good example.</p>
+      <!-- =================================================== -->
 
-<!-- =================================================== -->
-
-              <p>See also the <a href=
-              "MultiConnectionUpdate.shtml">Multiple Connection Update</a>
-              page.</p>
-
-<!-- =================================================== -->
+      <p>See also the <a href="MultiConnectionUpdate.shtml">Multiple Connection Update</a>
+      page.</p>
+      <!-- =================================================== -->
 
       <h2>Code Structure</h2>
-
-      <a href="images/JmrixPackageStructure.png">
-      <img src="images/JmrixPackageStructure.png" align="right" height="50%" width="50%" /></a>
-      The code for a general type, like "LocoNet connections"
-      or "NCE connections", should be gathered in a specific
-      package right under
-      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/package-summary.html">jmri.jmrix</a></code>
-      e.g.
-      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">jmri.jmrix.loconet</a></code>
-      and
-      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/nce/package-summary.html">jmri.jmrix.nce</a></code>.
+      <a href="images/JmrixPackageStructure.png"><img src="images/JmrixPackageStructure.png" class=
+      "floatRight" height="50%" width="50%" alt="jmrix package structure"></a> The code for a
+      general type, like "LocoNet connections" or "NCE connections", should be gathered in a
+      specific package right under <code><a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/package-summary.html">jmri.jmrix</a></code> e.g.
+      <code><a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">jmri.jmrix.loconet</a></code>
+      and <code><a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/nce/package-summary.html">jmri.jmrix.nce</a></code>.
       In the preferences dialog and <code>JmrixConfigPane</code> main configuration code, this
-      level is called the "manufacturer selection".
-      It provides a level of grouping, which we may someday want to use for
-      e.g. providing separate updates for specific hardware, while still
+      level is called the "manufacturer selection". It provides a level of grouping, which we may
+      someday want to use for e.g. providing separate updates for specific hardware, while still
       separating the system-specific code from the system-independent parts of JMRI.
+      <p>Within that, the code should be separated further by putting specific hardware options
+      into their own subpackages, for example</p>
 
-      <p>
-      Within that, the code should be separated further by putting
-      specific hardware options into their own subpackages, for example
       <ul>
-      <li><code>jmri.jmrix.loconet.locobuffer</code> vs
-        <code>jmri.jmrix.loconet.locobufferusb</code> vs.
-        <code>jmri.jmrix.loconet.pr3</code> vs.
-        <code>jmri.jmrix.loconet.locormi</code>
-      <li><code>jmri.jmrix.nce.serialdriver</code> vs. <code>jmri.jmrix.nce.usbdriver</code>
-        vs. <code>jmri.jmrix.nce.simulator</code> vs. <code>jmri.jmrix.nce.networkdriver</code>
+        <li><code>jmri.jmrix.loconet.locobuffer</code> vs
+        <code>jmri.jmrix.loconet.locobufferusb</code> vs. <code>jmri.jmrix.loconet.pr3</code> vs.
+        <code>jmri.jmrix.loconet.locormi</code></li>
+
+        <li><code>jmri.jmrix.nce.serialdriver</code> vs. <code>jmri.jmrix.nce.usbdriver</code> vs.
+        <code>jmri.jmrix.nce.simulator</code> vs. <code>jmri.jmrix.nce.networkdriver</code></li>
       </ul>
       In the preferences, this is called the "connection mode" selection.
-      <p>
-      Additional subpackages can be used grouping various functions as needed.
-      For example, <a href="Swing.shtml">Swing-based tools</a> should go in their own
-        <a href="Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.
+      <p>Additional subpackages can be used grouping various functions as needed. For example,
+      <a href="Swing.shtml">Swing-based tools</a> should go in their own <a href=
+      "Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.</p>
 
       <h2>Normal Operation</h2>
-
-      The key to normal operation (after start up and before shut down)
-      is a
-      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a></code>
-      object that provides all necessary access to the system connection's objects.
-      For example, the
-      <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">LocoNetSystemConnectionMemo</a></code>
-      provides access to a number of LocoNet-specific objects and LocoNet-specific implementations of common objects.
-      Although some of those (e.g. a SensorManager) might be separately
-      available from the InstanceManager, accessing them from a SystemConnectionMemo
-      allows you to find the consistent set associated with one specific connection
-      of a multiple-connection setup, even when there are multiple connections of a specific type.
-      There are also a few tools that work with the
-      <code>SystemConnectionManager</code> objects themselves after
+      The key to normal operation (after start up and before shut down) is a <code><a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a></code>
+      object that provides all necessary access to the system connection's objects. For example,
+      the <code><a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetSystemConnectionMemo.html">LocoNetSystemConnectionMemo</a></code>
+      provides access to a number of LocoNet-specific objects and LocoNet-specific implementations
+      of common objects. Although some of those (e.g. a SensorManager) might be separately
+      available from the InstanceManager, accessing them from a SystemConnectionMemo allows you to
+      find the consistent set associated with one specific connection of a multiple-connection
+      setup, even when there are multiple connections of a specific type. There are also a few
+      tools that work with the <code>SystemConnectionManager</code> objects themselves after
       obtaining them from the <code>InstanceManager</code>.
-
-
       <h2>Initialization</h2>
-
-      We don't directly persist the SystemConnectionMemo.
-      This is partly for historical reasons, but it also reflects the level of
-      abstraction:  A SystemConnectionMemo is at the level of a "LocoNet connection"
-      or a "NCE connection", and there's a lot of specific information below it to
-      configure one of many possible such connections.
-
-      <p>
-      Instead, configuration of the connection is from the bottom up:  From the most
-      specific code up to the general. The "Adapter" object connects directly
-      to the system, e.g. managing a serial link, and then builds up the 
-      objects that work with that link, including all the various type managers.
-      This makes sense because the type of the connection is really specified
-      via the type of that link and what's on the other end of it.
+      We don't directly persist the SystemConnectionMemo. This is partly for historical reasons,
+      but it also reflects the level of abstraction: A SystemConnectionMemo is at the level of a
+      "LocoNet connection" or a "NCE connection", and there's a lot of specific information below
+      it to configure one of many possible such connections.
+      <p>Instead, configuration of the connection is from the bottom up: From the most specific
+      code up to the general. The "Adapter" object connects directly to the system, e.g. managing a
+      serial link, and then builds up the objects that work with that link, including all the
+      various type managers. This makes sense because the type of the connection is really
+      specified via the type of that link and what's on the other end of it.</p>
 
       <h3>"Simple" Initialization Sequence</h3>
+      This section describes the LocoNet implementation of the new (post-multiple) configuration
+      system. This is similar for LocoBuffer, LocoBuffer-USB, PR3, etc connections, but we use the
+      specific LocoBuffer-USB case for concreteness. This sequence picks up after the basic startup
+      of the application itself, see the <a href="AppStructure.shtml">App Structure page</a> for
+      that.
+      <p>There are several objects involved in startup:</p>
 
-      This section describes the
-      LocoNet implementation of the new (post-multiple) configuration
-      system.
-      This is similar for LocoBuffer, LocoBuffer-USB, PR3, etc connections, but
-      we use the specific LocoBuffer-USB case for concreteness.
-      This sequence picks up after the basic startup of the
-      application itself, see the
-      <a href="AppStructure.shtml">App Structure page</a> for that.
+      <ul>
+        <li>A <code>ConnectionConfigXml</code> object, created by the <a href=
+        "XmlPersistance.shtml">ConfigureXML system</a> as part of reading the preferences. It
+        drives the process.
+        </li>
 
+        <li>A <code>ConnectionConfig</code> object, registered so that a later store of the
+        preferences will write out the right stuff</li>
 
-     <p>
-      There are several objects involved in startup:
-        <ul>
-            <li>A <code>ConnectionConfigXml</code> object,
-                created by the <a href="XmlPersistance.shtml">ConfigureXML system</a> as part of reading the preferences.
-                It drives the process.
-            <li>A <code>ConnectionConfig</code> object, registered so that a later store of the preferences will write out the right stuff
-            <li>An <code>Adapter</code> object of a very specific type, which handles both the connection to the system hardware, and
-                (through its <code>configure()</code> method) the creation of the rest of the system.
-        </ul>
+        <li>An <code>Adapter</code> object of a very specific type, which handles both the
+        connection to the system hardware, and (through its <code>configure()</code> method) the
+        creation of the rest of the system.</li>
+      </ul>
 
-      <p>
-      The profile XML file contains a connection element
-      that drives the configuration:
+      <p>The profile XML file contains a connection element that drives the configuration:</p>
+
       <pre>
         &lt;connection xmlns="" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml"
                                 disabled="no" manufacturer="Digitrax" port="/dev/tty.usbserial-LWPMMU13"
@@ -142,72 +119,81 @@
                 &lt;/option&gt;
             &lt;/options&gt;
         &lt;/connection&gt;
-      </pre>
-
-      <a href="images/LocoNetConnectionStartSequence.png"><img src="images/LocoNetConnectionStartSequence.png" align="right" height="40%" width="40%" /></a>
-      Initialization proceeds through multiple steps (click on the diagram to expand it):
+      </pre><a href="images/LocoNetConnectionStartSequence.png"><img src=
+"images/LocoNetConnectionStartSequence.png" class="floatRight" height="40%" width="40%" alt=
+"start sequence"></a> Initialization proceeds through multiple steps (click on the diagram to
+expand it):
       <ul>
         <li>An object of type
-        <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code>
-        is constructed by the configurexml mechanism when the specific
-        class is named by the file during the
-        <a href="AppStructure.shtml#load">initial preference load</a>
-        at application startup.</li>
+        <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code> is
+        constructed by the configurexml mechanism when the specific class is named by the file
+        during the <a href="AppStructure.shtml#load">initial preference load</a> at application
+        startup.
+        </li>
 
-        <li>The ConnectionConfigXml object is a child of the
-        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
-        class, which is in turn a child of the
-        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractConnectionConfigXml</a> class.
+        <li>The ConnectionConfigXml object is a child of the <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">
+          jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a> class, which is in turn a
+          child of the <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractConnectionConfigXml</a>
+          class.
+        </li>
 
-        <li>After it's constructed, the ConnectionConfigManager calls
-        <code>load(..)</code> on the ConnectionConfigXml object.
-        This is implemented in
-        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a>
-        which does:
-            <ul>
-            <li>Invoke <code>getInstance()</code> which initializes an <code>adapter</code>
-                member implementing
-                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html">SerialPortAdapter</a></code>.
-                In this case,
-                <code>getInstance()</code> is implemented in
-                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/configurexml/ConnectionConfigXml.html#getInstance--">jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</a></code>
-                and assigns a
-                <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/LocoBufferUsbAdapter.html">jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter</a></code>
-                to the "adapter" member of "ConnectionConfigXml"  That's used later on to configure the port, etc.
+        <li>After it's constructed, the ConnectionConfigManager calls <code>load(..)</code> on the
+        ConnectionConfigXml object. This is implemented in <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/configurexml/AbstractSerialConnectionConfigXml.html">
+          jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml</a> which does:
+          <ul>
+            <li>Invoke <code>getInstance()</code> which initializes an <code>adapter</code> member
+            implementing <code><a href=
+            "https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html">SerialPortAdapter</a></code>.
+            In this case, <code>getInstance()</code> is implemented in <code><a href=
+            "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/configurexml/ConnectionConfigXml.html#getInstance--">
+            jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</a></code> and
+            assigns a <code><a href=
+            "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/LocoBufferUsbAdapter.html">
+            jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter</a></code> to the "adapter"
+            member of "ConnectionConfigXml" That's used later on to configure the port, etc.</li>
 
-            <li>Some load of serial port information, e.g. port name
-                and speed values, followed by calling
-                <code>loadCommon(shared, perNode, adapter)</code> from the base class,
-                which brings in common information:
-                <ul>
-                <li>Values for four generic options: "option1" through "option4".
-                    The port adapters then convert this to specific, connection-specific
-                    options as needed later on
-                <li>Calls <code>loadOptions(perNode.getChild("options"), perNode.getChild("options"), adapter)</code>
-                    to do any additional handling of info coded in an
-                    <code>&lt;options&gt;</code> element.
-                    Although overridden in some cases, the default for this is to
-                    invoke <code>adapter.setOptionState(name, value)</code>
-                    In this LocoNet case, that stores the command station name, see the element above.
+            <li>Some load of serial port information, e.g. port name and speed values, followed by
+            calling <code>loadCommon(shared, perNode, adapter)</code> from the base class, which
+            brings in common information:
+              <ul>
+                <li>Values for four generic options: "option1" through "option4". The port adapters
+                then convert this to specific, connection-specific options as needed later on</li>
 
-                <li>Sets a "manufacturer" attribute/name in the TrafficController
-                <li>Sets the system prefix and user name in the SystemConnectionMemo
-                <li>Sets the adapter disabled or non-disabled
-                </ul>
+                <li>Calls <code>loadOptions(perNode.getChild("options"),
+                perNode.getChild("options"), adapter)</code> to do any additional handling of info
+                coded in an <code>&lt;options&gt;</code> element. Although overridden in some
+                cases, the default for this is to invoke <code>adapter.setOptionState(name,
+                value)</code> In this LocoNet case, that stores the command station name, see the
+                element above.</li>
 
-            <li><code>register()</code>, which is implemented in <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code>
-                by invoking <code>this.register(new ConnectionConfig(adapter))</code>, which in turn is implemented
-                in <code>jmri.jmrix.configurexml.AbstractConnectionConfigXml</code> as
-                <pre>
+                <li>Sets a "manufacturer" attribute/name in the TrafficController</li>
+
+                <li>Sets the system prefix and user name in the SystemConnectionMemo</li>
+
+                <li>Sets the adapter disabled or non-disabled</li>
+              </ul>
+            </li>
+
+            <li>
+              <code>register()</code>, which is implemented in
+              <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code> by
+              invoking <code>this.register(new ConnectionConfig(adapter))</code>, which in turn is
+              implemented in <code>jmri.jmrix.configurexml.AbstractConnectionConfigXml</code> as
+
+              <pre>
         protected void register(ConnectionConfig c) {
             c.register();
         }
-                </pre>
-                The <code>ConnectionConfig c</code> here is of type <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code>
-                which extends <code>jmri.jmrix.AbstractSerialConnectionConfig</code>
-                which extends <code>jmri.jmrix.AbstractConnectionConfig</code>.
-                In <code>AbstractConnectionConfig</code>, finally, <code>register()</code> does:
-                <pre>
+                </pre>The <code>ConnectionConfig c</code> here is of type
+<code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> which extends
+<code>jmri.jmrix.AbstractSerialConnectionConfig</code> which extends
+<code>jmri.jmrix.AbstractConnectionConfig</code>. In <code>AbstractConnectionConfig</code>,
+finally, <code>register()</code> does:
+
+              <pre>
         this.setInstance();
         InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(this);
         ConnectionConfigManager ccm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
@@ -215,26 +201,31 @@
             ccm.add(this);
         }
                 </pre>
-             <p>That <code>this.setInstance()</code> call is implemented in <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code>
-                to set the "adapter" member there to a new <code>LocoBufferUsbAdapter</code> object. Note that this "adapter" is
-                from the ConnectionConfig (specifically AbstractConnectionConfig) object, not the ConnectionConfigXml object referred to above.
-                In the sequence we're showing here, the <code>LocoBufferUsbAdapter</code> object had already been created by
-                getInstance in <code>ConnectionConfigXml</code>, and passed to the <code>ConnectionConfig</code> object when it's
-                created inside the <code>register()</code> sequence.
+              <p>That <code>this.setInstance()</code> call is implemented in
+              <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> to set the "adapter"
+              member there to a new <code>LocoBufferUsbAdapter</code> object. Note that this
+              "adapter" is from the ConnectionConfig (specifically AbstractConnectionConfig)
+              object, not the ConnectionConfigXml object referred to above. In the sequence we're
+              showing here, the <code>LocoBufferUsbAdapter</code> object had already been created
+              by getInstance in <code>ConnectionConfigXml</code>, and passed to the
+              <code>ConnectionConfig</code> object when it's created inside the
+              <code>register()</code> sequence.</p>
 
-             <p>At this point, we have a <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code>
-                object registered for persistence, so it can be written out later.</p>
+              <p>At this point, we have a
+              <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> object registered for
+              persistence, so it can be written out later.</p>
+            </li>
 
             <li>Initialize the actual port using <code>adapter.openPort(portName, "JMRI")</code>.
-                This uses code specific to the
-                <code>adapter</code> member that was initialized in <code>getInstance()</code>,
-                i.e. in thise case LocoBuffer-USB code.
+            This uses code specific to the <code>adapter</code> member that was initialized in
+            <code>getInstance()</code>, i.e. in thise case LocoBuffer-USB code.</li>
 
             <li>Finally, with the port open and available from the <code>adapter</code> object,
-                initialize the operation of the system by calling <code>adapter.configure()</code> method.
-                That Adapter configure() method does (through the general
-                LocoBufferAdapter superclass) (this is given as a sample, ignore the details):
-        <pre>
+            initialize the operation of the system by calling <code>adapter.configure()</code>
+            method. That Adapter configure() method does (through the general LocoBufferAdapter
+            superclass) (this is given as a sample, ignore the details):
+
+              <pre>
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
@@ -250,112 +241,108 @@
         // start operation
         packets.startThreads();
         </pre>
-                <ol>
-                <li>The first group does some internal housekeeping and
-                    creates the object(s) that run the connection
-                <li>The second group loads the previously-created
-                    SystemConnectionMeno with information
-                    about the connection.
-                    <p>
-                    The <code>getSystemConnectionMemo</code> is in the common
-                    <code>LocoBufferAdapter</code> superclass. (There's some
-                    code in the inheritance chain that does some casting
-                    that should someday be cleaned up)
+              <ol>
+                <li>The first group does some internal housekeeping and creates the object(s) that
+                run the connection</li>
 
-                <li>The third group starts up operation
-
-           <p>At this point, the system is basically up and
-                      ready for operation.</p>
-
-
-                    <li>Finally, a
-                    jmri.jmrix.loconet.LocoNetSystemConnectionMemo object
-                    is created and registered with the
-                    InstanceManager.</li>
-                  </ol>
+                <li>The second group loads the previously-created SystemConnectionMeno with
+                information about the connection.
+                  <p>The <code>getSystemConnectionMemo</code> is in the common
+                  <code>LocoBufferAdapter</code> superclass. (There's some code in the inheritance
+                  chain that does some casting that should someday be cleaned up)</p>
                 </li>
 
-            </ul>
-        <li>Later, jmri.jmrix.ActiveSystemsMenu and/or
-        jmri.jmrix.SystemsMenu will create the main menu bar
-        menus for the individual systems:
-            <ul>
-            <li>Ask the InstanceManager for all the ComponentFactory
-                instances. These were created, in most cases,
-                in the constructor of the SystemConnectionMemo,
-                and live in the .swing subproject (e.g.
-                loconet.swing.LnComponentFactory )
-            <li>For each of those, ask it for the menu object (e.g. LocoNetMenu)
-                and post that to the GUI.
-            <li>In the process of creating the menu, the ComponentFactory
-                connects each Action to itself so that the
-                individual tools will be able to connect to the proper e.g.
-                TrafficController, SlotMonitor, etc.</li>
+                <li>The third group starts up operation
+                  <p>At this point, the system is basically up and ready for operation.</p>
+                </li>
 
-            <li>When an Action is fired later on, the invoked class(es)
-                enquire of the LocoNetSystemConnectionMemo when they need a
-                resource, instead of referring to an instance() method in
-                the resource's class.</li>
-            </ul>
+                <li>Finally, a jmri.jmrix.loconet.LocoNetSystemConnectionMemo object is created and
+                registered with the InstanceManager.</li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+
+        <li>Later, jmri.jmrix.ActiveSystemsMenu and/or jmri.jmrix.SystemsMenu will create the main
+        menu bar menus for the individual systems:
+          <ul>
+            <li>Ask the InstanceManager for all the ComponentFactory instances. These were created,
+            in most cases, in the constructor of the SystemConnectionMemo, and live in the .swing
+            subproject (e.g. loconet.swing.LnComponentFactory )</li>
+
+            <li>For each of those, ask it for the menu object (e.g. LocoNetMenu) and post that to
+            the GUI.</li>
+
+            <li>In the process of creating the menu, the ComponentFactory connects each Action to
+            itself so that the individual tools will be able to connect to the proper e.g.
+            TrafficController, SlotMonitor, etc.</li>
+
+            <li>When an Action is fired later on, the invoked class(es) enquire of the
+            LocoNetSystemConnectionMemo when they need a resource, instead of referring to an
+            instance() method in the resource's class.</li>
+          </ul>
+        </li>
       </ul>
 
-    <h4>Lessons</h4> <!-- Should this part move up? -->
+      <h4>Lessons</h4>
+      <!-- Should this part move up? -->
+      Should this part move up?
+      <ul>
+        <li>It's important that managers only be created once. More specifically, the managers and
+        the SystemConnectionMemo should only be registered in the InstanceManager once. If they're
+        registered more times than that, they appear as duplicates in various auto-constructed
+        lists, menus and tab sets. <a href="images/JmrixLocoNetClassDiagram.png"><img src=
+        "images/JmrixLocoNetClassDiagram.png" class="floatRight" alt=
+        "Class Diagram with diamond shape" height="25%" width="25%"></a>
+        </li>
 
-    Should this part move up?
+        <li>Much work is done in the PortAdapter subclasses. From a common <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
+        interface, JMRI has two different forms for those: <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html"><code>jmrix.SerialPortAdapter</code></a>
+        (Serial/USB connections) and <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrix/NetworkPortAdapter.html"><code>jmrix.NetworkPortAdapter</code></a>
+        (network connections).
+          <p>Abstract base classes implement those as <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortController</code></a>
+          (Serial/USB connections) and <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a>
+          (network connections) (most, but not all, systems use one of those) with a common base of
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a>.</p>
 
-    <ul>
-    <li>It's important that managers only be created once. More specifically,
-    the managers and the SystemConnectionMemo should only be registered in the
-    InstanceManager once.  If they're registered more times than that, they
-    appear as duplicates in various auto-constructed lists, menus and tab sets.
+          <p>These in turn are inherited into the system-specific classes, e.g <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
+          and <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnNetworkPortController.html"><code>loconet.LnNetworkPortController</code></a>
+          respectively (see UML diagrams on those linked Javadoc pages).</p>
 
-    <a href="images/JmrixLocoNetClassDiagram.png"><img src="images/JmrixLocoNetClassDiagram.png" align="right"
-    alt="Class Diagram with diamond shape" height="25%" width="25%"></a></li>
-    <li>Much work is done in the PortAdapter subclasses.  From a common
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
-    interface, JMRI has two different
-    forms for those:
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html"><code>jmrix.SerialPortAdapter</code></a> (Serial/USB connections)
-    and
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/NetworkPortAdapter.html"><code>jmrix.NetworkPortAdapter</code></a> (network connections).
-    <p>
+          <p>Because Java doesn't allow multiple inheritance, the system-specific descendants of
+          the two abstract base classes can't actually share a single common system-specific base
+          class. This results in some code duplication in e.g. serial/USB connections vs the
+          network connection classes in the system-specific classes.</p>
 
+          <ul>
+            <li>The terminology switch from "PortAdapter" to "PortController" is confusing. In many
+            cases, it's
 
-    Abstract base classes implement those as
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortController</code></a> (Serial/USB connections)
-    and
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections)
-    (most, but not all, systems use one of those) with a common base of
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a>.
+              <pre>
+            Abstract*PortAdapter &lt;- Sys*PortController &lt;- Sys*PortAdapter
+        </pre>as you work down the abstraction. This should eventually be fixed.
+            </li>
 
-    <p>These in turn are inherited into the system-specific classes, e.g
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
-    and
-    <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnNetworkPortController.html"><code>loconet.LnNetworkPortController</code></a>
-    respectively (see UML diagrams on those linked Javadoc pages).
-    <p>
-    Because Java doesn't allow multiple inheritance, the system-specific descendants of the two abstract base classes can't
-    actually share a single common system-specific base class.  This results in some code duplication in
-    e.g. serial/USB connections vs the network connection classes in the system-specific classes.
-    <ul>
-      <li>
-        The terminology switch from "PortAdapter" to "PortController" is confusing. In many cases, it's
-        <pre>
-            Abstract*PortAdapter <- Sys*PortController <- Sys*PortAdapter
-        </pre>
-        as you work down the abstraction.  This should eventually be fixed.</li>
-      <li>
-        How does jmrix.AbstractStreamPortController fit into the <code>PortAdapter</code>
-        class hierarchy? (there is no *StreamPortController as defined in its header;
-                it extends AbstractPortController)</li>
-    </ul>
-    </li>
-    </ul>
+            <li>How does jmrix.AbstractStreamPortController fit into the <code>PortAdapter</code>
+            class hierarchy? (there is no *StreamPortController as defined in its header; it
+            extends AbstractPortController)</li>
+          </ul>
+        </li>
+      </ul>
 
-    <h3>More Complex Initialization: C/MRI</h3>
-    For a more complex example, consider C/MRI, which has more content
-    in it's <code>&lt;connection&gt;</code>element:
-<pre>
+      <h3>More Complex Initialization: C/MRI</h3>
+      For a more complex example, consider C/MRI, which has more content in it's
+      <code>&lt;connection&gt;</code>element:
+
+      <pre>
   &lt;connection userName="C/MRI" systemPrefix="C" manufacturer="C/MRI"
                     disabled="no" port="(none selected)" speed="9,600 baud"
                     class="jmri.jmrix.cmri.serial.sim.configurexml.ConnectionConfigXml"&gt;
@@ -397,15 +384,21 @@
       &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
     &lt;/node&gt;
   &lt;/connection&gt;
-</pre>
+</pre>How this gets read in.
+      <p>Implications for internal structure.</p>
 
-      How this gets read in.
-      <p>
-      Implications for internal structure.
-      <p>
-      Proper internal structure
+      <p>Proper internal structure</p>
 
       <h2>Configuration Process</h2>
+      See <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane
+      Javadoc</a> for links to configuration elements. (Is there another place that the
+      configuration process and preferences support is described? If so, it should be linked from
+      here.)
+      <p>Any particular system connection is included in the preferences by being listed in the
+      <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is
+      normally generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code>
+      class-level annotations.</p>
 
       See <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
       for links to configuration elements.
@@ -413,8 +406,9 @@
       be linked from here.)
       <p>
       Any particular system connection is included in the preferences by
-      being listed in the <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
+      being listed in the <code>target/classes/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
       generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code> class-level annotations.
+
       <pre>
 # Providers of System Connections type lists in Preferences
 # Order is Insignificant
@@ -423,81 +417,86 @@ jmri.jmrix.lenz.LenzConnectionTypeList
 ...
 jmri.jmrix.loconet.LnConnectionTypeList
 ...
-      </pre>
-      This provides the contents for the 1st-level selection in the top JComboBox, e.g.
-      in this case "Digitrax". This (generally) corresponds to selecting a system
-      package within the JMRI package that might contain multiple varients of a specific connection.
-      Within <code>JmrixConfigPane</code> this is called the "manufacturer" selection.
-      <p>
-      The contents of the
-      <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java"><code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of
-      <A href="https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
-          .ConnectionTypeList</code></a>
-      then provides the contents for the second-level JComboBox of specific connection
-      types, each corresponding (generally) to a specific
+      </pre>This provides the contents for the 1st-level selection in the top JComboBox, e.g. in
+this case "Digitrax". This (generally) corresponds to selecting a system package within the JMRI
+package that might contain multiple varients of a specific connection. Within
+<code>JmrixConfigPane</code> this is called the "manufacturer" selection.
+      <p>The contents of the <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java">
+      <code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
+      .ConnectionTypeList</code></a> then provides the contents for the second-level JComboBox of
+      specific connection types, each corresponding (generally) to a specific
       <code>ConnectionConfig</code> implementation that can configure a specific connection type.
-      Within <code>JmrixConfigPane</code> this is called the "mode" selection.
-
+      Within <code>JmrixConfigPane</code> this is called the "mode" selection.</p>
 
       <h3>Creating from scratch</h3>
-      <a href="images/ConfigureLocoNetConnectionFromNone.png"><img src="images/ConfigureLocoNetConnectionFromNone.png" align="right" height="40%" width="40%" /></a>
+      <a href="images/ConfigureLocoNetConnectionFromNone.png"><img src=
+      "images/ConfigureLocoNetConnectionFromNone.png" class="floatRight" height="40%" width="40%"
+      alt="configure loconet"></a> Note this starts off by creating a ConnectionConfig, which
+      creates a PortAdapter, similar to the read-from-XML version. But we don't want a running
+      connection: We want one that we can work with to set/store configuration information. So,
+      although we "register()", we do not "configure()".
+      <p>Filling the <code>details</code> JPanel is done within the <code>ConnectionConfig</code>
+      object via a call to <code>loadDetails()</code>. In many cases, including this LocoNet
+      example, that's referred up to a base class:</p>
 
-      Note this starts off by creating a ConnectionConfig, which creates a PortAdapter, similar to the
-      read-from-XML version.
-      But we don't want a running connection: We want one that we can
-      work with to set/store configuration information. So, although we "register()",
-      we do not "configure()".
-
-      <p>
-      Filling the <code>details</code> JPanel is done within the
-      <code>ConnectionConfig</code> object via a call to
-      <code>loadDetails()</code>.  In many cases, including
-      this LocoNet example, that's referred up to a
-      base class:
       <ul>
-      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSerialConnectionConfig.java"><code>AbstractSerialConnectionConfig</code></a>
-            handles connections through serial links that need specification of serial port name, baud rate, etc.
-      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractNetworkConnectionConfig.java"><code>AbstractNetworkConnectionConfig</code></a>
-            handles connections through network (TCP) connections that need specification of network address, port, etc.
-      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractStreamConnectionConfig.java"><code>AbstractStreamConnectionConfig</code></a>
-            handles configuration of connections based on streams.
-      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSimulatorConnectionConfig.java"><code>AbstractSimulatorConnectionConfig</code></a>
-            handles configuration of simulated connections.
-      </ul>
+        <li>
+          <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSerialConnectionConfig.java">
+          <code>AbstractSerialConnectionConfig</code></a> handles connections through serial links
+          that need specification of serial port name, baud rate, etc.
+        </li>
 
+        <li>
+          <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractNetworkConnectionConfig.java">
+          <code>AbstractNetworkConnectionConfig</code></a> handles connections through network
+          (TCP) connections that need specification of network address, port, etc.
+        </li>
+
+        <li>
+          <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractStreamConnectionConfig.java">
+          <code>AbstractStreamConnectionConfig</code></a> handles configuration of connections
+          based on streams.
+        </li>
+
+        <li>
+          <a href=
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSimulatorConnectionConfig.java">
+          <code>AbstractSimulatorConnectionConfig</code></a> handles configuration of simulated
+          connections.
+        </li>
+      </ul>
 
       <h3>Storing</h3>
 
       <h3>Changing Options</h3>
-
-      The Swing panel that shows the main options (e.g. option1 through option4)
-      sets changes to those values directly into the ConnectionConfig/PortAdapter
-      without asking them to act further via e.g. configure().
-
+      The Swing panel that shows the main options (e.g. option1 through option4) sets changes to
+      those values directly into the ConnectionConfig/PortAdapter without asking them to act
+      further via e.g. configure().
       <h3>Updating a Connection Mode</h3>
-
-      Changing the mode JComboBox in <code>JmrixConfigPane</code>
-      first clears the existing contents of the <code>details</code>
-      JPanel with <code>removeAll()</code>,
-      then calls the <code>JmrixConfigPane.selection()</code>
-      method to refill it.
-
+      Changing the mode JComboBox in <code>JmrixConfigPane</code> first clears the existing
+      contents of the <code>details</code> JPanel with <code>removeAll()</code>, then calls the
+      <code>JmrixConfigPane.selection()</code> method to refill it.
       <h3>Deleting a Connection</h3>
 
       <h2>Misc</h2>
-
-      This section is a grab-bag of other things you might want to know
-      about the system connection structure.
-
+      This section is a grab-bag of other things you might want to know about the system connection
+      structure.
       <ul>
-      <li>The <code><a href="http://www.jmri.org/JavaDoc/doc/jmri/swing/ConnectionLabel.html">jmri.swing.ConnectionLabel</a></code> class
-      is a Swing JLabel that listens to a single connection and displays its status.  We use those on the main
-      splash screen, but they can also be used in other places.</li>
+        <li>The <code><a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/swing/ConnectionLabel.html">jmri.swing.ConnectionLabel</a></code>
+        class is a Swing JLabel that listens to a single connection and displays its status. We use
+        those on the main splash screen, but they can also be used in other places.</li>
       </ul>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
