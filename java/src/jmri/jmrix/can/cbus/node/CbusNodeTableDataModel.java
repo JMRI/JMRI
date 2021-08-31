@@ -35,6 +35,8 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
     public CbusNodeTableDataModel(@Nonnull CanSystemConnectionMemo memo, int row, int column) {
         super(memo,row,column);
         log.debug("Starting MERG CBUS Node Table");
+        preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
+        
         _mainArray = new ArrayList<>();
         _nodesFound = new ArrayList<>();
 
@@ -46,8 +48,6 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
     }
     
     public void startup(){
-        
-        preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
         setBackgroundAllocateListener( preferences.getAllocateNNListener() );
         if ( preferences.getStartupSearchForCs() ) {

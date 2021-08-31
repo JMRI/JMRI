@@ -448,12 +448,15 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createType44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "Pi-SPROG 3"); // NOI18N
-        result.put(2, "SPROG 3 Plus/PI-SPROG 3 Plus/Pi-SPROG 3 v2"); // NOI18N
-        result.put(3, "CAN SPROG"); // NOI18N
-        result.put(4, "System Booster"); // NOI18N
-        result.put(5, "Error"); // NOI18N
-        result.put(6, "CAN ISB"); // NOI18N
+        result.put(1, "CANPiSPRG3"); // NOI18N
+        result.put(2, "CANSPROG3P"); // NOI18N
+        result.put(3, "CANSPROG"); // NOI18N
+        result.put(4, "SBOOST"); // NOI18N
+        result.put(5, "Unsupported"); // NOI18N
+        result.put(6, "CANISB"); // NOI18N
+        result.put(7, "CANCBUSIO"); // NOI18N
+        result.put(8, "CANSERVOIO"); // NOI18N
+        result.put(9, "CANSOLIO"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
@@ -603,12 +606,15 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createExtra44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "Programmer/Command Station.");
-        result.put(2, "Programmer/Command Station.");
-        result.put(3, "Programmer/Command Station.");
+        result.put(1, "Pi-SPROG 3 programmer/command station.");
+        result.put(2, "SPROG 3 Plus programmer/command station.");
+        result.put(3, "CAN SPROG programmer/command station.");
         result.put(4, "System booster");
-        result.put(5, "Unsupported module type.");
-        result.put(6, "Isolated CANUSB and CBUS node.");
+        result.put(5, "Unsuppoerted module type");
+        result.put(6, "CBUS I/O module.");
+        result.put(7, "Isolated USB to CAN interface with CBUS node.");
+        result.put(8, "8-channel servo I/O.");
+        result.put(9, "8-channel twin-coil solenoid I/O.");
         return Collections.unmodifiableMap(result);
     }   
 

@@ -3,7 +3,9 @@ package jmri.jmrix.can.cbus.node;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.util.StringUtil;
 import jmri.util.ThreadingUtil;
 
@@ -24,13 +26,14 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     
     // column order needs to match list in column tooltips
     static public final int NV_NUMBER_COLUMN = 0;
-    static public final int NV_CURRENT_VAL_COLUMN = 1;
-    static public final int NV_CURRENT_HEX_COLUMN = 2;
-    static public final int NV_CURRENT_BIT_COLUMN = 3;
-    static public final int NV_SELECT_COLUMN = 4;
-    static public final int NV_SELECT_HEX_COLUMN = 5;
-    static public final int NV_SELECT_BIT_COLUMN = 6;
-    static public final int MAX_COLUMN = 7;
+    static public final int NV_NAME_COLUMN = 1;
+    static public final int NV_CURRENT_VAL_COLUMN = 2;
+    static public final int NV_CURRENT_HEX_COLUMN = 3;
+    static public final int NV_CURRENT_BIT_COLUMN = 4;
+    static public final int NV_SELECT_COLUMN = 5;
+    static public final int NV_SELECT_HEX_COLUMN = 6;
+    static public final int NV_SELECT_BIT_COLUMN = 7;
+    static public final int MAX_COLUMN = 8;
 
     public CbusNodeNVTableDataModel(CanSystemConnectionMemo memo, int row, int column ) {
         log.debug("Starting MERG CBUS Node NV Table");
@@ -82,6 +85,8 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         switch (col) {
             case NV_NUMBER_COLUMN:
                 return ("NV");
+            case NV_NAME_COLUMN:
+                return ("Name");
             case NV_CURRENT_VAL_COLUMN:
                 return ("Dec.");
             case NV_CURRENT_HEX_COLUMN:
@@ -107,6 +112,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NV_SELECT_HEX_COLUMN:
+            case NV_NAME_COLUMN:
             case NV_SELECT_BIT_COLUMN:
             case NV_CURRENT_HEX_COLUMN:
             case NV_CURRENT_BIT_COLUMN:
@@ -149,6 +155,8 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         switch (col) {
             case NV_NUMBER_COLUMN:
                 return (row +1);
+            case NV_NAME_COLUMN:
+                return CbusConfigPaneProvider.getProviderByNode(nodeOfInterest).getNVNameByIndex(row);
             case NV_CURRENT_VAL_COLUMN:
                 return nodeOfInterest.getNodeNvManager().getNV(row+1);
             case NV_CURRENT_HEX_COLUMN:
@@ -259,6 +267,15 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
             fireTableDataChanged();
         });
         
+    }
+    
+    /**
+     * Get the Node being used in table.
+     * 
+     * @return the CbusNode of Interest
+     */
+    public CbusNode getNode() {
+        return nodeOfInterest;
     }
     
     /**

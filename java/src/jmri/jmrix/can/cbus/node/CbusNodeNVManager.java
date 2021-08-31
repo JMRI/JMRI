@@ -266,6 +266,14 @@ public class CbusNodeNVManager {
         }
     }
     
+    /**
+     * @return descriptive string
+     */
+    @Override
+    public String toString() {
+        return "Node Variables";
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(CbusNodeNVManager.class);
     
 }
