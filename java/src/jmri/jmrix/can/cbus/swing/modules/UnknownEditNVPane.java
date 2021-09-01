@@ -26,11 +26,6 @@ public class UnknownEditNVPane extends AbstractEditNVPane {
         JPanel newPane = new JPanel(new BorderLayout());
         
         JPanel gridPane = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.gridy = 0;
         
         JScrollPane scroll = new JScrollPane(gridPane);
         

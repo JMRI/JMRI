@@ -386,7 +386,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Spinner with titled border
      */
-    private class TitledSpinner extends JPanel implements ChangeListener {
+    private static class TitledSpinner extends JPanel implements ChangeListener {
         
         protected JSpinner tSpin;
         protected int _index;
