@@ -20,7 +20,6 @@ public class CanservoioPaneProviderTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNode nd = new CbusNode(null,12345);
         CanservoioPaneProvider t = new CanservoioPaneProvider();
         Assert.assertNotNull("exists",t);
     }

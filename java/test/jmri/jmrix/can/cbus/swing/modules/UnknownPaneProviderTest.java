@@ -20,7 +20,6 @@ public class UnknownPaneProviderTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNode nd = new CbusNode(null,12345);
         UnknownPaneProvider t = new UnknownPaneProvider();
         Assert.assertNotNull("exists",t);
     }

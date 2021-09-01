@@ -20,7 +20,6 @@ public class Canacc8PaneProviderTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNode nd = new CbusNode(null,12345);
         Canacc8PaneProvider t = new Canacc8PaneProvider();
         Assert.assertNotNull("exists",t);
     }

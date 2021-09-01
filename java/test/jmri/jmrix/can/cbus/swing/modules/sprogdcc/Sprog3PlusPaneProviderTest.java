@@ -20,7 +20,6 @@ public class Sprog3PlusPaneProviderTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNode nd = new CbusNode(null,12345);
         Sprog3PlusPaneProvider t = new Sprog3PlusPaneProvider();
         Assert.assertNotNull("exists",t);
     }
