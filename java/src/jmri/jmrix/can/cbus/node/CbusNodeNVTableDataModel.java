@@ -157,6 +157,12 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                 return (row +1);
             case NV_NAME_COLUMN:
                 return CbusConfigPaneProvider.getProviderByNode(nodeOfInterest).getNVNameByIndex(row);
+//                CbusConfigPaneProvider p = CbusConfigPaneProvider.getProviderByNode(nodeOfInterest);
+//                if (p != null) {
+//                    return p.getNVNameByIndex(row);
+//                } else {
+//                    return "";
+//                }
             case NV_CURRENT_VAL_COLUMN:
                 return nodeOfInterest.getNodeNvManager().getNV(row+1);
             case NV_CURRENT_HEX_COLUMN:

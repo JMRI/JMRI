@@ -53,7 +53,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     
     /**
      * Get the edit frame instance
-     * @return 
+     * @return the edit frame
      */
     abstract public AbstractEditNVPane getEditNVFrameInstance();
     
@@ -62,7 +62,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * 
      * @param editFrame
      * @param node
-     * @return 
+     * @return the edit frame
      */
     abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
@@ -71,7 +71,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * 
      * @param editFrame
      * @param node
-     * @return 
+     * @return the edit frame
      */
     abstract public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
@@ -100,11 +100,15 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * Get a module provider from a CBUS node
      * 
      * @param node the node instance
-     * @return the module provider, null if not known
+     * @return the module provider
      */
     final static public CbusConfigPaneProvider getProviderByNode(CbusNode node) {
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
-        return p;
+        if (p != null) {
+            return p;
+        } else {
+            return new UnknownPaneProvider();
+        }
     }
 
     /**
@@ -149,5 +153,5 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
 
     static volatile Map<String, CbusConfigPaneProvider> instanceMap = null;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
 }

@@ -77,7 +77,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         c.gridx = 0;
         c.gridy = 3;
         feedbackSpinner = new TitledSpinner("Feedback Delay (ms)", 9, new UpdateFeedback());    // NV9 for feedback delay 
-        feedbackSpinner.init((double)_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
+        feedbackSpinner.init(_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
         gridPane.add(feedbackSpinner, c);
@@ -138,8 +138,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     /**
      * Update the NVs controlling the pulse width and type
-     * 
-     * {@inheritDoc}
      */
     public class UpdatePulse implements UpdateNV {
         
@@ -166,7 +164,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
      */
     public class UpdateStartup implements UpdateNV {
         
-        /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
             int newNV10 = _nvArray[10] & (~(1<<(index-1)));
@@ -191,8 +188,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     /**
      * Update the NVs controlling the feedback delay
-     * 
-     * {@inheritDoc}
      */
     public class UpdateFeedback implements UpdateNV {
         
@@ -200,7 +195,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             double delay = ((SpinnerNumberModel)feedbackSpinner.tSpin.getModel()).getNumber().doubleValue();
-            int newInt = (int)((double)delay/FEEDBACK_DELAY_STEP_SIZE);
+            int newInt = (int)(delay/FEEDBACK_DELAY_STEP_SIZE);
             _nvArray[index] = newInt;
             _dataModel.setValueAt(newInt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -209,7 +204,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Construct pane to allow configuration of the module outputs
      */
-    private final class OutPane extends JPanel {
+    private class OutPane extends JPanel {
         
         int _index;
         
@@ -255,7 +250,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             setButtons(_nvArray[index]);
 
             pulseSpinner = new TitledSpinner("Pulse width (ms)", _index, pulseUpdateFn);
-            pulseSpinner.init((double)((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
+            pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
 
             gridPane.add(cont, c);
@@ -301,7 +296,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Construct pane to allow configuration of the oputput startup action
      */
-    private final class StartupActionPane extends JPanel {
+    private class StartupActionPane extends JPanel {
         
         int _index;
         
@@ -366,9 +361,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         
         /**
          * Set startup action button states
-         * 
-         * @param nv10 startup position
-         * @param nv11 move on startup
          */
         public void setButtons() {
             // Startup action is in NV10 and NV11, 1 bit per output 
@@ -395,7 +387,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Spinner with titled border
      */
-    private final class TitledSpinner extends JPanel implements ChangeListener {
+    private class TitledSpinner extends JPanel implements ChangeListener {
         
         protected JSpinner tSpin;
         protected int _index;
@@ -440,9 +432,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
          */
         @Override
         public void stateChanged(ChangeEvent e) {
-            JSpinner spin = (JSpinner)(e.getSource());
-            SpinnerNumberModel spinModel = (SpinnerNumberModel)(spin.getModel());
-            int newVal = spinModel.getNumber().intValue();
             _update.setNewVal(_index);
         }
 
