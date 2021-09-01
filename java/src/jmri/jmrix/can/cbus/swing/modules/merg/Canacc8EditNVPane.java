@@ -160,7 +160,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Update the NVs controlling the startup action
      * 
-     * {@inheritDoc}
      */
     public class UpdateStartup implements UpdateNV {
         
