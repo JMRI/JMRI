@@ -78,7 +78,7 @@
         </dd>
       </dl>
       plus specific files used by the <a href="Ant.shtml">build process</a>, to <a href=
-      "Logging.shtml">control logging</a>, and containing the <a href="/Copyright.shtml">JMRI
+      "Logging.shtml">control logging</a>, and containing the <a href="/copyright.shtml">JMRI
       license</a>.
       <h3>Static Package and Class Structure</h3>
 

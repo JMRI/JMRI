@@ -53,6 +53,13 @@
       <p>If you're making up your own system, describe it in some detail so that you can come back
       to it later on and remember what you had in mind.</p>
 
+      <p>At a minimum, the index.shtml contains a link to the aspects.xml file and each
+      appearance xml file.  This is used to display formatted pages for each xml file.  Use the
+      index.xml for the Basic signal system as a model.</p>
+
+      <p>If the new signal system is going to be contributed to JMRI, the xml/signals/index.shtml
+      file needs to be updated with a link to the new signal system index.shtml file.
+
       <h3>Create a new aspects.xml file</h3>
       The <code>&lt;name&gt;</code> element at the top of this file provides the user name for your
       signaling system, which features prominently in the user interface. It can be a little more
