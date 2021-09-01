@@ -37,7 +37,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Set the display pane to the current node (creating a new pane if necessary)
      * 
-     * @param node 
+     * @param node to be shown
      */
     protected void setNode(CbusNode node ) {
         setResetNode(false, node);
@@ -46,7 +46,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Reset the display pane
      * 
-     * @param node 
+     * @param node being displayed
      */
     protected void resetNode(CbusNode node ) {
         setResetNode(true, node);
@@ -96,6 +96,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);
 
 }

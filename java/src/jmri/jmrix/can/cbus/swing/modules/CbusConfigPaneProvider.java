@@ -60,8 +60,8 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     /**
      * Get the current edit frame or create one
      * 
-     * @param editFrame
-     * @param node
+     * @param editFrame the containing frame
+     * @param node the node to be edited
      * @return the edit frame
      */
     abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
@@ -69,8 +69,8 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     /**
      * Create a new edit frame
      * 
-     * @param editFrame
-     * @param node
+     * @param editFrame the containing frame
+     * @param node the node to be edited
      * @return the edit frame
      */
     abstract public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
