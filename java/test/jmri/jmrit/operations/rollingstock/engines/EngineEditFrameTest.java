@@ -888,7 +888,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.initComponents();
         f.load(e1);
 
-        Consist c = engineManager.newConsist("TEST_CONSIST");
+        Consist c = InstanceManager.getDefault(ConsistManager.class).newConsist("TEST_CONSIST");
         f.groupComboBox.setSelectedItem(c.getName());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());

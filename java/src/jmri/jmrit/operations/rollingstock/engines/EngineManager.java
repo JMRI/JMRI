@@ -1,10 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
 
-import javax.swing.JComboBox;
-
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +26,6 @@ public class EngineManager extends RollingStockManager<Engine>
         implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
-
-    public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
     }
@@ -55,96 +53,6 @@ public class EngineManager extends RollingStockManager<Engine>
     public void deregister(Engine engine) {
         super.deregister(engine);
         InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
-    }
-
-    /**
-     * Creates a new consist if needed
-     *
-     * @param name of the consist
-     * @return consist
-     */
-    public Consist newConsist(String name) {
-        Consist consist = getConsistByName(name);
-        if (consist == null && !name.equals(NONE)) {
-            consist = new Consist(name);
-            Integer oldSize = Integer.valueOf(_consistHashTable.size());
-            _consistHashTable.put(name, consist);
-            setDirtyAndFirePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_consistHashTable.size()));
-        }
-        return consist;
-    }
-
-    public void deleteConsist(String name) {
-        Consist consist = getConsistByName(name);
-        if (consist != null) {
-            consist.dispose();
-            Integer oldSize = Integer.valueOf(_consistHashTable.size());
-            _consistHashTable.remove(name);
-            setDirtyAndFirePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_consistHashTable.size()));
-        }
-    }
-
-    public Consist getConsistByName(String name) {
-        return _consistHashTable.get(name);
-    }
-
-    public void replaceConsistName(String oldName, String newName) {
-        Consist oldConsist = getConsistByName(oldName);
-        if (oldConsist != null) {
-            Consist newConsist = newConsist(newName);
-            // keep the lead engine
-            Engine leadEngine = oldConsist.getLead();
-            if (leadEngine != null) {
-                leadEngine.setConsist(newConsist);
-            }
-            for (Engine engine : oldConsist.getEngines()) {
-                engine.setConsist(newConsist);
-            }
-        }
-    }
-
-    /**
-     * Creates a combo box containing all of the consist names
-     *
-     * @return a combo box with all of the consist names
-     */
-    public JComboBox<String> getConsistComboBox() {
-        JComboBox<String> box = new JComboBox<>();
-        box.addItem(NONE);
-        for (String name : getConsistNameList()) {
-            box.addItem(name);
-        }
-        return box;
-    }
-
-    public void updateConsistComboBox(JComboBox<String> box) {
-        box.removeAllItems();
-        box.addItem(NONE);
-        for (String name : getConsistNameList()) {
-            box.addItem(name);
-        }
-    }
-
-    public List<String> getConsistNameList() {
-        List<String> out = new ArrayList<>();
-        Enumeration<String> en = _consistHashTable.keys();
-        while (en.hasMoreElements()) {
-            out.add(en.nextElement());
-        }
-        Collections.sort(out);
-        return out;
-    }
-
-    public int getConsistMaxNameLength() {
-        int maxLength = 0;
-        for (String name : getConsistNameList()) {
-            if (name.length() > maxLength) {
-                maxLength = name.length();
-            }
-        }
-        return maxLength;
     }
 
     /**
@@ -241,37 +149,7 @@ public class EngineManager extends RollingStockManager<Engine>
         return names;
     }
 
-    @Override
-    public void dispose() {
-        for (String consistName : getConsistNameList()) {
-            deleteConsist(consistName);
-        }
-        super.dispose();
-    }
-
     public void load(Element root) {
-        // new format using elements starting version 3.3.1
-        if (root.getChild(Xml.NEW_CONSISTS) != null) {
-            List<Element> consists = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
-            log.debug("Engine manager sees {} consists", consists.size());
-            Attribute a;
-            for (Element consist : consists) {
-                if ((a = consist.getAttribute(Xml.NAME)) != null) {
-                    newConsist(a.getValue());
-                }
-            }
-        } // old format
-        else if (root.getChild(Xml.CONSISTS) != null) {
-            String names = root.getChildText(Xml.CONSISTS);
-            if (!names.equals(NONE)) {
-                String[] consistNames = names.split("%%"); // NOI18N
-                log.debug("consists: {}", names);
-                for (String name : consistNames) {
-                    newConsist(name);
-                }
-            }
-        }
-
         if (root.getChild(Xml.ENGINES) != null) {
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
             log.debug("readFile sees {} engines", engines.size());
@@ -289,24 +167,12 @@ public class EngineManager extends RollingStockManager<Engine>
      *
      */
     public void store(Element root) {
-        // root.addContent(new Element(Xml.OPTIONS)); // nothing to store under options
-
         Element values;
-        List<String> names = getConsistNameList();
-        Element consists = new Element(Xml.NEW_CONSISTS);
-        for (String name : names) {
-            Element consist = new Element(Xml.CONSIST);
-            consist.setAttribute(new Attribute(Xml.NAME, name));
-            consists.addContent(consist);
-        }
-        root.addContent(consists);
-
         root.addContent(values = new Element(Xml.ENGINES));
         // add entries
         for (RollingStock rs : getByRoadNameList()) {
             Engine eng = (Engine) rs;
             values.addContent(eng.store());
-
         }
     }
 

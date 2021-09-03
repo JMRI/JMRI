@@ -4300,7 +4300,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Router status", Track.OKAY, router.getStatus());
 
         // now place the two cars in a kernel
-        Kernel k1 = cmanager.newKernel("group of two cars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("group of two cars");
         c1.setKernel(k1); // lead car
         c2.setKernel(k1);
 
