@@ -4236,7 +4236,6 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Router router = InstanceManager.getDefault(Router.class);
-        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
 
         // register the car and engine types used
