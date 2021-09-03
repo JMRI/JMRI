@@ -1,16 +1,15 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Control;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car delivery schedule for a location
@@ -216,7 +215,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         while (en.hasMoreElements()) {
             arr[i++] = en.nextElement();
         }
-        java.util.Arrays.sort(arr);
+        Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getItemById(arr[i]));
         }
