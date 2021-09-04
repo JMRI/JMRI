@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -60,39 +57,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public void deregister(Car car) {
         super.deregister(car);
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
-    }
-
-    /**
-     * @return requested Car object or null if none exists
-     */
-    @Override
-    public Car getById(String id) {
-        return super.getById(id);
-    }
-
-    /**
-     * Get Car by road and number
-     *
-     * @param road   Car road
-     * @param number Car number
-     * @return requested Car object or null if none exists
-     */
-    @Override
-    public Car getByRoadAndNumber(String road, String number) {
-        return super.getByRoadAndNumber(road, number);
-    }
-
-    /**
-     * Get a Car by type and road. Used to test that a car with a specific type
-     * and road exists.
-     *
-     * @param type car type.
-     * @param road car road.
-     * @return the first car found with the specified type and road.
-     */
-    @Override
-    public Car getByTypeAndRoad(String type, String road) {
-        return super.getByTypeAndRoad(type, road);
     }
 
     /**
@@ -190,17 +154,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @return ordered list of kernel names
      */
     public List<String> getKernelNameList() {
-        String[] names = new String[_kernelHashTable.size()];
         List<String> out = new ArrayList<>();
         Enumeration<String> en = _kernelHashTable.keys();
-        int i = 0;
         while (en.hasMoreElements()) {
-            names[i++] = en.nextElement();
+            out.add(en.nextElement());
         }
-        java.util.Arrays.sort(names);
-        for (String name : names) {
-            out.add(name);
-        }
+        Collections.sort(out);
         return out;
     }
 

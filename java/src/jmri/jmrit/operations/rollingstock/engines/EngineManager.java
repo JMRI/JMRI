@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -33,20 +30,6 @@ public class EngineManager extends RollingStockManager<Engine>
     public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
-    }
-
-    /**
-     * @return requested Engine object or null if none exists
-     */
-    @Override
-    public Engine getById(String id) {
-        return super.getById(id);
-    }
-
-    @Override
-    public Engine getByRoadAndNumber(String engineRoad, String engineNumber) {
-        String engineId = Engine.createId(engineRoad, engineNumber);
-        return getById(engineId);
     }
 
     /**
@@ -145,17 +128,12 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     public List<String> getConsistNameList() {
-        String[] names = new String[_consistHashTable.size()];
         List<String> out = new ArrayList<>();
         Enumeration<String> en = _consistHashTable.keys();
-        int i = 0;
         while (en.hasMoreElements()) {
-            names[i++] = en.nextElement();
+            out.add(en.nextElement());
         }
-        java.util.Arrays.sort(names);
-        for (String name : names) {
-            out.add(name);
-        }
+        Collections.sort(out);
         return out;
     }
 
