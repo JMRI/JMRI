@@ -1,49 +1,44 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>JMRI: Western Pacific Railroad 1971 Signal Definitions</title>
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Western Pacific Railroad 1971 Signal Definitions</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1> 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+<h1>
 JMRI: Western Pacific Railroad 1971 Signal Definitions
 </h1>
 
-<p>This directory contains signal definitions corresponding to rules listed on pages 132-135 from the 1971 
+<p>This directory contains signal definitions corresponding to rules listed on pages 132-135 from the 1971
 "Western Pacific Railroad Company - Operating Rules".</p>
 
-<p>Note:  Not all signal rules or mast permutations listed or implied in the Operating Rules are shown, 
+<p>Note:  Not all signal rules or mast permutations listed or implied in the Operating Rules are shown,
 but rather only those typically used by WP in the 1970's.</p>
 <p>
-See the 
-<a href="aspects.xml">aspect page</a>.
+See the
+<a href="aspects.xml">aspect page</a>.</p>
 
 <p>
-Signal Mast definitions:
+Signal Mast definitions:</p>
 <ul>
-<li><a href="appearance-WP71-SL-1-high-A.xml">Single head searchlight, high absolute signal</a>
-<li><a href="appearance-WP71-SL-2-high-A.xml">Double head searchlight, high absolute signal</a>
-<li><a href="appearance-WP71-SL-1-low-A.xml">Single head searchlight, dwarf absolute signal</a>
-<li><a href="appearance-WP71-SL-1-high-P.xml">Single head searchlight, high permissive signal</a>
-<li><a href="appearance-WP71-SL-1-with-Yel-marker-high-P.xml">Single head searchlight, high permissive signal with yellow marker</a>
+<li><a href="appearance-WP71-SL-1-high-A.xml">Single head searchlight, high absolute signal</a></li>
+<li><a href="appearance-WP71-SL-2-high-A.xml">Double head searchlight, high absolute signal</a></li>
+<li><a href="appearance-WP71-SL-1-low-A.xml">Single head searchlight, dwarf absolute signal</a></li>
+<li><a href="appearance-WP71-SL-1-high-P.xml">Single head searchlight, high permissive signal</a></li>
+<li><a href="appearance-WP71-SL-1-with-Yel-marker-high-P.xml">Single head searchlight, high permissive signal with yellow marker</a></li>
 </ul>
 
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
