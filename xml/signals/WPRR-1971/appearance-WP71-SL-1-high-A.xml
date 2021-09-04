@@ -33,7 +33,7 @@
       <authorinitials>JAM</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
-		
+
   </revhistory>
 
   <aspecttable>WPRR-1971</aspecttable>
@@ -41,7 +41,7 @@
   <reference>Signal definitions corresponding to pages 132-135 from the 1971 "Western Pacific Railroad Company - Operating Rules" binder.</reference>
   <reference>Mast definitions and aspect progression documented in "WP Signal Aspects and Masts.XLSX".</reference>
   <description>Appearances for single-head high searchlight without markers, with A-plate or without number plate.</description>
-  
+
   <appearances>
 
     <appearance>
@@ -84,9 +84,9 @@
       <reference>Page 134</reference>
       <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-292.gif</imagelink>
     </appearance>
-    
+
   </appearances>
-  
+
   <specificappearances>
     <!-- Start of Specific Appearances list -->
 
@@ -129,22 +129,22 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
