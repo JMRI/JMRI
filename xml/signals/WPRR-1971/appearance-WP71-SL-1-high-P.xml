@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Jim</firstname>
+        <surname>Moomaw</surname>
+      </personname>
+      <email>jam_pub@pobox.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Jim</firstname>
+        <surname>Atkins</surname>
+      </personname>
+      <email></email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2021-08-26</date>
+      <authorinitials>JAM</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+		
+  </revhistory>
+
+  <aspecttable>WPRR-1971</aspecttable>
+  <name>Single head high searchlight permissive signal</name>
+  <reference>Signal definitions corresponding to pages 132-135 from the 1971 "Western Pacific Railroad Company - Operating Rules" binder.</reference>
+  <reference>Mast definitions and aspect progression documented in "WP Signal Aspects and Masts.XLSX".</reference>
+  <description>Appearances for single-head high searchlight without markers with number plate.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Dark</aspectname>
+      <show>dark</show>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/dark.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Page 132</reference>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <reference>Page 132</reference>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Page 132</reference>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop And Proceed</aspectname>
+      <show>red</show>
+      <reference>Page 134</reference>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/rule-291.gif</imagelink>
+    </appearance>
+    
+  </appearances>
+  
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+
+    <danger>
+      <aspect>Stop And Proceed</aspect>
+    </danger>
+
+  	<permissive>
+      <aspect>Stop And Proceed</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop And Proceed</aspect>
+    </held>
+
+    <dark>
+      <aspect>Dark</aspect>
+      <imagelink>preference:resources/WPRR-1971/SL-1-high-P/dark.gif</imagelink>
+    </dark>
+
+  </specificappearances>
+
+  <aspectMappings>
+    <!-- Start of Advanced-Aspect mapping -->
+    <!-- NOTE 1:  advancedAspect here means the signal ahead of "our", and aspect is same or more restrictive -->
+	<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these "our" aspects -->
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+   <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+	
+   <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Diverging Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Restricting Diverging</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Stop And Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>
