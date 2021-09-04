@@ -33,7 +33,7 @@
       <authorinitials>JAM</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
-		
+
   </revhistory>
 
   <aspecttable>WPRR-1971</aspecttable>
@@ -41,52 +41,52 @@
   <reference>Signal definitions corresponding to pages 132-135 from the 1971 "Western Pacific Railroad Company - Operating Rules" binder.</reference>
   <reference>Mast definitions and aspect progression documented in "WP Signal Aspects and Masts.XLSX".</reference>
   <description>Appearances for single-head dwarf (low) searchlight without markers, with A-plate or without number plate.</description>
-  
+
   <appearances>
 
     <appearance>
       <aspectname>Dark</aspectname>
       <show>dark</show>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/dark.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/dark.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashred</show>
       <reference>Page 134</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/rule-288.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/rule-288.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Page 134</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/rule-292.gif</imagelink>
     </appearance>
-    
+
   </appearances>
-  
+
   <specificappearances>
     <!-- Start of Specific Appearances list -->
 
@@ -100,7 +100,7 @@
 
     <dark>
       <aspect>Dark</aspect>
-      <imagelink>preference:resources/WPRR-1971/SL-1-low-A/dark.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-low-A/dark.gif</imagelink>
     </dark>
 
   </specificappearances>
@@ -109,7 +109,7 @@
     <!-- Start of Advanced Aspect mapping -->
     <!-- NOTE 1:  advancedAspect here means the signal ahead of "our", and aspect is same or more restrictive -->
 	<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these "our" aspects -->
- 
+
  <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -129,22 +129,22 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
     <aspectMapping>
       <advancedAspect>Diverging Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>

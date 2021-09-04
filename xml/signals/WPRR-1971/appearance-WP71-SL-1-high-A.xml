@@ -47,42 +47,42 @@
     <appearance>
       <aspectname>Dark</aspectname>
       <show>dark</show>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/dark.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/dark.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 132</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashred</show>
       <reference>Page 134</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-288.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/rule-288.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Page 134</reference>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -100,7 +100,7 @@
 
     <dark>
       <aspect>Dark</aspect>
-      <imagelink>preference:resources/WPRR-1971/SL-1-high-A/dark.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/WPRR-1971/SL-1-high-A/dark.gif</imagelink>
     </dark>
 
   </specificappearances>
