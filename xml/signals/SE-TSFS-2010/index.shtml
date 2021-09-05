@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: etxbct $) 2021 -->
-<!-- $Id: index.shtml,v 1.2 2010/01/23 20:42:03 jacobsen Exp $ -->
-<title>JMRI: SE TSFS System 2010</title>
 
+<title>JMRI: SE TSFS System 2010</title>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
@@ -17,7 +15,7 @@
 </HEAD>
 
 <BODY>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -41,9 +39,9 @@ Signal Mast definitions:
 <li><a href="appearance-hsi_4.xml">Four aspects Main signal</a>
 <li><a href="appearance-hsi_5.xml">Six aspects Main signal</a>
 <li><a href="appearance-fsi_3.xml">Three aspects Distant signal</a>
-<li><a href="appearance-fsi_2.xml"/>Two aspects Distant signal</a>
-<li><a href="appearance-hdvsi_8.xml"/>Shunting Main Dwarf signal</a>
-<li><a href="appearance-dvsi_4.xml"/>Shunting Dwarf signal</a>
+<li><a href="appearance-fsi_2.xml">Two aspects Distant signal</a>
+<li><a href="appearance-hdvsi_8.xml">Shunting Main Dwarf signal</a>
+<li><a href="appearance-dvsi_4.xml">Shunting Dwarf signal</a>
 <li><a href="appearance-hsi_2+dvsi.xml">Two aspects Main signal and Shunting signal</a>
 <li><a href="appearance-hsi_3+dvsi.xml">Three aspects Main signal and Shunting signal</a>
 <li><a href="appearance-hsi_4+dvsi.xml">Four aspects Main signal and Shunting signal</a>
@@ -51,6 +49,8 @@ Signal Mast definitions:
 <li><a href="appearance-guard_2.xml">Two aspects Guard signal</a>
 </ul>
 
-<!--#include virtual="/Footer" -->
+    </div>
+</div>
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>
