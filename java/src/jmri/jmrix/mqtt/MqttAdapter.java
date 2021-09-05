@@ -110,7 +110,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             mqttConnOpts.setWill(baseTopic + getOptionState("LastWillTopic"),
                     getOptionState("LastWillMessage").getBytes(),
                     qosflag,
-                    true);
+                    false);
         }
 
         return mqttConnOpts;
