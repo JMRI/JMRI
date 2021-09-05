@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/JMRI/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>SE TSFS 2010</name>
+  <date>2010</date>
+  <reference>Swedish signals JTF appendix 3H 2010</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Benny</firstname>
+        <surname>Tjader</surname>
+      </personname>
+      <email>etxbct@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-09-05</date>
+      <authorinitials>BCT</authorinitials>
+      <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+
+  <aspects>
+    <aspect>
+      <name>Unlit</name>
+      <indication>The signal can be ignored.</indication>
+      <description>Dark guard signal</description>
+      <comment>Normal</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+    </aspect>
+
+    <aspect>
+      <name>Lit</name>
+      <indication>The signal must not be passed without permission from the traffic control.</indication>
+      <description>Lit guard signal</description>
+      <comment>Stop</comment>
+      <speed>Stop</speed>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <indication>The signal must not be passed without permission from the traffic control.
+       During shunting operations permission to pass a home signal displaying stop may be given
+       with a radio or with a dwarf signal.</indication>
+      <description>One red light on main signal</description>
+      <comment>Stop</comment>
+      <speed>Stop</speed>
+    </aspect>
+
+    <aspect>
+      <name>Clear 40</name>
+      <indication>Authorises the driver to pass the signal at 40 km/h or at a higher speed given
+       by the ATC system.</indication>
+      <description>Two green light on main signal, Left green light on main dwarf signal</description>
+      <comment>Clear 40</comment>
+      <delay>5</delay>
+      <speed>Medium</speed>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 80</name>
+      <indication>Authorises the driver to pass the signal at 80 km/h or at a higher speed given
+       by the ATC system.</indication>
+      <description>One green light on main signal, Right green light on main dwarf signal</description>
+      <comment>Clear 80</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 80 Caution</name>
+      <indication>Authorises the driver to pass the signal at 80 km/h or at a higher speed given
+       by the ATC system.</indication>
+      <description>Right flashing green light on main dwarf signal</description>
+      <comment>Clear 80 Caution</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 40 Caution</name>
+      <indication>Authorises the driver to pass the signal at 40 km/h (25 mph) or at a higher speed given
+       by the ATC system. The next signal might be displaying stop if it is farther away than 450 meters,
+       so the driver must approach next signal cautiously and be prepared to stop short of next signal.</indication>
+      <description>Left flashing green light on main dwarf signal</description>
+      <comment>Clear 40 Caution</comment>
+      <delay>5</delay>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 80 Expect Stop</name>
+      <indication>Authorises the driver to pass the signal at 80 km/h or at a higher speed given
+       by the ATC system. The next signal is displaying stop, so the driver must decrease speed
+       and approach the next signal prepared to stop short of it.</indication>
+      <description>One green light + one flashing green light on main signal</description>
+      <comment>Clear 80 Expect Stop</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 80 Expect 80</name>
+      <indication>Authorises the driver to pass the signal at 80 km/h or at a higher speed given
+       by the ATC system. The next signal is displaying a clear 80 aspect.</indication>
+      <description>One green light + one flashing white light on main signal</description>
+      <comment>Clear 80 Expect 80</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 80 Expect 40</name>
+      <indication>Authorises the driver to pass the signal at 80 km/h or at a higher speed given
+       by the ATC system. The next signal is displaying clear 40, so the driver must decrease speed
+       and approach the next signal prepared to pass it at a speed not exceeding 40 km/h (25 mph) or
+       the speed shown on the ATC driver's display.</indication>
+      <description>One green light + Two flashing green lights on main signal</description>
+      <comment>Clear 80 Expect 40</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear 40 Short Entry Route</name>
+      <indication>Authorises the driver to pass the signal at a maximum speed of 40 km/h (25 mph).
+       The next signal shows "stop" and is closer than 450 meters.</indication>
+      <description>Three green lights on main signal</description>
+      <comment>Clear 40 Short Entry Route</comment>
+      <delay>5</delay>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Expect Stop</name>
+      <indication>Expect stop, prepare to stop at next main signal.</indication>
+      <description>One flashing green light</description>
+      <comment>Expect Stop</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Expect 80</name>
+      <indication>Expect proceed, prepare to proceed at next main signal (80 km/h if not indicated otherwise).</indication>
+      <description>One flashing white light</description>
+      <comment>Expect 80</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Expect 40</name>
+      <indication>Expect slow, prepare to proceed at slow speed at next main signal (40 km/h if not indicated otherwise).</indication>
+      <description>Two flashing green lights</description>
+      <comment>Expect 40</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Sh0</name>
+      <indication>The signal must not be passed without permission from the traffic control.
+       During shunting operations permission to pass a home signal displaying stop may be given
+       with a radio or with a dwarf signal. shunting not allowed</indication>
+      <description>One red light on main signal, Two horizontal white lights</description>
+      <comment>Stop</comment>
+      <speed>Stop</speed>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Sh1</name>
+      <indication>Shunting allowed, line clear</indication>
+      <description>Two white lights arranged vertically</description>
+      <comment>Shunting movment authorized, clear</comment>
+      <delay>5</delay>
+      <speed>Restricted</speed>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Sh2</name>
+      <indication>Shunting allowed, caution</indication>
+      <description>Two white lights arranged left diagonally</description>
+      <comment>Shunting movment authorized, obsticals</comment>
+      <delay>5</delay>
+      <speed>Restricted</speed>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Sh3</name>
+      <indication>Shunting allowed, check</indication>
+      <description>Two white lights arranged right diagonally</description>
+      <comment>Shunting movment authorized, check switches and clearence</comment>
+      <delay>5</delay>
+      <speed>RestrictedSlow</speed>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh0</name>
+      <indication>Shunting not allowed</indication>
+      <description>Two horizontal white lights</description>
+      <comment>Stop</comment>
+      <speed>Stop</speed>
+    </aspect>
+
+    <aspect>
+      <name>Sh1 Stop</name>
+      <indication>Shunting allowed, line clear</indication>
+      <description>Two white lights arranged vertically</description>
+      <comment>Shunting movment authorized, clear and next main signal in Stop</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh1 80</name>
+      <indication>Shunting allowed, line clear</indication>
+      <description>Two white lights arranged vertically</description>
+      <comment>Shunting movment authorized, clear and next main signal in 80</comment>
+      <delay>5</delay>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh1 40</name>
+      <indication>Shunting allowed, line clear</indication>
+      <description>Two white lights arranged vertically</description>
+      <comment>Shunting movment authorized, clear and next main signal in 40</comment>
+      <delay>5</delay>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh2</name>
+      <indication>Shunting allowed, caution</indication>
+      <description>Two white lights arranged left diagonally</description>
+      <comment>Shunting movment authorized, obsticals</comment>
+      <delay>5</delay>
+      <speed>Restricted</speed>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh3</name>
+      <indication>Shunting allowed, check</indication>
+      <description>Two white lights arranged right diagonally</description>
+      <comment>Shunting movment authorized, check switches and clearence</comment>
+      <delay>5</delay>
+      <speed>RestrictedSlow</speed>
+      <route>Either</route>
+    </aspect>
+  </aspects>
+
+  <imagetypes>
+    <imagetype type="medium panel"/>
+    <imagetype type="small panel"/>
+    <imagetype type="prototype"/>
+    <imagetype type="mod59"/>
+    <imagetype type="mod68"/>
+    <imagetype type="mod85"/>
+  </imagetypes>
+
+  <appearancefiles>
+    <appearancefile href="appearance-fsi_2.xml"/>
+    <appearancefile href="appearance-fsi_3.xml"/>
+    <appearancefile href="appearance-hsi_2.xml"/>
+    <appearancefile href="appearance-hsi_2+dvsi.xml"/>
+    <appearancefile href="appearance-hsi_3.xml"/>
+    <appearancefile href="appearance-hsi_3+dvsi.xml"/>
+    <appearancefile href="appearance-hsi_4.xml"/>
+    <appearancefile href="appearance-hsi_4+dvsi.xml"/>
+    <appearancefile href="appearance-hsi_5.xml"/>
+    <appearancefile href="appearance-hsi_5+dvsi.xml"/>
+    <appearancefile href="appearance-dvsi_4.xml"/>
+    <appearancefile href="appearance-hdvsi_8.xml"/>
+    <appearancefile href="appearance-sly_2.xml"/>
+    <appearancefile href="appearance-sly_2+dvsi.xml"/>
+  </appearancefiles>
+</aspecttable>

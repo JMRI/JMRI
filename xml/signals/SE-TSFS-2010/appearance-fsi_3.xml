@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/JMRI/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname><firstname>Benny</firstname><surname>Tjader</surname></personname>
+      <email>etxbct@gmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-09-05</date>
+      <authorinitials>BCT</authorinitials>
+      <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>SE TSFS 2010</aspecttable>
+  <name>Single three aspect distant signal</name>
+  <reference>See <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Wikipedia</a></reference>
+  <description>Single distant signal ahead of block signals.
+  </description>
+
+  <appearances>
+    <appearance>
+      <aspectname>Expect Stop</aspectname>
+      <show>flashgreen</show>
+      <imagelink type="prototype">preference:resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="medium panel">preference:resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="small panel">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="mod59">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="mod68">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="mod85">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Expect 80</aspectname>
+      <show>flashlunar</show>
+      <imagelink type="prototype">preference:resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="medium panel">preference:resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="small panel">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="mod59">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="mod68">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="mod85">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Expect 40</aspectname>
+      <show>flashgreen</show>
+      <show>flashgreen</show>
+      <imagelink type="prototype">preference:resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="medium panel">preference:resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="small panel">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="mod59">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="mod68">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="mod85">preference:resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+    </appearance>
+  </appearances>
+</appearancetable>  
