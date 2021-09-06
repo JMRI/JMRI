@@ -129,6 +129,7 @@ public class JemmyUtil {
     }
     
     static public void waitFor(JmriJFrame f) {
+        f.requestFocus();
         jmri.util.JUnitUtil.waitFor(() -> {
             return f.isActive();
         }, "wait for frame to be active");

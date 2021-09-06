@@ -1,121 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Jython access to JMRI Tools</title>
-  <meta name="author" content="Bob Jacobsen">  <meta name="keywords" content=
-  "JMRI technical code Python Jython scripting">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code Python Jython scripting">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>Jython access to JMRI Tools</h1>
-      <p>This page discusses
-      access to the JMRI libraries from Jython, a Java version of
-      Python. The emphasis is on using JMRI capabilities from a
-      command-line Jython interpreter. <b>This page is not about
-      scripting with Jython inside JMRI.</b> See the <a href=
-      "../../tools/scripting/index.shtml">scripting pages</a> if
-      you are more interested in Jython scripting within JMRI.
 
-      <p>Note that this page is somewhat out of date; version
-      numbers, etc may not be current.</p>
+      <p>This page discusses access to the JMRI libraries from Jython, a Java version of Python.
+      The emphasis is on using JMRI capabilities from a command-line Jython interpreter.
+      <strong>This page is not about scripting with Jython inside JMRI.</strong> See the <a href=
+      "../../tools/scripting/index.shtml">scripting pages</a> if you are more interested in Jython
+      scripting within JMRI.</p>
 
-      <h2>Introduction</h2><a href=
-      "http://www.python.org">Python</a> is a widely used scripting
-      language that's available on many types of computers. A
-      Java-based varient, called <a href=
-      "http://www.jython.org">Jython</a>, has been integrated with
-      JMRI to make it easy to control a model railroad from the
-      command line of a computer.
+      <p>Note that this page is somewhat out of date; version numbers, etc may not be current.</p>
 
+      <h2>Introduction</h2>
+      <a href="http://www.python.org">Python</a> is a widely used scripting language that's
+      available on many types of computers. A Java-based varient, called <a href=
+      "http://www.jython.org">Jython</a>, has been integrated with JMRI to make it easy to control
+      a model railroad from the command line of a computer. Jython and Python bring some
+      simplifications to using JMRI code. The Java member function:
 
-      Jython and Python bring some simplifications to using JMRI code. The Java
-      member function:
       <pre>
         turnout.setCommandedState(jmri.Turnout.CLOSED);
 </pre>can also be expressed in Jython as:
+
       <pre>
         turnout.commandedState = CLOSED
 </pre><br>
       This results in much easier-to-read code.
+      <p>There are a lot of useful Python books and online tutorials. For more information on the
+      Jython language and it's relations with Java, the best reference is the <a href=
+      "http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a> book published by O'Reilly.
+      The <a href="http://www.jython.org/">jython.org web site</a> is also very useful.</p>
 
-      <p>There are a lot of useful Python books and online
-      tutorials. For more information on the Jython language and
-      it's relations with Java, the best reference is the <a href=
-      "http://www.oreilly.com/catalog/jythoness/">Jython
-      Essentials</a> book published by O'Reilly. The <a href=
-      "http://www.jython.org/">jython.org web site</a> is also very
-      useful.</p>
-
-      <h2>Using Jython directly</h2>This section of the page is a
-      pile of useful information on controlling JMRI from Jython
+      <h2>Using Jython directly</h2>
+      This section of the page is a pile of useful information on controlling JMRI from Jython
       directly.
+      <p>Note that you don't need most of this when running the PanelPro.py or similar scripts, as
+      they handle starting a complete application.</p>
 
-      <p>Note that you don't need most of this when running the
-          PanelPro.py or similar scripts, as they handle starting a
-          complete application.</p>
-
-      <h3>Initialization</h3>JMRI uses the LogJ system extensively
-      for logging information during program execution. To
+      <h3>Initialization</h3>
+      JMRI uses the LogJ system extensively for logging information during program execution. To
       configure that when running with Jython, you should do:
+
       <pre>
   import org
   org.apache.log4j.PropertyConfigurator.configure("default.lcf")
-</pre>before starting any of the JMRI classes. The "default.lcf" is
-the name of the logging control file to be used; it can be omitted.
-
+</pre>before starting any of the JMRI classes. The "default.lcf" is the name of the logging control
+file to be used; it can be omitted.
       <p>To make JMRI classes available, you have to do:</p>
+
       <pre>
   import jmri
-</pre>As currently set up, this does not run any initialization
-code to start the hardware connections, etc. One way to do that is
-to load a configuration file, perhaps one you've created earlier
-via the PanelPro preferences panel:
-<pre>
+</pre>As currently set up, this does not run any initialization code to start the hardware
+connections, etc. One way to do that is to load a configuration file, perhaps one you've created
+earlier via the PanelPro preferences panel:
+
+      <pre>
   import java.io
   configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"PanelProConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(configfile)
-</pre>to activate the JMRI classes and connect to your layout
-hardware. "PanelProConfig2.xml" is the name of the configuration
-file from the PanelPro program; you can use another name if
-desired. The configuration file controls the layout connection, and
-any other options that may have been set when it was created.
+</pre>to activate the JMRI classes and connect to your layout hardware. "PanelProConfig2.xml" is
+the name of the configuration file from the PanelPro program; you can use another name if desired.
+The configuration file controls the layout connection, and any other options that may have been set
+when it was created.
+      <p>Alternately, if you want to start the complete PanelPro application, including the menu
+      bar, spash screen, etc, you can do:</p>
 
-<p>Alternately, if you want to start the complete PanelPro
-    application, including the menu bar, spash screen, etc, you
-      can do:</p>
       <pre>
  import apps
  apps.PanelPro.PanelPro.main([])
       </pre>
-
-      <p>This will start the program, including its startup
-      configuration, etc.</p>
+      <p>This will start the program, including its startup configuration, etc.</p>
 
       <p>To simplify this startup even further, you can do:</p>
+
       <pre>
  execfile("PanelPro.py")
       </pre>to invoke these commands.
-
-      <h3>Access to JMRI</h3>JMRI uses the factory-pattern
-      extensively to get access to objects. In Java this results in
+      <h3>Access to JMRI</h3>
+      JMRI uses the factory-pattern extensively to get access to objects. In Java this results in
       verbose code like
+
       <pre>
    Turnout t2 = InstanceManager.getDefault(jmri.TurnoutManager.class).newTurnout("LT2", "turnout 2");
    t2.setCommandedState(Turnout.THROWN)
-</pre>Jython simplifies that by allowing us to provide useful
-variables, and by shortening certain method calls.
-
-      <p>To get access to the SignalHead, Sensor and Turnout
-      managers and the CommandStation object, several shortcut
-      variables are defined in the .py scripts listed above:</p>
+</pre>Jython simplifies that by allowing us to provide useful variables, and by shortening certain
+method calls.
+      <p>To get access to the SignalHead, Sensor and Turnout managers and the CommandStation
+      object, several shortcut variables are defined in the .py scripts listed above:</p>
 
       <ul>
         <li>sensors</li>
@@ -133,65 +118,61 @@ variables, and by shortening certain method calls.
         <li>dcc</li>
 
         <li>audio</li>
-      </ul>These can then be referenced directly in Jython as
+      </ul>
+      These can then be referenced directly in Jython as
+
       <pre>
    t2 = turnouts.provideTurnout("12");
 
    dcc.
 </pre>Note that the variable t2 did not need to be declared.
+      <p>Juthon provides a shortcut for parameters that have been defined with Java-Bean-like get
+      and set methods:</p>
 
-      <p>Juthon provides a shortcut for parameters that have been
-      defined with Java-Bean-like get and set methods:</p>
       <pre>
    t2.setCommandedState(Turnout.THROWN)
 </pre>can be written as
+
       <pre>
    t2.commandedState = THROWN
-</pre>where the assignment is actually invoking the set method.
-Also note that THROWN was defined when running the Python script at
-startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also
+</pre>where the assignment is actually invoking the set method. Also note that THROWN was defined
+when running the Python script at startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also
 defined.
+      <p>A similar mechanism can be used to check the state of something:</p>
 
-      <p>A similar mechanism can be used to check the state of
-      something:</p>
       <pre>
 &gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE
 1
 &gt;&gt;&gt; print sensors.provideSensor("3").knownState == INACTIVE
 0
-</pre>Note that Jython uses "1" to indicate true, and "0" to
-indicate false, so sensor 3 is currently active in this example
+</pre>Note that Jython uses "1" to indicate true, and "0" to indicate false, so sensor 3 is
+currently active in this example
+      <p>You can also directly invoke methods, e.g. to send a DCC packet to the rails you type:</p>
 
-      <p>You can also directly invoke methods, e.g. to send a DCC
-      packet to the rails you type:</p>
       <pre>
 
    dcc.sendPacket([0x01, 0x03, 0xbb], 4)
-</pre>This sends that three-byte packet four times, and then
-returns to the command line.
+</pre>This sends that three-byte packet four times, and then returns to the command line.
+      <p>To exit, either ^C from the command line, or use the exit command from the menu.</p>
 
-      <p>To exit, either ^C from the command line, or use the exit
-      command from the menu.</p>
+      <h2>Using Python for signal logic and automation</h2>
+      The existing JMRI "<a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>" classes
+      provide hooks for user layout automation, including signaling. But they require that you
+      write Java code and compile it into .class files, or write Jython code and import it.
+      <h3>Termination</h3>
 
-      <h2>Using Python for signal logic and automation</h2>The
-      existing JMRI "<a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
-      classes provide hooks for user layout automation, including
-      signaling. But they require that you write Java code and
-      compile it into .class files, or write Jython code and import it.
+      <p>Once the JMRI main thread (or Swing GUI thread?) has started, ^D is not sufficient to
+      exist the program. You have to select "Quit" from the actual file menu, or ^C the
+      program.</p>
 
-    <h3>Termination</h3>
-      <p>Once the JMRI main thread (or Swing GUI
-      thread?) has started, ^D is not sufficient to exist the
-      program. You have to select "Quit" from the actual file menu,
-      or ^C the program.</p>
-
-      <p>It would be good to understand what's preventing the
-      program from stopping when it gets the <code>^D</code>.</p>
-      
+      <p>It would be good to understand what's preventing the program from stopping when it gets
+      the <code>^D</code>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

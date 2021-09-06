@@ -1,9 +1,12 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
+import jmri.util.JmriJFrame;
 
 /**
  * Start a SwitchboardEditor.
@@ -25,7 +28,7 @@ public class SwitchboardEditorAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String name = Bundle.getMessage("SwitchboardDefaultName", "");
         for (int i = 2; i < 100; i++) {
-            if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
+            if (JmriJFrame.getFrame(name) != null) {
                 name = Bundle.getMessage("SwitchboardDefaultName", " " + i);
             }
         }

@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Main Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI: Main Window</h1>
 
-      <p>The JMRI main window is where you get access to all the JMRI capabilities.
-      See <a href="../../html/apps/PanelPro/index.shtml">PanelPro</a> for details about
-      the standard set of menus.</p>
+      <p>The JMRI main window is where you get access to all the JMRI capabilities. See <a href=
+      "../../html/apps/PanelPro/index.shtml">PanelPro</a> for details about the standard set of
+      menus.</p>
 
       <p>This is the apps.Apps.shtml help page</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

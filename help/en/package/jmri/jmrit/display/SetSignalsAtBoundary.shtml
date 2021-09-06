@@ -1,133 +1,104 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Set Signals at Block Boundary Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor Tool">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Set Signals at Block Boundary</h1>
 
       <h2>Introduction</h2>
 
-      <p>This tool provides an automated procedure for assigning
-      signals to a block boundary not associated with a turnout or
-      a level crossing. This occurs when track segments from
-      different blocks join at an anchor point. If requested, this
-      tool will place signal icons on the panel at the specified
-      block boundary, and will set up Simple Signal Logic for the
-      specified signal heads. Prior to accessing this tool, blocks
-      must be defined for signaled regions of track on the panel,
-      and the required signal heads must be in the Signal Head
-      Table. This tool only works correctly when track through the
-      anchor point is vertical or horizontal (or mostly vertical or
-      horizontal), so design your panel accordingly.</p>
+      <p>This tool provides an automated procedure for assigning signals to a block boundary not
+      associated with a turnout or a level crossing. This occurs when track segments from different
+      blocks join at an anchor point. If requested, this tool will place signal icons on the panel
+      at the specified block boundary, and will set up Simple Signal Logic for the specified signal
+      heads. Prior to accessing this tool, blocks must be defined for signaled regions of track on
+      the panel, and the required signal heads must be in the Signal Head Table. This tool only
+      works correctly when track through the anchor point is vertical or horizontal (or mostly
+      vertical or horizontal), so design your panel accordingly.</p>
 
-      <p>When this item is selected, a dialog is shown for entry of
-      names of the two blocks whose boundary is to be signaled, and
-      for entry of names (system or user) of one or two signal
-      heads to be assigned to the block boundary. For each signal
-      head, check boxes are available for selecting whether an icon
-      is to be placed on the panel, and whether Simple Signal Logic
-      is to be created for the signal head. Regardless of whether
-      icons are placed or logic is created, Layout Editor will
-      record that the entered signal heads are assigned to the
+      <p>When this item is selected, a dialog is shown for entry of names of the two blocks whose
+      boundary is to be signaled, and for entry of names (system or user) of one or two signal
+      heads to be assigned to the block boundary. For each signal head, check boxes are available
+      for selecting whether an icon is to be placed on the panel, and whether Simple Signal Logic
+      is to be created for the signal head. Regardless of whether icons are placed or logic is
+      created, Layout Editor will record that the entered signal heads are assigned to the
       specified block boundary.</p>
 
       <h2>The Set Signals at Block Boundary Dialog</h2>
 
-      <p>In the top two Block Name fields, enter the names of the
-      two blocks that join at the block boundary. If the tool
-      cannot find blocks with those names on the panel, an error
-      message results. Also, if the two blocks don't join at an
-      anchor point on the panel, an error message results.</p>
+      <p>In the top two Block Name fields, enter the names of the two blocks that join at the block
+      boundary. If the tool cannot find blocks with those names on the panel, an error message
+      results. Also, if the two blocks don't join at an anchor point on the panel, an error message
+      results.</p>
 
-      <p>Signal Head names (either system or user) are entered in
-      the next section. At least one signal head name should be
-      entered. If signal heads at this block boundary have been
-      entered previously, click <b>Get Saved</b> to retrieve the
-      signal head names previously entered. The upper entry,
-      <b>East (or South) Bound</b>, is for the signal head seen by
-      an east-bound train (or south-bound train if the track is
-      vertical). "East-bound" refers to a train proceeding from
-      left to right <i>on the panel</i> at the block boundary.
-      Similarly, "south-bound" refers to a train proceeding from
-      top to bottom <i>on the panel</i>. Likewise, the second
-      signal head entry, <b>West(or North) Bound</b>, is for a
-      signal head seen by a west-bound (or north-bound) train.
-      Because the signal icons only look decent for horizontal or
-      vertical track, you should set up your panel so that block
-      boundaries occur on track that is almost horizontal or almost
-      vertical.</p>
+      <p>Signal Head names (either system or user) are entered in the next section. At least one
+      signal head name should be entered. If signal heads at this block boundary have been entered
+      previously, click <strong>Get Saved</strong> to retrieve the signal head names previously
+      entered. The upper entry, <strong>East (or South) Bound</strong>, is for the signal head seen
+      by an east-bound train (or south-bound train if the track is vertical). "East-bound" refers
+      to a train proceeding from left to right <em>on the panel</em> at the block boundary.
+      Similarly, "south-bound" refers to a train proceeding from top to bottom <em>on the
+      panel</em>. Likewise, the second signal head entry, <strong>West(or North) Bound</strong>, is
+      for a signal head seen by a west-bound (or north-bound) train. Because the signal icons only
+      look decent for horizontal or vertical track, you should set up your panel so that block
+      boundaries occur on track that is almost horizontal or almost vertical.</p>
 
-      <p>Note: If there was a signal head previously assigned to
-      one of the two positions, and you enter a <i>different</i>
-      signal head in the same place, the new signal head will
-      replace the previous signal head, and the icon of the
-      previous signal head (if there is one) will be deleted from
-      the panel.</p>
+      <p>Note: If there was a signal head previously assigned to one of the two positions, and you
+      enter a <em>different</em> signal head in the same place, the new signal head will replace
+      the previous signal head, and the icon of the previous signal head (if there is one) will be
+      deleted from the panel.</p>
 
-      <p>Check <b>Add Signal Icon to Panel</b> to request that an
-      icon for a signal head be placed on the panel at the block
-      boundary. This tool can only place a signal icon on track
-      that is almost vertical or almost horizontal. If this is not
-      so, a message is printed, and you should place the signal
-      icon manually using the Layout Editor tool bar. Regardless,
-      the signal head name is assigned to the block boundary.</p>
+      <p>Check <strong>Add Signal Icon to Panel</strong> to request that an icon for a signal head
+      be placed on the panel at the block boundary. This tool can only place a signal icon on track
+      that is almost vertical or almost horizontal. If this is not so, a message is printed, and
+      you should place the signal icon manually using the Layout Editor tool bar. Regardless, the
+      signal head name is assigned to the block boundary.</p>
 
-      <p>Check <b>Set up Logic</b> to request that the tool set up
-      a Simple Signal Logic for a signal head. The tool will create
-      the logic and automatically fill in entries from the
-      information available. If the tool does not have enough
-      information available to set up the logic, a message results,
-      and you will have to return later after more signals have
-      been assigned to turnouts and block boundaries on the
-      panel.</p>
+      <p>Check <strong>Set up Logic</strong> to request that the tool set up a Simple Signal Logic
+      for a signal head. The tool will create the logic and automatically fill in entries from the
+      information available. If the tool does not have enough information available to set up the
+      logic, a message results, and you will have to return later after more signals have been
+      assigned to turnouts and block boundaries on the panel.</p>
 
       <h2>Notes</h2>
 
-      <p>When setting up logic, this tool will follow track within
-      a block until it finds a signal at the end of the block away
-      from the block boundary being signaled. If your layout
-      contains sections that are signaled and sections that are
-      not, to get this tool to set up logic correctly, you may have
-      to place a virtual signal (a signal that does not correspond
-      to an actual signal on the layout) at the unsignaled end of
-      the block that connects a section of track that is signaled
-      with track that is not signaled. If a block ends with an end
-      bumper, no signal is required at the end bumper end.</p>
+      <p>When setting up logic, this tool will follow track within a block until it finds a signal
+      at the end of the block away from the block boundary being signaled. If your layout contains
+      sections that are signaled and sections that are not, to get this tool to set up logic
+      correctly, you may have to place a virtual signal (a signal that does not correspond to an
+      actual signal on the layout) at the unsignaled end of the block that connects a section of
+      track that is signaled with track that is not signaled. If a block ends with an end bumper,
+      no signal is required at the end bumper end.</p>
 
-      <p>If a block has an internal turnout (the turnout, and the
-      track segments at its throat and continuing legs are within
-      the block), the program will expect signals at that turnout
-      even if it's not at the end of the block. However, at times
-      the user may not want to signal a seldom used turnout within
-      a block. When following track through a block, the program
-      will skip over unsignaled internal turnouts if <b>Skip
-      Unsignaled Internal Turnouts</b> is checked in the Layout
-      Editor <b>Tools</b> menu. It will always, however, warn that
-      it is doing so. <b>Use this option with caution.</b> There is
-      no signal protecting against a skipped turnout being set
-      incorrectly, so if an unsignaled internal turnout is not set
-      correctly, derailed trains could result.</p>
+      <p>If a block has an internal turnout (the turnout, and the track segments at its throat and
+      continuing legs are within the block), the program will expect signals at that turnout even
+      if it's not at the end of the block. However, at times the user may not want to signal a
+      seldom used turnout within a block. When following track through a block, the program will
+      skip over unsignaled internal turnouts if <strong>Skip Unsignaled Internal Turnouts</strong>
+      is checked in the Layout Editor <strong>Tools</strong> menu. It will always, however, warn
+      that it is doing so. <strong>Use this option with caution.</strong> There is no signal
+      protecting against a skipped turnout being set incorrectly, so if an unsignaled internal
+      turnout is not set correctly, derailed trains could result.</p>
 
-      <p>This tool sets up three-aspect signaling. If you have a
-      special situation at a signal, or would like four aspect
-      signaling or approach lighting you will have to edit the
-      information entered by the tool. The Simple Signal Logic
-      dialog can be accessed from the popup menu of the signal
-      icon. If your special situation cannot be handled by Simple
-      Signal Logic, you should refer to Logix to tailor the signal
-      logic to your needs.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>This tool sets up three-aspect signaling. If you have a special situation at a signal, or
+      would like four aspect signaling or approach lighting you will have to edit the information
+      entered by the tool. The Simple Signal Logic dialog can be accessed from the popup menu of
+      the signal icon. If your special situation cannot be handled by Simple Signal Logic, you
+      should refer to Logix to tailor the signal logic to your needs.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

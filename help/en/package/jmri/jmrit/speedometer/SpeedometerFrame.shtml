@@ -1,46 +1,39 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Speedometer</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Speedometer</h1>
 
-      <p>The Speedometer measures the time from one sensor to
-      another, then calculates the speed by calculating the
-      distance covered by the time taken.</p>
+      <p>The Speedometer measures the time from one sensor to another, then calculates the speed by
+      calculating the distance covered by the time taken.</p>
 
-      <p>Enter a Sensor Sysname in 'starts timers on' field. Then
-      enter another Sensor Sysname in the 'stops timer 1 on' field.
-      Measure the distance between the two, convert that into feet
-      for your scale and enter that into the 'Distance 1'
+      <p>Enter a Sensor Sysname in 'starts timers on' field. Then enter another Sensor Sysname in
+      the 'stops timer 1 on' field. Measure the distance between the two, convert that into feet
+      for your scale and enter that into the 'Distance 1' field.</p>
+
+      <p>The speed of your train between the two Sensors will be displayed in the 'Timer 1 Speed'
       field.</p>
 
-      <p>The speed of your train between the two Sensors will be
-      displayed in the 'Timer 1 Speed' field.</p>
+      <p>You can add a third Sensor in the 'stops timer 2 on' field and that will give the speed
+      between the starts sensor and that sensor in the 'Timer 2 Speed' field. You also need to
+      enter the value in the 'Distance 2' field in scale feet between the start sensor and this
+      sensor.</p>
 
-      <p>You can add a third Sensor in the 'stops timer 2 on' field
-      and that will give the speed between the starts sensor and
-      that sensor in the 'Timer 2 Speed' field. You also need to
-      enter the value in the 'Distance 2' field in scale feet
-      between the start sensor and this sensor.</p>
-
-      <p>You can select to trigger the start/end of the timers with
-      the entry or exit buttons. The indicators on the right side
-      of the pane is the state sensors you selected.</p>
-
+      <p>You can select to trigger the start/end of the timers with the entry or exit buttons. The
+      indicators on the right side of the pane is the state sensors you selected.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

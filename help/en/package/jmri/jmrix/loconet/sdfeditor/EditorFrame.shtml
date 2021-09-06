@@ -1,128 +1,95 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SDF Sound File Editor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Digitrax SDF Sound File Editor">
+  <meta name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>SDF Sound File Editor</h1>
-      <p>Digitrax sound decoders are
-      loaded with "sound projects", stored in "Sound Project"
-      (.spj) files. Those contain a number of "sound fragments" in
-      .wav format, plus a small program that tells the decoder when
-      to play the various sounds, and controls the use of functions
-      and CVs. That program is stored in a "Sound Definition" (SDF)
-      format.</p>
 
-      <p>The SDF Sound File Editor allows you to make certain kinds
-      of changes to the SDF information in a sound project. It's
-      used with the <a href="../soundloader/EditorFrame.shtml">SPJ
-      editor</a> because the SDF information is stored in a
-      Digitrax SPJ sound project file. After you edit the SDF
-      information, you can save it to a file from the <a href=
-      "../soundloader/EditorFrame.shtml">SPJ editor</a>, and then
-      download it to a Digitrax sound decoder with a Digitrax PR2
-      or PR3 and the <a href=
-      "../soundloader/LoaderFrame.shtml">JMRI sound downloader
-      tool</a> or the Digitrax SoundLoader program.</p>
+      <p>Digitrax sound decoders are loaded with "sound projects", stored in "Sound Project" (.spj)
+      files. Those contain a number of "sound fragments" in .wav format, plus a small program that
+      tells the decoder when to play the various sounds, and controls the use of functions and CVs.
+      That program is stored in a "Sound Definition" (SDF) format.</p>
 
-      <p>Digitrax provides sample sound project files at their
-      Sound Depot <a href=
-      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
-      web site. You can also find links to documentation and
-      additional tools there.</p>
+      <p>The SDF Sound File Editor allows you to make certain kinds of changes to the SDF
+      information in a sound project. It's used with the <a href=
+      "../soundloader/EditorFrame.shtml">SPJ editor</a> because the SDF information is stored in a
+      Digitrax SPJ sound project file. After you edit the SDF information, you can save it to a
+      file from the <a href="../soundloader/EditorFrame.shtml">SPJ editor</a>, and then download it
+      to a Digitrax sound decoder with a Digitrax PR2 or PR3 and the <a href=
+      "../soundloader/LoaderFrame.shtml">JMRI sound downloader tool</a> or the Digitrax SoundLoader
+      program.</p>
 
-      <p>When you open the SDF editor by clicking the "Edit" button
-      in the <a href="../soundloader/EditorFrame.shtml">SPJ
-      editor</a>, a new window opens that has two parts:<br>
-      <a href="SdfInitSound.gif"><img src="SdfInitSound.gif" width=
-      "415" height="235" alt="SDF Editor"></a><br>
-      On the left is a view of the entire SDF information as a tree
-      of nested elements. On the right is a window that shows
-      additional information on the element that's selected on the
+      <p>Digitrax provides sample sound project files at their Sound Depot <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web
+      site. You can also find links to documentation and additional tools there.</p>
+
+      <p>When you open the SDF editor by clicking the "Edit" button in the <a href=
+      "../soundloader/EditorFrame.shtml">SPJ editor</a>, a new window opens that has two parts:<br>
+      <a href="SdfInitSound.gif"><img src="SdfInitSound.gif" width="415" height="235" alt=
+      "SDF Editor"></a><br>
+      On the left is a view of the entire SDF information as a tree of nested elements. On the
+      right is a window that shows additional information on the element that's selected on the
       left.</p>
 
-      <p>The right hand window has the "assembly" format for the
-      selected element at the top, then an explanation of what the
-      element does in the middle. If an editor for that particular
-      type of element has been defined, the section at the bottom
-      will have checkboxes and selection boxes for modifying the
-      content of the element.</p>
+      <p>The right hand window has the "assembly" format for the selected element at the top, then
+      an explanation of what the element does in the middle. If an editor for that particular type
+      of element has been defined, the section at the bottom will have checkboxes and selection
+      boxes for modifying the content of the element.</p>
 
-      <h2>SDF Structure</h2>Sound definitions define a series of
-      layers that together control the decoder. By opening and
-      closing the icons on the left side of the editor window, you
-      can explore the structure of a sound definition. Feel free to
-      explore! Until you save the file, you can't actually hurt
+      <h2>SDF Structure</h2>
+      Sound definitions define a series of layers that together control the decoder. By opening and
+      closing the icons on the left side of the editor window, you can explore the structure of a
+      sound definition. Feel free to explore! Until you save the file, you can't actually hurt
       anything.
+      <h3>Scheme</h3>
+      At the top level are "schemes", which are like programs for the decoder. A decoder can only
+      be using one scheme at a time, although there can be several present in memory at once. The
+      schemes are numbered, starting with 0, and the active scheme is selected via the contents of
+      CV. Scheme 31 marks the end of the file.
+      <p>There are no options to the scheme itself for you to edit, but you can open the scheme to
+      work with its contents.</p>
 
-      <h3>Scheme</h3>At the top level are "schemes", which are like
-      programs for the decoder. A decoder can only be using one
-      scheme at a time, although there can be several present in
-      memory at once. The schemes are numbered, starting with 0,
-      and the active scheme is selected via the contents of CV.
-      Scheme 31 marks the end of the file.
+      <p>The first element of a scheme is a version number tag. These defines the format used to
+      store the scheme's contents. Currently, only version 1 is a defined format.</p>
 
-      <p>There are no options to the scheme itself for you to edit,
-      but you can open the scheme to work with its contents.</p>
+      <p>After the version tag, one or more "channels" are defined.</p>
 
-      <p>The first element of a scheme is a version number tag.
-      These defines the format used to store the scheme's contents.
-      Currently, only version 1 is a defined format.</p>
+      <h3>Channel</h3>
+      The decoder hardware is capable of handling several things at once. These are called
+      "channels", and one or more of them make up each scheme. How many there can be depends on the
+      specific decoder hardware, but it's quite common to see four channels within a scheme.
+      <p>Although all the channels can be playing sounds simultaneously, each channel can only play
+      one sound (one .wav fragment) at a time. The purpose of the commands within the channel is to
+      define which sounds it should play, and when they should start and end.</p>
 
-      <p>After the version tag, one or more "channels" are
-      defined.</p>
+      <p>The channel element itself has no options for you to edit, but you can open it and work
+      with its contents.</p>
 
-      <h3>Channel</h3>The decoder hardware is capable of handling
-      several things at once. These are called "channels", and one
-      or more of them make up each scheme. How many there can be
-      depends on the specific decoder hardware, but it's quite
-      common to see four channels within a scheme.
+      <h3>Sequence</h3>
+      Within each channel, there can be one or more sequences. Each one has a condition under which
+      it starts, and then a series of operations to take then it's started.
+      <p>The operations can be things like starting to play a particular sound, or modifying how a
+      sound is played, or changing various information internal to the decoder. When the sequence
+      is started, it runs right to the end, leaving behind things for the decoder to do in the
+      future. For example, it can define which sound fragment to play next when the current one is
+      done, or stop the sound that's currently being played by the channel and start a new one.</p>
 
-      <p>Although all the channels can be playing sounds
-      simultaneously, each channel can only play one sound (one
-      .wav fragment) at a time. The purpose of the commands within
-      the channel is to define which sounds it should play, and
-      when they should start and end.</p>
-
-      <p>The channel element itself has no options for you to edit,
-      but you can open it and work with its contents.</p>
-
-      <h3>Sequence</h3>Within each channel, there can be one or
-      more sequences. Each one has a condition under which it
-      starts, and then a series of operations to take then it's
-      started.
-
-      <p>The operations can be things like starting to play a
-      particular sound, or modifying how a sound is played, or
-      changing various information internal to the decoder. When
-      the sequence is started, it runs right to the end, leaving
-      behind things for the decoder to do in the future. For
-      example, it can define which sound fragment to play next when
-      the current one is done, or stop the sound that's currently
-      being played by the channel and start a new one.</p>
-
-      <p>The sequence starts when a trigger condition becomes true.
-      You can examine and change the trigger condition using the
-      lower-right part of the editor frame. Some examples
-      include:</p>
+      <p>The sequence starts when a trigger condition becomes true. You can examine and change the
+      trigger condition using the lower-right part of the editor frame. Some examples include:</p>
 
       <ul>
-        <li>Trigger when a function becomes true, e.g. when the
-        user sets F1 on.</li>
+        <li>Trigger when a function becomes true, e.g. when the user sets F1 on.</li>
 
-        <li>Trigger on how the decoder is controlling the
-        locomotive, for example:
-
+        <li>Trigger on how the decoder is controlling the locomotive, for example:
           <ul>
             <li>when the motor speed increases</li>
 
@@ -133,7 +100,6 @@
         </li>
 
         <li>Trigger on other events from the outside, such as:
-
           <ul>
             <li>when the chuff cam goes active</li>
 
@@ -142,12 +108,11 @@
             <li>when an input connection goes active</li>
           </ul>
         </li>
-      </ul>There are a lot of possibilities, which are listed in
-      the selection box and (partially) documented on a <a href=
-      "TriggerConditions.shtml">separate page</a>.
-
-      <p>There are also four options that can be selected to change
-      when the sequense is started:</p>
+      </ul>
+      There are a lot of possibilities, which are listed in the selection box and (partially)
+      documented on a <a href="TriggerConditions.shtml">separate page</a>.
+      <p>There are also four options that can be selected to change when the sequense is
+      started:</p>
 
       <dl>
         <dt>Zap</dt>
@@ -158,46 +123,38 @@
 
         <dt>Not triggered</dt>
 
-        <dd>The sequence starts when the opposite condition
-        happens. For example, if the trigger is "When F1 goes
-        active", and this option is selected, the sequence will
-        start when F1 goes inactive.</dd>
+        <dd>The sequence starts when the opposite condition happens. For example, if the trigger is
+        "When F1 goes active", and this option is selected, the sequence will start when F1 goes
+        inactive.</dd>
       </dl>
 
-      <p>Each sequence contains one or more instructions, the last
-      of which has to be an "End Sequence" instruction.</p>
+      <p>Each sequence contains one or more instructions, the last of which has to be an "End
+      Sequence" instruction.</p>
 
-      <h3>Instructions</h3>Within each sequence are instructions
-      that tell the decoder what to do as it's processing the
+      <h3>Instructions</h3>
+      Within each sequence are instructions that tell the decoder what to do as it's processing the
       sequence. We describe the most important ones here.
-
       <h4>Play Fragment</h4>
 
       <h4>Set Modifier</h4>
 
-      <h2>Examples</h2>(Provide some fragments of code here as
-      examples)
-
-      <h2>Status and Future Work</h2><img src=
-      "../../../../../images/bangdesk.gif" align="right" height=
-      "45" width="45" alt="Cute image of work"> This editor tool is
-      still very much a work in progress. It's good at browsing the
-      content of the file, but it needs a lot more explanatory text
-      added. Also, it currently only provides a way to make small
-      changes to the contents of an SDF file, but doesn't (yet)
-      allow you to make larger changes to structure of the file.
-      For example, if you selected an "Initiate Sound" element,
-      which tells the decoder to start playing a sound under
-      certain conditions, you can change those conditions. But the
-      editor (at present) doesn't provide a way to add new
-      "Initiate Sound" elements.
-
-      <p>The editor is meant to be a beginner's tool, and we need a
-      lot of explanatory text on each window so people know what
-      the options do.</p>
+      <h2>Examples</h2>
+      (Provide some fragments of code here as examples)
+      <h2>Status and Future Work</h2>
+      <img src="../../../../../images/bangdesk.gif" class="floatRight" height="45" width="45" alt=
+      "Cute image of work"> This editor tool is still very much a work in progress. It's good at
+      browsing the content of the file, but it needs a lot more explanatory text added. Also, it
+      currently only provides a way to make small changes to the contents of an SDF file, but
+      doesn't (yet) allow you to make larger changes to structure of the file. For example, if you
+      selected an "Initiate Sound" element, which tells the decoder to start playing a sound under
+      certain conditions, you can change those conditions. But the editor (at present) doesn't
+      provide a way to add new "Initiate Sound" elements.
+      <p>The editor is meant to be a beginner's tool, and we need a lot of explanatory text on each
+      window so people know what the options do.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.KernelManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -325,7 +326,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
         
         // increase test code coverage by placing cars in a kernel
-        Kernel k2 = cmanager.newKernel("2 Boxcars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("2 Boxcars");
         c3.setKernel(k2);
         c4.setKernel(k2);
         
@@ -418,7 +419,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Car c11 = JUnitOperationsUtil.createAndPlaceCar("A", "110", "Boxcar", "40", northendStaging1, 1);
         
         // increase test code coverage by placing cars in a kernel
-        Kernel k2 = cmanager.newKernel("2 Boxcars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("2 Boxcars");
         c3.setKernel(k2);
         c4.setKernel(k2);
         

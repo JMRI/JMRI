@@ -71,12 +71,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Adds a Jython script which repeats certain "normal" LocoNet
-                switch (turnout) control messages as "special" LocoNet switch
-                control messages, so that they will be forwarded to the DCC track
-                signal (and RailSync signals) when the Digitrax command station's
-                "Bushby" feature is enabled.  Further information may be found
-                <a href="#LnBushbyForwarder"> here</a>.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -352,10 +347,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Updated TCS Decoder identification processes to allow for 4-byte decoder
-            with ids stored in CV's 253, 254, 255, and 256. Process only effects TCS decoders
-            CV249 > 175.
-            </li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -466,24 +458,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>For some hardware types, sensors.requestAll() can request a status update for any Sensors known to JMRI.
-            <br>This is not possible for many hardware types, eg. Internal Connections.
-            <br>For multiple hardware connections, this will query all connections.</li>
-
-            <li><a id="LnBushbyForwarder" name="LnBushbyForwarder">Adds</a> the
-                <code>LnBushbyForwarder.py</code> jython script, to support
-            Digitrax command stations by providing a mechanism to forward "special"
-            LocoNet turnout control messages when "normal" LocoNet turnout control
-            messages are seen for user-selected LocoNet turnout addresses.  This
-            may be useful when the Digitrax command station "Bushby" feature is
-            enabled.  More technical discussion of the issues associated with the
-            Bushby feature may be found in the discussion of <a href="../html/hardware/loconet/Digitrax.shtml#alternatives">
-            Command Station Turnout Command
-            Rejection Avoidance Strategies</a> in the general Digitrax help page.</li>
-
-            <li>Added ThreadingExample.py script to show how to defer work to the GUI/Layout
-                script from an AbstractAutomat or other threaded script.
-            <li>Added a new LnSendToolwithNCE script.
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -590,17 +565,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-          <li>PanelPro main menu updates
-            <ul>
-              <li>Moved the <strong>Virtual Sound Decoder</strong> menu from the
-              <strong>Debug</strong> menu to the <strong>Tools</strong> menu.</li>
-              <li>Moved <strong>Start WiThrottle Server</strong> and <strong>Start JMRI Web Server</strong>
-              from <strong>Debug</strong> to <strong>Tools &rArr; Servers</strong>.</li>
-              <li>Updated website help pages including adding a section about the
-              PanelPro menus to the main PanelPro help page.</li>
-            </ul>
-          </li>
-
-          <li></li>
+            <li></li>
         </ul>
 

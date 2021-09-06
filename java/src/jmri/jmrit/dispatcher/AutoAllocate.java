@@ -206,11 +206,16 @@ public class AutoAllocate implements Runnable {
                         continue;
                     }
                     // is the train held
-                    if (activeTrain.holdAllocation || (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+                    if (activeTrain.holdAllocation()|| (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
                         log.debug("[{}]:Allocation is Holding or Delayed", trainName);
                         continue;
                     }
-
+                    // apparently holdAllocation() is not set when holding !!!
+                    if (InstanceManager.getDefault(DispatcherFrame.class)
+                            .getSignalType() == DispatcherFrame.SIGNALMAST &&
+                            isSignalHeldAtStartOfSection(ar)) {
+                        continue;
+                    }
                     // this already reserved for the train, allocate.
                     String reservedTrainName = reservedSections.get(ar.getSection().getSystemName());
                     if (reservedTrainName != null) {
@@ -355,11 +360,6 @@ public class AutoAllocate implements Runnable {
                     } // end of allocating by safe sections
                 }
                 log.trace("Using Regular");
-                if (InstanceManager.getDefault(DispatcherFrame.class)
-                        .getSignalType() == DispatcherFrame.SIGNALMAST &&
-                        isSignalHeldAtStartOfSection(ar)) {
-                    continue;
-                }
                 if (!checkUnallocatedCleanly(activeTrain, ar.getSection())) {
                     okToAllocate = false;
                     continue;

@@ -1,64 +1,69 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Main Window</title>
-  <!--#include virtual="/Style.shtml" -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Main Window</h1>
 
       <h2>The Roster Table</h2>
 
-      <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="dp3_Main_Main.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>The Roster Table in the main body of DecoderPro displays
-      all of the locomotives in your roster or selected roster
-      groups.<br>
-      <strong>SORT</strong> by any column by clicking on the column
-      header. Roster above is sorted by DCC addresses.</p>
+      <p>The Roster Table in the main body of DecoderPro displays all of the locomotives in your
+      roster or selected roster groups.<br>
+      <strong>SORT</strong> by any column by clicking on the column header. Roster above is sorted
+      by DCC addresses.</p>
 
-      <p><img src="images/dp3_rosterTable.png" width="900" height=
-      "141" alt="table"></p>
+      <p><img src="images/dp3_rosterTable.png" width="900" height="141" alt="table">
+      </p>
 
-      <p>Hide/show any column by right clicking anywhere in the
-      Roster header and checking columns to be displayed and
-      unchecking columns to hide.</p>
+      <p>Hide/show any column by right clicking anywhere in the Roster header and checking columns
+      to be displayed and unchecking columns to hide.</p>
 
-      <p><img src="images/dp3_rosterTable01.png" width="418"
-      height="322" alt="table"></p>
+      <p><img src="images/dp3_rosterTable01.png" width="418" height="322" alt="table">
+      </p>
 
       <p>With columns hidden.<br>
-      <img src="images/dp3_rosterTable02.png" width="495" height=
-      "376" alt="table"><br></p>
+      <img src="images/dp3_rosterTable02.png" width="495" height="376" alt="table"><br></p>
 
-      <p>Selecting Actions using Context menu (Right Click ) on
-      locomotive selected. Select the action you would like to
-      perform.</p>
+      <p>Selecting Actions using Context menu (Right Click ) on locomotive selected. Select the
+      action you would like to perform.</p>
 
-      <p><img src="images/dp3_rosterTable03.png" width="483"
-      height="303" alt="table3"></p>
+      <p><img src="images/dp3_rosterTable03.png" width="483" height="303" alt="table3">
+      </p>
 
-      <p>Double Click on Selected locomotive and Programming Window
-      will open.</p>
+      <p>Double Click on Selected locomotive and Programming Window will open.</p>
 
-      <p>Editing column of a Roster Entry in the table. select
-      locomotive then click on column that you want to edit. Type
-      your change.</p>
+      <p>Editing column of a Roster Entry in the table. select locomotive then click on column that
+      you want to edit. Type your change.</p>
 
       <p>The following columns may be edited.<br>
       ID Col<br>
@@ -68,37 +73,31 @@
       Model<br>
       Owner<br></p>
 
-      <table width="90%" border="0" cellspacing="1" cellpadding=
-      "2">
-        <tr>
-          <td><img src="images/dp3_rosterTableEditCol.png" width=
-          "300" height="195" alt="edit col"></td>
+      <p><img src="images/dp3_rosterTableEditCol.png" width="300" height="195" alt="edit col">
+      <img src="images/dp3_rosterTableEditCol01.png" width="378" height="223" alt="&lt;/p"></p>
 
-          <td><img src="images/dp3_rosterTableEditCol01.png" width=
-          "378" height="223" alt="edit col"></td>
-        </tr>
-      </table>
+      <p><strong>Column sequence</strong> may be modified and Saved. Just Drag and Drop the column
+      header to the desired position.</p>
 
-      <p><strong>Column sequence</strong> may be modified and
-      Saved. Just Drag and Drop the column header to the desired
-      position.</p>
+      <p><strong>Column Width</strong> may be changed by grabbing the divider between the column
+      until the double headed arrow shows and move the arrows to the desired column width.</p>
 
-      <p><strong>Column Width</strong> may be changed by grabbing
-      the divider between the column until the double headed arrow
-      shows and move the arrows to the desired column width.</p>
+      <p>You may use the same technique to resize panes or the main window.<br></p>
 
-      <p>You may use the same technique to resize panes or the main
-      window.<br></p>
       <hr>
 
-      <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="dp3_Main_Main.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

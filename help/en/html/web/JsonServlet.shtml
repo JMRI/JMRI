@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator"
-    content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI JSON Servlet</title><!--#include virtual="/Style.shtml" -->
 
-  <title>JMRI JSON Servlet</title>
-  <!--#include virtual="/Style.shtml" -->
   <style type="text/css">
     table#jsonResponses {
       border-collapse: collapse;
@@ -27,68 +24,66 @@
     }
   </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI JSON Servlet</h1>
 
-      <p>The JMRI <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> Servlet provides a
-        RESTful API and a <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a>
-        API for accessing and editing user defined objects in JMRI. This document describes how to enable
-        the JMRI JSON servlet and provides some examples of use.</p>
+      <p>The JMRI <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> Servlet provides a RESTful
+      API and a <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> API for accessing
+      and editing user defined objects in JMRI. This document describes how to enable the JMRI JSON
+      servlet and provides some examples of use.</p>
 
-      <p><strong>Note</strong> the JMRI JSON protocol is documented in <a
-          href="https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API Documentation</a>.</p>
+      <p><strong>Note</strong> the JMRI JSON protocol is documented in <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API
+      Documentation</a>.</p>
 
-      <h2><a name="jmri_json_servlet">JMRI JSON Servlet</a></h2>
+      <h2 id="jmri_json_servlet">JMRI JSON Servlet</h2>
 
-      <p>An overview of how Web Server operates using JSON between JMRI and the web browser, using web.servlet.panel as
-        an example, can be found on <a href="PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
+      <p>An overview of how Web Server operates using JSON between JMRI and the web browser, using
+      web.servlet.panel as an example, can be found on <a href=
+      "PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
 
       <h2>Setting up the JSON Servlet</h2>
 
-      <p>The JMRI JSON Servlet is a feature that is part of the Web
-        Server. To use this service:</p>
+      <p>The JMRI JSON Servlet is a feature that is part of the Web Server. To use this
+      service:</p>
 
       <ol>
         <li>Ensure the web server's port is unique:
-
           <ul>
             <li>Open the Preferences dialog</li>
 
-            <li>Click <b>Web Server</b> on the left side</li>
+            <li>Click <strong>Web Server</strong> on the left side</li>
 
-            <li>Ensure the port number is unique (for example
-              12080). Other ports are used by WiThrottle, JSON
-              Server, etc.</li>
+            <li>Ensure the port number is unique (for example 12080). Other ports are used by
+            WiThrottle, JSON Server, etc.</li>
 
             <li>Click Save</li>
           </ul>
         </li>
 
-        <li>Click <b>Actions</b> and <b>Start Web Server</b> to
-          ensure the web server is running
-          (<strong>Tools &rArr; Servers &rArr; Start JRMI Web Server</strong> in PanelPro).</li>
+        <li>Click <strong>Actions</strong> and <strong>Start Web Server</strong> to ensure the web
+        server is running (<strong>Tools ⇒ Servers ⇒ Start JRMI Web Server</strong> in
+        PanelPro).</li>
 
-        <li>If you want the Web Server to run each time you start
-          JMRI:
-
+        <li>If you want the Web Server to run each time you start JMRI:
           <ul>
-            <li>Open the JMRI <b>Preferences</b> dialog</li>
+            <li>Open the JMRI <strong>Preferences</strong> dialog</li>
 
-            <li>Select <b>Start Up</b> in the left column</li>
+            <li>Select <strong>Start Up</strong> in the left column</li>
 
-            <li>Click <b>Add &#9662;</b></li>
+            <li>Click <strong>Add ▾</strong></li>
 
-            <li>Select <b>Perform action...</b></li>
+            <li>Select <strong>Perform action...</strong></li>
 
-            <li>Select <b>Start Web Server</b></li>
+            <li>Select <strong>Start Web Server</strong></li>
 
-            <li>Click <b>OK</b></li>
+            <li>Click <strong>OK</strong></li>
           </ul>
         </li>
       </ol>
@@ -99,77 +94,110 @@
 
       <dl>
         <dt>/json</dt>
-        <dd>Depending on protocol:
+
+        <dd>
+          Depending on protocol:
           <dl>
             <dt>HTTP</dt>
+
             <dd>Open a JSON WebSocket console that allows experimentation with JSON sockets.</dd>
 
             <dt>WS</dt>
+
             <dd>Open a JSON WebSocekt.</dd>
           </dl>
         </dd>
 
         <dt>/json/<em>type</em></dt>
-        <dd>Using the HTTP protocol:
+
+        <dd>
+          Using the HTTP protocol:
           <dl>
             <dt>GET</dt>
+
             <dd>request a list of objects of <em>type</em></dd>
 
             <dt>PUT</dt>
+
             <dd>add an object of <em>type</em></dd>
           </dl>
-          A JSON array of valid types for your JMRI installation is available by using the <em>type</em>
-          "<code><a href="http://localhost:12080/json/type">type</a></code>" (with JMRI Web Server running). See the <a
-            href="https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol documentation</a> for more
-          details.
+          A JSON array of valid types for your JMRI installation is available by using the
+          <em>type</em> "<code><a href="http://localhost:12080/json/type">type</a></code>" (with
+          JMRI Web Server running). See the <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol
+          documentation</a> for more details.
         </dd>
 
         <dt>/json/<em>type</em>/<em>name</em></dt>
-        <dd>Using the HTTP protocol:
+
+        <dd>
+          Using the HTTP protocol:
           <dl>
             <dt>GET</dt>
+
             <dd>request the object of <em>type</em> with name <em>name</em></dd>
 
             <dt>POST</dt>
+
             <dd>modify the object of <em>type</em> with name <em>name</em></dd>
 
             <dt>DELETE</dt>
+
             <dd>remove the object of <em>type</em> with name <em>name</em></dd>
           </dl>
         </dd>
       </dl>
 
-      <h2><a name="jmri_json_server">JMRI JSON Server</a></h2>
+      <h2 id="jmri_json_server">JMRI JSON Server</h2>
 
-      <p>The JMRI JSON server is functionally identical to the JSON
-        WebSocket interface, but running over a standard network socket.</p>
+      <p>The JMRI JSON server is functionally identical to the JSON WebSocket interface, but
+      running over a standard network socket.</p>
 
-      <h2><a name="jquery_jmri">jquery.jmri.js</a></h2>
+      <h2 id="jquery_jmri">jquery.jmri.js</h2>
 
-      <p><a href="https://github.com/JMRI/JMRI/blob/master/web/js/jquery.jmri.js"><em>jquery.jmri.js</em></a>
-        is a <a href="https://jquery.com">jQuery</a> library that ships with JMRI and
-        makes the JSON protocol support "just work" on most current browsers.</p>
+      <p><a href=
+      "https://github.com/JMRI/JMRI/blob/master/web/js/jquery.jmri.js"><em>jquery.jmri.js</em></a>
+      is a <a href="https://jquery.com">jQuery</a> library that ships with JMRI and makes the JSON
+      protocol support "just work" on most current browsers.</p>
 
-      <p>Examples of use of the jquery.jmri.js JavaScript library that
-        ships with JMRI include:</p>
+      <p>Examples of use of the jquery.jmri.js JavaScript library that ships with JMRI include:</p>
 
       <dl>
-        <dt><a href="/operations">Operations Conductor</a></dt>
-        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a></dd>
+        <dt>Operations Conductor</dt>
 
-        <dt><a href="/panel">Panel</a></dt>
-        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a></dd>
+        <dd>
+          source <a href=
+          "https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a>
+        </dd>
 
-        <dt><a href="/json">JSON Console</a></dt>
-        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a></dd>
+        <dt>Panel</dt>
 
-        <dt><a href="/web/power.html">Power Demonstration</a></dt>
-        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/power.html">/web/power.html</a></dd>
+        <dd>
+          source <a href=
+          "https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a>
+        </dd>
+
+        <dt>JSON Console</dt>
+
+        <dd>
+          source <a href=
+          "https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a>
+        </dd>
+
+        <dt>
+          <a href="/web/power.html">Power Demonstration</a>
+        </dt>
+
+        <dd>
+          source <a href=
+          "https://github.com/JMRI/JMRI/blob/master/web/power.html">/web/power.html</a>
+        </dd>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

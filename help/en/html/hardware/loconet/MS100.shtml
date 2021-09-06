@@ -1,98 +1,83 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Connecting an MS100 to
-  LocoNet&reg;</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Connecting an MS100 to LocoNet®</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Connecting an MS100 to LocoNet®</h1>
 
-      <h1>Hardware Support: Connecting an MS100 to
-      LocoNet&reg;</h1>
+      <p>The MS100 from Digitrax allows you to connect many types of computers to a LocoNet®.</p>
 
-      <p>The MS100 from Digitrax allows you to connect many types
-      of computers to a LocoNet&reg;.</p>
-
-      <p>Unfortunately, the MS100 is a somewhat old design, and
-      doesn't provide a reliable connection to the LocoNet.</p>
+      <p>Unfortunately, the MS100 is a somewhat old design, and doesn't provide a reliable
+      connection to the LocoNet.</p>
 
       <ul>
-        <li>Your computer may not be able to connect through the
-        MS100.</li>
+        <li>Your computer may not be able to connect through the MS100.</li>
 
-        <li>Even if it the MS100 makes a connection, you are likely
-        to encounter hard-to-diagnose intermittent errors.</li>
+        <li>Even if it the MS100 makes a connection, you are likely to encounter hard-to-diagnose
+        intermittent errors.</li>
 
-        <li>Even if you get the MS100 to work once, it may
-        permanently fail due to an update to the computer operating
-        system.</li>
+        <li>Even if you get the MS100 to work once, it may permanently fail due to an update to the
+        computer operating system.</li>
 
-        <li>If you have problems with an MS100, there may not be
-        anybody who can help you with them.</li>
+        <li>If you have problems with an MS100, there may not be anybody who can help you with
+        them.</li>
       </ul>
-      <p class="important">We strongly recommend that new setups
-      not use the MS100, and existing users plan on converting to
-      a better solution before it becomes unavoidable.</p>
 
-      <p>The <a href="LocoBufferUSB.shtml">LocoBuffer USB</a> and
-      the <a href="PR3.shtml">Digitrax PR3</a> are currently the
-      most reliable ways to connect a computer to a LocoNet. The
+      <p class="important">We strongly recommend that new setups not use the MS100, and existing
+      users plan on converting to a better solution before it becomes unavoidable.</p>
+
+      <p>The <a href="LocoBufferUSB.shtml">LocoBuffer USB</a> and the <a href="PR3.shtml">Digitrax
+      PR3</a> are currently the most reliable ways to connect a computer to a LocoNet. The
       LocoBuffer-USB is produced by Dick Bronson's <a href=
-      "http://www.rr-cirkits.com">RR-CirKits</a> company, based in
-      part on the original LocoBuffer design.</p>
+      "http://www.rr-cirkits.com">RR-CirKits</a> company, based in part on the original LocoBuffer
+      design.</p>
 
-      <p>In MS100 mode, the program attempts to open the port at
-      16600 baud, the LocoNet rate. If this fails, it attempts to
-      open the port at 16457 baud, which is a standard rate that's
-      close enough to work. If this also fails, the won't be able
-      to talk to the LocoNet through the MS100.</p>
+      <p>In MS100 mode, the program attempts to open the port at 16600 baud, the LocoNet rate. If
+      this fails, it attempts to open the port at 16457 baud, which is a standard rate that's close
+      enough to work. If this also fails, the won't be able to talk to the LocoNet through the
+      MS100.</p>
 
-      <p>Because neither of these rates are available, <b>the MS100
-      can't be used with Mac OS X, Windows 7 or most Windows Vista
-      machines</b>.</p>
+      <p>Because neither of these rates are available, <strong>the MS100 can't be used with Mac OS
+      X, Windows 7 or most Windows Vista machines</strong>.</p>
 
-      <p>Because we can't be sure your computer will be able to
-      talk to a MS100 without trying it, you should test this
-      before spending money on the MS100. To do that:</p>
+      <p>Because we can't be sure your computer will be able to talk to a MS100 without trying it,
+      you should test this before spending money on the MS100. To do that:</p>
 
       <ul>
         <li>Start the program.</li>
 
-        <li>Set the preferences for MS100 and your serial port. You
-        don't need to have anything connected, but do select the
-        port you will eventually be using.</li>
+        <li>Set the preferences for MS100 and your serial port. You don't need to have anything
+        connected, but do select the port you will eventually be using.</li>
 
         <li>Save the preferences.</li>
 
-        <li>Quit the program and restart it so that the preferences
-        take effect.</li>
+        <li>Quit the program and restart it so that the preferences take effect.</li>
       </ul>
 
-      <p>If you get a dialog box saying "Could not set baud
-      rate...", then you won't be able to use your computer with a
-      MS100. You should use a LocoBuffer.</p>
+      <p>If you get a dialog box saying "Could not set baud rate...", then you won't be able to use
+      your computer with a MS100. You should use a LocoBuffer.</p>
 
-      <h3>Linux hack to set the baud rate</h3>Some users have
-      reported success using Linux commands to directly set the
-      baud rate while the program is running. To do this:
-
+      <h3>Linux hack to set the baud rate</h3>
+      Some users have reported success using Linux commands to directly set the baud rate while the
+      program is running. To do this:
       <ul>
-        <li>Start DecoderPro, and wait until you see the error
-        message that the baud rate could not be set.</li>
+        <li>Start DecoderPro, and wait until you see the error message that the baud rate could not
+        be set.</li>
 
         <li>Run the following commands from the Linux command line:
+
           <pre>
 setserial /dev/ttyS0 divisor 7
 setserial /dev/ttyS0 spd_cust
@@ -101,14 +86,17 @@ stty speed 38400 &lt; /dev/ttyS0
         </li>
 
         <li>Then click on "OK" and continue on.</li>
-      </ul>This has been reported to work with both RH9 and FC3.
+      </ul>
+      This has been reported to work with both RH9 and FC3.
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
       <hr class="hide">
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

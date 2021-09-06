@@ -1,28 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: C/MRI Diagnostics</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: C/MRI Diagnostics</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h2>JMRI: C/MRI Diagnostics</h2>
-      <p>When it asks for output card
-      number, it means the address. For example, if you have two
-      input cards at 0 and 1, then output cards are address 2, 3,
-      and 4, you can specify 2, 3 and 4 here. Don't think it refers
-      to the "1st" output card, etc.</p>
 
+      <p>When it asks for output card number, it means the address. For example, if you have two
+      input cards at 0 and 1, then output cards are address 2, 3, and 4, you can specify 2, 3 and 4
+      here. Don't think it refers to the "1st" output card, etc.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

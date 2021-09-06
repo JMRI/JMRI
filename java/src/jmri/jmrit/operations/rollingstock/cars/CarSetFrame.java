@@ -58,7 +58,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     protected JComboBox<Track> trackReturnWhenLoadedBox = new JComboBox<>();
     protected JComboBox<String> loadReturnWhenLoadedBox = carLoads.getComboBox(null);
     JComboBox<String> loadComboBox = carLoads.getComboBox(null);
-    JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
+    JComboBox<String> kernelComboBox = InstanceManager.getDefault(KernelManager.class).getComboBox();
 
     // buttons
     JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
@@ -209,6 +209,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // get notified if combo box gets modified
         carLoads.addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
+        InstanceManager.getDefault(KernelManager.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(DivisionManager.class).addPropertyChangeListener(this);
 
         packFrame();
@@ -405,7 +406,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (kernelComboBox.getSelectedItem().equals(RollingStockManager.NONE)) {
                 car.setKernel(null);
             } else if (!car.getKernelName().equals(kernelComboBox.getSelectedItem())) {
-                car.setKernel(carManager.getKernelByName((String) kernelComboBox.getSelectedItem()));
+                car.setKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName((String) kernelComboBox.getSelectedItem()));
                 // if car has FRED or is caboose make lead
                 if (car.hasFred() || car.isCaboose()) {
                     car.getKernel().setLead(car);
@@ -772,7 +773,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     }
 
     protected void updateKernelComboBox() {
-        carManager.updateKernelComboBox(kernelComboBox);
+        InstanceManager.getDefault(KernelManager.class).updateComboBox(kernelComboBox);
         if (_car != null) {
             kernelComboBox.setSelectedItem(_car.getKernelName());
         }
@@ -819,6 +820,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     @Override
     public void dispose() {
         InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(KernelManager.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(DivisionManager.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
         super.dispose();
     }
@@ -851,7 +854,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (e.getPropertyName().equals(Car.RETURN_WHEN_LOADED_CHANGED_PROPERTY)) {
             updateReturnWhenLoadedComboBoxes();
         }
-        if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY) ||
+        if (e.getPropertyName().equals(KernelManager.LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
             updateKernelComboBox();
         }

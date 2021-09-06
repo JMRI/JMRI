@@ -239,6 +239,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case CURRENT_COLUMN:
             case RANDOM_COLUMN:
             case SETOUT_DAY_COLUMN:
             case ROAD_COLUMN:
@@ -315,6 +316,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             return;
         }
         switch (col) {
+            case CURRENT_COLUMN:
+                setCurrent(row);
+                break;
             case RANDOM_COLUMN:
                 setRandom(value, row);
                 break;
@@ -505,6 +509,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             }
         }
         return cb;
+    }
+    
+    private void setCurrent(int row) {
+        ScheduleItem si = _list.get(row);
+        _track.setScheduleItemId(si.getId());
     }
 
     // set the count or hits if in match mode

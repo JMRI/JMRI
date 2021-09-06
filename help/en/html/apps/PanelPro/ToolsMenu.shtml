@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: Tools Menu</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Tools Menu</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h2>JMRI: Tools Menu</h2>
 
       <p>The Tools Menu gives access to the JMRI tools:</p>
@@ -18,144 +16,353 @@
       <ul>
         <li>Programmers
           <ul>
-            <li><a href="../../../package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml">Single CV Programmer</a></li>
-            <li><a href="../../../manual/DecoderPro/Programmer_ServiceMode.shtml">Service-Mode programmer</a></li>
-            <li><a href="../../../manual/DecoderPro/Programmer_OpsMode.shtml">Ops-Mode programmer</a></li>
-            <li><a href="../../../package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame">Multi-Decoder Control</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml">Single CV
+              Programmer</a>
+            </li>
+
+            <li>
+              <a href="../../../manual/DecoderPro/Programmer_ServiceMode.shtml">Service-Mode
+              programmer</a>
+            </li>
+
+            <li>
+              <a href="../../../manual/DecoderPro/Programmer_OpsMode.shtml">Ops-Mode programmer</a>
+            </li>
+
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml">Multi-Decoder
+              Control</a>
+            </li>
           </ul>
         </li>
 
         <li>Tables
           <ul>
-            <li><a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights</a>
+            </li>
+
             <li>Signals
               <ul>
-              <li><a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads</a></li>
-              <li><a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts</a></li>
-              <li><a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">Signal Groups</a></li>
-              <li><a href="../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a></li>
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal
+                  Heads</a>
+                </li>
+
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal
+                  Masts</a>
+                </li>
+
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">Signal
+                  Groups</a>
+                </li>
+
+                <li>
+                  <a href="../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast
+                  Logic</a>
+                </li>
               </ul>
             </li>
-            <li><a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/RouteTable.shtml">Routes</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a></li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/MemoryTable.shtml">Memory
+              Variables</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/RouteTable.shtml">Routes</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a>
+            </li>
+
             <li>LogixNG
               <ul>
-                <li><a href="../../../package/jmri/jmrit/beantable/LogixNGTable.shtml">LogixNGs</a></li>
-                <li><a href="../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">LogixNG Modules</a></li>
-                <li><a href="../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables</a></li>
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/LogixNGTable.shtml">LogixNGs</a>
+                </li>
+
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">LogixNG
+                  Modules</a>
+                </li>
+
+                <li>
+                  <a href="../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG
+                  Tables</a>
+                </li>
               </ul>
-            <li><a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Blocks</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/OBlockTable.shtml">Occupancy Blocks</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tabs</a></li>
-            <li><a href="../../../package/jmri/jmrit/beantable/RailComTable.shtml">RailCom IDs</a></li>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Blocks</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/OBlockTable.shtml">Occupancy
+              Blocks</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tabs</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/beantable/RailComTable.shtml">RailCom IDs</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../html/tools/throttle/ThrottleMain.shtml">Throttles</a>
+        <li>
+          <a href="../../../html/tools/throttle/ThrottleMain.shtml">Throttles</a>
           <ul>
             <li>New Throttle</li>
+
             <li>Throttles List Window</li>
+
             <li>Save Throttles Layout...</li>
+
             <li>Open Throttles Layout...</li>
+
             <li>Save As Default Throttles Layout</li>
+
             <li>Load Default Throttles Layout</li>
-            <li><a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">Start WiThrottle Server</a></li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">Start WiThrottle
+              Server</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../html/tools/consisttool/ConsistTool.shtml">Consist Control</a></li>
+        <li>
+          <a href="../../../html/tools/consisttool/ConsistTool.shtml">Consist Control</a>
+        </li>
 
-        <li><a href="../../../html/tools/fastclock/index.shtml">Clocks</a>
+        <li>
+          <a href="../../../html/tools/fastclock/index.shtml">Clocks</a>
           <ul>
             <li>Set up Fast Clock...</li>
+
             <li>Nixie Clock</li>
+
             <li>LCD Clock</li>
+
             <li>Analog Clock</li>
+
             <li>Pragotron Clock</li>
           </ul>
         </li>
 
-        <li><a href="../../../package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml">Power Control</a></li>
-        <li><a href="../../../package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout Control</a></li>
-        <li><a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Light Control</a></li>
-        <li><a href="../../tools/speedometer/index.shtml">Speedometer</a></li>
+        <li>
+          <a href="../../../package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml">Power Control</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout
+          Control</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Light
+          Control</a>
+        </li>
+
+        <li>
+          <a href="../../tools/speedometer/index.shtml">Speedometer</a>
+        </li>
+
         <li>Voltage / Current Meter</li>
-        <li><a href="../../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor Groups...</a></li>
-        <li><a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic...</a></li>
-        <li><a href="../../../package/jmri/jmrit/sendpacket/SendPacketFrame.shtml">Send DCC Packet...</a></li>
 
-        <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
+        <li>
+          <a href="../../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor
+          Groups...</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal
+          Logic...</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/sendpacket/SendPacketFrame.shtml">Send DCC
+          Packet...</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
           <ul>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives</a>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Routes">Routes</a>
-            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
+            </li>
+
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
+            </li>
+
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/operations/Operations.shtml#Routes">Routes</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></li>
-        <li><a href="../../../html/tools/TimeTable.shtml">TimeTable</a></li>
-        <li><a href="../../../package/jmri/jmrit/whereused/WhereUsed.shtml">WhereUsed</a></li>
+        <li>
+          <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+        </li>
 
-        <li><a href="../../../package/jmri/jmrit/ctc/CTC.shtml">CTC</a>
+        <li>
+          <a href="../../../html/tools/TimeTable.shtml">TimeTable</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/whereused/WhereUsed.shtml">WhereUsed</a>
+        </li>
+
+        <li>
+          <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">CTC</a>
           <ul>
-            <li><a href="../../../package/jmri/jmrit/ctc/CTC.shtml#editor">Open CTC Configuration Editor</a></li>
-            <li><a href="../../../package/jmri/jmrit/ctc/CTC.shtml#ctcMain">Run CTC Logic</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/ctc/CTC.shtml#editor">Open CTC Configuration
+              Editor</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/ctc/CTC.shtml#ctcMain">Run CTC Logic</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../html/tools/uss/index.shtml">USS CTC Tools</a>
+        <li>
+          <a href="../../../html/tools/uss/index.shtml">USS CTC Tools</a>
           <ul>
-            <li><a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicators...</a></li>
-            <li><a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Followers...</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS
+              Indicators...</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Followers...</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signals</a></li>
+        <li>
+          <a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signals</a>
+        </li>
 
         <li>Servers
           <ul>
-            <li><a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">Start WiThrottle Server</a></li>
-            <li><a href="../../../html/web/index.shtml">Start JMRI Web Server</a></li>
-            <li><a href="../../../html/hardware/SRCP/index.shtml">Start JMRI SRCP Server</a></li>
-            <li><a href="../../../html/hardware/jmriclient/index.shtml">Start JMRI Simple Server</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">Start WiThrottle
+              Server</a>
+            </li>
+
+            <li>
+              <a href="../../../html/web/index.shtml">Start JMRI Web Server</a>
+            </li>
+
+            <li>
+              <a href="../../../html/hardware/SRCP/index.shtml">Start JMRI SRCP Server</a>
+            </li>
+
+            <li>
+              <a href="../../../html/hardware/jmriclient/index.shtml">Start JMRI Simple Server</a>
+            </li>
           </ul>
         </li>
 
         <li>Virtual Sound Decoder
           <ul>
-            <li><a href="../../../package/jmri/jmrit/vsdecoder/swing/VSDManagerFrame.shtml">VSDecoder Manager</a></li>
-            <li><a href="../../../package/jmri/jmrit/vsdecoder/swing/ManageLocationsFrame.shtml">Manage VSD Locations</a></li>
-            <li><a href="../../../package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">VSDecoder Preferences</a></li>
+            <li>
+              <a href="../../../package/jmri/jmrit/vsdecoder/swing/VSDManagerFrame.shtml">VSDecoder
+              Manager</a>
+            </li>
+
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/vsdecoder/swing/ManageLocationsFrame.shtml">Manage VSD
+              Locations</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">VSDecoder
+              Preferences</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="../../../html/tools/logixng/LogixNG.shtml#tools">LogixNG</a>
+        <li>
+          <a href="../../../html/tools/logixng/LogixNG.shtml#tools">LogixNG</a>
           <ul>
             <li>Start LogixNG</li>
+
             <li>Stop LogixNG</li>
-            <li><a href="../../../package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">LogixNG initialization table</a></li>
-            <li><a href="../../../package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a></li>
+
+            <li>
+              <a href=
+              "../../../package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">LogixNG
+              initialization table</a>
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a>
+            </li>
           </ul>
         </li>
-
       </ul>
-
-      For more information, see also the <a href=
-      "../../../html/tools/index.shtml">general tools index</a>.
-      <!--#include virtual="/Footer.shtml" -->
+      For more information, see also the <a href="../../../html/tools/index.shtml">general tools
+      index</a>. <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

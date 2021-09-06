@@ -1,50 +1,41 @@
 <!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send LocoNet Packet</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help send loconet packets">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>Send LocoNet Packet</h1><a href=
-      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Plain.png"><img src="../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Plain.png"
-      width="268" height="156" alt="Send LocoNet Packet window"
-      align="right"></a><br>
-      The "Send LocoNet Packet" tool lets you directly command
-      LocoNet devices.
-
-      <p>It works best in combination with the "Show Raw Data"
-      option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet
-      Monitor</a>, because packets are entered here in raw
+      <h1>Send LocoNet Packet</h1>
+      <a href="../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Plain.png"><img src=
+      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Plain.png" width="268"
+      height="156" alt="Send LocoNet Packet window" class="floatRight"></a><br>
+      The "Send LocoNet Packet" tool lets you directly command LocoNet devices.
+      <p>It works best in combination with the "Show Raw Data" option in the <a href=
+      "../locomon/LocoMonFrame.shtml">LocoNet Monitor</a>, because packets are entered here in raw
       hexadecimal format.</p>
 
-      <p>The top section of the window lets you send a single
-      LocoNet packet. Just type the packet contents as hexadecimal
-      numbers, for example "83 7C", and click "Send". You should
-      include the byte for the checksum at the end of the
-      message.</p>
+      <p>The top section of the window lets you send a single LocoNet packet. Just type the packet
+      contents as hexadecimal numbers, for example "83 7C", and click "Send". You should include
+      the byte for the checksum at the end of the message.</p>
 
-      <p>The bottom section lets you enter from one to four packets
-      that will be repeatedly sent in sequence, with user-defined
-      delays in between. Press the "Go" button to start the
-      transmission sequence, and press it again to stop the
-      sequence. <a href=
-      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Sequence.png">
-      <img src=
-      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Sequence.png"
-      width="267" height="155" alt="Send LocoNet Packet window"
-      align="right"></a></p>
+      <p>The bottom section lets you enter from one to four packets that will be repeatedly sent in
+      sequence, with user-defined delays in between. Press the "Go" button to start the
+      transmission sequence, and press it again to stop the sequence. <a href=
+      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Sequence.png"><img src=
+      "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Sequence.png" width="267"
+      height="155" alt="Send LocoNet Packet window" class="floatRight"></a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

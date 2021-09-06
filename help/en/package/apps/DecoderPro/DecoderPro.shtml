@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: DecoderPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI: DecoderPro Main Window</h1>
 
-      <p>The DecoderPro main window gives you access to all the capabilities of JMRI.
-      This is the original DecoderPro that used the same menus as PanelPro.  This version
-      is not included in recent JMRI installs.  For more information on DecoderPro itself,
-      please see <a href="../../../manual/index.shtml">the DecoderPro online manual</a>.</p>
+      <p>The DecoderPro main window gives you access to all the capabilities of JMRI. This is the
+      original DecoderPro that used the same menus as PanelPro. This version is not included in
+      recent JMRI installs. For more information on DecoderPro itself, please see <a href=
+      "../../../manual/index.shtml">the DecoderPro online manual</a>.</p>
 
-
-      <p>The buttons on this window are short cuts to the decoder
-      programers. Plus a help link to a write up about DecoderPro
-      Symbolic Programmer and a Quit button that ends the JMRI
+      <p>The buttons on this window are short cuts to the decoder programers. Plus a help link to a
+      write up about DecoderPro Symbolic Programmer and a Quit button that ends the JMRI
       program.</p>
 
       <p>This is the apps.DecoderPro.DecoderPro.shtml help page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

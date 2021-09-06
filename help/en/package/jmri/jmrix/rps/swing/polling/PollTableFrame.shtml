@@ -1,97 +1,79 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: RPS Polling Control</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: RPS Polling Control</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>JMRI: RPS Polling Control</h1><a href=
-      "../../../../../../html/hardware/rps/images/PollControl.gif"><img src="../../../../../../html/hardware/rps/images/PollControl.gif"
-      height="80" width="300" alt="RPS Receiver Control window"
-      align="right"></a>
+      <h1>JMRI: RPS Polling Control</h1>
+      <a href="../../../../../../html/hardware/rps/images/PollControl.gif"><img src=
+      "../../../../../../html/hardware/rps/images/PollControl.gif" height="80" width="300" alt=
+      "RPS Receiver Control window" class="floatRight"></a>
       <p>The RPS Polling Control window is where you tell the <a href=
-      "../../../../../../html/hardware/rps/index.shtml">RPS
-      system</a> which of your locomotives have RPS transmitters
-      installed, and how often to talk to them.</p>
+      "../../../../../../html/hardware/rps/index.shtml">RPS system</a> which of your locomotives
+      have RPS transmitters installed, and how often to talk to them.</p>
 
-      <p>When you open the window, you should see your entire
-      <a href=
-      "../../../../../../manual/Comp_Setup_Roster.shtml">roster of
-      locomotives</a> displayed, one per line.</p>
+      <p>When you open the window, you should see your entire <a href=
+      "../../../../../../manual/DecoderPro3/Comp_Setup_Roster.shtml">roster of locomotives</a>
+      displayed, one per line.</p>
 
-      <p>If a locomotive has a RPS transmitter installed and you'd
-      like the system to track its position, check the box in the
-      "Poll" column.</p>
+      <p>If a locomotive has a RPS transmitter installed and you'd like the system to track its
+      position, check the box in the "Poll" column.</p>
 
-      <p>To control whether the system as a whole is polling, check
-      or uncheck the "Poll" box in the bottom section of the
-      window.</p>
+      <p>To control whether the system as a whole is polling, check or uncheck the "Poll" box in
+      the bottom section of the window.</p>
 
       <p>The table has nine columns:</p>
 
       <ul>
-        <li>"Roster Name" - This is the locomotive decoder name
-        from the roster.</li>
+        <li>"Roster Name" - This is the locomotive decoder name from the roster.</li>
 
-        <li>"ID" - The name that RPS uses to refer to this
-        transmitter. By default, it's the same as the roster name,
-        but you can change it if you'd like.</li>
+        <li>"ID" - The name that RPS uses to refer to this transmitter. By default, it's the same
+        as the roster name, but you can change it if you'd like.</li>
 
-        <li>"Locomotive Address" and "Long" - The DCC address of
-        the decoder. The "Long" box will be checked if this is a
-        "long" ("extended") address.</li>
+        <li>"Locomotive Address" and "Long" - The DCC address of the decoder. The "Long" box will
+        be checked if this is a "long" ("extended") address.</li>
 
-        <li>"Polled" - Should the RPS system measure this
-        position?</li>
+        <li>"Polled" - Should the RPS system measure this position?</li>
 
-        <li>"Last X", "Last Y", "Last Z" - The most recent measured
-        position for this transmitter.</li>
+        <li>"Last X", "Last Y", "Last Z" - The most recent measured position for this
+        transmitter.</li>
 
-        <li>"Last Time" - The time the last measurement was
-        taken.</li>
-      </ul>There are three radio buttons that control how polling
-      is done.
-
+        <li>"Last Time" - The time the last measurement was taken.</li>
+      </ul>
+      There are three radio buttons that control how polling is done.
       <dl>
         <dt>Use BSC Poll</dt>
 
-        <dd>When checked, this uses a "Binary State Command" to
-        poll the RPS system. If your RPS transmitters support this,
-        it is the recommended setting except for with Lenz
-        systems.</dd>
+        <dd>When checked, this uses a "Binary State Command" to poll the RPS system. If your RPS
+        transmitters support this, it is the recommended setting except for with Lenz systems.</dd>
 
         <dt>Use Direct Poll</dt>
 
-        <dd>When checked, JMRI sends F2 commands directly on the
-        track. Use this if your RPS transmitters require F2 polls,
-        and you don't have a Lenz DCC system.</dd>
+        <dd>When checked, JMRI sends F2 commands directly on the track. Use this if your RPS
+        transmitters require F2 polls, and you don't have a Lenz DCC system.</dd>
 
         <dt>Use Throttle Poll</dt>
 
-        <dd>When checked, JMRI simulates a throttle to send F2
-        polls. This is currently required for Lenz systems, and not
-        recommended for others.</dd>
+        <dd>When checked, JMRI simulates a throttle to send F2 polls. This is currently required
+        for Lenz systems, and not recommended for others.</dd>
       </dl>
 
-      <p>The interval box controls the number of milliseconds
-      between polls. This should not be set below about 80. If you
-      are polling less than 5 transmitters, set it to 300 or above.
-      This option will eventually be removed in a later JMRI
-      version, when it becomes automatic.</p>
+      <p>The interval box controls the number of milliseconds between polls. This should not be set
+      below about 80. If you are polling less than 5 transmitters, set it to 300 or above. This
+      option will eventually be removed in a later JMRI version, when it becomes automatic.</p>
 
-      <p>To save the values so they'll be automatically used when
-      the program is next started, click "Store New Default
-      Values".</p>
-
+      <p>To save the values so they'll be automatically used when the program is next started,
+      click "Store New Default Values".</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

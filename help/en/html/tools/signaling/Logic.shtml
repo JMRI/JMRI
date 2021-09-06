@@ -1,44 +1,36 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Simple Signal Logic</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Simple Signal Logic</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Simple Signal Logic</h1>
 
-      <p class="subtitle">Background information of the logic used
-      to control simple signals</p>
+      <p class="subtitle">Background information of the logic used to control simple signals</p>
 
       <div class="para">
-        <p>This page describes the logic used by the JMRI Simple
-        Signal panel to control signals.</p>
+        <p>This page describes the logic used by the JMRI Simple Signal panel to control
+        signals.</p>
 
-        <p>We display the actual code, so there's no ambiguity
-        about what it's doing. This is from JMRI test release
-        2.9.1.</p>
+        <p>We display the actual code, so there's no ambiguity about what it's doing. This is from
+        JMRI test release 2.9.1.</p>
       </div>
 
       <div class="section">
-        <a name="single" id="single"></a>
-
-        <h2>On Single Block</h2>
+        <h2 id="single">On Single Block</h2>
 
         <div class="para">
-
-          <p>This signal protects one end of a straight through
-          block, with no signaled turnouts.</p>
+          <p>This signal protects one end of a straight through block, with no signaled
+          turnouts.</p>
         </div>
 
         <div class="para">
@@ -47,7 +39,7 @@
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing &amp;&amp; fastestColor1()==SignalHead.YELLOW)
+        if (protectWithFlashing &amp;& fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
         if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
@@ -55,19 +47,19 @@
         // if distant signal, show exactly what the home signal does
         if (distantSignal)
             appearance = fastestColor1();
-            
+
         // if limited speed and green, reduce to yellow
         if (limitSpeed1)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
+
         // check for red overriding yellow or green
-        if (watchSensor1!=null &amp;&amp; watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null &amp;& watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null &amp;&amp; watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null &amp;& watchSensor2.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor3!=null &amp;&amp; watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null &amp;& watchSensor3.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor4!=null &amp;&amp; watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null &amp;& watchSensor4.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -76,7 +68,7 @@
 
         // handle approach lighting
         doApproach();
-        
+
         // show result if changed
         if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -88,17 +80,12 @@
       </div>
 
       <div class="section">
-
-        <a name="trailmain" id="trailmain"></a>
-        <h2>On Main Leg ofTrailing-Point Turnout</h2>
+        <h2 id="trailmain">On Main Leg ofTrailing-Point Turnout</h2>
 
         <div class="para">
-
-          <p>This signal is along the main route through a turnout,
-          which is defined as the direction taken by trains when
-          the turnout is closed. It's protecting the frog of the
-          turnout so that trains will stop before running through a
-          turnout set against them.</p>
+          <p>This signal is along the main route through a turnout, which is defined as the
+          direction taken by trains when the turnout is closed. It's protecting the frog of the
+          turnout so that trains will stop before running through a turnout set against them.</p>
         </div>
 
         <div class="para">
@@ -107,7 +94,7 @@
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing &amp;&amp; fastestColor1()==SignalHead.YELLOW)
+        if (protectWithFlashing &amp;& fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
         if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
@@ -119,29 +106,29 @@
         // if limited speed and green, reduce to yellow
         if (limitSpeed1)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
+
         // check for red overriding yellow or green
-        if (watchSensor1!=null &amp;&amp; watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null &amp;& watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null &amp;&amp; watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null &amp;& watchSensor2.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor3!=null &amp;&amp; watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null &amp;& watchSensor3.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor4!=null &amp;&amp; watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null &amp;& watchSensor4.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-            
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
+
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getCommandedState() != Turnout.CLOSED)
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getCommandedState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
-            
+
         // handle approach lighting
         doApproach();
-        
+
         // show result if changed
         if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -153,17 +140,12 @@
       </div>
 
       <div class="section">
-
-        <a name="traildiv" id="traildiv"></a>
-        <h2>On Diverging Leg of Trailing-Point Turnout</h2>
+        <h2 id="traildiv">On Diverging Leg of Trailing-Point Turnout</h2>
 
         <div class="para">
-
-          <p>This signal is along the diverging route through a
-          turnout, which is defined as the direction taken by
-          trains when the turnout is set to "thrown". It's
-          protecting the frog of the turnout so that trains will
-          stop before running through a turnout set against
+          <p>This signal is along the diverging route through a turnout, which is defined as the
+          direction taken by trains when the turnout is set to "thrown". It's protecting the frog
+          of the turnout so that trains will stop before running through a turnout set against
           them.</p>
         </div>
 
@@ -173,7 +155,7 @@
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing &amp;&amp; fastestColor1()==SignalHead.YELLOW)
+        if (protectWithFlashing &amp;& fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
         if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
@@ -185,29 +167,29 @@
         // if limited speed and green, reduce to yellow
         if (limitSpeed2)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
+
         // check for red overriding yellow or green
-        if (watchSensor1!=null &amp;&amp; watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null &amp;& watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null &amp;&amp; watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null &amp;& watchSensor2.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor3!=null &amp;&amp; watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null &amp;& watchSensor3.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor4!=null &amp;&amp; watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null &amp;& watchSensor4.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
 
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() != Turnout.THROWN)
             appearance = SignalHead.RED;
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getCommandedState() != Turnout.THROWN)
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getCommandedState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
-            
+
         // handle approach lighting
         doApproach();
-        
+
         // show result if changed
         if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -219,15 +201,12 @@
       </div>
 
       <div class="section">
-        <a name="face" id="face"></a>
-        <h2>On Facing-Point Turnout</h2>
+        <h2 id="face">On Facing-Point Turnout</h2>
 
         <div class="para">
-
-          <p>This signal is protecting the points-end of a turnout.
-          Depending on whether the turnout is thrown or closed, the
-          train will take two different routes, and the signal will
-          protect different next blocks.</p>
+          <p>This signal is protecting the points-end of a turnout. Depending on whether the
+          turnout is thrown or closed, the train will take two different routes, and the signal
+          will protect different next blocks.</p>
         </div>
 
         <div class="para">
@@ -235,16 +214,16 @@
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-        
+
         // find downstream appearance, being pessimistic if we're not sure of the state
         int s = SignalHead.GREEN;
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() != Turnout.THROWN)
             s = slowerOf(s, fastestColor1());
-        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
+        if (watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
             s = slowerOf(s, fastestColor2());
 
         // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing &amp;&amp; s==SignalHead.YELLOW)
+        if (protectWithFlashing &amp;& s==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
         if (s==SignalHead.RED  || s==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
@@ -253,56 +232,59 @@
             appearance = s;
 
         // if limited speed and green or flashing yellow, reduce to yellow
-        if (watchTurnout!=null &amp;&amp; limitSpeed1 &amp;&amp; watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
+        if (watchTurnout!=null &amp;& limitSpeed1 &amp;& watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
 
-        if (watchTurnout!=null &amp;&amp; limitSpeed2 &amp;&amp; watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
+        if (watchTurnout!=null &amp;& limitSpeed2 &amp;& watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
-           
+
 
         // check for red overriding yellow or green
-        if (watchSensor1!=null &amp;&amp; watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor1!=null &amp;& watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null &amp;&amp; watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null &amp;& watchSensor2.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor3!=null &amp;&amp; watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null &amp;& watchSensor3.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor4!=null &amp;&amp; watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null &amp;& watchSensor4.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
 
-        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
-                &amp;&amp; ((watchedSensor1!=null &amp;&amp; watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() == Turnout.CLOSED)
+                &amp;& ((watchedSensor1!=null &amp;& watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.CLOSED) &amp;&amp; ((watchedSensor1Alt!=null &amp;&amp; watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() == Turnout.CLOSED) &amp;& ((watchedSensor1Alt!=null &amp;& watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;&amp; ((watchedSensor2!=null &amp;&amp; watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;& ((watchedSensor2!=null &amp;& watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;&amp; ((watchedSensor2Alt!=null &amp;&amp; watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;& watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;& ((watchedSensor2Alt!=null &amp;& watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        
+
         // check if turnout in motion, if so force red
-        if (watchTurnout!=null &amp;&amp; (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
+        if (watchTurnout!=null &amp;& (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
             appearance = SignalHead.RED;
-        if (watchTurnout!=null &amp;&amp; (watchTurnout.getBean().getKnownState() != Turnout.THROWN) &amp;&amp; (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
+        if (watchTurnout!=null &amp;& (watchTurnout.getBean().getKnownState() != Turnout.THROWN) &amp;& (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
-            
+
         // handle approach lighting
         doApproach();
-        
+
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 </pre>
-        </div><!--closes para-->
-      </div><!--closes section-->
+        </div>
+        <!--closes para-->
+      </div>
+      <!--closes section-->
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

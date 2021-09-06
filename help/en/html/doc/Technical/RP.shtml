@@ -1,356 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Recommended Practices</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code standards recommendation Swing">
+  <meta name="keywords" content="JMRI technical code standards recommendation Swing">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI Code: Recommended Practices</h1>
-      <p>This page contains miscellaneous info and pointers for JMRI
-      developers.</p>
+
+      <p>This page contains miscellaneous info and pointers for JMRI developers.</p>
 
       <h2>Class Library Preferences</h2>
 
       <ul>
-        <li>We use Java Swing for our GUI development. It's a lot
-        more powerful than the original AWT, and the price is
-        right. We have a recommended organization and usage pattern
-        that's documented on <a href="Swing.shtml">another
-        page</a>.</li>
+        <li>We use Java Swing for our GUI development. It's a lot more powerful than the original
+        AWT, and the price is right. We have a recommended organization and usage pattern that's
+        documented on <a href="Swing.shtml">another page</a>.
+        </li>
 
-        <li>JMRI uses the
-        <a href="http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
-        to support serial
-        communications on Macintosh, Linux and Windows.
-        Before JMRI 4.7.5, we used the RXTX and
-        SerialIO libraries for this, but these were then removed.</li>
+        <li>JMRI uses the <a href=
+        "http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a> to
+        support serial communications on Macintosh, Linux and Windows. Before JMRI 4.7.5, we used
+        the RXTX and SerialIO libraries for this, but these were then removed.
+        </li>
 
-        <li>Take a few moments to learn about the different
-        types of <a href=
-        "https://docs.oracle.com/javase/tutorial/collections/intro/">
-        Java collections</a> that are available (
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>,
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
-        etc) in the 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
-        Not everything needs to be an array! Only use a 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
-        when there's a specific reason for it such as compatibility with an existing API;
-        they're slow and memory-intensive compared to e.g. an 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
-        A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
-        can be a good default solution to holding data that won't ever contain 'null'.
-        Consider using a
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
-        for data that's best kept in some sorted order; there's are very few good reasons for
-        sorting data during normal running in JMRI.
-        If none of these are adequate, consider incorporating a specialized collection type from
-        <a href="http://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>
+        <li>Take a few moments to learn about the different types of <a href=
+        "https://docs.oracle.com/javase/tutorial/collections/intro/">Java collections</a> that are
+        available ( <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>, <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>, <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, etc) in the
+        <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util
+        package</a>. Not everything needs to be an array! Only use a <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a> when there's a
+        specific reason for it such as compatibility with an existing API; they're slow and
+        memory-intensive compared to e.g. an <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>. A
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a> can be a
+        good default solution to holding data that won't ever contain 'null'. Consider using a
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a> for
+        data that's best kept in some sorted order; there's are very few good reasons for sorting
+        data during normal running in JMRI. If none of these are adequate, consider incorporating a
+        specialized collection type from <a href=
+        "http://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>
         instead of rolling your own.
         </li>
 
-        <li>JMRI uses <a href=
-        "https://docs.oracle.com/javase/tutorial/java/generics/">
-        Java generics</a> extensively to <a href=
-        "https://docs.oracle.com/javase/tutorial/java/generics/">
-        reduce errors and improve understanding</a>. With lots of
-        people writing and sharing code, using generics instead of
-        casts makes it much easier to understand the code, and
-        allows the compiler to catch many misunderstandings about
-        how things should be used. Most of the important
-        information on them can be found on <a href=
-        "https://docs.oracle.com/javase/tutorial/java/generics/">
-        this page</a> from the Java Tutorial.</li>
-        
-        <li>Enums, added in Java 5, are a better way of representing
-        N selections than using integer constants.  The entire idea is to
-        <u>not</u> have them be just another form of Integer or String, so don't provide
-        methods to convert them from or to Integer (int) or String.  If you need to
-        provide an ordering or comparison, add a public method to the enum to do that; it can work 
-        with the internal structure of the enum without exposing it.
+        <li>JMRI uses <a href="https://docs.oracle.com/javase/tutorial/java/generics/">Java
+        generics</a> extensively to <a href=
+        "https://docs.oracle.com/javase/tutorial/java/generics/">reduce errors and improve
+        understanding</a>. With lots of people writing and sharing code, using generics instead of
+        casts makes it much easier to understand the code, and allows the compiler to catch many
+        misunderstandings about how things should be used. Most of the important information on
+        them can be found on <a href="https://docs.oracle.com/javase/tutorial/java/generics/">this
+        page</a> from the Java Tutorial.
+        </li>
 
-        <li>If you need to use comma-separated variable (CSV)
-        files, please use the <a href="https://commons.apache.org/proper/commons-csv/">Apache Commons CSV API</a> if
-        possible. We are already using that in a number of places,
-        and will probably use it in more. If that does not provide
-        enough functionality, we might eventually move to the
-        <a href="http://opencsv.sourceforge.net/">opencsv API</a>, 
-        but since we only want to use one, the
-        conversion will be a lot of work.</li>
-        
-        <li>We currently don't use the Java <code>assert</code> keyword in our production
-        code. (We use the 
-        <a href="JUnit.shtml">JUnit Assert in testing</a>, but that's different).
-        We may use it in the future, but for now please 
-        <a href="Logging.shtml">log a message at the Error level</a> 
-        if you encounter an internal consistency problem during normal 
-        operation; if there's no way to continue, 
-        <code>throw new AssertionError("description");</code> as that's 
-        a step toward our eventually figuring out how to use Java
-        assertions in such cases.
+        <li>Enums, added in Java 5, are a better way of representing N selections than using
+        integer constants. The entire idea is to <u>not</u> have them be just another form of
+        Integer or String, so don't provide methods to convert them from or to Integer (int) or
+        String. If you need to provide an ordering or comparison, add a public method to the enum
+        to do that; it can work with the internal structure of the enum without exposing it.</li>
+
+        <li>If you need to use comma-separated variable (CSV) files, please use the <a href=
+        "https://commons.apache.org/proper/commons-csv/">Apache Commons CSV API</a> if possible. We
+        are already using that in a number of places, and will probably use it in more. If that
+        does not provide enough functionality, we might eventually move to the <a href=
+        "http://opencsv.sourceforge.net/">opencsv API</a>, but since we only want to use one, the
+        conversion will be a lot of work.
+        </li>
+
+        <li>We currently don't use the Java <code>assert</code> keyword in our production code. (We
+        use the <a href="JUnit.shtml">JUnit Assert in testing</a>, but that's different). We may
+        use it in the future, but for now please <a href="Logging.shtml">log a message at the Error
+        level</a> if you encounter an internal consistency problem during normal operation; if
+        there's no way to continue, <code>throw new AssertionError("description");</code> as that's
+        a step toward our eventually figuring out how to use Java assertions in such cases.
+        </li>
       </ul>
 
-      <a id="collections" name="collections"></a>
-      <h2>Collections</h2>
-        Take a few moments to learn about the different
-        types of <a href=
-        "https://docs.oracle.com/javase/tutorial/collections/intro/">
-        Java collections</a> that are available (
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>,
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
-        etc) in the 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
-
-        <ul>
-        <li>
-        Please don't use fixed-size arrays for holding variable sized data in objects.
-        That generally ends up wasting huge amounts of space at runtime, and we 
-        try to keep the JMRI memory footprint small when we can.
-        
-        <li>
-        Only use a 
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
-            when there's a specific reason for it such as compatibility with an existing API;
-            they're slow and memory-intensive compared to e.g. an 
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
-        <li>
-            A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
-            can be a good default solution to holding data that won't ever contain 'null'.
-       <li> 
-            Consider using a
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
-            for data that's best kept in some sorted order; there's are very few good reasons for
-            sorting data during normal running in JMRI.  If you also need random access (e.g. 
-            "The 5th element") consider 
-            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">IndexedTreeSet</a>
-            and
-            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
-        </ul>
-
-      <h2><a id="format" name="format">Code Format</a></h2>The <a href=
-      "http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">
-      Java Code Conventions</a> (if that link is broken, try
-      <a href=
-      "https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">
-      this one</a> from the Internet Archive) for names,
-      formatting, etc are really useful. If you find that you can't
-      read a piece of code, these will help make it better.
-
-      <p>Note that we have a few local conventions beyond those in
-      the Java recommendations. You'll find them on other pages in
-      this section, but for example, we recommend that you define
-      the <a href="Logging.shtml">logger reference</a> at the
-      bottom of each file.</p>
-
-      <a id="deprecating" name="deprecating"></a>
-      <h2>Deprecating Code</h2>
-      As development proceeds, sometimes
-      old ways of doing things have to be replaced by new ways. In
-      many cases, you can just change all the using code in our
-      repository, and move forward. 
-      For general interfaces that
-      might be used externally to JMRI, such as in scripts and
-      CATS, we prefer to leave the old interface in place for
-      a while, marking it as "deprecated" so that people can
-      discover that it will eventually go away. 
-      (The current list of those is available as
-      <a href="https://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
-      The sequence is then:
+      <h2 id="collections">Collections</h2>
+      Take a few moments to learn about the different types of <a href=
+      "https://docs.oracle.com/javase/tutorial/collections/intro/">Java collections</a> that are
+      available ( <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>, <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, etc) in the
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util
+      package</a>.
       <ul>
-        <li>Write the new methods.
-        <li>Mark the old methods with @deprecated and @Deprecated. The 
-            associated comment should tell people where to find the replacement (see below).
-            <p>Note that if you mark an interface or super-class (i.e. abstract) 
-                class or method
-                as deprecated, you should also mark all implementations of it as
-                deprecated.  That way, they won't themselves show as deprecations to fix,
-                but code that uses them will.
+        <li>Please don't use fixed-size arrays for holding variable sized data in objects. That
+        generally ends up wasting huge amounts of space at runtime, and we try to keep the JMRI
+        memory footprint small when we can.</li>
 
-        <li>Start generating warnings for users
-            (especially scripting users) by adding:
-<pre style="font-family: monospace;">
+        <li>Only use a <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a> when there's a
+        specific reason for it such as compatibility with an existing API; they're slow and
+        memory-intensive compared to e.g. an <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        </li>
+
+        <li>A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+        can be a good default solution to holding data that won't ever contain 'null'.
+        </li>
+
+        <li>Consider using a <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a> for data
+        that's best kept in some sorted order; there's are very few good reasons for sorting data
+        during normal running in JMRI. If you also need random access (e.g. "The 5th element")
+        consider <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">
+          IndexedTreeSet</a> and <a href=
+          "http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">
+          IndexedTreeMap</a>
+        </li>
+      </ul>
+
+      <h2 id="format">Code Format</h2>
+      The <a href="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Java Code
+      Conventions</a> (if that link is broken, try <a href=
+      "https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">this one</a>
+      from the Internet Archive) for names, formatting, etc are really useful. If you find that you
+      can't read a piece of code, these will help make it better.
+      <p>Note that we have a few local conventions beyond those in the Java recommendations. You'll
+      find them on other pages in this section, but for example, we recommend that you define the
+      <a href="Logging.shtml">logger reference</a> at the bottom of each file.</p>
+
+      <h2 id="deprecating">Deprecating Code</h2>
+      As development proceeds, sometimes old ways of doing things have to be replaced by new ways.
+      In many cases, you can just change all the using code in our repository, and move forward.
+      For general interfaces that might be used externally to JMRI, such as in scripts and CATS, we
+      prefer to leave the old interface in place for a while, marking it as "deprecated" so that
+      people can discover that it will eventually go away. (The current list of those is available
+      as <a href="https://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>) The
+      sequence is then:
+      <ul>
+        <li>Write the new methods.</li>
+
+        <li>Mark the old methods with @deprecated and @Deprecated. The associated comment should
+        tell people where to find the replacement (see below).
+          <p>Note that if you mark an interface or super-class (i.e. abstract) class or method as
+          deprecated, you should also mark all implementations of it as deprecated. That way, they
+          won't themselves show as deprecations to fix, but code that uses them will.</p>
+        </li>
+
+        <li>Start generating warnings for users (especially scripting users) by adding:
+
+          <pre style="font-family: monospace;">
             jmri.util.Log4JUtil.deprecationWarning(log, "myMethod()");
-</pre>
-            to the start of each method.
-            This will put a warning in the log if that method 
-            is used during normal operation.
-            <p>
-            If you have tests for that method (you should!) you may need to
-            modify the direct tests of the deprecated method; see
-            the 
-            <a href="JUnit.shtml#deprecationWarning">instructions on the JUnit page</a>.
+</pre>to the start of each method. This will put a warning in the log if that method is used during
+normal operation.
+          <p>If you have tests for that method (you should!) you may need to modify the direct
+          tests of the deprecated method; see the <a href=
+          "JUnit.shtml#deprecationWarning">instructions on the JUnit page</a>.</p>
         </li>
 
-        <li>Remove all uses in JMRI code (including tests!) 
-            of these deprecated classes and/or methods
-            until the deprecations report during compilation is clean. 
-            
+        <li>Remove all uses in JMRI code (including tests!) of these deprecated classes and/or
+        methods until the deprecations report during compilation is clean.</li>
+
         <li><strong>Don't forget to migrate the Jython sample scripts!</strong>
-
-        <li>These changes can be included in either an 
-            <a href="ReleaseProcess.md">update or minor release</a>. 
-            As soon as possible , you should 
-            PR them to either the <code>dev-update</code> or <code>dev-minor</code> branch, depending on
-            the <u>other</u> changes associated, so that people get notice
-            of the deprecations. Make sure that the PR includes someting for 
-            the release note about the deprecations 
-            to draw people's attention.
         </li>
-            
-        <li>Remove the deprecated methods and their tests. Make sure that the PR
-            to do this includes an update to the release note about the removal.
-            This can then be merged to the 
-            <code>dev-major</code> branch; whether it can be merged and 
-            released via the <code>dev-minor</code> is still a subject of discussion.
-            
-        </ul>
-        
-      <p>Note that a deprecated item is meant to still work.
-      Deprecated should only mean that you can't count on the
-      deprecated item working in the future, so that it would
-      be good to code away from it while it's still working.</p>
 
-      <p>There are two forms of marking something as deprecated
-      (Javadoc tag and Annotation), and both allow you to add
-      additional information. A nice discussion of the
-      technicalities is <a href=
-      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
-      here</a>. We strongly recommend using both of them like this:</p>
-<pre style="font-family: monospace;">
+        <li>These changes can be included in either an update or minor release. As soon as possible
+        , you should PR them to either the <code>dev-update</code> or <code>dev-minor</code>
+        branch, depending on the <u>other</u> changes associated, so that people get notice of the
+        deprecations. Make sure that the PR includes someting for the release note about the
+        deprecations to draw people's attention.</li>
+
+        <li>Remove the deprecated methods and their tests. Make sure that the PR to do this
+        includes an update to the release note about the removal. This can then be merged to the
+        <code>dev-major</code> branch; whether it can be merged and released via the
+        <code>dev-minor</code> is still a subject of discussion.</li>
+      </ul>
+
+      <p>Note that a deprecated item is meant to still work. Deprecated should only mean that you
+      can't count on the deprecated item working in the future, so that it would be good to code
+      away from it while it's still working.</p>
+
+      <p>There are two forms of marking something as deprecated (Javadoc tag and Annotation), and
+      both allow you to add additional information. A nice discussion of the technicalities is
+      <a href=
+      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">here</a>.
+      We strongly recommend using both of them like this:</p>
+
+      <pre style="font-family: monospace;">
 /**
  * (Other Javadoc comments)
  * @deprecated As of 2.7.8, use {@ link #foo()} instead
  */
 @Deprecated // 2.7.8
-</pre>
-        where the line contains the version in which the deprecation
-        is applied. That lets you easily know how long ago it was
-        deprecated. (There's a better way to do this in Java 9, but
-        JMRI still has to compile under Java 8 so please don't use that; see the 
-        <a href="TechRoadMap.shtml">release roadmap</a>
-        for background)
-            
-    <a id="exception" name="exception"></a>
-    <h2>Exceptions</h2>
-    
-    <h3>Throwing Exceptions</h3>
+</pre>where the line contains the version in which the deprecation is applied. That lets you easily
+know how long ago it was deprecated. (There's a better way to do this in Java 9, but JMRI still has
+to compile under Java 8 so please don't use that; see the <a href="TechRoadMap.shtml">release
+roadmap</a> for background)
+      <h2 id="exception">Exceptions</h2>
 
-    When checking inputs (i.e. for valid parameter values) and you find a problem, what should you do?
-    <ul>
-    <li>You can throw an unchecked exception. IllegalArgumentException is a great example:
-        Most of the time it doesn't really have to be thought about. It's rare to
-        explicitly try/catch for it.
-        When an IllegalArgumentException (or whatever) is thrown, it works up to some high-level handler, 
-        where there will be some default handling (usually just logging) it, 
-        and the various libraries will get a chance to clean things up.
+      <h3>Throwing Exceptions</h3>
+      When checking inputs (i.e. for valid parameter values) and you find a problem, what should
+      you do?
+      <ul>
+        <li>You can throw an unchecked exception. IllegalArgumentException is a great example: Most
+        of the time it doesn't really have to be thought about. It's rare to explicitly try/catch
+        for it. When an IllegalArgumentException (or whatever) is thrown, it works up to some
+        high-level handler, where there will be some default handling (usually just logging) it,
+        and the various libraries will get a chance to clean things up.</li>
 
-    <li>You can thrown a checked exception, i.e. a JmriException subclass or 
-        some on-target Java checked exception class. 
-        This forces all writers of method-using code to think about how to handle problems.  
-        They might wrap with a try-catch or just declare it to go upward, but they have to think about it.
+        <li>You can thrown a checked exception, i.e. a JmriException subclass or some on-target
+        Java checked exception class. This forces all writers of method-using code to think about
+        how to handle problems. They might wrap with a try-catch or just declare it to go upward,
+        but they have to think about it.</li>
 
-    <li>Don't use error codes or other "check the return value" approaches.  
-        They just make it likely there will be invisible problems that bite people in complicated ways 
-        (because you can ignore them, leaving junk behind)
-        
-    </ul>
-    
-    Generally, JMRI developers tend to throw an unchecked exception, i.e. IllegalArgumentException
-    or similar.
-    
-    <h3>Catching Exceptions</h3>
-    SpotBugs will object to code like this:
-<pre style="font-family: monospace;">
+        <li>Don't use error codes or other "check the return value" approaches. They just make it
+        likely there will be invisible problems that bite people in complicated ways (because you
+        can ignore them, leaving junk behind)</li>
+      </ul>
+      Generally, JMRI developers tend to throw an unchecked exception, i.e.
+      IllegalArgumentException or similar.
+      <h3>Catching Exceptions</h3>
+      SpotBugs will object to code like this:
+
+      <pre style="font-family: monospace;">
   try {
      // do something here
   } catch (Exception e) {
   }
-</pre>
-with a 
-<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception"><code>REC_CATCH_EXCEPTION</code></a>
-and/or a 
-<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore"><code>DE_MIGHT_IGNORE</code></a>
-(less often 
-<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop"><code>DE_MIGHT_DROP</code></a>).
-This is an example of two problems:
-<ul>
-<li>Catching <code>Exception</code> instead of more specific types
-<li>Having nothing in the <code>catch</code> block
-</ul>
+</pre>with a <a href=
+"http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception">
+      <code>REC_CATCH_EXCEPTION</code></a> and/or a <a href=
+      "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore">
+      <code>DE_MIGHT_IGNORE</code></a> (less often <a href=
+      "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop">
+      <code>DE_MIGHT_DROP</code></a>). This is an example of two problems:
+      <ul>
+        <li>Catching <code>Exception</code> instead of more specific types</li>
 
-Let's discuss those separately:
+        <li>Having nothing in the <code>catch</code> block</li>
+      </ul>
+      Let's discuss those separately:
+      <h4 id="catch">Catching the Exception class</h4>
+      There are two subcases here:
+      <ul>
+        <li>You're catching <code>Exception</code> because a lot of different specific things can
+        be thrown, and it's a pain to write multiple <code>catch</code> blocks for each of those.
+        That's actually obsolete thinking, though, because now there's syntax for combining those:
 
-<h4><a id="catch" name="catch">Catching the Exception class</a></h4>
-
-There are two subcases here:
-<ul>
-<li>You're catching <code>Exception</code> because a lot of different specific things can be thrown, 
-and it's a pain to write multiple <code>catch</code> blocks for each of those.  
-That's actually obsolete thinking, though, because now there's syntax for combining those:
-<pre style="font-family: monospace;">
+          <pre style="font-family: monospace;">
   try {
     // do something here
   } catch (IOException | JDOMException e) {
     // and do something, see below
   }
-</pre>
-That's a much better way to convey what this code is intended to do.
+</pre>That's a much better way to convey what this code is intended to do.
+        </li>
 
-<li>You want to catch any unchecked exception, such as
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html"><code>NullPointerException</code></a>,
-that is thrown.  Those are all subclasses of 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html"><code>RunTimeException</code></a>,
-so the clean way to do this is to catch that:
-<pre style="font-family: monospace;">
+        <li>You want to catch any unchecked exception, such as <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html"><code>NullPointerException</code></a>,
+        that is thrown. Those are all subclasses of <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html"><code>RunTimeException</code></a>,
+        so the clean way to do this is to catch that:
+
+          <pre style="font-family: monospace;">
   try {
     // do something here
   } catch (RunTimeException e) {
     // and do something, see below
   }
 </pre>
-</ul>
+        </li>
+      </ul>
 
-<h4><a id="empty" name="empty">Empty catch block</a></h4>
+      <h4 id="empty">Empty catch block</h4>
+      What's an empty <code>catch</code> block trying to say?
+      <ul>
+        <li>Ideally, the code should handle the exception, in the sense of reacting to it so that
+        the right stuff still happens for the user. So do that as a first strategy.
+          <p>But sometimes, that's complicated, or the error is really something that isn't
+          understood, or perhaps is routine and doesn't matter.</p>
+        </li>
 
-What's an empty <code>catch</code> block trying to say?
+        <li>If you can't do anything else, at least consider logging that the code has caught
+        something. Typically, this would be a warning:
 
-<ul>
-<li>Ideally, the code should handle the exception, in the sense of reacting to it so that the right stuff 
-still happens for the user. So do that as a first strategy.
-<p>
-But sometimes, that's complicated, or the error is really something that isn't understood,
-or perhaps is routine and doesn't matter.
-
-<li>If you can't do anything else, at least consider logging that the code has caught something.  
-Typically, this would be a warning:
-<pre style="font-family: monospace;">
+          <pre style="font-family: monospace;">
 log.warn("can't do anything useful with this:", e);
-</pre>
-Adding the <code>Exception</code> object <code>e</code> to the log logs all its content, including the traceback. 
-That way, if something weird happens later on, at least there's a clue in the log. 
+</pre>Adding the <code>Exception</code> object <code>e</code> to the log logs all its content,
+including the traceback. That way, if something weird happens later on, at least there's a clue in
+the log.
+        </li>
 
-<li>If it's really routine, log at <code>debug</code> or even <code>trace</code> level. 
-That way if it turns out later to not actually be routine, turning on additional logging will help track it down.
+        <li>If it's really routine, log at <code>debug</code> or even <code>trace</code> level.
+        That way if it turns out later to not actually be routine, turning on additional logging
+        will help track it down.</li>
 
-<li>Consider <em>not</em> catching the error, so that it propagates up. 
-(The methods for targeting the catch block more narrowly in the prior section can help here) 
-It will eventually be caught, and will contain a more useful stack trace.  
-This might require adding the exception to the signature of the current method so you can throw it upwards. 
-<p>
-Or, if absolutely can't change the signature, consider re-characterizing it, e.g.:
-<pre style="font-family: monospace;">
+        <li>Consider <em>not</em> catching the error, so that it propagates up. (The methods for
+        targeting the catch block more narrowly in the prior section can help here) It will
+        eventually be caught, and will contain a more useful stack trace. This might require adding
+        the exception to the signature of the current method so you can throw it upwards.
+          <p>Or, if absolutely can't change the signature, consider re-characterizing it, e.g.:</p>
+
+          <pre style="font-family: monospace;">
   try {
      // do something here
   } catch (IOException e) {
@@ -361,34 +317,35 @@ Or, if absolutely can't change the signature, consider re-characterizing it, e.g
      throw new IllegalArgumentException("couldn't process because ...", e);
   }
 </pre>
+        </li>
 
-<li>If it really is "ignore this, it's going to be OK", 
-you should add an annotation so that others know why it's OK and don't have to worry about it in the future:
-<pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value={"DE_MIGHT_DROP", "DE_MIGHT_IGNORE"}, 
+        <li>If it really is "ignore this, it's going to be OK", you should add an annotation so
+        that others know why it's OK and don't have to worry about it in the future:
+
+          <pre style="font-family: monospace;">
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value={"DE_MIGHT_DROP", "DE_MIGHT_IGNORE"},
     justification = "(Something about why this is OK)")
 </pre>
-</ul>
+        </li>
+      </ul>
 
-<a id="Optional" name="Optional"></a>
-<h2>Use of Optional</h2>
-
-The 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>
-class is the right way to provide 
-"a method return type where there is a clear need to represent 'no result,' and where using <code>null</code> is likely to cause errors".
-There's some good background on use of Optional in an
-<a href="https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">introductory Java Magazine article</a>.
-There's more info about how <code>null</code> makes errors likely is dicussed in a 
-<a href="https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related article</a>.
-As Tony Hoare - one of the giants of computer science - wrote, "I call it my billion-dollar mistake. 
-    It was the invention of the null reference in 1965. 
-    I couldn't resist the temptation to put in a null reference, 
-    simply because it was so easy to implement."
-
+      <h2 id="Optional">Use of Optional</h2>
+      The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>
+      class is the right way to provide "a method return type where there is a clear need to
+      represent 'no result,' and where using <code>null</code> is likely to cause errors". There's
+      some good background on use of Optional in an <a href=
+      "https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">
+      introductory Java Magazine article</a>. There's more info about how <code>null</code> makes
+      errors likely is dicussed in a <a href=
+      "https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related
+      article</a>. As Tony Hoare - one of the giants of computer science - wrote, "I call it my
+      billion-dollar mistake. It was the invention of the null reference in 1965. I couldn't resist
+      the temptation to put in a null reference, simply because it was so easy to implement." 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

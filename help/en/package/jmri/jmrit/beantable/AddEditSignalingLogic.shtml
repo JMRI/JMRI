@@ -1,140 +1,101 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Signal Mast Logic</title>
   <!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
   <meta name="Date.Modified" content="20150523">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
-  <meta name="keywords" content=
-  "JMRI help SignalMast Logic Add Edit">
+  <meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1><a name="Adding_Editing_Routes"
-      id="Adding_Editing_Routes"></a>Adding/Editing Signal
-      Mast Logic</h1>
+      <h1 id="Adding_Editing_Routes">Adding/Editing Signal Mast Logic</h1>
 
       <p>After clicking on the "Add..." button below the <a href=
-      "../beantable/SignalMastLogicTable.shtml">Signal Mast Logic
-      Table</a>, the following pane appears:</p>
-      <a href=
-      "../beantable/images/SignalMastLogicAdd.png"><img src=
-      "../beantable/images/SignalMastLogicAdd.png" align="right"
-      width="340" height="300" hspace="0" vspace="0" alt=
+      "../beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a>, the following pane
+      appears:</p>
+      <a href="../beantable/images/SignalMastLogicAdd.png"><img src=
+      "../beantable/images/SignalMastLogicAdd.png" class="floatRight" width="340" height="300" alt=
       "Signal Head Logic Add pane"></a>
+      <p>Start creating a Signal Mast Logic by selecting a <strong>Source Signal Mast</strong>
+      followed by a <strong>Destination Signal Mast</strong> from the pop-ups.<br>
+      The Source (Signal) Mast is the one which you wish to control in this Pair and set the
+      Appearances on.<br>
+      The Destination (Signal) Mast is the next signal mast down the line. The Appearance of the
+      Destination Mast along with the state of the Turnouts and Blocks that you select on this pane
+      will have a direct effect on the Appearance of the Source Mast.<br>
+      If you are not using the Layout Editor, then <em>no</em> validation is performed of the
+      Source and Destination Signal Masts. If the Layout Editor is being used, then the system will
+      try and determine if the Destination Mast is reachable from the Source Mast and warn you when
+      a connection is not found</p>
 
-      <p>Start creating a Signal Mast Logic by selecting a
-      <b>Source Signal Mast</b> followed by a <b>Destination
-      Signal Mast</b> from the pop-ups.<br>
-      The Source (Signal) Mast is the one which you wish
-      to control in this Pair and set the Appearances on.<br>
-      The Destination (Signal) Mast is the next signal mast down
-      the line. The Appearance of the Destination Mast along
-      with the state of the Turnouts and Blocks that you select
-      on this pane will have a direct effect on the Appearance of
-      the Source Mast.<br>
-      If you are not using the Layout Editor, then <em>no</em>
-      validation is performed of the Source and Destination Signal
-      Masts. If the Layout Editor is being used, then the system
-      will try and determine if the Destination Mast is reachable
-      from the Source Mast and warn you when a connection is not
-      found</p>
-
-      <p>The check box "Use Layout Editor Paths" allows you to get
-      JMRI to automatically generate the required Blocks, Turnouts
-      and Signal Masts, along with their states, that are located
+      <p>The check box "Use Layout Editor Paths" allows you to get JMRI to automatically generate
+      the required Blocks, Turnouts and Signal Masts, along with their states, that are located
       between the source and destination Signal Masts.<br>
-      Upon selecting "Use Layout Editor Paths", two further check
-      boxes will appear: "Use Turnout Details From Layout Editor"
-      and "Use Block Details From Layout Editor". Selecting either
-      of these will determine what information from the Layout
-      Editor is used when the system automatically generates the
-      route.<br>
-      The automatically generated information is not saved with the
-      panel file, but it is generated each time the layout panel is
-      opened.<br>
-      If the information on the <a href=
-      "../display/LayoutEditor.shtml">Layout Editor</a> panel
-      is edited, changes are not immediately reflected in the
-      Signal Mast Logic; you will need to store the panel, close
-      JMRI and re-open the panel for the Signal Mast Logic to be
+      Upon selecting "Use Layout Editor Paths", two further check boxes will appear: "Use Turnout
+      Details From Layout Editor" and "Use Block Details From Layout Editor". Selecting either of
+      these will determine what information from the Layout Editor is used when the system
+      automatically generates the route.<br>
+      The automatically generated information is not saved with the panel file, but it is generated
+      each time the layout panel is opened.<br>
+      If the information on the <a href="../display/LayoutEditor.shtml">Layout Editor</a> panel is
+      edited, changes are not immediately reflected in the Signal Mast Logic; you will need to
+      store the panel, close JMRI and re-open the panel for the Signal Mast Logic to be
       updated.</p>
 
-      <p>The "Allow The Logic to Automatically Determine
-      Conflicting SignalMasts" option tries to determine which
-      Signal Masts could possibly cause a conflicting route if they
-      were not set to danger.</p>
+      <p>The "Allow The Logic to Automatically Determine Conflicting SignalMasts" option tries to
+      determine which Signal Masts could possibly cause a conflicting route if they were not set to
+      danger.</p>
 
-      <p>The "Lock Turnouts when Signal Mast Logic is active"
-      feature allows you to selectively disable accessory (Turnout)
-      commands from cabs and/or locally-wired pushbuttons. When
-      selected, JMRI disables pushbuttons by sending pushbutton
-      disable commands to the Turnout decoders when the route is
-      locked, and enables the pushbuttons when the route is
-      unlocked. When locking a Turnout from cab commands, the JMRI
-      program will monitor the Turnout's accessory address and if
-      it detects a change command from a cab, will cancel the
-      command immediately by sending out the opposite command to
-      the Turnout. All Turnouts that are being monitored by the
-      JMRI program and are included in the route will be
-      locked.</p>
-
-      <a href=
-      "../beantable/images/SignalPairsEdit.png"><img src=
-      "../beantable/images/SignalPairsEdit.png" align="right"
-      width="341" height="274" hspace="0" vspace="0" alt=
+      <p>The "Lock Turnouts when Signal Mast Logic is active" feature allows you to selectively
+      disable accessory (Turnout) commands from cabs and/or locally-wired pushbuttons. When
+      selected, JMRI disables pushbuttons by sending pushbutton disable commands to the Turnout
+      decoders when the route is locked, and enables the pushbuttons when the route is unlocked.
+      When locking a Turnout from cab commands, the JMRI program will monitor the Turnout's
+      accessory address and if it detects a change command from a cab, will cancel the command
+      immediately by sending out the opposite command to the Turnout. All Turnouts that are being
+      monitored by the JMRI program and are included in the route will be locked.</p>
+      <a href="../beantable/images/SignalPairsEdit.png"><img src=
+      "../beantable/images/SignalPairsEdit.png" class="floatRight" width="341" height="274" alt=
       "Signal Head Logic Add pane Sensor tab"></a>
+      <p>The "Show" radio buttons allow you to show <strong>All</strong> or only the
+      <strong>Included</strong> Turnouts, Sensors, Blocks and Signal Masts that are selected as
+      part of this Signal Mast Logic.</p>
 
-      <p>The "Show" radio buttons allow you to show <b>All</b>
-      or only the <b>Included</b> Turnouts, Sensors, Blocks and
-      Signal Masts that are selected as part of this Signal
-      Mast Logic.</p>
+      <p>There are four tabs below the "Show" buttons, each containing the details of Blocks,
+      Turnouts, Sensors and Signal Masts that make up the Signal Mast Logic for this Source Mast.
+      In each of these tabs, there is an editable table that allows you to manually select which
+      item(s) should be included in the Signal Mast Logic and the State which each of those items
+      should be in.<br>
+      Below that is a second table that shows the automatically generated items (except under the
+      Sensors tab). Manually entered items over-ride the automatically generated items, therefore
+      if you wish to over-ride any item in this automatically generated list then select the
+      corresponding item and set the state in the upper table. Click the "Include" box in any of
+      the tables to add the desired item to your Signal Mast Logic. Next to the "Include" box is
+      the State option which that item must be in for the Source Signal Mast to come active.<br>
+      For example, if you wish a Turnout to be in a Thrown state to trigger the Signal Mast Logic,
+      then select "Thrown" in the drop down box. If you wish to over-ride a Turnout that was
+      automatically included, and you don't care what state it is set to, check "Include" in the
+      upper table and select "Any State" from the drop down box.</p>
 
-      <p>There are four tabs below the "Show" buttons, each
-      containing the details of Blocks, Turnouts, Sensors and
-      Signal Masts that make up the Signal Mast Logic for this
-      Source Mast. In each of these tabs, there is an editable
-      table that allows you to manually select which item(s) should
-      be included in the Signal Mast Logic and the State which each
-      of those items should be in.<br>
-      Below that is a second table that shows the automatically
-      generated items (except under the Sensors tab). Manually
-      entered items over-ride the automatically generated items,
-      therefore if you wish to over-ride any item in this
-      automatically generated list then select the corresponding
-      item and set the state in the upper table. Click the
-      "Include" box in any of the tables to add the desired item to
-      your Signal Mast Logic. Next to the "Include" box is the
-      State option which that item must be in for the Source Signal
-      Mast to come active.<br>
-      For example, if you wish a Turnout to be
-      in a Thrown state to trigger the Signal Mast Logic, then
-      select "Thrown" in the drop down box. If you wish to
-      over-ride a Turnout that was automatically included, and you
-      don't care what state it is set to, check "Include" in the
-      upper table and select "Any State" from the drop down
-      box.</p>
+      <p>Clicking on the "Update Signal (Mast) Logic" button will add or update this Signal Mast
+      Logic to the system. Once added, the tables holding the automatically generated data will be
+      re-populated.<br>
+      Tip: To update/fill the State column under the Signal Masts tab, update & reopen the Signal
+      Mast Logic item.</p>
 
-      <p>Clicking on the "Update Signal (Mast) Logic" button will
-      add or update this Signal Mast Logic to the system. Once
-      added, the tables holding the automatically generated data
-      will be re-populated.<br>
-      Tip: To update/fill the State column under the Signal Masts
-      tab, update &amp; reopen the Signal Mast Logic item.</p>
-
-      <p>Back to the <a href=
-      "../beantable/SignalMastLogicTable.shtml">Signal Mast Logic
-      Table help page</a>.</p>
-
+      <p>Back to the <a href="../beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table help
+      page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -6,9 +6,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.JComboBox;
-
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,19 +25,18 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class CarManager extends RollingStockManager<Car> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class CarManager extends RollingStockManager<Car>
+        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     // stores Kernels
     protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<>();
-
-    public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
     }
 
     /**
-     * Finds an existing Car or creates a new Car if needed requires car's road
-     * and number
+     * Finds an existing Car or creates a new Car if needed requires car's road and
+     * number
      *
      * @param road   car road
      * @param number car number
@@ -56,156 +52,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         return car;
     }
 
-    /**
-     * @return requested Car object or null if none exists
-     */
     @Override
-    public Car getById(String id) {
-        return super.getById(id);
-    }
-
-    /**
-     * Get Car by road and number
-     *
-     * @param road   Car road
-     * @param number Car number
-     * @return requested Car object or null if none exists
-     */
-    @Override
-    public Car getByRoadAndNumber(String road, String number) {
-        return super.getByRoadAndNumber(road, number);
-    }
-
-    /**
-     * Get a Car by type and road. Used to test that a car with a specific type
-     * and road exists.
-     *
-     * @param type car type.
-     * @param road car road.
-     * @return the first car found with the specified type and road.
-     */
-    @Override
-    public Car getByTypeAndRoad(String type, String road) {
-        return super.getByTypeAndRoad(type, road);
-    }
-
-    /**
-     * Create a new Kernel
-     *
-     * @param name string name for this Kernel
-     *
-     * @return Kernel
-     */
-    public Kernel newKernel(String name) {
-        Kernel kernel = getKernelByName(name);
-        if (kernel == null && !name.equals(NONE)) {
-            kernel = new Kernel(name);
-            int oldSize = _kernelHashTable.size();
-            _kernelHashTable.put(name, kernel);
-            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, _kernelHashTable
-                    .size());
-        }
-        return kernel;
-    }
-
-    /**
-     * Delete a Kernel by name
-     *
-     * @param name string name for the Kernel
-     *
-     */
-    public void deleteKernel(String name) {
-        Kernel kernel = getKernelByName(name);
-        if (kernel != null) {
-            kernel.dispose();
-            Integer oldSize = Integer.valueOf(_kernelHashTable.size());
-            _kernelHashTable.remove(name);
-            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable
-                    .size()));
-        }
-    }
-
-    /**
-     * Get a Kernel by name
-     *
-     * @param name string name for the Kernel
-     *
-     * @return named Kernel
-     */
-    public Kernel getKernelByName(String name) {
-        return _kernelHashTable.get(name);
-    }
-
-    public void replaceKernelName(String oldName, String newName) {
-        Kernel oldKernel = getKernelByName(oldName);
-        if (oldKernel != null) {
-            Kernel newKernel = newKernel(newName);
-            // keep the lead car
-            Car leadCar = oldKernel.getLead();
-            if (leadCar != null) {
-                leadCar.setKernel(newKernel);
-            }
-            for (Car car : oldKernel.getCars()) {
-                car.setKernel(newKernel);
-            }
-        }
-    }
-
-    /**
-     * Get a comboBox loaded with current Kernel names
-     *
-     * @return comboBox with Kernel names.
-     */
-    public JComboBox<String> getKernelComboBox() {
-        JComboBox<String> box = new JComboBox<>();
-        box.addItem(NONE);
-        for (String kernelName : getKernelNameList()) {
-            box.addItem(kernelName);
-        }
-        return box;
-    }
-
-    /**
-     * Update an existing comboBox with the current kernel names
-     *
-     * @param box comboBox requesting update
-     */
-    public void updateKernelComboBox(JComboBox<String> box) {
-        box.removeAllItems();
-        box.addItem(NONE);
-        for (String kernelName : getKernelNameList()) {
-            box.addItem(kernelName);
-        }
-    }
-
-    /**
-     * Get a list of kernel names
-     *
-     * @return ordered list of kernel names
-     */
-    public List<String> getKernelNameList() {
-        String[] names = new String[_kernelHashTable.size()];
-        List<String> out = new ArrayList<>();
-        Enumeration<String> en = _kernelHashTable.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            names[i++] = en.nextElement();
-        }
-        java.util.Arrays.sort(names);
-        for (String name : names) {
-            out.add(name);
-        }
-        return out;
-    }
-
-    public int getKernelMaxNameLength() {
-        int maxLength = 0;
-        for (String name : getKernelNameList()) {
-            if (name.length() > maxLength) {
-                maxLength = name.length();
-            }
-        }
-        return maxLength;
+    public void deregister(Car car) {
+        super.deregister(car);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
     }
 
     /**
@@ -244,11 +94,11 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public List<Car> getByRweList() {
         return getByList(getByLocationList(), BY_RWE);
     }
-    
+
     public List<Car> getByRwlList() {
         return getByList(getByLocationList(), BY_RWL);
     }
-    
+
     public List<Car> getByDivisionList() {
         return getByList(getByLocationList(), BY_DIVISION);
     }
@@ -290,22 +140,19 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             case BY_KERNEL:
                 return (c1, c2) -> (c1.getKernelName().compareToIgnoreCase(c2.getKernelName()));
             case BY_RWE:
-                return (c1, c2) -> (c1.getReturnWhenEmptyDestName()
-                        .compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
+                return (c1,
+                        c2) -> (c1.getReturnWhenEmptyDestName().compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
             case BY_RWL:
-                return (c1, c2) -> (c1.getReturnWhenLoadedDestName()
-                        .compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
+                return (c1,
+                        c2) -> (c1.getReturnWhenLoadedDestName().compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
             case BY_FINAL_DEST:
-                return (c1, c2) -> (c1.getFinalDestinationName()
-                        .compareToIgnoreCase(c2.getFinalDestinationName()));
+                return (c1, c2) -> (c1.getFinalDestinationName().compareToIgnoreCase(c2.getFinalDestinationName()));
             case BY_DIVISION:
-                return (c1, c2) -> (c1.getDivisionName()
-                        .compareToIgnoreCase(c2.getDivisionName()));
+                return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
                 return (c1, c2) -> (c1.getWait() - c2.getWait());
             case BY_PICKUP:
-                return (c1, c2) -> (c1.getPickupScheduleName()
-                        .compareToIgnoreCase(c2.getPickupScheduleName()));
+                return (c1, c2) -> (c1.getPickupScheduleName().compareToIgnoreCase(c2.getPickupScheduleName()));
             case BY_HAZARD:
                 return (c1, c2) -> ((c1.isHazardous() ? 1 : 0) - (c2.isHazardous() ? 1 : 0));
             default:
@@ -314,8 +161,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     }
 
     /**
-     * Return a list available cars (no assigned train or car already assigned
-     * to this train) on a route, cars are ordered least recently moved to most
+     * Return a list available cars (no assigned train or car already assigned to
+     * this train) on a route, cars are ordered least recently moved to most
      * recently moved.
      *
      * @param train The Train to use.
@@ -343,10 +190,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 }
             }
             // pickup allowed at destination? Don't include cars in staging
-            if (destination != null
-                    && destination.isPickUpAllowed()
-                    && destination.getLocation() != null
-                    && !destination.getLocation().isStaging()) {
+            if (destination != null &&
+                    destination.isPickUpAllowed() &&
+                    destination.getLocation() != null &&
+                    !destination.getLocation().isStaging()) {
                 destination = null; // include cars at destination
             }
         }
@@ -377,10 +224,15 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 out.add(car);
             }
         }
+        for (Car car : list) {
+            if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                out.add(car);
+            }
+        }
         // now load all of the remaining low priority cars
-        for (Car rs : list) {
-            if (!out.contains(rs)) {
-                out.add(rs);
+        for (Car car : list) {
+            if (!out.contains(car)) {
+                out.add(car);
             }
         }
         return out;
@@ -388,27 +240,27 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
 
     /**
      * Provides a very sorted list of cars assigned to the train. Note that this
-     * isn't the final sort as the cars must be sorted by each location the
-     * train visits.
+     * isn't the final sort as the cars must be sorted by each location the train
+     * visits.
      * <p>
      * The sort priority is as follows:
      * <ol>
      * <li>Caboose or car with FRED to the end of the list
-     * <li>Passenger cars to the end of the list, but before cabooses or car
-     * with FRED. Passenger cars have blocking numbers which places them
-     * relative to each other.
-     * <li>Car's destination (alphabetical by location and track name or by
-     * track blocking order)
+     * <li>Passenger cars to the end of the list, but before cabooses or car with
+     * FRED. Passenger cars have blocking numbers which places them relative to each
+     * other.
+     * <li>Car's destination (alphabetical by location and track name or by track
+     * blocking order)
      * <li>Car's current location (alphabetical by location and track name)
      * <li>Car's final destination (alphabetical by location and track name)
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
-     * Cars in a kernel are placed together by their kernel blocking numbers.
-     * The kernel's position in the list is based on the lead car in the kernel.
+     * Cars in a kernel are placed together by their kernel blocking numbers. The
+     * kernel's position in the list is based on the lead car in the kernel.
      * <p>
-     * If the train is to be blocked by track blocking order, all of the tracks
-     * at that location need a blocking number greater than 0.
+     * If the train is to be blocked by track blocking order, all of the tracks at
+     * that location need a blocking number greater than 0.
      *
      * @param train The selected Train.
      *
@@ -419,7 +271,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         List<Car> byFinal = getByList(byHazard, BY_FINAL_DEST);
         List<Car> byLocation = getByList(byFinal, BY_LOCATION);
         List<Car> byDestination = getByList(byLocation, BY_DESTINATION);
-        // now place cabooses, cars with FRED, and passenger cars at the rear of the train
+        // now place cabooses, cars with FRED, and passenger cars at the rear of the
+        // train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car car : byDestination) {
@@ -427,16 +280,17 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
-                // sort order based on train direction when serving track, low to high if West or North bound trains
+                // sort order based on train direction when serving track, low to high if West
+                // or North bound trains
                 if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
                     for (int j = 0; j < out.size(); j++) {
                         if (out.get(j).getDestinationTrack() == null) {
                             continue;
                         }
-                        if (car.getRouteDestination() != null
-                                && (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR)
-                                || car.getRouteDestination().getTrainDirectionString()
-                                        .equals(RouteLocation.NORTH_DIR))) {
+                        if (car.getRouteDestination() != null &&
+                                (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR) ||
+                                        car.getRouteDestination().getTrainDirectionString()
+                                                .equals(RouteLocation.NORTH_DIR))) {
                             if (car.getDestinationTrack().getBlockingOrder() < out.get(j).getDestinationTrack()
                                     .getBlockingOrder()) {
                                 out.add(j, car);
@@ -464,10 +318,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 for (index = 0; index < lastCarsIndex; index++) {
                     Car carTest = out.get(out.size() - 1 - index);
                     log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
-                    if (carTest.isPassenger()
-                            && !carTest.isCaboose()
-                            && !carTest.hasFred()
-                            && carTest.getBlocking() < car.getBlocking()) {
+                    if (carTest.isPassenger() &&
+                            !carTest.isCaboose() &&
+                            !carTest.hasFred() &&
+                            carTest.getBlocking() < car.getBlocking()) {
                         break;
                     }
                 }
@@ -582,45 +436,23 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         }
         return mias;
     }
-    
+
     /**
      * Determines a car's weight in ounces based on car's scale length
+     * 
      * @param carLength Car's scale length
      * @return car's weight in ounces
      * @throws NumberFormatException if length isn't a number
      */
     public static String calculateCarWeight(String carLength) throws NumberFormatException {
         double doubleCarLength = Double.parseDouble(carLength) * 12 / Setup.getScaleRatio();
-        double doubleCarWeight =
-                (Setup.getInitalWeight() + doubleCarLength * Setup.getAddWeight()) / 1000;
+        double doubleCarWeight = (Setup.getInitalWeight() + doubleCarLength * Setup.getAddWeight()) / 1000;
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(1);
         return nf.format(doubleCarWeight); // car weight in ounces.
     }
 
     public void load(Element root) {
-        // new format using elements starting version 3.3.1
-        if (root.getChild(Xml.NEW_KERNELS) != null) {
-            List<Element> eKernels = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
-            log.debug("Car manager sees {} kernels", eKernels.size());
-            Attribute a;
-            for (Element eKernel : eKernels) {
-                if ((a = eKernel.getAttribute(Xml.NAME)) != null) {
-                    newKernel(a.getValue());
-                }
-            }
-        } // old format
-        else if (root.getChild(Xml.KERNELS) != null) {
-            String names = root.getChildText(Xml.KERNELS);
-            if (!names.isEmpty()) {
-                String[] kernelNames = names.split("%%"); // NOI18N
-                log.debug("kernels: {}", names);
-                for (String name : kernelNames) {
-                    newKernel(name);
-                }
-            }
-        }
-
         if (root.getChild(Xml.CARS) != null) {
             List<Element> eCars = root.getChild(Xml.CARS).getChildren(Xml.CAR);
             log.debug("readFile sees {} cars", eCars.size());
@@ -637,18 +469,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param root The common Element for operations-cars.dtd.
      */
     public void store(Element root) {
-        root.addContent(new Element(Xml.OPTIONS)); // nothing to save under
-        // options
-
+        // nothing to save under options
+        root.addContent(new Element(Xml.OPTIONS));
+        
         Element values;
-        List<String> names = getKernelNameList();
-        Element kernels = new Element(Xml.NEW_KERNELS);
-        for (String name : names) {
-            Element kernel = new Element(Xml.KERNEL);
-            kernel.setAttribute(new Attribute(Xml.NAME, name));
-            kernels.addContent(kernel);
-        }
-        root.addContent(kernels);
         root.addContent(values = new Element(Xml.CARS));
         // add entries
         List<Car> carList = getByIdList();

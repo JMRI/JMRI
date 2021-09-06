@@ -1,64 +1,54 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - XpressNet LI101F Configuration
-  Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - XpressNet LI101F Configuration Tool</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
-      <h1>XpressNet LI101F Configuration Tool</h1><img src=
-      "images/LI101ConfigurationUtility.jpg" alt=
-      "LI101 Configuration Tool Image">
-
-      <p>The LI101 Configuration tool is used to configure the
-      LI101F.</p>
+      <h1>XpressNet LI101F Configuration Tool</h1>
+      <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">
+      <p>The LI101 Configuration tool is used to configure the LI101F.</p>
 
       <p>Starting at the top:</p>
 
-      <p>The First drop down box selects the address the device
-      will use on the XpressNet. This address needs to be different
-      than all other devices on your XpressNet.</p>
+      <p>The First drop down box selects the address the device will use on the XpressNet. This
+      address needs to be different than all other devices on your XpressNet.</p>
 
-      <p>The Second drop down box sets the LI101F port speed. This
-      speed should match what you have used for the "Port Speed"
-      setting in the JMRI Preferences Connections tab.</p>
+      <p>The Second drop down box sets the LI101F port speed. This speed should match what you have
+      used for the "Port Speed" setting in the JMRI Preferences Connections tab.</p>
 
       <h4>Buttons</h4>
 
-      <p>Starting on the left side of the pane, the button labeled
-      "Read from LI101" will read the current settings of the
-      LI101F.</p>
+      <p>Starting on the left side of the pane, the button labeled "Read from LI101" will read the
+      current settings of the LI101F.</p>
 
-      <p>The button labeled "Write to LI101" will write the
-      settings on the screen to the LI101F. If you changed the
-      LI101 Speed Setting, you will also need to change the
-      connection speed setting in your Preferences.</p>
+      <p>The button labeled "Write to LI101" will write the settings on the screen to the LI101F.
+      If you changed the LI101 Speed Setting, you will also need to change the connection speed
+      setting in your Preferences.</p>
 
-      <p>The button labeled "Reset to Factory Defaults" will reset
-      the <b>screen</b> to factory defaults. This does not send a
-      reset instruction to the LI101F at this point in time.</p>
+      <p>The button labeled "Reset to Factory Defaults" will reset the <strong>screen</strong> to
+      factory defaults. This does not send a reset instruction to the LI101F at this point in
+      time.</p>
 
-      <p>The last button, labeled "Close", will close the pane
-      without sending any (more) information to the LI101F.</p>
+      <p>The last button, labeled "Close", will close the pane without sending any (more)
+      information to the LI101F.</p>
 
-      <p>Back to the <a href="index.shtml">XpressNet Help</a>
-      page</p>
+      <p>Back to the <a href="index.shtml">XpressNet Help</a> page</p>
+
       <hr>
       Paul Bender<br>
-      paul.bender@acm.org
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      paul.bender@acm.org <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

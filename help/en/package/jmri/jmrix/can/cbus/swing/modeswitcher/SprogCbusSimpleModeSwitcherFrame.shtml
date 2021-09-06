@@ -1,53 +1,41 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: SPROG CBUS&reg; Simple Mode Switcher Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: SPROG CBUS® Simple Mode Switcher Tool</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+      <h1>JMRI : CBUS Simple Mode Switcher Tool</h1>
 
-    <h1>JMRI : CBUS Simple Mode Switcher Tool</h1>
+      <p>The mode switcher controls the programming modes that are available for the connected
+      command station. Not all CBUS command stations support the mode switcher.<br>
+      <br></p>
 
-    <p>The mode switcher controls the programming modes that are available for
-        the connected command station. Not all CBUS command stations support
-        the mode switcher.<br><br></p>
+      <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br>
+      <br></p>
+      <img src="images/ModeSwitcherMenu.PNG" alt="Mode switcher menu entry">
+      <p>Select programmer mode for service mode programming on a programming track</p>
 
-    <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br><br></p>
-
-    <img src="images/ModeSwitcherMenu.png" alt="Mode switcher menu entry">
-
-    <p></p>
-
-    <p>Select programmer mode for service mode programming on a programming
-        track</p>
-
-    <p>Select command station mode for running trains and using ops mode (on the
-       main) programming.<br><br></p>
-
-    <img src="images/SimpleModeSwitcher.png" alt="SPROG simple mode switcher">
-
-    <p></p>
-
-    <p>The Decoder Pro main window status bar shows the currently available
-        programmers.<br><br></p>
-
-    <img src="images/StatusBar.png" alt="DP3 status bar">
-
-    <p></p>
-
-    <h2></h2>
-    <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-
-    <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Select command station mode for running trains and using ops mode (on the main)
+      programming.<br>
+      <br></p>
+      <img src="images/SimpleModeSwitcher.PNG" alt="SPROG simple mode switcher">
+      <p>The Decoder Pro main window status bar shows the currently available programmers.<br>
+      <br></p>
+      <img src="images/StatusBar.PNG" alt="DP3 status bar">
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

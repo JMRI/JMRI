@@ -61,7 +61,7 @@
  <indexitem text="CAN Bus - Hardware, Connection, Tools " target="html.hardware.can.index"/>
 
  <indexitem text="CBUS " target="html.hardware.can.cbus.index">
-  <indexitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
+  <indexitem text="Connection Details " target="html.hardware.merg.Details"/>
 
   <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 

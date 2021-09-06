@@ -1,39 +1,33 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Select DCS52 USB Mode</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Select DCS52 USB Mode</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h2>JMRI: Select DCS52 USB Mode</h2>A <a href=
-      "../../../../../../html/hardware/loconet/DCS52.shtml">Digitrax
-      DCS52</a> USB interface can act either as a stand-alone programmer, or as an
-      interface to a LocoNet, but it can only do one at a time.
-      Normally, you choose the USB mode as part of <a href=
-      "../../../../../../html/hardware/loconet/PR3.shtml">setting
-      the JMRI connection preferences</a>.
-
-      <p>In some cases, you might want to quickly change the mode
-      during debugging. This tool provides two buttons to allow you
-      to change the DCS52 USB mode immediately. <em>Note that this may
-      result in unusual (and usually bad) behavior from the
-      program!</em> It's generally better to switch mode by
-      changing the JMRI preferences and restarting the program.</p>
+      <h2>JMRI: Select DCS52 USB Mode</h2>
+      A <a href="../../../../../../html/hardware/loconet/DCS52.shtml">Digitrax DCS52</a> USB
+      interface can act either as a stand-alone programmer, or as an interface to a LocoNet, but it
+      can only do one at a time. Normally, you choose the USB mode as part of <a href=
+      "../../../../../../html/hardware/loconet/PR3.shtml">setting the JMRI connection
+      preferences</a>.
+      <p>In some cases, you might want to quickly change the mode during debugging. This tool
+      provides two buttons to allow you to change the DCS52 USB mode immediately. <em>Note that
+      this may result in unusual (and usually bad) behavior from the program!</em> It's generally
+      better to switch mode by changing the JMRI preferences and restarting the program.</p>
 
       <p>For more information on the DCS52, please see its <a href=
-      "../../../../../../html/hardware/loconet/DCS52.shtml">JMRI
-      reference page</a>.</p>
+      "../../../../../../html/hardware/loconet/DCS52.shtml">JMRI reference page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,84 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Switchboard Editor Help</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help Switchboard Editor">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Switchboard Editor</h1>
-
       <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
-      To create a new Switchboard, from the Panels menu, choose New Panel &rArr; Switchboard Editor.<br>
+      To create a new Switchboard, from the Panels menu, choose New Panel ⇒ Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
-      If any Turnouts were defined in JMRI beforehand, those switches will immediately show
-      their current state and immediately let you control them.</p>
-      <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247" height="214"
-      align="right" alt="The Switchboard Editor"></a>
-      <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard will control.
-      Select an option for:</p>
+      If any Turnouts were defined in JMRI beforehand, those switches will immediately show their
+      current state and immediately let you control them.</p>
+      <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247"
+      height="214" class="floatRight" alt="The Switchboard Editor"></a>
+      <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard
+      will control. Select an option for:</p>
+
       <ul>
         <li>Bean type - to control a range of Turnouts, Sensors or Lights</li>
+
         <li>Connection - select Internal or an active JMRI connection</li>
+
         <li>Switch shape - pick a visual presentation for the switches:
-        <ul>
-          <li>Button - standard Java buttons, the default and best on slow displays</li>
-          <li>Slider - a modern interface popular in smart phones. You can pack a lot of controls in a small panel</li>
-          <li>Key - the classic layout keyboard inspired by the M&auml;rklin hardware Keyboard</li>
-          <li>Symbol - schematics like the traditional (Control) Panel, distinctive per bean type.</li>
-        </ul></li>
-        <li>Set the number of rows of switches to be displayed (number of items per row is calculated)</li>
-        <li>Select Hide unconnected switches to only show switches for items connected to hardware</li>
-        <li>Auto Address Range (selected by default)<span class="since">since 4.13.4</span> makes it easy to use the left/right arrows on the pane to
-        jump to the next set of hardware addresses while keeping the number of items on the board the same.</li>
+          <ul>
+            <li>Button - standard Java buttons, the default and best on slow displays</li>
+
+            <li>Slider - a modern interface popular in smart phones. You can pack a lot of controls
+            in a small panel</li>
+
+            <li>Key - the classic layout keyboard inspired by the Märklin hardware Keyboard</li>
+
+            <li>Symbol - schematics like the traditional (Control) Panel, distinctive per bean
+            type.</li>
+          </ul>
+        </li>
+
+        <li>Set the number of rows of switches to be displayed (number of items per row is
+        calculated)</li>
+
+        <li>Select Hide unconnected switches to only show switches for items connected to
+        hardware</li>
+
+        <li>Auto Address Range (selected by default)<span class="since">since 4.13.4</span> makes
+        it easy to use the left/right arrows on the pane to jump to the next set of hardware
+        addresses while keeping the number of items on the board the same.</li>
       </ul>
       <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221"
-      align="right" alt="Example of a Switchboard pane"></a>
+      class="floatRight" alt="Example of a Switchboard pane"></a>
       <p>Optionally, change the background color for this Switchboard via the Options menu.
-      <span class="since">since 4.21.2</span>The new settings are applied immediately. Sometimes you may want to click
-      [Update Switchboard] to redraw all items on the board.</p>
-      <p>
-      Note that hybrid Switchboards containing more than one bean type or connection are not possible.
-      You can create and save separate Switchboards for different connections, address ranges and object types like Turnouts.
-      Change the name of this Switchboard by choosing Rename Switchboard... from the Edit menu while the Editor is open.</p>
-      <p>When ready, close the Editor by clicking the Close box in its title bar or Close Editor from the File menu.
-      Open the Editor at any time from the Switchboard's Edit menu.</p>
+      <span class="since">since 4.21.2</span>The new settings are applied immediately. Sometimes
+      you may want to click [Update Switchboard] to redraw all items on the board.</p>
+
+      <p>Note that hybrid Switchboards containing more than one bean type or connection are not
+      possible. You can create and save separate Switchboards for different connections, address
+      ranges and object types like Turnouts. Change the name of this Switchboard by choosing Rename
+      Switchboard... from the Edit menu while the Editor is open.</p>
+
+      <p>When ready, close the Editor by clicking the Close box in its title bar or Close Editor
+      from the File menu. Open the Editor at any time from the Switchboard's Edit menu.</p>
 
       <h2>Quick Reference Guide - Using the Switchboard</h2>
+
       <p>In the PanelPro Panel menu, select New &gt; Switchboard Editor.</p>
-      <p>After the standard board opens, select a Connection, Bean type Switch Shape from the comboboxes.</p>
-      <p>Drag and resize the window to a handy position on screen. The switches will reflow and resize.</p>
-      <p>Clicking on an active switch on the board will send an instruction to the layout to toggle the item (on/off, closed/thrown).
-      Depending on the hardware, the switch label and graphics will change to show the new state.</p>
-      <p>A tooltip appears when you hover your mouse over a switch, showing the user name of that item (if it's connected and set).</p>
+
+      <p>After the standard board opens, select a Connection, Bean type Switch Shape from the
+      comboboxes.</p>
+
+      <p>Drag and resize the window to a handy position on screen. The switches will reflow and
+      resize.</p>
+
+      <p>Clicking on an active switch on the board will send an instruction to the layout to toggle
+      the item (on/off, closed/thrown). Depending on the hardware, the switch label and graphics
+      will change to show the new state.</p>
+
+      <p>A tooltip appears when you hover your mouse over a switch, showing the user name of that
+      item (if it's connected and set).</p>
+
       <p>Right-click a switch to open a context-menu and:</p>
-      <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" align="right" alt="SwitchBoard keys"></a>
+      <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" class=
+      "floatRight" alt="SwitchBoard keys"></a>
       <ul>
         <li>Set the user name of a connected item (stored in the item, not in the board)</li>
-        <li>Attach a new item to an inactive switch (using the name of the switch and the object type as set in the
-        Editor)</li>
+
+        <li>Attach a new item to an inactive switch (using the name of the switch and the object
+        type as set in the Editor)</li>
+
         <li>Invert a turnout so it displays the intended state (depending on protocol support)</li>
-        <li>To come: flip the switch icon to better represent the position of the connected turnout</li>
+
+        <li>To come: flip the switch icon to better represent the position of the connected
+        turnout</li>
       </ul>
 
-      <p>Remember to save your setup and configured items by choosing Store Panels... from the File menu.<br>
-      Note: The menu item changes as of 4.23.3 to <strong>Store ALL table content and panels</strong>.
-      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.<br>
-      You can have your Switchboards open automatically upon startup by setting them as as an "Open File"
-      Startup Action under Preferences &gt; Startup.</p>
-      <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">PanelPro help page</a>.</p>
+      <p>Remember to save your setup and configured items by choosing Store Panels... from the File
+      menu.<br>
+      Note: The menu item changes as of 4.23.3 to <strong>Store ALL table content and
+      panels</strong>. For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">Loading
+      and Storing Your Work</a>.<br>
+      You can have your Switchboards open automatically upon startup by setting them as as an "Open
+      File" Startup Action under Preferences &gt; Startup.</p>
 
+      <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">PanelPro help
+      page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
