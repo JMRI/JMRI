@@ -132,7 +132,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public final boolean validateName(String name) {
+    public final boolean validateName(String name, boolean ignoreDuplicateErrors) {
         // Empty name is not allowed
         if (name.isEmpty()) return false;
         
@@ -146,7 +146,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             }
         }
         
-        if (_parent != null) {
+        if (!ignoreDuplicateErrors && (_parent != null)) {
             // Check that no other female socket of the parent has the same name
             for (int i=0; i < _parent.getChildCount(); i++) {
                 FemaleSocket child = _parent.getChild(i);
@@ -160,8 +160,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public void setName(String name) {
-        if (!validateName(name)) {
+    public void setName(String name, boolean ignoreDuplicateErrors) {
+        if (!validateName(name, ignoreDuplicateErrors)) {
             throw new IllegalArgumentException("the name is not valid: " + name);
         }
         _name = name;
