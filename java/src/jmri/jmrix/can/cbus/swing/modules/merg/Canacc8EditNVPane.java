@@ -102,9 +102,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             _nvArray[nv] = value;
             if ((nv > 0) && (nv <= 8)) {
                 log.debug("Update NV {} to {}", nv, value);
-                out[nv].setButtons(value);  // Do this first to ensure correct state when buttons are tested as value is updated
+                int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.tSpin.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
+                out[nv].setButtons(value, oldSpinnerValue);
                 out[nv].pulseSpinner.tSpin.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
-                log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.tSpin.getModel()).getNumber().intValue());
+                 log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.tSpin.getModel()).getNumber().intValue());
             } else if (nv == 9) {
                 log.debug("Update feedback delay to {}", value);
                 feedbackSpinner.tSpin.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
@@ -144,15 +145,20 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int pulseWidth = 0;
-            if (out[index].single.isSelected() || out[index].repeat.isSelected()) {
-                pulseWidth = ((SpinnerNumberModel)out[index].pulseSpinner.tSpin.getModel()).getNumber().intValue();
-                pulseWidth /= PULSE_WIDTH_STEP_SIZE;
-            }            
+            int pulseWidth = ((SpinnerNumberModel)out[index].pulseSpinner.tSpin.getModel()).getNumber().intValue();
+            pulseWidth /= PULSE_WIDTH_STEP_SIZE;
+            if (out[index].cont.isSelected()) {
+                pulseWidth = 0;
+            }          
             if (out[index].repeat.isSelected()) {
                 pulseWidth |= 0x80;
             }
+            // Preserve continuous (bit 7) from old value unless we selected single button
+            if (_nvArray[index] >= 0x80 & !(out[index].buttonFlag && out[index].single.isSelected())) {
+                pulseWidth |= 0x80;
+            }
             _nvArray[index] = pulseWidth;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(pulseWidth, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
@@ -180,6 +186,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             
             _nvArray[10] = newNV10;
             _nvArray[11] = newNV11;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(newNV10, 9, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(newNV11, 10, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -196,6 +203,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             double delay = ((SpinnerNumberModel)feedbackSpinner.tSpin.getModel()).getNumber().doubleValue();
             int newInt = (int)(delay/FEEDBACK_DELAY_STEP_SIZE);
             _nvArray[index] = newInt;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(newInt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
@@ -212,6 +220,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         protected JRadioButton repeat;
         protected TitledSpinner pulseSpinner;
         protected StartupActionPane action;
+        protected boolean buttonFlag = false;
 
         public OutPane(int index) {
             super();
@@ -246,11 +255,12 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(cont);
             buttons.add(single);
             buttons.add(repeat);
-            setButtons(_nvArray[index]);
 
             pulseSpinner = new TitledSpinner("Pulse width (ms)", _index, pulseUpdateFn);
             pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
+
+            setButtonsInit(_nvArray[index]);
 
             gridPane.add(cont, c);
             c.gridy++;
@@ -270,17 +280,77 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         }
         
         /**
-         * Set pulse type button states to reflect pulse width
+         * Set Initial pulse type button states to reflect pulse width from initial NV value
          * 
          * @param pulseWidth 
          */
-        protected void setButtons(int pulseWidth) {
-            if (pulseWidth == 0) {
+        protected void setButtonsInit(int pulseWidth) {
+            if ((pulseWidth == 0) || (pulseWidth == 128)) {
                 cont.setSelected(true);
-            } else if (pulseWidth > 127) {
+                pulseSpinner.tSpin.setEnabled(false);
+            } else if (pulseWidth > 128) {
                 repeat.setSelected(true);
             } else {
                 single.setSelected(true);
+            }                    
+        }
+        
+        /**
+         * Set pulse type button states to reflect new setting from change in
+         * table model (which may result from changes in this gui).
+         * 
+         * Changes to table data model from this gui fire a data changed event 
+         * back to us so we have a conflict between who is changing the raw 
+         * value or who is changing button states, hence the slightly complex
+         * logic.
+         * 
+         * @param pulseWidth from the table chenge event
+         * @param oldPulseWidth from the spinner in this edit gui
+         */
+        protected void setButtons(int pulseWidth, int oldPulseWidth) {
+            if (buttonFlag == true) {
+                // User clicked a button
+                if (cont.isSelected()) {
+                    pulseSpinner.tSpin.setEnabled(false);
+                } else {
+                    pulseSpinner.tSpin.setEnabled(true);
+                }
+                buttonFlag = false;
+            } else {
+                // Change came from spinner or generic NV pane
+                if (!pulseSpinner.tSpin.isEnabled()) {
+                    // Spinner disabled, change from generic NV pane
+                    if ((pulseWidth != 0) && (pulseWidth != 128)) {
+                        pulseSpinner.tSpin.setEnabled(true);
+                        if (pulseWidth >= 128) {
+                            repeat.setSelected(true);
+                        } else {
+                            single.setSelected(true);
+                        }
+                    } else {
+                        cont.setSelected(true);
+                    }
+                } else {
+                    // Spinner enabled so was not continuous
+                    if (pulseWidth != oldPulseWidth) {
+                        // Change of value in generic NV pane
+                        if ((pulseWidth & 0x7F) == 0) {
+                            // Continuous
+                            cont.setSelected(true);
+                            pulseSpinner.tSpin.setEnabled(false);
+                        } else {
+                            if (pulseWidth >= 128) {
+                                repeat.setSelected(true);
+                            } else {
+                                single.setSelected(true);
+                            }
+                        }
+                    } else if ((pulseWidth & 0x7F) == 0) {
+                        // Change of spinner in this edit pane
+                        cont.setSelected(true);
+                        pulseSpinner.tSpin.setEnabled(false);
+                    }
+                }
             }
         }
         
@@ -288,6 +358,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
          * Call the callback to update from radio button selection state.
          */
         protected void typeActionListener() {
+            buttonFlag = true;
             pulseUpdateFn.setNewVal(_index);
         }
     }
