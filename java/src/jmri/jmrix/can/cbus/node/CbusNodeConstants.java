@@ -67,6 +67,9 @@ public class CbusNodeConstants {
                         node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     }
                     break;
+                case 9: // CANCAB
+                    node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
+                    break;
                 default:
                     break;
             }
