@@ -49,7 +49,7 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-      <dccAspect>0</dccAspect>
+      <dccAspect>1</dccAspect>
     </aspect>
 
     <aspect>
@@ -170,7 +170,7 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-      <dccAspect>1</dccAspect>
+      <dccAspect>0</dccAspect>
     </aspect>
 
   </aspects>
