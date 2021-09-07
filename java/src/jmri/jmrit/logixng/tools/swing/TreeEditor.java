@@ -533,7 +533,8 @@ public class TreeEditor extends TreeViewer {
         _showReminder = true;
         // make an Edit Frame
         if (_editActionExpressionDialog == null) {
-            MutableObject<String> commentStr = new MutableObject<>();
+            Base object = femaleSocket.getConnectedSocket().getObject();
+            MutableObject<String> commentStr = new MutableObject<>(object.getComment());
             
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
@@ -563,7 +564,7 @@ public class TreeEditor extends TreeViewer {
                         ThreadingUtil.runOnGUIEventually(() -> {
                             femaleSocket.unregisterListeners();
                             
-                            Base object = femaleSocket.getConnectedSocket().getObject();
+//                            Base object = femaleSocket.getConnectedSocket().getObject();
                             if (_addUserName.getText().isEmpty()) {
                                 ((NamedBean)object).setUserName(null);
                             } else {

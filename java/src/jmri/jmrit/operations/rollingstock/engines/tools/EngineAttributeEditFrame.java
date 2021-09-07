@@ -59,7 +59,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineLengths.class).deleteName(deleteItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.deleteConsist(deleteItem);
+            InstanceManager.getDefault(ConsistManager.class).deleteConsist(deleteItem);
         }
     }
 
@@ -77,7 +77,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             comboBox.setSelectedItem(addItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.newConsist(addItem);
+            InstanceManager.getDefault(ConsistManager.class).newConsist(addItem);
         }
     }
 
@@ -108,7 +108,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineModels.class).replaceName(oldItem, newItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.replaceConsistName(oldItem, newItem);
+            InstanceManager.getDefault(ConsistManager.class).replaceConsistName(oldItem, newItem);
         }
         if (_attribute.equals(TYPE)) {
             InstanceManager.getDefault(EngineTypes.class).replaceName(oldItem, newItem);
@@ -134,8 +134,8 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineLengths.class).addPropertyChangeListener(this);
         }
         if (_attribute.equals(CONSIST)) {
-            comboBox = engineManager.getConsistComboBox();
-            engineManager.addPropertyChangeListener(this);
+            comboBox = InstanceManager.getDefault(ConsistManager.class).getComboBox();
+            InstanceManager.getDefault(ConsistManager.class).addPropertyChangeListener(this);
         }
     }
 
@@ -144,6 +144,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineLengths.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(ConsistManager.class).removePropertyChangeListener(this);
         engineManager.removePropertyChangeListener(this);
         super.dispose();
     }
@@ -163,8 +164,8 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(EngineLengths.class).updateComboBox(comboBox);
         }
-        if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
-            engineManager.updateConsistComboBox(comboBox);
+        if (e.getPropertyName().equals(ConsistManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(ConsistManager.class).updateComboBox(comboBox);
         }
         super.propertyChange(e);
     }
