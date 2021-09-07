@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
-    private CmdStaFlags [] flags = new CmdStaFlags[3];
+    CmdStaFlags [] csFlags = new CmdStaFlags[3];
         
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -34,7 +34,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         
-        JPanel cmdStaPane = new CmdStaPane().getContent();
+        JPanel cmdStaPane = new CmdStaPane();
         JPanel powerPane = new PowerPane();
         JPanel dccPane = new DccPane();
         JPanel cbusPane = new CbusPane();
@@ -54,13 +54,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
     public class CmdStaPane extends JPanel {
         
-        CmdStaFlags [] flags = new CmdStaFlags[3];
-        
         public CmdStaPane() {
             super();
-        }
-        
-        protected JPanel getContent() {
+
             JPanel gridPane = new JPanel(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -77,8 +73,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 "Stop on timeout",
                 "Start of day",
                 "Auto power"};
-            flags[0] = new CmdStaFlags(0, "User Flags", userFlagStrings, _nvArray[2]);
-            JPanel userFlags = flags[0].getContents();
+            csFlags[0] = new CmdStaFlags(0, "User Flags", userFlagStrings, _nvArray[2]);
+            JPanel userFlags = csFlags[0].getContents();
 
             String opFlagStrings [] = new String[] {"Reserved",
                 "Reserved",
@@ -88,8 +84,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 "Blueline mode",
                 "ACK sensitivity",
                 "Reserved"};
-            flags[1] = new CmdStaFlags(1, "Operations Flags", opFlagStrings, _nvArray[3]);
-            JPanel opFlags = flags[1].getContents();
+            csFlags[1] = new CmdStaFlags(1, "Operations Flags", opFlagStrings, _nvArray[3]);
+            JPanel opFlags = csFlags[1].getContents();
 
             String debugFlagStrings [] = new String[] {"Reserved",
                 "Reserved",
@@ -99,8 +95,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 "Reserved",
                 "Reserved",
                 "Reserved"};
-            flags[2] = new CmdStaFlags(1, "Debug Flags", debugFlagStrings, _nvArray[4]);
-            JPanel debugFlags = flags[2].getContents();
+            csFlags[2] = new CmdStaFlags(1, "Debug Flags", debugFlagStrings, _nvArray[4]);
+            JPanel debugFlags = csFlags[2].getContents();
             
             gridPane.add(userFlags, c);
             c.gridx++;
@@ -108,7 +104,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridx++;
             gridPane.add(debugFlags, c);
             
-            return gridPane;
+            add(gridPane);
         }
     }
     
@@ -116,6 +112,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         public PowerPane() {
             super();
         }
+        
     }
     
     public class DccPane extends JPanel {
@@ -141,7 +138,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             _nvArray[nv] = value;
             if ((nv > 1) && (nv <= 4)) {
                 log.debug("Update NV {} to {}", nv, value);
-                flags[nv - 2].setButtons(value);
+                csFlags[nv - 2].setButtons(value);
             }
 //            } else if (nv == 9) {
 //                log.debug("Update feedback delay to {}", value);
@@ -198,11 +195,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             buttons = new JRadioButton[8];
             for (int i = 0; i < 8; i++) {
                 buttons[i] = new JRadioButton(_fn[i]);
-                if ((_flags & (1<<i)) > 0) {
-                    buttons[i].setSelected(true);
-                } else {
-                    buttons[i].setSelected(true);
-                }
                 gridPane.add(buttons[i], c);
                 c.gridy++;
             }
@@ -216,7 +208,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 if ((_flags & (1<<i)) > 0) {
                     buttons[i].setSelected(true);
                 } else {
-                    buttons[i].setSelected(true);
+                    buttons[i].setSelected(false);
                 }
             }
         }
