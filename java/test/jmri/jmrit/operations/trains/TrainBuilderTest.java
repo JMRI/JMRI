@@ -348,7 +348,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setBunit(true);
         e4.setBunit(true);
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e4.setConsist(consist);
         e3.setConsist(consist);
 
@@ -420,7 +420,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build, only single engines", train.isBuilt());
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -455,7 +455,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e3 = emanager.getByRoadAndNumber("E", "3");
         Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -572,7 +572,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e3 = emanager.getByRoadAndNumber("E", "3");
         Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
         e3.setConsist(consist);
@@ -643,7 +643,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
         Engine e2 = emanager.getByRoadAndNumber("E", "2");
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -742,7 +742,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
         Engine e2 = emanager.getByRoadAndNumber("E", "2");
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -2491,7 +2491,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c12 = JUnitOperationsUtil.createAndPlaceCar("CP", "120", "Boxcar", "40", bostonYard2, 21);
 
         // increase code coverage by using kernels
-        Kernel k1 = cmanager.newKernel("2 cars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("2 cars");
         c3.setKernel(k1);
         c4.setKernel(k1);
 
@@ -2765,7 +2765,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c7 = JUnitOperationsUtil.createAndPlaceCar("CP", "70", carTypes[1], "50", actonYard2, 16);
         Car c8 = JUnitOperationsUtil.createAndPlaceCar("CP", "80", carTypes[1], "60", actonYard2, 17);
 
-        Kernel k1 = cmanager.newKernel("group of 3 cars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("group of 3 cars");
         c8.setKernel(k1); // lead car
         c7.setKernel(k1); // on track Yard 2
         c3.setKernel(k1); // on track Yard 1
@@ -5076,7 +5076,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // in staging 1, length 40
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // in staging 1, length 40
 
-        Kernel k2 = cmanager.newKernel("Two cars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("Two cars");
         c3.setKernel(k2);
         c4.setKernel(k2);
 
@@ -5455,7 +5455,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c9 = cmanager.getByRoadAndNumber("CP", "99");
 
         // for better code coverage, we need a kernel out of staging
-        Kernel k2 = cmanager.newKernel("TwoCars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
         c3.setKernel(k2);
         c4.setKernel(k2);
 
@@ -8140,7 +8140,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cmanager.register(c4);
 
         // place two cars in a kernel
-        Kernel k1 = cmanager.newKernel("TwoCars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
 
         Car c5 = new Car(roadNames[1], "S5");
         c5.setTypeName(carTypes[3]);
@@ -9076,7 +9076,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
@@ -9473,7 +9473,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
@@ -10401,7 +10401,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
@@ -10789,7 +10789,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // create 2 consists and a single engine for testing
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -10810,7 +10810,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
-        Consist con2 = emanager.newConsist("C2");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
@@ -10826,7 +10826,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e5.setMoves(20);
 
         // 3 engine consist
-        Consist con3 = emanager.newConsist("C3");
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
@@ -12696,7 +12696,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc5trk1.setLength(1000);
 
         // create a 2 engine consist for departure
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -13385,7 +13385,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location essex = route.getTerminatesRouteLocation().getLocation();
         
         // create a 2 engine consist for departure
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         // create 4 new engine models with different HP ratings
         Engine e1 = emanager.newRS("UP", "1");
@@ -13812,7 +13812,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         et.addName(engineTypes[2]);
 
         // create 2 consists and a single engine for testing
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -13833,7 +13833,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
-        Consist con2 = emanager.newConsist("C2");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
@@ -13849,7 +13849,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e5.setMoves(20);
 
         // 3 engine consist
-        Consist con3 = emanager.newConsist("C3");
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
@@ -15682,7 +15682,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
         // place cars in kernel to improve test coverage
-        Kernel kernel = cmanager.newKernel("TwoCars");
+        Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
         c1.setKernel(kernel);
         c2.setKernel(kernel);
 
@@ -16227,7 +16227,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonInterchange1, 16);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonInterchange1, 16);
         // place cars in kernel to improve test coverage
-        Kernel kernel = cmanager.newKernel("TwoCars");
+        Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
         c1.setKernel(kernel);
         c2.setKernel(kernel);
 

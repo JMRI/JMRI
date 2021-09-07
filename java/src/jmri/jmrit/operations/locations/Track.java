@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jdom2.Attribute;
@@ -305,11 +306,11 @@ public class Track extends PropertyChangeSupport {
     public String getName() {
         return _name;
     }
-    
+
     public Division getDivision() {
         return getLocation().getDivision();
     }
-    
+
     public String getDivisionName() {
         return getLocation().getDivisionName();
     }
@@ -488,7 +489,7 @@ public class Track extends PropertyChangeSupport {
     public int getScheduleMode() {
         return _mode;
     }
-    
+
     public String getScheduleModeName() {
         if (getScheduleMode() == Track.MATCH) {
             return Bundle.getMessage("Match");
@@ -544,7 +545,7 @@ public class Track extends PropertyChangeSupport {
             carLength = car.getKernel().getTotalLength();
         }
         int trackLength = getLength();
-     
+
         // is the car or kernel too long for the track?
         if (trackLength < carLength && getPool() == null) {
             return false;
@@ -820,13 +821,12 @@ public class Track extends PropertyChangeSupport {
     }
 
     private void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            if (!_typeList.contains(type)) {
-                _typeList.add(type);
+        if (types.length > 0) {
+            Arrays.sort(types);
+            for (String type : types) {
+                if (!_typeList.contains(type)) {
+                    _typeList.add(type);
+                }
             }
         }
     }
@@ -909,14 +909,14 @@ public class Track extends PropertyChangeSupport {
     public String[] getRoadNames() {
         String[] roads = _roadList.toArray(new String[0]);
         if (_roadList.size() > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
         }
         return roads;
     }
 
     private void setRoadNames(String[] roads) {
         if (roads.length > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
             for (String roadName : roads) {
                 if (!roadName.equals(NONE)) {
                     _roadList.add(roadName);
@@ -988,7 +988,7 @@ public class Track extends PropertyChangeSupport {
 
     private void setLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String loadName : loads) {
                 if (!loadName.equals(NONE)) {
                     _loadList.add(loadName);
@@ -1006,7 +1006,7 @@ public class Track extends PropertyChangeSupport {
     public String[] getLoadNames() {
         String[] loads = _loadList.toArray(new String[0]);
         if (_loadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -1116,7 +1116,7 @@ public class Track extends PropertyChangeSupport {
 
     private void setShipLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String shipLoadName : loads) {
                 if (!shipLoadName.equals(NONE)) {
                     _shipLoadList.add(shipLoadName);
@@ -1134,7 +1134,7 @@ public class Track extends PropertyChangeSupport {
     public String[] getShipLoadNames() {
         String[] loads = _shipLoadList.toArray(new String[0]);
         if (_shipLoadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -2159,8 +2159,8 @@ public class Track extends PropertyChangeSupport {
             }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"),
-                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(), scheduleName,
-                                    car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
+                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(),
+                                    scheduleName, car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
                                     currentTrainScheduleName, currentSi.getRoadName(),
                                     currentSi.getReceiveLoadName() });
         } else {
@@ -2199,10 +2199,10 @@ public class Track extends PropertyChangeSupport {
         // set all cars in kernel to the next load
         car.updateKernel();
     }
-    
+
     public static final String TRAIN_SCHEDULE = "trainSchedule"; // NOI18N
     public static final String ALL = "all"; // NOI18N
-    
+
     public boolean checkScheduleAttribute(String attribute, String carType, Car car) {
         Schedule schedule = getSchedule();
         if (schedule == null) {
@@ -2882,7 +2882,7 @@ public class Track extends PropertyChangeSupport {
             trackType = SIDING; // Pre 4.21.1 location type
         }
         e.setAttribute(Xml.LOC_TYPE, trackType); // backwards compatibility
-        
+
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));

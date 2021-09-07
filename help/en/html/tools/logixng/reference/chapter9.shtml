@@ -64,6 +64,12 @@
           </tr>
 
           <tr>
+            <td>!</td>
+            <td>unary logical NOT</td>
+            <td>right to left</td>
+          </tr>
+
+          <tr>
             <td>* / %</td>
             <td>multiply, divide, modulo</td>
             <td>left to right</td>

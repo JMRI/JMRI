@@ -780,11 +780,15 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return null;
     }
 
+    /*
+     * addNotify removed - In linux the "setSize(dimension)" is honoured after the pack, increasing its size, overriding preferredSize
+     *                   - In windows the "setSize(dimension)" is ignored after the pack, so has no effect.
+     */
     // handle resizing when first shown
-    private boolean mShown = false;
+    // private boolean mShown = false;
 
-    /** {@inheritDoc} */
-    @Override
+    // /** {@inheritDoc} */
+    /* @Override
     public void addNotify() {
         super.addNotify();
         // log.debug("addNotify window ({})", getTitle());
@@ -801,6 +805,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
         mShown = true;
     }
+*/
 
     /**
      * Set whether the frame Position is saved or not after it has been created.
@@ -1021,35 +1026,11 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /*
-     * Daniel Boudreau 3/19/2014. There is a problem with saving the correct window size on a Linux OS. The testing was
-     * done using Oracle Java JRE 1.7.0_51 and Debian (Wheezy) Linux on a PC. One issue is that the window size returned
-     * by getSize() is slightly smaller than the actual window size. If we use getSize() to save the window size the
-     * window will shrink each time the window is closed and reopened. The previous workaround was to use
-     * getPreferredSize(), that returns whatever we've set in setPreferredSize() which keeps the window size constant
-     * when we save the data to the user preference file. However, if the user resizes the window, getPreferredSize()
-     * doesn't change, only getSize() changes when the user resizes the window. So we need to try and detect when the
-     * window size was modified by the user. Testing has shown that the window width is short by 4 pixels and the height
-     * is short by 3. This code will save the window size if the width or height was changed by at least 5 pixels. Sorry
-     * for this kludge.
+     * Save current window size, do not put adjustments here. Search elsewhere for the problem.
      */
-    private void saveWindowSize(jmri.UserPreferencesManager p) {
-        if (SystemType.isLinux()) {
-            // try to determine if user has resized the window
-            log.debug("getSize() width: {}, height: {}", super.getSize().getWidth(), super.getSize().getHeight());
-            log.debug("getPreferredSize() width: {}, height: {}", super.getPreferredSize().getWidth(), super.getPreferredSize().getHeight());
-            if (Math.abs(super.getPreferredSize().getWidth() - (super.getSize().getWidth() + 4)) > 5
-                    || Math.abs(super.getPreferredSize().getHeight() - (super.getSize().getHeight() + 3)) > 5) {
-                // adjust the new window size to be slight wider and higher than actually returned
-                Dimension size = new Dimension((int) super.getSize().getWidth() + 4, (int) super.getSize().getHeight() + 3);
-                log.debug("setting new window size {}", size);
-                p.setWindowSize(windowFrameRef, size);
-            } else {
-                p.setWindowSize(windowFrameRef, super.getPreferredSize());
-            }
-        } else {
-            p.setWindowSize(windowFrameRef, super.getSize());
-        }
-    }
+     private void saveWindowSize(jmri.UserPreferencesManager p) {
+         p.setWindowSize(windowFrameRef, super.getSize());
+     }
 
     /*
      * This field contains a list of properties that do not correspond to the JavaBeans properties coding pattern, or

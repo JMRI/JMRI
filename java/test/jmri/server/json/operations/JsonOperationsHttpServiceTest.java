@@ -19,10 +19,7 @@ import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.server.json.JSON;
@@ -947,8 +944,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
 
     @Test
     public void testDeleteNonExistantKernel() throws JsonException {
-        CarManager manager = InstanceManager.getDefault(CarManager.class);
-        assertThat(manager.getKernelByName("invalid-name")).isNull();
+        assertThat(InstanceManager.getDefault(KernelManager.class).getKernelByName("invalid-name")).isNull();
         assertThatCode(() -> service.doDelete(JsonOperations.KERNEL, "invalid-name", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.DELETE, 42)))
                         .isExactlyInstanceOf(JsonException.class)
@@ -958,7 +954,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     @Test
     public void testDeleteInUseKernel() throws JsonException {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        Kernel k1 = manager.newKernel("test1");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("test1");
         Car c1 = manager.newRS("road", "1");
         c1.setLength("40");
         c1.setWeight("1000");
