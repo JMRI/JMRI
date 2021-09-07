@@ -7,7 +7,7 @@
   <name>WPRR-1971</name>
   <date>1971</date>
   <reference>Signal definitions corresponding to pages 132-135 from the 1971 "Western Pacific Railroad Company - Operating Rules" binder.  NOTE: Only aspects commonly used by WP in 1970's are listed.</reference>
-  
+
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>
@@ -45,13 +45,13 @@
       <rule>(not found)</rule>
       <indication>Stop; regard dark signal as displaying its most restrictive indication.</indication>
       <reference>(Page not found)</reference>
-      <comment>Previous year operating rules had a specific rule covering dark signals, but that couldn't be found in the 1971 book.</comment>																						 
+      <comment>Previous year operating rules had a specific rule covering dark signals, but that couldn't be found in the 1971 book.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>0</dccAspect>
     </aspect>
-   
+
     <aspect>
       <name>Clear</name>
       <rule>Rule 281</rule>
@@ -71,9 +71,9 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Either</route>
-      <dccAspect>21</dccAspect>
+      <dccAspect>2</dccAspect>
     </aspect>
-    
+
     <aspect>
       <name>Diverging Clear</name>
       <rule>Rule 283</rule>
@@ -82,7 +82,7 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
-	  <dccAspect>21</dccAspect>
+	  <dccAspect>3</dccAspect>
     </aspect>
 
     <aspect>
@@ -93,7 +93,7 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Either</route>
-      <dccAspect>14</dccAspect>
+      <dccAspect>4</dccAspect>
     </aspect>
 
     <aspect>
@@ -104,7 +104,7 @@
       <speed>Medium</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
-      <dccAspect>8</dccAspect>
+      <dccAspect>5</dccAspect>
     </aspect>
 
     <aspect>
@@ -115,9 +115,9 @@
       <speed>Medium</speed>
       <speed2>Restricted</speed2>
       <route>Diverging</route>
-      <dccAspect>8</dccAspect>
+      <dccAspect>6</dccAspect>
     </aspect>
-   
+
     <aspect>
       <name>Diverging Restricting</name>
       <rule>Rule 287</rule>
@@ -126,7 +126,7 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Diverging</route>
-      <dccAspect>2</dccAspect>
+      <dccAspect>7</dccAspect>
     </aspect>
 
     <aspect>
@@ -137,9 +137,9 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
-      <dccAspect>4</dccAspect>
+      <dccAspect>8</dccAspect>
     </aspect>
-    
+
     <aspect>
       <name>Restricting Diverging</name>
       <rule>Rule 288-A</rule>
@@ -148,9 +148,9 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Diverging</route>
-      <dccAspect>4</dccAspect>
+      <dccAspect>9</dccAspect>
     </aspect>
-  
+
     <aspect>
       <name>Stop And Proceed</name>
       <rule>Rule 291</rule>
@@ -159,7 +159,7 @@
       <speed>Stop</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
-      <dccAspect>0</dccAspect>
+      <dccAspect>10</dccAspect>
     </aspect>
 
     <aspect>
@@ -170,9 +170,9 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-      <dccAspect>0</dccAspect>
-    </aspect>  
-   
+      <dccAspect>1</dccAspect>
+    </aspect>
+
   </aspects>
 
   <appearancefiles>
