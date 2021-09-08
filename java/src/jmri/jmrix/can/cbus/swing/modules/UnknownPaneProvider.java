@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules;
 
-import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
@@ -18,7 +17,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = CbusConfigPaneProvider.class)
 public class UnknownPaneProvider extends CbusConfigPaneProvider  {
     
-    String type = "Unknown";
+    String type = Bundle.getMessage("Unknown");
     
     public UnknownPaneProvider() {
         super();
@@ -34,7 +33,7 @@ public class UnknownPaneProvider extends CbusConfigPaneProvider  {
     /** {@inheritDoc} */
     @Override
     public String getNVNameByIndex(int index) {
-        return "Unknown NV";
+        return Bundle.getMessage("UnknownNv");
     }
 
     /** {@inheritDoc} */

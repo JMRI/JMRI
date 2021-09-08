@@ -10,6 +10,8 @@ import javax.swing.event.*;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
+import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
+import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +42,14 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     public static final double FEEDBACK_DELAY_STEP_SIZE = 0.5;
     
     OutPane [] out = new OutPane[OUTPUTS+1];
-    UpdatePulse pulseUpdateFn = new UpdatePulse();
-    UpdateStartup startupUpdateFn = new UpdateStartup();
 
-    TitledSpinner feedbackSpinner;
+    // To allow instantiation of CbusModulesCommon inner classes
+    private final CbusModulesCommon common = new CbusModulesCommon();
+    
+    private final UpdatePulse pulseUpdateFn = new UpdatePulse();
+    private final UpdateStartup startupUpdateFn = new UpdateStartup();
+
+    private TitledSpinner feedbackSpinner;
     
     protected Canacc8EditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -76,7 +82,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = new TitledSpinner("Feedback Delay (ms)", 9, new UpdateFeedback());    // NV9 for feedback delay 
+        feedbackSpinner = common.new TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, new UpdateFeedback());    // NV9 for feedback delay 
         feedbackSpinner.init(_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
@@ -102,13 +108,13 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             _nvArray[nv] = value;
             if ((nv > 0) && (nv <= 8)) {
                 log.debug("Update NV {} to {}", nv, value);
-                int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.tSpin.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
+                int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
                 out[nv].setButtons(value, oldSpinnerValue);
-                out[nv].pulseSpinner.tSpin.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
-                 log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.tSpin.getModel()).getNumber().intValue());
+                out[nv].pulseSpinner.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
+                 log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue());
             } else if (nv == 9) {
                 log.debug("Update feedback delay to {}", value);
-                feedbackSpinner.tSpin.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
+                feedbackSpinner.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
             } else if ((nv == 10) || (nv == 11)) {
                 log.debug("Update startup action", value);
                 for (int i = 1; i <= 8; i++) {
@@ -125,27 +131,14 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     }
     
     /**
-     * Interface for callback function(s) used to update the NVs
-     */
-    public interface UpdateNV {
-        
-        /**
-         * Build a new NV value from contents of gui elements
-         * 
-         * @param index of the NV
-         */
-        void setNewVal(int index);
-    }
-    
-    /**
      * Update the NVs controlling the pulse width and type
      */
-    public class UpdatePulse implements UpdateNV {
+    protected class UpdatePulse implements UpdateNV {
         
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int pulseWidth = ((SpinnerNumberModel)out[index].pulseSpinner.tSpin.getModel()).getNumber().intValue();
+            int pulseWidth = ((SpinnerNumberModel)out[index].pulseSpinner.getModel()).getNumber().intValue();
             pulseWidth /= PULSE_WIDTH_STEP_SIZE;
             if (out[index].cont.isSelected()) {
                 pulseWidth = 0;
@@ -167,7 +160,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
      * Update the NVs controlling the startup action
      * 
      */
-    public class UpdateStartup implements UpdateNV {
+    protected class UpdateStartup implements UpdateNV {
         
         @Override
         public void setNewVal(int index) {
@@ -195,12 +188,12 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     /**
      * Update the NVs controlling the feedback delay
      */
-    public class UpdateFeedback implements UpdateNV {
-        
+    protected class UpdateFeedback implements UpdateNV {
+
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            double delay = ((SpinnerNumberModel)feedbackSpinner.tSpin.getModel()).getNumber().doubleValue();
+            double delay = ((SpinnerNumberModel)feedbackSpinner.getModel()).getNumber().doubleValue();
             int newInt = (int)(delay/FEEDBACK_DELAY_STEP_SIZE);
             _nvArray[index] = newInt;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
@@ -234,12 +227,12 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             c.gridy = 0;
 
             Border border = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-            TitledBorder title = BorderFactory.createTitledBorder(border, "Output"+_index);
+            TitledBorder title = BorderFactory.createTitledBorder(border, Bundle.getMessage("OutputX", _index));
             setBorder(title);
 
-            cont = new JRadioButton("Continuous");
-            single = new JRadioButton("Single Pulse");
-            repeat = new JRadioButton("Repeat Pulse");
+            cont = new JRadioButton(Bundle.getMessage("Continuous"));
+            single = new JRadioButton(Bundle.getMessage("Single"));
+            repeat = new JRadioButton(Bundle.getMessage("Repeat"));
 
             cont.addActionListener((ActionEvent e) -> {
                 typeActionListener();
@@ -256,7 +249,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(single);
             buttons.add(repeat);
 
-            pulseSpinner = new TitledSpinner("Pulse width (ms)", _index, pulseUpdateFn);
+            pulseSpinner = common.new TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
             pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
 
@@ -287,7 +280,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         protected void setButtonsInit(int pulseWidth) {
             if ((pulseWidth == 0) || (pulseWidth == 128)) {
                 cont.setSelected(true);
-                pulseSpinner.tSpin.setEnabled(false);
+                pulseSpinner.setEnabled(false);
             } else if (pulseWidth > 128) {
                 repeat.setSelected(true);
             } else {
@@ -304,24 +297,24 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
          * value or who is changing button states, hence the slightly complex
          * logic.
          * 
-         * @param pulseWidth from the table chenge event
+         * @param pulseWidth from the table change event
          * @param oldPulseWidth from the spinner in this edit gui
          */
         protected void setButtons(int pulseWidth, int oldPulseWidth) {
             if (buttonFlag == true) {
                 // User clicked a button
                 if (cont.isSelected()) {
-                    pulseSpinner.tSpin.setEnabled(false);
+                    pulseSpinner.setEnabled(false);
                 } else {
-                    pulseSpinner.tSpin.setEnabled(true);
+                    pulseSpinner.setEnabled(true);
                 }
                 buttonFlag = false;
             } else {
                 // Change came from spinner or generic NV pane
-                if (!pulseSpinner.tSpin.isEnabled()) {
+                if (!pulseSpinner.isEnabled()) {
                     // Spinner disabled, change from generic NV pane
                     if ((pulseWidth != 0) && (pulseWidth != 128)) {
-                        pulseSpinner.tSpin.setEnabled(true);
+                        pulseSpinner.setEnabled(true);
                         if (pulseWidth >= 128) {
                             repeat.setSelected(true);
                         } else {
@@ -337,7 +330,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                         if ((pulseWidth & 0x7F) == 0) {
                             // Continuous
                             cont.setSelected(true);
-                            pulseSpinner.tSpin.setEnabled(false);
+                            pulseSpinner.setEnabled(false);
                         } else {
                             if (pulseWidth >= 128) {
                                 repeat.setSelected(true);
@@ -348,7 +341,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                     } else if ((pulseWidth & 0x7F) == 0) {
                         // Change of spinner in this edit pane
                         cont.setSelected(true);
-                        pulseSpinner.tSpin.setEnabled(false);
+                        pulseSpinner.setEnabled(false);
                     }
                 }
             }
@@ -386,12 +379,12 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             c.gridy = 0;
 
             Border border = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-            TitledBorder title = BorderFactory.createTitledBorder(border, "Startup Action");
+            TitledBorder title = BorderFactory.createTitledBorder(border, Bundle.getMessage("StartupAction"));
             setBorder(title);
 
-            off = new JRadioButton("Off");
-            none = new JRadioButton("None");
-            saved = new JRadioButton("Saved Action");
+            off = new JRadioButton(Bundle.getMessage("Off"));
+            none = new JRadioButton(Bundle.getMessage("None"));
+            saved = new JRadioButton(Bundle.getMessage("SavedAction"));
             
             off.addActionListener((ActionEvent e) -> {
                 startupActionListener();
@@ -454,83 +447,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         }
     }
     
-    /**
-     * Spinner with titled border
-     */
-    private static class TitledSpinner extends JPanel implements ChangeListener {
-        
-        protected JSpinner tSpin;
-        protected int _index;
-        protected String _title;
-        protected double _step;
-        protected UpdateNV _update;
-        
-        /**
-         * Construct a new titledSpinner
-         * 
-         * @param title to be displayed
-         * @param index of the associated NV 
-         * @param update callback funtion to apply new value
-         */
-        public TitledSpinner(String title, int index, UpdateNV update) {
-            super();
-            _title = title;
-            _index = index;
-            _update = update;
-        }
-        
-        protected void init(double init, double min, double max, double step) {
-            _step = step;
-            GridLayout grid = new GridLayout(1, 1);
-            setLayout(grid);
-
-            Border border = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-            TitledBorder titled = BorderFactory.createTitledBorder(border, _title);
-            setBorder(titled);
-
-            SpinnerNumberModel spinModel = new SpinnerNumberModel(init, min, max, _step);
-            tSpin = new JSpinner(spinModel);
-            tSpin.addChangeListener(this);
-
-            add(tSpin);
-        }
-        
-        /**
-         * Call back with updated value
-         * 
-         * @param e the spinner change event
-         */
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            _update.setNewVal(_index);
-        }
-
-        /**
-         ** The preferred width on the panel must consider the width of the text
-         ** used on the TitledBorder
-         * 
-         * from <a href=https://stackoverflow.com/questions/43425939/how-to-get-the-titledborders-title-to-display-properly-in-the-gui>
-         */
-        @Override
-        public Dimension getPreferredSize() {
-            
-            Dimension preferredSize = super.getPreferredSize();
-
-            Border border = getBorder();
-            int borderWidth = 0;
-
-            if (border instanceof TitledBorder) {
-                Insets insets = getInsets();
-                TitledBorder titledBorder = (TitledBorder)border;
-                borderWidth = titledBorder.getMinimumSize(this).width + insets.left + insets.right;
-            }
-
-            int preferredWidth = Math.max(preferredSize.width, borderWidth);
-
-            return new Dimension(preferredWidth, preferredSize.height);
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(Canacc8EditNVPane.class);
 
 }

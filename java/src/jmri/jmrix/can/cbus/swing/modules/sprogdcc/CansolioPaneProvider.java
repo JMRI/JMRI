@@ -44,17 +44,17 @@ public class CansolioPaneProvider extends CbusConfigPaneProvider {
      */
     private static Map<Integer, String> createNvMap() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(0, "Output 1"); // NOI18N
-        result.put(1, "Output 2"); // NOI18N
-        result.put(2, "Output 3"); // NOI18N
-        result.put(3, "Output 4"); // NOI18N
-        result.put(4, "Output 5"); // NOI18N
-        result.put(5, "Output 6"); // NOI18N
-        result.put(6, "Output 7"); // NOI18N
-        result.put(7, "Output 8"); // NOI18N
-        result.put(8, "Feedback Delay"); // NOI18N
-        result.put(9, "Startup Position"); // NOI18N
-        result.put(10, "Startup Move"); // NOI18N
+        result.put(0, Bundle.getMessage("OutputX", 1));
+        result.put(1, Bundle.getMessage("OutputX", 2));
+        result.put(2, Bundle.getMessage("OutputX", 3));
+        result.put(3, Bundle.getMessage("OutputX", 4));
+        result.put(4, Bundle.getMessage("OutputX", 5));
+        result.put(5, Bundle.getMessage("OutputX", 6));
+        result.put(6, Bundle.getMessage("OutputX", 7));
+        result.put(7, Bundle.getMessage("OutputX", 8));
+        result.put(8, Bundle.getMessage("FeedbackDelay"));
+        result.put(9, Bundle.getMessage("StartupPosition"));
+        result.put(10, Bundle.getMessage("StartupMove"));
         return Collections.unmodifiableMap(result);
     }
     
@@ -64,7 +64,7 @@ public class CansolioPaneProvider extends CbusConfigPaneProvider {
         // look for the NV
         String nv = nvMap.get(index);
         if (nv == null) {
-            return "Unknown NV";
+            return Bundle.getMessage("UnknownNv");
         } else {
             return nv;
         }

@@ -44,28 +44,28 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
      */
     private static Map<Integer, String> createNvMap() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(0, "Command station number"); // NOI18N
-        result.put(1, "User flags"); // NOI18N
-        result.put(2, "Operation flags"); // NOI18N
-        result.put(3, "Debug flags (not used)"); // NOI18N
-        result.put(4, "Prog track power mode"); // NOI18N
-        result.put(5, "Prog track current limit"); // NOI18N
-        result.put(6, "Input voltage (read only)"); // NOI18N
-        result.put(7, "Main track current (read only)"); // NOI18N
-        result.put(8, "Accessory packet repeat count"); // NOI18N
-        result.put(9, "Multimeter mode"); // NOI18N
-        result.put(10, "NN map to DCC (hi)"); // NOI18N
-        result.put(11, "NN map to DCC (hi)"); // NOI18N
-        result.put(12, "Main track current limit"); // NOI18N
-        result.put(13, "Prog track current (read only)"); // NOI18N
-        result.put(14, "Main track current high water mark (read only)"); // NOI18N
-        result.put(15, "Prog track current high water mark (read only)"); // NOI18N
-        result.put(16, "Setup mode (do not use)"); // NOI18N
-        result.put(17, "CAN ID"); // NOI18N
-        result.put(18, "Node Number (NN) hi"); // NOI18N
-        result.put(19, "Node Number (NN) lo"); // NOI18N
-        result.put(20, "DCC preamble bits"); // NOI18N
-        result.put(21, "CAN disable"); // NOI18N
+        result.put(0, Bundle.getMessage("CmdStaNo"));
+        result.put(1, Bundle.getMessage("UserFlags"));
+        result.put(2, Bundle.getMessage("OperationsFlags"));
+        result.put(3, Bundle.getMessage("DebugFlags"));
+        result.put(4, Bundle.getMessage("ProgTrackPowerMode"));
+        result.put(5, Bundle.getMessage("ProgTrackCurrentLimit"));
+        result.put(6, Bundle.getMessage("InputVoltage"));
+        result.put(7, Bundle.getMessage("MainTrackCurrent"));
+        result.put(8, Bundle.getMessage("AccessoryPacketRepeatCount"));
+        result.put(9, Bundle.getMessage("MultimeterMode"));
+        result.put(10, Bundle.getMessage("NnMapToDccHi"));
+        result.put(11, Bundle.getMessage("NnMapToDccLo"));
+        result.put(12, Bundle.getMessage("MainTrackCurrentLimit"));
+        result.put(13, Bundle.getMessage("ProgTackCurrent"));
+        result.put(14, Bundle.getMessage("MainTrackCurrentHWM"));
+        result.put(15, Bundle.getMessage("ProgTrackCurrentHWM"));
+        result.put(16, Bundle.getMessage("SetupMode"));
+        result.put(17, Bundle.getMessage("CanId"));
+        result.put(18, Bundle.getMessage("NodeNumberHi"));
+        result.put(19, Bundle.getMessage("NodeNumberLo"));
+        result.put(20, Bundle.getMessage("DccPreambleBits"));
+        result.put(21, Bundle.getMessage("CanDisable"));
         return Collections.unmodifiableMap(result);
     }
     
@@ -75,7 +75,7 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
         // look for the NV
         String nv = nvMap.get(index);
         if (nv == null) {
-            return "Unknown NV";
+            return Bundle.getMessage("UnknownNv");
         } else {
             return nv;
         }
