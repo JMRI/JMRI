@@ -232,7 +232,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     /**
      * Class to display CBUS command station flag settings
      */
-    private class CmdStaFlags extends JPanel {
+    private static class CmdStaFlags extends JPanel {
         
         protected int _type;
         protected String _title;
@@ -247,6 +247,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             _title = title;
             _flags = flags;
             _fn = fn.clone();
+            buttons = new JRadioButton[8];
         }
         
         protected JPanel getContents() {

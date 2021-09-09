@@ -147,7 +147,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 pulseWidth |= 0x80;
             }
             // Preserve continuous (bit 7) from old value unless we selected single button
-            if (_nvArray[index] >= 0x80 & !(out[index].buttonFlag && out[index].single.isSelected())) {
+            if ((_nvArray[index] >= 0x80) && !(out[index].buttonFlag && out[index].single.isSelected())) {
                 pulseWidth |= 0x80;
             }
             _nvArray[index] = pulseWidth;
