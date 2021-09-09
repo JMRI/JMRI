@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.KernelManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -59,13 +59,13 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     public void testCarAttributeEditFrameKernel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // remove all kernels
-        CarManager cm = InstanceManager.getDefault(CarManager.class);
-        List<String> kList = cm.getKernelNameList();
+        KernelManager km = InstanceManager.getDefault(KernelManager.class);
+        List<String> kList = km.getNameList();
         for (int i = 0; i < kList.size(); i++) {
-            cm.deleteKernel(kList.get(i));
+            km.deleteKernel(kList.get(i));
         }
         // create TwoCars kernel
-        cm.newKernel("TwoCars");
+        InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
 
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.KERNEL);
