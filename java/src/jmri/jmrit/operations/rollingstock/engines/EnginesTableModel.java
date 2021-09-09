@@ -567,7 +567,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     .getNewValue());
         }
         if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(ConsistManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
         }

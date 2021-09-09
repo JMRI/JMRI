@@ -3,10 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -700,12 +697,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     private void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            _listTypes.add(type);
+        if (types.length > 0) {
+            Arrays.sort(types);
+            for (String type : types) {
+                _listTypes.add(type);
+            }
         }
     }
 
@@ -828,18 +824,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return list of track ids for this location
      */
     public List<String> getTrackIdsByIdList() {
-        String[] arr = new String[_trackHashTable.size()];
         List<String> out = new ArrayList<>();
         Enumeration<String> en = _trackHashTable.keys();
-        int i = 0;
         while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
+            out.add(en.nextElement());
         }
-        java.util.Arrays.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(arr[i]);
-        }
+        Collections.sort(out);
         return out;
     }
 
