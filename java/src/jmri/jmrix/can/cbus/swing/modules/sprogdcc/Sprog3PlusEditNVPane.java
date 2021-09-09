@@ -234,7 +234,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
      */
     private static class CmdStaFlags extends JPanel {
         
-        protected int _type;
+//        protected int _type;
         protected String _title;
         protected String [] _fn;
         protected int _flags;
@@ -243,7 +243,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         public CmdStaFlags(int type, String title, String [] fn, int flags) {
             super();
             
-            _type = type;
+//            _type = type;
             _title = title;
             _flags = flags;
             _fn = fn.clone();
