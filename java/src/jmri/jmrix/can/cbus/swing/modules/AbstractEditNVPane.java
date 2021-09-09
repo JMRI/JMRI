@@ -28,7 +28,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 0th Index is total NVs
      * so Index 1 is NV1 .. Index 255 is NV255
      */
-    protected int [] _nvArray;
+    protected static int [] _nvArray;
     
     /**
      * Make a copy of the initial NVs before editing

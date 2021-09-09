@@ -22,14 +22,11 @@ import org.slf4j.LoggerFactory;
  */
 public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
-    CmdStaFlags [] csFlags = new CmdStaFlags[3];
+    private static CmdStaFlags [] csFlags = new CmdStaFlags[3];
     
-    // To allow instantiation of CbusModulesCommon inner classes
-    private final CbusModulesCommon common = new CbusModulesCommon();
-    
-    private final UpdateCmdStaNo cmdStaNoUpdateFn = new UpdateCmdStaNo();
-    private final UpdateCanId canIdUpdateFn = new UpdateCanId();
-    private final UpdateNodeNumber nodeNumberUpdateFn = new UpdateNodeNumber();
+    private static final UpdateCmdStaNo cmdStaNoUpdateFn = new UpdateCmdStaNo();
+    private static final UpdateCanId canIdUpdateFn = new UpdateCanId();
+    private static final UpdateNodeNumber nodeNumberUpdateFn = new UpdateNodeNumber();
         
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -95,7 +92,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     /**
      * Update the command station number
      */
-    protected class UpdateCmdStaNo implements UpdateNV {
+    protected static class UpdateCmdStaNo implements UpdateNV {
         
         /** {@inheritDoc} */
         @Override
@@ -106,7 +103,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     /**
      * Update the command station number
      */
-    protected class UpdateCanId implements UpdateNV {
+    protected static class UpdateCanId implements UpdateNV {
         
         /** {@inheritDoc} */
         @Override
@@ -117,7 +114,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     /**
      * Update the command station number
      */
-    protected class UpdateNodeNumber implements UpdateNV {
+    protected static class UpdateNodeNumber implements UpdateNV {
         
         /** {@inheritDoc} */
         @Override
@@ -125,11 +122,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
         
-    public class CmdStaPane extends JPanel {
-        
-        TitledSpinner cmdStaNoSpinner;
-        TitledSpinner canIdSpinner;
-        TitledSpinner nodeNumberSpinner;
+    public static class CmdStaPane extends JPanel {
         
         public CmdStaPane() {
             super();
@@ -178,7 +171,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy = 0;
             
             // x = 1
-            cmdStaNoSpinner = common.new TitledSpinner(Bundle.getMessage("CmdStaNo"), 0, cmdStaNoUpdateFn);
+            CbusModulesCommon.TitledSpinner cmdStaNoSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CmdStaNo"), 0, cmdStaNoUpdateFn);
             cmdStaNoSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             cmdStaNoSpinner.init(0, 0, 255, 1);
             gridPane.add(cmdStaNoSpinner, c);
@@ -188,7 +181,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
 
             // x = 2
             c.gridy = 0;
-            canIdSpinner = common.new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
+            CbusModulesCommon.TitledSpinner canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
             canIdSpinner.setToolTip(Bundle.getMessage("CmdStaCanIdTt"));
             canIdSpinner.init(114, 100, 127, 1);
             gridPane.add(canIdSpinner, c);
@@ -198,7 +191,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
 
             // x = 2
             c.gridy = 0;
-            nodeNumberSpinner = common.new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
+            CbusModulesCommon.TitledSpinner nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
             nodeNumberSpinner.setToolTip(Bundle.getMessage("CmdStaNnTt"));
             nodeNumberSpinner.init(65534, 65520, 65534, 1);
             gridPane.add(nodeNumberSpinner, c);
@@ -210,20 +203,20 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    public class PowerPane extends JPanel {
+    public static class PowerPane extends JPanel {
         public PowerPane() {
             super();
         }
         
     }
     
-    public class DccPane extends JPanel {
+    public static class DccPane extends JPanel {
         public DccPane() {
             super();
         }
     }
     
-    public class CbusPane extends JPanel {
+    public static class CbusPane extends JPanel {
         public CbusPane() {
             super();
         }

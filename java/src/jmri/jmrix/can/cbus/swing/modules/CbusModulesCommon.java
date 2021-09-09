@@ -8,6 +8,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import jmri.jmrix.can.cbus.swing.modules.merg.Canacc8EditNVPane;
+import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusEditNVPane;
 
 /**
  * Returns configuration objects for a MERG CANACC8
@@ -32,7 +33,7 @@ public class CbusModulesCommon {
     /**
      * Spinner with titled border
      */
-    public class TitledSpinner extends JPanel implements ChangeListener {
+    public static class TitledSpinner extends JPanel implements ChangeListener {
         
         protected JSpinner tSpin;
         protected int _index;
@@ -54,7 +55,7 @@ public class CbusModulesCommon {
             _update = update;
             tSpin = new JSpinner();
         }
-        
+
         /**
          * Initialise the spinner
          * 

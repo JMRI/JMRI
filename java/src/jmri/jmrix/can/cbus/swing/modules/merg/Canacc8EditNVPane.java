@@ -43,13 +43,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     OutPane [] out = new OutPane[OUTPUTS+1];
 
-    // To allow instantiation of CbusModulesCommon inner classes
-    private final CbusModulesCommon common = new CbusModulesCommon();
-    
     private final UpdatePulse pulseUpdateFn = new UpdatePulse();
     private final UpdateStartup startupUpdateFn = new UpdateStartup();
 
-    private TitledSpinner feedbackSpinner;
+    private CbusModulesCommon.TitledSpinner feedbackSpinner;
     
     protected Canacc8EditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -82,7 +79,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = common.new TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, new UpdateFeedback());    // NV9 for feedback delay 
+        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, new UpdateFeedback());    // NV9 for feedback delay 
         feedbackSpinner.init(_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
@@ -211,7 +208,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         protected JRadioButton cont;
         protected JRadioButton single;
         protected JRadioButton repeat;
-        protected TitledSpinner pulseSpinner;
+        protected CbusModulesCommon.TitledSpinner pulseSpinner;
         protected StartupActionPane action;
         protected boolean buttonFlag = false;
 
@@ -249,7 +246,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(single);
             buttons.add(repeat);
 
-            pulseSpinner = common.new TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
+            pulseSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
             pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
 
