@@ -31,7 +31,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS17</systemName>
-      <userName>Sta 1 SI 1 R</userName>
+      <userName>Sta 1 SI 2 R</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS22</systemName>
@@ -81,9 +81,6 @@
       <systemName>IS106</systemName>
       <userName>TC Right Approach</userName>
     </sensor>
-    <sensor inverted="false">
-      <systemName>ISSta 1 SI 2 R</systemName>
-    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -129,7 +126,7 @@
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT17</systemName>
-      <userName>Sta 1 SI 1 R</userName>
+      <userName>Sta 1 SI 2 R</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT18</systemName>
@@ -203,6 +200,9 @@
     <memory value="">
       <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
     </memory>
+    <memory>
+      <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
+    </memory>
     <memory value="5000">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:TIME</systemName>
     </memory>
@@ -210,41 +210,41 @@
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH2Lmain</systemName>
-      <userName>1 SI 2 Main</userName>
+      <userName>2 Main</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH2Lsiding</systemName>
-      <userName>1 SI 2 Siding</userName>
+      <userName>2 Siding</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH2Rlower</systemName>
-      <userName>1 SI 2 Lower</userName>
+      <userName>2 Lower</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH2Rupper</systemName>
-      <userName>1 SI 2 Upper</userName>
+      <userName>2 Upper</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH4Lmain</systemName>
-      <userName>2 SI 4 Main</userName>
+      <userName>4 Main</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH4Lsiding</systemName>
-      <userName>2 SI 4 Siding</userName>
+      <userName>4 Siding</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH4Rlower</systemName>
-      <userName>2 SI 4 Lower</userName>
+      <userName>4 Lower</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH4Rupper</systemName>
-      <userName>2 SI 4 Upper</userName>
+      <userName>4 Upper</userName>
     </signalhead>
   </signalheads>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="55" y="57" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="32" y="25" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/USSpanels/Panels/USS-15.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -862,7 +862,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 SI 1 R" x="123" y="468" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 R" x="123" y="468" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -879,7 +879,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <signalheadicon signalhead="2 SI 4 Upper" x="270" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Upper" x="270" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -908,7 +908,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 SI 4 Lower" x="281" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Lower" x="281" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -937,7 +937,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 SI 4 Siding" x="203" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Siding" x="203" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -966,7 +966,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 SI 4 Main" x="202" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Main" x="202" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -995,7 +995,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="1 SI 2 Upper" x="84" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Upper" x="84" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -1024,7 +1024,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="1 SI 2 Lower" x="71" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Lower" x="71" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -1053,7 +1053,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="1 SI 2 Siding" x="131" y="83" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Siding" x="131" y="83" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1082,7 +1082,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="1 SI 2 Main" x="130" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Main" x="130" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1115,36 +1115,53 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Fri Sep 10 06:38:40 EDT 2021</date>
+      <date>Fri Sep 10 07:12:50 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 10 06:38:50 EDT 2021</date>
+      <date>Fri Sep 10 07:13:01 EDT 2021</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Fri Sep 10 06:23:54 EDT 2021</date>
+          <date>Fri Sep 10 06:38:40 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Fri Sep 10 06:24:18 EDT 2021</date>
+          <date>Fri Sep 10 06:38:50 EDT 2021</date>
           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Fri Sep 10 06:23:54 EDT 2021</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Fri Sep 10 06:24:18 EDT 2021</date>
+              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Fri Sep 10 06:33:33 EDT 2021</date>
+              <filename />
+            </operation>
+          </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Fri Sep 10 06:33:33 EDT 2021</date>
+          <date>Fri Sep 10 06:41:44 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 10 06:41:44 EDT 2021</date>
+      <date>Fri Sep 10 07:27:41 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210910T1038Z+R9109c295e7 on Fri Sep 10 06:41:44 EDT 2021-->
+  <!--Written by JMRI version 4.25.3ish+jake+20210910T1112Z+R391f0db392 on Fri Sep 10 07:27:41 EDT 2021-->
 </layout-config>
