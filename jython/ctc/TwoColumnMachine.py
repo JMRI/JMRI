@@ -119,7 +119,9 @@ turnout.addLocks([occupancyLock, routeLock, TimeLock(signal2)]);
 
 station = Station("2", codeline, CodeButton("Sta 2 Code", "Sta 2 Code"))
 
-station.add(TurnoutSection("Sta 2 Layout TO", "Sta 2 TO 3 N", "Sta 2 TO 3 R", "Sta 2 TO 3 N", "Sta 2 TO 3 R", station))
+turnout = TurnoutSection("Sta 2 Layout TO", "Sta 2 TO 3 N", "Sta 2 TO 3 R", "Sta 2 TO 3 N", "Sta 2 TO 3 R", station)
+station.add(turnout)
+
 station.add(TrackCircuitSection("TC Main", "Sta 2 Main TC", station))
 station.add(TrackCircuitSection("TC Siding", "Sta 2 Siding TC", station))
 station.add(TrackCircuitSection("TC Sta 2 OS", "Sta 2 OS TC", station))
@@ -129,6 +131,10 @@ rightward = arrayList(["4 Main", "4 Siding"])
 leftward  = arrayList(["4 Upper", "4 Lower"])
 signal4 = SignalHeadSection(rightward, leftward, "Sta 2 SI 4 L", "Sta 2 SI 4 C", "Sta 2 SI 4 R", "Sta 2 SI 4 L", "Sta 2 SI 4 R", station);
 station.add(signal4)
+
+occupancyLock = OccupancyLock("TC Sta 2 OS")
+routeLock = RouteLock(["4 Upper", "4 Lower", "4 Main", "4 Siding"]);
+turnout.addLocks([occupancyLock, routeLock, TimeLock(signal4)]);
 
 # Optionally, set timings
 print "Setting timings"
