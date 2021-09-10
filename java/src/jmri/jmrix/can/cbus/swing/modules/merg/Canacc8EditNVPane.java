@@ -43,7 +43,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     OutPane [] out = new OutPane[OUTPUTS+1];
 
-    private final UpdatePulse pulseUpdateFn = new UpdatePulse();
+    private final UpdateNV pulseUpdateFn = new UpdatePulse();
     private final UpdateNV startupUpdateFn = new UpdateStartup();
     private final UpdateNV feedbackUpdateFn = new UpdateFeedback();
 
