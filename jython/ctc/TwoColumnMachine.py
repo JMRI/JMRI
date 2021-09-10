@@ -111,6 +111,10 @@ leftward  = arrayList(["2 Main", "2 Siding"])
 signal2 = SignalHeadSection(rightward, leftward, "Sta 1 SI 2 L", "Sta 1 SI 2 C", "Sta 1 SI 2 R", "Sta 1 SI 2 L", "Sta 1 SI 2 R", station);
 station.add(signal2)
 
+occupancyLock = OccupancyLock("TC Sta 1 OS")
+routeLock = RouteLock(["2 Upper", "2 Lower", "2 Main", "2 Siding"]);
+turnout.addLocks([occupancyLock, routeLock, TimeLock(signal2)]);
+
 # Set up Station 2 - levers 3 and 4
 
 station = Station("2", codeline, CodeButton("Sta 2 Code", "Sta 2 Code"))
