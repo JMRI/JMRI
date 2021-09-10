@@ -146,8 +146,11 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory>
+    <memory value="">
       <systemName>IMUSS CTC:CODELINE:1:LOG</systemName>
+    </memory>
+    <memory value="">
+      <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
     </memory>
   </memories>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
@@ -223,40 +226,6 @@
         </unknown>
         <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
-        </inconsistent>
-      </icons>
-      <iconmaps />
-    </turnouticon>
-    <turnouticon turnout="Sta 1 Code" x="103" y="591" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="true" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
-      <icons>
-        <closed url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
-          <rotation>0</rotation>
-        </closed>
-        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
-          <rotation>0</rotation>
-        </thrown>
-        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
-          <rotation>0</rotation>
-        </unknown>
-        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
-          <rotation>0</rotation>
-        </inconsistent>
-      </icons>
-      <iconmaps />
-    </turnouticon>
-    <turnouticon turnout="Sta 2 Code" x="235" y="599" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="true" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
-      <icons>
-        <closed url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
-          <rotation>1</rotation>
-        </closed>
-        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
-          <rotation>1</rotation>
-        </thrown>
-        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
-          <rotation>1</rotation>
-        </unknown>
-        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
-          <rotation>1</rotation>
         </inconsistent>
       </icons>
       <iconmaps />
@@ -515,7 +484,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC Main" x="170" y="178" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Main" x="171" y="206" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -545,7 +514,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC Siding" x="169" y="204" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Siding" x="172" y="179" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -610,35 +579,121 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
+    <positionablelabel x="873" y="678" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/plate/base-plates/misc/code.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <turnouticon turnout="Code Indication Start" x="971" y="724" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Code Send Start" x="906" y="724" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-w.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="Sta 1 Code" x="104" y="594" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Sta 2 Code" x="236" y="593" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USSpanels/Plates/code-button.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Sep 09 21:25:35 EDT 2021</date>
+      <date>Thu Sep 09 21:44:12 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Sep 09 21:26:27 EDT 2021</date>
+      <date>Thu Sep 09 21:44:46 EDT 2021</date>
       <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Sep 09 21:06:22 EDT 2021</date>
+          <date>Thu Sep 09 21:25:35 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
+          <type>Load OK</type>
+          <date>Thu Sep 09 21:26:27 EDT 2021</date>
+          <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Thu Sep 09 21:06:22 EDT 2021</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Sep 09 21:22:05 EDT 2021</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
           <type>Store</type>
-          <date>Thu Sep 09 21:22:05 EDT 2021</date>
+          <date>Thu Sep 09 21:42:10 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Sep 09 21:42:10 EDT 2021</date>
+      <date>Thu Sep 09 22:01:37 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210910T0125Z+R8d3ff7a023 on Thu Sep 09 21:42:10 EDT 2021-->
+  <!--Written by JMRI version 4.25.3ish+jake+20210910T0144Z+R20a202f6b0 on Thu Sep 09 22:01:37 EDT 2021-->
 </layout-config>

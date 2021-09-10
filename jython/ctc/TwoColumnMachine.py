@@ -32,6 +32,7 @@ turnouts.provideTurnout("IT12").setUserName("Sta 1 Code")
 sensors.provideSensor  ("IS12").setUserName("Sta 1 Code")
 turnouts.provideTurnout("IT13").setUserName("Sta 1 TO 1 N")
 sensors.provideSensor  ("IS13").setUserName("Sta 1 TO 1 N")
+sensors.provideSensor  ("IS13").state = ACTIVE
 turnouts.provideTurnout("IT14").setUserName("Sta 1 TO 1 R")
 sensors.provideSensor  ("IS14").setUserName("Sta 1 TO 1 R")
 turnouts.provideTurnout("IT15").setUserName("Sta 1 Left Approach TC")
@@ -41,6 +42,7 @@ turnouts.provideTurnout("IT22").setUserName("Sta 2 Code")
 sensors.provideSensor  ("IS22").setUserName("Sta 2 Code")
 turnouts.provideTurnout("IT23").setUserName("Sta 2 TO 3 N")
 sensors.provideSensor  ("IS23").setUserName("Sta 2 TO 3 N")
+sensors.provideSensor  ("IS23").state = ACTIVE
 turnouts.provideTurnout("IT24").setUserName("Sta 2 TO 3 R")
 sensors.provideSensor  ("IS24").setUserName("Sta 2 TO 3 R")
 turnouts.provideTurnout("IT25").setUserName("Sta 2 Main TC")
@@ -76,4 +78,24 @@ station.add(TrackCircuitSection("TC Main", "Sta 2 Main TC", station))
 station.add(TrackCircuitSection("TC Siding", "Sta 2 Siding TC", station))
 station.add(TrackCircuitSection("TC Sta 2 OS", "Sta 2 OS TC", station))
 station.add(TrackCircuitSection("TC Right Approach", "Sta 2 Right Approach TC", station, bell))
+
+# Optionally, set timings
+print "Setting timings"
+
+jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 5000  # turnout throw time
+print "Turnout throw delay: ", jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL/1000., "seconds"
+
+jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 3000
+print "Code send delay: ", jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY/1000., "seconds"
+
+# Start pulses for code and indication set to 1 second
+jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH = 1000
+jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 1000
+
+jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 5000
+print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
+
+jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH = 5000
+memories.providetMemory("IMUSS CTC:SIGNALHEADSECTION:1:TIME").setValue(jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH)
+print "Running time for", jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH/1000., "seconds"
 
