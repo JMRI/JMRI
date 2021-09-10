@@ -50,7 +50,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
     @Override
     public void initComponents() {
 
-        groupComboBox = InstanceManager.getDefault(EngineManager.class).getConsistComboBox();
+        groupComboBox = InstanceManager.getDefault(ConsistManager.class).getComboBox();
         modelComboBox = engineModels.getComboBox();
 
         super.initComponents();
@@ -192,7 +192,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 engine.setConsist(null);
                 engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
             } else if (!engine.getConsistName().equals(groupComboBox.getSelectedItem())) {
-                engine.setConsist(engineManager.getConsistByName((String) groupComboBox.getSelectedItem()));
+                engine.setConsist(InstanceManager.getDefault(ConsistManager.class).getConsistByName((String) groupComboBox.getSelectedItem()));
                 if (engine.getConsist() != null) {
                     engine.setBlocking(engine.getConsist().getSize());
                     blockingTextField.setText(Integer.toString(engine.getBlocking()));
@@ -282,6 +282,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     @Override
     protected void addPropertyChangeListeners() {
+        InstanceManager.getDefault(ConsistManager.class).addPropertyChangeListener(this);
         engineModels.addPropertyChangeListener(this);
         engineManager.addPropertyChangeListener(this);
         super.addPropertyChangeListeners();
@@ -289,6 +290,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     @Override
     protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(ConsistManager.class).removePropertyChangeListener(this);
         engineModels.removePropertyChangeListener(this);
         engineManager.removePropertyChangeListener(this);
         if (_rs != null) {
@@ -317,8 +319,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 modelComboBox.setSelectedItem(((Engine) _rs).getModel());
             }
         }
-        if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
-            engineManager.updateConsistComboBox(groupComboBox);
+        if (e.getPropertyName().equals(ConsistManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(ConsistManager.class).updateComboBox(groupComboBox);
             if (_rs != null) {
                 groupComboBox.setSelectedItem(((Engine) _rs).getConsistName());
             }

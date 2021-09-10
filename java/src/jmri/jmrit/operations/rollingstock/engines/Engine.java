@@ -417,7 +417,7 @@ public class Engine extends RollingStock {
             setBunit(a.getValue().equals(Xml.TRUE));
         }
         if ((a = e.getAttribute(Xml.CONSIST)) != null) {
-            Consist c = InstanceManager.getDefault(EngineManager.class).getConsistByName(a.getValue());
+            Consist c = InstanceManager.getDefault(ConsistManager.class).getConsistByName(a.getValue());
             if (c != null) {
                 setConsist(c);
                 if ((a = e.getAttribute(Xml.LEAD_CONSIST)) != null && a.getValue().equals(Xml.TRUE)) {
