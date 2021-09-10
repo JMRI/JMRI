@@ -31,12 +31,7 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.CopyCurrentReport;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private ReporterValue _reporterValue = ReporterValue.CopyCurrentReport;
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -65,11 +60,7 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
 
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationReference(_operationReference);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationFormula(_operationFormula);
+        copy.setReporterValue(_reporterValue);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -165,60 +156,12 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     }
 
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperationFormula();
+    public void setReporterValue(ReporterValue value) {
+        _reporterValue = value;
     }
 
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(DirectOperation state) {
-        _operationDirect = state;
-    }
-
-    public DirectOperation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperationFormula();
-    }
-
-     public String getOperationFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperationFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
+    public ReporterValue getReporterValue() {
+        return _reporterValue;
     }
 
 
@@ -337,60 +280,6 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         return true;
     }
 
-    private String getNewOperation() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
-    private String getNewData() throws JmriException {
-
-        switch (_dataAddressing) {
-            case Direct:
-                if (_memoryHandle != null) {
-                    return _memoryHandle.getBean().getDisplayName();
-                }
-                return "";
-
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
-
-            case LocalVariable:
-                log.info("getNewData: lv = {}", _dataLocalVariable);
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
-
-            case Formula:
-                return _dataExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
-        }
-    }
 
     Reporter getSourceReporter() throws JmriException {
         Reporter reporter = null;
@@ -429,19 +318,10 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     }
 
     Object getReporterData(Reporter reporter) throws JmriException {
-        DirectOperation oper;
-
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewOperation() : null;
-
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;    // combo selection
-        } else {
-            oper = DirectOperation.valueOf(name);   // convert from string name
-        }
-
         Object obj;
-        switch (oper) {
+        ReporterValue value = _reporterValue;
+
+        switch (value) {
             case CopyCurrentReport:
                 obj = reporter.getCurrentReport();
                 break;
@@ -450,10 +330,11 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
                 break;
             case CopyState:
                 obj = reporter.getState();
-                    break;
+                break;
             default:
-                throw new IllegalArgumentException("invalid oper state: " + oper.name());
+                throw new IllegalArgumentException("invalid value name: " + value.name());
         }
+
         return obj;
     }
 
@@ -468,7 +349,7 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
             case Reference:
                 String refName = ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _dataReference);
-                log.info("ref ref = {}, name = {}", _dataReference, refName);
+                log.debug("ref ref = {}, name = {}", _dataReference, refName);
                 Memory refMem = InstanceManager.getDefault(MemoryManager.class).getMemory(refName);
                 if (refMem == null) {
                     throw new IllegalArgumentException("invalid memory reference: " + refName);
@@ -477,16 +358,25 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
                 break;
 
             case LocalVariable:
-                log.info("LocalVariable: lv = {}", _dataLocalVariable);
+                log.debug("LocalVariable: lv = {}", _dataLocalVariable);
                 getConditionalNG().getSymbolTable().setValue(_dataLocalVariable, data);
                 break;
 
             case Formula:
-//                 return _dataExpressionNode != null
-//                         ? TypeConversionUtil.convertToString(
-//                                 _dataExpressionNode.calculate(
-//                                         getConditionalNG().getSymbolTable()), false)
-//                         : null;
+                String formulaName = _dataExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _dataExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+                if (formulaName == null) {
+                    throw new IllegalArgumentException("invalid memory formula, name is null");
+                }
+
+                Memory formulaMem = InstanceManager.getDefault(MemoryManager.class).getMemory(formulaName);
+                if (formulaMem == null) {
+                    throw new IllegalArgumentException("invalid memory formula: " + formulaName);
+                }
+                formulaMem.setValue(data);
                 break;
 
             default:
@@ -500,11 +390,11 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         // Get the reporter bean
         Reporter reporter = getSourceReporter();
         if (reporter == null) return;
-        log.info("reporter = {}", reporter.getDisplayName());
+        log.debug("reporter = {}", reporter.getDisplayName());
 
         // Get the reporter data
         Object data = getReporterData(reporter);
-        log.info("data = {}", data);
+        log.debug("data = {}", data);
 
         // Update the destination
         updateDestination(data);
@@ -528,7 +418,6 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     @Override
     public String getLongDescription(Locale locale) {
         String bean = "";
-        String item = "";
         String dest = "";
 
         switch (_addressing) {
@@ -558,27 +447,6 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        switch (_operationAddressing) {
-            case Direct:
-                item = getOperationDirect().toString();
-                break;
-
-            case Reference:
-                item = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                item = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                item = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
-
         switch (_dataAddressing) {
             case Direct:
                 String memoryName;
@@ -605,8 +473,10 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
             default:
                 throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
         }
-// Copy reporter "{0}" {1} to {2}
-        return Bundle.getMessage(locale, "ActionReporter_Long", bean, item, dest);
+
+        String item = getReporterValue().toString();
+
+        return Bundle.getMessage(locale, "ActionReporter_Long", item, bean, dest);
     }
 
     /** {@inheritDoc} */
@@ -630,14 +500,14 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     public void disposeMe() {
     }
 
-    public enum DirectOperation {
+    public enum ReporterValue {
         CopyCurrentReport(Bundle.getMessage("ActionReporter_CopyCurrentReport")),
         CopyLastReport(Bundle.getMessage("ActionReporter_CopyLastReport")),
         CopyState(Bundle.getMessage("ActionReporter_CopyState"));
 
         private final String _text;
 
-        private DirectOperation(String text) {
+        private ReporterValue(String text) {
             this._text = text;
         }
 

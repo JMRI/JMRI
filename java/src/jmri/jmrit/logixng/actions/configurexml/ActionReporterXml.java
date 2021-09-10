@@ -57,11 +57,7 @@ public class ActionReporterXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
 
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
+        element.addContent(new Element("reporterValue").addContent(p.getReporterValue().name()));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
         element.addContent(new Element("dataReference").addContent(p.getDataReference()));
@@ -107,26 +103,10 @@ public class ActionReporterXml extends jmri.managers.configurexml.AbstractNamedB
             if (elem != null) h.setFormula(elem.getTextTrim());
 
 
-            elem = shared.getChild("operationAddressing");
+                elem = shared.getChild("reporterValue");
             if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                h.setReporterValue(ActionReporter.ReporterValue.valueOf(elem.getTextTrim()));
             }
-
-            elem = shared.getChild("operationDirect");
-            if (elem != null) {
-                String oper = elem.getTextTrim();
-                h.setOperationDirect(ActionReporter.DirectOperation.valueOf(oper));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
 
             elem = shared.getChild("dataAddressing");
             if (elem != null) {

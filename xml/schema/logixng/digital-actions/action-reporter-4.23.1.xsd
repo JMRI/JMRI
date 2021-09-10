@@ -47,8 +47,7 @@
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
-              <xs:element name="operationDirect" minOccurs="0" maxOccurs="1">
+              <xs:element name="reporterValue" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="CopyCurrentReport"/>
@@ -57,9 +56,6 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1"/>

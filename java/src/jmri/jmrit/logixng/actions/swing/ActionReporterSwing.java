@@ -6,17 +6,10 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionReporter;
-import jmri.jmrit.logixng.actions.ActionReporter.DirectOperation;
+import jmri.jmrit.logixng.actions.ActionReporter.ReporterValue;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
@@ -42,16 +35,8 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
     private JTextField _beanFormulaTextField;
 
 
-    private JTabbedPane _tabbedPaneOperation;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-
-    private JComboBox<DirectOperation> _stateComboBox;
-    private JTextField _operReferenceTextField;
-    private JTextField _operLocalVariableTextField;
-    private JTextField _operFormulaTextField;
+    private JPanel _panelReporterValue;
+    private JComboBox<ReporterValue> _reporterValueComboBox;
 
 
     private JTabbedPane _tabbedPaneData;
@@ -60,7 +45,7 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
     private JPanel _panelDataLocalVariable;
     private JPanel _panelDataFormula;
 
-    private BeanSelectPanel<Memory> _dataSelectPanel;
+    private BeanSelectPanel<Memory> _memorySelectPanel;
     private JTextField _dataReferenceTextField;
     private JTextField _dataLocalVariableTextField;
     private JTextField _dataFormulaTextField;
@@ -70,7 +55,17 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         ActionReporter action = (ActionReporter)object;
 
         panel = new JPanel();
+
         // Left section
+        _panelReporterValue = new javax.swing.JPanel();
+        _reporterValueComboBox = new JComboBox<>();
+        for (ReporterValue e : ReporterValue.values()) {
+            _reporterValueComboBox.addItem(e);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_reporterValueComboBox);
+        _panelReporterValue.add(_reporterValueComboBox);
+
+        // Center section
         _tabbedPaneBean = new JTabbedPane();
         _panelBeanDirect = new javax.swing.JPanel();
         _panelBeanReference = new javax.swing.JPanel();
@@ -97,37 +92,6 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         _beanFormulaTextField.setColumns(30);
         _panelBeanFormula.add(_beanFormulaTextField);
 
-        // Center section
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
-
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (DirectOperation e : DirectOperation.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        _panelOperationDirect.add(_stateComboBox);
-
-        _operReferenceTextField = new JTextField();
-        _operReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_operReferenceTextField);
-
-        _operLocalVariableTextField = new JTextField();
-        _operLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_operLocalVariableTextField);
-
-        _operFormulaTextField = new JTextField();
-        _operFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_operFormulaTextField);
-
         // Right section
         _tabbedPaneData = new JTabbedPane();
         _panelDataDirect = new javax.swing.JPanel();
@@ -140,8 +104,8 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         _tabbedPaneData.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDataLocalVariable);
         _tabbedPaneData.addTab(NamedBeanAddressing.Formula.toString(), _panelDataFormula);
 
-        _dataSelectPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _panelDataDirect.add(_dataSelectPanel);
+        _memorySelectPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _panelDataDirect.add(_memorySelectPanel);
 
         _dataReferenceTextField = new JTextField();
         _dataReferenceTextField.setColumns(30);
@@ -171,17 +135,7 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
             _beanLocalVariableTextField.setText(action.getLocalVariable());
             _beanFormulaTextField.setText(action.getFormula());
 
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            _operReferenceTextField.setText(action.getOperationReference());
-            _operLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _operFormulaTextField.setText(action.getOperationFormula());
+            _reporterValueComboBox.setSelectedItem(action.getReporterValue());
 
             switch (action.getDataAddressing()) {
                 case Direct: _tabbedPaneData.setSelectedComponent(_panelDataDirect); break;
@@ -191,7 +145,7 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getDataAddressing().name());
             }
             if (action.getMemory() != null) {
-                _dataSelectPanel.setDefaultNamedBean(action.getMemory().getBean());
+                _memorySelectPanel.setDefaultNamedBean(action.getMemory().getBean());
             }
             _dataReferenceTextField.setText(action.getDataReference());
             _dataLocalVariableTextField.setText(action.getDataLocalVariable());
@@ -199,8 +153,8 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
+            _panelReporterValue,
             _tabbedPaneBean,
-            _tabbedPaneOperation,
             _tabbedPaneData};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -213,7 +167,6 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         validateBeanSection(errorMessages);
-        validateOperationSection(errorMessages);
         validateDataSection(errorMessages);
         return errorMessages.isEmpty();
     }
@@ -255,37 +208,6 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         }
     }
 
-    private void validateOperationSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionReporter action = new ActionReporter("IQDA2", null);
-
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_operReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setOperationFormula(_operFormulaTextField.getText());
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-    }
-
     private void validateDataSection(List<String> errorMessages) {
         // Create a temporary action to test formula
         ActionReporter action = new ActionReporter("IQDA3", null);
@@ -317,7 +239,7 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-            if (_dataSelectPanel.getNamedBean() == null) {
+            if (_memorySelectPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("ActionReporter_ErrorMemory"));
             }
         }
@@ -355,6 +277,9 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
 
         try {
             // Left section
+            action.setReporterValue(_reporterValueComboBox.getItemAt(_reporterValueComboBox.getSelectedIndex()));
+
+            // Center section
             if (_tabbedPaneBean.getSelectedComponent() == _panelBeanDirect) {
                 action.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneBean.getSelectedComponent() == _panelBeanReference) {
@@ -370,27 +295,11 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneBean has unknown selection");
             }
 
-            // Center section
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_operReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_operLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_operFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneBean has unknown selection");
-            }
-
             // Right section
             action.removeMemory();
             if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-                Memory memory = _dataSelectPanel.getNamedBean();
+                action.setDataAddressing(NamedBeanAddressing.Direct);
+                Memory memory = _memorySelectPanel.getNamedBean();
                 if (memory != null) {
                     NamedBeanHandle<Memory> handle
                             = InstanceManager.getDefault(NamedBeanHandleManager.class)
@@ -426,8 +335,8 @@ public class ActionReporterSwing extends AbstractDigitalActionSwing {
         if (_beanSelectPanel != null) {
             _beanSelectPanel.dispose();
         }
-        if (_dataSelectPanel != null) {
-            _dataSelectPanel.dispose();
+        if (_memorySelectPanel != null) {
+            _memorySelectPanel.dispose();
         }
     }
 
