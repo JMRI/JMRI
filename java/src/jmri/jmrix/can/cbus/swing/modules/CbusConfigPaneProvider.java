@@ -44,7 +44,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * Get descriptive name of NV
      * 
      * @param index of the NV
-     * @return the name as String may be empty string if NV description is unknown
+     * @return the name as String. May be empty string if NV description is unknown
      * or null if index is out of range
      */
     abstract public String getNVNameByIndex(int index);

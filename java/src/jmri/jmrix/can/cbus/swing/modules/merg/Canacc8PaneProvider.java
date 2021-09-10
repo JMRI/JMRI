@@ -21,6 +21,18 @@ public class Canacc8PaneProvider extends CbusConfigPaneProvider {
     
     String type = "CANACC8";
     
+    public static final int OUTPUT1 = 1;
+    public static final int OUTPUT2 = 2;
+    public static final int OUTPUT3 = 3;
+    public static final int OUTPUT4 = 4;
+    public static final int OUTPUT5 = 5;
+    public static final int OUTPUT6 = 6;
+    public static final int OUTPUT7 = 7;
+    public static final int OUTPUT8 = 8;
+    public static final int FEEDBACK_DELAY = 9;
+    public static final int STARTUP_POSITION = 10;
+    public static final int STARTUP_MOVE = 11;
+
     public Canacc8PaneProvider() {
         super();
     }
@@ -43,17 +55,18 @@ public class Canacc8PaneProvider extends CbusConfigPaneProvider {
      */
     private static Map<Integer, String> createNvMap() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(0, Bundle.getMessage("OutputX", 1));
-        result.put(1, Bundle.getMessage("OutputX", 2));
-        result.put(2, Bundle.getMessage("OutputX", 3));
-        result.put(3, Bundle.getMessage("OutputX", 4));
-        result.put(4, Bundle.getMessage("OutputX", 5));
-        result.put(5, Bundle.getMessage("OutputX", 6));
-        result.put(6, Bundle.getMessage("OutputX", 7));
-        result.put(7, Bundle.getMessage("OutputX", 8));
-        result.put(8, Bundle.getMessage("FeedbackDelay"));
-        result.put(9, Bundle.getMessage("StartupPosition"));
-        result.put(10, Bundle.getMessage("StartupMove"));
+        result.put(0, "Error - invalid NV index");
+        result.put(OUTPUT1, Bundle.getMessage("OutputX", 1));
+        result.put(OUTPUT2, Bundle.getMessage("OutputX", 2));
+        result.put(OUTPUT3, Bundle.getMessage("OutputX", 3));
+        result.put(OUTPUT4, Bundle.getMessage("OutputX", 4));
+        result.put(OUTPUT5, Bundle.getMessage("OutputX", 5));
+        result.put(OUTPUT6, Bundle.getMessage("OutputX", 6));
+        result.put(OUTPUT7, Bundle.getMessage("OutputX", 7));
+        result.put(OUTPUT8, Bundle.getMessage("OutputX", 8));
+        result.put(FEEDBACK_DELAY, Bundle.getMessage("FeedbackDelay"));
+        result.put(STARTUP_POSITION, Bundle.getMessage("StartupPosition"));
+        result.put(STARTUP_MOVE, Bundle.getMessage("StartupMove"));
         return Collections.unmodifiableMap(result);
     }
     

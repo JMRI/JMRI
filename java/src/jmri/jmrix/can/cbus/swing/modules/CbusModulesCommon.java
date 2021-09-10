@@ -25,7 +25,7 @@ public class CbusModulesCommon {
         /**
          * Build a new NV value from contents of gui elements
          * 
-         * @param index of the NV
+         * @param index Index of something. e.g., an NV, or an output bit, etc
          */
         void setNewVal(int index);
     }

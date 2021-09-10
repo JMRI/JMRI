@@ -81,7 +81,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         c.gridx = 0;
         c.gridy = 3;
         feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, feedbackUpdateFn);    // NV9 for feedback delay 
-        feedbackSpinner.init(_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
+        feedbackSpinner.init(_nvArray[Canacc8PaneProvider.FEEDBACK_DELAY]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
         gridPane.add(feedbackSpinner, c);
@@ -162,8 +162,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         
         @Override
         public void setNewVal(int index) {
-            int newNV10 = _nvArray[10] & (~(1<<(index-1)));
-            int newNV11 = _nvArray[11] & (~(1<<(index-1)));
+            int newNV10 = _nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (~(1<<(index-1)));
+            int newNV11 = _nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
             
             // Startup action is in NV10 and NV11, 1 bit per output 
             if (out[index].action.off.isSelected()) {
@@ -175,8 +175,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 newNV11 |= (1<<(index-1));
             }
             
-            _nvArray[10] = newNV10;
-            _nvArray[11] = newNV11;
+            _nvArray[Canacc8PaneProvider.STARTUP_POSITION] = newNV10;
+            _nvArray[Canacc8PaneProvider.STARTUP_MOVE] = newNV11;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(newNV10, 9, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(newNV11, 10, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -184,7 +184,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     }
     
     /**
-     * Update the NVs controlling the feedback delay
+     * Update the NV controlling the feedback delay
      */
     protected class UpdateFeedback implements UpdateNV {
 
@@ -400,10 +400,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(saved);
             setButtons();
             // Startup action is in NV10 and NV11, 1 bit per output 
-            if ((_nvArray[10] & (1<<(_index-1)))>0) {
+            if ((_nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[11] & (1<<(_index-1)))>0) {
+            } else if ((_nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {
@@ -425,10 +425,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
          */
         public void setButtons() {
             // Startup action is in NV10 and NV11, 1 bit per output 
-            if ((_nvArray[10] & (1<<(_index-1)))>0) {
+            if ((_nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[11] & (1<<(_index-1)))>0) {
+            } else if ((_nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {

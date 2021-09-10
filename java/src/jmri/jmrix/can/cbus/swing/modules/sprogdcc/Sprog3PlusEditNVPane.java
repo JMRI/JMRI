@@ -218,7 +218,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("StartOfDay"),
                 Bundle.getMessage("AutoPower")
             };
-            csFlags[0] = new CmdStaFlags(0, Bundle.getMessage("UserFlags"), userFlagStrings, _nvArray[2]);
+            csFlags[0] = new CmdStaFlags(0, Bundle.getMessage("UserFlags"), userFlagStrings, _nvArray[Sprog3PlusPaneProvider.USER_FLAGS]);
             JPanel userFlags = csFlags[0].getContents();
 
             String opFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
@@ -230,7 +230,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("AckSensitivity"),
                 Bundle.getMessage("Reserved")
             };
-            csFlags[1] = new CmdStaFlags(1, Bundle.getMessage("OperationsFlags"), opFlagStrings, _nvArray[3]);
+            csFlags[1] = new CmdStaFlags(1, Bundle.getMessage("OperationsFlags"), opFlagStrings, _nvArray[Sprog3PlusPaneProvider.OPERATIONS_FLAGS]);
             JPanel opFlags = csFlags[1].getContents();
 
             String debugFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
@@ -242,7 +242,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("Reserved"),
                 Bundle.getMessage("Reserved")
             };
-            csFlags[2] = new CmdStaFlags(1, Bundle.getMessage("DebugFlags"), debugFlagStrings, _nvArray[4]);
+            csFlags[2] = new CmdStaFlags(1, Bundle.getMessage("DebugFlags"), debugFlagStrings, _nvArray[Sprog3PlusPaneProvider.DEBUG_FLAGS]);
             JPanel debugFlags = csFlags[2].getContents();
 
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
@@ -264,7 +264,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             c.gridwidth = 3;
             JComboBox<String> powerModeList = new JComboBox<>(powerModeStrings);
-            powerModeList.setSelectedIndex(_nvArray[5]);
+            powerModeList.setSelectedIndex(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE]);
             powerModeList.addActionListener((ActionEvent e) -> {
                 pwrModeActionListener(e);
             });
@@ -283,7 +283,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             CbusModulesCommon.TitledSpinner mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), 0, currentLimitUpdateFn);
 //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
-            mainSpinner.init(_nvArray[13]/100.0, 0.1, 2.5, 0.1);
+            mainSpinner.init(_nvArray[Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
@@ -298,7 +298,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             CbusModulesCommon.TitledSpinner progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), 0, currentLimitUpdateFn);
 //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
-            progSpinner.init(_nvArray[6]/100.0, 0.1, 2.5, 0.1);
+            progSpinner.init(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(progSpinner, c);
             c.gridy++;
             
@@ -355,13 +355,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             CbusModulesCommon.TitledSpinner accyPktSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("AccyPktCnt"), 0, accyPktUpdateFn);
 //            accyPktSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
-            accyPktSpinner.init(_nvArray[9], 1, 7, 1);
+            accyPktSpinner.init(_nvArray[Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT], 1, 7, 1);
             gridPane.add(accyPktSpinner, c);
             c.gridy++;
             
             CbusModulesCommon.TitledSpinner nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), 0, nnMapUpdateFn);
 //            nnMapDccSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
-            int nn = _nvArray[11]*256 + _nvArray[12];
+            int nn = _nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_HI]*256 + _nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_LO];
             nnMapDccSpinner.init(nn, 0, 65535, 1);
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
@@ -372,7 +372,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             CbusModulesCommon.TitledSpinner PreambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
 //            PreambleSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             PreambleSpinner.setToolTip(Bundle.getMessage("CmdStaCanIdTt"));
-            PreambleSpinner.init(_nvArray[21], 14, 32, 1);
+            PreambleSpinner.init(_nvArray[Sprog3PlusPaneProvider.DCC_PREAMBLE], 14, 32, 1);
             gridPane.add(PreambleSpinner, c);
                     
             add(gridPane);
