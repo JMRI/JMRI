@@ -34,7 +34,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static final UpdateNV preambleUpdateFn = new UpdatePreamble();
     private static final UpdateNV powerModeUpdateFn = new UpdatePowerMode();
     private static final UpdateNV meterUpdateFn = new UpdateMeter();
-        
+    
+    private static CbusModulesCommon.TitledSpinner cmdStaNoSpinner;
+            
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
     }
@@ -72,25 +74,72 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
             int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _nvArray[nv] = value;
-            if ((nv > 1) && (nv <= 4)) {
-                log.debug("Update NV {} to {}", nv, value);
-                csFlags[nv - 2].setButtons(value);
+            
+            switch (nv) {
+                case Sprog3PlusPaneProvider.CMD_STATION_NUMBER:
+                    cmdStaNoSpinner.getModel().setValue(value);
+                    break;
+                    
+                case Sprog3PlusPaneProvider.USER_FLAGS:
+                    csFlags[0].setFlags(value);
+                    break;
+                    
+                case Sprog3PlusPaneProvider.OPERATIONS_FLAGS:
+                    csFlags[1].setFlags(value);
+                    break;
+                    
+                case Sprog3PlusPaneProvider.DEBUG_FLAGS:
+                    csFlags[2].setFlags(value);
+                    break;
+                            
+                case Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT:
+                case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.INPUT_VOLTAGE:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT:
+                case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.MULTIMETER_MODE:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.NN_MAP_DCC_HI:
+                case Sprog3PlusPaneProvider.NN_MAP_DCC_LO:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.MAIN_HIGH_WATER_MARK:
+                case Sprog3PlusPaneProvider.PROG_HIGH_WATER_MARK:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.SETUP:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.CANID:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.NN_HI:
+                case Sprog3PlusPaneProvider.NN_LO:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.DCC_PREAMBLE:
+                    break;
+                    
+                case Sprog3PlusPaneProvider.CAN_DISABLE:
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Unexpected NV index");
+                    
             }
-//            } else if (nv == 9) {
-//                log.debug("Update feedback delay to {}", value);
-//                feedbackSpinner.tSpin.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
-//            } else if ((nv == 10) || (nv == 11)) {
-//                log.debug("Update startup action", value);
-//                for (int i = 1; i <= 8; i++) {
-//                    out[i].action.setButtons();
-//                }
-//            } else if (nv == 12) {
-//                // Not used
-//                log.debug("Update unknow");
-//                
-//            } else {
-//                throw new IllegalArgumentException("Unexpected NV index");
-//            }
         }
     }
     
@@ -227,7 +276,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("StartOfDayTt"),
                 Bundle.getMessage("AutoPowerTt")
             };
-            csFlags[0] = new CmdStaFlags(0, Bundle.getMessage("UserFlags"), userFlagStrings, userFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.USER_FLAGS]);
+            csFlags[0] = new CmdStaFlags(Bundle.getMessage("UserFlags"), userFlagStrings, userFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.USER_FLAGS]);
             JPanel userFlags = csFlags[0].getContents();
 
             String opFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
@@ -248,7 +297,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("AckSensitivityTt"),
                 Bundle.getMessage("ReservedTt")
             };
-            csFlags[1] = new CmdStaFlags(1, Bundle.getMessage("OperationsFlags"), opFlagStrings, opFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.OPERATIONS_FLAGS]);
+            csFlags[1] = new CmdStaFlags(Bundle.getMessage("OperationsFlags"), opFlagStrings, opFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.OPERATIONS_FLAGS]);
             JPanel opFlags = csFlags[1].getContents();
 
             String debugFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
@@ -269,7 +318,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("ReservedTt"),
                 Bundle.getMessage("ReservedTt")
             };
-            csFlags[2] = new CmdStaFlags(1, Bundle.getMessage("DebugFlags"), debugFlagStrings, debugFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.DEBUG_FLAGS]);
+            csFlags[2] = new CmdStaFlags(Bundle.getMessage("DebugFlags"), debugFlagStrings, debugFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.DEBUG_FLAGS]);
             JPanel debugFlags = csFlags[2].getContents();
 
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
@@ -283,7 +332,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy = 0;
 
             // x = 1
-            CbusModulesCommon.TitledSpinner cmdStaNoSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CmdStaNo"), 0, cmdStaNoUpdateFn);
+            cmdStaNoSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CmdStaNo"), 0, cmdStaNoUpdateFn);
             cmdStaNoSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             cmdStaNoSpinner.init(0, 0, 255, 1);
             gridPane.add(cmdStaNoSpinner, c);
@@ -454,16 +503,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
      */
     private static class CmdStaFlags extends JPanel {
         
-//        protected int _type;
         protected String _title;
-        protected String [] _fn;
         protected int _flags;
         protected JRadioButton [] buttons;
 
-        public CmdStaFlags(int type, String title, String [] fn, String [] tt, int flags) {
+        public CmdStaFlags(String title, String [] fn, String [] tt, int flags) {
             super();
             
-//            _type = type;
             _title = title;
             _flags = flags;
             buttons = new JRadioButton[8];
@@ -473,6 +519,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             }
         }
         
+        /**
+         * Get the panel to display the flags
+         * 
+         * @return JPanel displaying the flags
+         */
         protected JPanel getContents() {
             
             JPanel gridPane = new JPanel(new GridBagLayout());
@@ -496,6 +547,19 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             return gridPane;
         }
         
+        /**
+         * Update the flags settings
+         * 
+         * @param flags settings
+         */
+        protected void setFlags(int flags) {
+            _flags = flags;
+            setButtons();
+        }
+        
+        /**
+         * Set the buttons to the state of the flags
+         */
         protected void setButtons() {
             for (int i = 0; i < 8; i++) {
                 if ((_flags & (1<<i)) > 0) {
@@ -504,11 +568,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     buttons[i].setSelected(false);
                 }
             }
-        }
-        
-        protected void setButtons(int flags) {
-            _flags = flags;
-            setButtons();
         }
     }
 
