@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -27,6 +28,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static final UpdateCmdStaNo cmdStaNoUpdateFn = new UpdateCmdStaNo();
     private static final UpdateCanId canIdUpdateFn = new UpdateCanId();
     private static final UpdateNodeNumber nodeNumberUpdateFn = new UpdateNodeNumber();
+    private static final UpdateCurrentLimit currentLimitUpdateFn = new UpdateCurrentLimit();
+    private static final UpdateAccyCount accyPktUpdateFn = new UpdateAccyCount();
+    private static final UpdateNnMap nnMapUpdateFn = new UpdateNnMap();
+    private static final UpdatePreamble preambleUpdateFn = new UpdatePreamble();
         
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -41,13 +46,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         JTabbedPane tabbedPane = new JTabbedPane();
         
         JPanel cmdStaPane = new CmdStaPane();
-        JPanel powerPane = new PowerPane();
         JPanel dccPane = new DccPane();
         JPanel cbusPane = new CbusPane();
         tabbedPane.addTab(Bundle.getMessage("CmdSta"), cmdStaPane);
-        tabbedPane.addTab("Power", powerPane);
         tabbedPane.addTab("DCC", dccPane);
-        tabbedPane.addTab("CBUS", cbusPane);
+        tabbedPane.addTab("CBUS Diagnostics", cbusPane);
         
         JScrollPane scroll = new JScrollPane(tabbedPane);
         
@@ -122,8 +125,43 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
         
-    public static class CmdStaPane extends JPanel {
+    /**
+     * Update the current Limit
+     */
+    protected static class UpdateCurrentLimit implements UpdateNV {
         
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+        }
+    }
+        
+    protected static class UpdateAccyCount implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+        }
+    }
+
+    protected static class UpdateNnMap implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+        }
+    }
+
+    protected static class UpdatePreamble implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+        }
+    }
+    
+    public static class CmdStaPane extends JPanel {
+
         public CmdStaPane() {
             super();
 
@@ -138,7 +176,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("MapEvents"),
                 Bundle.getMessage("StopOnTimeout"),
                 Bundle.getMessage("StartOfDay"),
-                Bundle.getMessage("AutoPower")};
+                Bundle.getMessage("AutoPower")
+            };
             csFlags[0] = new CmdStaFlags(0, Bundle.getMessage("UserFlags"), userFlagStrings, _nvArray[2]);
             JPanel userFlags = csFlags[0].getContents();
 
@@ -149,7 +188,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("AllStopTrackOff"),
                 Bundle.getMessage("BluelineMode"),
                 Bundle.getMessage("AckSensitivity"),
-                Bundle.getMessage("Reserved")};
+                Bundle.getMessage("Reserved")
+            };
             csFlags[1] = new CmdStaFlags(1, Bundle.getMessage("OperationsFlags"), opFlagStrings, _nvArray[3]);
             JPanel opFlags = csFlags[1].getContents();
 
@@ -160,65 +200,162 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                 Bundle.getMessage("Reserved"),
                 Bundle.getMessage("Reserved"),
                 Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved")};
+                Bundle.getMessage("Reserved")
+            };
             csFlags[2] = new CmdStaFlags(1, Bundle.getMessage("DebugFlags"), debugFlagStrings, _nvArray[4]);
             JPanel debugFlags = csFlags[2].getContents();
+
+            String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
+                Bundle.getMessage("ProgOnMode"),
+                Bundle.getMessage("ProgArMode")
+            };
             
             c.weightx = 1;
             c.weighty = 1;
-//            c.gridheight = 4;
             c.gridx = 0;
             c.gridy = 0;
-            
+
             // x = 1
             CbusModulesCommon.TitledSpinner cmdStaNoSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CmdStaNo"), 0, cmdStaNoUpdateFn);
             cmdStaNoSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             cmdStaNoSpinner.init(0, 0, 255, 1);
             gridPane.add(cmdStaNoSpinner, c);
             c.gridy++;
+            
+            c.gridwidth = 3;
+            JComboBox<String> powerModeList = new JComboBox<>(powerModeStrings);
+            powerModeList.setSelectedIndex(_nvArray[5]);
+            powerModeList.addActionListener((ActionEvent e) -> {
+                pwrModeActionListener();
+            });
+            gridPane.add(powerModeList, c);
+            c.gridwidth = 1;
+            c.gridy++;
+            
+            JRadioButton meter = new JRadioButton(Bundle.getMessage("Multimeter"));
+            meter.setSelected(false);
+//            meter.setToolTipText("");
+            gridPane.add(meter, c);
+            c.gridy++;
+            
+            CbusModulesCommon.TitledSpinner mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), 0, currentLimitUpdateFn);
+    //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+            mainSpinner.init(_nvArray[13]/100.0, 0.1, 2.5, 0.1);
+            gridPane.add(mainSpinner, c);
+            c.gridy++;
+            
             gridPane.add(userFlags, c);
             c.gridx++;
 
             // x = 2
             c.gridy = 0;
-            CbusModulesCommon.TitledSpinner canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
-            canIdSpinner.setToolTip(Bundle.getMessage("CmdStaCanIdTt"));
-            canIdSpinner.init(114, 100, 127, 1);
-            gridPane.add(canIdSpinner, c);
             c.gridy++;
+            c.gridy++;
+            c.gridy++;
+            
+            CbusModulesCommon.TitledSpinner progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), 0, currentLimitUpdateFn);
+    //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+            progSpinner.init(_nvArray[6]/100.0, 0.1, 2.5, 0.1);
+            gridPane.add(progSpinner, c);
+            c.gridy++;
+            
             gridPane.add(opFlags, c);
             c.gridx++;
 
-            // x = 2
+            // x = 3
             c.gridy = 0;
-            CbusModulesCommon.TitledSpinner nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
-            nodeNumberSpinner.setToolTip(Bundle.getMessage("CmdStaNnTt"));
-            nodeNumberSpinner.init(65534, 65520, 65534, 1);
-            gridPane.add(nodeNumberSpinner, c);
             c.gridy++;
+            c.gridy++;
+            c.gridy++;
+            c.gridy++;
+            
             gridPane.add(debugFlags, c);
             c.gridx++;
-                    
+
             add(gridPane);
         }
-    }
-    
-    public static class PowerPane extends JPanel {
-        public PowerPane() {
-            super();
-        }
         
+        protected void pwrModeActionListener() {
+        }
     }
     
     public static class DccPane extends JPanel {
         public DccPane() {
             super();
+
+            JPanel gridPane = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+
+            c.weightx = 1;
+            c.weighty = 1;
+            c.gridx = 0;
+            c.gridy = 0;
+            
+            CbusModulesCommon.TitledSpinner accyPktSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("AccyPktCnt"), 0, accyPktUpdateFn);
+//            accyPktSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+            accyPktSpinner.init(_nvArray[9], 1, 7, 1);
+            gridPane.add(accyPktSpinner, c);
+            c.gridy++;
+            
+            CbusModulesCommon.TitledSpinner nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), 0, nnMapUpdateFn);
+//            nnMapDccSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+            int nn = _nvArray[11]*256 + _nvArray[12];
+            nnMapDccSpinner.init(nn, 0, 65535, 1);
+            gridPane.add(nnMapDccSpinner, c);
+            c.gridy++;
+            
+            gridPane.add(nnMapDccSpinner, c);
+            c.gridy++;
+
+            CbusModulesCommon.TitledSpinner PreambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
+//            PreambleSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+            PreambleSpinner.setToolTip(Bundle.getMessage("CmdStaCanIdTt"));
+            PreambleSpinner.init(_nvArray[21], 14, 32, 1);
+            gridPane.add(PreambleSpinner, c);
+                    
+            add(gridPane);
         }
     }
     
     public static class CbusPane extends JPanel {
         public CbusPane() {
             super();
+
+            JPanel gridPane = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+
+            c.weightx = 1;
+            c.weighty = 1;
+            c.gridx = 0;
+            c.gridy = 0;
+
+            CbusModulesCommon.TitledSpinner canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
+//            canIdSpinner.setToolTip(Bundle.getMessage("CmdStaCanIdTt"));
+            canIdSpinner.init(114, 100, 127, 1);
+            gridPane.add(canIdSpinner, c);
+            c.gridy++;
+
+            CbusModulesCommon.TitledSpinner nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
+//            nodeNumberSpinner.setToolTip(Bundle.getMessage("CmdStaNnTt"));
+            nodeNumberSpinner.init(65534, 65520, 65534, 1);
+            gridPane.add(nodeNumberSpinner, c);
+            c.gridy++;
+            
+            JRadioButton setup = new JRadioButton("SetupMode");
+            setup.setSelected(false);
+//            setup.setToolTipText("");
+            gridPane.add(setup, c);
+            c.gridy++;
+            
+            JRadioButton disable = new JRadioButton("DisableCan");
+            disable.setSelected(false);
+//            disable.setToolTipText("");
+            gridPane.add(disable, c);
+            c.gridy++;
+            
+            add(gridPane);
         }
     }
     
