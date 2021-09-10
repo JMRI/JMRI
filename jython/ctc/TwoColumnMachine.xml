@@ -22,6 +22,18 @@
       <userName>Sta 1 TO 1 R</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS15</systemName>
+      <userName>Sta 1 SI 2 L</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS16</systemName>
+      <userName>Sta 1 SI 2 C</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS17</systemName>
+      <userName>Sta 1 SI 1 R</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>IS22</systemName>
       <userName>Sta 2 Code</userName>
     </sensor>
@@ -32,6 +44,18 @@
     <sensor inverted="false">
       <systemName>IS24</systemName>
       <userName>Sta 2 TO 3 R</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS25</systemName>
+      <userName>Sta 2 SI 4 L</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS26</systemName>
+      <userName>Sta 2 SI 4 C</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS27</systemName>
+      <userName>Sta 2 SI 4 R</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS101</systemName>
@@ -56,6 +80,9 @@
     <sensor inverted="false">
       <systemName>IS106</systemName>
       <userName>TC Right Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSta 1 SI 2 R</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -94,10 +121,22 @@
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT15</systemName>
-      <userName>Sta 1 Left Approach TC</userName>
+      <userName>Sta 1 SI 2 L</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT16</systemName>
+      <userName>Sta 1 SI 2 C</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT17</systemName>
+      <userName>Sta 1 SI 1 R</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT18</systemName>
+      <userName>Sta 1 Left Approach TC</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT19</systemName>
       <userName>Sta 1 OS TC</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -118,18 +157,30 @@
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT25</systemName>
-      <userName>Sta 2 Main TC</userName>
+      <userName>Sta 2 SI 4 L</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT26</systemName>
-      <userName>Sta 2 Siding TC</userName>
+      <userName>Sta 2 SI 4 C</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT27</systemName>
-      <userName>Sta 2 OS TC</userName>
+      <userName>Sta 2 SI 4 R</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT28</systemName>
+      <userName>Sta 2 Main TC</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT29</systemName>
+      <userName>Sta 2 Siding TC</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT30</systemName>
+      <userName>Sta 2 OS TC</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT31</systemName>
       <userName>Sta 2 Right Approach TC</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -156,10 +207,44 @@
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:TIME</systemName>
     </memory>
   </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2Lmain</systemName>
+      <userName>1 SI 2 Main</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2Lsiding</systemName>
+      <userName>1 SI 2 Siding</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2Rlower</systemName>
+      <userName>1 SI 2 Lower</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2Rupper</systemName>
+      <userName>1 SI 2 Upper</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4Lmain</systemName>
+      <userName>2 SI 4 Main</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4Lsiding</systemName>
+      <userName>2 SI 4 Siding</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4Rlower</systemName>
+      <userName>2 SI 4 Lower</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4Rupper</systemName>
+      <userName>2 SI 4 Upper</userName>
+    </signalhead>
+  </signalheads>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="1232" y="195" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="55" y="57" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/USSpanels/Panels/USS-15.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -652,69 +737,414 @@
       <iconmaps />
     </sensoricon>
     <memoryInputIcon colWidth="30" memory="IMUSS CTC:CODELINE:1:LOG" x="502" y="736" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <multisensoricon x="104" y="505" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="Sta 1 SI 2 L">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="Sta 1 SI 2 C">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="Sta 1 SI 2 R">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <multisensoricon x="233" y="504" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="Sta 2 SI 4 L">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="Sta 2 SI 4 C">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="Sta 2 SI 4 R">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <turnouticon turnout="Sta 1 SI 2 C" x="107" y="451" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sta 2 SI 4 C" x="235" y="451" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-g.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sta 1 SI 2 L" x="93" y="467" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sta 2 SI 4 L" x="221" y="465" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-y.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sta 2 SI 4 R" x="252" y="465" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-r.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Sta 1 SI 1 R" x="123" y="468" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-r.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <signalheadicon signalhead="2 SI 4 Upper" x="270" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="2 SI 4 Lower" x="281" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="2 SI 4 Siding" x="203" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="2 SI 4 Main" x="202" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1 SI 2 Upper" x="84" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1 SI 2 Lower" x="71" y="136" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1 SI 2 Siding" x="131" y="83" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="1 SI 2 Main" x="130" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Sep 09 22:08:38 EDT 2021</date>
+      <date>Fri Sep 10 06:38:40 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Sep 09 22:09:17 EDT 2021</date>
-      <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+      <date>Fri Sep 10 06:38:50 EDT 2021</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Sep 09 21:44:12 EDT 2021</date>
+          <date>Fri Sep 10 06:23:54 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Sep 09 21:44:46 EDT 2021</date>
-          <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Thu Sep 09 21:25:35 EDT 2021</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Thu Sep 09 21:26:27 EDT 2021</date>
-              <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Thu Sep 09 21:06:22 EDT 2021</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Thu Sep 09 21:22:05 EDT 2021</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Thu Sep 09 21:42:10 EDT 2021</date>
-              <filename />
-            </operation>
-          </filehistory>
+          <date>Fri Sep 10 06:24:18 EDT 2021</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Sep 09 22:01:37 EDT 2021</date>
+          <date>Fri Sep 10 06:33:33 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Sep 09 22:12:58 EDT 2021</date>
+      <date>Fri Sep 10 06:41:44 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210910T0208Z+Rb7bbcd85d5 on Thu Sep 09 22:12:58 EDT 2021-->
+  <!--Written by JMRI version 4.25.3ish+jake+20210910T1038Z+R9109c295e7 on Fri Sep 10 06:41:44 EDT 2021-->
 </layout-config>

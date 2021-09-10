@@ -30,25 +30,46 @@ turnouts.provideTurnout("IT21").setUserName("Sta 2 Layout TO")
 # Define objects on panel
 turnouts.provideTurnout("IT12").setUserName("Sta 1 Code")
 sensors.provideSensor  ("IS12").setUserName("Sta 1 Code")
+
 turnouts.provideTurnout("IT13").setUserName("Sta 1 TO 1 N")
 sensors.provideSensor  ("IS13").setUserName("Sta 1 TO 1 N")
 sensors.provideSensor  ("IS13").state = ACTIVE
 turnouts.provideTurnout("IT14").setUserName("Sta 1 TO 1 R")
 sensors.provideSensor  ("IS14").setUserName("Sta 1 TO 1 R")
-turnouts.provideTurnout("IT15").setUserName("Sta 1 Left Approach TC")
-turnouts.provideTurnout("IT16").setUserName("Sta 1 OS TC")
+
+turnouts.provideTurnout("IT15").setUserName("Sta 1 SI 2 L")
+sensors.provideSensor  ("IS15").setUserName("Sta 1 SI 2 L")
+turnouts.provideTurnout("IT16").setUserName("Sta 1 SI 2 C")
+sensors.provideSensor  ("IS16").setUserName("Sta 1 SI 2 C")
+sensors.provideSensor  ("IS16").state = ACTIVE
+turnouts.provideTurnout("IT17").setUserName("Sta 1 SI 1 R")
+sensors.provideSensor  ("IS17").setUserName("Sta 1 SI 1 R")
+
+turnouts.provideTurnout("IT18").setUserName("Sta 1 Left Approach TC")
+turnouts.provideTurnout("IT19").setUserName("Sta 1 OS TC")
+
 
 turnouts.provideTurnout("IT22").setUserName("Sta 2 Code")
 sensors.provideSensor  ("IS22").setUserName("Sta 2 Code")
+
 turnouts.provideTurnout("IT23").setUserName("Sta 2 TO 3 N")
 sensors.provideSensor  ("IS23").setUserName("Sta 2 TO 3 N")
 sensors.provideSensor  ("IS23").state = ACTIVE
 turnouts.provideTurnout("IT24").setUserName("Sta 2 TO 3 R")
 sensors.provideSensor  ("IS24").setUserName("Sta 2 TO 3 R")
-turnouts.provideTurnout("IT25").setUserName("Sta 2 Main TC")
-turnouts.provideTurnout("IT26").setUserName("Sta 2 Siding TC")
-turnouts.provideTurnout("IT27").setUserName("Sta 2 OS TC")
-turnouts.provideTurnout("IT28").setUserName("Sta 2 Right Approach TC")
+
+turnouts.provideTurnout("IT25").setUserName("Sta 2 SI 4 L")
+sensors.provideSensor  ("IS25").setUserName("Sta 2 SI 4 L")
+turnouts.provideTurnout("IT26").setUserName("Sta 2 SI 4 C")
+sensors.provideSensor  ("IS26").setUserName("Sta 2 SI 4 C")
+sensors.provideSensor  ("IS26").state = ACTIVE
+turnouts.provideTurnout("IT27").setUserName("Sta 2 SI 4 R")
+sensors.provideSensor  ("IS27").setUserName("Sta 2 SI 4 R")
+
+turnouts.provideTurnout("IT28").setUserName("Sta 2 Main TC")
+turnouts.provideTurnout("IT29").setUserName("Sta 2 Siding TC")
+turnouts.provideTurnout("IT30").setUserName("Sta 2 OS TC")
+turnouts.provideTurnout("IT31").setUserName("Sta 2 Right Approach TC")
 
 # The core of the sample script starts here, defining & connecting
 # the USS CTC objects to run the panel
