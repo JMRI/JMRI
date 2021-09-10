@@ -36,6 +36,17 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static final UpdateNV meterUpdateFn = new UpdateMeter();
     
     private static CbusModulesCommon.TitledSpinner cmdStaNoSpinner;
+    private static JComboBox<String> powerModeList ;
+    private static CbusModulesCommon.TitledSpinner mainSpinner;
+    private static CbusModulesCommon.TitledSpinner progSpinner;
+    private static CbusModulesCommon.TitledSpinner accyPktSpinner;
+    private static JRadioButton meter;
+    private static CbusModulesCommon.TitledSpinner nnMapDccSpinner;
+    private static JRadioButton setup;
+    private static CbusModulesCommon.TitledSpinner canIdSpinner;
+    private static CbusModulesCommon.TitledSpinner nodeNumberSpinner;
+    private static CbusModulesCommon.TitledSpinner PreambleSpinner;
+    private static JRadioButton disable ;
             
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -93,49 +104,59 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                             
                 case Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE:
+                    powerModeList.setSelectedIndex(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT:
+                    mainSpinner.getModel().setValue(value);
+                    break;
+                
                 case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT:
-                    break;
-                    
-                case Sprog3PlusPaneProvider.INPUT_VOLTAGE:
-                    break;
-                    
-                case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT:
-                case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT:
+                    progSpinner.getModel().setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT:
+                    accyPktSpinner.getModel().setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.MULTIMETER_MODE:
+                    meter.setSelected(value != 0);
                     break;
                     
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_HI:
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_LO:
-                    break;
-                    
-                case Sprog3PlusPaneProvider.MAIN_HIGH_WATER_MARK:
-                case Sprog3PlusPaneProvider.PROG_HIGH_WATER_MARK:
+                    nnMapDccSpinner.getModel().setValue(_nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_HI]*256 + _nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_LO]);
                     break;
                     
                 case Sprog3PlusPaneProvider.SETUP:
+                    setup.setSelected(value != 0);
                     break;
                     
                 case Sprog3PlusPaneProvider.CANID:
+                    canIdSpinner.getModel().setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.NN_HI:
                 case Sprog3PlusPaneProvider.NN_LO:
+                    nodeNumberSpinner.getModel().setValue(_nvArray[Sprog3PlusPaneProvider.NN_HI]*256 + _nvArray[Sprog3PlusPaneProvider.NN_LO]);
                     break;
                     
                 case Sprog3PlusPaneProvider.DCC_PREAMBLE:
+                    PreambleSpinner.getModel().setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.CAN_DISABLE:
+                    disable.setEnabled(value != 0);
                     break;
 
+                case Sprog3PlusPaneProvider.INPUT_VOLTAGE:
+                case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT:
+                case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT:
+                case Sprog3PlusPaneProvider.MAIN_HIGH_WATER_MARK:
+                case Sprog3PlusPaneProvider.PROG_HIGH_WATER_MARK:
+                    // These read-only NVs are not preented in the edit GUI as they can be displayed on meters
+                    break;
+                    
                 default:
                     throw new IllegalArgumentException("Unexpected NV index");
                     
@@ -339,7 +360,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             
             c.gridwidth = 3;
-            JComboBox<String> powerModeList = new JComboBox<>(powerModeStrings);
+            powerModeList = new JComboBox<>(powerModeStrings);
             powerModeList.setSelectedIndex(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE]);
             powerModeList.addActionListener((ActionEvent e) -> {
                 pwrModeActionListener(e);
@@ -348,7 +369,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridwidth = 1;
             c.gridy++;
             
-            JRadioButton meter = new JRadioButton(Bundle.getMessage("Multimeter"));
+            meter = new JRadioButton(Bundle.getMessage("Multimeter"));
             meter.setSelected(false);
             meter.setToolTipText(Bundle.getMessage("MultimeterTt"));
             meter.addActionListener((ActionEvent e) -> {
@@ -357,7 +378,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(meter, c);
             c.gridy++;
             
-            CbusModulesCommon.TitledSpinner mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), 0, currentLimitUpdateFn);
+            mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), 0, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
             mainSpinner.init(_nvArray[Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(mainSpinner, c);
@@ -372,7 +393,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             c.gridy++;
             
-            CbusModulesCommon.TitledSpinner progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), 0, currentLimitUpdateFn);
+            progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), 0, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
             progSpinner.init(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(progSpinner, c);
@@ -429,13 +450,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridx = 0;
             c.gridy = 0;
             
-            CbusModulesCommon.TitledSpinner accyPktSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("AccyPktCnt"), 0, accyPktUpdateFn);
+            accyPktSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("AccyPktCnt"), 0, accyPktUpdateFn);
             accyPktSpinner.setToolTip(Bundle.getMessage("AccyPktCntTt"));
             accyPktSpinner.init(_nvArray[Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT], 1, 7, 1);
             gridPane.add(accyPktSpinner, c);
             c.gridy++;
             
-            CbusModulesCommon.TitledSpinner nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), 0, nnMapUpdateFn);
+            nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), 0, nnMapUpdateFn);
             nnMapDccSpinner.setToolTip(Bundle.getMessage("NnMapDccTt"));
             int nn = _nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_HI]*256 + _nvArray[Sprog3PlusPaneProvider.NN_MAP_DCC_LO];
             nnMapDccSpinner.init(nn, 0, 65535, 1);
@@ -445,7 +466,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
 
-            CbusModulesCommon.TitledSpinner PreambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
+            PreambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
             PreambleSpinner.setToolTip(Bundle.getMessage("DccPreamblesTt"));
             PreambleSpinner.init(_nvArray[Sprog3PlusPaneProvider.DCC_PREAMBLE], 14, 32, 1);
             gridPane.add(PreambleSpinner, c);
@@ -470,25 +491,26 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridx = 0;
             c.gridy = 0;
 
-            CbusModulesCommon.TitledSpinner canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
+            canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), 0, canIdUpdateFn);
             canIdSpinner.setToolTip(Bundle.getMessage("CanIdTt"));
-            canIdSpinner.init(114, 100, 127, 1);
+            canIdSpinner.init(_nvArray[Sprog3PlusPaneProvider.CANID], 100, 127, 1);
             gridPane.add(canIdSpinner, c);
             c.gridy++;
 
-            CbusModulesCommon.TitledSpinner nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
+            nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), 0, nodeNumberUpdateFn);
             nodeNumberSpinner.setToolTip(Bundle.getMessage("NodeNumberTt"));
-            nodeNumberSpinner.init(65534, 65520, 65534, 1);
+            int nn = _nvArray[Sprog3PlusPaneProvider.NN_HI]*256 + _nvArray[Sprog3PlusPaneProvider.NN_LO];
+            nodeNumberSpinner.init(nn, 65520, 65534, 1);
             gridPane.add(nodeNumberSpinner, c);
             c.gridy++;
             
-            JRadioButton setup = new JRadioButton("SetupMode");
+            setup = new JRadioButton("SetupMode");
             setup.setSelected(false);
             setup.setToolTipText(Bundle.getMessage("SetupModeTt"));
             gridPane.add(setup, c);
             c.gridy++;
             
-            JRadioButton disable = new JRadioButton("DisableCan");
+            disable = new JRadioButton("DisableCan");
             disable.setSelected(false);
             disable.setToolTipText(Bundle.getMessage("DisableCanTt"));
             gridPane.add(disable, c);
@@ -571,6 +593,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    //private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }
