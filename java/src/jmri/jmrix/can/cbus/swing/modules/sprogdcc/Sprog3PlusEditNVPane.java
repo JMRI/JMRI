@@ -25,13 +25,15 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
     private static CmdStaFlags [] csFlags = new CmdStaFlags[3];
     
-    private static final UpdateCmdStaNo cmdStaNoUpdateFn = new UpdateCmdStaNo();
-    private static final UpdateCanId canIdUpdateFn = new UpdateCanId();
-    private static final UpdateNodeNumber nodeNumberUpdateFn = new UpdateNodeNumber();
-    private static final UpdateCurrentLimit currentLimitUpdateFn = new UpdateCurrentLimit();
-    private static final UpdateAccyCount accyPktUpdateFn = new UpdateAccyCount();
-    private static final UpdateNnMap nnMapUpdateFn = new UpdateNnMap();
-    private static final UpdatePreamble preambleUpdateFn = new UpdatePreamble();
+    private static final UpdateNV cmdStaNoUpdateFn = new UpdateCmdStaNo();
+    private static final UpdateNV canIdUpdateFn = new UpdateCanId();
+    private static final UpdateNV nodeNumberUpdateFn = new UpdateNodeNumber();
+    private static final UpdateNV currentLimitUpdateFn = new UpdateCurrentLimit();
+    private static final UpdateNV accyPktUpdateFn = new UpdateAccyCount();
+    private static final UpdateNV nnMapUpdateFn = new UpdateNnMap();
+    private static final UpdateNV preambleUpdateFn = new UpdatePreamble();
+    private static final UpdateNV powerModeUpdateFn = new UpdatePowerMode();
+    private static final UpdateNV meterUpdateFn = new UpdateMeter();
         
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -104,7 +106,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     }
         
     /**
-     * Update the command station number
+     * Update the CAN ID
+     * 
+     * For debug only, CAN ID is not normally set this way
      */
     protected static class UpdateCanId implements UpdateNV {
         
@@ -115,7 +119,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     }
         
     /**
-     * Update the command station number
+     * Update the node number
+     * 
+     * For debug only, CAN ID is not normally set this way
      */
     protected static class UpdateNodeNumber implements UpdateNV {
         
@@ -124,9 +130,20 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
         }
     }
-        
+    
     /**
-     * Update the current Limit
+     * Update the multi meter events setting
+     */
+    protected static class UpdateMeter implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int mode) {
+        }
+    }
+    
+    /**
+     * Update a current Limit
      */
     protected static class UpdateCurrentLimit implements UpdateNV {
         
@@ -135,7 +152,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
         }
     }
-        
+    
+    /**
+     * Update the number of times a DCC accessory packet is repeated
+     */
     protected static class UpdateAccyCount implements UpdateNV {
         
         /** {@inheritDoc} */
@@ -144,6 +164,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
 
+    /**
+     * Update the Node Number of events to be mapped to DCC accessory commands
+     */
     protected static class UpdateNnMap implements UpdateNV {
         
         /** {@inheritDoc} */
@@ -152,6 +175,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
 
+    /**
+     * Update the number of DCC packet preamble bits
+     */
     protected static class UpdatePreamble implements UpdateNV {
         
         /** {@inheritDoc} */
@@ -160,8 +186,22 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
+    /**
+     * Update the command station power mode
+     */
+    protected static class UpdatePowerMode implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int mode) {
+        }
+    }
+    
     public static class CmdStaPane extends JPanel {
 
+        /**
+         * Panel to display command station NVs
+         */
         public CmdStaPane() {
             super();
 
@@ -226,7 +266,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             JComboBox<String> powerModeList = new JComboBox<>(powerModeStrings);
             powerModeList.setSelectedIndex(_nvArray[5]);
             powerModeList.addActionListener((ActionEvent e) -> {
-                pwrModeActionListener();
+                pwrModeActionListener(e);
             });
             gridPane.add(powerModeList, c);
             c.gridwidth = 1;
@@ -235,11 +275,14 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             JRadioButton meter = new JRadioButton(Bundle.getMessage("Multimeter"));
             meter.setSelected(false);
 //            meter.setToolTipText("");
+            meter.addActionListener((ActionEvent e) -> {
+                meterActionListener(e);
+            });
             gridPane.add(meter, c);
             c.gridy++;
             
             CbusModulesCommon.TitledSpinner mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), 0, currentLimitUpdateFn);
-    //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+//            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             mainSpinner.init(_nvArray[13]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(mainSpinner, c);
             c.gridy++;
@@ -254,7 +297,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             
             CbusModulesCommon.TitledSpinner progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), 0, currentLimitUpdateFn);
-    //            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
+//            mainSpinner.setToolTip(Bundle.getMessage("CmdStaNoTt"));
             progSpinner.init(_nvArray[6]/100.0, 0.1, 2.5, 0.1);
             gridPane.add(progSpinner, c);
             c.gridy++;
@@ -275,10 +318,28 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             add(gridPane);
         }
         
-        protected void pwrModeActionListener() {
+        /**
+         * Action listener for the command station power mode
+         * 
+         * @param e the action event
+         */
+        protected void pwrModeActionListener(ActionEvent e) {
+            powerModeUpdateFn.setNewVal(((JComboBox)e.getSource()).getSelectedIndex());
+        }
+        
+        /**
+         * Action listener for multimeter nmode selection
+         * 
+         * @param e the action event
+         */
+        protected void meterActionListener(ActionEvent e) {
+            meterUpdateFn.setNewVal(((JRadioButton)e.getSource()).isSelected() ? 1 : 0);
         }
     }
     
+    /**
+     * Panel to display DCC related NVs
+     */
     public static class DccPane extends JPanel {
         public DccPane() {
             super();
@@ -318,6 +379,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
+    /**
+     * Panel to display CBUS operation related NVs
+     */
     public static class CbusPane extends JPanel {
         public CbusPane() {
             super();

@@ -44,7 +44,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     OutPane [] out = new OutPane[OUTPUTS+1];
 
     private final UpdatePulse pulseUpdateFn = new UpdatePulse();
-    private final UpdateStartup startupUpdateFn = new UpdateStartup();
+    private final UpdateNV startupUpdateFn = new UpdateStartup();
+    private final UpdateNV feedbackUpdateFn = new UpdateFeedback();
 
     private CbusModulesCommon.TitledSpinner feedbackSpinner;
     
@@ -79,7 +80,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, new UpdateFeedback());    // NV9 for feedback delay 
+        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, feedbackUpdateFn);    // NV9 for feedback delay 
         feedbackSpinner.init(_nvArray[9]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
