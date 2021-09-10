@@ -69,7 +69,7 @@
 
         <li>Version 3.10.1 requires Java 1.7 through Java 8.</li>
 
-        <li>Version 4.2 requires Java 8.</li>
+        <li>Version 4.2 and later requires Java 8 through 11. If your machine can run it, we recommend Java 11.</li>
       </ul>
 
       <p>As of JMRI 4.20, JMRI is only fully supported when running on the most current update
