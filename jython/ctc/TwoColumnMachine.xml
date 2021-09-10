@@ -200,7 +200,7 @@
     <memory value="">
       <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
     </memory>
-    <memory>
+    <memory value="">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
     </memory>
     <memory value="5000">
@@ -241,10 +241,52 @@
       <userName>4 Upper</userName>
     </signalhead>
   </signalheads>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
+    <signalelement signal="4 Siding" mode="3" watchedturnout="Sta 2 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 2 OS</sensorname>
+      <sensorname>TC Right Approach</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2 Lower" mode="3" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 1 OS</sensorname>
+      <sensorname>TC Siding</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2 Upper" mode="2" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 1 OS</sensorname>
+      <sensorname>TC Main</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="4 Main" mode="2" watchedturnout="Sta 2 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 2 OS</sensorname>
+      <sensorname>TC Right Approach</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2 Siding" mode="3" watchedturnout="Sta 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 1 OS</sensorname>
+      <sensorname>TC Left Approach</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2 Main" mode="2" watchedturnout="Sta 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 1 OS</sensorname>
+      <sensorname>TC Left Approach</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="4 Upper" mode="2" watchedturnout="Sta 2 Layout TO" watchedsignal1="2 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 2 OS</sensorname>
+      <sensorname>TC Main</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="4 Lower" mode="3" watchedturnout="Sta 2 Layout TO" watchedsignal1="2 Siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 2 OS</sensorname>
+      <sensorname>TC Siding</sensorname>
+      <comment />
+    </signalelement>
+  </signalelements>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="32" y="25" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="32" y="25" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/USSpanels/Panels/USS-15.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1116,53 +1158,70 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Fri Sep 10 07:12:50 EDT 2021</date>
+      <date>Fri Sep 10 08:11:05 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 10 07:13:01 EDT 2021</date>
+      <date>Fri Sep 10 08:11:30 EDT 2021</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Fri Sep 10 06:38:40 EDT 2021</date>
+          <date>Fri Sep 10 07:12:50 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Fri Sep 10 06:38:50 EDT 2021</date>
+          <date>Fri Sep 10 07:13:01 EDT 2021</date>
           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Fri Sep 10 06:23:54 EDT 2021</date>
+              <date>Fri Sep 10 06:38:40 EDT 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Fri Sep 10 06:24:18 EDT 2021</date>
+              <date>Fri Sep 10 06:38:50 EDT 2021</date>
               <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Fri Sep 10 06:23:54 EDT 2021</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Sep 10 06:24:18 EDT 2021</date>
+                  <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Fri Sep 10 06:33:33 EDT 2021</date>
+                  <filename />
+                </operation>
+              </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Fri Sep 10 06:33:33 EDT 2021</date>
+              <date>Fri Sep 10 06:41:44 EDT 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Fri Sep 10 06:41:44 EDT 2021</date>
+          <date>Fri Sep 10 07:27:41 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 10 07:27:41 EDT 2021</date>
+      <date>Fri Sep 10 08:25:01 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210910T1112Z+R391f0db392 on Fri Sep 10 07:27:41 EDT 2021-->
+  <!--Written by JMRI version 4.25.3ish+jake+20210910T1211Z+Rf2b568e7ca on Fri Sep 10 08:25:01 EDT 2021-->
 </layout-config>
