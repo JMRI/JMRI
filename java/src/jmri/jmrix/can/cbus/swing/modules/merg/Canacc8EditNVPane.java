@@ -80,7 +80,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), 9, feedbackUpdateFn);    // NV9 for feedback delay 
+        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
+        feedbackSpinner.setToolTip(Bundle.getMessage("FeedbackDelayTt"));
         feedbackSpinner.init(_nvArray[Canacc8PaneProvider.FEEDBACK_DELAY]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
@@ -229,8 +230,11 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             setBorder(title);
 
             cont = new JRadioButton(Bundle.getMessage("Continuous"));
+            cont.setToolTipText(Bundle.getMessage("ContinuousTt"));
             single = new JRadioButton(Bundle.getMessage("Single"));
+            single.setToolTipText(Bundle.getMessage("SingleTt"));
             repeat = new JRadioButton(Bundle.getMessage("Repeat"));
+            repeat.setToolTipText(Bundle.getMessage("RepeatTt"));
 
             cont.addActionListener((ActionEvent e) -> {
                 typeActionListener();
@@ -248,6 +252,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(repeat);
 
             pulseSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
+            pulseSpinner.setToolTip(Bundle.getMessage("PulseWidthTt"));
             pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
 
@@ -381,8 +386,11 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             setBorder(title);
 
             off = new JRadioButton(Bundle.getMessage("Off"));
+            off.setToolTipText(Bundle.getMessage("OffTt"));
             none = new JRadioButton(Bundle.getMessage("None"));
+            none.setToolTipText(Bundle.getMessage("NoneTt"));
             saved = new JRadioButton(Bundle.getMessage("SavedAction"));
+            saved.setToolTipText(Bundle.getMessage("SavedActionTt"));
             
             off.addActionListener((ActionEvent e) -> {
                 startupActionListener();
