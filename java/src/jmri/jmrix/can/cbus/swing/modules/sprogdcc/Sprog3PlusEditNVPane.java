@@ -45,7 +45,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static JRadioButton setup;
     private static CbusModulesCommon.TitledSpinner canIdSpinner;
     private static CbusModulesCommon.TitledSpinner nodeNumberSpinner;
-    private static CbusModulesCommon.TitledSpinner PreambleSpinner;
+    private static CbusModulesCommon.TitledSpinner preambleSpinner;
     private static JRadioButton disable ;
             
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
@@ -142,7 +142,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.DCC_PREAMBLE:
-                    PreambleSpinner.getModel().setValue(value);
+                    preambleSpinner.getModel().setValue(value);
                     break;
                     
                 case Sprog3PlusPaneProvider.CAN_DISABLE:
@@ -466,10 +466,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
 
-            PreambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
-            PreambleSpinner.setToolTip(Bundle.getMessage("DccPreamblesTt"));
-            PreambleSpinner.init(_nvArray[Sprog3PlusPaneProvider.DCC_PREAMBLE], 14, 32, 1);
-            gridPane.add(PreambleSpinner, c);
+            preambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), 0, preambleUpdateFn);
+            preambleSpinner.setToolTip(Bundle.getMessage("DccPreamblesTt"));
+            preambleSpinner.init(_nvArray[Sprog3PlusPaneProvider.DCC_PREAMBLE], 14, 32, 1);
+            gridPane.add(preambleSpinner, c);
                     
             add(gridPane);
         }
