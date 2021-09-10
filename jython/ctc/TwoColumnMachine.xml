@@ -152,6 +152,9 @@
     <memory value="">
       <systemName>IMUSS CTC:LOCK:1:LOG</systemName>
     </memory>
+    <memory value="5000">
+      <systemName>IMUSS CTC:SIGNALHEADSECTION:1:TIME</systemName>
+    </memory>
   </memories>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
@@ -648,52 +651,70 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
+    <memoryInputIcon colWidth="30" memory="IMUSS CTC:CODELINE:1:LOG" x="502" y="736" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Sep 09 21:44:12 EDT 2021</date>
+      <date>Thu Sep 09 22:08:38 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Sep 09 21:44:46 EDT 2021</date>
+      <date>Thu Sep 09 22:09:17 EDT 2021</date>
       <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Sep 09 21:25:35 EDT 2021</date>
+          <date>Thu Sep 09 21:44:12 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Sep 09 21:26:27 EDT 2021</date>
+          <date>Thu Sep 09 21:44:46 EDT 2021</date>
           <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Thu Sep 09 21:06:22 EDT 2021</date>
+              <date>Thu Sep 09 21:25:35 EDT 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
+              <type>Load OK</type>
+              <date>Thu Sep 09 21:26:27 EDT 2021</date>
+              <filename>/Users/jake/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Thu Sep 09 21:06:22 EDT 2021</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Thu Sep 09 21:22:05 EDT 2021</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
               <type>Store</type>
-              <date>Thu Sep 09 21:22:05 EDT 2021</date>
+              <date>Thu Sep 09 21:42:10 EDT 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Sep 09 21:42:10 EDT 2021</date>
+          <date>Thu Sep 09 22:01:37 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Sep 09 22:01:37 EDT 2021</date>
+      <date>Thu Sep 09 22:12:58 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210910T0144Z+R20a202f6b0 on Thu Sep 09 22:01:37 EDT 2021-->
+  <!--Written by JMRI version 4.25.3ish+jake+20210910T0208Z+Rb7bbcd85d5 on Thu Sep 09 22:12:58 EDT 2021-->
 </layout-config>
