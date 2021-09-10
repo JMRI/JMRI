@@ -499,7 +499,7 @@
 	    <h4>USS CTC Logic</h4>
             <ul>
                 <li>Improve the
-                <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py ">jython/ctc/TwoColumnMachine.py </a>
+                <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py </a>
                 sample script</li>
             </ul>
 
