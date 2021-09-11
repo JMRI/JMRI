@@ -33,7 +33,6 @@ public interface Lock {
      */
     static public boolean checkLocksClear(List<Lock> locks) {
         lockLogger.clear();
-        boolean permitted = true;
         if (locks != null) {
             for (Lock lock : locks) {
                 if ( ! lock.isLockClear()) return false; // return immediately so that lockLogger isn't overwritten
