@@ -24,23 +24,25 @@ public interface Lock {
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
-    public boolean isLockClear();
+    public boolean isLockClear(LockLogger lockLogger);
 
     /**
      * Check a collection of Locks, handling the logging etc as needed.
      * @param locks collection of locks.
      * @return false if a lock is not clear, else true.
      */
-    static public boolean checkLocksClear(List<Lock> locks) {
+    static public boolean checkLocksClear(List<Lock> locks, LockLogger lockLogger) {
         lockLogger.clear();
         if (locks != null) {
             for (Lock lock : locks) {
-                if ( ! lock.isLockClear()) return false; // return immediately so that lockLogger isn't overwritten
+                if ( ! lock.isLockClear(lockLogger)) return false; // return immediately so that lockLogger isn't overwritten
             }
         }
         return true;
     }
 
     // static while we decide whether to access via scripts
-    final static LockLogger lockLogger = new LockLogger();
+    // final static LockLogger lockLogger = new LockLogger();
+    final static LockLogger signalLockLogger  = new LockLogger("IMUSS CTC:SIGNAL LOCK:1:LOG");
+    final static LockLogger turnoutLockLogger = new LockLogger("IMUSS CTC:TURNOUT LOCK:1:LOG");
 }

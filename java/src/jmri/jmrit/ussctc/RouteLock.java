@@ -89,7 +89,7 @@ public class RouteLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     @Override
-    public boolean isLockClear() {
+    public boolean isLockClear(LockLogger lockLogger) {
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {

@@ -15,6 +15,9 @@ import jmri.*;
  */
 public class LockLogger {
 
+    LockLogger(String name) {
+        logMemoryName = name;
+    }
     /**
      * Set the current status of some Lock
      * @param logger The object providing status
@@ -53,7 +56,7 @@ public class LockLogger {
     Map<Object, String> statusMap = new LinkedHashMap<>();
 
     // static while we decide whether to access via scripts
-    public static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
+    public String logMemoryName;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }
