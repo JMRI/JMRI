@@ -391,6 +391,15 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>Add a Reporter Action which can be used to copy reports to memory variables or local
+          variables.</li>
+          <li>Add a Reporter Expression which can compare reports to strings, memory variables or
+          local variables.</li>
+        </ul>
+
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
