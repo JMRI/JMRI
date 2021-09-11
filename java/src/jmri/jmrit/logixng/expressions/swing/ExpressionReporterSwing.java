@@ -66,7 +66,7 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
 
         _reporterBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(ReporterManager.class), null);
 
-        JPanel _reporterValuePanel = new JPanel();
+        _reporterValuePanel = new JPanel();
         _reporterValueComboBox = new JComboBox<>();
         for (ReporterValue e : ReporterValue.values()) {
             _reporterValueComboBox.addItem(e);
