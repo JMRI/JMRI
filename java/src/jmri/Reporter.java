@@ -69,10 +69,59 @@ public interface Reporter extends NamedBean {
      * classes. But there are occasionally reasons to set it from inside the
      * program, e.g. debugging via entering values in the Reporter Table. Hence
      * provision of this method.
+     * <p>
+     * If the method isExtendedReportsSupported() returns true, then the method
+     * setExtendedReport() must be used instead.
      *
      * @param r the report
+     * @throws UnsupportedOperationException if extended reports are supported.
      */
-    public void setReport(Object r);
+    public void setReport(Object r) throws UnsupportedOperationException;
+
+    /**
+     * Is extended reports supported?
+     * @return true if extended reports are supported, false otherwise
+     */
+    public boolean isExtendedReportsSupported();
+
+    /**
+     * Query the last report. This will return a value even if there's no
+     * current report available. If there is a current report, both this and the
+     * current report will be equal. If nothing has ever been reported, this
+     * will return a null object.
+     *
+     * @return the last report or null
+     */
+    public ExtendedReport getLastExtendedReport();
+
+    /**
+     * Query the current report. If there is no current report available (e.g.
+     * the reporting hardware says no information is currently available) this
+     * will return a null object.
+     *
+     * @return the current report or null
+     */
+    public ExtendedReport getCurrentExtendedReport();
+
+    /**
+     * Set the extended report.
+     * <p>
+     * A Reporter object will usually just "report"; its contents usually come
+     * from the layout, and hence are only set by lower-level implementation
+     * classes. But there are occasionally reasons to set it from inside the
+     * program, e.g. debugging via entering values in the Reporter Table. Hence
+     * provision of this method.
+     * <p>
+     * If r is not null, extendedReport must not be null.
+     * <br>
+     * If r is null and extendedReport is not null, the current report will be
+     * set to extendedReport. Calling setExtendedReport(null, extendedReport)
+     * is the same as calling setExtendedReport(extendedReport, extendedReport).
+     *
+     * @param r the report
+     * @param extendedReport the extended report
+     */
+    public void setExtendedReport(Object r, ExtendedReport extendedReport);
 
     /**
      * Provide an integer form of the last report.

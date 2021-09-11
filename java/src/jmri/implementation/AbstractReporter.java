@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.ExtendedReport;
 import jmri.Reporter;
 
 /**
@@ -45,7 +46,10 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
      * Provide a general method for updating the report.
      */
     @Override
-    public void setReport(Object r) {
+    public final void setReport(Object r) {
+        // If extended reports are supported, then the method setExtendedReport() must be used instead.
+        if (isExtendedReportsSupported()) throw new UnsupportedOperationException("Use setExtendedReport() instead");
+
         if (r == _currentReport) {
             return;
         }
@@ -59,6 +63,26 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         }
         // notify
         firePropertyChange("currentReport", old, _currentReport);
+    }
+
+    @Override
+    public boolean isExtendedReportsSupported() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ExtendedReport getLastExtendedReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ExtendedReport getCurrentExtendedReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setExtendedReport(Object r, ExtendedReport extendedReport) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     // internal data members

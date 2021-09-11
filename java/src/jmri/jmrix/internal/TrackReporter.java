@@ -26,9 +26,9 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
         collection = new ArrayDeque<Object>();
     }
 
-    /**
+    /*.*
      * Provide a general method for updating the report.
-     */
+     *./
     @Override
     public void setReport(Object r) {
         if (r == _currentReport) {
@@ -45,7 +45,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
         // notify
         firePropertyChange("currentReport", old, _currentReport);
     }
-            
+*/
     @Override
     public int getState() {
        return state;

@@ -75,6 +75,26 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
     }
 
     @Override
+    public boolean isExtendedReportsSupported() {
+        return reporter.isExtendedReportsSupported();
+    }
+
+    @Override
+    public ExtendedReport getLastExtendedReport() {
+        return reporter.getLastExtendedReport();
+    }
+
+    @Override
+    public ExtendedReport getCurrentExtendedReport() {
+        return reporter.getCurrentExtendedReport();
+    }
+
+    @Override
+    public void setExtendedReport(Object r, ExtendedReport extendedReport) {
+        reporter.setExtendedReport(r, extendedReport);
+    }
+
+    @Override
     public int getState() {
         return reporter.getState();
     }
