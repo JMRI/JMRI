@@ -128,7 +128,6 @@
           <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
-
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
           <label xml:lang="ca">AUX 3| SUSI XCLK</label>
@@ -147,6 +146,48 @@
           <label xml:lang="ca">Marxa Maniobres</label>
         </output>
         <size length="14.2" width="9.3" height="1.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH10C Gen. 2 (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1A">
+          <!-- New in Gen 2 decoder  -->
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1A">
+          <!-- New in Gen 2 decoder  -->
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="Dimming (with std mapping)|or AUX 5 or SUSI ZCLK" maxcurrent="20mA">
+          <label xml:lang="de">Abblendlicht (mit Std. Fn.-zuord.)|o. AUX 5 o. SUSI ZCLK</label>
+          <label xml:lang="ca">AUX 5 (SUSI ZCLK)|(Intensitat de llums con std. Mapping)</label>
+        </output>
+        <output name="8" label="Shunting (with std mapping)|or AUX 6 or SUSI ZDAT" maxcurrent="20mA">
+          <label xml:lang="de">Rangiergang (mit Std. Fn.-zuordnungen)|o. AUX 6 o. SUSI ZDAT</label>
+          <label xml:lang="ca">Marxa de maniobres (con std. Mapping)|o AUX 6 o SUSI ZDAT</label>
+        </output>
+        <size length="12.7" width="8.9" height="1.4" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
