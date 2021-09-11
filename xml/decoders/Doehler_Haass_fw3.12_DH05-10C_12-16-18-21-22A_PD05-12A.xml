@@ -66,6 +66,48 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
+      <model model="DH05C Gen. 2 (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="20mA">
+          <!-- New in Gen 2 decoder  -->
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="20mA">
+          <!-- New in Gen 2 decoder  -->
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX 5|(or SUSI ZCLK)|(or Dimmed Lights|with std mapping)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 5|(o. SUSI ZCLK)|(o. Abblendlicht|mit Std. Fn.-zuordnungen)</label>
+          <label xml:lang="ca">AUX 5| SUSI ZCLK|(Intensitat de llums|con std. Mapping)</label>
+        </output>
+        <output name="8" label="AUX 6|(or SUSI ZDAT)|(or Shunting Speed|with std mapping)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 6|(o. SUSI ZDAT)|(o. Rangiergang|mit Std. Fn.-zuordnungen)</label>
+          <label xml:lang="ca">AUX 6| SUSI ZDAT|(Marxa de maniobres|con std. Mapping)</label>
+        </output>
+        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
       <model model="DH10C (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
