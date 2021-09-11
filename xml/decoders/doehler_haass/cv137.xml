@@ -109,7 +109,7 @@
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
     <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
-	    <label xml:lang="ca">nverteix sentit SUSI</label>
+      <label xml:lang="ca">nverteix sentit SUSI</label>
     <tooltip>bit 2</tooltip>
   </variable>
   <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD05A,PD12A,Sound Decoders (2020)">
