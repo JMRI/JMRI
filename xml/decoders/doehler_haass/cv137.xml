@@ -35,8 +35,20 @@
         <surname>Kok</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2021-09-11</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fixed SUSI mapping CV name so it appears on SUSI pane</revremark>
+    </revision>
     <revision>
       <revnumber>3</revnumber>
       <date>2020-12-12</date>
@@ -115,7 +127,7 @@
     <tooltip>bit4</tooltip>
     <tooltip xml:lang="de">Erweiterte Funktionszuordnungen aktivieren</tooltip>
   </variable>
-  <variable CV="137" item="AUX on ZCLK" mask="XXVXXXXX" exclude="PD05A,PD12A">
+  <variable CV="137" item="SUSI outputs mapping" mask="XXVXXXXX" exclude="PD05A,PD12A">
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/-->
     <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
      <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -131,10 +143,10 @@
       </enumChoice>
      </enumChoiceGroup>
     </enumVal>
-    <label>AUX on SUSI</label>
+    <label>SUSI ouputs mapping</label>
     <label xml:lang="de">AUX an SUSI</label>
     <label xml:lang="ca">AUX en SUSI</label>
-    <tooltip>bit5</tooltip>
-    <tooltip xml:lang="de">Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
+    <tooltip>bit5 - Only valid if CV137/Bit 0=1 and Bit 4=1</tooltip>
+    <tooltip xml:lang="de">bit 5 - Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
   </variable>
 </variables>
