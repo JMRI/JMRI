@@ -19,13 +19,13 @@ public interface Lock {
         MACHINE_TURNOUT,
         MACHINE_SIGNAL
     }
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
-    public boolean isLockClear();  
-    
+    public boolean isLockClear();
+
     /**
      * Check a collection of Locks, handling the logging etc as needed.
      * @param locks collection of locks.
@@ -36,10 +36,10 @@ public interface Lock {
         boolean permitted = true;
         if (locks != null) {
             for (Lock lock : locks) {
-                if ( ! lock.isLockClear()) permitted = false;
+                if ( ! lock.isLockClear()) return false; // return immediately so that lockLogger isn't overwritten
             }
         }
-        return permitted;
+        return true;
     }
 
     // static while we decide whether to access via scripts
