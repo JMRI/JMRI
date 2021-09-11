@@ -22,6 +22,7 @@ public interface Lock {
 
     /**
      * Test the lock conditions
+     * @param lockLogger the logger on which to emit status messages
      * @return True if lock is clear and operation permitted
      */
     public boolean isLockClear(LockLogger lockLogger);
@@ -29,6 +30,7 @@ public interface Lock {
     /**
      * Check a collection of Locks, handling the logging etc as needed.
      * @param locks collection of locks.
+     * @param lockLogger the logger on which to emit status messages
      * @return false if a lock is not clear, else true.
      */
     static public boolean checkLocksClear(List<Lock> locks, LockLogger lockLogger) {
