@@ -15,7 +15,7 @@
  * <HR>
  * These are intended to be connected together and initialized by Jython glue code.
  * An example can be found in
- * < href="https:jmri.org/jython/ctc">https:jmri.org/jython/ctc</a>.
+ * <a href="https:jmri.org/jython/ctc">https:jmri.org/jython/ctc</a>.
  *
  * <p>
  *     Some older tools also have *Panel, *Frame and *Action support classes, and
