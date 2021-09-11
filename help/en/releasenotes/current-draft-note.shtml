@@ -201,7 +201,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Added defs for 2nd. generation DH05C and DH10C decoders (more outputs, whereas other 2nd Gen decoders models don't have functions or CV changes)</li>
             </ul>
 
         <h4>ESU</h4>
@@ -568,4 +568,3 @@
         <ul>
             <li></li>
         </ul>
-
