@@ -59,7 +59,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS101</systemName>
-      <userName>TC Left Approach</userName>
+      <userName>TC Sta 1 Left Approach</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS102</systemName>
@@ -67,11 +67,11 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS103</systemName>
-      <userName>TC Main</userName>
+      <userName>TC Sta 2 Main</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS104</systemName>
-      <userName>TC Siding</userName>
+      <userName>TC Sta 2 Siding</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS105</systemName>
@@ -79,7 +79,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS106</systemName>
-      <userName>TC Right Approach</userName>
+      <userName>TC Sta 2 Right Approach</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -249,37 +249,37 @@
     </signalelement>
     <signalelement signal="2 Lower" mode="3" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 1 OS</sensorname>
-      <sensorname>TC Siding</sensorname>
+      <sensorname>TC Sta 2 Siding</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="2 Upper" mode="2" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 1 OS</sensorname>
-      <sensorname>TC Main</sensorname>
+      <sensorname>TC Sta 2 Main</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="4 Main" mode="2" watchedturnout="Sta 2 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 2 OS</sensorname>
-      <sensorname>TC Right Approach</sensorname>
+      <sensorname>TC Sta 2 Right Approach</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="2 Siding" mode="3" watchedturnout="Sta 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 1 OS</sensorname>
-      <sensorname>TC Left Approach</sensorname>
+      <sensorname>TC Sta 1 Left Approach</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="2 Main" mode="2" watchedturnout="Sta 1 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 1 OS</sensorname>
-      <sensorname>TC Left Approach</sensorname>
+      <sensorname>TC Sta 1 Left Approach</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="4 Upper" mode="2" watchedturnout="Sta 2 Layout TO" watchedsignal1="2 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 2 OS</sensorname>
-      <sensorname>TC Main</sensorname>
+      <sensorname>TC Sta 2 Main</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="4 Lower" mode="3" watchedturnout="Sta 2 Layout TO" watchedsignal1="2 Siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 2 OS</sensorname>
-      <sensorname>TC Siding</sensorname>
+      <sensorname>TC Sta 2 Siding</sensorname>
       <comment />
     </signalelement>
   </signalelements>
@@ -584,7 +584,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <sensoricon sensor="TC Left Approach" x="52" y="205" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Sta 1 Left Approach" x="52" y="205" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -614,7 +614,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC Main" x="171" y="206" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Sta 2 Main" x="171" y="206" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -629,7 +629,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC Right Approach" x="289" y="205" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Sta 2 Right Approach" x="289" y="205" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -644,7 +644,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="TC Siding" x="172" y="179" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="TC Sta 2 Siding" x="172" y="179" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
