@@ -498,10 +498,9 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Improve the
-                <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py </a>
-                sample script</li>
-            </ul>
+                <li>Improve the USS CTC documentation and the
+                <a href="http://jmri.org/jython/ctc/">jython/ctc/</a>
+                sample script example of use<li>>
 
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
