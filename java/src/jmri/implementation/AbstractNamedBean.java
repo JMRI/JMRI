@@ -135,6 +135,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     protected final HashMap<PropertyChangeListener, String> register = new HashMap<>();
     protected final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(@Nonnull PropertyChangeListener l,
@@ -148,6 +149,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
@@ -161,18 +163,21 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(propertyName, listener);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
@@ -183,6 +188,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
@@ -193,6 +199,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name) {
@@ -216,6 +223,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return new ArrayList<>(listenerRefs.values());
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
@@ -239,12 +247,14 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
@@ -281,11 +291,13 @@ public abstract class AbstractNamedBean implements NamedBean {
         return "";
     }
     
+    /** {@inheritDoc} */
     @Override
     final public String getUserName() {
         return mUserName;
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void setUserName(String s) throws NamedBean.BadUserNameException {
@@ -299,6 +311,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         pcs.firePropertyChange(p, old, n);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
@@ -310,6 +323,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public String describeState(int state) {
@@ -347,6 +361,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public Object getProperty(@Nonnull String key) {
@@ -356,6 +371,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return parameters.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     @Nonnull
@@ -366,6 +382,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return parameters.keySet();
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removeProperty(String key) {
@@ -377,6 +394,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     private HashMap<String, Object> parameters = null;
 
+    /** {@inheritDoc} */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }

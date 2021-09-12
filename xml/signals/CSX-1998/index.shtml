@@ -1,57 +1,101 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<title>JMRI: CSX 1998 Signaling Definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: CSX 1998 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1> 
-JMRI: CSX 1998 Signaling Definition
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-This directory contains signaling definitions corresponding to 
-the CSX Transportation Signal Rules - 281-298, January 1998.
+      <h1>JMRI: CSX 1998 Signaling Definition</h1>
+      This directory contains signaling definitions corresponding to the CSX Transportation Signal
+      Rules - 281-298, January 1998.
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
-<p>
-See the 
-<a href="aspects.xml">aspect page</a>.
+      <p>Signal Mast definitions:</p>
 
-<p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-CLS-1-3-2A-hi.xml">Single over triple lamp approach colorlight high signal</a>
-<li><a href="appearance-CLS-1-3-2R-hi.xml">Single over triple lamp restricting colorlight high signal</a>
-<li><a href="appearance-CLS-1-3-hi.xml">Single over triple lamp colorlight high signal</a>
-<li><a href="appearance-CLS-1-3-lo.xml">Single over triple lamp colorlight dwarf signal</a>
-<li><a href="appearance-CLS-3-2-2A-hi.xml">Triple over double over double lamp approach colorlight high signal</a>
-<li><a href="appearance-CLS-3-2-2R-hi.xml">Triple over double over double lamp restricting colorlight high signal</a>
-<li><a href="appearance-CLS-3-2A-hi.xml">Triple over double lamp approach colorlight high signal</a>
-<li><a href="appearance-CLS-3-2R-hi.xml">Triple over double lamp restricting colorlight high signal</a>
-<li><a href="appearance-CLS-3-3-2A-hi.xml">Triple over triple over double lamp approach colorlight high signal</a>
-<li><a href="appearance-CLS-3-3-2R-hi.xml">Triple over triple over double lamp restricting colorlight high signal</a>
-<li><a href="appearance-CLS-3-3-3-hi.xml">Triple over triple over triple lamp colorlight high signal</a>
-<li><a href="appearance-CLS-3-3-hi.xml">Triple over triple lamp colorlight high signal</a>
-<li><a href="appearance-CLS-3-3-lo.xml">Triple over triple lamp colorlight dwarf signal</a>
-<li><a href="appearance-CLS-3-hi.xml">Triple lamp colorlight high signal</a>
-<li><a href="appearance-CLS-3-lo.xml">Triple lamp colorlight dwarf signal</a>
-</ul>
+      <ul>
+        <li>
+          <a href="appearance-CLS-1-3-2A-hi.xml">Single over triple lamp approach colorlight high
+          signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-1-3-2R-hi.xml">Single over triple lamp restricting colorlight
+          high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-1-3-hi.xml">Single over triple lamp colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-1-3-lo.xml">Single over triple lamp colorlight dwarf signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-2-2A-hi.xml">Triple over double over double lamp approach
+          colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-2-2R-hi.xml">Triple over double over double lamp restricting
+          colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-2A-hi.xml">Triple over double lamp approach colorlight high
+          signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-2R-hi.xml">Triple over double lamp restricting colorlight high
+          signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-3-2A-hi.xml">Triple over triple over double lamp approach
+          colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-3-2R-hi.xml">Triple over triple over double lamp restricting
+          colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-3-3-hi.xml">Triple over triple over triple lamp colorlight high
+          signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-3-hi.xml">Triple over triple lamp colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-3-lo.xml">Triple over triple lamp colorlight dwarf signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-hi.xml">Triple lamp colorlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-CLS-3-lo.xml">Triple lamp colorlight dwarf signal</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

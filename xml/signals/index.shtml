@@ -1,174 +1,273 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-<title>JMRI: Signal System Definitions</title>
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Signal System Definitions</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1>
-JMRI: Signal System Definitions
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Signal System Definitions</h1>
+      JMRI provides a number of definitions for signal systems via this directory.
+      <p>For more information, please see the JMRI help page on <a href=
+      "../../help/en/html/tools/signaling/AspectSignaling.shtml">Aspect-based signaling</a>.</p>
 
-JMRI provides a number of definitions for signal
-systems via this directory.
+      <p>The available definitions include:</p>
 
-<p>
-For more information, please see the JMRI help page on
-<a href="../../help/en/html/tools/signaling/AspectSignaling.shtml">Aspect-based signaling</a>.
+      <dl>
+        <dt>
+          <a href="basic/index.shtml">basic</a>
+        </dt>
 
+        <dd>A non-prototypical set of aspects and appearances that most model railroaders will
+        understand easily.</dd>
 
-<p>
-The available definitions include:
-<dl>
+        <dt>
+          <a href="AAR-1946/index.shtml">AAR-1946</a>
+        </dt>
 
-<dt><a href="basic/index.shtml">basic</a>
-    <dd>A non-prototypical set of aspects and appearances that most
-        model railroaders will understand easily.
+        <dd>American Association of Railroads 1946 rule book</dd>
 
-<dt><a href="AAR-1946/index.shtml">AAR-1946</a>
-    <dd>American Association of Railroads 1946 rule book
+        <dt>
+          <a href="Amtrak-2010/index.shtml">Amtrak-2010</a>
+        </dt>
 
-<dt><a href="Amtrak-2010/index.shtml">Amtrak-2010</a>
-    <dd>Amtrak Northeast Corridor Color Position Light signals
+        <dd>Amtrak Northeast Corridor Color Position Light signals</dd>
 
-<dt><a href="B&O-1957/index.shtml">B&amp;O-1957</a>
-    <dd>1957 B&amp;O
-    <br>
-    <i>Incomplete, not finished.</i>
+        <dt>
+          <a href="B&amp;O-1957/index.shtml">B&amp;O-1957</a>
+        </dt>
 
-<dt><a href="B&O-1980/index.shtml">B&amp;O-1980</a>
-    <dd>1980 B&amp;O CPL and semaphore
+        <dd>1957 B&amp;O<br>
+        <em>Incomplete, not finished.</em></dd>
 
-<dt><a href="B&O-2009/index.shtml">B&amp;O-2009</a>
-    <dd>2009 B&amp;O (CSX) Color Position Lights
+        <dt>
+          <a href="B&amp;O-1980/index.shtml">B&amp;O-1980</a>
+        </dt>
 
-<dt><a href="B&O-Semaphore/index.shtml">B&amp;O-Semaphore</a>
-    <dd>1969 B&amp;O Semaphore masts only (works with B&amp;O-2009 CPL)
+        <dd>1980 B&amp;O CPL and semaphore</dd>
 
-<dt><a href="BN-1989/index.shtml">BN-1989</a>
-    <dd>1989 October Burlington Northern
+        <dt>
+          <a href="B&amp;O-2009/index.shtml">B&amp;O-2009</a>
+        </dt>
 
-<dt><a href="BNSF-1996/index.shtml">BNSF-1996</a>
-    <dd>1996 BNSF Railway
+        <dd>2009 B&amp;O (CSX) Color Position Lights</dd>
 
-<dt><a href="BR-2003/index.shtml">BR-2003</a>
-    <dd>2003 BR rule book
+        <dt>
+          <a href="B&amp;O-Semaphore/index.shtml">B&amp;O-Semaphore</a>
+        </dt>
 
-<dt><a href="C&O-1980/index.shtml">C&amp;O-1980</a>
-    <dd>Chessie System 1980 rule book for the C&O RR.
+        <dd>1969 B&amp;O Semaphore masts only (works with B&amp;O-2009 CPL)</dd>
 
-<dt><a href="CCOR-1967/index.shtml">CCOR-1967</a>
-    <dd>Based up CCOR 1967 rulebook, as referenced.
+        <dt>
+          <a href="BN-1989/index.shtml">BN-1989</a>
+        </dt>
 
-<dt><a href="CFL-2014/index.shtml">CFL-2014</a>
-    <dd>Current info for Luxemburg in 2014
+        <dd>1989 October Burlington Northern</dd>
 
-<dt><a href="CNJ-1974/index.shtml">CNJ-1974</a>
-    <dd>Central Railroad of NJ
+        <dt>
+          <a href="BNSF-1996/index.shtml">BNSF-1996</a>
+        </dt>
 
-<dt><a href="CROR-2008/index.shtml">CROR-2008</a>
-    <dd>2008 Transport Canada TC O-0-93 rule book
+        <dd>1996 BNSF Railway</dd>
 
-<dt><a href="../../../../../xml/signals/CSD-1962-zakladni/index.shtml">CSD-1962-zakladni</a> &ndash;
-    <a href="../../../../../xml/signals/CSD-1962-cestova/index.shtml">CSD-1962-cestova</a> &ndash;
-    <a href="../../../../../xml/signals/CSD-1962-vlozena/index.shtml">CSD-1962-vlozena</a> &ndash;
-    <a href="../../../../../xml/signals/CSD-1962-mechaniky/index.shtml">CSD-1962-mechaniky</a> &ndash;
-    <a href="../../../../../xml/signals/SZDC-2015-zakladni/index.shtml">SZDC-2015-zakladni</a> </dt>
+        <dt>
+          <a href="BR-2003/index.shtml">BR-2003</a>
+        </dt>
 
-<dd>ČSD &ndash; Československé státní dráhy &ndash; Czechoslovakia signal definition 1962 <br>
-    <i>CSD-1962-zakladni &ndash; basic signals &ndash; Set 0</i> <br>
-    <i>CSD-1962-cestova &ndash; intermediate signals &ndash; Set 1</i> <br>
-    <i>CSD-1962-vlozena &ndash; embedded signals and hump yard signals &ndash; Set 2</i> <br>
-    <i>CSD-1962-mechaniky &ndash; mechanical signals &ndash; Set 4</i> <br>
-    SŽDC &ndash; Správa železniční dopravní cesty &ndash; Czech signal definition 2015 <br>
-    <i>SZDC-2015-zakladni &ndash; basic signals &ndash; Set 3</i> </dd>
+        <dd>2003 BR rule book</dd>
 
-<dt><a href="CSX-1998/index.shtml">CSX-1998</a>
-    <dd>CSX 1998 rule book Rules 281-298
-    <br>
-    <i>Some errors in aspect mapping, not finished.</i>
+        <dt>
+          <a href="C&amp;O-1980/index.shtml">C&amp;O-1980</a>
+        </dt>
 
-<dt><a href="CSX-2014-Chessie/index.shtml">CSX-2014-Chessie</a>
-    <dd>CSX 2014 rule book (former Chessie rules)
+        <dd>Chessie System 1980 rule book for the C&amp;O RR.</dd>
 
-<dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
-    <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
+        <dt>
+          <a href="CCOR-1967/index.shtml">CCOR-1967</a>
+        </dt>
 
-<dt><a href="GWR-1931/index.shtml">GWR-1931</a>
-    <dd>GWR 1931 searchlight signals
+        <dd>Based up CCOR 1967 rulebook, as referenced.</dd>
 
-<dt><a href="InfraBel-2013/index.shtml">InfraBel-2013</a>
-    <dd>Current info for Belgium in 2013 taken from Wikipedia
+        <dt>
+          <a href="CFL-2014/index.shtml">CFL-2014</a>
+        </dt>
 
-<dt><a href="LMS-1932/index.shtml">LMS-1932</a>
-    <dd>Complete LMS speed signalling from 1932-1988
+        <dd>Current info for Luxemburg in 2014</dd>
 
-<dt><a href="NS-2008/index.shtml">NS-2008</a>
-    <dd>Norfolk Southern Corporation Operating rules book (NORAC)
+        <dt>
+          <a href="CNJ-1974/index.shtml">CNJ-1974</a>
+        </dt>
 
-<dt><a href="NW-1981/index.shtml">NW-1981</a>
-    <dd>Norfolk and Western 1981 rule book
+        <dd>Central Railroad of NJ</dd>
 
-<dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
-    <dd>New York Central System 1937 rule book
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
+        <dt>
+          <a href="CROR-2008/index.shtml">CROR-2008</a>
+        </dt>
 
-<dt><a href="NYC-1956/index.shtml">NYC-1956</a>
-    <dd>From the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."
+        <dd>2008 Transport Canada TC O-0-93 rule book</dd>
 
-<dt><a href="ProRail-1954/index.shtml">ProRail-1954</a>
-    <dd>1954 Dutch rule book, still in use in the Netherlands
+        <dt>
+          <a href="CSD-1962-zakladni/index.shtml">CSD-1962-zakladni</a> – <a href=
+          "CSD-1962-cestova/index.shtml">CSD-1962-cestova</a> – <a href=
+          "CSD-1962-vlozena/index.shtml">CSD-1962-vlozena</a> – <a href=
+          "CSD-1962-mechaniky/index.shtml">CSD-1962-mechaniky</a> – <a href=
+          "SZDC-2015-zakladni/index.shtml">SZDC-2015-zakladni</a>
+        </dt>
 
-<dt><a href="PRR-1956/index.shtml">PRR-1956</a>
-    <dd>Pennsylvania Railroad 1956 rule book, including their color position light signals
+        <dd>ČSD – Československé státní dráhy – Czechoslovakia signal definition 1962<br>
+        <em>CSD-1962-zakladni – basic signals – Set 0</em><br>
+        <em>CSD-1962-cestova – intermediate signals – Set 1</em><br>
+        <em>CSD-1962-vlozena – embedded signals and hump yard signals – Set 2</em><br>
+        <em>CSD-1962-mechaniky – mechanical signals – Set 4</em><br>
+        SŽDC – Správa železniční dopravní cesty – Czech signal definition 2015<br>
+        <em>SZDC-2015-zakladni – basic signals – Set 3</em></dd>
 
-<dt><a href="RG-1965/index.shtml">RG-1965</a>
-    <dd>1965 Rio Grande Rules of the Operating Department
+        <dt>
+          <a href="CSX-1998/index.shtml">CSX-1998</a>
+        </dt>
 
-<dt><a href="SLSF-1973/index.shtml">SLSF-1973</a>
-    <dd>1973 SLSF (Frisco) rules
-    <br>
-    <i>Missing some icons, not finished.</i>
+        <dd>CSX 1998 rule book Rules 281-298<br>
+        <em>Some errors in aspect mapping, not finished.</em></dd>
 
-<dt><a href="SOU-1981/index.shtml">SOU-1981</a>
-	<dd>1981 N&amp;W - Southern Railway
+        <dt>
+          <a href="CSX-2014-Chessie/index.shtml">CSX-2014-Chessie</a>
+        </dt>
 
-<dt><a href="SPTCO-1930/index.shtml">SPTCO-1930</a>
-    <dd>Southern Pacific Railway and Transportation Company 1930 rule book
+        <dd>CSX 2014 rule book (former Chessie rules)</dd>
 
-<dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
-    <dd>Southern Pacific Railway and Transportation Company 1960 rule book
+        <dt>
+          <a href="DanishSimplified/index.shtml">DanishSimplified</a>
+        </dt>
 
-<dt><a href="SPTCO-1969/index.shtml">SPTCO-1969</a>
-    <dd>Southern Pacific Railway and Transportation Company 1969 rule book
+        <dd>Danish Simplified signal definition</dd>
 
-<dt><a href="UP-2008/index.shtml">UP-2008</a>
-    <dd>Union Pacific Railroad 2008 rule book
+        <dt>
+          <a href="DB-HV-1969/index.shtml">DB HV 1969</a>
+        </dt>
 
-<dt><a href="WM-1980/index.shtml">WM-1980</a>
-    <dd>Western Maryland Railroad 1973-1980
+        <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal
+        (Hauptsignal/Vorsignal) system revision<br>
+        <em>Missing aspect mapping, not finished.</em></dd>
 
-</dl>
+        <dt>
+          <a href="GWR-1931/index.shtml">GWR-1931</a>
+        </dt>
 
+        <dd>GWR 1931 searchlight signals</dd>
+
+        <dt>
+          <a href="InfraBel-2013/index.shtml">InfraBel-2013</a>
+        </dt>
+
+        <dd>Current info for Belgium in 2013 taken from Wikipedia</dd>
+
+        <dt>
+          <a href="LMS-1932/index.shtml">LMS-1932</a>
+        </dt>
+
+        <dd>Complete LMS speed signalling from 1932-1988</dd>
+
+        <dt>
+          <a href="NS-2008/index.shtml">NS-2008</a>
+        </dt>
+
+        <dd>Norfolk Southern Corporation Operating rules book (NORAC)</dd>
+
+        <dt>
+          <a href="NW-1981/index.shtml">NW-1981</a>
+        </dt>
+
+        <dd>Norfolk and Western 1981 rule book</dd>
+
+        <dt>
+          <a href="NYCS-1937/index.shtml">NYCS-1937</a>
+        </dt>
+
+        <dd>New York Central System 1937 rule book<br>
+        <em>Missing aspect mapping, not finished.</em></dd>
+
+        <dt>
+          <a href="NYC-1956/index.shtml">NYC-1956</a>
+        </dt>
+
+        <dd>From the New York Central System publication "Rules of the Operating Department,
+        Effective October 28, 1956."</dd>
+
+        <dt>
+          <a href="PKP-PLK-2020/index.shtml">PKP-PLK-2020</a>
+        </dt>
+
+        <dd>Instruction E1 - Polish railroads standard PKP PLK</dd>
+
+        <dt>
+          <a href="ProRail-1954/index.shtml">ProRail-1954</a>
+        </dt>
+
+        <dd>1954 Dutch rule book, still in use in the Netherlands</dd>
+
+        <dt>
+          <a href="PRR-1956/index.shtml">PRR-1956</a>
+        </dt>
+
+        <dd>Pennsylvania Railroad 1956 rule book, including their color position light signals</dd>
+
+        <dt>
+          <a href="RG-1965/index.shtml">RG-1965</a>
+        </dt>
+
+        <dd>1965 Rio Grande Rules of the Operating Department</dd>
+
+        <dt>
+          <a href="SLSF-1973/index.shtml">SLSF-1973</a>
+        </dt>
+
+        <dd>1973 SLSF (Frisco) rules<br>
+        <em>Missing some icons, not finished.</em></dd>
+
+        <dt>
+          <a href="SOU-1981/index.shtml">SOU-1981</a>
+        </dt>
+        <dd>1981 N&amp;W - Southern Railway</dd>
+
+        <dt>
+          <a href="SPTCO-1930/index.shtml">SPTCO-1930</a>
+        </dt>
+        <dd>Southern Pacific Railway and Transportation Company 1930 rule book</dd>
+
+        <dt>
+          <a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
+        </dt>
+        <dd>Southern Pacific Railway and Transportation Company 1960 rule book</dd>
+
+        <dt>
+          <a href="SPTCO-1969/index.shtml">SPTCO-1969</a>
+        </dt>
+        <dd>Southern Pacific Railway and Transportation Company 1969 rule book</dd>
+
+        <dt>
+          <a href="UP-2008/index.shtml">UP-2008</a>
+        </dt>
+        <dd>Union Pacific Railroad 2008 rule book</dd>
+
+        <dt>
+          <a href="WM-1980/index.shtml">WM-1980</a>
+        </dt>
+        <dd>Western Maryland Railroad 1973-1980</dd>
+
+        <dt>
+          <a href="WPRR-1971/index.shtml">WPRR-1971</a>
+        </dt>
+        <dd>Western Pacific 1971 and earlier</dd>
+
+      </dl>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
