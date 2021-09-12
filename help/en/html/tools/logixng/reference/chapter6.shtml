@@ -151,8 +151,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_item.png"><img src=
-        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list" width=
-        "136" height="296"></a>
+        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
       </div>
 
       <h5>Block</h5>
@@ -356,6 +355,26 @@
         "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog" width="718" height=
         "252"></a>
       </div>
+
+      <h5>Reporter</h5>
+
+      <p>Compare the content of one of the three Reporter data fields to a string, a memory variable
+      or a local variable.  See the <strong>Memory</strong> description for a list of the
+      comparisons.</p>
+
+      <ul>
+        <li><strong>Current Report:</strong> The current value unless the hardware says there is
+        nothing to report.  In that case the value will be null.</li>
+
+        <li><strong>Last Report:</strong> Normally the current report and last report are the same.
+        If the current report is null, this will be most recent valid report.  If no report has ever
+        been received, this will be null.</li>
+
+        <li><strong>State:</strong> A number that represents the last report.</li>
+      </ul>
+
+      <p>Note:  The meaning of the reports and the state number are defined by originating
+      hardware.</p>
 
       <h5>Script</h5>
 
