@@ -677,6 +677,10 @@
         "http://www.protrak.cc/">Grapevine</a> works.
         </li>
 
+        <li>Jeff Moonmaw, who provided the <a href=
+        "http:jmri.org/xml/signals/WPRR-1971">WPRR 1971 </a> signal system definition.
+        </li>
+
         <li>Michael Mosher, who helped identify the way Digitrax decoder models are organized, has
         done a lot of work to improve the decoder definitions for NCE, Soundtraxx and Atlas
         decoders, provided new definitions for TCS, MRC and (lots of!) QSI and Zimo decoders; a

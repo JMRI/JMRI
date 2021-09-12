@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -966,12 +967,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     protected void setTrainSkipsLocations(String[] locationIds) {
-        if (locationIds.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(locationIds);
-        for (String id : locationIds) {
-            _skipLocationsList.add(id);
+        if (locationIds.length > 0) {
+            Arrays.sort(locationIds);
+            for (String id : locationIds) {
+                _skipLocationsList.add(id);
+            }
         }
     }
 
@@ -1045,7 +1045,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     protected void setTypeNames(String[] types) {
         if (types.length > 0) {
-            java.util.Arrays.sort(types);
+            Arrays.sort(types);
             for (String type : types) {
                 _typeList.add(type);
             }
@@ -1130,7 +1130,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     protected void setRoadNames(String[] roads) {
         if (roads.length > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
             for (String road : roads) {
                 if (!road.isEmpty()) {
                     _roadList.add(road);
@@ -1148,7 +1148,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getRoadNames() {
         String[] roads = _roadList.toArray(new String[0]);
         if (_roadList.size() > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
         }
         return roads;
     }
@@ -1254,7 +1254,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     protected void setLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String load : loads) {
                 if (!load.isEmpty()) {
                     _loadList.add(load);
@@ -1272,7 +1272,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getLoadNames() {
         String[] loads = _loadList.toArray(new String[0]);
         if (_loadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -1363,13 +1363,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _ownerList = new ArrayList<>();
 
     protected void setOwnerNames(String[] owners) {
-        if (owners.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(owners);
-        for (String owner : owners) {
-            if (!owner.isEmpty()) {
-                _ownerList.add(owner);
+        if (owners.length > 0) {
+            Arrays.sort(owners);
+            for (String owner : owners) {
+                if (!owner.isEmpty()) {
+                    _ownerList.add(owner);
+                }
             }
         }
     }
@@ -1383,7 +1382,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getOwnerNames() {
         String[] owners = _ownerList.toArray(new String[0]);
         if (_ownerList.size() > 0) {
-            java.util.Arrays.sort(owners);
+            Arrays.sort(owners);
         }
         return owners;
     }
@@ -1810,9 +1809,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
-                    new Object[] { car.toString(), rldest.getTrainDirectionString() }));
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
-                    new Object[] { track.getName() }));
+                    new Object[] { car.toString(), rldest.getTrainDirectionString(), track.getName() }));
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {

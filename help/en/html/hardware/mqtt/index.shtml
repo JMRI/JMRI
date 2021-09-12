@@ -209,6 +209,14 @@
         <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a
         Light change by clicking on a panel or table. JMRI also acts on Light state messages sent
         from the layout on the "Light receive topic."</li>
+
+        <li><strong>Last Will</strong>: JMRI can specify its last will message when it connects to
+        a broker. The last will message is a normal MQTT message with a topic, retained message
+        flag, QoS, and payload. The broker stores the message until it detects that the client
+        has disconnected ungracefully. In response to the ungraceful disconnect, the broker sends
+        the last will message to all subscribed clients of the last will message topic. If the
+        client disconnects gracefully with a correct DISCONNECT message, the broker discards the
+        stored Last Will message.</li>
       </ul>
 
       <p>All other messages, even on defined topics, are ignored by the standard JMRI processing.
