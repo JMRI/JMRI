@@ -260,9 +260,18 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             lastIndication = CODE_RIGHT;
             log.debug("Layout signals set RIGHT"); // NOI18N
             setListHeldState(hRightHeads, false);
-        } else {
+        } else if (value == CODE_STOP) {
             lastIndication = CODE_STOP;
             log.debug("Layout signals set STOP"); // NOI18N
+            setListHeldState(hRightHeads, true);
+            setListHeldState(hLeftHeads, true);
+        } else {
+            // RIGHT or LEFT but locks not clear
+            Lock.signalLockLogger.setStatus(this,
+                "Force stop: left clear "+Lock.checkLocksClear(leftwardLocks, Lock.signalLockLogger)
+                 +", right clear "+Lock.checkLocksClear(rightwardLocks, Lock.signalLockLogger));
+            lastIndication = CODE_STOP;
+            log.debug("Layout signals set STOP due to locks"); // NOI18N
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
         }
@@ -375,21 +384,31 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         // Restricting cases show OFF
         if (leftRestricting || rightRestricting) {
+            Lock.signalLockLogger.setStatus(this, "Force off due to restricting");
             retval = CODE_OFF;
         } else if ((!leftClear) && (!rightClear)) {
+            if (lastIndication != CODE_STOP)
+                Lock.signalLockLogger.setStatus(this, "Force stop right and left");
+            else
+                Lock.signalLockLogger.clear();
             retval = CODE_STOP;
         } else if ((!leftClear) && rightClear && (lastIndication == CODE_RIGHT  )) {
+            Lock.signalLockLogger.clear();
             retval = CODE_RIGHT;
         } else if (leftClear && (!rightClear) && (lastIndication == CODE_LEFT)) {
+            Lock.signalLockLogger.clear();
             retval = CODE_LEFT;
         } else {
             log.debug("not individually cleared, set OFF");
+            if (!rightClear) Lock.signalLockLogger.setStatus(this, "Force stop due to right not clear");
+            else if (!leftClear) Lock.signalLockLogger.setStatus(this, "Force stop due to left not clear");
+            else Lock.signalLockLogger.setStatus(this, "Force stop due to vital settings");
             retval = CODE_OFF;
         }
         return retval;
     }
 
-    CodeGroupThreeBits lastIndication = CODE_OFF;
+    CodeGroupThreeBits lastIndication = CODE_STOP;
     void setLastIndication(CodeGroupThreeBits v) {
         CodeGroupThreeBits old = lastIndication;
         lastIndication = v;
