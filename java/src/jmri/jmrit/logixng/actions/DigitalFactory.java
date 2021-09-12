@@ -30,6 +30,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionMemory.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionOBlock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionPower.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionReporter.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSensor.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalHead.class));

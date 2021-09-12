@@ -155,8 +155,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_item.png"><img src=
-        "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list" width=
-        "184" height="386"></a>
+        "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list"></a>
       </div>
 
       <h5>Audio</h5>
@@ -349,6 +348,25 @@
 
         <li><strong>On:</strong> Turn track power on.</li>
       </ul>
+
+      <h5>Reporter</h5>
+
+      <p>The Reporter action is used to copy the report content to a memory variable or a LogixNG
+      local variable.  There are three kinds of information.</p>
+
+      <ul>
+        <li><strong>Current Report:</strong> The current value unless the hardware says there is
+        nothing to report.  In that case the value will be null.</li>
+
+        <li><strong>Last Report:</strong> Normally the current report and last report are the same.
+        If the current report is null, this will be most recent valid report.  If no report has ever
+        been received, this will be null.</li>
+
+        <li><strong>State:</strong> A number that represents the last report.</li>
+      </ul>
+
+      <p>Note:  The meaning of the reports and the state number are defined by originating
+      hardware.</p>
 
       <h5>Route</h5>
 
