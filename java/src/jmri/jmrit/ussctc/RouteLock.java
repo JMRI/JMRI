@@ -21,7 +21,7 @@ public class RouteLock implements Lock {
         this.list = list;
         this.beans = null;
     }
-    
+
     /**
      * @param list SignalHeads that cover this route
      * @param beans Defines the specific route
@@ -30,7 +30,7 @@ public class RouteLock implements Lock {
         this.list = list;
         this.beans = beans;
     }
-    
+
     /**
      * @param array User or system names of SignalHeads that cover this route
      */
@@ -65,13 +65,13 @@ public class RouteLock implements Lock {
             }
         }
         this.list = q1;
-        
+
         ArrayDeque<BeanSetting> q2 = new ArrayDeque<>();
         for (BeanSetting bean : beans) {
             q2.add(bean);
         }
         this.beans = q2;
-        
+
     }
 
     /**
@@ -81,9 +81,9 @@ public class RouteLock implements Lock {
         this(new String[]{head});
     }
 
-    Iterable<NamedBeanHandle<SignalHead>> list; 
+    Iterable<NamedBeanHandle<SignalHead>> list;
     Iterable<BeanSetting> beans;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
@@ -95,22 +95,26 @@ public class RouteLock implements Lock {
             for (BeanSetting bean : beans) {
                 if ( ! bean.check()) {
                     lockLogger.setStatus(this, "");
+                    log.debug("RouteLock OK because {} doesn't match, route not engaged", bean.getBeanName());
                     return true;
                 }
             }
         }
-        
+
         for (NamedBeanHandle<SignalHead> handle : list) {
             if ( isSignalClear(handle) ) {
                 lockLogger.setStatus(this, "Locked due to route including signal "+handle.getBean().getDisplayName());
+                log.debug("RouteLock locked due to route including signal {} set clear", handle.getBean().getDisplayName());
                 return false;
             }
         }
         lockLogger.setStatus(this, "");
+        log.debug("RouteLock OK, no signals set clear");
         return true;
     }
-    
+
     boolean isSignalClear(@Nonnull NamedBeanHandle<SignalHead> handle) {
         return handle.getBean().getState() != SignalHead.RED;
     }
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteLock.class);
 }

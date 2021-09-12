@@ -39,6 +39,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-oblock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-power-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reference-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reporter-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalhead-4.23.1.xsd"/>
@@ -85,6 +86,7 @@
             <xs:element name="ExpressionOBlock"   type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionPower"    type="LogixNG_DigitalExpression_ExpressionPowerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionReference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionReporter" type="LogixNG_DigitalExpression_ExpressionReporterType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionScript"   type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSensor"   type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSignalHead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />

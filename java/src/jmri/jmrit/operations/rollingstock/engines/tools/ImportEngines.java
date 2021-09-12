@@ -16,10 +16,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -429,7 +426,7 @@ public class ImportEngines extends ImportRollingStock {
                 engine.setBuilt(engineBuilt);
                 // consist?
                 if (!engineConsistName.isEmpty()) {
-                    Consist consist = engineManager.newConsist(engineConsistName);
+                    Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(engineConsistName);
                     engine.setConsist(consist);
                 }
 
