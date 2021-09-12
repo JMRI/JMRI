@@ -10,6 +10,7 @@
 		    <li><a href="/help/en/html/tools/signaling/SignalMasts.shtml">Signal Masts</a>
 		    <li><a href="/help/en/html/tools/signaling/SignalGroups.shtml">Signal Groups</a>
 		    <li><a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
+		    <li><a href="../../../../../xml/signals/">Signal Mast Signaling Systems</a>
 		    <li><a href="/help/en/html/tools/signaling/interlock/index.shtml">Entry Exit &amp; Interlocking</a>
 		    <li><a href="/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling</a>
 		    </ul>

@@ -811,7 +811,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.load(car);
 
         // create a kernel
-        Kernel k = cManager.newKernel("Test_Kernel");
+        Kernel k = InstanceManager.getDefault(KernelManager.class).newKernel("Test_Kernel");
         car2.setKernel(k);
 
         f.groupComboBox.setSelectedItem("Test_Kernel");
