@@ -1,21 +1,25 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Routine to synchronize operation's engines with NCE consist memory.
@@ -131,7 +135,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 
             // look for lead engines
             for (int consistNum = 1; consistNum < 128; consistNum++) {
-                engineManager.deleteConsist(NCE + consistNum);
+                InstanceManager.getDefault(ConsistManager.class).deleteConsist(NCE + consistNum);
                 int engNum = getEngineNumberFromArray(consistNum, 0, 2);
                 if (engNum != 0) {
                     log.debug("NCE consist {} has lead engine {}", consistNum, engNum);
@@ -139,7 +143,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                     for (Engine engine : engineList) {
                         if (engine.getNumber().equals(Integer.toString(engNum))) {
                             log.debug("found lead engine match {}", engine.getNumber());
-                            Consist engConsist = engineManager.newConsist(NCE + consistNum);
+                            Consist engConsist = InstanceManager.getDefault(ConsistManager.class).newConsist(NCE + consistNum);
                             engConsist.setConsistNumber(consistNum); // load the consist number
                             engine.setConsist(engConsist);
                             engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
@@ -181,7 +185,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                     if (engine.getNumber().equals(Integer.toString(engNum))) {
                         log.debug("found engine match {}", engine.getNumber());
                         engMatch = true;
-                        Consist engConsist = engineManager.getConsistByName(NCE + consistNum);
+                        Consist engConsist = InstanceManager.getDefault(ConsistManager.class).getConsistByName(NCE + consistNum);
                         if (engConsist != null) {
                             engine.setConsist(engConsist);
                             if (offset == CS_CON_MEM_REAR) {

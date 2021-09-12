@@ -112,9 +112,8 @@ public class JUnitOperationsUtil {
         co.addName("DAB");
 
         // Set up four engines in two consists
-        Consist con1 = emanager.newConsist("C16");
-
-        Consist con2 = emanager.newConsist("C14");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C16");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C14");
 
         Engine e1 = new Engine("PC", "5016");
         e1.setModel("GP40");
