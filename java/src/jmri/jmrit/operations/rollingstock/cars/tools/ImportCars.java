@@ -531,7 +531,7 @@ public class ImportCars extends ImportRollingStock {
                     car.setOwner(carOwner);
                     car.setBuilt(carBuilt);
                     car.setLoadName(carLoadName);
-                    car.setKernel(carManager.newKernel(carKernelName));
+                    car.setKernel(InstanceManager.getDefault(KernelManager.class).newKernel(carKernelName));
                     car.setMoves(carMoves);
                     car.setValue(carValue);
                     car.setComment(carComment);
@@ -769,7 +769,7 @@ public class ImportCars extends ImportRollingStock {
                 String kernelName = inputLine[base + 2];
                 Car car = carManager.getByRoadAndNumber(carRoad, carNumber);
                 if (car != null) {
-                    Kernel kernel = carManager.newKernel(kernelName);
+                    Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
                     car.setKernel(kernel);
                     carsAdded++;
                 } else {

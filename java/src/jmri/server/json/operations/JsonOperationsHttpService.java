@@ -1,41 +1,10 @@
 package jmri.server.json.operations;
 
-import static jmri.server.json.JSON.COLOR;
-import static jmri.server.json.JSON.COMMENT;
+import static jmri.server.json.JSON.*;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORCE_DELETE;
-import static jmri.server.json.JSON.HAZARDOUS;
-import static jmri.server.json.JSON.LENGTH;
-import static jmri.server.json.JSON.MODEL;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.NUMBER;
-import static jmri.server.json.JSON.OWNER;
-import static jmri.server.json.JSON.RENAME;
-import static jmri.server.json.JSON.RFID;
-import static jmri.server.json.JSON.ROAD;
-import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
-import static jmri.server.json.JSON.UTILITY;
-import static jmri.server.json.operations.JsonOperations.BUILT;
-import static jmri.server.json.operations.JsonOperations.CABOOSE;
-import static jmri.server.json.operations.JsonOperations.CAR;
-import static jmri.server.json.operations.JsonOperations.CARS;
-import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
-import static jmri.server.json.operations.JsonOperations.DESTINATION;
-import static jmri.server.json.operations.JsonOperations.ENGINE;
-import static jmri.server.json.operations.JsonOperations.FRED;
+import static jmri.server.json.operations.JsonOperations.*;
 import static jmri.server.json.operations.JsonOperations.KERNEL;
-import static jmri.server.json.operations.JsonOperations.LEAD;
-import static jmri.server.json.operations.JsonOperations.LOCATION;
-import static jmri.server.json.operations.JsonOperations.LOCATIONS;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
-import static jmri.server.json.operations.JsonOperations.PASSENGER;
-import static jmri.server.json.operations.JsonOperations.ROLLING_STOCK;
-import static jmri.server.json.operations.JsonOperations.TRACK;
-import static jmri.server.json.operations.JsonOperations.TRAIN;
-import static jmri.server.json.operations.JsonOperations.TRAINS;
-import static jmri.server.json.operations.JsonOperations.WEIGHT;
-import static jmri.server.json.operations.JsonOperations.WEIGHT_TONS;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import java.util.ArrayList;
@@ -57,10 +26,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
@@ -97,7 +63,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 result = utilities.getEngine(name, locale, id);
                 break;
             case KERNEL:
-                Kernel kernel = carManager().getKernelByName(name);
+                Kernel kernel = InstanceManager.getDefault(KernelManager.class).getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
@@ -144,10 +110,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case KERNEL:
                 if (data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
-                    carManager().replaceKernelName(name, newName);
-                    carManager().deleteKernel(name);
+                    InstanceManager.getDefault(KernelManager.class).replaceKernelName(name, newName);
+                    InstanceManager.getDefault(KernelManager.class).deleteKernel(name);
                 }
-                return message(type, getKernel(carManager().getKernelByName(newName), locale, id).put(RENAME, name), id);
+                return message(type, getKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName(newName), locale, id).put(RENAME, name), id);
             case LOCATION:
                 return message(type, postLocation(name, data, locale, id), id);
             case TRAIN:
@@ -215,7 +181,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
-                return message(type, getKernel(carManager().newKernel(name), locale, id), id);
+                return message(type, getKernel(InstanceManager.getDefault(KernelManager.class).newKernel(name), locale, id), id);
             case LOCATION:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
@@ -323,7 +289,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 deleteEngine(name, locale, id);
                 break;
             case KERNEL:
-                Kernel kernel = carManager().getKernelByName(name);
+                Kernel kernel = InstanceManager.getDefault(KernelManager.class).getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
@@ -331,7 +297,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), request);
                 }
-                carManager().deleteKernel(name);
+                InstanceManager.getDefault(KernelManager.class).deleteKernel(name);
                 break;
             case LOCATION:
                 // TODO: do not remove an in use location
@@ -400,11 +366,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     private JsonNode getKernels(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        carManager().getKernelNameList()
+        InstanceManager.getDefault(KernelManager.class).getNameList()
                 // individual kernels should not have id in array, but same
                 // method is used to get single kernels as requested, so pass
                 // additive inverse of id to allow errors
-                .forEach(kernel -> array.add(message(KERNEL, getKernel(carManager().getKernelByName(kernel), locale, id * -1), id * -1)));
+                .forEach(kernel -> array.add(message(KERNEL, getKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName(kernel), locale, id * -1), id * -1)));
         return message(array, id);
     }
 
