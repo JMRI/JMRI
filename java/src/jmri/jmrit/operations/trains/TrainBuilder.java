@@ -2494,6 +2494,16 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         new TrainCsvManifest(_train);
     }
+    
+    private void showWarningMessage() {
+        if (trainManager.isBuildMessagesEnabled() && _warnings) {
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("buildCheckReport"),
+                            new Object[] { _train.getName(), _train.getDescription() }),
+                    MessageFormat.format(Bundle.getMessage("buildWarningMsg"), new Object[] { _train.getName() }),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
     private void buildFailed(BuildFailedException e) {
         String msg = e.getMessage();
