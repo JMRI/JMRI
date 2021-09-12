@@ -38,8 +38,9 @@ public abstract class AbstractBase
     @Override
     public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         for (int i=0; i < original.getChildCount(); i++) {
-            // Copy the name of the socket
-            getChild(i).setName(original.getChild(i).getName());
+            // Copy the name of the socket.
+            // Ignore duplicate errors since these errors might happen temporary in this loop.
+            getChild(i).setName(original.getChild(i).getName(), true);
 
             // Copy the child
             if (original.getChild(i).isConnected()) {

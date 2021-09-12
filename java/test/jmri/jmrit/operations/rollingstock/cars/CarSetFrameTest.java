@@ -108,12 +108,14 @@ public class CarSetFrameTest extends OperationsTestCase {
         Car c4 = cManager.getByRoadAndNumber("CP", "99");
         Assert.assertNotNull("car exists", c3);
         Assert.assertNotNull("car exists", c4);
-        Kernel k = cManager.newKernel("test");
+        f.loadCar(c3);
+        
+        Kernel k = InstanceManager.getDefault(KernelManager.class).newKernel("test");
         c3.setKernel(k);
         c4.setKernel(k);
         
-        f.loadCar(c3);
-
+        Assert.assertEquals("confirm kernel", "test", f.kernelComboBox.getItemAt(1));
+        
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"), c3.getKernelName()), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);

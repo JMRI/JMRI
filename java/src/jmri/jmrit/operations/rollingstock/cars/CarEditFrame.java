@@ -60,7 +60,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     @Override
     public void initComponents() {
 
-        groupComboBox = InstanceManager.getDefault(CarManager.class).getKernelComboBox();
+        groupComboBox = InstanceManager.getDefault(KernelManager.class).getComboBox();
 
         super.initComponents();
 
@@ -395,7 +395,7 @@ public class CarEditFrame extends RollingStockEditFrame {
             if (groupComboBox.getSelectedItem().equals(CarManager.NONE)) {
                 car.setKernel(null);
             } else if (!car.getKernelName().equals(groupComboBox.getSelectedItem())) {
-                car.setKernel(carManager.getKernelByName((String) groupComboBox.getSelectedItem()));
+                car.setKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName((String) groupComboBox.getSelectedItem()));
                 // if car has FRED or caboose make lead
                 if (car.hasFred() || car.isCaboose()) {
                     car.getKernel().setLead(car);
@@ -508,6 +508,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(KernelManager.class).addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
         super.addPropertyChangeListeners();
     }
@@ -516,6 +517,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     protected void removePropertyChangeListeners() {
         InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(KernelManager.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
         if (_rs != null) {
             _rs.removePropertyChangeListener(this);
@@ -543,9 +545,9 @@ public class CarEditFrame extends RollingStockEditFrame {
                 colorComboBox.setSelectedItem(_rs.getColor());
             }
         }
-        if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY) ||
+        if (e.getPropertyName().equals(KernelManager.LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
-            carManager.updateKernelComboBox(groupComboBox);
+            InstanceManager.getDefault(KernelManager.class).updateComboBox(groupComboBox);
             if (_rs != null) {
                 groupComboBox.setSelectedItem(((Car) _rs).getKernelName());
             }

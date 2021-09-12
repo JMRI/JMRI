@@ -1,61 +1,83 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<title>JMRI: SLSF-1973 Signaling Definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: SLSF-1973 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1> 
-JMRI: SLSF-1973 Signaling Definition
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-This directory contains signaling definitions corresponding to 
-the SLSF (Frisco) rules as described in the 
-July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
-<p>
-Per Frisco rule 280, dwarf signals display the same indication as high signals.
+      <h1>JMRI: SLSF-1973 Signaling Definition</h1>
+      This directory contains signaling definitions corresponding to the SLSF (Frisco) rules as
+      described in the July 1978 Revision of the St. Louis San Francisco Railway Company
+      publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter
+      titled Description of Signals. As noted in the source material, these rules are rules of the
+      Frisco Transportation department.
+      <p>Per Frisco rule 280, dwarf signals display the same indication as high signals.</p>
 
-<p>
-Selected pages from the 1957 St. Louis San Francisco Railway Company publication "Rules of the Transportation Department" are avaialble on the <a href="http://www.frisco.org/vb/showthread.php?t=290">Frisco Modelers and Information Group website</a>.
+      <p>Selected pages from the 1957 St. Louis San Francisco Railway Company publication "Rules of
+      the Transportation Department" are avaialble on the <a href=
+      "http://www.frisco.org/vb/showthread.php?t=290">Frisco Modelers and Information Group
+      website</a>.</p>
 
-<p>
-See the 
-<a href="aspects.xml">aspect page</a>.
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
-<p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-SL-3.xml">Triple searchlight signal</a>
-<li><a href="appearance-SL-3-triangle.xml">Triple searchlight signal with Triangle plackard</a>
-<li><a href="appearance-SL-2-abs.xml">Double searchlight signal</a>
-<li><a href="appearance-SL-2-pbs.xml">Double searchlight permissive signal</a>
-<li><a href="appearance-SL-2-grade.xml">Double searchlight grade signal</a>
-<li><a href="appearance-SL-2-triangle.xml">Double searchlight signal with Triangle placard</a>
-<li><a href="appearance-SL-1-abs.xml">Single searchlight signal</a>
-<li><a href="appearance-SL-1-pbs.xml">Single searchlight permissive signal</a>
-<li><a href="appearance-SL-1-grade.xml">Single searchlight grade signal</a>
-</ul>
+      <p>Signal Mast definitions:</p>
 
-<p>
-<b>Note:</b> Signals with a triangle plackard display Approach Limited instead of Approach Medium.
-    
+      <ul>
+        <li>
+          <a href="appearance-SL-3.xml">Triple searchlight signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-3-triangle.xml">Triple searchlight signal with Triangle
+          plackard</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-2-abs.xml">Double searchlight signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-2-pbs.xml">Double searchlight permissive signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-2-grade.xml">Double searchlight grade signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-2-triangle.xml">Double searchlight signal with Triangle
+          placard</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-abs.xml">Single searchlight signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-pbs.xml">Single searchlight permissive signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-grade.xml">Single searchlight grade signal</a>
+        </li>
+      </ul>
+
+      <p><strong>Note:</strong> Signals with a triangle plackard display Approach Limited instead
+      of Approach Medium.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

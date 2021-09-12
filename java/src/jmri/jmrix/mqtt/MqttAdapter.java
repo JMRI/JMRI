@@ -86,6 +86,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
         options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));
         options.put("15", new Option("Signal Mast topic :", new String[]{Bundle.getMessage("TopicSignalMast")}, Option.Type.TEXT));
+        options.put("LastWillTopic", new Option(Bundle.getMessage("NameTopicLastWill"),
+                    new String[]{Bundle.getMessage("TopicLastWill")}, Option.Type.TEXT));
+        options.put("LastWillMessage", new Option(Bundle.getMessage("NameMessageLastWill"),
+                    new String[]{Bundle.getMessage("MessageLastWill")}, Option.Type.TEXT));
         allowConnectionRecovery = true;
     }
 
@@ -94,8 +98,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         // Setup the MQTT Connection Options
         MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
         mqttConnOpts.setCleanSession(true);
-        mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
-        mqttConnOpts.setPassword(getOptionState(MQTT_PASSWORD_OPTION).toCharArray());
+        if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+            mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
+            mqttConnOpts.setPassword(getOptionState(MQTT_PASSWORD_OPTION).toCharArray());
+        }
+
+        //set Last Will
+        if (! getOptionState("LastWillTopic").isEmpty()
+                && ! getOptionState("LastWillMessage").isEmpty()) {
+            mqttConnOpts.setWill(baseTopic + getOptionState("LastWillTopic"),
+                    getOptionState("LastWillMessage").getBytes(),
+                    qosflag,
+                    true);
+        }
 
         return mqttConnOpts;
     }
@@ -142,8 +158,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
 
-            if ( getOptionState(MQTT_USERNAME_OPTION) != null
-                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+            if ((getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty())
+                    || ( ! getOptionState("LastWillTopic").isEmpty()
+                    && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
             } else {
                 mqttClient.connect();
@@ -219,7 +237,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public void publish(@Nonnull String topic, @Nonnull byte[] payload) {
         try {
             String fullTopic = baseTopic + topic;
-            mqttClient.publish(fullTopic, payload, 2, true);
+            mqttClient.publish(fullTopic, payload, qosflag, retained);
         } catch (MqttException ex) {
             log.error("Can't publish : ", ex);
         }
