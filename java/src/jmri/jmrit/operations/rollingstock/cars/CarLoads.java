@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -556,7 +553,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 if ((a = eLoad.getAttribute(Xml.NAMES)) != null) {
                     String names = a.getValue();
                     String[] loadNames = names.split("%%");// NOI18N
-                    java.util.Arrays.sort(loadNames);
+                    Arrays.sort(loadNames);
                     log.debug("Car load type: {} loads: {}", type, names);
                     // addName puts new items at the start, so reverse load
                     for (int j = loadNames.length; j > 0;) {
