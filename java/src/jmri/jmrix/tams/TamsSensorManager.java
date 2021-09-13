@@ -8,9 +8,6 @@ import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.jmrix.tams.TamsMessage;
-import jmri.jmrix.tams.TamsSystemConnectionMemo;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
