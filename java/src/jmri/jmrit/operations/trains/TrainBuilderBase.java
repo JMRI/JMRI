@@ -3117,12 +3117,18 @@ public class TrainBuilderBase extends TrainCommon {
         }
         int hpMax = hpNeeded;
         // largest single engine HP known today is less than 15,000.
-        // high end modern diesel locos approximately 5000 HP
-        // 100 car train at 100 tons per car and 2 HPT requires 20,000 HP
+        // high end modern diesel locos approximately 5000 HP.
+        // 100 car train at 100 tons per car and 2 HPT requires 20,000 HP.
+        // will assign consisted engines to train.
+        boolean foundLoco = false;
         hpLoop: while (hpMax < 20000) {
             hpMax += hpNeeded / 2; // start off looking for an engine with no more than 50% extra HP
             log.debug("Max hp {}", hpMax);
             for (Engine engine : _engineList) {
+                // don't use non lead locos in a consist
+                if (engine.getConsist() != null && !engine.isLead()) {
+                    continue;
+                }
                 if (engine.getLocation() != rl.getLocation()) {
                     continue;
                 }
@@ -3145,13 +3151,15 @@ public class TrainBuilderBase extends TrainCommon {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildLocoHasRequiredHp"),
                             new Object[] { engine.toString(), engineHp, hpNeeded }));
                     if (setLocoDestination(engine, rl, rld)) {
+                        foundLoco = true;
                         break hpLoop;
                     }
                 }
             }
         }
-        if (_train.getLeadEngine() == null && !_train.isBuildConsistEnabled()) {
-            throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
+        if (!foundLoco && !_train.isBuildConsistEnabled()) {
+            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngHp"),
+                    new Object[] { rl.getLocation().getName() }));
         }
     }
 
@@ -3277,16 +3285,6 @@ public class TrainBuilderBase extends TrainCommon {
                                         car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
             }
             addLine(_buildReport, ONE, BLANK_LINE);
-        }
-    }
-
-    protected void showWarningMessage() {
-        if (trainManager.isBuildMessagesEnabled() && _warnings) {
-            JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("buildCheckReport"),
-                            new Object[] { _train.getName(), _train.getDescription() }),
-                    MessageFormat.format(Bundle.getMessage("buildWarningMsg"), new Object[] { _train.getName() }),
-                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
