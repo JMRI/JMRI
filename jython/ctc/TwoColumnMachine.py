@@ -17,12 +17,12 @@ turnouts.getTurnout("Code Indication Start")    .state = CLOSED
 turnouts.getTurnout("Code Send Start")          .state = CLOSED
 turnouts.getTurnout("Bell")                     .state = CLOSED
 
-sensors. getSensor( "TC Left Approach")         .state = INACTIVE
+sensors. getSensor( "TC Sta 1 Left Approach")   .state = INACTIVE
 sensors. getSensor( "TC Sta 1 OS")              .state = INACTIVE
-sensors. getSensor( "TC Main")                  .state = INACTIVE
-sensors. getSensor( "TC Siding")                .state = INACTIVE
+sensors. getSensor( "TC Sta 2 Main")            .state = INACTIVE
+sensors. getSensor( "TC Sta 2 Siding")          .state = INACTIVE
 sensors. getSensor( "TC Sta 2 OS")              .state = INACTIVE
-sensors. getSensor( "TC Right Approach")        .state = INACTIVE
+sensors. getSensor( "TC Sta 2 Right Approach")  .state = INACTIVE
 
 turnouts.getTurnout("Sta 1 Layout TO")          .state = CLOSED
 
@@ -103,7 +103,7 @@ station = Station("1", codeline, CodeButton("Sta 1 Code", "Sta 1 Code"))
 turnout = TurnoutSection("Sta 1 Layout TO", "Sta 1 TO 1 N", "Sta 1 TO 1 R", "Sta 1 TO 1 N", "Sta 1 TO 1 R", station)
 station.add(turnout)
 
-station.add(TrackCircuitSection("TC Left Approach", "Sta 1 Left Approach TC", station, bell))
+station.add(TrackCircuitSection("TC Sta 1 Left Approach", "Sta 1 Left Approach TC", station, bell))
 station.add(TrackCircuitSection("TC Sta 1 OS", "Sta 1 OS TC", station))
 
 rightward = arrayList(["2 Upper", "2 Lower"])
@@ -122,10 +122,10 @@ station = Station("2", codeline, CodeButton("Sta 2 Code", "Sta 2 Code"))
 turnout = TurnoutSection("Sta 2 Layout TO", "Sta 2 TO 3 N", "Sta 2 TO 3 R", "Sta 2 TO 3 N", "Sta 2 TO 3 R", station)
 station.add(turnout)
 
-station.add(TrackCircuitSection("TC Main", "Sta 2 Main TC", station))
-station.add(TrackCircuitSection("TC Siding", "Sta 2 Siding TC", station))
+station.add(TrackCircuitSection("TC Sta 2 Main", "Sta 2 Main TC", station))
+station.add(TrackCircuitSection("TC Sta 2 Siding", "Sta 2 Siding TC", station))
 station.add(TrackCircuitSection("TC Sta 2 OS", "Sta 2 OS TC", station))
-station.add(TrackCircuitSection("TC Right Approach", "Sta 2 Right Approach TC", station, bell))
+station.add(TrackCircuitSection("TC Sta 2 Right Approach", "Sta 2 Right Approach TC", station, bell))
 
 rightward = arrayList(["4 Main", "4 Siding"])
 leftward  = arrayList(["4 Upper", "4 Lower"])
@@ -152,6 +152,6 @@ jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 1000
 jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 5000
 print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
 
-jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH = 5000
+jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH = 30000
 memories.provideMemory("IMUSS CTC:SIGNALHEADSECTION:1:TIME").setValue(jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH)
 print "Running time for", jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH/1000., "seconds"
