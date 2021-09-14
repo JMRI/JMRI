@@ -118,12 +118,6 @@ public class AnalogMany extends AbstractAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void setValue(double value) throws JmriException {
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.setValue(value);

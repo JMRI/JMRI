@@ -99,11 +99,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
     /** {@inheritDoc} */
     @Override
     final public void setup() {

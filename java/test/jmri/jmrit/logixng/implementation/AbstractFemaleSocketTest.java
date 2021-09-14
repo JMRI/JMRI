@@ -351,11 +351,6 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported");
         }

@@ -134,12 +134,6 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         
         if (_formula.isEmpty()) {
