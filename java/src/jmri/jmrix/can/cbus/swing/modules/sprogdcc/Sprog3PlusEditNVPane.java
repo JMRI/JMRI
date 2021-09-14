@@ -108,11 +108,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT:
-                    mainSpinner.getModel().setValue(value);
+                    mainSpinner.getModel().setValue(value/100.0);
                     break;
                 
                 case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT:
-                    progSpinner.getModel().setValue(value);
+                    progSpinner.getModel().setValue(value/100.0);
                     break;
                     
                 case Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT:
