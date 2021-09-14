@@ -17,7 +17,7 @@ public class TimeLock implements Lock {
         this.list = list;
         this.beans = null;
     }
-    
+
     /**
      * @param list SignalHeadSections that cover this route
      * @param beans Defines the specific route
@@ -26,7 +26,7 @@ public class TimeLock implements Lock {
         this.list = list;
         this.beans = beans;
     }
-    
+
     /**
      * @param array SignalHeadSections that cover this route
      * @param beans Defines the specific route
@@ -34,10 +34,10 @@ public class TimeLock implements Lock {
     public TimeLock(SignalHeadSection[] array, BeanSetting[] beans) {
         list = new ArrayList<>();
         for (SignalHeadSection s : array) list.add(s);
-        
+
         this.beans = new ArrayList<>();
         for (BeanSetting bean : beans) this.beans.add(bean);
-        
+
     }
 
     /**
@@ -46,8 +46,8 @@ public class TimeLock implements Lock {
     public TimeLock(SignalHeadSection[] array) {
         list = new ArrayList<>();
         for (SignalHeadSection s : array) list.add(s);
-        
-        this.beans = null;   
+
+        this.beans = null;
     }
 
     /**
@@ -57,15 +57,15 @@ public class TimeLock implements Lock {
         this(new SignalHeadSection[]{head});
     }
 
-    List<SignalHeadSection> list; 
+    List<SignalHeadSection> list;
     List<BeanSetting> beans;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
     @Override
-    public boolean isLockClear() {
+    public boolean isLockClear(LockLogger lockLogger) {
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
@@ -75,7 +75,7 @@ public class TimeLock implements Lock {
                 }
             }
         }
-        
+
         for (SignalHeadSection section : list) {
             if (section.isRunningTime()) {
                 lockLogger.setStatus(this, "Locked: "+section.getStation()+" running time");
@@ -85,5 +85,5 @@ public class TimeLock implements Lock {
         lockLogger.setStatus(this, "");
         return true;
     }
-    
+
 }

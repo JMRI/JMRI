@@ -17,10 +17,10 @@ public class CombinedLockTest {
     @Test
     public void testEmpty() {
         ArrayList<Lock> list = new ArrayList<>();
-        
+
         CombinedLock lock = new CombinedLock(list);
-        
-        Assert.assertTrue(lock.isLockClear());
+
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -28,12 +28,12 @@ public class CombinedLockTest {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
             @Override
-            public boolean isLockClear() { return true; }
+            public boolean isLockClear(LockLogger l) { return true; }
         });
 
         CombinedLock lock = new CombinedLock(list);
-        
-        Assert.assertTrue(lock.isLockClear());
+
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -41,12 +41,12 @@ public class CombinedLockTest {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
             @Override
-            public boolean isLockClear() { return false; }
+            public boolean isLockClear(LockLogger l) { return false; }
         });
 
         CombinedLock lock = new CombinedLock(list);
-        
-        Assert.assertTrue( ! lock.isLockClear());
+
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -54,19 +54,19 @@ public class CombinedLockTest {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
             @Override
-            public boolean isLockClear() { return true; }
+            public boolean isLockClear(LockLogger l) { return true; }
         });
         list.add(new Lock() {
             @Override
-            public boolean isLockClear() { return false; }
+            public boolean isLockClear(LockLogger l) { return false; }
         });
- 
+
         CombinedLock lock = new CombinedLock(list);
-        
-        Assert.assertTrue( ! lock.isLockClear());
+
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
-        
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

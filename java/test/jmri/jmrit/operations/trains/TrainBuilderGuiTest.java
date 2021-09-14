@@ -204,6 +204,68 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     }
     
     /**
+     * Test warning message.
+     */
+    @Test
+    public void testWarningMessage() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+        
+        // cause warning message
+        Setup.setCarRoutingEnabled(false);
+        
+//        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
+//        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
+//
+//        Location northend = lmanager.getLocationById("1");
+//
+//        Track northendStaging1 = northend.getTrackById("1s1");
+//
+//        // Place Engines on Staging tracks
+//        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
+//        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
+//        
+//        // 4 cars in staging, 2 cabooses, and 2 Boxcars
+//        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+//        
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+//        train2.setNumberEngines("2");
+//        Route route = train2.getRoute();
+//        
+//        // don't allow any drops in the train's route to cause build failure
+//        RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
+//        rlNI.setDropAllowed(false);
+//        
+//        // note that Cabooses ignore the drop restriction
+//        RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
+//        rlSouthendStaging.setDropAllowed(false);       
+
+        // should cause warning dialog to appear
+        Thread build = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new TrainBuilder().build(train2);
+            }
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
+
+        // dialog "Build report for train (SFF) has warnings"
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+    }
+    
+    /**
      * Test failure message when cars in staging are stuck there.
      */
     @Test
@@ -293,8 +355,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
-        
-
     }
     
     /**
