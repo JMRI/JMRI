@@ -611,7 +611,7 @@
     
 	  <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
@@ -904,7 +904,7 @@
     </variables>
     <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
