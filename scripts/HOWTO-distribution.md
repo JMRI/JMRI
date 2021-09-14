@@ -462,9 +462,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.25.3+R1547b1639f.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R1547b1639f.dmg) | 8a9a77c19f38f1ee6248feb9735d9681a18499927db021a61c995b65722c5f74
-[JMRI.4.25.3+R1547b1639f.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R1547b1639f.exe) | c676b9eb39df623a9da4fc5c3dab2242b2b8f989e6a1e399c8c327a7ed886237
-[JMRI.4.25.3+R1547b1639f.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R1547b1639f.tgz) | 025415a532cb6a1020235876cd256fa2f065d17b5893044b96c06ca02b70ec0b
+[JMRI.4.25.3+R96551bed89.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R96551bed89.dmg) | e75b63bc8901d98a9a821e875a484e05e89fc50da5bc98070a75b34970b5998d
+[JMRI.4.25.3+R96551bed89.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R96551bed89.exe) | 8cbdfc2cdcf43167eaf250f3c31bf29b78760e321431afb94f3143f052f67dc8
+[JMRI.4.25.3+R96551bed89.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.3/JMRI.4.25.3+R96551bed89.tgz) | 37390cd48f0caaae8d2150eb4defffe074cce48d680bf8f883305071a8f30167
 
 ```
 
@@ -536,6 +536,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 
 - Update the web site front page and downloads page:
 ```
+        cd ../website
         ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml
 ```
 
