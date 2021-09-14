@@ -19,7 +19,7 @@ public class EditCommentDialog {
     
     private String _comment;
     private JDialog _editCommentDialog = null;
-    private final JLabel _commentLabel = new JLabel("Comment" + ":");   // NOI18N
+    private final JLabel _commentLabel = new JLabel(Bundle.getMessage("EditCommentDialogTitle") + ":");   // NOI18N
     private final JTextArea _commentTextArea = new JTextArea();
     
     
