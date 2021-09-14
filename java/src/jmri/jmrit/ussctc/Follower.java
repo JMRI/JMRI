@@ -11,6 +11,9 @@ import jmri.implementation.DefaultRoute;
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a Follower.
  *
+ * @see jmri.jmrit.ussctc.FollowerFrame
+ * @see jmri.jmrit.ussctc.FollowerPanel
+ * @see jmri.jmrit.ussctc.FollowerAction
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Follower implements Constants {
