@@ -99,12 +99,20 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // add listeners
         for (NamedBeanHandle<Signal> b : hRightHeads) {
             b.getBean().addPropertyChangeListener(
-                (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
+                (java.beans.PropertyChangeEvent e) -> {
+                    jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                        layoutSignalHeadChanged(e);
+                    });
+                }
             );
         }
         for (NamedBeanHandle<Signal> b : hLeftHeads) {
             b.getBean().addPropertyChangeListener(
-                (java.beans.PropertyChangeEvent e) -> {layoutSignalHeadChanged(e);}
+                (java.beans.PropertyChangeEvent e) -> {
+                    jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                        layoutSignalHeadChanged(e);
+                    });
+                }
             );
         }
     }
@@ -221,10 +229,10 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         // A model thought -  if setting stop, hold signals immediately
         // instead of waiting for code cycle.  Model railroads move fast...
-        if (retval == CODE_STOP) {
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
-        }
+        //if (retval == CODE_STOP) {
+        //    setListHeldState(hRightHeads, true);
+        //    setListHeldState(hLeftHeads, true);
+        //}
 
         return retval;
     }
@@ -239,27 +247,30 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      */
     @Override
     public void codeValueDelivered(CodeGroupThreeBits value) {
-        log.debug("codeValueDelivered sets value {}", value);
         // @TODO add lock checking here; this is part of vital logic implementation
 
         // Set signals. While doing that, remember command as indication, so that the
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
+        log.debug("codeValueDelivered sets value {} current: {} last: {}", value, currentIndication, lastIndication);
+
         if (value == CODE_LEFT && Lock.checkLocksClear(leftwardLocks, Lock.signalLockLogger)) {
             lastIndication = CODE_STOP;
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
+            // setListHeldState(hRightHeads, true);
+            // setListHeldState(hLeftHeads, true);
             lastIndication = CODE_LEFT;
             log.debug("Layout signals set LEFT"); // NOI18N
             setListHeldState(hLeftHeads, false);
+            setListHeldState(hRightHeads, true);
         } else if (value == CODE_RIGHT && Lock.checkLocksClear(rightwardLocks, Lock.signalLockLogger)) {
             lastIndication = CODE_STOP;
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
+            // setListHeldState(hRightHeads, true);
+            // setListHeldState(hLeftHeads, true);
             lastIndication = CODE_RIGHT;
             log.debug("Layout signals set RIGHT"); // NOI18N
             setListHeldState(hRightHeads, false);
+            setListHeldState(hLeftHeads, true);
         } else if (value == CODE_STOP) {
             lastIndication = CODE_STOP;
             log.debug("Layout signals set STOP"); // NOI18N
@@ -282,13 +293,14 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             jmri.util.TimerUtil.schedule(new TimerTask() { // NOI18N
                 @Override
                 public void run() {
-                    jmri.util.ThreadingUtil.runOnGUI( ()->{
+                    jmri.util.ThreadingUtil.runOnLayout( ()->{
                         log.debug("end of movement delay from codeValueDelivered");
                         station.requestIndicationStart();
                     } );
                 }
             }, MOVEMENT_DELAY);
         }
+        log.debug("End codeValueDelivered");
     }
 
     protected void setListHeldState(Iterable<NamedBeanHandle<Signal>> list, boolean state) {
@@ -331,11 +343,11 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         // TODO: anti-fleeting done always, need call-on logic
 
-        // set Held right away
-        if (retval == CODE_STOP && lastIndication != CODE_STOP) {
-            setListHeldState(hRightHeads, true);
-            setListHeldState(hLeftHeads, true);
-        }
+        // set Held immediately
+        //if (retval == CODE_STOP && lastIndication != CODE_STOP) {
+        //    setListHeldState(hRightHeads, true);
+        //    setListHeldState(hLeftHeads, true);
+        //}
 
         lastIndication = retval;
         return retval;
@@ -365,6 +377,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      * @return code group.
      */
     public CodeGroupThreeBits getCurrentIndication() {
+        log.debug("Start getCurrentIndication with lastIndication {}", lastIndication);
         boolean leftClear = false;
         boolean leftRestricting = false;
         for (NamedBeanHandle<Signal> handle : hLeftHeads) {
@@ -387,13 +400,15 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         // Restricting cases show OFF
         if (leftRestricting || rightRestricting) {
-            Lock.signalLockLogger.setStatus(this, "Force off due to restricting");
+            Lock.signalLockLogger.setStatus(this, "    Force off due to restricting");
             retval = CODE_OFF;
         } else if ((!leftClear) && (!rightClear)) {
-            if (lastIndication != CODE_STOP)
-                Lock.signalLockLogger.setStatus(this, "Force stop right and left");
-            else
+            if (lastIndication != CODE_STOP) {
+                log.debug("    CurrentIndication stop due to right and left not clear with "+lastIndication);
+                Lock.signalLockLogger.setStatus(this, "Show stop due to right and left not clear");
+            } else {
                 Lock.signalLockLogger.clear();
+            }
             retval = CODE_STOP;
         } else if ((!leftClear) && rightClear && (lastIndication == CODE_RIGHT  )) {
             Lock.signalLockLogger.clear();
@@ -402,12 +417,13 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             Lock.signalLockLogger.clear();
             retval = CODE_LEFT;
         } else {
-            log.debug("not individually cleared, set OFF");
+            log.debug("    Not individually cleared, set OFF");
             if (!rightClear) Lock.signalLockLogger.setStatus(this, "Force stop due to right not clear");
             else if (!leftClear) Lock.signalLockLogger.setStatus(this, "Force stop due to left not clear");
             else Lock.signalLockLogger.setStatus(this, "Force stop due to vital settings");
             retval = CODE_OFF;
         }
+        log.debug("End getCurrentIndication returns {}", retval);
         return retval;
     }
 
@@ -462,6 +478,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {
         CodeGroupThreeBits current = getCurrentIndication();
         // as a modeling thought, if we're dropping to stop, set held right now
+        log.debug("layoutSignalHeadChanged with last: {} current: {} defer: {}, driving update", lastIndication, current, deferIndication);
         if (current == CODE_STOP && current != lastIndication && ! deferIndication ) {
             deferIndication = true;
             setListHeldState(hRightHeads, true);
@@ -471,11 +488,12 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         // if there was a change, need to send indication back to central
         if (current != lastIndication && ! deferIndication) {
-            log.debug("  SignalHead change resulted in changed Indication, driving update");
+            log.debug("  SignalHead change sends changed Indication last: {} current: {} defer: {}, driving update", lastIndication, current, deferIndication);
             station.requestIndicationStart();
         } else {
             log.debug("  SignalHead change without change in Indication");
         }
+        log.debug("end of layoutSignalHeadChanged");
     }
 
     final PropertyChangeSupport pcs = new PropertyChangeSupport(this);

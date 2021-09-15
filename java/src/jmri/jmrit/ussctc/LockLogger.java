@@ -26,7 +26,7 @@ public class LockLogger {
      * @param status The new status value, "" for "nothing of interest"
      */
     public void setStatus(@Nonnull Object logger, @Nonnull String status) {
-        log.debug("Object {} set \"{}\" was \"{}\"", logger, status, statusMap.get(logger));
+        log.debug("Object {} set \"{}\" was \"{}\"", logger.getClass(), status, statusMap.get(logger));
         statusMap.put(logger, status);
         // most recent always displayed if not null
         if ( ! status.isEmpty()) {

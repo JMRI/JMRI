@@ -61,6 +61,7 @@ public class CodeLine {
 
     synchronized void endAndCheckNext() {
         if (!active) log.error("endAndCheckNext with active false");
+        log.debug("active set false");
         active = false;
         checkForWork();
     }
@@ -68,6 +69,7 @@ public class CodeLine {
     synchronized void checkForWork() {
         log.debug("checkForWork with active == {}", active);
         if (active) return;
+        log.debug("active set true");
         active = true;
 
         // indications have priority over code sends
@@ -84,6 +86,7 @@ public class CodeLine {
             startSendCode(codeStation);
             return;
         }
+        log.debug("active set false");
         active = false;
         logMemory.setValue("");
         log.debug("CodeLine goes inactive");  // NOI18N
@@ -94,7 +97,7 @@ public class CodeLine {
      * @param station Station being addressed.
      */
     synchronized void requestSendCode(Station station) {
-        log.debug("requestSendCode queued from {}", station.toString());
+        log.debug("requestSendCode queued from Station {}", station.getName());
         // remove if present
         while (codeQueue.contains(station)) {
             codeQueue.remove(station);
@@ -138,7 +141,7 @@ public class CodeLine {
      * @param station Station being addressed.
      */
     synchronized void requestIndicationStart(Station station) {
-        log.debug("requestIndicationStart queued from {}", station.toString());
+        log.debug("requestIndicationStart queued from Station {}", station.getName());
         // remove if present
         while (indicationQueue.contains(station)) {
             indicationQueue.remove(station);
