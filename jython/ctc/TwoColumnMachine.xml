@@ -82,6 +82,7 @@
       <userName>TC Sta 2 Right Approach</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS107</systemName>
       <systemName>ISTC Right Approach</systemName>
     </sensor>
   </sensors>
