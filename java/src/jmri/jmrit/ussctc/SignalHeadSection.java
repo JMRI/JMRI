@@ -19,7 +19,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     /**
      *  Anonymous object only for testing
      */
-    SignalHeadSection() {}
+    SignalHeadSection() {
+        this.station = new Station("1", null, new CodeButton("IS1","IT1"));
+    }
 
     static final int DEFAULT_RUN_TIME_LENGTH = 30000;
 
