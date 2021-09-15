@@ -26,15 +26,15 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ChangeDepartureTimesFrame t = new ChangeDepartureTimesFrame();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
-    
+
     @Test
     public void testChangeTime() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        
+
         // confirm departure time default
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train2 = tmanager.getTrainById("2");
@@ -44,14 +44,14 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
         Assert.assertEquals("departure time", "23", train2.getDepartureTimeHour());
         // test roll over at 24 hours
         JemmyUtil.enterClickAndLeave(f.changeButton);
-        Assert.assertEquals("departure time", "00", train2.getDepartureTimeHour());      
+        Assert.assertEquals("departure time", "00", train2.getDepartureTimeHour());
     }
-    
+
     @Test
     public void testChangeTimeRoute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        
+
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train2 = tmanager.getTrainById("2");
         Route route = train2.getRoute();
@@ -60,14 +60,18 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
         rl1.setDepartureTime("03", "43");
         RouteLocation rl2 = route.getRouteLocationBySequenceNumber(2);
         rl2.setDepartureTime("23", "02");
-        
+
+        // leave route update checkbox unselected
         Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
         ChangeDepartureTimesFrame f = new ChangeDepartureTimesFrame();
+        JemmyUtil.enterClickAndLeave(f.changeButton);
+        Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
+        Assert.assertEquals("Route location departure time", "23", rl2.getDepartureTimeHour());
+
+        // now select checkbox
+        JemmyUtil.enterClickAndLeave(f.routesCheckBox);
         JemmyUtil.enterClickAndLeave(f.changeButton);
         Assert.assertEquals("departure time", "04", train2.getDepartureTimeHour());
         Assert.assertEquals("Route location departure time", "00", rl2.getDepartureTimeHour());
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrameTest.class);
-
 }
