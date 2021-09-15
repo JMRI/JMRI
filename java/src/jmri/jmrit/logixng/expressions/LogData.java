@@ -118,12 +118,6 @@ public class LogData extends AbstractDigitalExpression
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private List<Object> getDataValues() throws JmriException {
         List<Object> values = new ArrayList<>();
         for (Data _data : _dataList) {

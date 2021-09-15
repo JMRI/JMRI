@@ -81,12 +81,6 @@ public class ActionThrottle extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         
         int currentLocoAddress = -1;

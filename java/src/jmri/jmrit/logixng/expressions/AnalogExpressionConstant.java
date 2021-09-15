@@ -42,12 +42,6 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
         return Category.ITEM;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     public void setValue(double value) {
         assertListenersAreNotRegistered(log, "setValue");
         _value = value;

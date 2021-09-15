@@ -118,12 +118,6 @@ public class StringMany extends AbstractStringAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void setValue(String value) throws JmriException {
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.setValue(value);
