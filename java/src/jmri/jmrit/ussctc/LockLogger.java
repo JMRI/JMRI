@@ -17,7 +17,9 @@ public class LockLogger {
 
     LockLogger(String name) {
         logMemoryName = name;
+        memory = InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName);
     }
+
     /**
      * Set the current status of some Lock
      * @param logger The object providing status
@@ -29,34 +31,35 @@ public class LockLogger {
         // most recent always displayed if not null
         if ( ! status.isEmpty()) {
             log.trace("  writing status from call");
-            InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue(status);
+            memory.setValue(status);
             return;
         }
         // see if anything else needs to be displayed
         for (String value : statusMap.values()) {
             if ( ! value.isEmpty() ) {
                 log.trace("   writing status from map: \"{}\"", value);
-                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue(value);
+                memory.setValue(value);
                 return;
             }
         }
         // should be "", but make sure
         log.trace("   clearing status");
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
+        memory.setValue("");
     }
 
     public void clear() {
         log.debug("LockLogger cleared from \"{}\"",
-                        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).getValue()
+                        memory.getValue()
         );
         statusMap.clear();
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
+        memory.setValue("");
     }
 
     Map<Object, String> statusMap = new LinkedHashMap<>();
 
     // static while we decide whether to access via scripts
-    public String logMemoryName;
+    final public String logMemoryName;
+    final public Memory memory;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }

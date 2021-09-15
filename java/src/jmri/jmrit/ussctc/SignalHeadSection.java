@@ -134,7 +134,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         SET_STOP,
         SET_RIGHT
     }
-    Machine machine;
+    Machine machine = Machine.SET_STOP;
 
     boolean timeRunning = false;
 
@@ -299,22 +299,25 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
     @Override
     public String toString() {
-        StringBuffer retVal = new StringBuffer("SignalHeadSection ["); // NOI18N
-        boolean first;
-        first = true;
+        StringBuffer retVal = new StringBuffer("SignalHeadSection "); // NOI18N
+
+        retVal.append(" state: "+machine); // NOI18N
+        retVal.append(" time: "+isRunningTime()); // NOI18N
+        retVal.append(" defer: "+deferIndication); // NOI18N
+
         for (NamedBeanHandle<Signal> handle : hRightHeads) {
-            if (!first) retVal.append(", "); // NOI18N
-            first = false;
-            retVal.append("\"").append(handle.getName()).append("\""); // NOI18N
+            retVal.append("\n  \"").append(handle.getName()).append("\" "); // NOI18N
+            retVal.append(" held: "+handle.getBean().getHeld()+" "); // NOI18N
+            retVal.append(" clear: "+handle.getBean().isCleared()+" "); // NOI18N
+            retVal.append(" stop: "+handle.getBean().isAtStop()); // NOI18N
         }
-        retVal.append("],["); // NOI18N
-        first = true;
         for (NamedBeanHandle<Signal> handle : hLeftHeads) {
-            if (!first) retVal.append(", "); // NOI18N
-            first = false;
-            retVal.append("\"").append(handle.getName()).append("\""); // NOI18N
+            retVal.append("\n  \"").append(handle.getName()).append("\" "); // NOI18N
+            retVal.append(" held: "+handle.getBean().getHeld()+" "); // NOI18N
+            retVal.append(" clear: "+handle.getBean().isCleared()+" "); // NOI18N
+            retVal.append(" stop: "+handle.getBean().isAtStop()); // NOI18N
         }
-        retVal.append("]"); // NOI18N
+
         return retVal.toString();
     }
 

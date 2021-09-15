@@ -83,7 +83,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS107</systemName>
-      <systemName>ISTC Right Approach</systemName>
+      <userName>ISTC Right Approach</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

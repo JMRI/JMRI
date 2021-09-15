@@ -144,6 +144,16 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
     @Override
     public void indicationComplete(CodeGroupTwoBits value) { central.indicationComplete(value); }
 
+    public String toString() {
+        String retval;
+
+        retval = getName()
+                    +" central: "+central.state
+                    +" field lastCode: "+field.lastCodeValue+" lastInd "+field.lastIndicationValue;
+
+        return retval;
+    }
+
     static class TurnoutCentralSection implements CentralSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
         public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);

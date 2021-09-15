@@ -47,4 +47,6 @@ public interface Lock {
     // final static LockLogger lockLogger = new LockLogger();
     final static LockLogger signalLockLogger  = new LockLogger("IMUSS CTC:SIGNAL LOCK:1:LOG");
     final static LockLogger turnoutLockLogger = new LockLogger("IMUSS CTC:TURNOUT LOCK:1:LOG");
+
+    final static LockLogger debugLockLogger = new LockLogger("IMUSS CTC:DEBUG LOCK:1:LOG");
 }

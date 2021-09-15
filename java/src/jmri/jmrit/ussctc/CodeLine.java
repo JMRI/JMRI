@@ -6,7 +6,7 @@ import jmri.*;
  * Drive the code line communications on a USS CTC panel.
  * <p>
  * Primary interactions are with a group of {@link Station} objects
- * that make up the panel.  Can also work with external 
+ * that make up the panel.  Can also work with external
  * hardware via Turnout/Sensor interfaces.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
@@ -14,7 +14,7 @@ import jmri.*;
 public class CodeLine {
 
     /**
-     * Create and configure 
+     * Create and configure
      *
      * @param startIndicateTO  Name for turnout that starts indication operations on the layout
      * @param startSendTO  Name for turnout that starts send operations on the layout
@@ -30,7 +30,7 @@ public class CodeLine {
         logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
                         Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");  // NOI18N
         log.debug("log memory name is {}", logMemory.getSystemName());  // NOI18N
-        
+
         hStartIndicateTO = hm.getNamedBeanHandle(startIndicateTO, tm.provideTurnout(startIndicateTO));
         hStartSendTO = hm.getNamedBeanHandle(startSendTO, tm.provideTurnout(startSendTO));
 
@@ -49,27 +49,27 @@ public class CodeLine {
     final NamedBeanHandle<Turnout> hOutput2TO;
     final NamedBeanHandle<Turnout> hOutput3TO;
     final NamedBeanHandle<Turnout> hOutput4TO;
-    
+
     public static int START_PULSE_LENGTH = 500; // mSec
     public static int CODE_SEND_DELAY = 2500; // mSec
     public static int INTER_INDICATION_DELAY = 500; // mSec
-    
+
     volatile Deque<Station> codeQueue = new ArrayDeque<>();
     volatile Deque<Station> indicationQueue = new ArrayDeque<>();
-    
+
     volatile boolean active = false;
-    
+
     synchronized void endAndCheckNext() {
         if (!active) log.error("endAndCheckNext with active false");
         active = false;
         checkForWork();
     }
-    
+
     synchronized void checkForWork() {
         log.debug("checkForWork with active == {}", active);
         if (active) return;
         active = true;
-        
+
         // indications have priority over code sends
         final Station indicatorStation = indicationQueue.pollFirst();
         if (indicatorStation != null) {
@@ -88,7 +88,7 @@ public class CodeLine {
         logMemory.setValue("");
         log.debug("CodeLine goes inactive");  // NOI18N
     }
-    
+
     /**
      * Request processing of an indication from the field
      * @param station Station being addressed.
@@ -109,7 +109,7 @@ public class CodeLine {
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");  // NOI18N
         logMemory.setValue("Sending Code: Station "+station.getName());  // NOI18N
         startSendExternalCodeLine();
-        
+
         // Wait time for sequence complete, then proceed to end of code send
         // ToDo: Allow an input to end this too
         jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
@@ -119,7 +119,7 @@ public class CodeLine {
                     endAndCheckNext();
                 }, CODE_SEND_DELAY);
     }
-    
+
     void startSendExternalCodeLine() {
         hStartSendTO.getBean().setCommandedState(Turnout.THROWN);
         jmri.util.TimerUtil.schedule(new TimerTask() {
@@ -129,7 +129,10 @@ public class CodeLine {
             }
         }, START_PULSE_LENGTH);
     }
-    
+
+    public String toString() {
+        return "Codeline "+active;
+    }
     /**
      * Request processing of an indication from the field.
      * @param station Station being addressed.
@@ -144,18 +147,18 @@ public class CodeLine {
         indicationQueue.addLast(station);
         checkForWork();
     }
-    
+
     void startSendIndication(Station station) {
         final Station s = station;
         log.debug("CodeLine startSendIndication - process indication from field");
 
         // light code light and gather values
         station.indicationStart();
-    
+
         log.debug("Tell hardware to start sending indication");
         logMemory.setValue("Receiving Indication: Station "+station.getName());  // NOI18N
         startIndicationExternalCodeLine();
-        
+
         // Wait time for sequence complete, then proceed to end of indication send
         // ToDo: Allow an input to end this too
         jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
@@ -176,7 +179,7 @@ public class CodeLine {
             }
         }, START_PULSE_LENGTH);
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class);
 }
