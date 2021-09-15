@@ -138,6 +138,15 @@ routeLock2 = RouteLock(["4 Upper", "4 Lower", "4 Main", "4 Siding"]);
 timeLock2 = TimeLock(signal4);
 turnout3.addLocks([occupancyLock2, routeLock2, timeLock2]);
 
+# traffic locks
+viaMain2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,    [jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), THROWN), jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), THROWN)])
+viaSiding2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,  [jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), CLOSED)])
+signal2.addRightwardLocks([viaMain2,viaSiding2])
+
+viaMain4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT,   [jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), THROWN), jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), THROWN)])
+viaSiding4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT, [jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), CLOSED)])
+signal4.addLeftwardLocks([viaMain4,viaSiding4])
+
 # Optionally, set timings
 print "Setting timings"
 
