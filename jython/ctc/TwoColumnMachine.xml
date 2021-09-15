@@ -251,7 +251,7 @@
   <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
     <signalelement signal="4 Siding" mode="3" watchedturnout="Sta 2 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 2 OS</sensorname>
-      <sensorname>TC Right Approach</sensorname>
+      <sensorname>TC Sta 2 Right Approach</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="2 Upper" mode="2" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
