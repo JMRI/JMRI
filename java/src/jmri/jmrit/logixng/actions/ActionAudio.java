@@ -227,12 +227,6 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_operationAddressing) {

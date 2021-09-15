@@ -58,12 +58,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         if (_childExpression.evaluate() && !_childLastState) {
             _childLastState = true;

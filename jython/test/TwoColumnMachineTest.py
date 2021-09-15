@@ -3,7 +3,8 @@ import java
 import jmri
 
 cm = jmri.InstanceManager.getDefault(jmri.ConfigureManager)
-cm.load(java.io.File(jmri.util.FileUtil.getExternalFilename("program:jython/ctc/TwoColumnMachine.xml")))
+# load a version of the example fix that has no panel, so can run headless
+cm.load(java.io.File(jmri.util.FileUtil.getExternalFilename("program:jython/test/TwoColumnMachineTest.xml")))
 
 execfile("jython/ctc/TwoColumnMachine.py")
 

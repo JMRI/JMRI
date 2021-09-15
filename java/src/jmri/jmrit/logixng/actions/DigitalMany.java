@@ -111,12 +111,6 @@ public class DigitalMany extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.execute();
