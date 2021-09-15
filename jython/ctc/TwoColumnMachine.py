@@ -144,19 +144,24 @@ print "Setting timings"
 jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 5000  # turnout throw time
 print "Turnout throw delay: ", jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL/1000., "seconds"
 
-jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 3000
+jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 3000
+print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
+
+jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 2000
 print "Code send delay: ", jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY/1000., "seconds"
 
-# Start pulses for code and indication set to 1 second
-jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH = 1000
-jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 1000
+# Start pulses for code and indication
+jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH = 1500
+print "Length of start pulse to relay box: ", jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH/1000., "seconds"
 
-jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 5000
-print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
+# force some time between indications
+jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 1500
+print "Length of inter-indication delay: ", jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY/1000., "seconds"
+
 
 jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH = 30000
 memories.provideMemory("IMUSS CTC:SIGNALHEADSECTION:1:TIME").setValue(jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH)
 print "Running time for", jmri.jmrit.ussctc.SignalHeadSection.DEFAULT_RUN_TIME_LENGTH/1000., "seconds"
 
-# print initial state
-execfile("jython/ctc/DumpStatus.py")
+# Optionally, print initial state
+# execfile("jython/ctc/DumpStatus.py")
