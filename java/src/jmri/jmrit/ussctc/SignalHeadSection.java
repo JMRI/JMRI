@@ -83,6 +83,11 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             }
         }
 
+        timeLogSensor = InstanceManager.getDefault(SensorManager.class).provideSensor(Constants.commonNamePrefix
+                                            +"SIGNALSECTION:"+station.getName()+":RUNNINGTIME"
+                                            +Constants.commonNameSuffix);
+        timeLogSensor.setCommandedState(Sensor.INACTIVE);
+
         hLeftIndicator = hm.getNamedBeanHandle(leftIndicator, tm.provideTurnout(leftIndicator));
         hStopIndicator = hm.getNamedBeanHandle(stopIndicator, tm.provideTurnout(stopIndicator));
         hRightIndicator = hm.getNamedBeanHandle(rightIndicator, tm.provideTurnout(rightIndicator));
@@ -121,6 +126,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
     Memory timeMemory = null;
     Memory logMemory = null;
+
+    Sensor timeLogSensor;
 
     ArrayDeque<NamedBeanHandle<Signal>> hRightHeads;
     ArrayDeque<NamedBeanHandle<Signal>> hLeftHeads;
@@ -185,9 +192,11 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
             // setting to stop, have to start running time
             timeRunning = true;
+            timeLogSensor.setCommandedState(Sensor.ACTIVE);
             jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{
                     log.debug("End running time"); // NOI18N
                     logMemory.setValue("");
+                    timeLogSensor.setCommandedState(Sensor.INACTIVE);
                     timeRunning = false;
                     station.requestIndicationStart();
                 } ,
