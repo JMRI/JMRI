@@ -31,7 +31,10 @@
       <ul>
         <li>The <a href=
         "https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample
-        script
+        script and it's associated
+        <a href=
+        "https://jmri.org/jython/ctc/TwoColumnMachine.xml">jython/ctc/TwoColumnMachine.xml</a>
+        panel file.
         </li>
 
         <li>The <a href=
@@ -153,20 +156,25 @@
       model railroad dispatchers.</p>
 
       <dl>
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
+        <dt>IMUSS CTC:CODELINE:1:LOG</dt>
 
         <dd>What the code line is doing</dd>
 
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
+        <dt>IMUSS CTC:SIGNAL LOCK:1:TIME</dt>
 
-        <dd>Whether time is running</dd>
+        <dd>Activity associated with the signals</dd>
 
-        <dt>IMUSS CTC:LOCK:1:LOG</dt>
+        <dt>IMUSS CTC:TURNOUT LOCK:1:LOG</dt>
 
-        <dd>Whether any locks are showing as locked</dd>
+        <dd>Activity associated with turnout locks</dd>
       </dl>
       The "1" in those can change if there's more than one set of objects, i.e. if more than one
       code line is being modelled.
+      <p>These tools also create sensors that indicate whether a particular
+      station is locked due to running time or not. They're called
+      ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:, ISUSS CTC:SIGNALSECTION:2:RUNNINGTIME:1:, etc
+      and can be placed on panels to display that the station is running time.
+      </p>
       <h3>Standalone Tools</h3>
       These can be created from the USS menu under Tools in JMRI applications. They work by
       creating Logix and/or Routes that implement the desired functionality. You could do that by
