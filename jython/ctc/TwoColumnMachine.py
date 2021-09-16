@@ -104,7 +104,7 @@ turnout1 = TurnoutSection("Sta 1 Layout TO", "Sta 1 TO 1 N", "Sta 1 TO 1 R", "St
 station1.add(turnout1)
 
 station1.add(TrackCircuitSection("TC Sta 1 Left Approach", "Sta 1 Left Approach TC", station1, bell))
-station1.add(TrackCircuitSection("TC Sta 1 OS", "Sta 1 OS TC", station1))
+station1.add(TrackCircuitSection("TC Sta 1 OS", "Sta 1 OS TC", station1, bell))
 
 rightward = arrayList(["2 Upper", "2 Lower"])
 leftward  = arrayList(["2 Main", "2 Siding"])
@@ -125,7 +125,7 @@ station2.add(turnout3)
 
 station2.add(TrackCircuitSection("TC Sta 2 Main", "Sta 2 Main TC", station2))
 station2.add(TrackCircuitSection("TC Sta 2 Siding", "Sta 2 Siding TC", station2))
-station2.add(TrackCircuitSection("TC Sta 2 OS", "Sta 2 OS TC", station2))
+station2.add(TrackCircuitSection("TC Sta 2 OS", "Sta 2 OS TC", station2, bell))
 station2.add(TrackCircuitSection("TC Sta 2 Right Approach", "Sta 2 Right Approach TC", station2, bell))
 
 rightward = arrayList(["4 Main", "4 Siding"])
