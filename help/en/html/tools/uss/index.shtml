@@ -175,6 +175,12 @@
       ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:, ISUSS CTC:SIGNALSECTION:2:RUNNINGTIME:1:, etc
       and can be placed on panels to display that the station is running time.
       </p>
+      <p>Note that the example panel uses one set of
+      <a href="https://www.jmri.org/resources/icons/USSpanels/">display icons</a>.
+      JMRI has other sets (See
+      <a href="https://www.jmri.org/resources/icons/CTCpanels/">these</a> and others)
+      that let you make up other styles and sizes, and you can always make up your own.
+
       <h3>Standalone Tools</h3>
       These can be created from the USS menu under Tools in JMRI applications. They work by
       creating Logix and/or Routes that implement the desired functionality. You could do that by
