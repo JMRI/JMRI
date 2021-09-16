@@ -34,6 +34,8 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
     // combo boxes
     javax.swing.JComboBox<Integer> hourBox = new javax.swing.JComboBox<>();
 
+    javax.swing.JCheckBox routesCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("ModifyRouteTimes"));
+
     public ChangeDepartureTimesFrame() {
         // general GUI config
 
@@ -49,6 +51,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         pHour.setLayout(new GridBagLayout());
         pHour.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectHours")));
         addItem(pHour, hourBox, 0, 0);
+        addItem(pHour, routesCheckBox, 1, 0);
 
         // row 4
         JPanel pButton = new JPanel();
@@ -78,13 +81,16 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
             for (Train train : trains) {
                 train.setDepartureTime(adjustHour(train.getDepartureTimeHour()), train.getDepartureTimeMinute());
             }
-            // now check every route to see if there are any departure times that need adjustment
-            RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
-            List<Route> routes = routeManager.getRoutesByNameList();
-            for (Route route : routes) {
-                for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                    if (!rl.getDepartureTime().equals(RouteLocation.NONE))
-                        rl.setDepartureTime(adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
+            // now check every route to see if there are any departure times that need
+            // adjustment
+            if (routesCheckBox.isSelected()) {
+                RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+                List<Route> routes = routeManager.getRoutesByNameList();
+                for (Route route : routes) {
+                    for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                        if (!rl.getDepartureTime().equals(RouteLocation.NONE))
+                            rl.setDepartureTime(adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
+                    }
                 }
             }
         }
