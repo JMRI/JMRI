@@ -311,11 +311,6 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         Hold e1 = new Hold("IQDE321", null);
         Assert.assertTrue("Hold".equals(e1.getShortDescription()));

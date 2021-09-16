@@ -41,12 +41,6 @@ public class StringExpressionConstant extends AbstractStringExpression {
         return Category.ITEM;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     public void setValue(String value) {
         assertListenersAreNotRegistered(log, "setValue");
         _value = value;

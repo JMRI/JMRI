@@ -1012,7 +1012,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<String> possibleNames = new ArrayList<>();
         for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = s.getSystemName();
+            String mayBeName = s.getDisplayName();
             int mayBeDirection = 0;
             if ((s != primarySection) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {

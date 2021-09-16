@@ -264,11 +264,6 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }

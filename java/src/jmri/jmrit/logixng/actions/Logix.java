@@ -49,12 +49,6 @@ public class Logix extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         boolean result = _expressionSocket.evaluate();
         boolean hasChangedToTrue = result && !_lastExpressionResult;

@@ -181,12 +181,6 @@ public class ActionSound extends AbstractDigitalAction {
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getTheSound() throws JmriException {
         
         switch (_soundAddressing) {

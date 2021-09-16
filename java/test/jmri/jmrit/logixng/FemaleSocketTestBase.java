@@ -377,14 +377,6 @@ public abstract class FemaleSocketTestBase {
 
         errorFlag.set(false);
         try {
-            _femaleSocket.isExternal();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-
-        errorFlag.set(false);
-        try {
             _femaleSocket.getChild(0);
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
@@ -570,11 +562,6 @@ public abstract class FemaleSocketTestBase {
 
         @Override
         public Category getCategory() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public boolean isExternal() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

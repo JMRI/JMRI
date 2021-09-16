@@ -91,11 +91,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     @Override
     public void testMaleSocketIsActive() {
         super.testMaleSocketIsActive();
