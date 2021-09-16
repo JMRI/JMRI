@@ -50,8 +50,11 @@ import org.slf4j.LoggerFactory;
 public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         implements CanListener {
 
+    // EEPROM base address for older PIC18 devices
     protected static final int EE_START_2580 = 0xf00000;
+    // EEPROM base address for for PIC 18F26K83 and related family members 
     protected static final int EE_START_26K83 = 0x310000;
+    // EEPROM base address for for PIC 18F27Q84 and related family members
     protected static final int EE_START_27Q84 = 0x380000;
     
     private TrafficController tc;
