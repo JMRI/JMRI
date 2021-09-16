@@ -81,10 +81,6 @@
       <systemName>IS106</systemName>
       <userName>TC Sta 2 Right Approach</userName>
     </sensor>
-    <sensor inverted="false">
-      <systemName>IS107</systemName>
-      <userName>ISTC Right Approach</userName>
-    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
