@@ -295,7 +295,7 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <turnouticon turnout="Sta 1 TO 1 N" x="25" y="354" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 TO 1 N" x="25" y="354" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -312,7 +312,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 TO 3 N" x="90" y="354" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 TO 3 N" x="90" y="354" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -329,7 +329,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 TO 3 R" x="119" y="354" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 TO 3 R" x="119" y="354" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -346,7 +346,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 TO 1 R" x="54" y="355" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 TO 1 R" x="54" y="355" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -417,7 +417,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <turnouticon turnout="Sta 2 Code" x="106" y="561" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 Code" x="106" y="561" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -434,7 +434,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 Code" x="42" y="560" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 Code" x="42" y="560" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -451,7 +451,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 Layout TO" x="43" y="93" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 Layout TO" x="43" y="93" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/TrackSegments/os-lefthand-west-closed.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -468,7 +468,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 Left Approach TC" x="16" y="114" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 Left Approach TC" x="16" y="114" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -485,7 +485,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 OS TC" x="54" y="114" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 OS TC" x="54" y="114" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -502,7 +502,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 Main TC" x="83" y="114" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 Main TC" x="83" y="114" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -519,7 +519,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 Siding TC" x="85" y="92" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 Siding TC" x="85" y="92" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -536,7 +536,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 Right Approach TC" x="147" y="114" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 Right Approach TC" x="147" y="114" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -553,7 +553,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 Layout TO" x="104" y="93" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 Layout TO" x="104" y="93" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/TrackSegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -570,7 +570,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 OS TC" x="116" y="114" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 OS TC" x="116" y="114" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -702,7 +702,7 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <turnouticon turnout="Code Indication Start" x="971" y="724" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Code Indication Start" x="971" y="724" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -719,7 +719,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Code Send Start" x="906" y="724" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Code Send Start" x="906" y="724" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -809,7 +809,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <turnouticon turnout="Sta 1 SI 2 C" x="37" y="450" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 C" x="37" y="450" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -826,7 +826,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 SI 4 C" x="105" y="451" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 SI 4 C" x="105" y="451" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -843,7 +843,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 SI 2 L" x="25" y="466" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 L" x="25" y="466" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -860,7 +860,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 SI 4 L" x="90" y="467" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 SI 4 L" x="90" y="467" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -877,7 +877,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 SI 4 R" x="119" y="467" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 SI 4 R" x="119" y="467" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -894,7 +894,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 SI 2 R" x="53" y="466" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 R" x="53" y="466" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
