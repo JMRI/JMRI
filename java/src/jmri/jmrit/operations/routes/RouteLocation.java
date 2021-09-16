@@ -331,6 +331,10 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         return _wait;
     }
 
+    /**
+     * Sets the formated departure time from this location
+     * @param time format hours:minutes
+     */
     public void setDepartureTime(String time) {
         String old = _departureTime;
         _departureTime = time;
@@ -424,15 +428,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public int getTrainIconY() {
         return _trainIconY;
     }
-    
- 
-//    public void setTrainIconRangeX(int x) {
-//        int old = _trainIconRangeX;
-//        _trainIconRangeX = x;
-//        if (old != x) {
-//            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
-//        }
-//    }
 
     /**
      * Gets the X range for detecting the manual movement of a train icon.
@@ -441,15 +436,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public int getTrainIconRangeX() {
         return getLocation().getTrainIconRangeX();
     }
-
-
-//    public void setTrainIconRangeY(int y) {
-//        int old = _trainIconRangeY;
-//        _trainIconRangeY = y;
-//        if (old != y) {
-//            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
-//        }
-//    }
 
     /**
      * Gets the Y range for detecting the manual movement of a train icon.

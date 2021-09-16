@@ -346,12 +346,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewAspect() throws JmriException {
 
         switch (_aspectAddressing) {

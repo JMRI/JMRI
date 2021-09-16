@@ -230,12 +230,6 @@ public class TriggerRoute extends AbstractDigitalAction implements VetoableChang
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewLock() throws JmriException {
 
         switch (_operationAddressing) {

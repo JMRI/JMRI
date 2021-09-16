@@ -225,12 +225,6 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewLock() throws JmriException {
 
         switch (_lockAddressing) {
