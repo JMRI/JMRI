@@ -156,15 +156,15 @@ print "Turnout throw delay: ", jmri.implementation.AbstractTurnout.DELAYED_FEEDB
 jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 3000
 print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
 
-jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 2000
+jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 1000
 print "Code send delay: ", jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY/1000., "seconds"
 
 # Start pulses for code and indication
-jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH = 1500
+jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH = 500
 print "Length of start pulse to relay box: ", jmri.jmrit.ussctc.CodeLine.START_PULSE_LENGTH/1000., "seconds"
 
 # force some time between indications
-jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 1500
+jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY = 500
 print "Length of inter-indication delay: ", jmri.jmrit.ussctc.CodeLine.INTER_INDICATION_DELAY/1000., "seconds"
 
 
