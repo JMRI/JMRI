@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>25</minor>
-    <test>3</test>
+    <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -80,6 +80,12 @@
     <sensor inverted="false">
       <systemName>IS106</systemName>
       <userName>TC Sta 2 Right Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISUSS CTC:SIGNALSECTION:2:RUNNINGTIME:1:</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -197,17 +203,20 @@
     <memory value="">
       <systemName>IMUSS CTC:CODELINE:1:LOG</systemName>
     </memory>
+    <memory>
+      <systemName>IMUSS CTC:DEBUG LOCK:1:LOG</systemName>
+    </memory>
     <memory value="">
       <systemName>IMUSS CTC:SIGNAL LOCK:1:LOG</systemName>
     </memory>
     <memory value="">
-      <systemName>IMUSS CTC:TURNOUT LOCK:1:LOG</systemName>
-    </memory>
-    <memory value="">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
     </memory>
-    <memory value="5000">
+    <memory value="30000">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:TIME</systemName>
+    </memory>
+    <memory value="">
+      <systemName>IMUSS CTC:TURNOUT LOCK:1:LOG</systemName>
     </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -250,14 +259,14 @@
       <sensorname>TC Sta 2 Right Approach</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="2 Upper" mode="2" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>TC Sta 1 OS</sensorname>
-      <sensorname>TC Sta 2 Main</sensorname>
-      <comment />
-    </signalelement>
     <signalelement signal="2 Lower" mode="3" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Siding" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>TC Sta 1 OS</sensorname>
       <sensorname>TC Sta 2 Siding</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="2 Upper" mode="2" watchedturnout="Sta 1 Layout TO" watchedsignal1="4 Main" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>TC Sta 1 OS</sensorname>
+      <sensorname>TC Sta 2 Main</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="4 Main" mode="2" watchedturnout="Sta 2 Layout TO" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -289,12 +298,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="32" y="25" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
-    <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/USSpanels/Panels/USS-15.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="CTC Panel" x="23" y="226" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <turnouticon turnout="Sta 1 TO 1 N" x="25" y="354" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
@@ -587,96 +591,6 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <sensoricon sensor="TC Sta 1 Left Approach" x="26" y="204" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
-    <sensoricon sensor="TC Sta 1 OS" x="61" y="204" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
-    <sensoricon sensor="TC Sta 2 Main" x="89" y="204" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
-    <sensoricon sensor="TC Sta 2 Right Approach" x="153" y="202" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
-    <sensoricon sensor="TC Sta 2 Siding" x="90" y="177" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
-    <sensoricon sensor="TC Sta 2 OS" x="122" y="203" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </active>
-      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inactive>
-      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </unknown>
-      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </inconsistent>
-      <iconmaps />
-    </sensoricon>
     <positionablelabel x="10" y="116" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/USSpanels/TrackSegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -766,9 +680,6 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <memoryInputIcon colWidth="30" memory="IMUSS CTC:CODELINE:1:LOG" x="502" y="692" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
-    <memoryInputIcon colWidth="30" memory="IMUSS CTC:TURNOUT LOCK:1:LOG" x="502" y="714" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
-    <memoryInputIcon colWidth="30" memory="IMUSS CTC:SIGNAL LOCK:1:LOG" x="502" y="736" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
     <multisensoricon x="37" y="503" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
       <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="Sta 1 SI 2 L">
         <rotation>0</rotation>
@@ -809,7 +720,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <turnouticon turnout="Sta 1 SI 2 C" x="37" y="450" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 C" x="41" y="450" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -877,7 +788,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 2 SI 4 R" x="119" y="467" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 2 SI 4 R" x="121" y="467" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -894,7 +805,7 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <turnouticon turnout="Sta 1 SI 2 R" x="53" y="466" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+    <turnouticon turnout="Sta 1 SI 2 R" x="56" y="465" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -911,7 +822,124 @@
       </icons>
       <iconmaps />
     </turnouticon>
-    <signalheadicon signalhead="4 Upper" x="145" y="103" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <positionablelabel x="0" y="0" level="1" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/Panels/USS-15.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Layout Image Panel" x="21" y="25" height="243" width="817" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <turnouticon turnout="Sta 2 Layout TO" x="112" y="21" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/TrackSegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/TrackSegments/os-righthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/TrackSegments/os-righthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/TrackSegments/os-righthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="TC Sta 1 Left Approach" x="16" y="48" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TC Sta 1 OS" x="56" y="48" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TC Sta 2 Main" x="93" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TC Sta 2 Right Approach" x="157" y="48" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TC Sta 2 Siding" x="92" y="25" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TC Sta 2 OS" x="123" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <memoryInputIcon colWidth="30" memory="IMUSS CTC:CODELINE:1:LOG" x="0" y="83" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryInputIcon colWidth="30" memory="IMUSS CTC:TURNOUT LOCK:1:LOG" x="0" y="104" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryInputIcon colWidth="30" memory="IMUSS CTC:SIGNAL LOCK:1:LOG" x="0" y="126" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <signalheadicon signalhead="4 Upper" x="149" y="36" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -940,7 +968,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 Lower" x="156" y="103" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Lower" x="161" y="36" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -969,7 +997,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 Siding" x="90" y="107" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Siding" x="95" y="34" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -998,7 +1026,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="4 Main" x="90" y="133" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="4 Main" x="94" y="58" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -1027,7 +1055,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 Upper" x="28" y="138" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Upper" x="21" y="58" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -1056,7 +1084,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 Lower" x="16" y="138" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Lower" x="8" y="58" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>2</rotation>
@@ -1085,7 +1113,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 Siding" x="75" y="82" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Siding" x="65" y="12" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1114,7 +1142,7 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <signalheadicon signalhead="2 Main" x="75" y="108" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="2 Main" x="65" y="35" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1143,91 +1171,165 @@
       </icons>
       <iconmaps />
     </signalheadicon>
+    <positionablelabel x="0" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text=" " size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="1" y="44" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/TrackSegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="0" y="0" level="0" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="  " size="13" style="0" red="0" green="0" blue="0" hasBackground="yes" redBack="128" greenBack="128" blueBack="128" fixedWidth="800" fixedHeight="200" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="73" y="44" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/TrackSegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="74" y="21" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/TrackSegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="135" y="44" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/TrackSegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <turnouticon turnout="Sta 1 Layout TO" x="34" y="21" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/TrackSegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/TrackSegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/TrackSegments/os-lefthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/TrackSegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="Bell" x="438" y="108" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/USSpanels/Lamps/lamp-d.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/USSpanels/Lamps/lamp-r.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/USSpanels/Lamps/lamp-b.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <positionablelabel x="409" y="110" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Bell:" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sat Sep 11 11:07:45 EDT 2021</date>
+      <date>Thu Sep 16 07:30:39 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sat Sep 11 11:07:59 EDT 2021</date>
+      <date>Thu Sep 16 07:30:41 EDT 2021</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Fri Sep 10 08:11:05 EDT 2021</date>
+          <date>Sat Sep 11 11:07:45 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Fri Sep 10 08:11:30 EDT 2021</date>
+          <date>Sat Sep 11 11:07:59 EDT 2021</date>
           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Fri Sep 10 07:12:50 EDT 2021</date>
+              <date>Fri Sep 10 08:11:05 EDT 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Fri Sep 10 07:13:01 EDT 2021</date>
+              <date>Fri Sep 10 08:11:30 EDT 2021</date>
               <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Fri Sep 10 06:38:40 EDT 2021</date>
+                  <date>Fri Sep 10 07:12:50 EDT 2021</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Fri Sep 10 06:38:50 EDT 2021</date>
+                  <date>Fri Sep 10 07:13:01 EDT 2021</date>
                   <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Fri Sep 10 06:23:54 EDT 2021</date>
+                      <date>Fri Sep 10 06:38:40 EDT 2021</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Fri Sep 10 06:24:18 EDT 2021</date>
+                      <date>Fri Sep 10 06:38:50 EDT 2021</date>
                       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Fri Sep 10 06:23:54 EDT 2021</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Fri Sep 10 06:24:18 EDT 2021</date>
+                          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Fri Sep 10 06:33:33 EDT 2021</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Fri Sep 10 06:33:33 EDT 2021</date>
+                      <date>Fri Sep 10 06:41:44 EDT 2021</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Fri Sep 10 06:41:44 EDT 2021</date>
+                  <date>Fri Sep 10 07:27:41 EDT 2021</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Fri Sep 10 07:27:41 EDT 2021</date>
+              <date>Fri Sep 10 08:25:01 EDT 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Fri Sep 10 08:25:01 EDT 2021</date>
+          <date>Sat Sep 11 11:14:29 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Sep 11 11:14:29 EDT 2021</date>
+      <date>Thu Sep 16 08:11:44 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.3ish+jake+20210911T1507Z+R7f6b40b5c9 on Sat Sep 11 11:14:29 EDT 2021-->
+  <!--Written by JMRI version 4.25.4ish+jake+20210916T1130Z+R9ffb361c5a on Thu Sep 16 08:11:44 EDT 2021-->
 </layout-config>
