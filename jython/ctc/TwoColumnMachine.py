@@ -142,7 +142,7 @@ print "Setting timings"
 jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL = 5000  # turnout throw time
 print "Turnout throw delay: ", jmri.implementation.AbstractTurnout.DELAYED_FEEDBACK_INTERVAL/1000., "seconds"
 
-jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 3000
+jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY = 4000
 print"Signal movement delay: ", jmri.jmrit.ussctc.SignalHeadSection.MOVEMENT_DELAY/1000., "seconds"
 
 jmri.jmrit.ussctc.CodeLine.CODE_SEND_DELAY = 1000
