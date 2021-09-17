@@ -293,12 +293,6 @@ public class ActionMemory extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
 
         Memory memory;

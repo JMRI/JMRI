@@ -169,11 +169,6 @@ public class DefaultModule extends AbstractBase
     public Category getCategory() {
         return Category.OTHER;
     }
-
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);

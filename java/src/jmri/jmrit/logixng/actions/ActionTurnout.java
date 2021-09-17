@@ -225,12 +225,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_stateAddressing) {

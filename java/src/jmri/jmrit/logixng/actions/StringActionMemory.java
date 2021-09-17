@@ -118,12 +118,6 @@ public class StringActionMemory extends AbstractStringAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "StringActionMemory_Short");
     }

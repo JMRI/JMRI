@@ -134,12 +134,6 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public double evaluate() throws JmriException {
         
         if (_formula.isEmpty()) {

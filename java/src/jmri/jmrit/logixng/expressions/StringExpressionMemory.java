@@ -64,12 +64,6 @@ public class StringExpressionMemory extends AbstractStringExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);

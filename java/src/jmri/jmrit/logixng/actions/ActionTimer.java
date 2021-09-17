@@ -99,12 +99,6 @@ public class ActionTimer extends AbstractDigitalAction
         return Category.COMMON;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     /**
      * Get a new timer task.
      */

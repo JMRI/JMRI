@@ -112,12 +112,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() {
         // Do nothing.
         // The purpose of this action is only to listen on property changes

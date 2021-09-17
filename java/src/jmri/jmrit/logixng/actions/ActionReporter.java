@@ -274,12 +274,6 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
 
     Reporter getSourceReporter() throws JmriException {
         Reporter reporter = null;

@@ -60,12 +60,6 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         
         PowerState checkPowerState = _powerState;

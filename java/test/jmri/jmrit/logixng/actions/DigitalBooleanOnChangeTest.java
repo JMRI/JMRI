@@ -207,11 +207,6 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testGetShortDescription() {
         DigitalBooleanActionBean a1 = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE_TO_TRUE);
         Assert.assertEquals("strings are equal", "On change", a1.getShortDescription());

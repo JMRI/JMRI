@@ -345,12 +345,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private int getAppearanceFromName(String name) {
         if (_signalHeadHandle == null) throw new UnsupportedOperationException("_signalHeadHandle is null");
 
