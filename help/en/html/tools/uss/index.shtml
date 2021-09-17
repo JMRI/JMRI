@@ -182,10 +182,13 @@
       that let you make up other styles and sizes, and you can always make up your own.
       For examples of creating CTC panels, please see the
       <a href="https://www.jmri.org/community/examples/Gallery.shtml">gallery page</a>.
-      </p>
+      Often the best way to create
+      the background is to draw the entire thing as a single background image using
+      graphics tools on your computer.</p>
+
       <p>There's also another set of
       <a href="https://www.jmri.org/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC tools</a>
-      for building CTC controls in a more graphical way.
+      for building CTC controls in a more graphical way.</p>
 
       <h3>Standalone Tools</h3>
       These can be created from the USS menu under Tools in JMRI applications. They work by
