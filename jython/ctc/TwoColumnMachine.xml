@@ -82,6 +82,10 @@
       <userName>TC Sta 2 Right Approach</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS 108</systemName>
+      <userName>Bell Cutout</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:</systemName>
     </sensor>
     <sensor inverted="false">
@@ -298,7 +302,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="CTC Panel" x="23" y="226" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="CTC Panel" x="20" y="269" height="817" width="1048" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <turnouticon turnout="Sta 1 TO 1 N" x="25" y="354" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" degrees="0" scale="1.0">
@@ -827,8 +831,28 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
+    <positionablelabel x="801" y="659" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USS/plate/base-plates/misc/bell-cutout.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="Bell Cutout" x="828" y="725" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/codeButton-Active.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/codeButton-Inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/codeButton-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/codeButton-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
   </paneleditor>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Layout Image Panel" x="217" y="25" height="243" width="817" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Layout Image Panel" x="20" y="25" height="243" width="817" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <turnouticon turnout="Sta 2 Layout TO" x="112" y="21" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USSpanels/TrackSegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
@@ -1262,104 +1286,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Sep 16 09:00:21 EDT 2021</date>
+      <date>Fri Sep 17 07:54:01 EDT 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Sep 16 09:00:23 EDT 2021</date>
+      <date>Fri Sep 17 07:54:03 EDT 2021</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Sep 16 08:49:02 EDT 2021</date>
+          <date>Fri Sep 17 07:38:56 EDT 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Sep 16 08:49:04 EDT 2021</date>
+          <date>Fri Sep 17 07:38:58 EDT 2021</date>
           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Thu Sep 16 07:30:39 EDT 2021</date>
+              <date>Thu Sep 16 09:00:21 EDT 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Thu Sep 16 07:30:41 EDT 2021</date>
+              <date>Thu Sep 16 09:00:23 EDT 2021</date>
               <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sat Sep 11 11:07:45 EDT 2021</date>
+                  <date>Thu Sep 16 08:49:02 EDT 2021</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sat Sep 11 11:07:59 EDT 2021</date>
+                  <date>Thu Sep 16 08:49:04 EDT 2021</date>
                   <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Fri Sep 10 08:11:05 EDT 2021</date>
+                      <date>Thu Sep 16 07:30:39 EDT 2021</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Fri Sep 10 08:11:30 EDT 2021</date>
+                      <date>Thu Sep 16 07:30:41 EDT 2021</date>
                       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Fri Sep 10 07:12:50 EDT 2021</date>
+                          <date>Sat Sep 11 11:07:45 EDT 2021</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Fri Sep 10 07:13:01 EDT 2021</date>
+                          <date>Sat Sep 11 11:07:59 EDT 2021</date>
                           <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ctc/TwoColumnMachine.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Fri Sep 10 07:27:41 EDT 2021</date>
+                          <date>Sat Sep 11 11:14:29 EDT 2021</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Fri Sep 10 08:25:01 EDT 2021</date>
+                      <date>Thu Sep 16 08:11:44 EDT 2021</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sat Sep 11 11:14:29 EDT 2021</date>
+                  <date>Thu Sep 16 09:00:04 EDT 2021</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Thu Sep 16 08:11:44 EDT 2021</date>
+              <date>Thu Sep 16 09:02:11 EDT 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Sep 16 09:00:04 EDT 2021</date>
+          <date>Fri Sep 17 07:47:34 EDT 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Sep 16 09:02:11 EDT 2021</date>
+      <date>Fri Sep 17 07:55:02 EDT 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.4ish+jake+20210916T1300Z+Rfa6c0f8994 on Thu Sep 16 09:02:11 EDT 2021-->
+  <!--Written by JMRI version 4.25.4ish+jake+20210917T1153Z+R5d8e5bf4ee on Fri Sep 17 07:55:02 EDT 2021-->
 </layout-config>

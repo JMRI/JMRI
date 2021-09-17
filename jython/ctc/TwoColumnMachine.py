@@ -17,6 +17,7 @@ from jmri.jmrit import Sound
 turnouts.getTurnout("Code Indication Start")    .state = CLOSED
 turnouts.getTurnout("Code Send Start")          .state = CLOSED
 turnouts.getTurnout("Bell")                     .state = CLOSED
+sensors.getSensor("Bell Cutout")                .state = INACTIVE
 
 sensors. getSensor( "TC Sta 1 Left Approach")   .state = INACTIVE
 sensors. getSensor( "TC Sta 1 OS")              .state = INACTIVE
@@ -77,7 +78,7 @@ turnouts.getTurnout("Sta 2 Right Approach TC")  .state = CLOSED
 
 # The bell and code line are shared by all Stations
 
-bell = PhysicalBell("Bell", Sound("program:resources/sounds/Bell.wav"))   # both a layout output (real bell) and a computer sound, see ComputerBell for option
+bell = VetoedBell("Bell Cutout", PhysicalBell("Bell", Sound("program:resources/sounds/Bell.wav")))   # both a layout output (real bell) and a computer sound, see ComputerBell for option
 
 codeline = CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104")
 
