@@ -164,7 +164,8 @@ public class DigitalMany extends AbstractDigitalAction
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
         switch (oper) {
-            case Remove:        // Possible if socket is not connected
+            case Remove:    // Possible if socket is not connected and there is at least two sockets
+                if (_actionEntries.size() == 1) return false;
                 return ! getChild(index).isConnected();
             case InsertBefore:
                 return true;    // Always possible
