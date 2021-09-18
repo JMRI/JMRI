@@ -41,7 +41,10 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnoutLock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionWarrant.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, AddToPriorityFIFOQueue.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Delay.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoAnalogAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoStringAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, EnableLogix.class));
@@ -51,7 +54,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class));
-        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, PriorityFIFOQueue.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ShutdownComputer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, TableForEach.class));

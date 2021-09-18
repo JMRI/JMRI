@@ -1489,6 +1489,19 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        AddToPriorityFIFOQueue addToPriorityFIFOQueue = new AddToPriorityFIFOQueue(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(addToPriorityFIFOQueue);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        addToPriorityFIFOQueue = new AddToPriorityFIFOQueue(digitalActionManager.getAutoSystemName(), null);
+        addToPriorityFIFOQueue.setComment("A comment");
+        addToPriorityFIFOQueue.setPriority(2);
+//        addToPriorityFIFOQueue.getDigitalActionSocket().connect(maleSocket111);
+        maleSocket = digitalActionManager.registerAction(addToPriorityFIFOQueue);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.actions.DigitalCallModule callModule = new jmri.jmrit.logixng.actions.DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(callModule);
         maleSocket.setEnabled(false);
@@ -1506,6 +1519,18 @@ public class StoreAndLoadTest {
         callModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
         callModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalActionManager.registerAction(callModule);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        Delay delay = new Delay(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(delay);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        delay = new Delay(digitalActionManager.getAutoSystemName(), null);
+        delay.setComment("A comment");
+//        delay.getAnalogExpressionSocket().connect(maleSocket1111);
+        maleSocket = digitalActionManager.registerAction(delay);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1835,6 +1860,18 @@ public class StoreAndLoadTest {
         many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         many.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(many);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        PriorityFIFOQueue priorityFIFOQueue = new PriorityFIFOQueue(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(priorityFIFOQueue);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        priorityFIFOQueue = new PriorityFIFOQueue(digitalActionManager.getAutoSystemName(), null);
+        priorityFIFOQueue.setComment("A comment");
+        priorityFIFOQueue.setNumPriorities(3);
+        maleSocket = digitalActionManager.registerAction(priorityFIFOQueue);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 

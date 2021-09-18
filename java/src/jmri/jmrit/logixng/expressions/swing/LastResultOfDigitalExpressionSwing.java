@@ -31,7 +31,7 @@ public class LastResultOfDigitalExpressionSwing extends AbstractDigitalExpressio
         _expressionsComboBox = new JComboBox<>();
         _expressionsComboBox.addItem("");
         for (MaleDigitalExpressionSocket bean : InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet()) {
-            if (bean.getUserName() != null) {
+//            if (bean.getUserName() != null) {
                 _expressionsComboBox.addItem(bean.getDisplayName());
                 if (expression != null) {
                     NamedBeanHandle<DigitalExpressionBean> handle = expression.getDigitalExpression();
@@ -39,7 +39,7 @@ public class LastResultOfDigitalExpressionSwing extends AbstractDigitalExpressio
                         _expressionsComboBox.setSelectedItem(bean.getDisplayName());
                     }
                 }
-            }
+//            }
         }
         JComboBoxUtil.setupComboBoxMaxRows(_expressionsComboBox);
         
