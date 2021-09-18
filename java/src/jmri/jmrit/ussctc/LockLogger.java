@@ -32,6 +32,7 @@ public class LockLogger {
         if ( ! status.isEmpty()) {
             log.trace("  writing status from call");
             memory.setValue(status);
+            log(status);
             return;
         }
         // see if anything else needs to be displayed
@@ -39,6 +40,7 @@ public class LockLogger {
             if ( ! value.isEmpty() ) {
                 log.trace("   writing status from map: \"{}\"", value);
                 memory.setValue(value);
+                log(status);
                 return;
             }
         }
@@ -55,11 +57,19 @@ public class LockLogger {
         memory.setValue("");
     }
 
+    /**
+     * Log a copy of the status. Intended to be overridden by specific LockLogger implementations.
+     * @param message The status message, all filled out
+     */
+    void log(String message) {
+        log.debug(message);
+    }
+
     Map<Object, String> statusMap = new LinkedHashMap<>();
 
     // static while we decide whether to access via scripts
     final public String logMemoryName;
     final public Memory memory;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
+    final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }
