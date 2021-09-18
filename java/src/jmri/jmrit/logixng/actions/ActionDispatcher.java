@@ -521,7 +521,6 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                         throw new IllegalArgumentException("invalid oper state: " + _operationDirect.name());
 
                 }
-                break;
 
             case Reference:
                 state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
