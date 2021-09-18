@@ -443,6 +443,9 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                     }
                 }
                 return;
+
+            default:
+                throw new IllegalArgumentException("invalid oper state: " + oper.name());
         }
     }
 
@@ -514,6 +517,8 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                         return getLongDataDescription(locale, "ActionDispatcher_Long_TerminateOption",
                                 fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
                                 Bundle.getMessage("ActionDispatcher_Long_Disable"));
+                    default:
+                        throw new IllegalArgumentException("invalid oper state: " + _operationDirect.name());
 
                 }
                 break;
