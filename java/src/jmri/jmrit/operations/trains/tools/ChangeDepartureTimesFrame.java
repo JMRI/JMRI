@@ -63,13 +63,12 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ChangeTrainDepartureTimes", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight200));
-
         setTitle(Bundle.getMessage("TitleChangeDepartureTime"));
 
         // setup buttons
         addButtonAction(changeButton);
+        
+        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight200));
     }
 
     @Override
