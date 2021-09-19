@@ -77,7 +77,7 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
         // sockets. A male socket might be contained in another male socket.
         // In some cases, it seems that the male socket used in this call is
         // not the male socket that's registered in the manager. To resolve
-        // this, we search for the registered bean with the system namem and
+        // this, we search for the registered bean with the system name and
         // then deregister the bean we have found.
         E bean = getBySystemName(s.getSystemName());
         if (bean == null) {
