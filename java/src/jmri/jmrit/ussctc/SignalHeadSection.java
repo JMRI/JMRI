@@ -80,7 +80,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             }
         }
 
-        timeLogSensor = InstanceManager.getDefault(SensorManager.class).provideSensor(Constants.commonNamePrefix
+        timeLogSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IS"+Constants.commonNamePrefix
                                             +"SIGNALSECTION:"+station.getName()+":RUNNINGTIME"
                                             +Constants.commonNameSuffix);
         timeLogSensor.setCommandedState(Sensor.INACTIVE);
