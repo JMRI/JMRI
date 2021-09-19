@@ -214,13 +214,10 @@
       <systemName>IMUSS CTC:SIGNAL LOCK:1:LOG</systemName>
     </memory>
     <memory value="">
-      <systemName>IMUSS CTC:SIGNALHEADSECTION:1:LOG</systemName>
+      <systemName>IMUSS CTC:TURNOUT LOCK:1:LOG</systemName>
     </memory>
     <memory value="30000">
       <systemName>IMUSS CTC:SIGNALHEADSECTION:1:TIME</systemName>
-    </memory>
-    <memory value="">
-      <systemName>IMUSS CTC:TURNOUT LOCK:1:LOG</systemName>
     </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
