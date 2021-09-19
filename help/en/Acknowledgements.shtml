@@ -207,6 +207,9 @@
         <li>Geoff Bunza, <!-- gbglacier -->
          who provided serial input and output scripts for Arduino.</li>
 
+        <li>Mike Burgett,
+         who provided information on prototype CTC layout and behavior.</li>
+
         <li>Bob Byck, who did extensive testing of test release 1.7.3</li>
 
         <li>Allen Byrne, who has systematically made improvements in the syntax and structure of
