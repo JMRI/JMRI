@@ -3,7 +3,6 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for Tams systems. The Manager handles all the state\
  * changes Requires v1.4.7 or higher of TAMS software to work correctly
  * <P>
- * System names are "TMSnnn:yy", where nnn is the Tams Object Number for a given
+ * System names are "TSnnn:yy", where nnn is the Tams Object Number for a given
  * S88 Bus Module and yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
@@ -143,9 +142,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            // TODO prevent further execution, ruturn error flag
+            /*JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);*/
+            // TODO prevent further execution, return error flag
             throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
         }
 
@@ -166,8 +165,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
         if (port == 0 || port > 16) {
             log.error("Port number must be between 1 and 16");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            /*JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);*/
             // TODO prevent further execution, return error flag
             throw new JmriException("Port number must be between 1 and 16");
         }
