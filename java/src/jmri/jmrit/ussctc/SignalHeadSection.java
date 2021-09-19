@@ -47,10 +47,6 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
 
         this.station = station;
 
-        logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
-                        Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"LOG"); // NOI18N
-        log.debug("log memory name is {}", logMemory.getSystemName());
-
         timeMemory = InstanceManager.getDefault(MemoryManager.class).getMemory(
                         Constants.commonNamePrefix+"SIGNALHEADSECTION"+Constants.commonNameSuffix+"TIME"); // NOI18N
         if (timeMemory == null) {
@@ -126,7 +122,6 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     }
 
     Memory timeMemory = null;
-    Memory logMemory = null;
 
     Sensor timeLogSensor;
 
@@ -255,8 +250,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             timeRunning = true;
             timeLogSensor.setCommandedState(Sensor.ACTIVE);
             jmri.util.ThreadingUtil.runOnLayoutDelayed(  ()->{
-                    log.debug("End running time"); // NOI18N
-                    logMemory.setValue("");
+                    log.debug("End running time: Station {}", station.getName()); // NOI18N
+                    Lock.signalLockLogger.setStatus(this, "End running time: Station "+station.getName());
                     timeLogSensor.setCommandedState(Sensor.INACTIVE);
                     if (!timeRunning) log.warn("Running time timer ended while not marked as running time");
                     timeRunning = false;
@@ -264,8 +259,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
                 } ,
                 (int)timeMemory.getValue());
 
-            log.debug("starting to run time");
-            logMemory.setValue("Running time: Station "+station.getName());
+           Lock.signalLockLogger.setStatus(this, "Running time: Station "+station.getName());
     }
 
     public static int MOVEMENT_DELAY = 5000;
