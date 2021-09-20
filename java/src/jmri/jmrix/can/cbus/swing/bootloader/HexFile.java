@@ -25,13 +25,13 @@ public class HexFile {
     protected static final int MAX_EEPROM_SIZE = 1024;
     protected static final int ID_START = 0x200000;
     protected static final int CONFIG_START = 0x300000;
-    protected static final int EE_START = 0xf00000;
 
     private int address = 0;
     private boolean read;
     private int lineNo = 0;
     private int progEnd = 0;
     private int configEnd = 0;
+    private int eeStart;
     private int eeEnd = 0;
 
     // Storage for raw program data
@@ -44,10 +44,12 @@ public class HexFile {
      * Create a new HexFile object and initialize data to unprogrammed state.
      * 
      * @param fileName file name to use for the hex file
+     * @param eepromStart start address of EEPROM for the device
      */
-    public HexFile(String fileName) {
+    public HexFile(String fileName, int eepromStart) {
         name = fileName;
         file = new File(fileName);
+        eeStart = eepromStart;
         
         hexDataProg = new byte [MAX_PROG_SIZE];
         hexDataConfig = new byte [MAX_CONFIG_SIZE];
@@ -131,9 +133,9 @@ public class HexFile {
                     address = (address & 0xffff0000) + r.getAddress();
                     log.debug("Hex record for address {}", Integer.toHexString(address));
 
-                    if ((address >= EE_START) && (address < (EE_START  + MAX_EEPROM_SIZE))) {
+                    if ((address >= eeStart) && (address < (eeStart  + MAX_EEPROM_SIZE))) {
                         for (int i = 0; i < r.len; i++) {
-                            hexDataEeprom[address - EE_START + i] = r.getData(i);
+                            hexDataEeprom[address - eeStart + i] = r.getData(i);
                         }
                         if ((address + r.len) > eeEnd) {
                             eeEnd = address + r.len;

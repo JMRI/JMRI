@@ -12,7 +12,7 @@ public class HexFileTest {
 
     @Test
     public void testCTor() {
-        HexFile f = new HexFile("cbusHexFileTest");
+        HexFile f = new HexFile("cbusHexFileTest", 0xF00000);
         Assert.assertNotNull("exists",f);
     }
     

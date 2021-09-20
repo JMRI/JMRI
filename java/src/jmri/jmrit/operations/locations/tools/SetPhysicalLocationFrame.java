@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
@@ -13,6 +14,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
@@ -99,9 +101,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         if (_location != null) {
             locationBox.setSelectedItem(_location);
         }
-
-        pack();
-        setVisible(true);
+        
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
     }
 
     /**
@@ -173,8 +174,6 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         physicalLocation.setValue(l.getPhysicalLocation());
     }
 
-    // Unused. Carried over from SetTrainIconPosition or whatever it was
-    // called...
     /*
      * private void spinnersEnable(boolean enable){
      * physicalLocation.setEnabled(enable); }
