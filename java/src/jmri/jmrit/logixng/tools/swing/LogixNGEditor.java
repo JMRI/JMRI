@@ -212,7 +212,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             conditionalTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(conditionalTableScrollPane);
 
-            _showStartupThreadsCheckBox = new JCheckBox("Show startup thread");
+            _showStartupThreadsCheckBox = new JCheckBox(Bundle.getMessage("ShowStartupThreadCheckBox"));
             contentPane.add(_showStartupThreadsCheckBox);
             _showStartupThreadsCheckBox.addActionListener((evt) -> {
                 _conditionalNGTableModel.setShowStartupThreads(
