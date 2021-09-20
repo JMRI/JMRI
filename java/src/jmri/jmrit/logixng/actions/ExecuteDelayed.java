@@ -69,12 +69,6 @@ public class ExecuteDelayed
         return Category.COMMON;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     /**
      * Get a new timer task.
      */
