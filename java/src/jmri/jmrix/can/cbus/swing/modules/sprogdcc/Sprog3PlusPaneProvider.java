@@ -114,15 +114,6 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     /** {@inheritDoc} */
     @Override
     public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-            _nVarEditFrame = new Sprog3PlusEditNVPane(dataModel, node);
-        }
-        return _nVarEditFrame.getContent();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         _nVarEditFrame = new Sprog3PlusEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }

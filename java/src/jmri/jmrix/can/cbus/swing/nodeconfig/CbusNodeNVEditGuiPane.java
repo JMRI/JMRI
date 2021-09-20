@@ -35,30 +35,11 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     /**
-     * Set the display pane to the current node (creating a new pane if necessary)
-     * 
-     * @param node to be shown
-     */
-    protected void setNode(CbusNode node ) {
-        setResetNode(false, node);
-    }
-    
-    /**
-     * Reset the display pane
-     * 
-     * @param node being displayed
-     */
-    protected void resetNode(CbusNode node ) {
-        setResetNode(true, node);
-    }
-    
-    /**
      * Helper function
      * 
-     * @param reset reset flag
      * @param node node to display
      */
-    private void setResetNode(boolean reset, CbusNode node) {
+    protected void setNode(CbusNode node) {
         _node = node;
         
         if (pane1!=null){
@@ -67,11 +48,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         }
         
         CbusConfigPaneProvider provider = CbusConfigPaneProvider.getProviderByNode(_node);
-        if (reset) {
-            editGui = provider.getNewEditNVFrame(nodeNVModel, _node);
-        } else {
-            editGui = provider.getEditNVFrame(nodeNVModel, _node);
-        }
+        editGui = provider.getEditNVFrame(nodeNVModel, _node);
         editGuiInstance = provider.getEditNVFrameInstance();
         showGui(editGui);
 

@@ -70,7 +70,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         for (int y = 0; y < OUTPUTS/4; y++) {
             c.gridx = 0;
             for (int x = 0; x < 4; x++) {
-                int index = y*4+x+1;
+                int index = y*4 + x + 1;            // NVs indexed from 1
                 out[index] = new OutPane(index);
                 gridPane.add(out[index], c);
                 c.gridx++;

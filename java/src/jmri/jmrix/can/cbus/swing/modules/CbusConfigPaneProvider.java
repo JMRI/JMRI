@@ -58,22 +58,13 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     abstract public AbstractEditNVPane getEditNVFrameInstance();
     
     /**
-     * Get the current edit frame or create one
-     * 
-     * @param editFrame the containing frame
-     * @param node the node to be edited
-     * @return the edit frame
-     */
-    abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
-
-    /**
      * Create a new edit frame
      * 
      * @param editFrame the containing frame
      * @param node the node to be edited
      * @return the edit frame
      */
-    abstract public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
+    abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
     /**
      * Return string representation of the node

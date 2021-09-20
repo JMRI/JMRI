@@ -161,7 +161,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     protected void cancelOption(){
         nodeNVModel.resetNewNvs();
         if (editNVGui != null) {
-            editNVGui.resetNode(nodeOfInterest);
+            editNVGui.setNode(nodeOfInterest);
         }
     }
     

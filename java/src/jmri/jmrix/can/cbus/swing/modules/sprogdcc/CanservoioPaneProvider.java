@@ -97,11 +97,4 @@ public class CanservoioPaneProvider extends CbusConfigPaneProvider {
         }
         return _nVarEditFrame.getContent();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        _nVarEditFrame = new CanservoioEditNVPane(dataModel, node);
-        return _nVarEditFrame.getContent();
-    }
 }

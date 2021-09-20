@@ -91,15 +91,6 @@ public class Canacc8PaneProvider extends CbusConfigPaneProvider {
     /** {@inheritDoc} */
     @Override
     public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-            _nVarEditFrame = new Canacc8EditNVPane(dataModel, node);
-        }
-        return _nVarEditFrame.getContent();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         _nVarEditFrame = new Canacc8EditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }
