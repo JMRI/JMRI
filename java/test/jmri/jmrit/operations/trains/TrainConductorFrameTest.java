@@ -84,18 +84,30 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         // Need to select all before moving train
         JButtonOperator jbos = new JButtonOperator(jfoc, Bundle.getMessage("SelectAll"));
         jbos.doClick();
-        // Move train using conductor window
         JButtonOperator jbom = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return jbom.isEnabled();
+        }, "wait for button to be enabled");
+        
+        // Move train using conductor window       
         jbom.doClick();
         Assert.assertEquals("Train moved", "North Industries", train2.getCurrentLocationName());
         
         // move to next location
+        Assert.assertTrue("confirm button is enabled", jbos.isEnabled());
         jbos.doClick();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return jbom.isEnabled();
+        }, "wait for button to be enabled");
         jbom.doClick();
         Assert.assertEquals("Train moved", "South End Staging", train2.getCurrentLocationName());
         
         // terminate train
+        Assert.assertTrue("confirm button is enabled", jbos.isEnabled());
         jbos.doClick();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return jbom.isEnabled();
+        }, "wait for button to be enabled");
         jbom.doClick();
         Assert.assertFalse(train2.isBuilt());
 
@@ -122,12 +134,16 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertTrue(train2.isBuilt());
         
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return  p.modifyButton.isEnabled();
+        }, "wait for button to be enabled");
         JemmyUtil.enterClickAndLeaveThreadSafe(p.modifyButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("AddCarsToTrain?"), Bundle.getMessage("ButtonNo"));
         
         Assert.assertFalse(p.selectButton.isEnabled());
+        Assert.assertTrue("confirm button is enabled", p.modifyButton.isEnabled());
         JemmyUtil.enterClickAndLeave(p.modifyButton);
         Assert.assertTrue(p.selectButton.isEnabled());
         
