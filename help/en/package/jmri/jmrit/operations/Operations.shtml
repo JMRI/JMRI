@@ -4829,7 +4829,8 @@
 
       <p>Use this window to change all of your train departure times by certain number of hours. It
       can be found under Trains-&gt;Tools. Useful if you're trying to match the train departure
-      times to a real or fast clock.</p>
+      times to a real or fast clock. You also have the option to change the departure times in your
+      routes.</p>
 
       <h4 id="TrainsTableColors">Train Row Color</h4>
 

@@ -117,11 +117,13 @@ public class DigitalMany extends AbstractDigitalAction
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _actionEntries.get(index)._socket;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getChildCount() {
         return _actionEntries.size();
@@ -164,7 +166,8 @@ public class DigitalMany extends AbstractDigitalAction
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
         switch (oper) {
-            case Remove:        // Possible if socket is not connected
+            case Remove:    // Possible if socket is not connected and there are at least two sockets
+                if (_actionEntries.size() == 1) return false;
                 return ! getChild(index).isConnected();
             case InsertBefore:
                 return true;    // Always possible
@@ -234,6 +237,7 @@ public class DigitalMany extends AbstractDigitalAction
         }
     }
     
+    /** {@inheritDoc} */
     @Override
     public void connected(FemaleSocket socket) {
         if (disableCheckForUnconnectedSocket) return;
@@ -248,6 +252,7 @@ public class DigitalMany extends AbstractDigitalAction
         checkFreeSocket();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void disconnected(FemaleSocket socket) {
         for (ActionEntry entry : _actionEntries) {
@@ -258,11 +263,13 @@ public class DigitalMany extends AbstractDigitalAction
         }
     }
     
+    /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "Many_Short");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Many_Long");
