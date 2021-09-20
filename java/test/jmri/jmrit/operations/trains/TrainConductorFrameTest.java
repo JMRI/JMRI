@@ -73,6 +73,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         train2.setNumberEngines("2");
         
         TrainConductorFrame f = new TrainConductorFrame(train2);
+        TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         
         // update panel by building train
         Assert.assertTrue(train2.build());
@@ -84,6 +85,9 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         // Need to select all before moving train
         JButtonOperator jbos = new JButtonOperator(jfoc, Bundle.getMessage("SelectAll"));
         jbos.doClick();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return p.moveButton.isEnabled();
+        }, "wait for button to be enabled");
         // Move train using conductor window
         JButtonOperator jbom = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
         jbom.doClick();
@@ -91,11 +95,17 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         // move to next location
         jbos.doClick();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return p.moveButton.isEnabled();
+        }, "wait for button to be enabled");
         jbom.doClick();
         Assert.assertEquals("Train moved", "South End Staging", train2.getCurrentLocationName());
         
         // terminate train
         jbos.doClick();
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return p.moveButton.isEnabled();
+        }, "wait for button to be enabled");
         jbom.doClick();
         Assert.assertFalse(train2.isBuilt());
 
