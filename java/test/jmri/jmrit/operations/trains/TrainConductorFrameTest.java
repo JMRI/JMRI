@@ -31,8 +31,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        TrainConductorFrame t = new TrainConductorFrame(train1);
+        TrainConductorFrame t = new TrainConductorFrame(null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
@@ -134,9 +133,6 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertTrue(train2.isBuilt());
         
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return  p.modifyButton.isEnabled();
-        }, "wait for button to be enabled");
         JemmyUtil.enterClickAndLeaveThreadSafe(p.modifyButton);
         
         // dialog window should appear
@@ -149,6 +145,4 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(f);
     }
-
- 
 }

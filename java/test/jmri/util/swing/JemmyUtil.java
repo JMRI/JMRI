@@ -47,11 +47,17 @@ public class JemmyUtil {
     }
     
     static public void enterClickAndLeaveThreadSafe(JButton comp) {
+        // test can hang if button isn't enabled
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return comp.isEnabled();
+        }, "wait for button to be enabled");
+        
         Thread t = new Thread(() -> {
             JButtonOperator jbo = new JButtonOperator(comp);
             jbo.push();
         });
         t.start();
+        
         jmri.util.JUnitUtil.waitFor(() -> {
             return t.getState().equals(Thread.State.TERMINATED);
         }, "wait for dialog window to appear");
