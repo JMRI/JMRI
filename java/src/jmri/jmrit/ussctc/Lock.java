@@ -45,11 +45,13 @@ public interface Lock {
 
     // static while we decide whether to access via scripts
     final static LockLogger signalLockLogger  = new LockLogger("IMUSS CTC:SIGNAL LOCK:1:LOG"){
+        @Override
         void log(String message) {
             log.info(message);
         }
     };
     final static LockLogger turnoutLockLogger = new LockLogger("IMUSS CTC:TURNOUT LOCK:1:LOG"){
+        @Override
         void log(String message) {
             log.info(message);
         }

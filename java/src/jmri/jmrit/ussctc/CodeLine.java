@@ -133,6 +133,7 @@ public class CodeLine {
         }, START_PULSE_LENGTH);
     }
 
+    @Override
     public String toString() {
         return "Codeline "+active;
     }
