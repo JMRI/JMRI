@@ -561,11 +561,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     new String[] { ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"), // NOI18N
                             ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnNoClose") }, // NOI18N
                     ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
-            if (result == javax.swing.JOptionPane.NO_OPTION) {
-                return;
+            if (result != javax.swing.JOptionPane.NO_OPTION) {
+                // user wants to save
+                storeValues();
             }
-            // user wants to save
-            storeValues();
         }
     }
 
