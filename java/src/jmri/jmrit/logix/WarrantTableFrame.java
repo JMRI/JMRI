@@ -49,14 +49,15 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
-    static final String ramp = Bundle.getMessage("Ramp");
-    static final String halt = Bundle.getMessage("Halt");
+    static final String ramp = Bundle.getMessage("Halt");
+    static final String halt = Bundle.getMessage("Stop");
     static final String stop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
+    static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort,
-                                        (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
+    static final String[] controls = {" ", ramp, resume, halt, speedup, retry, stop, abort,
+                            (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
 

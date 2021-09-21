@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,6 +117,8 @@ public class IndicatorTrackPaths {
         }
     }
 
+    @jmri.InvokeOnLayoutThread
+    // LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
     protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
             removeLocoIcon();
