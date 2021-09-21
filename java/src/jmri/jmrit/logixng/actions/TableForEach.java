@@ -57,12 +57,6 @@ public class TableForEach extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         
 //        System.out.format("TableForEach.execute: %s%n", getLongDescription());

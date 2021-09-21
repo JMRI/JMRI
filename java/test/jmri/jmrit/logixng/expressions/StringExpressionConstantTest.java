@@ -198,11 +198,6 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "String constant", _base.getShortDescription(Locale.ENGLISH));
     }

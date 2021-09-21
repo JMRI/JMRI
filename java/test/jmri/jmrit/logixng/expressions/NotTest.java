@@ -246,11 +246,6 @@ public class NotTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         Not e1 = new Not("IQDE321", null);
         Assert.assertTrue("Not".equals(e1.getShortDescription()));

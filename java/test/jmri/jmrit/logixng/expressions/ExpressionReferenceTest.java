@@ -142,11 +142,6 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         Assert.assertEquals("Reference", expressionReference.getShortDescription());
         Assert.assertEquals("Reference '' is Nothing", expressionReference.getLongDescription());

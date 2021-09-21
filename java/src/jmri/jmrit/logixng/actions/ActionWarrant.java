@@ -310,12 +310,6 @@ public class ActionWarrant extends AbstractDigitalAction implements VetoableChan
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
 
     private String getNewOper() throws JmriException {
 

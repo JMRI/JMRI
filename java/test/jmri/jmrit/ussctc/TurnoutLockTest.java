@@ -23,7 +23,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(lock.isLockClear());
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.THROWN);
 
-        Assert.assertTrue(! lock.isLockClear());
+        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(! lock.isLockClear());
+        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(! lock.isLockClear());
+        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @BeforeEach

@@ -131,12 +131,6 @@ public class Sequence extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         if (_stopExpressionSocket.isConnected()
                 && _stopExpressionSocket.evaluate()) {

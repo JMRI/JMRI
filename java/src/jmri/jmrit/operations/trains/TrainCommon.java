@@ -25,6 +25,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
@@ -1338,7 +1339,7 @@ public class TrainCommon {
                             InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
         }
         if (attribute.equals(Setup.CONSIST)) {
-            return SPACE + padAndTruncateIfNeeded(engine.getConsistName(), engineManager.getConsistMaxNameLength());
+            return SPACE + padAndTruncateIfNeeded(engine.getConsistName(), InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
@@ -1364,7 +1365,7 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.PICKUP_COMMENT)) {
             return SPACE + car.getPickupComment();
         } else if (attribute.equals(Setup.KERNEL)) {
-            return SPACE + padAndTruncateIfNeeded(car.getKernelName(), carManager.getKernelMaxNameLength());
+            return SPACE + padAndTruncateIfNeeded(car.getKernelName(), InstanceManager.getDefault(KernelManager.class).getMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
             if (car.isLead()) {
                 return SPACE + padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
@@ -1735,10 +1736,10 @@ public class TrainCommon {
                         InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) + SPACE);
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
-                        engineManager.getConsistMaxNameLength()) + SPACE);
+                        InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
             } else if (attribute.equals(Setup.KERNEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Kernel(),
-                        carManager.getKernelMaxNameLength()) + SPACE);
+                        InstanceManager.getDefault(KernelManager.class).getMaxNameLength()) + SPACE);
             } else if (attribute.equals(Setup.KERNEL_SIZE)) {
                 buf.append("   "); // assume kernel size is 99 or less
             } else if (attribute.equals(Setup.LOAD)) {

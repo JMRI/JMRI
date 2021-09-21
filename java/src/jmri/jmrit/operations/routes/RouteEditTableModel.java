@@ -604,7 +604,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         return cb;
     }
 
-    private JComboBox<String> getTimeComboBox() {
+    protected JComboBox<String> getTimeComboBox() {
         JComboBox<String> timeBox = new JComboBox<>();
         String hour;
         String minute;

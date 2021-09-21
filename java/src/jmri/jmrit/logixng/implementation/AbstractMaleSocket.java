@@ -95,12 +95,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         return _object.getCategory();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public final boolean isExternal() {
-        return _object.isExternal();
-    }
-
     @Override
     public final FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _object.getChild(index);

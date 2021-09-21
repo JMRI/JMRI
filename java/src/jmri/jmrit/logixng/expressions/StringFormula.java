@@ -134,12 +134,6 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public String evaluate() throws JmriException {
         
         if (_formula.isEmpty()) {

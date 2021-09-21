@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
  * User interface frame for creating and editing "OS Indicator" logic on USS CTC
  * machines.
  *
+ * @see jmri.jmrit.ussctc.OsIndicator
+ * @see jmri.jmrit.ussctc.OsIndicatorFrame
+ * @see jmri.jmrit.ussctc.OsIndicatorAction
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicatorPanel extends BasePanel {

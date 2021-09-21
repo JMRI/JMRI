@@ -120,7 +120,7 @@ public class DefaultIdTag extends AbstractIdTag {
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
                 } catch (IllegalArgumentException ex) {
-                    log.warn("Failed to provide Turnout \"{}\" in load", e.getChild("whereLastSeen").getText());
+                    log.warn("Failed to provide Reporter \"{}\" in load", e.getChild("whereLastSeen").getText());
                 }
             }
             if (e.getChild("whenLastSeen") != null) { // NOI18N
