@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.*;
 
+import org.junit.Assert;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -135,10 +136,16 @@ public class JemmyUtil {
     }
     
     static public void waitFor(JmriJFrame f) {
+        int count = 2;
         f.requestFocus();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return f.isActive();
-        }, "wait for frame to be active");
+        while (!f.isActive() && count > 0) {
+            jmri.util.JUnitUtil.waitFor(() -> {
+                return f.isActive();
+            });
+            count--;
+            f.requestFocus();
+        }
+        Assert.assertTrue("frame is active", f.isActive());
     }
 
 }
