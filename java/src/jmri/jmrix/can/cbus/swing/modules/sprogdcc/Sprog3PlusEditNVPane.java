@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
@@ -13,8 +12,8 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Node Variable edit frame for a MERG CANACC8 CBUS module
@@ -23,7 +22,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
-    private CmdStaFlags [] csFlags = new CmdStaFlags[3];
+    private static final int USER_FLAGS = 0;
+    private static final int OPS_FLAGS = 1;
+    private static final int DEBUG_FLAGS = 2;
+    private CbusModulesCommon.CmdStaFlags [] csFlags = new CbusModulesCommon.CmdStaFlags[3];
     
     private final UpdateNV cmdStaNoUpdateFn = new UpdateCmdStaNo();
     private final UpdateNV canIdUpdateFn = new UpdateCanId();
@@ -34,6 +36,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private final UpdateNV preambleUpdateFn = new UpdatePreamble();
     private final UpdateNV powerModeUpdateFn = new UpdatePowerMode();
     private final UpdateNV meterUpdateFn = new UpdateMeter();
+    private final UpdateNV flagUpdateFn = new UpdateFlags();
     
     private CbusModulesCommon.TitledSpinner cmdStaNoSpinner;
     private JComboBox<String> powerModeList ;
@@ -48,6 +51,72 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private CbusModulesCommon.TitledSpinner preambleSpinner;
     private JRadioButton disable ;
             
+    protected String flagTitleStrings[] = new String[] {
+        Bundle.getMessage("UserFlags"),
+        Bundle.getMessage("OperationsFlags"),
+        Bundle.getMessage("DebugFlags")
+    };
+
+    protected String flagStrings[][] = new String[][] {
+        // User
+        {Bundle.getMessage("Reserved"),
+            Bundle.getMessage("PermitSteal"),
+            Bundle.getMessage("PermitShare"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("MapEvents"),
+            Bundle.getMessage("StopOnTimeout"),
+            Bundle.getMessage("StartOfDay"),
+            Bundle.getMessage("AutoPower")},
+        // Ops
+        {Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("ZtcMode"),
+            Bundle.getMessage("AllStopTrackOff"),
+            Bundle.getMessage("BluelineMode"),
+            Bundle.getMessage("AckSensitivity"),
+            Bundle.getMessage("Reserved")},
+        // Debug
+        {Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved")
+        }};
+
+    protected String flagTtStrings[][] = new String[][] {
+        // User
+        {Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("PermitStealTt"),
+            Bundle.getMessage("PermitShareTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("MapEventsTt"),
+            Bundle.getMessage("StopOnTimeoutTt"),
+            Bundle.getMessage("StartOfDayTt"),
+            Bundle.getMessage("AutoPowerTt")},
+        // Ops
+        {Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ZtcModeTt"),
+            Bundle.getMessage("AllStopTrackOffTt"),
+            Bundle.getMessage("BluelineModeTt"),
+            Bundle.getMessage("AckSensitivityTt"),
+            Bundle.getMessage("ReservedTt")},
+        // Debug
+        {Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt")
+        }};
+
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
     }
@@ -108,11 +177,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT:
-                    mainSpinner.getModel().setValue(value/100.0);
+                    double progLimit = (double)value/100;
+                    progSpinner.getModel().setValue(progLimit);
                     break;
                 
                 case Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT:
-                    progSpinner.getModel().setValue(value/100.0);
+                    double mainLimit = (double)value/100;
+                    mainSpinner.getModel().setValue(mainLimit);
                     break;
                     
                 case Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT:
@@ -180,6 +251,21 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     }
         
     /**
+     * Update the Flags
+     */
+    protected class UpdateFlags implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+            int flags = csFlags[index].getFlags();
+            _nvArray[Sprog3PlusPaneProvider.USER_FLAGS + index] = flags;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            _dataModel.setValueAt(flags, Sprog3PlusPaneProvider.USER_FLAGS + index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+        }
+    }
+        
+    /**
      * Update the CAN ID
      * 
      * For debug only, CAN ID is not normally set this way
@@ -224,7 +310,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         
         /** {@inheritDoc} */
         @Override
-        public void setNewVal(int mode) {
+        public void setNewVal(int index) {
+            int mode = meter.isSelected() ? 1 : 0;
+            _nvArray[index] = mode;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            _dataModel.setValueAt(mode, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
     
@@ -237,11 +327,14 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int limit;
+            float fLimit;
             if (index == Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT) {
-                limit = ((SpinnerNumberModel)mainSpinner.getModel()).getNumber().intValue();
+                fLimit = ((SpinnerNumberModel)mainSpinner.getModel()).getNumber().floatValue();
             } else {
-                limit = ((SpinnerNumberModel)mainSpinner.getModel()).getNumber().intValue();
+                fLimit = ((SpinnerNumberModel)progSpinner.getModel()).getNumber().floatValue();
             }
+            // Limit to 10mA precision
+            limit = (int)(fLimit*100 + 0.5);
             _nvArray[index] = limit;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(limit, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -304,7 +397,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         
         /** {@inheritDoc} */
         @Override
-        public void setNewVal(int mode) {
+        public void setNewVal(int index) {
+            int mode = powerModeList.getSelectedIndex();
+            _nvArray[index] = mode;
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            _dataModel.setValueAt(mode, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
     
@@ -317,72 +414,15 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             super();
 
             JPanel gridPane = new JPanel(new GridBagLayout());
+            JPanel [] flagPane = new JPanel[3];
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
 
-            String userFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
-                Bundle.getMessage("PermitSteal"),
-                Bundle.getMessage("PermitShare"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("MapEvents"),
-                Bundle.getMessage("StopOnTimeout"),
-                Bundle.getMessage("StartOfDay"),
-                Bundle.getMessage("AutoPower")
-            };
-            String userFlagTtStrings [] = new String[] {Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("PermitStealTt"),
-                Bundle.getMessage("PermitShareTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("MapEventsTt"),
-                Bundle.getMessage("StopOnTimeoutTt"),
-                Bundle.getMessage("StartOfDayTt"),
-                Bundle.getMessage("AutoPowerTt")
-            };
-            csFlags[0] = new CmdStaFlags(Bundle.getMessage("UserFlags"), userFlagStrings, userFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.USER_FLAGS]);
-            JPanel userFlags = csFlags[0].getContents();
-
-            String opFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("ZtcMode"),
-                Bundle.getMessage("AllStopTrackOff"),
-                Bundle.getMessage("BluelineMode"),
-                Bundle.getMessage("AckSensitivity"),
-                Bundle.getMessage("Reserved")
-            };
-            String opFlagTtStrings [] = new String[] {Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ZtcModeTt"),
-                Bundle.getMessage("AllStopTrackOffTt"),
-                Bundle.getMessage("BluelineModeTt"),
-                Bundle.getMessage("AckSensitivityTt"),
-                Bundle.getMessage("ReservedTt")
-            };
-            csFlags[1] = new CmdStaFlags(Bundle.getMessage("OperationsFlags"), opFlagStrings, opFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.OPERATIONS_FLAGS]);
-            JPanel opFlags = csFlags[1].getContents();
-
-            String debugFlagStrings [] = new String[] {Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved"),
-                Bundle.getMessage("Reserved")
-            };
-            String debugFlagTtStrings [] = new String[] {Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt"),
-                Bundle.getMessage("ReservedTt")
-            };
-            csFlags[2] = new CmdStaFlags(Bundle.getMessage("DebugFlags"), debugFlagStrings, debugFlagTtStrings, _nvArray[Sprog3PlusPaneProvider.DEBUG_FLAGS]);
-            JPanel debugFlags = csFlags[2].getContents();
-
+            for (int i = 0; i < 3; i++) {
+                csFlags[i] = new CbusModulesCommon.CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                flagPane[i] = csFlags[i].getContents();
+            }
+            
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
                 Bundle.getMessage("ProgOnMode"),
                 Bundle.getMessage("ProgArMode")
@@ -421,11 +461,11 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(_nvArray[Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
+            mainSpinner.init(_nvArray[Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT]/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
-            gridPane.add(userFlags, c);
+            gridPane.add(flagPane[USER_FLAGS], c);
             c.gridx++;
 
             // x = 2
@@ -435,12 +475,12 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             
             progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
-            mainSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT]/100.0, 0.1, 2.5, 0.1);
+            progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
+            progSpinner.init(_nvArray[Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT]/100.0, 1.0, 2.5, 0.01);
             gridPane.add(progSpinner, c);
             c.gridy++;
             
-            gridPane.add(opFlags, c);
+            gridPane.add(flagPane[OPS_FLAGS], c);
             c.gridx++;
 
             // x = 3
@@ -450,7 +490,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             c.gridy++;
             
-            gridPane.add(debugFlags, c);
+            gridPane.add(flagPane[DEBUG_FLAGS], c);
             c.gridx++;
 
             add(gridPane);
@@ -462,7 +502,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
          * @param e the action event
          */
         protected void pwrModeActionListener(ActionEvent e) {
-            powerModeUpdateFn.setNewVal(((JComboBox)e.getSource()).getSelectedIndex());
+            powerModeUpdateFn.setNewVal(Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE);
         }
         
         /**
@@ -471,7 +511,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
          * @param e the action event
          */
         protected void meterActionListener(ActionEvent e) {
-            meterUpdateFn.setNewVal(((JRadioButton)e.getSource()).isSelected() ? 1 : 0);
+            meterUpdateFn.setNewVal(Sprog3PlusPaneProvider.MULTIMETER_MODE);
         }
     }
     
@@ -561,79 +601,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    /**
-     * Class to display CBUS command station flag settings
-     */
-    private class CmdStaFlags extends JPanel {
-        
-        protected String _title;
-        protected int _flags;
-        protected JRadioButton [] buttons;
-
-        public CmdStaFlags(String title, String [] fn, String [] tt, int flags) {
-            super();
-            
-            _title = title;
-            _flags = flags;
-            buttons = new JRadioButton[8];
-            for (int i = 0; i < 8; i++) {
-                buttons[i] = new JRadioButton(fn[i]);
-                buttons[i].setToolTipText(tt[i]);
-            }
-        }
-        
-        /**
-         * Get the panel to display the flags
-         * 
-         * @return JPanel displaying the flags
-         */
-        protected JPanel getContents() {
-            
-            JPanel gridPane = new JPanel(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weightx = 1;
-            c.weighty = 1;
-            c.gridx = 0;
-            c.gridy = 0;
-
-            Border border = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-            TitledBorder t = BorderFactory.createTitledBorder(border, _title);
-            gridPane.setBorder(t);
-
-            for (int i = 0; i < 8; i++) {
-                gridPane.add(buttons[i], c);
-                c.gridy++;
-            }
-            setButtons();
-            
-            return gridPane;
-        }
-        
-        /**
-         * Update the flags settings
-         * 
-         * @param flags settings
-         */
-        protected void setFlags(int flags) {
-            _flags = flags;
-            setButtons();
-        }
-        
-        /**
-         * Set the buttons to the state of the flags
-         */
-        protected void setButtons() {
-            for (int i = 0; i < 8; i++) {
-                if ((_flags & (1<<i)) > 0) {
-                    buttons[i].setSelected(true);
-                } else {
-                    buttons[i].setSelected(false);
-                }
-            }
-        }
-    }
-
     //private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

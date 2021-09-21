@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.can.cbus.swing.modules;
 
 import java.awt.GraphicsEnvironment;
@@ -53,11 +48,6 @@ public class CbusConfigPaneProviderTest {
         
         @Override
         public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node) {
-            return null;
-        }
-
-        @Override
-        public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node) {
             return null;
         }
     }

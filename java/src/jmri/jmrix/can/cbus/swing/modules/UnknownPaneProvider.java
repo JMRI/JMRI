@@ -50,11 +50,4 @@ public class UnknownPaneProvider extends CbusConfigPaneProvider  {
         }
         return _nVarEditFrame.getContent();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getNewEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        _nVarEditFrame = new UnknownEditNVPane(dataModel, node);
-        return _nVarEditFrame.getContent();
-    }
 }
