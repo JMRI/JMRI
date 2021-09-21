@@ -61,16 +61,26 @@ public class Station {
 
     @Override
     public String toString() {
-        String retval = "Station "+name+"\n";
-        retval = retval+"        sentValues:";
+        StringBuffer retval = new StringBuffer("Station "+name+"\n        sentValues:");
 
-        if (sentValues == null) retval = retval + " (null)";
-        else for (Enum e : sentValues)  retval = retval+" "+e;
-        retval = retval+"\n  indicationValues:";
-        if (indicationValues == null) retval = retval + " (null)";
-        else for (Enum e : indicationValues) retval = retval+" "+e;
+        if (sentValues == null) retval.append(" (null)");
+        else {
+            for (Enum e : sentValues)  {
+                retval.append(" ");
+                retval.append(e);
+            }
+        }
 
-        return retval;
+        retval.append("\n  indicationValues:");
+        if (indicationValues == null) retval = retval.append(" (null)");
+        else {
+            for (Enum e : sentValues)  {
+                retval.append(" ");
+                retval.append(e);
+            }
+        }
+
+        return new String(retval);
     }
 
     /**

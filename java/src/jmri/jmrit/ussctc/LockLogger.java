@@ -71,5 +71,5 @@ public class LockLogger {
     final public String logMemoryName;
     final public Memory memory;
 
-    final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
+    protected final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }
