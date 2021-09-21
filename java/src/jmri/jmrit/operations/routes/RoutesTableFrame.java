@@ -90,12 +90,8 @@ public class RoutesTableFrame extends OperationsFrame {
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
 
-        initMinimumSize();
-        // make panel a bit wider than minimum if the very first time opened
-        if (getWidth() == Control.panelWidth500) {
-            setSize(Control.panelWidth700, getHeight());
-        }
-
+        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight300));
+ 
         // create ShutDownTasks
         createShutDownTask();
     }

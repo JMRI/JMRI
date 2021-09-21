@@ -567,8 +567,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light upper yellow.</tooltip>
@@ -641,8 +641,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light green.</tooltip>
@@ -715,8 +715,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light red.</tooltip>
@@ -789,8 +789,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light lunar.</tooltip>
@@ -863,8 +863,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light lower yellow.</tooltip>
@@ -937,8 +937,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 0 Signal light blue.</tooltip>
@@ -1057,8 +1057,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light upper yellow.</tooltip>
@@ -1131,8 +1131,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light green.</tooltip>
@@ -1205,8 +1205,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light red.</tooltip>
@@ -1279,8 +1279,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light lunar.</tooltip>
@@ -1353,8 +1353,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light lower yellow.</tooltip>
@@ -1427,8 +1427,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 1 Signal light blue.</tooltip>
@@ -1547,8 +1547,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light upper yellow.</tooltip>
@@ -1621,8 +1621,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light green.</tooltip>
@@ -1695,8 +1695,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light red.</tooltip>
@@ -1769,8 +1769,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light lunar.</tooltip>
@@ -1843,8 +1843,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light lower yellow.</tooltip>
@@ -1917,8 +1917,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 2 Signal light blue.</tooltip>
@@ -2037,8 +2037,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light upper yellow.</tooltip>
@@ -2111,8 +2111,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light green.</tooltip>
@@ -2185,8 +2185,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light red.</tooltip>
@@ -2259,8 +2259,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light lunar.</tooltip>
@@ -2333,8 +2333,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light lower yellow.</tooltip>
@@ -2407,8 +2407,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 3 Signal light blue.</tooltip>
@@ -2527,8 +2527,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light upper yellow.</tooltip>
@@ -2601,8 +2601,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light green.</tooltip>
@@ -2675,8 +2675,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light red.</tooltip>
@@ -2749,8 +2749,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light lunar.</tooltip>
@@ -2823,8 +2823,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light lower yellow.</tooltip>
@@ -2897,8 +2897,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 4 Signal light blue.</tooltip>
@@ -3017,8 +3017,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light upper yellow.</tooltip>
@@ -3091,8 +3091,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light green.</tooltip>
@@ -3165,8 +3165,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light red.</tooltip>
@@ -3239,8 +3239,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light lunar.</tooltip>
@@ -3313,8 +3313,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light lower yellow.</tooltip>
@@ -3387,8 +3387,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 5 Signal light blue.</tooltip>
@@ -3507,8 +3507,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light upper yellow.</tooltip>
@@ -3581,8 +3581,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light green.</tooltip>
@@ -3655,8 +3655,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light red.</tooltip>
@@ -3729,8 +3729,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light lunar.</tooltip>
@@ -3803,8 +3803,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light lower yellow.</tooltip>
@@ -3877,8 +3877,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 6 Signal light blue.</tooltip>
@@ -3997,8 +3997,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light upper yellow.</tooltip>
@@ -4071,8 +4071,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light green.</tooltip>
@@ -4145,8 +4145,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light red.</tooltip>
@@ -4219,8 +4219,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light lunar.</tooltip>
@@ -4293,8 +4293,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light lower yellow.</tooltip>
@@ -4367,8 +4367,8 @@
                     <choice xml:lang="cs">P</choice>
                 </enumChoice>
                 <enumChoice choice="Not addressed" value="16" >
-                    <choice>×</choice>
-                    <choice xml:lang="cs">×</choice>
+                    <choice>×  </choice>
+                    <choice xml:lang="cs">×  </choice>
                 </enumChoice>
             </enumVal>
             <tooltip>Signal mast 7 Signal light blue.</tooltip>
