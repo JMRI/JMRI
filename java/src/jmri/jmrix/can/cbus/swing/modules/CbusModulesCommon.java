@@ -230,6 +230,7 @@ public class CbusModulesCommon {
             for (int i = 6; i >= 0; i--) {
                 value = (value << 1) + (buttons[i].isSelected() ? 1 : 0);
             }
+            setFlags(value);
             _flagUpdateFn.setNewVal(_index);
         }
 
