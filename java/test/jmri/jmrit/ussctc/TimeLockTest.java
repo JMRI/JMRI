@@ -21,7 +21,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue(lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue(lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue( ! lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s});
 
-        Assert.assertTrue( ! lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(s);
 
-        Assert.assertTrue( ! lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue( ! lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class TimeLockTest {
         BeanSetting b = new BeanSetting(t, Turnout.CLOSED);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
 
-        Assert.assertTrue( ! lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class TimeLockTest {
         BeanSetting b = new BeanSetting(t, Turnout.THROWN);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
 
-        Assert.assertTrue( lock.isLockClear(lock.turnoutLockLogger));
+        Assert.assertTrue( lock.isLockClear(Lock.turnoutLockLogger));
     }
 
 
