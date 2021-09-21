@@ -145,7 +145,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.cabsignals.CabSignalAction());
 
         add(new JSeparator());
-        JMenu serverMenu = new JMenu("Servers");
+        JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
         serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
         serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new JSeparator());

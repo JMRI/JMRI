@@ -307,9 +307,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
     }
 
     private void loadToolMenu() {
@@ -325,12 +323,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
-        toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(false, _location));
-        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
     }
 
     // frames

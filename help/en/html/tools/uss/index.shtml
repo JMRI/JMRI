@@ -11,7 +11,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h2>JMRI: Utils USS CTC Tools</h2>
+      <h2>JMRI: Utility USS CTC Tools</h2>
 
       <p class="example">This is the original implementation of CTC and provides capabilities that
       are enabled using scripting. See also <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">the
@@ -142,35 +142,15 @@
         when a Call On state (on an internal turnout that represents the state) has been set (by
         e.g. a Maintainer Call section used to set that JMRI Turnout in the field).</dd>
       </dl>
-      <!-- 
-      (The following pages exist, but aren't right for the post-4.7.4 content)
-      <dl>
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
-        Turnout Lever</a></dt>
 
-        <dd>Controls a Turnout from a lever on the Panel, along
-        with the two indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
-        Signal Lever</a></dt>
-
-        <dd>Controls a set of Signals from a lever on the Panel,
-        along with the three indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code
-        Button</a></dt>
-
-        <dd>Implements the code button and code lamp.</dd>
-      </dl>
- -->
-      There's a page with a worked example (not yet present), and a separate page describing the
+      There's a separate page describing the
       <a href="Conventions.shtml">naming conventions</a> used in the example, in case you find that
       these will save you some work on the setup.
+
       <p>These tools log information to several JMRI Memory objects, which in turn can be placed
-      onto panels as MemoryIcons.</p>
+      onto panels as MemoryIcons to show e.g. which lock is preventing an operation.
+      Prototype CTC machines don't have these, of course, but they're very useful for
+      model railroad dispatchers.</p>
 
       <dl>
         <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>

@@ -138,11 +138,6 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         DigitalExpressionBean e1 = new True("IQDE321", null);
         Assert.assertTrue("Always true".equals(e1.getShortDescription()));

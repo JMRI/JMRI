@@ -15,13 +15,16 @@ import jmri.*;
  */
 public class LockLogger {
 
+    LockLogger(String name) {
+        logMemoryName = name;
+    }
     /**
      * Set the current status of some Lock
      * @param logger The object providing status
      * @param status The new status value, "" for "nothing of interest"
      */
     public void setStatus(@Nonnull Object logger, @Nonnull String status) {
-        log.trace("Object {} set \"{}\" was \"{}\"", logger, status, statusMap.get(logger));
+        log.debug("Object {} set \"{}\" was \"{}\"", logger, status, statusMap.get(logger));
         statusMap.put(logger, status);
         // most recent always displayed if not null
         if ( ! status.isEmpty()) {
@@ -41,16 +44,19 @@ public class LockLogger {
         log.trace("   clearing status");
         InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
     }
-    
+
     public void clear() {
+        log.debug("LockLogger cleared from \"{}\"",
+                        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).getValue()
+        );
         statusMap.clear();
         InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
     }
-    
+
     Map<Object, String> statusMap = new LinkedHashMap<>();
-    
+
     // static while we decide whether to access via scripts
-    public static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
+    public String logMemoryName;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }

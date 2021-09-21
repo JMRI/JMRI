@@ -102,12 +102,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() {
         if (_digitalExpressionHandle != null) {
             MaleSocket m = (MaleSocket) _digitalExpressionHandle.getBean();

@@ -1809,9 +1809,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
-                    new Object[] { car.toString(), rldest.getTrainDirectionString() }));
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
-                    new Object[] { track.getName() }));
+                    new Object[] { car.toString(), rldest.getTrainDirectionString(), track.getName() }));
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {

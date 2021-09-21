@@ -193,11 +193,6 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
     
     private class MaleRootSocket extends AbstractMaleSocket {
 

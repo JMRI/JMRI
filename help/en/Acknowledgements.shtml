@@ -97,7 +97,8 @@
         <li>
           <a href="https://github.com/JMRI/JMRI/pulls/danielb987">Daniel Bergqvist</a>,
           <!-- danielb987 --> primary author of the <a href=
-          "https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>.
+          "https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>
+          who also does a lot of GitHub administration, particularly of PRs.
         </li>
 
         <li>Andrew Berridge, who debugged and fixed problems with the SPROG serial interface</li>
@@ -114,7 +115,8 @@
         <li>Lolke Bijlsma provided a decoder definition for the Shine Plus decoder series from
         Train-O-Rama.</li>
 
-        <li>Pierre Billon, who translated decoder files to German and French and provided decoder
+        <li>Pierre Billon, <!-- PierreMc -->
+        who translated decoder files to German and French and provided decoder
         definitions for Doehler and Haass.</li>
 
         <li>Ian Birchenough, who contributed (with Phil Grainger) six ZTC decoder definition files,
@@ -127,7 +129,8 @@
         <li>Bob Blackwell, who moderates the jmriusers mailing list, accumulating the decoder ID
         info, and updated the DecoderPro manual</li>
 
-        <li>Herve Blorec, who worked on the French translation</li>
+        <li>Herve Blorec, <!-- bzh56420 -->
+        who worked on the French translation</li>
 
         <li>Don Borden, who loaned a Soundtraxx decoder for testing the dual-decoder support</li>
 
@@ -368,11 +371,12 @@
 
         <li>John Forsythe, who helped with the timing needs of TCS decoders</li>
 
-        <li>Enzo Fortuna, who created the Italian translation</li>
+        <li>Enzo Fortuna, <!-- enzofortuna -->
+        who created the Italian translation</li>
 
-        <li>Marc Fournier, <!-- Marcfour -->
-         who improved the TCS decoder definition and did the detail work to update the Soundtraxx
-        manufacturer name.</li>
+        <li>Marc Fournier, <!-- Marcfour  MarcFoum-->
+         who improved the TCS decoder definition, did the detail work to update the Soundtraxx
+        manufacturer name, and fixed some Soundtraxx variable names.</li>
 
         <li>Paul Fraker, who wrote the documentation for the Throttles and provided MRC decoder
         definitions</li>
@@ -490,7 +494,8 @@
         <li>Brian Jackson <!-- brianjackson1 -->
          who updated the Hornby TTS library</li>
 
-        <li>Bob Jacobsen, who wrote some of the early code and does packaging and user support</li>
+        <li>Bob Jacobsen, <!-- bobjacobsen -->
+        who wrote some of the early code and does packaging and user support</li>
 
         <li>Martin Jahner, who fixed the constant checkboxen and built a replacement library for
         Mac OS X</li>
@@ -659,7 +664,8 @@
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
-        <li>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor,
+        <li>Bob Milhaupt, <-- devel-bobm -->
+        who fixed a problem with transponding messages in the LocoNet monitor,
         provided a lot of usability improvements in the LocoNet monitor, and updated several
         LocoNet-related help pages.</li>
 
@@ -675,6 +681,10 @@
 
         <li>Mike Moir, who provided a lot of information on how <a href=
         "http://www.protrak.cc/">Grapevine</a> works.
+        </li>
+
+        <li>Jeff Moonmaw, who provided the <a href=
+        "http:jmri.org/xml/signals/WPRR-1971">WPRR 1971 </a> signal system definition.
         </li>
 
         <li>Michael Mosher, who helped identify the way Digitrax decoder models are organized, has
@@ -750,7 +760,8 @@
         "Q"></a> <a id="R"></a>
         </li>
 
-        <li>Balazs Racz, who fixed a bug in startup and improved our tech documentation, updated
+        <li>Balazs Racz, <-- balazsracz -->
+        who fixed a bug in startup and improved our tech documentation, updated
         the OpenLCB support to their version 0.7, and added support for bean properties to the
         Tables</li>
 
@@ -924,7 +935,8 @@
         implementation.
         </li>
 
-        <li>Mark Underwood, who provided a fix for a problem with looping sounds and added support
+        <li>Mark Underwood, <!-- msunderwd -->
+        who provided a fix for a problem with looping sounds and added support
         for the DCC++ hardware. <a id="V"></a>
         </li>
 

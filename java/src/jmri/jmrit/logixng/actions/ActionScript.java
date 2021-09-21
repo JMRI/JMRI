@@ -184,12 +184,6 @@ public class ActionScript extends AbstractDigitalAction {
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getTheScript() throws JmriException {
         
         switch (_scriptAddressing) {

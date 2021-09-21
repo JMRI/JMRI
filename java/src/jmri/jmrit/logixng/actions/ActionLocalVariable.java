@@ -187,12 +187,6 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         if (_localVariable == null) return;
 
