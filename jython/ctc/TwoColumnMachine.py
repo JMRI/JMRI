@@ -14,61 +14,61 @@ from jmri.jmrit import Sound
 # to the layout
 
 # initialize objects on layout
-turnouts.getTurnout("Code Indication Start")    .state = CLOSED
-turnouts.getTurnout("Code Send Start")          .state = CLOSED
-turnouts.getTurnout("Bell")                     .state = CLOSED
-sensors.getSensor("Bell Cutout")                .state = INACTIVE
+turnouts.provideTurnout("Code Indication Start")    .state = CLOSED
+turnouts.provideTurnout("Code Send Start")          .state = CLOSED
+turnouts.provideTurnout("Bell")                     .state = CLOSED
+sensors.provideSensor("Bell Cutout")                .state = INACTIVE
 
-sensors. getSensor( "TC Sta 1 Left Approach")   .state = INACTIVE
-sensors. getSensor( "TC Sta 1 OS")              .state = INACTIVE
-sensors. getSensor( "TC Sta 2 Main")            .state = INACTIVE
-sensors. getSensor( "TC Sta 2 Siding")          .state = INACTIVE
-sensors. getSensor( "TC Sta 2 OS")              .state = INACTIVE
-sensors. getSensor( "TC Sta 2 Right Approach")  .state = INACTIVE
+sensors. provideSensor( "TC Sta 1 Left Approach")   .state = INACTIVE
+sensors. provideSensor( "TC Sta 1 OS")              .state = INACTIVE
+sensors. provideSensor( "TC Sta 2 Main")            .state = INACTIVE
+sensors. provideSensor( "TC Sta 2 Siding")          .state = INACTIVE
+sensors. provideSensor( "TC Sta 2 OS")              .state = INACTIVE
+sensors. provideSensor( "TC Sta 2 Right Approach")  .state = INACTIVE
 
-turnouts.getTurnout("Sta 1 Layout TO")          .state = CLOSED
+turnouts.provideTurnout("Sta 1 Layout TO")          .state = CLOSED
 
-turnouts.getTurnout("Sta 2 Layout TO")          .state = CLOSED
+turnouts.provideTurnout("Sta 2 Layout TO")          .state = CLOSED
 
 # initialize_options objects on panel
-turnouts.getTurnout("Sta 1 Code")               .state = CLOSED
-sensors. getSensor( "Sta 1 Code")               .state = INACTIVE
+turnouts.provideTurnout("Sta 1 Code")               .state = CLOSED
+sensors. provideSensor( "Sta 1 Code")               .state = INACTIVE
 
-turnouts.getTurnout("Sta 1 TO 1 N")             .state = CLOSED
-sensors. getSensor( "Sta 1 TO 1 N")             .state = ACTIVE
-turnouts.getTurnout("Sta 1 TO 1 R")             .state = CLOSED
-sensors. getSensor( "Sta 1 TO 1 R")             .state = INACTIVE
+turnouts.provideTurnout("Sta 1 TO 1 N")             .state = CLOSED
+sensors. provideSensor( "Sta 1 TO 1 N")             .state = ACTIVE
+turnouts.provideTurnout("Sta 1 TO 1 R")             .state = CLOSED
+sensors. provideSensor( "Sta 1 TO 1 R")             .state = INACTIVE
 
-turnouts.getTurnout("Sta 1 SI 2 L")             .state = CLOSED
-sensors. getSensor( "Sta 1 SI 2 L")             .state = INACTIVE
-turnouts.getTurnout("Sta 1 SI 2 C")             .state = CLOSED
-sensors. getSensor( "Sta 1 SI 2 C")             .state = ACTIVE
-turnouts.getTurnout("Sta 1 SI 2 R")             .state = CLOSED
-sensors. getSensor( "Sta 1 SI 2 R")             .state = INACTIVE
+turnouts.provideTurnout("Sta 1 SI 2 L")             .state = CLOSED
+sensors. provideSensor( "Sta 1 SI 2 L")             .state = INACTIVE
+turnouts.provideTurnout("Sta 1 SI 2 C")             .state = CLOSED
+sensors. provideSensor( "Sta 1 SI 2 C")             .state = ACTIVE
+turnouts.provideTurnout("Sta 1 SI 2 R")             .state = CLOSED
+sensors. provideSensor( "Sta 1 SI 2 R")             .state = INACTIVE
 
-turnouts.getTurnout("Sta 1 Left Approach TC")   .state = CLOSED
-turnouts.getTurnout("Sta 1 OS TC")              .state = CLOSED
+turnouts.provideTurnout("Sta 1 Left Approach TC")   .state = CLOSED
+turnouts.provideTurnout("Sta 1 OS TC")              .state = CLOSED
 
 
-turnouts.getTurnout("Sta 2 Code")               .state = CLOSED
-sensors. getSensor( "Sta 2 Code")               .state = INACTIVE
+turnouts.provideTurnout("Sta 2 Code")               .state = CLOSED
+sensors. provideSensor( "Sta 2 Code")               .state = INACTIVE
 
-turnouts.getTurnout("Sta 2 TO 3 N")             .state = CLOSED
-sensors. getSensor( "Sta 2 TO 3 N")             .state = ACTIVE
-turnouts.getTurnout("Sta 2 TO 3 R")             .state = CLOSED
-sensors. getSensor( "Sta 2 TO 3 R")             .state = INACTIVE
+turnouts.provideTurnout("Sta 2 TO 3 N")             .state = CLOSED
+sensors. provideSensor( "Sta 2 TO 3 N")             .state = ACTIVE
+turnouts.provideTurnout("Sta 2 TO 3 R")             .state = CLOSED
+sensors. provideSensor( "Sta 2 TO 3 R")             .state = INACTIVE
 
-turnouts.getTurnout("Sta 2 SI 4 L")             .state = CLOSED
-sensors. getSensor( "Sta 2 SI 4 L")             .state = INACTIVE
-turnouts.getTurnout("Sta 2 SI 4 C")             .state = CLOSED
-sensors. getSensor( "Sta 2 SI 4 C")             .state = ACTIVE
-turnouts.getTurnout("Sta 2 SI 4 R")             .state = CLOSED
-sensors. getSensor( "Sta 2 SI 4 R")             .state = INACTIVE
+turnouts.provideTurnout("Sta 2 SI 4 L")             .state = CLOSED
+sensors. provideSensor( "Sta 2 SI 4 L")             .state = INACTIVE
+turnouts.provideTurnout("Sta 2 SI 4 C")             .state = CLOSED
+sensors. provideSensor( "Sta 2 SI 4 C")             .state = ACTIVE
+turnouts.provideTurnout("Sta 2 SI 4 R")             .state = CLOSED
+sensors. provideSensor( "Sta 2 SI 4 R")             .state = INACTIVE
 
-turnouts.getTurnout("Sta 2 Main TC")            .state = CLOSED
-turnouts.getTurnout("Sta 2 Siding TC")          .state = CLOSED
-turnouts.getTurnout("Sta 2 OS TC")              .state = CLOSED
-turnouts.getTurnout("Sta 2 Right Approach TC")  .state = CLOSED
+turnouts.provideTurnout("Sta 2 Main TC")            .state = CLOSED
+turnouts.provideTurnout("Sta 2 Siding TC")          .state = CLOSED
+turnouts.provideTurnout("Sta 2 OS TC")              .state = CLOSED
+turnouts.provideTurnout("Sta 2 Right Approach TC")  .state = CLOSED
 
 # signals must be provided by panel file, including signal logic
 
@@ -126,12 +126,12 @@ timeLock2 = TimeLock(signal4);
 turnout3.addLocks([occupancyLock2, routeLock2, timeLock2]);
 
 # traffic locks - lock signal if route is set toward it already - note far route depends on Turnout settings, i.e. siding or main
-viaMain2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,    [jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), THROWN), jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), THROWN)])
-viaSiding2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,  [jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), CLOSED)])
+viaMain2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,    [jmri.BeanSetting(turnouts.provideTurnout("Sta 1 Layout TO"), THROWN), jmri.BeanSetting(turnouts.provideTurnout("Sta 2 Layout TO"), THROWN)])
+viaSiding2 = TrafficLock(signal4, SignalHeadSection.CODE_LEFT,  [jmri.BeanSetting(turnouts.provideTurnout("Sta 1 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.provideTurnout("Sta 2 Layout TO"), CLOSED)])
 signal2.addRightwardLocks([viaMain2,viaSiding2])
 
-viaMain4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT,   [jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), THROWN), jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), THROWN)])
-viaSiding4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT, [jmri.BeanSetting(turnouts.getTurnout("Sta 2 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.getTurnout("Sta 1 Layout TO"), CLOSED)])
+viaMain4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT,   [jmri.BeanSetting(turnouts.provideTurnout("Sta 2 Layout TO"), THROWN), jmri.BeanSetting(turnouts.provideTurnout("Sta 1 Layout TO"), THROWN)])
+viaSiding4 = TrafficLock(signal2, SignalHeadSection.CODE_RIGHT, [jmri.BeanSetting(turnouts.provideTurnout("Sta 2 Layout TO"), CLOSED), jmri.BeanSetting(turnouts.provideTurnout("Sta 1 Layout TO"), CLOSED)])
 signal4.addLeftwardLocks([viaMain4,viaSiding4])
 
 
