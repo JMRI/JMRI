@@ -71,5 +71,9 @@ public class LockLogger {
     final public String logMemoryName;
     final public Memory memory;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",
+    justification = "Findbugs got this one wrong.  The 'log' variable needs to be protected "+
+                    "because it's accessed in anonymous subclasses in the `Lock` class which override "+
+                    "the `log()` method")
     protected final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }
