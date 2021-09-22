@@ -373,7 +373,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             _viewProfile.setEnabled(false);
             return null;
         } else {
-            _viewProfile.setEnabled(true);;
+            _viewProfile.setEnabled(true);
         }
         JPanel viewPanel = new JPanel();
         viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));

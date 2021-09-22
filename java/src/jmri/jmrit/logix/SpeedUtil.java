@@ -191,11 +191,13 @@ public class SpeedUtil {
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null,
                     String.valueOf(number), null, null, null, null);
             if (!l.isEmpty()) {
-                _rosterEntry = l.get(0);
-                setRosterId(_rosterEntry.getId());
-                if (l.size() != 1) {
+                int size = l.size();
+                if ( size!= 1) {
                     log.info("{} entries for address {}, {}", l.size(), number, type);
                 }
+                // take the last (most recent, I expect) entry
+                _rosterEntry = l.get(size - 1);
+                setRosterId(_rosterEntry.getId());
             } else {
                 // DCC address is set, but there is not a Roster entry for it
                 _rosterId = "$"+_dccAddress.toString()+"$";
