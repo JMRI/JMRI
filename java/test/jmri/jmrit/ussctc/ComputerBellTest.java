@@ -16,11 +16,18 @@ public class ComputerBellTest {
 
     @Test
     public void testConstruction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new ComputerBell(new Sound("program:resources/sounds/Bell.wav"));
     }
 
     @Test
+    public void testNullConstruction() {
+        new ComputerBell(null);
+    }
+
+    @Test
     public void testBellStroke() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Bell bell = new ComputerBell(new Sound("program:resources/sounds/Bell.wav"));
         bell.ring();
     }
