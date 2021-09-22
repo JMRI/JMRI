@@ -113,7 +113,7 @@ public class MqttSignalMast extends AbstractSignalMast {
     private void report() {
         String msg = aspect+"; ";
         msg = msg+ (getLit()?"Lit; ":"Unlit; ");
-        msg = msg+ (getLHeld()?"Held":"Unheld");
+        msg = msg+ (getHeld()?"Held":"Unheld");
         sendMessage(msg);
     }
     private void sendMessage(String c) {
