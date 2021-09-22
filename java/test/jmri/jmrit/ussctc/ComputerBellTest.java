@@ -12,26 +12,16 @@ import java.awt.GraphicsEnvironment;
 /**
  * Tests for PhysicalBell class in the jmri.jmrit.ussctc package
  *
- * @author Bob Jacobsen Copyright 2007, 2021
+ * Can't do any particular tests with actual sounds because CI servers
+ * don't support the jmri.jmrit.Sound class
+ *
+ * @author Bob Jacobsen Copyright 2021
  */
 public class ComputerBellTest {
 
     @Test
-    public void testConstruction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new ComputerBell(new Sound("program:resources/sounds/Bell.wav"));
-    }
-
-    @Test
     public void testNullConstruction() {
         new ComputerBell(null);
-    }
-
-    @Test
-    public void testBellStroke() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Bell bell = new ComputerBell(new Sound("program:resources/sounds/Bell.wav"));
-        bell.ring();
     }
 
     @BeforeEach
