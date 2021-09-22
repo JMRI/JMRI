@@ -70,7 +70,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             Bundle.getMessage("ZtcMode"),
             Bundle.getMessage("AllStopTrackOff"),
             Bundle.getMessage("Reserved"),
-            Bundle.getMessage("Reerved"),
+            Bundle.getMessage("Reserved"),
             Bundle.getMessage("Reserved")},
         // Debug
         {Bundle.getMessage("PriPkts"),
