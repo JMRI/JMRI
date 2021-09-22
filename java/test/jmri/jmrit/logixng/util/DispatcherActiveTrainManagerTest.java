@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.util;
 
 import jmri.InstanceManager;
-// import jmri.Memory;
-// import jmri.MemoryManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -14,15 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test DispatcherTrainInfoManager
+ * Test DispatcherActiveTrainManager
  *
  * @author Dave Sand 2021
  */
-public class DispatcherTrainInfoManagerTest {
+public class DispatcherActiveTrainManagerTest {
 
     @Test
     public void testCtor() {
-        DispatcherTrainInfoManager t = new DispatcherTrainInfoManager();
+        DispatcherActiveTrainManager t = new DispatcherActiveTrainManager();
         Assert.assertNotNull("not null", t);
     }
 
@@ -44,5 +42,5 @@ public class DispatcherTrainInfoManagerTest {
         JUnitUtil.tearDown();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherTrainInfoManagerTest.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherActiveTrainManagerTest.class);
 }

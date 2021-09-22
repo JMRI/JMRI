@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.DispatcherTrainInfoManager;
+import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -50,9 +50,12 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     private boolean _terminateOption = false;
     private int _trainPriority = 5;
 
+    private final DispatcherActiveTrainManager _atManager;
+
     public ActionDispatcher(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        _atManager = InstanceManager.getDefault(DispatcherActiveTrainManager.class);
     }
 
     @Override
@@ -387,7 +390,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
             return;
         }
 
-        ActiveTrain activeTrain = DispatcherTrainInfoManager.getActiveTrain(trainInfoFileName);
+        ActiveTrain activeTrain = _atManager.getActiveTrain(trainInfoFileName);
 
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
                 ? getNewOper() : null;
@@ -404,7 +407,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
         switch (oper) {
             case LoadTrainFromFile:
                 if (activeTrain == null) {
-                    activeTrain = DispatcherTrainInfoManager.createActiveTrain(trainInfoFileName);
+                    activeTrain = _atManager.createActiveTrain(trainInfoFileName);
                     if (activeTrain == null) {
                         log.warn("DispatcherAction: Unable to create an active train");
                     }
@@ -414,7 +417,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                 return;
 
             case TerminateTrain:
-                DispatcherTrainInfoManager.terminateActiveTrain(trainInfoFileName);
+                _atManager.terminateActiveTrain(trainInfoFileName);
                 return;
 
             case TrainPriority:

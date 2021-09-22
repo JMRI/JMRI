@@ -7,12 +7,11 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionDispatcher;
 import jmri.jmrit.logixng.actions.ActionDispatcher.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.DispatcherTrainInfoManager;
+import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
@@ -82,7 +81,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
         _tabbedPaneDispatcher.addTab(NamedBeanAddressing.Formula.toString(), _panelDispatcherFormula);
 
         _fileNamesComboBox = new JComboBox<>();
-        DispatcherTrainInfoManager.getTrainInfoFileNames().forEach(name -> {
+        InstanceManager.getDefault(DispatcherActiveTrainManager.class).getTrainInfoFileNames().forEach(name -> {
             _fileNamesComboBox.addItem(name);
         });
         JComboBoxUtil.setupComboBoxMaxRows(_fileNamesComboBox);

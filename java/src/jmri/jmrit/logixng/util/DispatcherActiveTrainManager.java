@@ -1,8 +1,11 @@
 package jmri.jmrit.logixng.util;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
-import jmri.InstanceManager;
+import jmri.*;
+import jmri.beans.Bean;
 import jmri.jmrit.dispatcher.*;
 
 /**
@@ -19,24 +22,33 @@ import jmri.jmrit.dispatcher.*;
  * The contents of a train info file are not unique.  While only one active train can be using a
  * transit, multiple files can refer to the transit.
  * <p>
+ * This class extends Bean so that ExpressionDispatcher objects can listen for changes to the
+ * _activeTrainMap.  These events are used to add and remove ActiveTrain listeners that capture
+ * ActiveTrain status and mode changes.
+ * <p>
  * This class provides the following features:
  * <ul>
  * <li>Provides a list of active train info files.
  * <li>Provides a map to link train info files names to the current ActiveTrain, if any.
  * <li>Creates an ActiveTrain on behalf of the Dispatcher Load Action.
  * <li>Provide the current ActiveTrain object, if any, for the a specific file name.
- * <li>Gracefully terminate an active train.
+ * <li>Gracefully terminate an active train that was started by a LogixNG action.
  * </ul>
  */
-public class DispatcherTrainInfoManager {
+public class DispatcherActiveTrainManager extends Bean implements InstanceManagerAutoDefault {
 
-    static private final HashMap<String, ActiveTrain> _activeTrainMap = new HashMap<>();
+    private final HashMap<String, ActiveTrain> _activeTrainMap;
+
+    public DispatcherActiveTrainManager() {
+        InstanceManager.setDefault(DispatcherActiveTrainManager.class, this);
+        _activeTrainMap = new HashMap<>();
+    }
 
     /**
      * Get a list of existing train info file names.
      * @return an array of file names.
      */
-    static public List<String> getTrainInfoFileNames() {
+    public List<String> getTrainInfoFileNames() {
         TrainInfoFile tiFiles = new TrainInfoFile();
         return new ArrayList<>(Arrays.asList(tiFiles.getTrainInfoFileNames()));
     }
@@ -44,10 +56,11 @@ public class DispatcherTrainInfoManager {
     /**
      * Get the current ActiveTrain for the specified file name.
      * If the Dispatcher train no longer exists, remove the hash map entry.
+     * Notify ExpressionDispatcher objects when an ActiveTrain no longer exists.
      * @param fileName The file name to be used for the lookup.
      * @return the ActiveTrain instance or null.  Null can mean no related active train or no file name match.
      */
-    static public ActiveTrain getActiveTrain(String fileName) {
+    public ActiveTrain getActiveTrain(String fileName) {
         log.debug("1.1 -- getActiveTrain: {}", fileName);
         if (fileName == null) return null;
         if (! _activeTrainMap.containsKey(fileName)) return null;
@@ -59,6 +72,7 @@ public class DispatcherTrainInfoManager {
         if (hashTrain != null && hashTrain != currentTrain) {
             log.debug("1.3 -- getActiveTrain: Remove active train");
             _activeTrainMap.remove(fileName);   // Update hash map
+            firePropertyChange("ActiveTrain", fileName, "");
             hashTrain = null;
         }
         log.debug("1.4 -- getActiveTrain: return {}", hashTrain);
@@ -73,7 +87,7 @@ public class DispatcherTrainInfoManager {
      * @param fileName  The train info file name.
      * @return the active train or null if the create failed.
      */
-    static public ActiveTrain createActiveTrain(String fileName) {
+    public ActiveTrain createActiveTrain(String fileName) {
         if (fileName == null) return null;
 
         ActiveTrain oldTrain = getActiveTrain(fileName);
@@ -84,11 +98,12 @@ public class DispatcherTrainInfoManager {
 
         DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
 
-        int result = df.loadTrainFromTrainInfo(fileName);
         ActiveTrain at = null;
+        int result = df.loadTrainFromTrainInfo(fileName);
         if (result == 0) {
             at = getDispatcherActiveTrain(fileName);
             _activeTrainMap.put(fileName, at);
+            firePropertyChange("ActiveTrain", "", fileName);
         }
 
         log.debug("2.2 -- AT is {}", at);
@@ -100,7 +115,7 @@ public class DispatcherTrainInfoManager {
      * Terminated the LogxiNG related active train if it still exists.
      * @param fileName The train info file name.
      */
-    static public void terminateActiveTrain(String fileName) {
+    public void terminateActiveTrain(String fileName) {
         if (fileName == null) return;
 
         ActiveTrain oldTrain = getActiveTrain(fileName);
@@ -110,6 +125,7 @@ public class DispatcherTrainInfoManager {
         oldTrain.setStatus(ActiveTrain.DONE);
 
         _activeTrainMap.remove(fileName);
+        firePropertyChange("ActiveTrain", fileName, "");
     }
 
     /**
@@ -120,7 +136,7 @@ public class DispatcherTrainInfoManager {
      * @param fileName The train info file name.
      * @return the ActiveTrain if a train has the same transit as the file, null if there is no match
      */
-    static public ActiveTrain getDispatcherActiveTrain(String fileName) {
+    public ActiveTrain getDispatcherActiveTrain(String fileName) {
         log.debug("4.1 -- getDispatcherActiveTrain: {}", fileName);
         TrainInfo tif = getTrainInfoFile(fileName);
         if (tif == null) return null;
@@ -142,7 +158,7 @@ public class DispatcherTrainInfoManager {
      * @param fileName The name of the train info file.
      * @return a TrainInfo object or null if not found or invalid.
      */
-    static public TrainInfo getTrainInfoFile(String fileName) {
+    public TrainInfo getTrainInfoFile(String fileName) {
         if (fileName == null) return null;
 
         TrainInfoFile tiFiles = new TrainInfoFile();
@@ -154,6 +170,6 @@ public class DispatcherTrainInfoManager {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherTrainInfoManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherActiveTrainManager.class);
 }
 
