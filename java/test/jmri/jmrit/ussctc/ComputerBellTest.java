@@ -5,7 +5,9 @@ import jmri.*;
 import jmri.jmrit.Sound;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for PhysicalBell class in the jmri.jmrit.ussctc package
