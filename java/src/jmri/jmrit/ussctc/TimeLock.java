@@ -78,7 +78,7 @@ public class TimeLock implements Lock {
 
         for (SignalHeadSection section : list) {
             if (section.isRunningTime()) {
-                lockLogger.setStatus(this, "Locked: "+section.getStation()+" running time");
+                lockLogger.setStatus(this, "Locked: Station "+section.getStation().getName()+" running time");
                 return false;
             }
         }
@@ -86,4 +86,10 @@ public class TimeLock implements Lock {
         return true;
     }
 
+    @Override
+    public String toString() {
+        String retval = isLockClear(debugLockLogger) ? "clear " : "locked";
+        retval = retval+debugLockLogger.memory.getValue();
+        return retval;
+    }
 }
