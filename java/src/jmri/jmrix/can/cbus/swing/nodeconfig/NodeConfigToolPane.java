@@ -23,6 +23,7 @@ import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -90,6 +91,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             });
         }
         
+        CbusConfigPaneProvider.loadInstances();
+
         _selectedNode = -1;
 
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
