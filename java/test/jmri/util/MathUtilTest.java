@@ -209,8 +209,8 @@ public class MathUtilTest {
     public void testDoubleLerp() {
         boolean passed = true;    // assume success (optimist!)
         double minV = -666.66, maxV = +999.99;
-        Double minD = new Double(minV);
-        Double maxD = new Double(maxV);
+        Double minD = minV;
+        Double maxD = maxV;
         for (double theV = 0.0; theV < 2.f; theV += 0.15) {
             double c = MathUtil.lerp(minV, maxV, theV);
             double t = (c - minV) / (maxV - minV);
@@ -220,7 +220,7 @@ public class MathUtilTest {
                 break;
             }
 
-            Double theD = new Double(theV);
+            Double theD = theV;
             Double cD = MathUtil.lerp(minD, maxD, theD);
             Double tD = (cD - minD) / (maxD - minD);
             Assert.assertEquals("MathUtil.lerp(minD, maxD, vD)", tD, theD, tolerance);
