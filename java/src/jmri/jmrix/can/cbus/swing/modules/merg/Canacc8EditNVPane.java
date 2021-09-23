@@ -80,7 +80,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelay"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
+        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelayUnits"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
         feedbackSpinner.setToolTip(Bundle.getMessage("FeedbackDelayTt"));
         feedbackSpinner.init(_nvArray[Canacc8PaneProvider.FEEDBACK_DELAY]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);

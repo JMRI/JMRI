@@ -55,11 +55,11 @@ public class CansolEditNVPane extends AbstractEditNVPane {
         c.gridy = 0;
         
         // Four columns for the outputs
-        for (int y = 0; y < OUTPUTS/2; y++) {
+        for (int y = 0; y < OUTPUTS/4; y++) {
             c.gridx = 0;
-            for (int x = 0; x < 2; x++) {
-                int index = y*2 + x + 1;            // NVs indexed from 1
-                pulse[index] = new TitledSpinner(Bundle.getMessage("OutputX", index), index, pulseUpdateFn);
+            for (int x = 0; x < 4; x++) {
+                int index = y*4 + x + 1;            // NVs indexed from 1
+                pulse[index] = new TitledSpinner((Bundle.getMessage("OutputX", index)) + " " + Bundle.getMessage("PulseWidthUnits"), index, pulseUpdateFn);
                 pulse[index].setToolTip(Bundle.getMessage("CanSolOutputTt"));
                 pulse[index].init(_nvArray[index]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
                 gridPane.add(pulse[index], c);
@@ -70,26 +70,25 @@ public class CansolEditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         
-        rechargeSpinner = new TitledSpinner(Bundle.getMessage("RechargeTime"), RECHARGE_TIME, rechargeUpdateFn);
+        rechargeSpinner = new TitledSpinner(Bundle.getMessage("RechargeTimeUnits"), RECHARGE_TIME, rechargeUpdateFn);
         rechargeSpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
         rechargeSpinner.init(_nvArray[RECHARGE_TIME]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(rechargeSpinner, c);
-        c.gridy++;
+        c.gridx++;
 
-        fireDelaySpinner = new TitledSpinner(Bundle.getMessage("FireDelayTime"), FIRE_DELAY, fireDelayUpdateFn);
-        fireDelaySpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
+        fireDelaySpinner = new TitledSpinner(Bundle.getMessage("FireDelayUnits"), FIRE_DELAY, fireDelayUpdateFn);
+        fireDelaySpinner.setToolTip(Bundle.getMessage("FireDelayTt"));
         fireDelaySpinner.init(_nvArray[FIRE_DELAY]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(fireDelaySpinner, c);
-        c.gridy++;
+        c.gridx++;
 
-        enableDelaySpinner = new TitledSpinner(Bundle.getMessage("RechargeTime"), ENABLE_DELAY, enableDelayUpdateFn);
-        enableDelaySpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
+        enableDelaySpinner = new TitledSpinner(Bundle.getMessage("EnableDelayUnits"), ENABLE_DELAY, enableDelayUpdateFn);
+        enableDelaySpinner.setToolTip(Bundle.getMessage("EnableDelayTt"));
         enableDelaySpinner.init(_nvArray[ENABLE_DELAY]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(enableDelaySpinner, c);
-        c.gridy++;
 
         JScrollPane scroll = new JScrollPane(gridPane);
         
@@ -112,22 +111,20 @@ public class CansolEditNVPane extends AbstractEditNVPane {
             if ((nv > 0) && (nv <= 8)) {
                 log.debug("Update NV {} to {}", nv, value);
                 pulse[nv].getModel().setValue(value*TIME_STEP_SIZE);
-                log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)pulse[nv].getModel()).getNumber().intValue());
             } else if (nv == 9) {
                 log.debug("Update recharge delay to {}", value);
                 rechargeSpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else if (nv == 10) {
-                log.debug("Update fire delay", value);
+                log.debug("Update fire delay to {}", value);
                 fireDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else if (nv == 11) {
-                log.debug("Update fire delay", value);
-                fireDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
+                log.debug("Update enable delay to {}", value);
+                enableDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else if ((nv >= 12) && (nv <= 16)) {
                 // Not used
                 log.debug("Update unknow");
-                
             } else {
-                throw new IllegalArgumentException("Unexpected NV index");
+                throw new IllegalArgumentException("Unexpected NV index " + nv);
             }
         }
     }
