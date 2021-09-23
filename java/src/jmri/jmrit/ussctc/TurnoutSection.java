@@ -144,6 +144,17 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
     @Override
     public void indicationComplete(CodeGroupTwoBits value) { central.indicationComplete(value); }
 
+    @Override
+    public String toString() {
+        String retval;
+
+        retval = getName()
+                    +" central: "+central.state
+                    +" field lastCode: "+field.lastCodeValue+" lastInd "+field.lastIndicationValue;
+
+        return retval;
+    }
+
     static class TurnoutCentralSection implements CentralSection<CodeGroupTwoBits, CodeGroupTwoBits>  {
         public TurnoutCentralSection(String normalIndicator, String reversedIndicator, String normalInput, String reversedInput) {
             NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -294,40 +305,43 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         public void codeValueDelivered(CodeGroupTwoBits value) {
             lastCodeValue = value;
 
-            if (Lock.checkLocksClear(locks, Lock.turnoutLockLogger)) {
-                // Set turnout as commanded, skipping redundant operations
-                if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
+            // Set turnout as commanded, skipping redundant operations
+            if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
+                if (Lock.checkLocksClear(locks, Lock.turnoutLockLogger)) {
                     hLayoutTO.getBean().setCommandedState(Turnout.CLOSED);
                     log.debug("Layout turnout set CLOSED");
-                } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
+                } else logLocked(value);
+            } else if (value == CODE_THROWN && hLayoutTO.getBean().getCommandedState() != Turnout.THROWN) {
+                if (Lock.checkLocksClear(locks, Lock.turnoutLockLogger)) {
                     hLayoutTO.getBean().setCommandedState(Turnout.THROWN);
                     log.debug("Layout turnout set THROWN");
-                } else {
-                    log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
-                    // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
-                    // from motion run above
-                    // But we have to handle the case of e.g. re-commanding back to the current turnout state
-                    if ( lastIndicationValue != getCurrentIndication() ) {
-
-                        log.debug("    Last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
-                        jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
-
-                    }
-                }
+                } else logLocked(value);
             } else {
-                log.debug("No turnout operation due to not permitted by lock: {}", value);
+                log.debug("Layout turnout already set for {} as {}", value, hLayoutTO.getBean().getCommandedState());
                 // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
                 // from motion run above
-                // But we have to handle the case of re-commanding back to the current turnout state
+                // But we have to handle the case of e.g. re-commanding back to the current turnout state
                 if ( lastIndicationValue != getCurrentIndication() ) {
 
-                        log.debug("    Locked, but last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
+                    log.debug("    Last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
                     jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
 
                 }
             }
         }
 
+        void logLocked(CodeGroupTwoBits value) {
+            log.debug("No turnout operation due to not permitted by lock: {}", value);
+            // Usually, indication will come back when turnout feedback (defined elsewhere) triggers
+            // from motion run above
+            // But we have to handle the case of re-commanding back to the current turnout state
+            if ( lastIndicationValue != getCurrentIndication() ) {
+
+                log.debug("    Locked, but last indication {} doesn't match current {}, request indication", lastIndicationValue, getCurrentIndication());
+                jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{ station.requestIndicationStart(); } );
+
+            }
+        }
         /**
          * Provide state that's returned from field to machine via indication.
          */

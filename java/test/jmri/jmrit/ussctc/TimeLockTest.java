@@ -137,6 +137,7 @@ public class TimeLockTest {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        // new Lock(); // to create statics
     }
 
     @AfterEach
