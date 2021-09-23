@@ -412,7 +412,9 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>When changing the icons used by an item,
+                the icon display window now shows the choices
+                in alphanumeric order by name.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -570,6 +572,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The length of logging lines sent to the system console has been reduced
+                by no longer including the date.  The time is still included.
+                If you have a copy of the 'default.lcf' file in your local JMRI
+                setting directory, you won't see this change until you update it.</li>
         </ul>
 

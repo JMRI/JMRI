@@ -50,6 +50,13 @@ import org.slf4j.LoggerFactory;
 public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         implements CanListener {
 
+    // EEPROM base address for older PIC18 devices
+    protected static final int EE_START_2580 = 0xf00000;
+    // EEPROM base address for for PIC 18F26K83 and related family members 
+    protected static final int EE_START_26K83 = 0x310000;
+    // EEPROM base address for for PIC 18F27Q84 and related family members
+    protected static final int EE_START_27Q84 = 0x380000;
+    
     private TrafficController tc;
     private CbusSend send;
     private CbusPreferences preferences;
@@ -79,6 +86,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     
     int nodeNumber;
     int nextParam;
+    
+    private int eeStart;
 
     BusyDialog busyDialog;
     
@@ -386,7 +395,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            hexFile = new HexFile(hexFileChooser.getSelectedFile().getPath());
+            hexFile = new HexFile(hexFileChooser.getSelectedFile().getPath(), eeStart);
             log.debug("hex file chosen: {}", hexFile.getName());
             addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), hexFile.getName()));
             try {
@@ -535,6 +544,18 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFinished"), hardwareParams.toString()));
                 busyDialog.finish();
                 busyDialog = null;
+                // Set EEPROM base address depending on module device type
+                if (hardwareParams.getParam(9) == 20) {
+                    log.debug("Using EEPROM base address for PIC 18F25-26K83");
+                    eeStart = EE_START_26K83;
+                } else if ((hardwareParams.getParam(9) == 21) || (hardwareParams.getParam(9) == 22)) {
+                    log.debug("Using EEPROM base address for PIC 18F27-47-57Q84");
+                    eeStart = EE_START_27Q84;
+                } else {
+                    // Other PIC 18
+                    log.debug("Using EEPROM base address for Generic PIC18");
+                    eeStart = EE_START_2580;
+                }
                 openFileChooserButton.setEnabled(true);
             }
         } else {
@@ -616,6 +637,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected boolean writeNextData() {
         byte [] d;
         
+        log.debug("writeNextData()");
         if ((bootAddress == 0x7f8) && (hexForBootloader == true)) {
             log.debug("Pause for bootloader reset");
             // Pause at end of bootloader code to allow time for node to reset
@@ -632,8 +654,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             d = hexFile.getConfig(bootAddress - HexFile.CONFIG_START, 8);
             sendData(bootAddress, d, CbusNode.BOOT_CONFIG_TIMEOUT_TIME);
             return true;
-        } else if ((bootAddress >= HexFile.EE_START) && (bootAddress < hexFile.getEeEnd())) {
-            d = hexFile.getEeprom(bootAddress - HexFile.EE_START, 8);
+        } else if ((bootAddress >= eeStart) && (bootAddress < hexFile.getEeEnd())) {
+            d = hexFile.getEeprom(bootAddress - eeStart, 8);
             sendData(bootAddress, d, CbusNode.BOOT_CONFIG_TIMEOUT_TIME);
             return true;
         }
@@ -650,13 +672,16 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         // Move onto next memory region
         if ((bootState == BootState.PROG_CHECK_SENT) && configCheckBox.isSelected()) {
             // Move onto config words
+            log.debug("Next region: Config words");
             startProgramming(0x300000, BootState.INIT_CONFIG_SENT);
         } else if ((bootState == BootState.PROG_CHECK_SENT) && eepromCheckBox.isSelected()
                 || (bootState == BootState.CONFIG_CHECK_SENT) && eepromCheckBox.isSelected()) {
-            // Move onto eeprom
-            startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
+            // Move onto EEPROM
+            log.debug("Next region: EEPROM");
+            startProgramming(eeStart, BootState.INIT_EEPROM_SENT);
         } else {
             // Done writing
+            log.debug("Next region: Done");
             sendReset();
         }   
     }
@@ -672,7 +697,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         checksum = 0;
         dataFramesSent = 0;
         bootState = state;
-        log.debug("Start writing at address {}", Integer.toHexString(bootAddress));
+        log.debug("Start Programming at address {}", Integer.toHexString(bootAddress));
         addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
         setInitTimeout();
         CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
@@ -883,6 +908,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * No reply so timeout is expected. Start sending data.
      */
     private void setInitTimeout() {
+        log.debug("setInitTimeout()");
         clearInitTimeout(); // resets if timer already running
         initTask = new TimerTask() {
             @Override
@@ -890,10 +916,13 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 initTask = null;
                 if (bootState == BootState.INIT_PROG_SENT) {
                     bootState = BootState.PROG_DATA;
+                    log.debug("Bootstate is PROG_DATA");
                 } else if (bootState == BootState.INIT_CONFIG_SENT) {
                     bootState = BootState.CONFIG_DATA;
+                    log.debug("Bootstate is CONFIG_DATA");
                 } else {
                     bootState = BootState.EEPROM_DATA;
+                    log.debug("Bootstate is EEPROM_DATA");
                 }
                 writeNextData();
             }
