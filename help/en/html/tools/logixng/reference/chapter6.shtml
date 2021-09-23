@@ -203,7 +203,7 @@
 
       <p>A Dispatcher train only exists from the time it is created until it is terminated.
       LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
-      See the Saving and <em>Retrieving Active Train Information</em> section at
+      See the <em>Saving and Retrieving Active Train Information</em> section at
       <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/NewTrain.shtml">
       Activate New Train</a>.  The train is started using the LogixNG Dispatcher
       <em>Load train from train info file</em> Action.  If the related train does not exist when
