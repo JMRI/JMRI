@@ -116,5 +116,13 @@ public class RouteLock implements Lock {
     boolean isSignalClear(@Nonnull NamedBeanHandle<SignalHead> handle) {
         return handle.getBean().getState() != SignalHead.RED;
     }
+
+    @Override
+    public String toString() {
+        String retval = isLockClear(debugLockLogger) ? "clear " : "locked";
+        retval = retval+debugLockLogger.memory.getValue();
+        return retval;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteLock.class);
 }
