@@ -199,6 +199,35 @@
         unknown or inconsistent.</li>
       </ul>
 
+      <h5>Dispatcher</h5>
+
+      <p>A Dispatcher train only exists from the time it is created until it is terminated.
+      LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
+      See the Saving and <em>Retrieving Active Train Information</em> section at
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/NewTrain.shtml">
+      Activate New Train</a>.  The train is started using the LogixNG Dispatcher
+      <em>Load train from train info file</em> Action.  If the related train does not exist when
+      the expression is evaluated, the result will be false. That means a false result is either
+      actually false or the train does not exist.</p>
+
+      <p>Train Mode:</p>
+      <ul>
+        <li><strong>Automatic</strong></li>
+        <li><strong>Dispatched</strong></li>
+        <li><strong>Manual</strong></li>
+      </ul>
+
+      <p>Train Status:</p>
+      <ul>
+        <li><strong>Running</strong></li>
+        <li><strong>Paused</strong></li>
+        <li><strong>Waiting</strong></li>
+        <li><strong>Working</strong></li>
+        <li><strong>Ready</strong></li>
+        <li><strong>Stopped</strong></li>
+        <li><strong>Done</strong></li>
+      </ul>
+
       <h5>Entry/Exit</h5>
 
       <ul>
