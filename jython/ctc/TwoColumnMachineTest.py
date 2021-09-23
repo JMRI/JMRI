@@ -1,4 +1,4 @@
-# Configure a two-column CTC machine.
+# Configure a two-column CTC machine - test (headless, mouthless) version
 #
 # Uses only internal Sensors and Turnouts so it can be run as a sample.
 #
@@ -78,7 +78,7 @@ turnouts.provideTurnout("Sta 2 Right Approach TC")  .state = CLOSED
 
 # The bell and code line are shared by all Stations
 
-bell = VetoedBell("Bell Cutout", PhysicalBell("Bell", Sound("program:resources/sounds/Bell.wav")))   # both a layout output (real bell) and a computer sound, see ComputerBell for option
+bell = VetoedBell("Bell Cutout", PhysicalBell("Bell"))   # a layout output (real bell); no computer sound available in CI
 
 codeline = CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104")
 
