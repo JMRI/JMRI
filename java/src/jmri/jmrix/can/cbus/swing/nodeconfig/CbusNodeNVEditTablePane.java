@@ -6,12 +6,14 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 
@@ -141,9 +143,9 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                     f.setFont(f.getFont().deriveFont(Font.BOLD, largerFont ));
                 }
                 
-                int oldval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_CURRENT_VAL_COLUMN);
-                int newval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-                
+                    int oldval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_CURRENT_VAL_COLUMN);
+                    int newval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+
                 String string;
                 if(arg1 != null){
                     string = arg1.toString();
@@ -153,19 +155,19 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                         }
                     } catch (NumberFormatException ex) {
                     }
-                    
+
                     f.setText(string.toUpperCase());
                 } else {
                     f.setText("");
                 }
-                
+
                 if (( tablecol == CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN
                     || tablecol == CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)
                     && ( oldval == newval ) ){
                     f.setText("");
                 }
-                
-                
+
+
                 if (isSelected) {
                     if ( oldval != newval ) {
                         f.setBackground( Color.orange );
