@@ -570,5 +570,7 @@
                 by no longer including the date.  The time is still included.
                 If you have a copy of the 'default.lcf' file in your local JMRI
                 setting directory, you won't see this change until you update it.</li>
+            <li>Access to the deprecated SecurityManager class has been removed;
+                Java access security is now enforced by default.</li>
         </ul>
 
