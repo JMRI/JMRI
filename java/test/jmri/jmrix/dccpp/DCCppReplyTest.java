@@ -364,28 +364,41 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringTurnoutReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 1234 0");
         Assert.assertEquals("Monitor string", "Turnout Reply: ID: 1234, Dir: CLOSED", l.toMonitorString());
+        Assert.assertFalse(l.getTOIsThrown());
+        Assert.assertTrue(l.getTOIsClosed());
         l = DCCppReply.parseDCCppReply("H 1234 1");
         Assert.assertEquals("Monitor string", "Turnout Reply: ID: 1234, Dir: THROWN", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsThrown());
+        Assert.assertFalse(l.getTOIsClosed());
     }
 
     @Test
     public void testMonitorStringTurnoutDefReplies() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 23 DCC 5 0 1");
         Assert.assertEquals("Monitor string", "Turnout Def DCC Reply: ID:23, Address:5, Index:0, DCC Address:17, Dir:THROWN", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsThrown());
+        Assert.assertFalse(l.getTOIsClosed());
         l = DCCppReply.parseDCCppReply("H 24 SERVO 100 410 205 2 1");
+        Assert.assertTrue(l.getTOIsThrown());
         Assert.assertEquals("Monitor string", "Turnout Def Servo Reply: ID:24, Pin:100, ThrownPos:410, ClosedPos:205, Profile:2, Dir:THROWN", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("H 1124 SERVO 100 410 205 2 0");
         Assert.assertEquals("Monitor string", "Turnout Def Servo Reply: ID:1124, Pin:100, ThrownPos:410, ClosedPos:205, Profile:2, Dir:CLOSED", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsClosed());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 50 1");
         Assert.assertEquals("Monitor string", "Turnout Def Vpin Reply: ID:12345, Pin:50, Dir:THROWN", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsThrown());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0");
         Assert.assertEquals("Monitor string", "Turnout Def Vpin Reply: ID:12345, Pin:150, Dir:CLOSED", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsClosed());
         l = DCCppReply.parseDCCppReply("H 30000 LCN 0");
         Assert.assertEquals("Monitor string", "Turnout Def LCN Reply: ID:30000, Dir:CLOSED", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsClosed());
         l = DCCppReply.parseDCCppReply("H 30001 LCN 1");
         Assert.assertEquals("Monitor string", "Turnout Def LCN Reply: ID:30001, Dir:THROWN", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsThrown());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0 ignore unexpected values at the end");
         Assert.assertEquals("Monitor string", "Turnout Def Vpin Reply: ID:12345, Pin:150, Dir:CLOSED", l.toMonitorString());
+        Assert.assertTrue(l.getTOIsClosed());
         
     }
 

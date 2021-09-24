@@ -107,10 +107,10 @@ public final class DCCppConstants {
     public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
     public static final String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])"; // <a ADDR SUBADDR ACTIVATE>
     public static final String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
-    public static final String TURNOUT_ADD_REGEX =     "T\\s(\\d+)\\s(\\d+)\\s(\\d+)";                          // <T ID ADDR SUBADDR> (deprecated at 3.1.7, use DCC)
-    public static final String TURNOUT_ADD_DCC_REGEX = "T\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)";                    // <T ID DCC ADDR SUBADDR>
-    public static final String TURNOUT_ADD_SERVO_REGEX="T\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";// <T ID SERVO PIN THROWNPOSITION CLOSEDPOSITION PROFILE>
-    public static final String TURNOUT_ADD_VPIN_REGEX ="T\\s(\\d+)\\sVPIN\\s(\\d+)";                            // <T ID VPIN PIN>
+    public static final String TURNOUT_ADD_REGEX =     "T\\s(\\d+)\\s(\\d+)\\s(\\d+)";                          // <T id addr subaddr> (deprecated at 3.1.7, use DCC)
+    public static final String TURNOUT_ADD_DCC_REGEX = "T\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)";                    // <T id DCC addr subaddr>
+    public static final String TURNOUT_ADD_SERVO_REGEX="T\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";// <T id SERVO pin thrownposition closedposition profile>
+    public static final String TURNOUT_ADD_VPIN_REGEX ="T\\s(\\d+)\\sVPIN\\s(\\d+)";                            // <T id VPIN pin>
     public static final String TURNOUT_DELETE_REGEX = "T\\s*(\\d+)"; // <T ID>
     public static final String TURNOUT_LIST_REGEX = "T"; // <T>
     public static final String SENSOR_ADD_REGEX = "S\\s(\\d+)\\s(\\d+)\\s([1,0])";
@@ -146,11 +146,11 @@ public final class DCCppConstants {
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
     public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
-    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*"; // <T ID ADDR SUBADDR THROWN> (deprecated at 3.1.7, use DCC)
-    public static final String TURNOUT_DEF_DCC_REPLY_REGEX = "\\s*H\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";                    // <H ID DCC ADDR SUBADDR THROWN>
-    public static final String TURNOUT_DEF_SERVO_REPLY_REGEX="\\s*H\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";// <H ID SERVO PIN THROWNPOSITION CLOSEDPOSITION PROFILE THROWN>
-    public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H ID VPIN PIN THROWN>
-    public static final String TURNOUT_DEF_LCN_REPLY_REGEX = "\\s*H\\s(\\d+)\\sLCN\\s+([0|1]).*";                                      // <H ID LCN THROWN>
+    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*"; // <T ID addr subaddr thrown> (deprecated at 3.1.7, use DCC)
+    public static final String TURNOUT_DEF_DCC_REPLY_REGEX = "\\s*H\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";                    // <H id DCC addr subaddr thrown>
+    public static final String TURNOUT_DEF_SERVO_REPLY_REGEX="\\s*H\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";// <H id SERVO pin thrownposition closedposition profile thrown>
+    public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H id VPIN pin thrown>
+    public static final String TURNOUT_DEF_LCN_REPLY_REGEX = "\\s*H\\s(\\d+)\\sLCN\\s+([0|1]).*";                                      // <H id LCN thrown>
     public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";

@@ -96,7 +96,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "Direction: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
-                if (isTurnoutDefReply()) {
+                if (isTurnoutCmdReply()) {
+                    text = "Turnout Reply: ";
+                    text += "ID: " + getTOIDString() + ", ";
+                    text += "Dir: " + getTOStateString();
+                } else if (isTurnoutDefReply()) {
                     text = "Turnout Def Reply: ";
                     text += "ID:" + getTOIDString() + ", ";
                     text += "Address:" + getTOAddressString() + ", ";
@@ -141,10 +145,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text = "Turnout Def LCN Reply: ";
                     text += "ID:" + getTOIDString() + ", ";
                     text += "Dir:" + getTOStateString();
-                } else { //TODO move this to top for performance
-                    text = "Turnout Reply: ";
-                    text += "ID: " + getTOIDString() + ", ";
-                    text += "Dir: " + getTOStateString();
+                } else { 
+                    text = "Unknown Turnout Reply Format: ";
+                    text += toString();
                 }
                 break;
             case DCCppConstants.SENSOR_REPLY_H:
@@ -842,11 +845,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getTOIsThrown() { 
-        return(this.getValueBool(2)); //TODO fix this
+        return(this.getTOStateInt() == 1);
     }
 
     public boolean getTOIsClosed() {
-        return(!this.getValueBool(2)); //TODO fix this
+        return(!this.getTOIsThrown());
     }
 
 
@@ -1324,6 +1327,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      // Message Identification functions
     public boolean isThrottleReply() { return (this.getOpCodeChar() == DCCppConstants.THROTTLE_REPLY); }
     public boolean isTurnoutReply() { return (this.getOpCodeChar() == DCCppConstants.TURNOUT_REPLY); }
+    public boolean isTurnoutCmdReply() { return (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)); }
     public boolean isProgramReply() { return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)); }
     public boolean isVerifyReply()  { return (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)); }
     public boolean isProgramBitReply() { return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)); }
