@@ -375,7 +375,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
                 } else {
-                    text = "Unknown Turnout Cmd: " + toString();                    
+                    text = "Unmatched Turnout Cmd: " + toString();                    
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:

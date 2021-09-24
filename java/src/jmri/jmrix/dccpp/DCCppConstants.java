@@ -146,7 +146,7 @@ public final class DCCppConstants {
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
     public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
-    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*"; // <T ID addr subaddr thrown> (deprecated at 3.1.7, use DCC)
+    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*"; // <T id addr subaddr thrown> (deprecated at 3.1.7, use DCC)
     public static final String TURNOUT_DEF_DCC_REPLY_REGEX = "\\s*H\\s(\\d+)\\sDCC\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";                    // <H id DCC addr subaddr thrown>
     public static final String TURNOUT_DEF_SERVO_REPLY_REGEX="\\s*H\\s(\\d+)\\sSERVO\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s+([0|1]).*";// <H id SERVO pin thrownposition closedposition profile thrown>
     public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H id VPIN pin thrown>
