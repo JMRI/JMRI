@@ -31,8 +31,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        TrainConductorFrame t = new TrainConductorFrame(train1);
+        TrainConductorFrame t = new TrainConductorFrame(null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
@@ -73,6 +72,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         train2.setNumberEngines("2");
         
         TrainConductorFrame f = new TrainConductorFrame(train2);
+        JemmyUtil.waitFor(f);
         
         // update panel by building train
         Assert.assertTrue(train2.build());
@@ -82,33 +82,36 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JFrameOperator jfoc = new JFrameOperator(
                 Bundle.getMessage("TitleTrainConductor") + " (" + train2.getName() + ")");
         // Need to select all before moving train
-        JButtonOperator jbos = new JButtonOperator(jfoc, Bundle.getMessage("SelectAll"));
-        jbos.doClick();
-        JButtonOperator jbom = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
+        JButtonOperator jboSelectAll = new JButtonOperator(jfoc, Bundle.getMessage("SelectAll"));
         jmri.util.JUnitUtil.waitFor(() -> {
-            return jbom.isEnabled();
+            return jboSelectAll.isEnabled();
+        }, "wait for button to be enabled");
+        jboSelectAll.doClick();
+        JButtonOperator jboMove = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return jboMove.isEnabled();
         }, "wait for button to be enabled");
         
         // Move train using conductor window       
-        jbom.doClick();
+        jboMove.doClick();
         Assert.assertEquals("Train moved", "North Industries", train2.getCurrentLocationName());
         
         // move to next location
-        Assert.assertTrue("confirm button is enabled", jbos.isEnabled());
-        jbos.doClick();
+        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
+        jboSelectAll.doClick();
         jmri.util.JUnitUtil.waitFor(() -> {
-            return jbom.isEnabled();
+            return jboMove.isEnabled();
         }, "wait for button to be enabled");
-        jbom.doClick();
+        jboMove.doClick();
         Assert.assertEquals("Train moved", "South End Staging", train2.getCurrentLocationName());
         
         // terminate train
-        Assert.assertTrue("confirm button is enabled", jbos.isEnabled());
-        jbos.doClick();
+        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
+        jboSelectAll.doClick();
         jmri.util.JUnitUtil.waitFor(() -> {
-            return jbom.isEnabled();
+            return jboMove.isEnabled();
         }, "wait for button to be enabled");
-        jbom.doClick();
+        jboMove.doClick();
         Assert.assertFalse(train2.isBuilt());
 
         JUnitUtil.dispose(f);
@@ -132,15 +135,14 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         TrainConductorFrame f = new TrainConductorFrame(train2);
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
+        JemmyUtil.waitFor(f);
         
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return  p.modifyButton.isEnabled();
-        }, "wait for button to be enabled");
         JemmyUtil.enterClickAndLeaveThreadSafe(p.modifyButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("AddCarsToTrain?"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertFalse(p.selectButton.isEnabled());
         Assert.assertTrue("confirm button is enabled", p.modifyButton.isEnabled());
@@ -149,6 +151,4 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(f);
     }
-
- 
 }

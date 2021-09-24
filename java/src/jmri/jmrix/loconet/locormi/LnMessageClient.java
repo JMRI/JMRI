@@ -76,10 +76,7 @@ public class LnMessageClient extends LnTrafficRouter {
         log.debug("configureRemoteConnection: {} {}", remoteHostName, timeoutSec);
 
         try {
-            if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new SecurityManager());
-            }
-            log.debug("security manager set, set interface to //{}//{}", // NOI18N
+            log.debug("set interface to //{}//{}", // NOI18N
                     remoteHostName, LnMessageServer.serviceName);
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
                     "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
