@@ -225,10 +225,10 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
+            return Bundle.getMessage("atHalt", name).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
-        assertThat(Bundle.getMessage("Halted", block.getDisplayName(), "1")).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
+        assertThat(Bundle.getMessage("atHalt", block.getDisplayName())).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);

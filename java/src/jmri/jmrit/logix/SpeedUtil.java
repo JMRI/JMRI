@@ -195,7 +195,6 @@ public class SpeedUtil {
                 if ( size!= 1) {
                     log.info("{} entries for address {}, {}", l.size(), number, type);
                 }
-                // take the last (most recent, I expect) entry
                 _rosterEntry = l.get(size - 1);
                 setRosterId(_rosterEntry.getId());
             } else {

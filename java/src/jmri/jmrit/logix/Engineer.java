@@ -585,10 +585,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     String debugInfo() {
         StringBuffer info = new StringBuffer("\nEngineer ");
         info.append(getName()); info.append(", Thread.State= "); info.append(getState());
-        info.append("\n\tisAlive= "); info.append(isAlive());
+        info.append(", isAlive= "); info.append(isAlive());
         info.append(", isInterrupted= "); info.append(isInterrupted());
         info.append("\n\trunstate= "); info.append(Warrant.RUN_STATE[getRunState()]);
-        info.append(", speed setting= "); info.append(getSpeedSetting());
+        info.append(", Current speed setting= "); info.append(getSpeedSetting());
         info.append(", scriptSpeed= "); info.append(getScriptSpeed());
         int cmdIdx = getCurrentCommandIndex();
         info.append("\n\tcurrent Cmd Index #"); info.append(cmdIdx + 1); 
@@ -602,13 +602,12 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         info.append(", _atclear= "); info.append(_atClear);
         info.append(", _halt= "); info.append(_halt); 
         info.append(", _atHalt= "); info.append(_atHalt);
-        info.append("\n\t_waitForSync= ");info.append(_waitForSync);
+        info.append("\n\t\t_waitForSync= ");info.append(_waitForSync);
         info.append(", _syncIdx= ");info.append(_syncIdx);
-        info.append("\n\t_setRunOnET= "); info.append(_setRunOnET); 
+        info.append("\n\t\t_setRunOnET= "); info.append(_setRunOnET); 
         info.append(", _runOnET= "); info.append(_runOnET);
-
-        info.append("\n\t_stopPending= "); info.append(_stopPending); 
-        info.append(", _abort= "); info.append(_abort);
+        info.append("\n\t\t_stopPending= "); info.append(_stopPending); 
+        info.append(", _abort= "); info.append(_abort); info.append("\n\tStack trace:");
         for (StackTraceElement elem :getStackTrace()) {
             info.append("\n\t\t");
             info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
@@ -621,7 +620,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             info.append("\n\tRamp flags: ready= "); info.append(_ramp.isReady());
             info.append(", holdsRamp= "); info.append(_ramp.holdsRamp());
             info.append(", stop= "); info.append(_ramp.stop);
-            info.append(", _die= "); info.append(_ramp._die);
+            info.append(", _die= "); info.append(_ramp._die); info.append("\n\tStack trace:");
             for (StackTraceElement elem : _ramp.getStackTrace()) {
                 info.append("\n\t\t");
                 info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
@@ -644,7 +643,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     public synchronized void setStop(boolean eStop, boolean setHalt) {
         float speed = _throttle.getSpeedSetting();
         if (log.isDebugEnabled()) 
-            log.debug("setStop({{},{}}) speed={} scriptSpeed={}", eStop, setHalt, speed, _normalSpeed);
+            log.debug("setStop({}, {}) speed={} scriptSpeed={}", eStop, setHalt, speed, _normalSpeed);
         if (speed < .001f) {
             return;
         }
@@ -668,12 +667,12 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 return Warrant.RAMP_HALT;
             }
             return Warrant.STOP_PENDING;
+        } else if (_halt) {
+            return Warrant.HALT;
         } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
         } else if (_waitForSensor) {
             return Warrant.WAIT_FOR_SENSOR;
-        } else if (_halt) {
-            return Warrant.HALT;
         } else if (_abort) {
             return Warrant.ABORT;
         } else if (_waitForSync) {

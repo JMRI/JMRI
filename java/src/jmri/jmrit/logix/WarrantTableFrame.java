@@ -168,7 +168,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setBackground(Color.white);
         _status.setFont(_status.getFont().deriveFont(Font.BOLD));
         _status.setEditable(false);
-        setStatusText(BLANK.substring(0, 90), null, false);
+        _status.setText(BLANK.substring(0, 90));
 
         JButton nxButton = new JButton(Bundle.getMessage("CreateNXWarrant"));
         nxButton.addActionListener(new ActionListener() {
@@ -480,6 +480,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setForeground(c);
         _status.setText(msg);
         if (save && msg != null && msg.length() > 0) {
+            log.info(msg);
             WarrantTableAction.getDefault().writetoLog(msg);
             _statusHistory.add(msg);
             while (_statusHistory.size() > _maxHistorySize) {
