@@ -455,7 +455,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Light Controllers triggered by Turnout now have Turnout stored in xml by DisplayName (
+            UserName, or SystemName if no userName set ), rather than SystemName.</li>
         </ul>
 
     <h3>Scripting</h3>
