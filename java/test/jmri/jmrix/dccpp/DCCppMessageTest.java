@@ -386,7 +386,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg = new DCCppMessage("T 25 VPIN 50");
         Assert.assertEquals("Monitor string", "Add Turnout Vpin: ID:25, Pin:50", msg.toMonitorString());
         msg = new DCCppMessage("T 23 DCC 5 T");
-        Assert.assertEquals("Monitor string", "Unknown Turnout Cmd: T 23 DCC 5 T", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Unmatched Turnout Cmd: T 23 DCC 5 T", msg.toMonitorString());
     }
 
     @Test

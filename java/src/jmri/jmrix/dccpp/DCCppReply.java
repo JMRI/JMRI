@@ -1090,7 +1090,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefNumString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(1));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
@@ -1103,7 +1103,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefAddrString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(2));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
@@ -1116,7 +1116,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefSubAddrString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(3));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());

@@ -1699,6 +1699,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.TURNOUT_LIST_REGEX));
     }
 
+    public static DCCppMessage makeMessage(String msg) {
+        return (new DCCppMessage(msg));
+    }
+
     /**
      * Create/Delete/Query Sensor.
      * <p>
