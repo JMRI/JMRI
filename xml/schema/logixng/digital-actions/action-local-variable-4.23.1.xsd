@@ -34,7 +34,7 @@
             <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariableXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -50,21 +50,23 @@
                     <xs:enumeration value="SetToString"/>
                     <xs:enumeration value="CopyVariableToVariable"/>
                     <xs:enumeration value="CopyMemoryToVariable"/>
+                    <xs:enumeration value="CopyTableCellToVariable"/>
                     <xs:enumeration value="CalculateFormula"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
+
 			<xs:attribute name="class" type="classType" use="required"/>
-        
+
     </xs:complexType>
 
 </xs:schema>
