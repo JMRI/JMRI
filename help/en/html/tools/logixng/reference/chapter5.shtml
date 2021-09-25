@@ -324,8 +324,16 @@
         <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
         value for the selected local variable.</li>
 
-        <li><strong>Memory:</strong> Selet the <strong>Memory</strong> tab and select the memory
+        <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
+
+        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
+        the data that will be copied to the selected local variable. For example,
+        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
+        the table reference is OK, such as when using the
+        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
+        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
+        for details about tables.</li>
       </ul>
 
       <h5>Memory</h5>
@@ -339,8 +347,16 @@
         <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
         value for the selected memory.</li>
 
-        <li><strong>Memory:</strong> Selet the <strong>Memory</strong> tab and select the memory
+        <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected memory.</li>
+
+        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
+        the data that will be copied to the selected memory variable. For example,
+        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
+        the table reference is OK, such as when using the
+        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
+        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
+        for details about tables.</li>
       </ul>
 
       <h5>OBlock</h5>
