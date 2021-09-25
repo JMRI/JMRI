@@ -39,14 +39,29 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
+
+              <xs:element name="time" type="xs:int" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="timeUnitAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="timeUnit" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Milliseconds"/>
+                    <xs:enumeration value="Seconds"/>
+                    <xs:enumeration value="Minutes"/>
+                    <xs:enumeration value="Hours"/>
+                  </xs:restriction>
+                </xs:simpleType>
               </xs:element>
+
+              <xs:element name="timeUnitReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="timeUnitLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="timeUnitFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

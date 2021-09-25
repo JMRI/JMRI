@@ -36,33 +36,23 @@ public class DelayXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         
         storeCommon(p, element);
         
-        Element e2 = new Element("Socket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
-        MaleSocket socket = p.getAnalogExpressionSocket().getConnectedSocket();
-        String socketSystemName;
-        if (socket != null) {
-            socketSystemName = socket.getSystemName();
-        } else {
-            socketSystemName = p.getAnalogExpressionSocketSystemName();
-        }
-        if (socketSystemName != null) {
-            e2.addContent(new Element("systemName").addContent(socketSystemName));
-        }
-        element.addContent(e2);
-        
+        element.addContent(new Element("time").addContent(Integer.toString(p.getTime())));
+        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
+        element.addContent(new Element("reference").addContent(p.getReference()));
+        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("formula").addContent(p.getFormula()));
+
+        element.addContent(new Element("timeUnitAddressing").addContent(p.getTimeUnitAddressing().name()));
+        element.addContent(new Element("timeUnit").addContent(p.getTimeUnit().name()));
+        element.addContent(new Element("timeUnitReference").addContent(p.getTimeUnitReference()));
+        element.addContent(new Element("timeUnitLocalVariable").addContent(p.getTimeUnitLocalVariable()));
+        element.addContent(new Element("timeUnitFormula").addContent(p.getTimeUnitFormula()));
+
         return element;
     }
     
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        
-        Element socketNameElement = shared.getChild("Socket").getChild("socketName");
-        String socketName = socketNameElement.getTextTrim();
-        Element socketSystemNameElement = shared.getChild("Socket").getChild("systemName");
-        String socketSystemName = null;
-        if (socketSystemNameElement != null) {
-            socketSystemName = socketSystemNameElement.getTextTrim();
-        }
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -70,9 +60,50 @@ public class DelayXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         
         loadCommon(h, shared);
         
-        h.getChild(0).setName(socketName);
-        h.setAnalogExpressionSocketSystemName(socketSystemName);
-        
+        try {
+            Element elem = shared.getChild("addressing");
+            if (elem != null) {
+                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("time");
+            if (elem != null) {
+                h.setTime(Integer.parseInt(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("reference");
+            if (elem != null) h.setReference(elem.getTextTrim());
+
+            elem = shared.getChild("localVariable");
+            if (elem != null) h.setLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("formula");
+            if (elem != null) h.setFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("timeUnitAddressing");
+            if (elem != null) {
+                h.setTimeUnitAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            Element lightState = shared.getChild("timeUnit");
+            if (lightState != null) {
+                h.setTimeUnit(Delay.TimeUnit.valueOf(lightState.getTextTrim()));
+            }
+
+            elem = shared.getChild("timeUnitReference");
+            if (elem != null) h.setTimeUnitReference(elem.getTextTrim());
+
+            elem = shared.getChild("timeUnitLocalVariable");
+            if (elem != null) h.setTimeUnitLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("timeUnitFormula");
+            if (elem != null) h.setTimeUnitFormula(elem.getTextTrim());
+
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
