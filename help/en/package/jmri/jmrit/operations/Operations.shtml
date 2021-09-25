@@ -2417,21 +2417,23 @@
       A spur is used to service an industry. To add a spur, select the "Spurs" radio button and
       then press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a>
       window. Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more
-      information. When entering the length of the spur, enter the length of the cars that will
-      service the industry plus the coupler lengths. For example, let's say you have an industry
-      that can service two 50' boxcars, the track length in this case is 100' plus 8' for the
-      couplers (4' for each car), for a total of 108'. You could optionally round up the length to
-      110' or more.
-      <p>When a car is placed at a spur the car's load status is modified. The program provides two
-      load names for all cars, the default empty or "E", and the default load or "L". If a car has
-      one of these loads when it arrives at a spur, the load name will change to the other, i.e.
-      "E" becomes "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>,
-      it too will be replaced by the default empty "E" when the program sets a car out to a spur.
-      You can also configure your car to return to a specific location or track when the car's load
-      is removed, and optionally change the car's default "E" load to a custom empty load. See
-      <a href="#ReturnWhenEmpty">Return When Empty</a> for more details.</p>
+   information. When entering the length of the spur, enter the length of the cars that will service
+   the industry plus the coupler lengths. For example, let's say you have an industry that can
+   service two 50' boxcars, the track length in this case is 100' plus 8' for the couplers (4' for
+   each car), for a total of 108'. You could optionally round up the length to 110' or more.
+   <p>
+    When a car is placed at a spur the car's load status is modified. The program provides two load
+    names for all cars, the default empty or "E", and the default load or "L". If a car has one of
+    these loads when it arrives at a spur, the load name will change to the other, i.e. "E" becomes
+    "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>, it too will be
+    replaced by the default empty "E" when the program sets a car out to a spur. You can also
+    configure your car to return to a specific location or track when the car's load is removed, and
+    optionally change the car's default "E" load to a custom empty load. See <a
+     href="#ReturnWhenEmpty">Return When Empty</a> and <a href="#ReturnWhenLoaded">Return When
+     Loaded</a> for more details.
+   </p>
 
-      <p>You can if you want, control which trains or routes can pick up or set out cars to your
+   <p>You can if you want, control which trains or routes can pick up or set out cars to your
       spurs. If you do restrict which trains or routes can pull cars from a track, you must also
       restrict the track's car types, loads, and roads to the same ones that your trains can
       service, otherwise you can have cars stranded on the track.</p>
@@ -2504,7 +2506,7 @@
       deliver cars in the order you entered in the schedule table. Car types at the top of the
       table are requested first and once the last car type is delivered, the schedule resumes from
       the top. A pointer shows the next car type to be delivered. Select the "Sequential" radio
-      button in the top left corner and press "Save" if car type and load delivery order is
+      button in the top left corner and press "Save" if car type and load delivery order is as
       desired.</p>
 
       <p>Match mode eliminates the sequential aspects of a schedule. In match mode, the program
