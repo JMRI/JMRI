@@ -207,6 +207,9 @@
         <li>Geoff Bunza, <!-- gbglacier -->
          who provided serial input and output scripts for Arduino.</li>
 
+        <li>Mike Burgett,
+         who provided information on prototype CTC layout and behavior.</li>
+
         <li>Bob Byck, who did extensive testing of test release 1.7.3</li>
 
         <li>Allen Byrne, who has systematically made improvements in the syntax and structure of
@@ -666,8 +669,9 @@
 
         <li>Bob Milhaupt, <-- devel-bobm -->
         who fixed a problem with transponding messages in the LocoNet monitor,
-        provided a lot of usability improvements in the LocoNet monitor, and updated several
-        LocoNet-related help pages.</li>
+        provided a lot of usability improvements in the LocoNet monitor, updated several
+        LocoNet-related help pages, and provided significant help with the
+        <a href="http://jmri.org/help/en/html/tools/uss/index.shtml">USSCTC tools</a>.</li>
 
         <li>Dennis Miller, who greatly improved the CV printing, added the run-time help system and
         repackaged the window icons</li>

@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Andrew Crosland added new code to implement a Service provider Interface for CBUS module support.<br>
+                Initial support is limited to a few modules and allows more human-friendly editing of Node variables.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -86,7 +87,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>See CBUS notes.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -131,7 +132,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>See CBUS notes.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -391,6 +392,12 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>Add Dispatcher Actions and Expressions</li>
+        </ul>
+
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
@@ -500,7 +507,10 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li></li>
+                <li>Multiple upgrades to improve the realism
+                of the
+                <a href="https://jmri.org/jython/ctc">example panel's</a>
+                operation and appearance. Much help provided by Bob Milhaupt.</li>
             </ul>
 
    <h3>Switchboard Editor</h3>

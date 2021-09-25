@@ -18,7 +18,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -35,6 +34,8 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Boudreau Copyright (C) 2009, 2014
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+    
+    protected static final String POINTER = "    -->";
 
     // Defines the columns
     private static final int ID_COLUMN = 0;
@@ -369,9 +370,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private String getCurrentPointer(ScheduleItem si) {
         if (_track.getCurrentScheduleItem() == si) {
             if (_track.getScheduleMode() == Track.SEQUENTIAL && si.getCount() > 1) {
-                return " " + _track.getScheduleCount() + " -->"; // NOI18N
+                return " " + _track.getScheduleCount() + POINTER; // NOI18N
             } else {
-                return "    -->"; // NOI18N
+                return POINTER; // NOI18N
             }
         } else {
             return "";
@@ -391,16 +392,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         JComboBox<String> cb = new JComboBox<>();
         cb.addItem(ScheduleItem.NONE);
         for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
-            if (_track.isRoadNameAccepted(roadName)) {
-                Car car = InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), roadName);
-                if (car != null) {
-                    cb.addItem(roadName);
-                }
+            if (_track.isRoadNameAccepted(roadName) &&
+                    InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), roadName) != null) {
+                cb.addItem(roadName);
             }
         }
         cb.setSelectedItem(si.getRoadName());
         if (!cb.getSelectedItem().equals(si.getRoadName())) {
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getRoadName()});
+            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
             cb.addItem(notValid);
             cb.setSelectedItem(notValid);
         }
@@ -409,7 +408,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     String[] randomValues = {ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1"}; // NOI18N
 
-    private JComboBox<String> getRandomComboBox(ScheduleItem si) {
+    protected JComboBox<String> getRandomComboBox(ScheduleItem si) {
         JComboBox<String> cb = new JComboBox<>();
         for (String item : randomValues) {
             cb.addItem(item);
@@ -452,7 +451,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         return cb;
     }
 
-    private JComboBox<String> getLoadComboBox(ScheduleItem si) {
+    protected JComboBox<String> getLoadComboBox(ScheduleItem si) {
         // log.debug("getLoadComboBox for ScheduleItem "+si.getType());
         JComboBox<String> cb = InstanceManager.getDefault(CarLoads.class).getSelectComboBox(si.getTypeName());
         filterLoads(si, cb); // remove loads not accepted by this track
@@ -466,7 +465,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         return cb;
     }
 
-    private JComboBox<String> getShipComboBox(ScheduleItem si) {
+    protected JComboBox<String> getShipComboBox(ScheduleItem si) {
         // log.debug("getShipComboBox for ScheduleItem "+si.getType());
         JComboBox<String> cb = InstanceManager.getDefault(CarLoads.class).getSelectComboBox(si.getTypeName());
         cb.setSelectedItem(si.getShipLoadName());
@@ -479,7 +478,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         return cb;
     }
 
-    private JComboBox<Location> getDestComboBox(ScheduleItem si) {
+    protected JComboBox<Location> getDestComboBox(ScheduleItem si) {
         // log.debug("getDestComboBox for ScheduleItem "+si.getType());
         JComboBox<Location> cb = InstanceManager.getDefault(LocationManager.class).getComboBox();
         filterDestinations(cb, si.getTypeName());
@@ -493,7 +492,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         return cb;
     }
 
-    private JComboBox<Track> getTrackComboBox(ScheduleItem si) {
+    protected JComboBox<Track> getTrackComboBox(ScheduleItem si) {
         // log.debug("getTrackComboBox for ScheduleItem "+si.getType());
         JComboBox<Track> cb = new JComboBox<>();
         if (si.getDestination() != null) {
