@@ -87,6 +87,28 @@ public class AddToPriorityFIFOQueue
         return _priorityFIFOQueueHandle;
     }
     
+    public int getPriority() {
+        return _priority;
+    }
+
+    public void setPriority(int priority) {
+        assertListenersAreNotRegistered(log, "setPriority");
+        _priority = priority;
+    }
+
+    public FemaleDigitalActionSocket getDigitalActionSocket() {
+        return _actionSocket;
+    }
+
+    public String getDigitalActionSocketSystemName() {
+        return _actionSocketSystemName;
+    }
+
+    public void setDigitalActionSocketSystemName(String systemName) {
+        assertListenersAreNotRegistered(log, "setDigitalActionSocketSystemName");
+        _actionSocketSystemName = systemName;
+    }
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -174,26 +196,6 @@ public class AddToPriorityFIFOQueue
             priorityFIFOQueueName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         return Bundle.getMessage(locale, "AddToPriorityFIFOQueue_Long", _actionSocket.getName(), _priority, priorityFIFOQueueName);
-    }
-
-    public int getPriority() {
-        return _priority;
-    }
-
-    public synchronized void setPriority(int priority) {
-        _priority = priority;
-    }
-
-    public FemaleDigitalActionSocket getDigitalActionSocket() {
-        return _actionSocket;
-    }
-
-    public String getDigitalActionSocketSystemName() {
-        return _actionSocketSystemName;
-    }
-
-    public void setDigitalActionSocketSystemName(String systemName) {
-        _actionSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
