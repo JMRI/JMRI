@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author: etxbct $) 2021 -->
+
+  <title>JMRI: SE-TSFS-2010</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+      <h1>JMRI: SE-TSFS-2010</h1>
+      This directory contains signaling definitions corresponding to the TSFS 2010
+       - Rule book JTF for Swedish Railroad described in the 
+      September 2009 version of the "3H Signaling System", Module 3H.
+      <br>
+      The wikipedia has also some english information in its
+      <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling" target="_blank">
+        Swedish railway signalling page</a>.
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>Signal Mast definitions:</p>
+      <ul>
+        <li>
+          <a href="appearance-fsi_2.xml">Two aspects Distant signal</a>
+        <li>
+          <a href="appearance-fsi_3.xml">Three aspects Distant signal</a>
+        <li>
+          <a href="appearance-hsi_2.xml">Two aspects Main signal</a>
+        <li>
+          <a href="appearance-hsi_2+dvsi.xml">Two aspects Main signal and
+            Shunting signal</a>
+        <li>
+          <a href="appearance-hsi_3.xml">Three aspects Main signal</a>
+        <li>
+          <a href="appearance-hsi_3+dvsi.xml">Three aspects Main signal and
+            Shunting signal</a>
+        <li>
+          <a href="appearance-hsi_4.xml">Four aspects Main signal</a>
+        <li>
+          <a href="appearance-hsi_4+dvsi.xml">Four aspects Main signal and
+            Shunting signal</a>
+        <li>
+          <a href="appearance-hsi_5.xml">Six aspects Main signal</a>
+        <li>
+          <a href="appearance-hsi_5+dvsi.xml">Six aspects Main signal and
+            Shunting signal</a>
+        <li>
+          <a href="appearance-hdvsi_8.xml">Shunting Main Dwarf signal</a>
+        <li>
+          <a href="appearance-dvsi_4.xml">Shunting Dwarf signal</a>
+        <li>
+          <a href="appearance-sly_2.xml">Two aspects Guard signal</a>
+        <li>
+          <a href="appearance-sly_2+dvsi.xml">Two aspects Guard signal and
+            Shunting signal</a>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <script src="/js/main.js"></script>
+</body>
+</html>

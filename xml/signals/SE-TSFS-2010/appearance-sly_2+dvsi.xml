@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year>
+    <holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Benny</firstname>
+        <surname>Tjader</surname>
+      </personname>
+      <email>etxbct@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-09-05</date>
+      <authorinitials>BCT</authorinitials>
+      <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>SE TSFS 2010</aspecttable>
+  <name>Single two aspect gard signal with Dvsi</name>
+  <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
+  for english information.</reference>
+  <description>Single distant signal ahead of block signals at short distance.
+  Placed instead of the "normal" single distant signal when the distance to the block signal is less than 1200m.
+  It differentiates from the normal type because it has only two lights.
+  </description>
+
+  <appearances>
+    <appearance>
+      <aspectname>Not used</aspectname>
+      <show>dark</show>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh-dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh-dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh-dark.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh-dark.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh-dark.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Lit</aspectname>
+      <show>red</show>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si0+Sh0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si0+Sh0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si0+Sh0.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si0+Sh0.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si0+Sh0.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si0+Sh0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh0</aspectname>
+      <show>dark</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh0.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh0.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh0.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh1 Stop</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>lunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh1.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh1 40</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>lunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh1.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh1 80</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>lunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh1.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh2</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>lunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh2.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh2.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sh3</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>lunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh3.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh3.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Sly_two_aspect/Si1+Sh3.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Si1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Si1+Sh2.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Lit</aspect>
+    </danger>
+    <permissive>
+      <aspect>Sh2</aspect>
+    </permissive>
+    <held>
+      <aspect>Lit</aspect>
+    </held>
+    <dark>
+      <aspect>Not used</aspect>
+    </dark>
+   </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Lit</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 stop</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect Stop</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 stop</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh0</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh0</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect 40</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40 Caution</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40 Short Entry Route</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect 80</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Caution</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect Stop</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect 40</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect 80</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh1</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 Stop</advancedAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 40</advancedAspect>
+      <ourAspect>Sh1 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 80</advancedAspect>
+      <ourAspect>Sh1 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh2</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh2</advancedAspect>
+      <ourAspect>Lit</ourAspect>
+      <ourAspect>Sh0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh3</advancedAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh3</advancedAspect>
+      <ourAspect>Sh3</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>  
