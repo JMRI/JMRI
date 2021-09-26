@@ -131,7 +131,7 @@ public class PriorityFIFOQueue
             throw new IllegalArgumentException("priority is out of bound");
         }
         _queues.get(priority).add(action);
-        if (!_isCurrentlyRunning) getConditionalNG().execute();;
+        if (!_isCurrentlyRunning) getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -156,6 +156,6 @@ public class PriorityFIFOQueue
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PriorityFIFOQueue.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PriorityFIFOQueue.class);
     
 }
