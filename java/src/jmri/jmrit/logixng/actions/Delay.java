@@ -72,12 +72,6 @@ public class Delay extends AbstractDigitalAction {
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
     private long getCurrentTime() throws JmriException {
 
         switch (_addressing) {

@@ -135,12 +135,6 @@ public class AddToPriorityFIFOQueue
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         if (_priorityFIFOQueueHandle != null) {
             _priorityFIFOQueueHandle.getBean().addAction(_priority, _actionSocket);

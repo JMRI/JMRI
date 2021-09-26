@@ -42,12 +42,6 @@ public class PriorityFIFOQueue
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     private DigitalAction getNextAction() {
         for (Deque<DigitalAction> queue : _queues) {
             if (!queue.isEmpty()) {
