@@ -96,11 +96,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "Direction: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
-                if (isTurnoutDefReply()) {
+                if (isTurnoutCmdReply()) {
                     text = "Turnout Reply: ";
-                    text += "Number: " + getTOIDString() + ", ";
-                    text += "Address: " + getTOAddressString() + ", ";
-                    text += "Index: " + getTOAddressIndexString() + ", ";
+                    text += "ID: " + getTOIDString() + ", ";
+                    text += "Dir: " + getTOStateString();
+                } else if (isTurnoutDefReply()) {
+                    text = "Turnout Def Reply: ";
+                    text += "ID:" + getTOIDString() + ", ";
+                    text += "Address:" + getTOAddressString() + ", ";
+                    text += "Index:" + getTOAddressIndexString() + ", ";
                     // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
                     if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
@@ -109,11 +113,41 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                         int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
                         text += "DCC Address: " + dccAddress + ", ";
                     }
-                    text += "Direction: " + getTOStateString();
-                } else {
-                    text = "Turnout Reply: ";
-                    text += "Number: " + getTOIDString() + ", ";
-                    text += "Direction: " + getTOStateString();
+                    text += "Dir: " + getTOStateString();
+                } else if (isTurnoutDefDCCReply()) {
+                    text = "Turnout Def DCC Reply: ";
+                    text += "ID:" + getTOIDString() + ", ";
+                    text += "Address:" + getTOAddressString() + ", ";
+                    text += "Index:" + getTOAddressIndexString() + ", ";
+                    // if we are able to parse the address and index we can convert it
+                    // to a standard DCC address for display.
+                    if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
+                        int boardAddr = getTOAddressInt();
+                        int boardIndex = getTOAddressIndexInt();
+                        int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
+                        text += "DCC Address:" + dccAddress + ", ";
+                    }
+                    text += "Dir:" + getTOStateString();
+                } else if (isTurnoutDefServoReply()) {
+                    text = "Turnout Def Servo Reply: ";
+                    text += "ID:" + getTOIDString() + ", ";
+                    text += "Pin:" + getTOPinInt() + ", ";
+                    text += "ThrownPos:" + getTOThrownPositionInt() + ", ";
+                    text += "ClosedPos:" + getTOClosedPositionInt() + ", ";
+                    text += "Profile:" + getTOProfileInt() + ", ";
+                    text += "Dir:" + getTOStateString();
+                } else if (isTurnoutDefVpinReply()) {
+                    text = "Turnout Def Vpin Reply: ";
+                    text += "ID:" + getTOIDString() + ", ";
+                    text += "Pin:" + getTOPinInt() + ", ";
+                    text += "Dir:" + getTOStateString();
+                } else if (isTurnoutDefLCNReply()) {
+                    text = "Turnout Def LCN Reply: ";
+                    text += "ID:" + getTOIDString() + ", ";
+                    text += "Dir:" + getTOStateString();
+                } else { 
+                    text = "Unknown Turnout Reply Format: ";
+                    text += toString();
                 }
                 break;
             case DCCppConstants.SENSOR_REPLY_H:
@@ -287,6 +321,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 // meanings.
                 if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) {
+                    r.myRegex =      DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX)) {
+                    r.myRegex =      DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)) {
+                    r.myRegex =      DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)) {
+                    r.myRegex =      DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
@@ -710,7 +752,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTOAddressString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(2));
         } else {
             return("-1");
@@ -718,7 +760,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getTOAddressInt() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueInt(2));
         } else {
             return(-1);
@@ -726,7 +768,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTOAddressIndexString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(3));
         } else {
             return("-1");
@@ -734,8 +776,40 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getTOAddressIndexInt() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueInt(3));
+        } else {
+            return(-1);
+        }
+    }
+
+    public int getTOPinInt() {
+        if (this.isTurnoutDefServoReply() || this.isTurnoutDefVpinReply()) {
+            return(this.getValueInt(2));
+        } else {
+            return(-1);
+        }
+    }
+
+    public int getTOThrownPositionInt() {
+        if (this.isTurnoutDefServoReply()) {
+            return(this.getValueInt(3));
+        } else {
+            return(-1);
+        }
+    }
+
+    public int getTOClosedPositionInt() {
+        if (this.isTurnoutDefServoReply()) {
+            return(this.getValueInt(4));
+        } else {
+            return(-1);
+        }
+    }
+
+    public int getTOProfileInt() {
+        if (this.isTurnoutDefServoReply()) {
+            return(this.getValueInt(5));
         } else {
             return(-1);
         }
@@ -754,8 +828,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public int getTOStateInt() {
         // Will return 1 (true - thrown) or 0 (false - closed)
-        if (this.isTurnoutDefReply()) { // turnout list response
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) { // turnout list response
             return(this.getValueInt(4));
+        } else if (this.isTurnoutDefServoReply()) { // servo turnout 
+            return(this.getValueInt(6));
+        } else if (this.isTurnoutDefVpinReply()) { // vpin turnout 
+            return(this.getValueInt(3));
+        } else if (this.isTurnoutDefLCNReply()) { // LCN turnout 
+            return(this.getValueInt(2));
         } else if (this.isTurnoutReply()) { // single turnout response
             return(this.getValueInt(2));
         } else {
@@ -764,12 +844,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    public boolean getTOIsThrown() {
-        return(this.getValueBool(2));
+    public boolean getTOIsThrown() { 
+        return(this.getTOStateInt() == 1);
     }
 
     public boolean getTOIsClosed() {
-        return(!this.getValueBool(2));
+        return(!this.getTOIsThrown());
     }
 
 
@@ -1010,7 +1090,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefNumString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(1));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
@@ -1023,7 +1103,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefAddrString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(2));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
@@ -1036,7 +1116,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getTurnoutDefSubAddrString() {
-        if (this.isTurnoutDefReply()) {
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) {
             return(this.getValueString(3));
         } else {
             log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
@@ -1247,6 +1327,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      // Message Identification functions
     public boolean isThrottleReply() { return (this.getOpCodeChar() == DCCppConstants.THROTTLE_REPLY); }
     public boolean isTurnoutReply() { return (this.getOpCodeChar() == DCCppConstants.TURNOUT_REPLY); }
+    public boolean isTurnoutCmdReply() { return (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)); }
     public boolean isProgramReply() { return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)); }
     public boolean isVerifyReply()  { return (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)); }
     public boolean isProgramBitReply() { return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)); }
@@ -1262,6 +1343,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
          (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_L)); }
     public boolean isSensorDefReply() { return(this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)); }
     public boolean isTurnoutDefReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)); }
+    public boolean isTurnoutDefDCCReply()   { return(this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)); }
+    public boolean isTurnoutDefServoReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX)); }
+    public boolean isTurnoutDefVpinReply()  { return(this.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)); }
+    public boolean isTurnoutDefLCNReply()   { return(this.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
     public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
