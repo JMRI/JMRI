@@ -395,7 +395,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add Dispatcher Actions and Expressions</li>
+          <li>Add Dispatcher Actions and Expressions.</li>
+          <li>Add a <strong>Table</strong> tab to Local Variable and Memory Actions.
+          The table reference is used to identify the cell that has content that will be copied
+          to the selected local or memory variable.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
