@@ -215,12 +215,6 @@ public class ExpressionScript extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getTheScript() throws JmriException {
         
         switch (_scriptAddressing) {

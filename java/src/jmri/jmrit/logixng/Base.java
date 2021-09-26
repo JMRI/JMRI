@@ -290,15 +290,6 @@ public interface Base extends PropertyChangeProvider {
     public Category getCategory();
 
     /**
-     * Is this external?
-     * Does it affects or is dependent on external things, like
-     * turnouts and sensors? Timers are considered as internal since they
-     * behavies the same on every computer on every layout.
-     * @return true if this is external
-     */
-    public boolean isExternal();
-
-    /**
      * Is this item active? If this item is enabled and all the parents are
      * enabled, this item is active.
      * @return true if active, false otherwise.

@@ -99,16 +99,6 @@ public class OperationsPanel extends JPanel {
     private static final int MIN_CHECKBOXES = 5;
     private static final int MAX_CHECKBOXES = 11;
 
-    /**
-     * Gets the number of checkboxes(+1) that can fix in one row see
-     * OperationsFrame.minCheckboxes and OperationsFrame.maxCheckboxes
-     *
-     * @return the number of checkboxes, minimum is 5 (6 checkboxes)
-     */
-    protected int getNumberOfCheckboxesPerLine() {
-        return getNumberOfCheckboxesPerLine(this.getPreferredSize());
-    }
-
     protected int getNumberOfCheckboxesPerLine(Dimension size) {
         if (size == null) {
             return MIN_CHECKBOXES; // default is 6 checkboxes per row
@@ -192,11 +182,8 @@ public class OperationsPanel extends JPanel {
      *
      * @param scrollPane the pane containing the textArea
      * @param textArea   the textArea to adjust
+     * @param size the preferred size
      */
-    protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
-        this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
-    }
-
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
         FontMetrics metrics = getFontMetrics(textArea.getFont());
         int columnWidth = metrics.charWidth('m');

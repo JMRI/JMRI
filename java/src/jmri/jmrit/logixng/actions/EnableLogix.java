@@ -226,12 +226,6 @@ public class EnableLogix extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     private String getNewLock() throws JmriException {
         
         switch (_operationAddressing) {

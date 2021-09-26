@@ -98,11 +98,6 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         ExecuteDelayed a1 = new ExecuteDelayed("IQDA321", null);
         Assert.assertEquals("strings are equal", "Execute delayed", a1.getShortDescription());

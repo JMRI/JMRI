@@ -344,12 +344,6 @@ public class ActionSignalMast extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewAspect() throws JmriException {
 
         switch (_aspectAddressing) {

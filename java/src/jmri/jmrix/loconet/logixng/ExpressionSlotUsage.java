@@ -59,12 +59,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         return CategoryLocoNet.LOCONET;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     public void setMemo(LocoNetSystemConnectionMemo memo) {
         assertListenersAreNotRegistered(log, "setMemo");
         _memo = memo;

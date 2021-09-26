@@ -189,7 +189,7 @@
       <h3 id="variables">Node Variables</h3>
 
       <div>
-        <p>This is a generic tool for Node Variable and Node Event editing.</p>
+        <p>This is a tool for Node Variable and Node Event editing.</p>
 
         <p><strong>Other tools may be more appropriate for full node configuration.</strong>
         </p>
@@ -209,7 +209,13 @@
 
         <p>Click edit to edit the NVs, the edit screen will open in a new window.</p>
 
-        <h4>Editing Node Variables</h4>
+        <h4>Editing Generic Node Variables</h4>
+
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-nv-edit-generic-1070x739.png"
+        width="1070" height="739" alt="CBUS Node Manager generic NV editor" class="floatRight">
+
+        <p>The generic node variable tab displays the raw node variable values for any CBUS node.</p>
 
         <p>Columns on the left are the current values, columns on the right show proposed.</p>
 
@@ -219,6 +225,21 @@
 
         <p>Click on this button for a confirmation before writing, after which the window will
         close.</p>
+
+        <h4>Using the Node Variable Edit GUI</h4>
+
+        <img src=
+        "../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-nv-edit-gui-1070x739.png"
+        width="1070" height="739" alt="CBUS Node Manager NV editor gui" class="floatRight">
+
+        <p>The Edit tab presents a more user friendly view of Node Variables for those nodes that are supported.
+            Physical quantities such as delays and currents will be scaled to display the physical value, rather
+            that the raw node variable value shown in the generic tab. Hover over individual objects for tool tips
+            or refer to the node documentation for full details.</p>
+        
+        <p>Changes in the edit tab will be reflected in the generic tab, and vice-versa.</p?
+       
+
       </div>
 
       <h3 id="events">Node Events</h3>

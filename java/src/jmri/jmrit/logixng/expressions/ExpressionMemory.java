@@ -224,12 +224,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getString(Object o) {
         if (o != null) {
             return o.toString();

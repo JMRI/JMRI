@@ -183,11 +183,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Analog constant", _base.getShortDescription());
     }

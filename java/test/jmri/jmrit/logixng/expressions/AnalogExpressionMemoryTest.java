@@ -312,11 +312,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Memory as analog value", _base.getShortDescription());
     }

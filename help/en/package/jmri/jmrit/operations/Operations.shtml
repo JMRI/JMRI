@@ -1417,7 +1417,8 @@
       staging during the train build, select this option. Normally during the train build the
       program would select the track with the least amount of use when determining the track to
       arrive on. Note that the program will only prompt you if there are two or more tracks
-      available in staging that meet the train's requirements. <a id="CarRouting"></a>
+      available in staging that meet the train's requirements. 
+      
       <h4 id="TryNormalMode">Try Normal Mode if Build Failure from Staging</h4>
       When using <a href="#BuildOptions">aggressive</a> mode to build a train, the program will
       first try and pull cars from all of the train's locations to free up space for cars departing
@@ -1429,21 +1430,25 @@
       <p>You can also request to build a specific train in normal mode, see <a href=
       "#TrainBuildOptions">Train Build Options</a>.</p>
 
+      <a id="CarRouting"></a>
       <h3>Car Routing Options</h3>
 
-      <h4>Enable Car Routing</h4>
-      When car routing is enabled, the program will use multiple trains to deliver a car to its
-      final destination. It is recommended that you leave this option enabled. With car routing
-      enabled, you can use a <a href="#Schedules">Schedule</a> to deliver a car to a specific
-      location using the car's final destination fields. The car routing algorithm will search for
-      the most efficient route for the car to travel. The router will attempt to use
-      classification/interchange tracks and then yards to move cars. If you don't want the router
-      to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. The program will
-      try and find a route using a maximum of six trains to complete the car move. Note that the
-      program never gives up trying to route a car. If a car has been assigned a <a href=
-      "#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the program will
-      try and route the car during every train build that has access to the car.
-      <h4>Enable Car Routing via Yards</h4>
+   <h4>Enable Car Routing</h4>
+   When car routing is enabled, the program will use multiple trains to deliver a car to its final
+   destination. It is recommended that you leave this option enabled. The
+   <a href="#LocationDivision">railroad division</a> feature uses routing to move cars. With car
+   routing enabled, you can use a
+   <a href="#Schedules">Schedule</a> to deliver a car to a specific location using the car's final
+   destination fields. The car routing algorithm will search for the most efficient route for the
+   car to travel. The router will attempt to use classification/interchange tracks and then yards to
+   move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
+   via Yards" checkbox. The program will try and find a route using a maximum of six trains to
+   complete the car move. Note that the program never gives up trying to route a car. If a car has
+   been assigned a
+   <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the program
+   will try and route the car during every train build that has access to the car.
+   
+   <h4>Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
       move the car to its final destination. If you want the program to also consider using yard
       tracks when routing, select this option.
@@ -2038,16 +2043,21 @@
       date the page was printed.</p>
 
       <h3>Manifest and Switch List Preview</h3>
-      If you want to use a text editor to preview your Manifests and switch lists, select this
-      option. This option also allows you to make manual changes to your Manifests and switch lists
-      before you print them.
-      <h3 id="AddLogo">Add Logo</h3>
-      If you want a logo in the top right hand corner of your Manifests and switch lists, press the
-      "Add Logo" button and select a file with the image you want to display. The supported image
-      file extensions are .gif, .png, .jpg, plus others. You can also have a different logo for
-      every train in your roster, see <a href="#TrainManifestOptions">Train Manifest Options</a>
-      for details.
-      <h3 id="MisplacedCarsComment">Misplaced Cars Comment</h3>
+   If you want to use a text editor to preview your Manifests and switch lists, select this option.
+   This option also allows you to make manual changes to your Manifests and switch lists before you
+   print them.
+
+   <h3 id="AddLogo">Add Logo</h3>
+   If you want a logo in the top right hand corner of your Manifests and switch lists, press the
+   "Add Logo" button and select a file with the image you want to display. The supported image file
+   extensions are .gif, .png, .jpg, plus others. You can also have a different logo for every train
+   in your roster, see
+   <a href="#TrainManifestOptions">Train Manifest Options</a> for details. If the Manifest or switch
+   list text intrudes on your logo, you can adjust the start of the text by creating
+   <a href="#TrainEdit">train comments</a> for Manifests, and <a
+    href="#SwitchList">switch list comments</a> for a location.
+
+   <h3 id="MisplacedCarsComment">Misplaced Cars Comment</h3>
       OperationsPro™ provides a comment for your crew to search for <a href=
       "#CarsSet">misplaced</a> cars. You can modify the comment to your liking. Full scale
       railroads unfortunately misplace cars as part of their operations, so having a few cars in
@@ -2199,22 +2209,25 @@
 
       <h4 id="LocationDivision">Railroad Division</h4>
 
-      <p>The railroad divisions feature allows you to create prototypical car movements for your
-      railroad. To use this feature first create and then select at least one division for your
-      railroad by using the "Add" button in the "Division" section of the "Edit Location" window.
-      You can assign multiple locations to the same division, and you can create several divisions
-      for your railroad. Cars that are assigned a <a href="#HomeDivision">home division</a> will
-      return to the <a href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home
-      division when their load state becomes empty. If the program can't find a home division yard
-      or staging for the empty car, it will try to send the car directly to an industry (<a href=
-      "#Sidings">spur</a>) at the car's home division. Cars with a home division will also return
-      to an industry (<a href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their home
-      division when loaded from an industry or staging outside of their home division. Cars loaded
-      at their home division can travel to any industry or staging on the railroad. The program
-      will use <a href="#Interchange">interchange</a> tracks to route the cars to yards, industries
-      or staging that require multiple trains.</p>
+   <p>
+    The railroad divisions feature allows you to create prototypical car movements for your
+    railroad. Cars with a home division are <a href="#CarRouting">routed</a> to their destinations
+    and move with "purpose". To use this feature first create and then select at least one division
+    for your railroad by using the "Add" button in the "Division" section of the "Edit Location"
+    window. You can assign multiple locations to the same division, and you can create several
+    divisions for your railroad. Cars that are assigned a <a href="#HomeDivision">home division</a>
+    will return to the <a href="#Yards">yard</a> or <a href="#Staging">staging</a> at their home
+    division when their load state becomes empty. If the program can't find a home division yard or
+    staging for the empty car, it will try to send the car directly to an industry (<a
+     href="#Sidings">spur</a>) at the car's home division. Cars with a home division will also
+    return to an industry (<a href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their
+    home division when loaded from an industry or staging outside of their home division. Cars
+    loaded at their home division can travel to any industry or staging on the railroad. The program
+    will use <a href="#Interchange">interchange</a> tracks to route the cars to yards, industries or
+    staging that require multiple trains.
+   </p>
 
-      <p>When setting up railroad divisions, it is best if there's at least one division yard for
+   <p>When setting up railroad divisions, it is best if there's at least one division yard for
       empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of
       the division. Staging can be used as a substitute for industries.</p>
 
@@ -2404,21 +2417,23 @@
       A spur is used to service an industry. To add a spur, select the "Spurs" radio button and
       then press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a>
       window. Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more
-      information. When entering the length of the spur, enter the length of the cars that will
-      service the industry plus the coupler lengths. For example, let's say you have an industry
-      that can service two 50' boxcars, the track length in this case is 100' plus 8' for the
-      couplers (4' for each car), for a total of 108'. You could optionally round up the length to
-      110' or more.
-      <p>When a car is placed at a spur the car's load status is modified. The program provides two
-      load names for all cars, the default empty or "E", and the default load or "L". If a car has
-      one of these loads when it arrives at a spur, the load name will change to the other, i.e.
-      "E" becomes "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>,
-      it too will be replaced by the default empty "E" when the program sets a car out to a spur.
-      You can also configure your car to return to a specific location or track when the car's load
-      is removed, and optionally change the car's default "E" load to a custom empty load. See
-      <a href="#ReturnWhenEmpty">Return When Empty</a> for more details.</p>
+   information. When entering the length of the spur, enter the length of the cars that will service
+   the industry plus the coupler lengths. For example, let's say you have an industry that can
+   service two 50' boxcars, the track length in this case is 100' plus 8' for the couplers (4' for
+   each car), for a total of 108'. You could optionally round up the length to 110' or more.
+   <p>
+    When a car is placed at a spur the car's load status is modified. The program provides two load
+    names for all cars, the default empty or "E", and the default load or "L". If a car has one of
+    these loads when it arrives at a spur, the load name will change to the other, i.e. "E" becomes
+    "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>, it too will be
+    replaced by the default empty "E" when the program sets a car out to a spur. You can also
+    configure your car to return to a specific location or track when the car's load is removed, and
+    optionally change the car's default "E" load to a custom empty load. See <a
+     href="#ReturnWhenEmpty">Return When Empty</a> and <a href="#ReturnWhenLoaded">Return When
+     Loaded</a> for more details.
+   </p>
 
-      <p>You can if you want, control which trains or routes can pick up or set out cars to your
+   <p>You can if you want, control which trains or routes can pick up or set out cars to your
       spurs. If you do restrict which trains or routes can pull cars from a track, you must also
       restrict the track's car types, loads, and roads to the same ones that your trains can
       service, otherwise you can have cars stranded on the track.</p>
@@ -2491,7 +2506,7 @@
       deliver cars in the order you entered in the schedule table. Car types at the top of the
       table are requested first and once the last car type is delivered, the schedule resumes from
       the top. A pointer shows the next car type to be delivered. Select the "Sequential" radio
-      button in the top left corner and press "Save" if car type and load delivery order is
+      button in the top left corner and press "Save" if car type and load delivery order is as
       desired.</p>
 
       <p>Match mode eliminates the sequential aspects of a schedule. In match mode, the program
@@ -2550,11 +2565,15 @@
 
       <h5>Ship</h5>
 
-      <p>You can optionally specify the car load shipped. When the "Ship" field is blank, the
-      program will only place the default empty "E" or default load "L" into the car. See <a href=
-      "#Sidings">Spurs</a> for how the program deals with the default loads.</p>
+   <p>
+    You can optionally specify the car load shipped. When the "Ship" field is blank, the program
+    will place the car's <a href="#ReturnWhenEmpty">Return When Empty</a> or <a
+     href="#ReturnWhenLoaded">Return When Loaded</a> if specified, otherwise the program will use
+    the default empty "E" or default load "L". See <a href="#Sidings">Spurs</a> for how the program
+    deals with the default loads.
+   </p>
 
-      <h5>Destination and Track</h5>
+   <h5>Destination and Track</h5>
 
       <p>You can decide where a car is to be sent after being serviced by the spur/industry. Use
       the "Destination" field to tell the program where the car is to be delivered. If you want to
@@ -4829,7 +4848,8 @@
 
       <p>Use this window to change all of your train departure times by certain number of hours. It
       can be found under Trains-&gt;Tools. Useful if you're trying to match the train departure
-      times to a real or fast clock.</p>
+      times to a real or fast clock. You also have the option to change the departure times in your
+      routes.</p>
 
       <h4 id="TrainsTableColors">Train Row Color</h4>
 

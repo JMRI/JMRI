@@ -37,12 +37,6 @@ public class False extends AbstractDigitalExpression {
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() {
         return false;
     }
