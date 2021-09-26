@@ -70,11 +70,7 @@ public class AddToPriorityFIFOQueueXml extends jmri.managers.configurexml.Abstra
 
         Element priorityFIFOQueueName = shared.getChild("priorityFIFOQueue");
         if (priorityFIFOQueueName != null) {
-            DigitalActionBean t = InstanceManager
-                    .getDefault(DigitalActionManager.class)
-                    .getNamedBean(priorityFIFOQueueName.getTextTrim());
-            if (t != null) h.setPriorityFIFOQueue((PriorityFIFOQueue) t);
-            else h.removePriorityFIFOQueue();
+            h.setPriorityFIFOQueue(priorityFIFOQueueName.getTextTrim());
         }
 
         Element priority = shared.getChild("priority");

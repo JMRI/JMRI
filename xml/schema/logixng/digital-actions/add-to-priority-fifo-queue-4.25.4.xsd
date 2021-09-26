@@ -40,6 +40,7 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="priorityFIFOQueue" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="priority" type="xs:int" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">

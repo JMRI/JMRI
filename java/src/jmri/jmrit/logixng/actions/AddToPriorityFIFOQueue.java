@@ -44,12 +44,15 @@ public class AddToPriorityFIFOQueue
     
     public void setPriorityFIFOQueue(@Nonnull String priorityFIFOQueueName) {
         assertListenersAreNotRegistered(log, "setPriorityFIFOQueue");
-        DigitalActionBean digitalExpression =
+        Base digitalAction =
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .getNamedBean(priorityFIFOQueueName);
-        if (digitalExpression != null) {
-            if (digitalExpression instanceof PriorityFIFOQueue) {
-                setPriorityFIFOQueue((PriorityFIFOQueue)digitalExpression);
+        if (digitalAction != null) {
+            while (digitalAction instanceof MaleSocket) {
+                digitalAction = ((MaleSocket)digitalAction).getObject();
+            }
+            if (digitalAction instanceof PriorityFIFOQueue) {
+                setPriorityFIFOQueue((PriorityFIFOQueue)digitalAction);
             } else {
                 removePriorityFIFOQueue();
                 log.error("\"{}\" is not a PriorityFIFOQueue", priorityFIFOQueueName);

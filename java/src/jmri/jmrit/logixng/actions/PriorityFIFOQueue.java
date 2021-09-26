@@ -68,7 +68,10 @@ public class PriorityFIFOQueue
         }
         
         while (action != null) {
+            Base oldParent = action.getParent();
+            action.setParent(this);
             action.execute();
+            action.setParent(oldParent);
             
             synchronized (this) {
                 action = getNextAction();
