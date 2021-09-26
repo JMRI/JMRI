@@ -211,7 +211,6 @@ public class DelaySwing extends AbstractDigitalActionSwing {
         }
         Delay action = (Delay)object;
         if (_tabbedPaneTime.getSelectedComponent() == _panelTimeDirect) {
-            action.setTime(Integer.parseInt(_timeTextField.getText()));
             if (_timeTextField != null) {
                 try {
                     action.setTime(Integer.parseInt(_timeTextField.getText()));

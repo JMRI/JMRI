@@ -118,11 +118,13 @@ public class PriorityFIFOQueue
         return _numPriorities;
     }
 
-    public synchronized void setNumPriorities(int numPriorities) {
+    public void setNumPriorities(int numPriorities) {
         _numPriorities = numPriorities;
-        _queues.clear();
-        for (int i=0; i < _numPriorities; i++) {
-            _queues.add(new ArrayDeque<>());
+        synchronized(this) {
+            _queues.clear();
+            for (int i=0; i < _numPriorities; i++) {
+                _queues.add(new ArrayDeque<>());
+            }
         }
     }
 
