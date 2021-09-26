@@ -62,4 +62,11 @@ public class TrafficLock implements Lock {
         return true;
     }
 
+    @Override
+    public String toString() {
+        String retval = isLockClear(debugLockLogger) ? "clear " : "locked";
+        retval = retval+debugLockLogger.memory.getValue();
+        return retval;
+    }
+
 }

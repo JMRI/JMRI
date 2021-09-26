@@ -165,6 +165,16 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     }
     
     /**
+     * Reports just the name, not the user name.
+     * <p>
+     * @return string eg "CANPAN"
+     *
+     */
+    public String getName(){
+        return getNodeStats().getNodeTypeName();
+    }
+    
+    /**
      * Set node on network
      * @param isFound false if not on network
      */
