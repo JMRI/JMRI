@@ -293,7 +293,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add(r.getSensorDefPullupBool());
             sensorModel.insertData(v, false);
             sensorSorter.sort();
-        } else if (r.isTurnoutDefReply()) {
+        } else if (r.isTurnoutDefReply() || r.isTurnoutDefDCCReply()) {
             List<Object> v = new ArrayList<>();
             v.add(r.getTurnoutDefNumInt());
             v.add(r.getTurnoutDefAddrInt());

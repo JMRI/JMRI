@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionLocalVariableType">
+    <xs:complexType name="LogixNG_DigitalExpression_ExpressionDispatcherType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionLocalVariable class.
+          Define the XML stucture for storing the contents of a Dispatcher class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariableXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.DispatcherXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -40,32 +40,44 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="trainInfoFileName" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="dispatcherState" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="SetToNull"/>
-                    <xs:enumeration value="SetToString"/>
-                    <xs:enumeration value="CopyVariableToVariable"/>
-                    <xs:enumeration value="CopyMemoryToVariable"/>
-                    <xs:enumeration value="CopyTableCellToVariable"/>
-                    <xs:enumeration value="CalculateFormula"/>
+                    <xs:enumeration value="Mode"/>
+                    <xs:enumeration value="Automatic"/>
+                    <xs:enumeration value="Dispatched"/>
+                    <xs:enumeration value="Manual"/>
+                    <xs:enumeration value="Status"/>
+                    <xs:enumeration value="Running"/>
+                    <xs:enumeration value="Paused"/>
+                    <xs:enumeration value="Waiting"/>
+                    <xs:enumeration value="Working"/>
+                    <xs:enumeration value="Ready"/>
+                    <xs:enumeration value="Stopped"/>
+                    <xs:enumeration value="Done"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
 

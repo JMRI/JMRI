@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionLocalVariableType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionDispatcherType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionLocalVariable class.
+          Define the XML stucture for storing the contents of a Dispatcher class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariableXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionDispatcherXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -40,32 +40,45 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="trainInfoFileName" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operationDirect" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="SetToNull"/>
-                    <xs:enumeration value="SetToString"/>
-                    <xs:enumeration value="CopyVariableToVariable"/>
-                    <xs:enumeration value="CopyMemoryToVariable"/>
-                    <xs:enumeration value="CopyTableCellToVariable"/>
-                    <xs:enumeration value="CalculateFormula"/>
+                    <xs:enumeration value="LoadTrainFromFile"/>
+                    <xs:enumeration value="TerminateTrain"/>
+                    <xs:enumeration value="TrainPriority"/>
+                    <xs:enumeration value="ResetWhenDoneOption"/>
+                    <xs:enumeration value="TerminateWhenDoneOption"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="resetOption" type="trueFalseType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="terminateOption" type="trueFalseType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="trainPriority" type="xs:int" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
 
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
 
