@@ -1157,7 +1157,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (car.getDestination() != null) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[] {
-                                car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
+                                car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
                 RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
                 if (rld == null) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(
