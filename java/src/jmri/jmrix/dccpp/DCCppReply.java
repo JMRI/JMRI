@@ -271,24 +271,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * @return comment text
      **/
     public String toComment(){
-        String text = "";
-        String comma = "";
+        StringBuilder text = new StringBuilder();
+        StringBuilder comma = new StringBuilder();
         switch (getOpCodeChar()) {
             case DCCppConstants.TURNOUT_REPLY:
             case DCCppConstants.SENSOR_REPLY:
             case DCCppConstants.OUTPUT_REPLY:
                 //write out properties in comment
-                HashMap<String, Object> p = getProperties();
-                for (HashMap.Entry<String, Object> set : p.entrySet()) {                
-                    text += comma + set.getKey() + ":" + set.getValue();
-                    comma = ",";
-                }
+                getProperties().forEach((key, value) -> {
+                    text.append(comma).append(key).append(":").append(value);
+                    comma.setLength(0);
+                    comma.append(",");
+                 });
+                
                 break;
             default:
-                text = "";
                 break;
         }
-        return text;
+        return text.toString();
     }
 
     /**
