@@ -96,8 +96,9 @@ public class SpeedUtil {
      *    WarrantFrame.setup() - edit existing warrant
      *    WarrantManagerXml - load warrant
      * @param id key to speedProfile
+     * @return true if RosterEntry exists for id
      */
-    public void setRosterId(String id) {
+    public boolean setRosterId(String id) {
         if (log.isTraceEnabled()) {
             log.debug("setRosterId({}) old={}", id, _rosterId);
         }
@@ -105,18 +106,22 @@ public class SpeedUtil {
             _rosterEntry = null;
             _mergeProfile = null;
             _sessionProfile = null;
-            return;
+            return false;
         }
-        if (!id.equals(_rosterId)) {
+        if (id.equals(_rosterId)) {
+            return true;
+        } else {
             _mergeProfile = null;
             _sessionProfile = null;
             RosterEntry re = Roster.getDefault().getEntryForId(id);
             if (re != null) {
                 _rosterEntry = re;
-                setDccAddress(Integer.parseInt(re.getDccAddress()), re.getProtocolAsString());
+                _dccAddress = re.getDccLocoAddress();
                 _rosterId = id;
+                return true;
             }
         }
+        return false;
     }
     
     public DccLocoAddress getDccAddress() {
@@ -185,11 +190,14 @@ public class SpeedUtil {
                 }
             }
         }
-        DccLocoAddress dccAddress = new DccLocoAddress(number, protocol);
-        if (_dccAddress == null || !_dccAddress.equals(dccAddress) || _rosterEntry == null) {
-            _dccAddress = dccAddress;
+        DccLocoAddress addr = new DccLocoAddress(number, protocol);
+        if (_rosterEntry != null && addr.equals(_rosterEntry.getDccLocoAddress())) {
+            return true;
+        } else {
+            _dccAddress = addr;
+            String numStr = String.valueOf(number);
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null,
-                    String.valueOf(number), null, null, null, null);
+                    numStr, null, null, null, null);
             if (!l.isEmpty()) {
                 int size = l.size();
                 if ( size!= 1) {
@@ -202,12 +210,13 @@ public class SpeedUtil {
                 _rosterId = "$"+_dccAddress.toString()+"$";
                 _rosterEntry = new RosterEntry();
                 _rosterEntry.setId(_rosterId);
+                _rosterEntry.setDccAddress(numStr);
+                _rosterEntry.setProtocol(protocol);
                 _mergeProfile = null;
                 _sessionProfile = null;
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
 
@@ -231,8 +240,10 @@ public class SpeedUtil {
             log.debug("setDccAddress: id= {}, _rosterId= {}", id, _rosterId);
         }
         if (id == null || id.isEmpty()) {
-            setDccAddress(null);
             return false;
+        }
+        if (setRosterId(id)) {
+            return true;
         }
         int index = - 1;
         for (int i=0; i<id.length(); i++) {
@@ -266,15 +277,15 @@ public class SpeedUtil {
         int num;
         try {
             num = Integer.parseInt(numId);
-            if (type == null) {
-                if (num > 128) {
-                    type = "L";
-                } else {
-                    type = "S";
-                }
-            }
         } catch (NumberFormatException e) {
             num = 0;
+        }
+        if (type == null) {
+            if (num > 128) {
+                type = "L";
+            } else {
+                type = "S";
+            }
         }
         if (!setDccAddress(num, type)) {
             log.error("setDccAddress failed for  number={} type={}", num, type);

@@ -345,7 +345,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case ROUTE_COLUMN:
             return new JTextField(25).getPreferredSize().width;
         case ADDRESS_COLUMN:
-            return new JTextField(7).getPreferredSize().width;
+            return new JTextField(13).getPreferredSize().width;
         case ALLOCATE_COLUMN:
         case DEALLOC_COLUMN:
         case SET_COLUMN:
@@ -394,7 +394,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case TRAIN_NAME_COLUMN:
             return w.getTrainName();
         case ADDRESS_COLUMN:
-            return w.getSpeedUtil().getAddress();
+            return w.getSpeedUtil().getRosterId();
         case ALLOCATE_COLUMN:
             NamedIcon icon;
             if (w.isTotalAllocated()) {
@@ -566,10 +566,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                         s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
-                    } else /*if (setting.equals("Debug"))*/ {
+                    } else if (setting.isEmpty()) {
                         s = Warrant.DEBUG;
                     }
-                    w.controlRunTrain(s);
+                    if (s != -1) {
+                        w.controlRunTrain(s);
+                    }
                 }
             }
             break;

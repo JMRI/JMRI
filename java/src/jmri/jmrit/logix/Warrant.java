@@ -1145,10 +1145,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     private boolean moveToNextBlock (OBlock block) {
         BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
-        String msg = bo.setPath(this);
-        if (msg != null) {
+        _message = bo.setPath(this);
+        if (_message != null) {
             log.warn("Cannot clear path for warrant \"{}\" at block \"{}\" - msg = {}",
-                    getDisplayName(), block.getDisplayName(), msg);
+                    getDisplayName(), block.getDisplayName(), _message);
             return false;
         }
         _idxCurrentOrder++;
@@ -1160,10 +1160,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     protected boolean debugInfo() {
-        StringBuffer info = new StringBuffer("\nWarrant ");
-        info.append(getDisplayName()); info.append(", ");
-        info.append("Current BlockOrder idx= "); info.append(_idxCurrentOrder);
-        info.append(",  Block \""); info.append(getBlockAt(_idxCurrentOrder).getDisplayName()); info.append("\"");
+        StringBuffer info = new StringBuffer("\nWarrant: ");
+        info.append(getDisplayName()); info.append(" - Head Block \"");
+        info.append(getBlockAt(_idxCurrentOrder).getDisplayName());
+        info.append("\" BlockOrder idx= "); info.append(_idxCurrentOrder);
         info.append("\n\tWarrant flags: _waitForSignal= ");
         info.append(_waitForSignal); info.append(", _waitForBlock= ");
         info.append(_waitForBlock); info.append(", _waitForWarrant= "); info.append(_waitForWarrant);
@@ -1619,7 +1619,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 // signal protecting next block just released its hold
                 int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
                 if (idxStop == _idxCurrentOrder + 1) {
-                    // Possibly train overran signal and set _stoppingBlock, either way signal says proceed
+                    // Most likely train overran signal and set _stoppingBlock. if not, either way signal says proceed
                     _waitForBlock = false;
                     OBlock block = getBlockAt(idxStop);
                     block.setValue(_trainName);
@@ -1627,10 +1627,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _idxCurrentOrder++;         // advance marker and claim occupation
                 }
             }
+            log.info(Bundle.getMessage("SignalCleared", _protectSignal.getDisplayName(), _trainName));
             _waitForSignal = false;
             ThreadingUtil.runOnGUIDelayed(() -> {
                 restoreRunning(speedType, -1);
-            }, 4000);   // 4 seconds
+            }, 3500);   // 3.5 seconds
         }
     }
 
@@ -1638,10 +1639,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_stoppingBlock == null) {
             return true;
         }
-        String blockName = _stoppingBlock.getDisplayName();
+        log.info(Bundle.getMessage("BlockCleared", _stoppingBlock.getDisplayName(), _trainName));
         _stoppingBlock.removePropertyChangeListener(this);
         _stoppingBlock = null;
-        log.info("Warrant \"{}\" Cleared _stoppingBlock= \"{}\".", getDisplayName(), blockName);
         _waitForBlock = false;
         return restoreRunning(_curSpeedType, -1);
     }
@@ -1656,9 +1656,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_stoppingBlock == null) {
             return false;
         }
-        log.info("Warrant \"{}\" cleared _stoppingBlock= \"{}\".",
-                getDisplayName(), _stoppingBlock.getDisplayName());
-        
         String msg = allocateFromIndex(true, _idxCurrentOrder + 1);
         if (msg == null && doStoppingBlockClear()) {
             return true;

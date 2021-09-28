@@ -587,13 +587,14 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         info.append(getName()); info.append(", Thread.State= "); info.append(getState());
         info.append(", isAlive= "); info.append(isAlive());
         info.append(", isInterrupted= "); info.append(isInterrupted());
-        info.append("\n\trunstate= "); info.append(Warrant.RUN_STATE[getRunState()]);
-        info.append(", Current speed setting= "); info.append(getSpeedSetting());
+        info.append("\n\tThrottle setting= "); info.append(getSpeedSetting());
         info.append(", scriptSpeed= "); info.append(getScriptSpeed());
+        info.append(". runstate= "); info.append(Warrant.RUN_STATE[getRunState()]);
         int cmdIdx = getCurrentCommandIndex();
-        info.append("\n\tcurrent Cmd Index #"); info.append(cmdIdx + 1); 
+         
         if (cmdIdx < _commands.size()) {
-            info.append("\n\t\tCommand: "); info.append(_commands.get(cmdIdx).toString());
+            info.append("\n\tCommand #"); info.append(cmdIdx + 1); 
+            info.append(": "); info.append(_commands.get(cmdIdx).toString());
         } else {
             info.append("\n\t\tAt last command.");
         }
@@ -864,14 +865,14 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         String msg = null;
         if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
             // Same loco, perhaps different warrant
-            log.debug("Loco address {} finishes warrant {} and starts warrant {}",
+            log.info("Loco address {} finishes warrant {} and starts warrant {}",
                     warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             Thread checker = new CheckForTermination(_warrant, warrant, num);
             checker.start();
             if (log.isDebugEnabled()) log.debug("Exit runWarrant");
             return;
         } else {
-            log.debug("Loco address {} on warrant {} and starts loco {} on warrant {}",
+            log.info("Loco address {} on warrant {} and starts loco {} on warrant {}",
                     _warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(),
                     warrant.getSpeedUtil().getDccAddress(), warrant.getDisplayName());
             msg = WarrantTableFrame.getDefault().runTrain(warrant, Warrant.MODE_RUN);
@@ -924,13 +925,14 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
-                if (time >= 10000) {
-                    msg = Bundle.getMessage("cannotLaunch",
-                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName());
-                }
             }
             log.info("Waited {}ms for warrant \"{}\" to terminate. runMode={}",
                     time, oldWarrant.getDisplayName(), oldWarrant.getRunMode());
+            if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
+                log.error(Bundle.getMessage("cannotLaunch",
+                        newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
+                return;
+            }
 
             java.awt.Color color;
             msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
@@ -960,7 +962,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             _speedType = speedType;
             _warrant.setCurrentSpeedType(_speedType);
             if (!_atHalt && !_atClear && !_ramp.holdRamp) { /*&& !_warrant.isWaitingForSignal()*/
-                clearWaits();
+                synchronized (this) {
+                    notifyAll();
+                }
                 log.debug("rampDone called notify");
                 if (_currentCommand.getCommand().equals(Command.NOOP)) {
                     _idxCurrentCommand--;   // notify advances command.  Repeat wait for entry to next block
@@ -976,9 +980,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
-    synchronized private void clearWaits() {
-        notifyAll();
-    }
     /*
      * *************************************************************************************
      */
@@ -1014,7 +1015,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
              synchronized (_rampLockObject) {
                  _rampLockObject.notifyAll(); // free waits at ramp time interval
                  log.debug("ThrottleRamp clears _ramp waits");
-                 clearWaits();
+                 synchronized (this) {
+                     notifyAll();
+                 }
                  log.debug("ThrottleRamp clears engineer waits");
             }
          }

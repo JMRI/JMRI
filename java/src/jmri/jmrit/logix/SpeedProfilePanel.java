@@ -218,7 +218,7 @@ public class SpeedProfilePanel extends JPanel {
             SpeedStep ss = entry.getValue();
             _profile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
             _anomaly = MergePrompt.validateSpeedProfile(_profile);
-            log.debug("updateAnomaly size={}", (_anomaly==null?"null":_anomaly.size()));
+            log.debug("updateAnomaly size={}", _anomaly.size());
             return _anomaly;
         }
 

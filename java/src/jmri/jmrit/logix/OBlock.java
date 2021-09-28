@@ -588,7 +588,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     sb.append("\". Warrant \"");
                     sb.append(warrant == null ? "null" : warrant.getDisplayName());
                     sb.append("\"cannot deallocate!");
-                    log.error("{}",sb);
                     return sb.toString();
                 }
             }
