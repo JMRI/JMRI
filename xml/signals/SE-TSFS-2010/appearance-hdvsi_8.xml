@@ -41,12 +41,12 @@
     <appearance>
       <aspectname>Not used</aspectname>
       <show>dark</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi-dark.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi-dark.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi-dark.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi-dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi-dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi-dark.gif</imagelink>
       <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi-dark.gif</imagelink>
       <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi-dark.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0+Sh0.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -54,12 +54,12 @@
       <show>red</show>
       <show>lunar</show>
       <show>lunar</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi0.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi0.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi0.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi0.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi0.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh0.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi0+Sh0.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi0+Sh0.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0+Sh0.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -68,12 +68,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi5.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi5.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi5.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi5.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi5.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi5.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0+Sh1.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -82,12 +82,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi6.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi6.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi6.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi5.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi5.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi6.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh2.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0+Sh2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -96,12 +96,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi7.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi7.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi7.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi5.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi5.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi6.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh3.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh3.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi0+Sh3.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi0+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi0+Sh2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -110,12 +110,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi1.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi1.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi1.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1+Sh1.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -124,12 +124,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi3.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi3.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi3.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi3+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi3+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi3+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1+Sh1.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -138,12 +138,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi2.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi2.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi2.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi2+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi2+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi2+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1+Sh1.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -152,12 +152,12 @@
       <show>lunar</show>
       <show>lunar</show>
       <delay>5</delay>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi4.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi4.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_eight_aspect/Hdvsi4.gif</imagelink>
-      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1.gif</imagelink>
-      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1.gif</imagelink>
-      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi4+Sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi4+Sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Hdvsi_five_aspect/Hdvsi4+Sh1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Hdvsi1+Sh1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Hdvsi1+Sh1.gif</imagelink>
     </appearance>
   </appearances>
 
