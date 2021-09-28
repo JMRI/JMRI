@@ -1881,7 +1881,7 @@ public class TrainBuilder extends TrainBuilderBase {
             return false; // the only false return
         }
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
-                new Object[] { car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
+                new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried by train
