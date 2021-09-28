@@ -298,12 +298,12 @@
     <appearancefile href="appearance-hsi_2+dvsi.xml"/>
     <appearancefile href="appearance-hsi_3.xml"/>
     <appearancefile href="appearance-hsi_3+dvsi.xml"/>
-    <appearancefile href="appearance-hsi_4.xml"/>
-    <appearancefile href="appearance-hsi_4+dvsi.xml"/>
     <appearancefile href="appearance-hsi_5.xml"/>
     <appearancefile href="appearance-hsi_5+dvsi.xml"/>
+    <appearancefile href="appearance-hsi_7.xml"/>
+    <appearancefile href="appearance-hsi_7+dvsi.xml"/>
     <appearancefile href="appearance-dvsi_4.xml"/>
-    <appearancefile href="appearance-hdvsi_8.xml"/>
+    <appearancefile href="appearance-hdvsi_5.xml"/>
     <appearancefile href="appearance-ssi_2.xml"/>
     <appearancefile href="appearance-ssi_2+dvsi.xml"/>
   </appearancefiles>
