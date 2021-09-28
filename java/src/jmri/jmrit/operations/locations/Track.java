@@ -2538,7 +2538,7 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with
-     * the detailed DTD in operations-config.xml
+     * the detailed DTD in operations-location.dtd.
      *
      * @param e        Consist XML element
      * @param location The Location loading this track.

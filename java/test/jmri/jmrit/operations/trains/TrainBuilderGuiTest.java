@@ -209,7 +209,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
-        // cause warning message
+        // cause 1 warning message
         Setup.setCarRoutingEnabled(false);
         
         // Route Northend-NI-Southend
@@ -229,9 +229,9 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        // dialog "Build report for train (SFF) has warnings"
+        // dialog "Build report for train (SFF) has 1 warnings"
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+                new Object[]{train2.getName(), 1}), Bundle.getMessage("ButtonOK"));
     }
     
     /**

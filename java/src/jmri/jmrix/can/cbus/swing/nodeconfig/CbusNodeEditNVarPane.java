@@ -2,9 +2,11 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 
@@ -24,7 +26,8 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     private JButton resetNvButton;
     private JPanel buttonPane;
     private CbusNodeNVEditTablePane genericNVTable;
-
+    private CbusNodeNVEditGuiPane editNVGui;
+    
     /**
      * Create a new instance of CbusNodeEditNVarPane.
      * @param main the NodeConfigToolPane this is a component of
@@ -82,17 +85,19 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         genericNVTable = new CbusNodeNVEditTablePane(nodeNVModel);
         genericNVTable.initComponents(memo);
         
+        editNVGui = new CbusNodeNVEditGuiPane(nodeNVModel);
+        editNVGui.initComponents(memo);
+        
         tabbedPane = new JTabbedPane();
         
-        JPanel generic = new JPanel();
         JPanel template = new JPanel();
         
-        generic.add( genericNVTable );
-        
         tabbedPane.addTab(("Generic"), genericNVTable);
+        tabbedPane.addTab(("Edit"), editNVGui);
         tabbedPane.addTab(("Template"), template);
         
         tabbedPane.setEnabledAt(1,false);
+        tabbedPane.setEnabledAt(2,false);
         tabbedPane.setSelectedIndex(0);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
@@ -123,6 +128,16 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         setSaveCancelButtonsActive ( false );
         genericNVTable.setNode( nodeOfInterest );
         
+        if (editNVGui != null) {
+            editNVGui.setNode(nodeOfInterest);
+            
+            tabbedPane.setEnabledAt(1,true);
+            tabbedPane.setSelectedIndex(1);
+        } else {
+            tabbedPane.setEnabledAt(1,false);
+            tabbedPane.setSelectedIndex(0);
+        }
+        
         validate();
         repaint();
         setVisible(true);
@@ -140,10 +155,14 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     
     /**
      * Reset edited NVs to original value ( or reset edited NV values if mid-load )
+     * Inform the provider of a the reset
      */
     @Override
     protected void cancelOption(){
         nodeNVModel.resetNewNvs();
+        if (editNVGui != null) {
+            editNVGui.setNode(nodeOfInterest);
+        }
     }
     
     /**
@@ -157,11 +176,15 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
 
     /**
      * Sets save / reset buttons active / inactive depending on table status
+     * Informs the module provider of a table change
      * {@inheritDoc}
      */
     @Override
     public void tableChanged(TableModelEvent e) {
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
+        if (editNVGui != null) {
+            editNVGui.tableChanged(e);
+        }
     }
     
     /**
