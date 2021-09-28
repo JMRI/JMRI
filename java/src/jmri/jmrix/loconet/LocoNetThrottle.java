@@ -481,7 +481,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if (sendLoconetMessage) {
             log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
-<<<<<<< HEAD
             if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                 LocoNetMessage msg = new LocoNetMessage(4);
                 msg.setOpCode(LnConstants.OPC_LOCO_SPD);
@@ -498,13 +497,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 msg.setElement(3, (slot.id() & 0x7f));
                 msg.setElement(4, new_spd);
                 network.sendLocoNetMessage(msg);
-=======
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SPD);
-            msg.setElement(1, slot.getSlot());
-            log.debug("setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
-            msg.setElement(2, new_spd);
-            network.sendLocoNetMessage(msg);
+            }
 
             // reset timeout - but only if something sent on net
             if (mRefreshTimer != null) {
@@ -512,7 +505,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
                 mRefreshTimer.start();
                 log.debug("Initially starting refresh timer for slot {} address {}", slot.getSlot(), slot.locoAddr());
->>>>>>> master
             }
         } else {
             log.debug("setSpeedSetting: not sending LocoNet speed message to slot {}, new({})==old({})", slot.getSlot(), new_spd, layout_spd);
