@@ -85,18 +85,23 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 String s = getSystemNamePrefix() + addr;
                 DCCppTurnout found = (DCCppTurnout) getBySystemName(s);
                 if ( found == null) {
-                    // need to create a new one, and send the message on 
-                    // to the newly created object.
-                    ((DCCppTurnout) provideTurnout(s)).setFeedbackMode(Turnout.MONITORING);
-                    ((DCCppTurnout) provideTurnout(s)).initmessage(l);
+                    // need to create a new one, set some attributes, 
+                    //  and send the message on to the newly created object.
+                    DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
+                    t.setFeedbackMode(Turnout.MONITORING);
+                    t.setComment(l.toComment());
+                    l.getProperties().forEach((key, value) -> {
+                       t.setProperty(key, value); //copy the properties from message to turnout
+                    });
+                    t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
                     // turnout
                     found.message(l);
                 }
             }
-        } else if (l.isOutputCmdReply()) {
-            log.debug("received Output Cmd Reply message: '{}'", l);
+        } else if (l.isOutputReply()) {
+            log.debug("received Output Reply message: '{}'", l);
             // parse message type
             int addr = l.getOutputNumInt();
             if (addr >= 0) {
@@ -110,8 +115,13 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 if (found == null) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
-                    ((DCCppTurnout) provideTurnout(s)).setFeedbackMode(Turnout.EXACT);
-                    ((DCCppTurnout) provideTurnout(s)).initmessage(l);
+                    DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
+                    t.setFeedbackMode(Turnout.EXACT);
+                    t.setComment(l.toComment());
+                    l.getProperties().forEach((key, value) -> {
+                       t.setProperty(key, value); //copy the properties from message to turnout
+                    });
+                    t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
                     // turnout
