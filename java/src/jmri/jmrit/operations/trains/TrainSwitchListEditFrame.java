@@ -620,7 +620,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
-    private static class TrainSwitchListCommentFrame extends OperationsFrame {
+    public static class TrainSwitchListCommentFrame extends OperationsFrame {
 
         // text area
         JTextArea commentTextArea = new JTextArea(10, 90);
@@ -628,6 +628,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Dimension minScrollerDim = new Dimension(1200, 500);
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
         Location _location;
 
@@ -651,12 +652,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
             JPanel pB = new JPanel();
             pB.setLayout(new GridBagLayout());
-            addItem(pB, saveButton, 0, 0);
+            addItem(pB, cancelButton, 0, 0);
+            addItem(pB, saveButton, 1, 0);
 
             getContentPane().add(pC);
             getContentPane().add(pB);
 
             addButtonAction(saveButton);
+            addButtonAction(cancelButton);
 
             pack();
             setTitle(location.getName());
@@ -673,6 +676,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                 if (Setup.isCloseWindowOnSaveEnabled()) {
                     super.dispose();
                 }
+            }
+            if (ae.getSource() == cancelButton) {
+                super.dispose();
             }
         }
     }
