@@ -32,7 +32,7 @@
 
   <aspecttable>SE TSFS 2010</aspecttable>
   <name>Shunting signal, dwarf signal</name>
-  <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
+  <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish railway signaling</a>
   for english information.</reference>
   <description>A dwraf signal to be used inside the station to control shunting movements.
   Shunting movements take place between this signal and next dwarf signal or "end of shunting" signal.</description>
