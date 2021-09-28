@@ -33,31 +33,31 @@
           <a href="appearance-hsi_2.xml">Two aspects Main signal</a>
         <li>
           <a href="appearance-hsi_2+dvsi.xml">Two aspects Main signal and
-            Shunting signal</a>
+            a Dwarf signal</a>
         <li>
           <a href="appearance-hsi_3.xml">Three aspects Main signal</a>
         <li>
           <a href="appearance-hsi_3+dvsi.xml">Three aspects Main signal and
-            Shunting signal</a>
+            a Dwarf signal</a>
         <li>
           <a href="appearance-hsi_4.xml">Four aspects Main signal</a>
         <li>
           <a href="appearance-hsi_4+dvsi.xml">Four aspects Main signal and
-            Shunting signal</a>
+            a Dwarf signal</a>
         <li>
           <a href="appearance-hsi_5.xml">Six aspects Main signal</a>
         <li>
           <a href="appearance-hsi_5+dvsi.xml">Six aspects Main signal and
-            Shunting signal</a>
+            a Dwarf signal</a>
         <li>
           <a href="appearance-hdvsi_8.xml">Shunting Main Dwarf signal</a>
         <li>
           <a href="appearance-dvsi_4.xml">Shunting Dwarf signal</a>
         <li>
-          <a href="appearance-sly_2.xml">Two aspects Guard signal</a>
+          <a href="appearance-ssi_2.xml">Two aspects Stop signal</a>
         <li>
-          <a href="appearance-sly_2+dvsi.xml">Two aspects Guard signal and
-            Shunting signal</a>
+          <a href="appearance-ssi_2+dvsi.xml">Two aspects Stop signal and
+            a Dwarf signal</a>
       </ul>
 
       <!--#include virtual="/Footer.shtml" -->

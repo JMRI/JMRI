@@ -30,10 +30,12 @@
   </revhistory>
 
   <aspecttable>SE TSFS 2010</aspecttable>
-  <name>Three aspect main signal and shunting signal</name>
+  <name>Three aspect main signal with dwarf signal</name>
   <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
   for english information.</reference>
-  <description>Signal to use as block, interlocking, entry and exit signal, without distant signal head</description>
+  <description>Main signal to used as block and interlocking signal inside the station without distant signal head.
+  The signal also have a dwarf signal to control shunting movements.
+  Shunting movements take place between this signal and next dwarf signal or "end of shunting" signal.</description>
   
   <appearances>
     <appearance>

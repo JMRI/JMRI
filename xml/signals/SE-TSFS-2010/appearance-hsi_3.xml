@@ -33,7 +33,7 @@
   <name>Three aspect main signal</name>
   <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
   for english information.</reference>
-  <description>Signal to use as block, interlocking, entry and exit signal, without distant signal head</description>
+  <description>Main signal to use as block, interlocking, entry and exit signal, without distant signal head</description>
 
   <appearances>
     <appearance>

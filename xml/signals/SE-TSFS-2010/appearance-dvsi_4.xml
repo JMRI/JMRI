@@ -34,9 +34,8 @@
   <name>Shunting signal, dwarf signal</name>
   <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
   for english information.</reference>
-  <description>Signal to use inside the station to control shunting movements.
-  Shunting movements take place between this signal and "end of shunting" signal.
-  </description>
+  <description>A dwraf signal to be used inside the station to control shunting movements.
+  Shunting movements take place between this signal and next dwarf signal or "end of shunting" signal.</description>
   
   <appearances>
     <appearance>

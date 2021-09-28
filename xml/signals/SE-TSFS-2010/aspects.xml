@@ -45,7 +45,7 @@
     <aspect>
       <name>Lit</name>
       <indication>The signal must not be passed without permission from the traffic control.</indication>
-      <description>Lit guard signal</description>
+      <description>Lit stop signal</description>
       <comment>Stop</comment>
       <speed>Stop</speed>
     </aspect>
@@ -201,7 +201,7 @@
     <aspect>
       <name>Unlit</name>
       <indication>The signal can be ignored.</indication>
-      <description>Dark guard signal</description>
+      <description>Dark stop signal</description>
       <comment>Normal</comment>
       <speed>Normal</speed>
     </aspect>
@@ -274,9 +274,9 @@
 
     <aspect>
       <name>Sh3</name>
-      <indication>Shunting allowed, check</indication>
+      <indication>Movement allowed, check</indication>
       <description>Two white lights arranged right diagonally</description>
-      <comment>Shunting movment authorized, check switches and clearence</comment>
+      <comment>Movement allowed, check points and clearence</comment>
       <speed>RestrictedSlow</speed>
       <route>Either</route>
     </aspect>
@@ -304,7 +304,7 @@
     <appearancefile href="appearance-hsi_5+dvsi.xml"/>
     <appearancefile href="appearance-dvsi_4.xml"/>
     <appearancefile href="appearance-hdvsi_8.xml"/>
-    <appearancefile href="appearance-sly_2.xml"/>
-    <appearancefile href="appearance-sly_2+dvsi.xml"/>
+    <appearancefile href="appearance-ssi_2.xml"/>
+    <appearancefile href="appearance-ssi_2+dvsi.xml"/>
   </appearancefiles>
 </aspecttable>

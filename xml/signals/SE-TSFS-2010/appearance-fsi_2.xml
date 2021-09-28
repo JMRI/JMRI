@@ -34,10 +34,8 @@
   <name>Single two aspect distant signal</name>
   <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish_railway_signalling</a>
   for english information.</reference>
-  <description>Single distant signal ahead of block signals at short distance.
-  Placed instead of the "normal" single distant signal when the distance to the block signal is less than 1200m.
-  It differentiates from the normal type because it has only two lights.
-  </description>
+  <description>Single distant signal to indicate what next main signal is showing.
+  No points or main dwarf signal allowed between single distance signal and next main signal.</description>
   
   <appearances>
     <appearance>
