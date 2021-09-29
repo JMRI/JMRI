@@ -362,7 +362,7 @@
 
     <aspectMapping>
       <advancedAspect>Sh3</advancedAspect>
-      <ourAspect>Sh3</ourAspect>
+      <ourAspect>Stop and Sh3</ourAspect>
     </aspectMapping>
   </aspectMappings>
 </appearancetable>

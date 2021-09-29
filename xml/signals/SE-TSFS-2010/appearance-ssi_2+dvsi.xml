@@ -163,7 +163,7 @@
       <advancedAspect>Lit</advancedAspect>
       <ourAspect>Lit</ourAspect>
       <ourAspect>Sh0</ourAspect>
-      <ourAspect>Sh1 stop</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
       <ourAspect>Sh3</ourAspect>
     </aspectMapping>
 
@@ -171,7 +171,7 @@
       <advancedAspect>Expect Stop</advancedAspect>
       <ourAspect>Lit</ourAspect>
       <ourAspect>Sh0</ourAspect>
-      <ourAspect>Sh1 stop</ourAspect>
+      <ourAspect>Sh1 Stop</ourAspect>
       <ourAspect>Sh1 40</ourAspect>
       <ourAspect>Sh3</ourAspect>
     </aspectMapping>
