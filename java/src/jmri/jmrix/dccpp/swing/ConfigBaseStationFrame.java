@@ -167,7 +167,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorSorter = new TableRowSorter<>(sensorTable.getModel());
         sensorTable.setRowSorter(sensorSorter);
         List<RowSorter.SortKey> sensorSortKeys = new ArrayList<>();
-        sensorSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        sensorSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("IDCol")).getModelIndex(), SortOrder.ASCENDING));
         sensorSorter.setSortKeys(sensorSortKeys);
         sensorSorter.sort();
         sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
@@ -193,7 +193,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         dccTurnoutSorter = new TableRowSorter<>(dccTurnoutTable.getModel());
         dccTurnoutTable.setRowSorter(dccTurnoutSorter);
         List<RowSorter.SortKey> dccTurnoutSortKeys = new ArrayList<>();
-        dccTurnoutSortKeys.add(new RowSorter.SortKey(dccTurnoutTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        dccTurnoutSortKeys.add(new RowSorter.SortKey(dccTurnoutTable.getColumn(Bundle.getMessage("IDCol")).getModelIndex(), SortOrder.ASCENDING));
         dccTurnoutSorter.setSortKeys(dccTurnoutSortKeys);
         dccTurnoutSorter.setSortable(dccTurnoutTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         dccTurnoutSorter.sort();
@@ -219,7 +219,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         servoTurnoutSorter = new TableRowSorter<>(servoTurnoutTable.getModel());
         servoTurnoutTable.setRowSorter(servoTurnoutSorter);
         List<RowSorter.SortKey> servoTurnoutSortKeys = new ArrayList<>();
-        servoTurnoutSortKeys.add(new RowSorter.SortKey(servoTurnoutTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        servoTurnoutSortKeys.add(new RowSorter.SortKey(servoTurnoutTable.getColumn(Bundle.getMessage("IDCol")).getModelIndex(), SortOrder.ASCENDING));
         servoTurnoutSorter.setSortKeys(servoTurnoutSortKeys);
         servoTurnoutSorter.setSortable(servoTurnoutTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         servoTurnoutSorter.sort();
@@ -245,7 +245,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         vpinTurnoutSorter = new TableRowSorter<>(vpinTurnoutTable.getModel());
         vpinTurnoutTable.setRowSorter(vpinTurnoutSorter);
         List<RowSorter.SortKey> vpinTurnoutSortKeys = new ArrayList<>();
-        vpinTurnoutSortKeys.add(new RowSorter.SortKey(vpinTurnoutTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        vpinTurnoutSortKeys.add(new RowSorter.SortKey(vpinTurnoutTable.getColumn(Bundle.getMessage("IDCol")).getModelIndex(), SortOrder.ASCENDING));
         vpinTurnoutSorter.setSortKeys(vpinTurnoutSortKeys);
         vpinTurnoutSorter.setSortable(vpinTurnoutTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         vpinTurnoutSorter.sort();
@@ -271,7 +271,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         outputSorter = new TableRowSorter<>(outputTable.getModel());
         outputTable.setRowSorter(outputSorter);
         List<RowSorter.SortKey> outputSortKeys = new ArrayList<>();
-        outputSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        outputSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("IDCol")).getModelIndex(), SortOrder.ASCENDING));
         outputSorter.setSortKeys(outputSortKeys);
         outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         outputSorter.sort();
@@ -307,7 +307,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     break;
                 case 3:
                     cTab = CurrentTab.VPINTURNOUT;
-                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("VpinTurnouts")));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("VpinTurnout")));
                     addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFAdd"));
                     saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("VpinTurnouts")));
                     saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFSave"));
@@ -315,7 +315,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     break;
                 case 2:
                     cTab = CurrentTab.SERVOTURNOUT;
-                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("ServoTurnouts")));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("ServoTurnout")));
                     addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFAdd"));
                     saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("ServoTurnouts")));
                     saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFSave"));
@@ -323,7 +323,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     break;
                 case 1:
                     cTab = CurrentTab.DCCTURNOUT;
-                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("DCCTurnouts")));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("DCCTurnout")));
                     addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFAdd"));
                     saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("DCCTurnouts")));
                     saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMTFSave"));
@@ -508,7 +508,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 }
                 case DCCTURNOUT: {
                     List<Object> v = new ArrayList<>();
-                    v.add(0); // Index
+                    v.add(0); // ID
                     v.add(0); // Address
                     v.add(0); // Subaddress
                     dccTurnoutModel.insertData(v, true);
@@ -516,15 +516,17 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 }
                 case SERVOTURNOUT: {
                     List<Object> v = new ArrayList<>();
-                    v.add(0); // Index
-                    v.add(0); // Address
-                    v.add(0); // Subaddress
+                    v.add(0); // ID
+                    v.add(0); // pin
+                    v.add(0); // thrownposition
+                    v.add(0); // closedposition
+                    v.add(0); // profile
                     servoTurnoutModel.insertData(v, true);
                     break;
                 }
                 case VPINTURNOUT: {
                     List<Object> v = new ArrayList<>();
-                    v.add(0); // Index
+                    v.add(0); // ID
                     v.add(0); // Pin
                     vpinTurnoutModel.insertData(v, true);
                     break;
@@ -607,6 +609,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             sensorModel.setDirtyRow(row, false);
                         }
                     }
+                    tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), this); //request updated definitions list 
                     break;
                 case DCCTURNOUT:
                     for (int i = 0; i < dccTurnoutModel.getRowData().size(); i++) {
@@ -636,19 +639,22 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             dccTurnoutModel.setDirtyRow(row, false);
                         }
                     }
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case SERVOTURNOUT:
                     for (int i = 0; i < servoTurnoutModel.getRowData().size(); i++) {
 
                         List<Object> r = servoTurnoutModel.getRowData().get(i);
-                        boolean isnew = (boolean) r.get(4);
-                        boolean isdirty = (boolean) r.get(5);
-                        boolean isdelete = (boolean) r.get(6);
+                        boolean isnew = (boolean) r.get(6);
+                        boolean isdirty = (boolean) r.get(7);
+                        boolean isdelete = (boolean) r.get(8);
                         int row = servoTurnoutModel.getRowData().indexOf(r);
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
-                                    (int) r.get(1), (int) r.get(2)), this);
+                            DCCppMessage m = new DCCppMessage("T "+(int)r.get(0)+" SERVO "+(int)r.get(1)+" "+
+                                    +(int)r.get(2)+" "+(int)r.get(3)+" "+(int)r.get(4));
+                            log.debug("Sending: {}", m);
+                            tc.sendDCCppMessage(m, this);
                             servoTurnoutModel.setNewRow(row, false);
                         } else if (isdelete) {
                             DCCppMessage m = new DCCppMessage("T " + Integer.toString((int) r.get(0)));
@@ -665,6 +671,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             servoTurnoutModel.setDirtyRow(row, false);
                         }
                     }
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case VPINTURNOUT:
                     for (int i = 0; i < vpinTurnoutModel.getRowData().size(); i++) {
@@ -694,6 +701,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             vpinTurnoutModel.setDirtyRow(row, false);
                         }
                     }
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case OUTPUT:
                     for (int i = 0; i < outputModel.getRowData().size(); i++) {
@@ -726,6 +734,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             outputModel.setDirtyRow(row, false);
                         }
                     }
+                    tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this); //request updated definitions list 
                     break;
                 default:
                     break;
@@ -818,7 +827,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             super(4, 5, 6, 7);
             // Use i18n-ized column titles.
             columnNames = new String[7];
-            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
+            columnNames[0] = Bundle.getMessage("IDCol");
             columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
             columnNames[2] = Bundle.getMessage("FieldTablePullupColumn");
             columnNames[3] = Bundle.getMessage("ColumnDelete");
@@ -856,7 +865,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             super(4, 5, 6, 7);
             // Use i18n-ized column titles.
             columnNames = new String[7];
-            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
+            columnNames[0] = Bundle.getMessage("IDCol");
             columnNames[1] = Bundle.getMessage("AddressCol");
             columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
             columnNames[3] = Bundle.getMessage("ColumnDelete");
@@ -890,16 +899,22 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private static class ServoTurnoutTableModel extends DCCppTableModel {
 
         public ServoTurnoutTableModel() {
-            super(4, 5, 6, 7);
+            super(6, 7, 8, 9);
             // Use i18n-ized column titles.
-            columnNames = new String[7];
-            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
-            columnNames[1] = Bundle.getMessage("AddressCol");
-            columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
-            columnNames[3] = Bundle.getMessage("ColumnDelete");
-            columnNames[4] = "isNew";        // hidden column // NOI18N
-            columnNames[5] = "isDirty";      // hidden column // NOI18N
-            columnNames[6] = "isDelete";     // hidden column // NOI18N
+            columnNames = new String[9];
+            columnNames[0] = Bundle.getMessage("IDCol");
+            columnNames[1] = Bundle.getMessage("PinCol");
+            columnNames[2] = Bundle.getMessage("ThrownPosCol");
+            columnNames[3] = Bundle.getMessage("ClosedPosCol");
+            columnNames[4] = Bundle.getMessage("ProfileCol");
+            columnNames[5] = Bundle.getMessage("ColumnDelete");
+            columnNames[6] = "isNew";        // hidden column // NOI18N
+            columnNames[7] = "isDirty";      // hidden column // NOI18N
+            columnNames[8] = "isDelete";     // hidden column // NOI18N
+        }
+        @Override
+        public int getDeleteColumn() {
+            return (5);
         }
 
         @Override
@@ -908,12 +923,14 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 case 0:
                 case 1:
                 case 2:
-                    return Integer.class;
                 case 3:
-                    return ConfigBaseStationFrame.ButtonEditor.class;
                 case 4:
+                    return Integer.class;
                 case 5:
+                    return ConfigBaseStationFrame.ButtonEditor.class;
                 case 6:
+                case 7:
+                case 8:
                     return Boolean.class;
                 default:
                     return super.getColumnClass(columnIndex);
@@ -930,7 +947,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             super(3, 4, 5, 6);
             // Use i18n-ized column titles.
             columnNames = new String[6];
-            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
+            columnNames[0] = Bundle.getMessage("IDCol");
             columnNames[1] = Bundle.getMessage("PinCol");
             columnNames[2] = Bundle.getMessage("ColumnDelete");
             columnNames[3] = "isNew";        // hidden column // NOI18N
@@ -970,7 +987,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             super(6, 7, 8, 9);
             // Use i18n-ized column titles.
             columnNames = new String[9];
-            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
+            columnNames[0] = Bundle.getMessage("IDCol");
             columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
             columnNames[2] = Bundle.getMessage("FieldTableInvertColumn");
             columnNames[3] = Bundle.getMessage("FieldTableOutputRestoreStateColumn");
