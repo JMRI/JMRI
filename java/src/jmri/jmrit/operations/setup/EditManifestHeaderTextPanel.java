@@ -16,11 +16,6 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  */
 public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
-//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
-
-    //protected static final ResourceBundle rb = ResourceBundle
-    //        .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
