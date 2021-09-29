@@ -957,6 +957,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="rampDone is called by ramp thread to clear Engineer waiting for it to finish")
     private void rampDone(boolean stop, String speedType) {
         if (!speedType.equals(Warrant.Stop) && !speedType.equals(Warrant.EStop)) {
             _speedType = speedType;
@@ -1006,6 +1007,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
              return holdRamp;
          }
 
+         @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
          void quit(boolean die) {
              log.debug("ThrottleRamp.quit({})", die);
              stop = true;
@@ -1094,6 +1096,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Engineer needs _normalSpeed to be updated")
         public void doRamp() {
             // At the the time 'right now' is the command indexed by _idxCurrentCommand-1"
             // is done. The main thread (Engineer) is waiting to do the _idxCurrentCommand.
@@ -1318,7 +1321,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                     if (log.isDebugEnabled()) 
                                         log.debug("Extending ramp to reach block {}. speed= {}",
                                                 _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
-                                    long waittime = 0;
+                                    int waittime = 0;
                                     while (_endBlockIdx > _warrant._idxCurrentOrder && waittime <= 15*timeIncrement && getSpeedSetting() > 0) {
                                         // Until loco reaches end block, continue current speed.
                                         if (waittime == 3*timeIncrement || waittime == 9*timeIncrement) {

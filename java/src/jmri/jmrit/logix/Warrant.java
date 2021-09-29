@@ -2462,7 +2462,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     private float getEntranceBufferDist(int idxBlockOrder) {
-        float bufDist = 6096 / WarrantPreferences.getDefault().getLayoutScale();// add 20 scale feet for safety distance
+        float bufDist = 9144 / WarrantPreferences.getDefault().getLayoutScale();// add 30 scale feet for safety distance
         if (_waitForSignal) {        // signal restricting speed
             bufDist+= getBlockOrderAt(idxBlockOrder).getEntranceSpace(); // signal's adjustment
         }
@@ -2756,7 +2756,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     waitTime, modThrottle, accumDist, availDist, rampLen + bufferDist);
         }
 
-        waitTime -= 20;     // Subtract a bit to avoid last unwanted speed command
+        waitTime -= 50;     // Subtract a bit to avoid last unwanted speed command
         rampSpeedDelay(waitTime, speedType, modThrottle, endBlockIdx);
         return true;
     }   // end setMovement

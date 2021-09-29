@@ -581,13 +581,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
                 if (jmri.InstanceManager.getDefault(WarrantManager.class).getBySystemName(_warrant.getSystemName()) != null) {
-                    StringBuilder sb = new StringBuilder("Block \"");
+                    StringBuilder sb = new StringBuilder("Cannot deallocate Block \"");
                     sb.append(getDisplayName());
-                    sb.append("\" is owned by warrant \"");
+                    sb.append("\"! Owned by warrant \"");
                     sb.append(_warrant.getDisplayName());
-                    sb.append("\". Warrant \"");
-                    sb.append(warrant == null ? "null" : warrant.getDisplayName());
-                    sb.append("\"cannot deallocate!");
+                    sb.append("\".");
                     return sb.toString();
                 }
             }
