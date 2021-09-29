@@ -40,6 +40,7 @@
       <description>Dark signal</description>
       <comment>Signal not in use</comment>
       <speed>Normal</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -48,6 +49,7 @@
       <description>Lit stop signal</description>
       <comment>Stop</comment>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -68,6 +70,7 @@
       <description>One red light on main signal</description>
       <comment>Stop</comment>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -78,6 +81,7 @@
       <description>One red light on main signal, Two horizontal white lights</description>
       <comment>Stop</comment>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -86,6 +90,7 @@
       <description>Two horizontal white lights</description>
       <comment>Movement not allowed</comment>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -105,6 +110,7 @@
       <description>Two green light on main signal, Left green light on main dwarf signal</description>
       <comment>Proceed 40</comment>
       <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Either</route>
     </aspect>
 
@@ -148,6 +154,7 @@
       <description>One green light on main signal, Right green light on main dwarf signal</description>
       <comment>Proceed 80</comment>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Normal</route>
     </aspect>
 
@@ -204,6 +211,7 @@
       <description>Dark stop signal</description>
       <comment>Normal</comment>
       <speed>Normal</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -212,6 +220,7 @@
       <description>Two white lights arranged vertically</description>
       <comment>Movement allowed, clear</comment>
       <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
     </aspect>
 
@@ -251,6 +260,7 @@
       <description>Two white lights arranged left diagonally</description>
       <comment>Movement allowed, Track not clear</comment>
       <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
     </aspect>
 
@@ -260,6 +270,7 @@
       <description>Two white lights arranged left diagonally</description>
       <comment>Movement allowed, Track not clear</comment>
       <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
     </aspect>
 
@@ -269,6 +280,7 @@
       <description>Two white lights arranged right diagonally</description>
       <comment>Movement allowed, check points and clearence</comment>
       <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
       <route>Either</route>
     </aspect>
 
@@ -278,6 +290,7 @@
       <description>Two white lights arranged right diagonally</description>
       <comment>Movement allowed, check points and clearence</comment>
       <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
       <route>Either</route>
     </aspect>
   </aspects>
