@@ -295,6 +295,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         tabbedPane.setMnemonicAt(4, Mnemonics.get("OutputTab")); // NOI18N
         cTab = CurrentTab.SENSOR;
         tabbedPane.setSelectedIndex(0);
+        if (!tc.getCommandStation().isServoTurnoutCreationSupported()) {
+            tabbedPane.setEnabledAt(2, false);
+            tabbedPane.setEnabledAt(3, false);
+        }
         tabbedPane.addChangeListener((ChangeEvent e) -> {
             switch (tabbedPane.getSelectedIndex()) { // set button text and tooltips for selected tabs
                 case 4:
