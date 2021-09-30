@@ -307,12 +307,19 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             
+            UIDefaults uiDefaults = javax.swing.UIManager.getDefaults();
+            
             FemaleSocket socket = (FemaleSocket)value;
             
             JPanel mainPanel = new JPanel();
             
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.setOpaque(false);
+            if (selected) {
+                mainPanel.setOpaque(true);
+                mainPanel.setBackground(uiDefaults.getColor("Tree.selectionBackground"));
+            } else {
+                mainPanel.setOpaque(false);
+            }
             
             JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             mainPanel.add(commentPanel);
@@ -341,6 +348,11 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
+                
+                connectedItemLabel.setFont(uiDefaults.getFont("Tree.font"));
+                if (selected) {
+                    connectedItemLabel.setForeground(uiDefaults.getColor("Tree.selectionForeground"));
+                }
                 
                 MaleSocket connectedSocket = socket.getConnectedSocket();
                 
@@ -392,6 +404,10 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                             variableData._initalValueType,
                             variableData._initialValueData));
                     variableLabel.setAlignmentX(LEFT_ALIGNMENT);
+                    variableLabel.setFont(uiDefaults.getFont("Tree.font"));
+                    if (selected) {
+                        variableLabel.setForeground(uiDefaults.getColor("Tree.selectionForeground"));
+                    }
                     mainPanel.add(variableLabel);
                 }
             }
