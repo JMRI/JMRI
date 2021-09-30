@@ -492,7 +492,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Add an address offset option for DCC Signal Mast Decoder signal masts.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
