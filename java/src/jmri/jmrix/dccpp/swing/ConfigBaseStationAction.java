@@ -39,6 +39,10 @@ public class ConfigBaseStationAction extends AbstractAction {
         super(s);
     }
 
+    public ConfigBaseStationAction() {
+        this(Bundle.getMessage("FieldManageBaseStationFrameTitle"), null);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
