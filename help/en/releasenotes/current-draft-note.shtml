@@ -33,6 +33,8 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
+                <li>added support for new servo and vpin turnout messages</li>
+                <li>store definitions as properties in created objects</li>
             </ul>
 
         <h4>DCC4pc</h4>
