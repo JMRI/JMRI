@@ -20,12 +20,14 @@
     <!-- ver4 updates for F29-F31 -->
     <!-- ver5 disable Reset to Defaults -->
     <!-- ver6 add "LokSound 5 micro E24 DCC" and "LokSound 5 micro KATO" -->
+    <!-- ver6 renamed "LokSound 5 micro E24 DCC" to "LokSound 5 nano DCC" -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <version author="Dave Heap" version="3" lastUpdated="20200726"/>
     <version author="Dave Heap" version="4" lastUpdated="20200807"/>
     <version author="Dave Heap" version="5" lastUpdated="20200818"/>
     <version author="Dave Heap" version="6" lastUpdated="20200924"/>
+    <version author="Dave Heap" version="7" lastUpdated="20210930"/>
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
@@ -60,7 +62,10 @@
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
-            <model model="LokSound 5 micro E24 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+            <model show="no" model="LokSound 5 micro E24 DCC" replacementModel="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <model model="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
             <model model="LokSound 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
