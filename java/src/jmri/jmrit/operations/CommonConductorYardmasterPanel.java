@@ -9,8 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.*;
 
@@ -95,7 +95,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JPanel pButtons = new JPanel();
 
     // check boxes
-    protected Hashtable<String, JCheckBox> checkBoxes = new Hashtable<>();
+    protected ConcurrentHashMap<String, JCheckBox> checkBoxes = new ConcurrentHashMap<>();
     protected List<RollingStock> rollingStock = new ArrayList<>();
 
     // flags
@@ -310,14 +310,16 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     // Determines if all car checkboxes are selected. Disables the Set button if
     // all checkbox are selected.
     protected void check() {
-        Enumeration<JCheckBox> en = checkBoxes.elements();
-        while (en.hasMoreElements()) {
-            JCheckBox checkBox = en.nextElement();
-            if (!checkBox.isSelected()) {
-                // log.debug("Checkbox (" + checkBox.getText() + ") isn't selected ");
-                moveButton.setEnabled(false);
-                modifyButton.setEnabled(true);
-                return;
+        synchronized (checkBoxes) {
+            Enumeration<JCheckBox> en = checkBoxes.elements();
+            while (en.hasMoreElements()) {
+                JCheckBox checkBox = en.nextElement();
+                if (!checkBox.isSelected()) {
+                    // log.debug("Checkbox (" + checkBox.getText() + ") isn't selected ");
+                    moveButton.setEnabled(false);
+                    modifyButton.setEnabled(true);
+                    return;
+                }
             }
         }
         // all selected, work done!
@@ -328,10 +330,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     protected void selectCheckboxes(boolean enable) {
-        Enumeration<JCheckBox> en = checkBoxes.elements();
-        while (en.hasMoreElements()) {
-            JCheckBox checkBox = en.nextElement();
-            checkBox.setSelected(enable);
+        synchronized (checkBoxes) {
+            Enumeration<JCheckBox> en = checkBoxes.elements();
+            while (en.hasMoreElements()) {
+                JCheckBox checkBox = en.nextElement();
+                checkBox.setSelected(enable);
+            }
         }
         isSetMode = false;
     }
@@ -651,6 +655,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
                     Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl), _train.getTrainTerminatesName(),
                     _train.getName()});
+        }
+    }
+    
+    protected void removeCarFromList(Car car) {
+        synchronized (checkBoxes) {
+            checkBoxes.remove("p" + car.getId());
+            checkBoxes.remove("s" + car.getId());
+            checkBoxes.remove("m" + car.getId());
+            log.debug("Car ({}) removed from list", car.toString());
+            if (car.isUtility()) {
+                clearAndUpdate(); // need to recalculate number of utility cars
+            }
         }
     }
 
