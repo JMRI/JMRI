@@ -120,6 +120,8 @@ public class TrainBuilder extends TrainBuilderBase {
 
         // operations automations use wait for train built to create custom manifests
         // and switch lists
+        _train.setPrinted(false);
+        _train.setSwitchListStatus(Train.UNKNOWN);
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
         _train.setBuilt(true);
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon

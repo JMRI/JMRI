@@ -73,6 +73,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         TrainConductorFrame f = new TrainConductorFrame(train2);
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
+        JemmyUtil.waitFor(f);
         
         // update panel by building train
         Assert.assertTrue(train2.build());
@@ -144,6 +145,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         TrainConductorFrame f = new TrainConductorFrame(train2);        
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(p.modifyButton);
         
         // dialog window should appear
