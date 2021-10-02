@@ -81,8 +81,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         super.initComponents();
 
         // Create the background function refreshing-related buttons and add
-        // them to a panel. The panel however will only be added if the traffic
-        // controller is an instance of SerialDCCppPacketizer and FunctionRefreshRequired by the command station
+        // them to a panel. Will be hidden if not required by command station.
         final JLabel functionLabel = new JLabel(Bundle.getMessage("LabelFunctionRefresh"), SwingConstants.LEFT); // NOI18N
 
         pauseRefreshButton.setText(Bundle.getMessage("ButtonPauseRefresh")); // NOI18N
@@ -173,6 +172,16 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         }
 
         logMessage("", "RX: ", l);
+
+
+        //enable or disable the refresh pane based on support by command station
+        if (l.isStatusReply()) { 
+            if (tc.getCommandStation().isFunctionRefreshRequired()) { 
+                serialPane.setVisible(true);
+            } else {
+                serialPane.setVisible(false);
+            }
+        }
     }
 
     // listen for the messages to the Base Station

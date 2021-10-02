@@ -3,8 +3,7 @@ package jmri.jmrix.dccpp.swing;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -30,6 +30,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
@@ -77,7 +79,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private final DCCppTrafficController tc;
 
     private JTabbedPane tabbedPane;
-    private JPanel sensorPanel;
+    private JLabel versionLabel = new JLabel("");
 
     private SensorTableModel sensorModel;
     private DccTurnoutTableModel dccTurnoutModel;
@@ -102,6 +104,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
     private CurrentTab cTab;
 
+    private static final int SENSOR_TAB_NUM     = 0;
+    private static final int DCCTURNOUT_TAB_NUM = 1;
+    private static final int SERVOTURNOUT_TAB_NUM=2;
+    private static final int VPINTURNOUT_TAB_NUM= 3;
+    private static final int OUTPUT_TAB_NUM     = 4;
+
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
@@ -122,17 +130,13 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         this.setTitle(Bundle.getMessage("FieldManageBaseStationFrameTitle"));
         this.buildMenu();
 
-        // Panel for managing sensors
-        sensorPanel = new JPanel();
-        sensorPanel.setLayout(new GridBagLayout());
-
+        //create Add, Save and Close buttons
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
         addButton.setMnemonic(Mnemonics.get("ButtonAdd")); // NOI18N
         addButton.addActionListener((ActionEvent e) -> {
             addButtonPressed(e);
         });
-
         JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
@@ -276,29 +280,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         outputSorter.sort();
 
-        // add the 5 tabs to the window
+        // add the 5 tabs to the pane
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("Sensors"), sensorScrollPanel);
-        tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipSensorTab"));
-        tabbedPane.setMnemonicAt(0, Mnemonics.get("SensorTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(SENSOR_TAB_NUM, Bundle.getMessage("ToolTipSensorTab"));
+        tabbedPane.setMnemonicAt(SENSOR_TAB_NUM, Mnemonics.get("SensorTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("DCCTurnouts"), dccTurnoutScrollPanel);
-        tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipDccTurnoutTab"));
-        tabbedPane.setMnemonicAt(1, Mnemonics.get("DCCTurnoutTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(DCCTURNOUT_TAB_NUM, Bundle.getMessage("ToolTipDccTurnoutTab"));
+        tabbedPane.setMnemonicAt(DCCTURNOUT_TAB_NUM, Mnemonics.get("DCCTurnoutTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("ServoTurnouts"), servoTurnoutScrollPanel);
-        tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipServoTurnoutTab"));
-        tabbedPane.setMnemonicAt(2, Mnemonics.get("ServoTurnoutTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(SERVOTURNOUT_TAB_NUM, Bundle.getMessage("ToolTipServoTurnoutTab"));
+        tabbedPane.setMnemonicAt(SERVOTURNOUT_TAB_NUM, Mnemonics.get("ServoTurnoutTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("VpinTurnouts"), vpinTurnoutScrollPanel);
-        tabbedPane.setToolTipTextAt(3, Bundle.getMessage("ToolTipVpinTurnoutTab"));
-        tabbedPane.setMnemonicAt(3, Mnemonics.get("VpinTurnoutTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(VPINTURNOUT_TAB_NUM, Bundle.getMessage("ToolTipVpinTurnoutTab"));
+        tabbedPane.setMnemonicAt(VPINTURNOUT_TAB_NUM, Mnemonics.get("VpinTurnoutTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOutputsTabTitle"), outputScrollPanel);
-        tabbedPane.setToolTipTextAt(4, Bundle.getMessage("ToolTipOutputTab"));
-        tabbedPane.setMnemonicAt(4, Mnemonics.get("OutputTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(OUTPUT_TAB_NUM, Bundle.getMessage("ToolTipOutputTab"));
+        tabbedPane.setMnemonicAt(OUTPUT_TAB_NUM, Mnemonics.get("OutputTab")); // NOI18N
         cTab = CurrentTab.SENSOR;
         tabbedPane.setSelectedIndex(0);
-        if (!tc.getCommandStation().isServoTurnoutCreationSupported()) {
-            tabbedPane.setEnabledAt(2, false);
-            tabbedPane.setEnabledAt(3, false);
-        }
         tabbedPane.addChangeListener((ChangeEvent e) -> {
             switch (tabbedPane.getSelectedIndex()) { // set button text and tooltips for selected tabs
                 case 4:
@@ -344,17 +344,22 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
         });
 
-        JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel buttonPane2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //Create and add various parts to the window
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        JPanel bottomPanelLeft = new JPanel();
+        JPanel bottomPanelRight = new JPanel();
 
-        buttonPane.add(addButton);
-        buttonPane.add(saveButton);
-        buttonPane2.add(closeButton);
+        bottomPanelLeft.add(addButton);
+        bottomPanelLeft.add(saveButton);
+        bottomPanel.add(bottomPanelLeft, BorderLayout.WEST);
+
+        bottomPanelRight.add(versionLabel);
+        bottomPanelRight.add(closeButton);
+        bottomPanel.add(bottomPanelRight, BorderLayout.EAST);   
 
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.getContentPane().add(tabbedPane);
-        this.getContentPane().add(buttonPane);
-        this.getContentPane().add(buttonPane2);
+        this.getContentPane().add(bottomPanel);
         this.pack();
         this.setVisible(true);
     }
@@ -371,10 +376,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         this.setJMenuBar(new JMenuBar());
         this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
-        //this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
     }
 
-    // DCCppListener Methods
+    //  handle incoming object creation messages by adding them to the appropriate table
+    //  handle incoming status message by disabling unsupported functions
     @Override
     public void message(DCCppReply r) {
         // When we get a SensorDefReply message, add the
@@ -417,6 +422,22 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
             outputModel.insertData(v, false);
             outputSorter.sort();
+        } else if (r.isStatusReply()) { 
+            DCCppCommandStation cs = tc.getCommandStation(); 
+            //enable or disable some tabs based on support by command station
+            if (cs.isServoTurnoutCreationSupported()) {
+                tabbedPane.setEnabledAt(SERVOTURNOUT_TAB_NUM, true);
+                tabbedPane.setEnabledAt(VPINTURNOUT_TAB_NUM,  true);
+            } else {
+                tabbedPane.setEnabledAt(SERVOTURNOUT_TAB_NUM, false);
+                tabbedPane.setEnabledAt(VPINTURNOUT_TAB_NUM,  false);                
+            }
+            //populate the version line
+            String v = cs.getStationType() + " " + cs.getVersion() + " " + cs.getBuild(); 
+            if (v.length() > 40) {
+                v = ""; //don't try to show really long version strings here
+            }
+            versionLabel.setText(v);
         }
     }
 
