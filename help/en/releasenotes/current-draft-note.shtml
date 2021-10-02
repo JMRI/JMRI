@@ -35,6 +35,7 @@
                 <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
                 <li>added support for new servo and vpin turnout messages</li>
                 <li>store definitions as properties in created objects</li>
+                <li>make "Configure DCC++ Base Station" available in startup actions</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -494,7 +495,8 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Add an address offset option for DCC Signal Mast Decoder signal masts.</li>
+                <li>Add the ability to select the aspect id for the unlit option.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
