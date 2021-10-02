@@ -32,7 +32,7 @@
   <!-- Used by Tams Elektronik from Tams FD-R Basic 3 model   -->
   <!-- It will likely be used in other Tams decoders or decoders from other brands   -->
   <!-- Please note additional function outputs may need to be added for other decoders   -->
-  <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
+  <variable item="FL(f) controls output 1" CV="257" mask="XXXXXXXV" minOut="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -40,7 +40,7 @@
     </enumVal>
     <label>FL(f) controls output 1</label>
   </variable>
-  <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1">
+  <variable item="FL(f) controls output 2" CV="257" mask="XXXXXXVX" minOut="2" default="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -48,7 +48,7 @@
     </enumVal>
     <label>FL(f) controls output 2</label>
   </variable>
-  <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+  <variable item="FL(f) controls output 3" CV="257" mask="XXXXXVXX" minOut="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -56,7 +56,7 @@
     </enumVal>
     <label>FL(f) controls output 3</label>
   </variable>
-  <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+  <variable item="FL(f) controls output 4" CV="257" mask="XXXXVXXX" minOut="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -64,7 +64,7 @@
     </enumVal>
     <label>FL(f) controls output 4</label>
   </variable>
-  <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+  <variable item="FL(r) controls output 1" CV="261" mask="XXXXXXXV" minOut="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -72,7 +72,7 @@
     </enumVal>
     <label>FL(r) controls output 1</label>
   </variable>
-  <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2">
+  <variable item="FL(r) controls output 2" CV="261" mask="XXXXXXVX" minOut="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -80,7 +80,7 @@
     </enumVal>
     <label>FL(r) controls output 2</label>
   </variable>
-  <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" default="1">
+  <variable item="FL(r) controls output 3" CV="261" mask="XXXXXVXX" minOut="3" default="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -88,7 +88,7 @@
     </enumVal>
     <label>FL(r) controls output 3</label>
   </variable>
-  <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+  <variable item="FL(r) controls output 4" CV="261" mask="XXXXVXXX" minOut="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
@@ -96,389 +96,1825 @@
     </enumVal>
     <label>FL(r) controls output 4</label>
   </variable>
-  <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
+  <variable item="F1(f) controls output 1" CV="265" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F1 controls output 1</label>
+    <label>F1(f) controls output 1</label>
   </variable>
-  <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+  <variable item="F1(f) controls output 2" CV="265" mask="XXXXXXVX" minOut="2" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F1 controls output 2</label>
+    <label>F1(f) controls output 2</label>
   </variable>
-  <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1">
+  <variable item="F1(f) controls output 3" CV="265" mask="XXXXXVXX" minOut="3" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F1 controls output 3</label>
+    <label>F1(f) controls output 3</label>
   </variable>
-  <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+  <variable item="F1(f) controls output 4" CV="265" mask="XXXXVXXX" minOut="4" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F1 controls output 4</label>
+    <label>F1(f) controls output 4</label>
   </variable>
-  <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+  <variable item="F1(r) controls output 1" CV="269" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F2 controls output 1</label>
+    <label>F1(r) controls output 1</label>
   </variable>
-  <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+  <variable item="F1(r) controls output 2" CV="269" mask="XXXXXXVX" minOut="2" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F2 controls output 2</label>
+    <label>F1(r) controls output 2</label>
   </variable>
-  <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+  <variable item="F1(r) controls output 3" CV="269" mask="XXXXXVXX" minOut="3" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F2 controls output 3</label>
+    <label>F1(r) controls output 3</label>
   </variable>
-  <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2">
+  <variable item="F1(r) controls output 4" CV="269" mask="XXXXVXXX" minOut="4" minFn="1">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F2 controls output 4</label>
+    <label>F1(r) controls output 4</label>
   </variable>
-  <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+
+  <variable item="F2(f) controls output 1" CV="273" mask="XXXXXXXV" minOut="1" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F3 controls output 1</label>
+    <label>F2(f) controls output 1</label>
   </variable>
-  <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+  <variable item="F2(f) controls output 2" CV="273" mask="XXXXXXVX" minOut="2" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F3 controls output 2</label>
+    <label>F2(f) controls output 2</label>
   </variable>
-  <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+  <variable item="F2(f) controls output 3" CV="273" mask="XXXXXVXX" minOut="3" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F3 controls output 3</label>
+    <label>F2(f) controls output 3</label>
   </variable>
-  <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+  <variable item="F2(f) controls output 4" CV="273" mask="XXXXVXXX" minOut="4" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F3 controls output 4</label>
+    <label>F2(f) controls output 4</label>
   </variable>
-  <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="3">
+  <variable item="F2(r) controls output 1" CV="277" mask="XXXXXXXV" minOut="1" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F4 controls output 1</label>
+    <label>F2(r) controls output 1</label>
   </variable>
-  <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="4">
+  <variable item="F2(r) controls output 2" CV="277" mask="XXXXXXVX" minOut="2" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F4 controls output 2</label>
+    <label>F2(r) controls output 2</label>
   </variable>
-  <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="4">
+  <variable item="F2(r) controls output 3" CV="277" mask="XXXXXVXX" minOut="3" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F4 controls output 3</label>
+    <label>F2(r) controls output 3</label>
   </variable>
-  <variable item="F4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="4">
+  <variable item="F2(r) controls output 4" CV="277" mask="XXXXVXXX" minOut="4" minFn="2">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F4 controls output 4</label>
+    <label>F2(r) controls output 4</label>
   </variable>
-  <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="5">
+
+  <variable item="F3(f) controls output 1" CV="281" mask="XXXXXXXV" minOut="1" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F5 controls output 1</label>
+    <label>F3(f) controls output 1</label>
   </variable>
-  <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="5">
+  <variable item="F3(f) controls output 2" CV="281" mask="XXXXXXVX" minOut="2" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F5 controls output 2</label>
+    <label>F3(f) controls output 2</label>
   </variable>
-  <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="5">
+  <variable item="F3(f) controls output 3" CV="281" mask="XXXXXVXX" minOut="3" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F5 controls output 3</label>
+    <label>F3(f) controls output 3</label>
   </variable>
-  <variable item="F5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="5">
+  <variable item="F3(f) controls output 4" CV="281" mask="XXXXVXXX" minOut="4" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F5 controls output 4</label>
+    <label>F3(f) controls output 4</label>
   </variable>
-  <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="6">
+  <variable item="F3(r) controls output 1" CV="285" mask="XXXXXXXV" minOut="1" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F6 controls output 1</label>
+    <label>F3(r) controls output 1</label>
   </variable>
-  <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="6">
+  <variable item="F3(r) controls output 2" CV="285" mask="XXXXXXVX" minOut="2" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F6 controls output 2</label>
+    <label>F3(r) controls output 2</label>
   </variable>
-  <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="6">
+  <variable item="F3(r) controls output 3" CV="285" mask="XXXXXVXX" minOut="3" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F6 controls output 3</label>
+    <label>F3(r) controls output 3</label>
   </variable>
-  <variable item="F6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="6">
+  <variable item="F3(r) controls output 4" CV="285" mask="XXXXVXXX" minOut="4" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F6 controls output 4</label>
+    <label>F3(r) controls output 4</label>
   </variable>
-  <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="7">
+
+  <variable item="F4(f) controls output 1" CV="289" mask="XXXXXXXV" minOut="1" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F7 controls output 1</label>
+    <label>F4(f) controls output 1</label>
   </variable>
-  <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="7">
+  <variable item="F4(f) controls output 2" CV="289" mask="XXXXXXVX" minOut="2" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F7 controls output 2</label>
+    <label>F4(f) controls output 2</label>
   </variable>
-  <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="7">
+  <variable item="F4(f) controls output 3" CV="289" mask="XXXXXVXX" minOut="3" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F7 controls output 3</label>
+    <label>F4(f) controls output 3</label>
   </variable>
-  <variable item="F7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="7">
+  <variable item="F4(f) controls output 4" CV="289" mask="XXXXVXXX" minOut="4" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F7 controls output 4</label>
+    <label>F4(f) controls output 4</label>
   </variable>
-  <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="8">
+  <variable item="F4(r) controls output 1" CV="293" mask="XXXXXXXV" minOut="1" minFn="3">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F8 controls output 1</label>
+    <label>F4(r) controls output 1</label>
   </variable>
-  <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="8">
+  <variable item="F4(r) controls output 2" CV="293" mask="XXXXXXVX" minOut="2" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F8 controls output 2</label>
+    <label>F4(r) controls output 2</label>
   </variable>
-  <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="8">
+  <variable item="F4(r) controls output 3" CV="293" mask="XXXXXVXX" minOut="3" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F8 controls output 3</label>
+    <label>F4(r) controls output 3</label>
   </variable>
-  <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="8">
+  <variable item="F4(r) controls output 4" CV="293" mask="XXXXVXXX" minOut="4" minFn="4">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F8 controls output 4</label>
+    <label>F4(r) controls output 4</label>
   </variable>
-  <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="9">
+
+  <variable item="F5(f) controls output 1" CV="297" mask="XXXXXXXV" minOut="1" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F9 controls output 1</label>
+    <label>F5(f) controls output 1</label>
   </variable>
-  <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="9">
+  <variable item="F5(f) controls output 2" CV="297" mask="XXXXXXVX" minOut="2" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F9 controls output 2</label>
+    <label>F5(f) controls output 2</label>
   </variable>
-  <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="9">
+  <variable item="F5(f) controls output 3" CV="297" mask="XXXXXVXX" minOut="3" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F9 controls output 3</label>
+    <label>F5(f) controls output 3</label>
   </variable>
-  <variable item="F9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="9">
+  <variable item="F5(f) controls output 4" CV="297" mask="XXXXVXXX" minOut="4" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F9 controls output 4</label>
+    <label>F5(f) controls output 4</label>
   </variable>
-  <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="10">
+  <variable item="F5(r) controls output 1" CV="301" mask="XXXXXXXV" minOut="1" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F10 controls output 1</label>
+    <label>F5(r) controls output 1</label>
   </variable>
-  <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="10">
+  <variable item="F5(r) controls output 2" CV="301" mask="XXXXXXVX" minOut="2" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F10 controls output 2</label>
+    <label>F5(r) controls output 2</label>
   </variable>
-  <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="10">
+  <variable item="F5(r) controls output 3" CV="301" mask="XXXXXVXX" minOut="3" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F10 controls output 3</label>
+    <label>F5(r) controls output 3</label>
   </variable>
-  <variable item="F10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="10">
+  <variable item="F5(r) controls output 4" CV="301" mask="XXXXVXXX" minOut="4" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F10 controls output 4</label>
+    <label>F5(r) controls output 4</label>
   </variable>
-  <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="11">
+
+  <variable item="F6(f) controls output 1" CV="305" mask="XXXXXXXV" minOut="1" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F11 controls output 1</label>
+    <label>F6(f) controls output 1</label>
   </variable>
-  <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="11">
+  <variable item="F6(f) controls output 2" CV="305" mask="XXXXXXVX" minOut="2" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F11 controls output 2</label>
+    <label>F6(f) controls output 2</label>
   </variable>
-  <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="11">
+  <variable item="F6(f) controls output 3" CV="305" mask="XXXXXVXX" minOut="3" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F11 controls output 3</label>
+    <label>F6(f) controls output 3</label>
   </variable>
-  <variable item="F11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="11">
+  <variable item="F6(f) controls output 4" CV="305" mask="XXXXVXXX" minOut="4" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F11 controls output 4</label>
+    <label>F6(f) controls output 4</label>
   </variable>
-  <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="12">
+  <variable item="F6(r) controls output 1" CV="309" mask="XXXXXXXV" minOut="1" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F12 controls output 1</label>
+    <label>F6(r) controls output 1</label>
   </variable>
-  <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="12">
+  <variable item="F6(r) controls output 2" CV="309" mask="XXXXXXVX" minOut="2" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F12 controls output 2</label>
+    <label>F6(r) controls output 2</label>
   </variable>
-  <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="12">
+  <variable item="F6(r) controls output 3" CV="309" mask="XXXXXVXX" minOut="3" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F12 controls output 3</label>
+    <label>F6(r) controls output 3</label>
   </variable>
-  <variable item="F12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="12">
+  <variable item="F6(r) controls output 4" CV="309" mask="XXXXVXXX" minOut="4" minFn="6">
     <enumVal>
       <enumChoice choice="No"/>
       <enumChoice choice="Yes">
     </enumChoice>
     </enumVal>
-    <label>F12 controls output 4</label>
+    <label>F6(r) controls output 4</label>
+  </variable>
+
+  <variable item="F7(f) controls output 1" CV="313" mask="XXXXXXXV" minOut="1" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(f) controls output 1</label>
+  </variable>
+  <variable item="F7(f) controls output 2" CV="313" mask="XXXXXXVX" minOut="2" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(f) controls output 2</label>
+  </variable>
+  <variable item="F7(f) controls output 3" CV="313" mask="XXXXXVXX" minOut="3" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(f) controls output 3</label>
+  </variable>
+  <variable item="F7(f) controls output 4" CV="313" mask="XXXXVXXX" minOut="4" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(f) controls output 4</label>
+  </variable>
+  <variable item="F7(r) controls output 1" CV="317" mask="XXXXXXXV" minOut="1" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(r) controls output 1</label>
+  </variable>
+  <variable item="F7(r) controls output 2" CV="317" mask="XXXXXXVX" minOut="2" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(r) controls output 2</label>
+  </variable>
+  <variable item="F7(r) controls output 3" CV="317" mask="XXXXXVXX" minOut="3" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(r) controls output 3</label>
+  </variable>
+  <variable item="F7(r) controls output 4" CV="317" mask="XXXXVXXX" minOut="4" minFn="7">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F7(r) controls output 4</label>
+  </variable>
+
+  <variable item="F8(f) controls output 1" CV="321" mask="XXXXXXXV" minOut="1" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(f) controls output 1</label>
+  </variable>
+  <variable item="F8(f) controls output 2" CV="321" mask="XXXXXXVX" minOut="2" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(f) controls output 2</label>
+  </variable>
+  <variable item="F8(f) controls output 3" CV="321" mask="XXXXXVXX" minOut="3" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(f) controls output 3</label>
+  </variable>
+  <variable item="F8(f) controls output 4" CV="321" mask="XXXXVXXX" minOut="4" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(f) controls output 4</label>
+  </variable>
+  <variable item="F8(r) controls output 1" CV="325" mask="XXXXXXXV" minOut="1" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(r) controls output 1</label>
+  </variable>
+  <variable item="F8(r) controls output 2" CV="325" mask="XXXXXXVX" minOut="2" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(r) controls output 2</label>
+  </variable>
+  <variable item="F8(r) controls output 3" CV="325" mask="XXXXXVXX" minOut="3" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(r) controls output 3</label>
+  </variable>
+  <variable item="F8(r) controls output 4" CV="325" mask="XXXXVXXX" minOut="4" minFn="8">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F8(r) controls output 4</label>
+  </variable>
+
+  <variable item="F9(f) controls output 1" CV="329" mask="XXXXXXXV" minOut="1" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(f) controls output 1</label>
+  </variable>
+  <variable item="F9(f) controls output 2" CV="329" mask="XXXXXXVX" minOut="2" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(f) controls output 2</label>
+  </variable>
+  <variable item="F9(f) controls output 3" CV="329" mask="XXXXXVXX" minOut="3" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(f) controls output 3</label>
+  </variable>
+  <variable item="F9(f) controls output 4" CV="329" mask="XXXXVXXX" minOut="4" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(f) controls output 4</label>
+  </variable>
+  <variable item="F9(r) controls output 1" CV="333" mask="XXXXXXXV" minOut="1" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(r) controls output 1</label>
+  </variable>
+  <variable item="F9(r) controls output 2" CV="333" mask="XXXXXXVX" minOut="2" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(r) controls output 2</label>
+  </variable>
+  <variable item="F9(r) controls output 3" CV="333" mask="XXXXXVXX" minOut="3" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(r) controls output 3</label>
+  </variable>
+  <variable item="F9(r) controls output 4" CV="333" mask="XXXXVXXX" minOut="4" minFn="9">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F9(r) controls output 4</label>
+  </variable>
+
+  <variable item="F10(f) controls output 1" CV="337" mask="XXXXXXXV" minOut="1" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(f) controls output 1</label>
+  </variable>
+  <variable item="F10(f) controls output 2" CV="337" mask="XXXXXXVX" minOut="2" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(f) controls output 2</label>
+  </variable>
+  <variable item="F10(f) controls output 3" CV="337" mask="XXXXXVXX" minOut="3" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(f) controls output 3</label>
+  </variable>
+  <variable item="F10(f) controls output 4" CV="337" mask="XXXXVXXX" minOut="4" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(f) controls output 4</label>
+  </variable>
+  <variable item="F10(r) controls output 1" CV="341" mask="XXXXXXXV" minOut="1" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(r) controls output 1</label>
+  </variable>
+  <variable item="F10(r) controls output 2" CV="341" mask="XXXXXXVX" minOut="2" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(r) controls output 2</label>
+  </variable>
+  <variable item="F10(r) controls output 3" CV="341" mask="XXXXXVXX" minOut="3" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(r) controls output 3</label>
+  </variable>
+  <variable item="F10(r) controls output 4" CV="341" mask="XXXXVXXX" minOut="4" minFn="10">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F10(r) controls output 4</label>
+  </variable>
+
+  <variable item="F11(f) controls output 1" CV="345" mask="XXXXXXXV" minOut="1" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(f) controls output 1</label>
+  </variable>
+  <variable item="F11(f) controls output 2" CV="345" mask="XXXXXXVX" minOut="2" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(f) controls output 2</label>
+  </variable>
+  <variable item="F11(f) controls output 3" CV="345" mask="XXXXXVXX" minOut="3" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(f) controls output 3</label>
+  </variable>
+  <variable item="F11(f) controls output 4" CV="345" mask="XXXXVXXX" minOut="4" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(f) controls output 4</label>
+  </variable>
+  <variable item="F11(r) controls output 1" CV="349" mask="XXXXXXXV" minOut="1" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(r) controls output 1</label>
+  </variable>
+  <variable item="F11(r) controls output 2" CV="349" mask="XXXXXXVX" minOut="2" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(r) controls output 2</label>
+  </variable>
+  <variable item="F11(r) controls output 3" CV="349" mask="XXXXXVXX" minOut="3" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(r) controls output 3</label>
+  </variable>
+  <variable item="F11(r) controls output 4" CV="349" mask="XXXXVXXX" minOut="4" minFn="11">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F11(r) controls output 4</label>
+  </variable>
+
+
+  <variable item="F12(f) controls output 1" CV="353" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(f) controls output 1</label>
+  </variable>
+  <variable item="F12(f) controls output 2" CV="353" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(f) controls output 2</label>
+  </variable>
+  <variable item="F12(f) controls output 3" CV="353" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(f) controls output 3</label>
+  </variable>
+  <variable item="F12(f) controls output 4" CV="353" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(f) controls output 4</label>
+  </variable>
+  <variable item="F12(r) controls output 1" CV="353" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(r) controls output 1</label>
+  </variable>
+  <variable item="F12(r) controls output 2" CV="353" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(r) controls output 2</label>
+  </variable>
+  <variable item="F12(r) controls output 3" CV="353" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(r) controls output 3</label>
+  </variable>
+  <variable item="F12(r) controls output 4" CV="353" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F12(r) controls output 4</label>
+  </variable>
+
+  <variable item="F13(f) controls output 1" CV="361" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(f) controls output 1</label>
+  </variable>
+  <variable item="F13(f) controls output 2" CV="361" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(f) controls output 2</label>
+  </variable>
+  <variable item="F13(f) controls output 3" CV="361" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(f) controls output 3</label>
+  </variable>
+  <variable item="F13(f) controls output 4" CV="361" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(f) controls output 4</label>
+  </variable>
+  <variable item="F13(r) controls output 1" CV="365" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(r) controls output 1</label>
+  </variable>
+  <variable item="F13(r) controls output 2" CV="365" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(r) controls output 2</label>
+  </variable>
+  <variable item="F13(r) controls output 3" CV="365" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(r) controls output 3</label>
+  </variable>
+  <variable item="F13(r) controls output 4" CV="365" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F13(r) controls output 4</label>
+  </variable>
+
+  <variable item="F14(f) controls output 1" CV="369" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(f) controls output 1</label>
+  </variable>
+  <variable item="F14(f) controls output 2" CV="369" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(f) controls output 2</label>
+  </variable>
+  <variable item="F14(f) controls output 3" CV="369" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(f) controls output 3</label>
+  </variable>
+  <variable item="F14(f) controls output 4" CV="369" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(f) controls output 4</label>
+  </variable>
+  <variable item="F14(r) controls output 1" CV="373" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(r) controls output 1</label>
+  </variable>
+  <variable item="F14(r) controls output 2" CV="373" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(r) controls output 2</label>
+  </variable>
+  <variable item="F14(r) controls output 3" CV="373" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(r) controls output 3</label>
+  </variable>
+  <variable item="F14(r) controls output 4" CV="373" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F14(r) controls output 4</label>
+  </variable>
+
+  <variable item="F15(f) controls output 1" CV="377" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(f) controls output 1</label>
+  </variable>
+  <variable item="F15(f) controls output 2" CV="377" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(f) controls output 2</label>
+  </variable>
+  <variable item="F15(f) controls output 3" CV="377" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(f) controls output 3</label>
+  </variable>
+  <variable item="F15(f) controls output 4" CV="377" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(f) controls output 4</label>
+  </variable>
+  <variable item="F15(r) controls output 1" CV="381" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(r) controls output 1</label>
+  </variable>
+  <variable item="F15(r) controls output 2" CV="381" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(r) controls output 2</label>
+  </variable>
+  <variable item="F15(r) controls output 3" CV="381" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(r) controls output 3</label>
+  </variable>
+  <variable item="F15(r) controls output 4" CV="381" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F15(r) controls output 4</label>
+  </variable>
+
+  <variable item="F16(f) controls output 1" CV="385" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(f) controls output 1</label>
+  </variable>
+  <variable item="F16(f) controls output 2" CV="385" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(f) controls output 2</label>
+  </variable>
+  <variable item="F16(f) controls output 3" CV="385" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(f) controls output 3</label>
+  </variable>
+  <variable item="F16(f) controls output 4" CV="385" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(f) controls output 4</label>
+  </variable>
+  <variable item="F16(r) controls output 1" CV="389" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(r) controls output 1</label>
+  </variable>
+  <variable item="F16(r) controls output 2" CV="389" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(r) controls output 2</label>
+  </variable>
+  <variable item="F16(r) controls output 3" CV="389" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(r) controls output 3</label>
+  </variable>
+  <variable item="F16(r) controls output 4" CV="389" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F16(r) controls output 4</label>
+  </variable>
+
+  <variable item="F17(f) controls output 1" CV="393" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(f) controls output 1</label>
+  </variable>
+  <variable item="F17(f) controls output 2" CV="393" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(f) controls output 2</label>
+  </variable>
+  <variable item="F17(f) controls output 3" CV="393" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(f) controls output 3</label>
+  </variable>
+  <variable item="F17(f) controls output 4" CV="393" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(f) controls output 4</label>
+  </variable>
+  <variable item="F17(r) controls output 1" CV="397" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(r) controls output 1</label>
+  </variable>
+  <variable item="F17(r) controls output 2" CV="397" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(r) controls output 2</label>
+  </variable>
+  <variable item="F17(r) controls output 3" CV="397" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(r) controls output 3</label>
+  </variable>
+  <variable item="F17(r) controls output 4" CV="397" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F17(r) controls output 4</label>
+  </variable>
+
+  <variable item="F18(f) controls output 1" CV="401" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(f) controls output 1</label>
+  </variable>
+  <variable item="F18(f) controls output 2" CV="401" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(f) controls output 2</label>
+  </variable>
+  <variable item="F18(f) controls output 3" CV="401" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(f) controls output 3</label>
+  </variable>
+  <variable item="F18(f) controls output 4" CV="401" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(f) controls output 4</label>
+  </variable>
+  <variable item="F18(r) controls output 1" CV="405" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(r) controls output 1</label>
+  </variable>
+  <variable item="F18(r) controls output 2" CV="405" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(r) controls output 2</label>
+  </variable>
+  <variable item="F18(r) controls output 3" CV="405" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(r) controls output 3</label>
+  </variable>
+  <variable item="F18(r) controls output 4" CV="405" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F18(r) controls output 4</label>
+  </variable>
+
+  <variable item="F19(f) controls output 1" CV="409" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(f) controls output 1</label>
+  </variable>
+  <variable item="F19(f) controls output 2" CV="409" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(f) controls output 2</label>
+  </variable>
+  <variable item="F19(f) controls output 3" CV="409" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(f) controls output 3</label>
+  </variable>
+  <variable item="F19(f) controls output 4" CV="409" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(f) controls output 4</label>
+  </variable>
+  <variable item="F19(r) controls output 1" CV="413" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(r) controls output 1</label>
+  </variable>
+  <variable item="F19(r) controls output 2" CV="413" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(r) controls output 2</label>
+  </variable>
+  <variable item="F19(r) controls output 3" CV="413" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(r) controls output 3</label>
+  </variable>
+  <variable item="F19(r) controls output 4" CV="413" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F19(r) controls output 4</label>
+  </variable>
+
+  <variable item="F20(f) controls output 1" CV="417" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(f) controls output 1</label>
+  </variable>
+  <variable item="F20(f) controls output 2" CV="417" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(f) controls output 2</label>
+  </variable>
+  <variable item="F20(f) controls output 3" CV="417" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(f) controls output 3</label>
+  </variable>
+  <variable item="F20(f) controls output 4" CV="417" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(f) controls output 4</label>
+  </variable>
+  <variable item="F20(r) controls output 1" CV="421" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(r) controls output 1</label>
+  </variable>
+  <variable item="F20(r) controls output 2" CV="421" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(r) controls output 2</label>
+  </variable>
+  <variable item="F20(r) controls output 3" CV="421" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(r) controls output 3</label>
+  </variable>
+  <variable item="F20(r) controls output 4" CV="421" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F20(r) controls output 4</label>
+  </variable>
+
+  <variable item="F21(f) controls output 1" CV="425" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(f) controls output 1</label>
+  </variable>
+  <variable item="F21(f) controls output 2" CV="425" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(f) controls output 2</label>
+  </variable>
+  <variable item="F21(f) controls output 3" CV="425" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(f) controls output 3</label>
+  </variable>
+  <variable item="F21(f) controls output 4" CV="425" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(f) controls output 4</label>
+  </variable>
+  <variable item="F21(r) controls output 1" CV="429" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(r) controls output 1</label>
+  </variable>
+  <variable item="F21(r) controls output 2" CV="429" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(r) controls output 2</label>
+  </variable>
+  <variable item="F21(r) controls output 3" CV="429" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(r) controls output 3</label>
+  </variable>
+  <variable item="F21(r) controls output 4" CV="429" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F21(r) controls output 4</label>
+  </variable>
+
+  <variable item="F22(f) controls output 1" CV="433" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(f) controls output 1</label>
+  </variable>
+  <variable item="F22(f) controls output 2" CV="433" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(f) controls output 2</label>
+  </variable>
+  <variable item="F22(f) controls output 3" CV="433" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(f) controls output 3</label>
+  </variable>
+  <variable item="F22(f) controls output 4" CV="433" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(f) controls output 4</label>
+  </variable>
+  <variable item="F22(r) controls output 1" CV="437" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(r) controls output 1</label>
+  </variable>
+  <variable item="F22(r) controls output 2" CV="437" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(r) controls output 2</label>
+  </variable>
+  <variable item="F22(r) controls output 3" CV="437" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(r) controls output 3</label>
+  </variable>
+  <variable item="F22(r) controls output 4" CV="437" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F22(r) controls output 4</label>
+  </variable>
+
+  <variable item="F23(f) controls output 1" CV="441" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(f) controls output 1</label>
+  </variable>
+  <variable item="F23(f) controls output 2" CV="441" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(f) controls output 2</label>
+  </variable>
+  <variable item="F23(f) controls output 3" CV="441" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(f) controls output 3</label>
+  </variable>
+  <variable item="F23(f) controls output 4" CV="441" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(f) controls output 4</label>
+  </variable>
+  <variable item="F23(r) controls output 1" CV="445" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(r) controls output 1</label>
+  </variable>
+  <variable item="F23(r) controls output 2" CV="445" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(r) controls output 2</label>
+  </variable>
+  <variable item="F23(r) controls output 3" CV="445" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(r) controls output 3</label>
+  </variable>
+  <variable item="F23(r) controls output 4" CV="445" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F23(r) controls output 4</label>
+  </variable>
+
+  <variable item="F24(f) controls output 1" CV="449" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(f) controls output 1</label>
+  </variable>
+  <variable item="F24(f) controls output 2" CV="449" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(f) controls output 2</label>
+  </variable>
+  <variable item="F24(f) controls output 3" CV="449" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(f) controls output 3</label>
+  </variable>
+  <variable item="F24(f) controls output 4" CV="449" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(f) controls output 4</label>
+  </variable>
+  <variable item="F24(r) controls output 1" CV="453" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(r) controls output 1</label>
+  </variable>
+  <variable item="F24(r) controls output 2" CV="453" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(r) controls output 2</label>
+  </variable>
+  <variable item="F24(r) controls output 3" CV="453" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(r) controls output 3</label>
+  </variable>
+  <variable item="F24(r) controls output 4" CV="453" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F24(r) controls output 4</label>
+  </variable>
+
+  <variable item="F25(f) controls output 1" CV="457" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(f) controls output 1</label>
+  </variable>
+  <variable item="F25(f) controls output 2" CV="457" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(f) controls output 2</label>
+  </variable>
+  <variable item="F25(f) controls output 3" CV="457" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(f) controls output 3</label>
+  </variable>
+  <variable item="F25(f) controls output 4" CV="457" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(f) controls output 4</label>
+  </variable>
+  <variable item="F25(r) controls output 1" CV="461" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(r) controls output 1</label>
+  </variable>
+  <variable item="F25(r) controls output 2" CV="461" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(r) controls output 2</label>
+  </variable>
+  <variable item="F25(r) controls output 3" CV="461" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(r) controls output 3</label>
+  </variable>
+  <variable item="F25(r) controls output 4" CV="461" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F25(r) controls output 4</label>
+  </variable>
+
+  <variable item="F26(f) controls output 1" CV="465" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(f) controls output 1</label>
+  </variable>
+  <variable item="F26(f) controls output 2" CV="465" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(f) controls output 2</label>
+  </variable>
+  <variable item="F26(f) controls output 3" CV="465" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(f) controls output 3</label>
+  </variable>
+  <variable item="F26(f) controls output 4" CV="465" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(f) controls output 4</label>
+  </variable>
+  <variable item="F26(r) controls output 1" CV="469" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(r) controls output 1</label>
+  </variable>
+  <variable item="F26(r) controls output 2" CV="469" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(r) controls output 2</label>
+  </variable>
+  <variable item="F26(r) controls output 3" CV="469" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(r) controls output 3</label>
+  </variable>
+  <variable item="F26(r) controls output 4" CV="469" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F26(r) controls output 4</label>
+  </variable>
+
+  <variable item="F27(f) controls output 1" CV="473" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(f) controls output 1</label>
+  </variable>
+  <variable item="F27(f) controls output 2" CV="473" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(f) controls output 2</label>
+  </variable>
+  <variable item="F27(f) controls output 3" CV="473" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(f) controls output 3</label>
+  </variable>
+  <variable item="F27(f) controls output 4" CV="473" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(f) controls output 4</label>
+  </variable>
+  <variable item="F27(r) controls output 1" CV="477" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(r) controls output 1</label>
+  </variable>
+  <variable item="F27(r) controls output 2" CV="477" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(r) controls output 2</label>
+  </variable>
+  <variable item="F27(r) controls output 3" CV="477" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(r) controls output 3</label>
+  </variable>
+  <variable item="F27(r) controls output 4" CV="477" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F27(r) controls output 4</label>
+  </variable>
+
+  <variable item="F28(f) controls output 1" CV="481" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(f) controls output 1</label>
+  </variable>
+  <variable item="F28(f) controls output 2" CV="481" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(f) controls output 2</label>
+  </variable>
+  <variable item="F28(f) controls output 3" CV="481" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(f) controls output 3</label>
+  </variable>
+  <variable item="F28(f) controls output 4" CV="481" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(f) controls output 4</label>
+  </variable>
+  <variable item="F28(r) controls output 1" CV="485" mask="XXXXXXXV" minOut="1" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(r) controls output 1</label>
+  </variable>
+  <variable item="F28(r) controls output 2" CV="485" mask="XXXXXXVX" minOut="2" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(r) controls output 2</label>
+  </variable>
+  <variable item="F28(r) controls output 3" CV="485" mask="XXXXXVXX" minOut="3" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(r) controls output 3</label>
+  </variable>
+  <variable item="F28(r) controls output 4" CV="485" mask="XXXXVXXX" minOut="4" minFn="12">
+    <enumVal>
+      <enumChoice choice="No"/>
+      <enumChoice choice="Yes">
+    </enumChoice>
+    </enumVal>
+    <label>F28(r) controls output 4</label>
   </variable>
 
 </variables>
