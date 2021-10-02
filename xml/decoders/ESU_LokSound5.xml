@@ -20,7 +20,7 @@
     <!-- ver4 updates for F29-F31 -->
     <!-- ver5 disable Reset to Defaults -->
     <!-- ver6 add "LokSound 5 micro E24 DCC" and "LokSound 5 micro KATO" -->
-    <!-- ver6 renamed "LokSound 5 micro E24 DCC" to "LokSound 5 nano DCC" -->
+    <!-- ver7 renamed "LokSound 5 micro E24 DCC" to "LokSound 5 nano DCC" -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <version author="Dave Heap" version="3" lastUpdated="20200726"/>
