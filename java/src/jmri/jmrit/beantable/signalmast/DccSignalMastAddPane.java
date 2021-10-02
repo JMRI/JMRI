@@ -16,7 +16,7 @@ import jmri.util.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring MatrixSignalMast objects.
+ * A pane for configuring DCC SignalMast objects.
  *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
@@ -30,17 +30,54 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     final void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // lit/unlit controls
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
-        p.add(allowUnLit);
-        p.setAlignmentX(Component.LEFT_ALIGNMENT);
-        add(p);
+
+        add(unLitOption());
+        add(connectionData());
 
         dccMastScroll = new JScrollPane(dccMastPanel);
         dccMastScroll.setBorder(BorderFactory.createEmptyBorder());
         add(dccMastScroll);
+    }
+
+    JPanel connectionData() {
+        JPanel p = new JPanel();
+
+        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border.setTitle(Bundle.getMessage("DCCMastConnection"));
+        p.setBorder(border);
+
+        p.setLayout(new jmri.util.javaworld.GridLayout2(3, 3));
+
+        p.add(systemPrefixBoxLabel);
+        p.add(systemPrefixBox);
+        p.add(new JLabel());    // Empty 1,3 cell
+
+        p.add(dccAspectAddressLabel);
+        dccAspectAddressField.setText("");
+        dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
+        p.add(dccAspectAddressField);
+        p.add(dccOffSetAddress);
+
+        p.add(new JLabel(Bundle.getMessage("DCCMastPacketSendCount")));
+        packetSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
+        p.add(packetSendCountSpinner);
+        packetSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
+
+        return p;
+    }
+
+    JPanel unLitOption() {
+        JPanel p = new JPanel();
+
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("AllowUnLitLabel"))));
+        p.add(allowUnLit);
+
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCUnlitAspectId"))));
+        unlitIdSpinner.setModel(new SpinnerNumberModel(31, 0, 31, 1));
+        p.add(unlitIdSpinner);
+
+        return p;
     }
 
     /** {@inheritDoc} */
@@ -61,7 +98,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
 
     JCheckBox allowUnLit = new JCheckBox();
-    JTextField unLitAspectField = new JTextField(5);
+//     JTextField unLitAspectField = new JTextField(5);
 
     LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
 
@@ -69,6 +106,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     SignalSystem sigsys;
     /* IMM Send Count */
     JSpinner packetSendCountSpinner = new JSpinner();
+    JSpinner unlitIdSpinner = new JSpinner();
 
     /**
      * Check if a command station will work for this subtype.
@@ -113,28 +151,13 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
         dccMastPanel.removeAll();
 
-        dccMastPanel.add(systemPrefixBoxLabel);
-        dccMastPanel.add(systemPrefixBox);
-
-        dccMastPanel.add(dccAspectAddressLabel);
-
-        // Address field with offset checkbox
-        JPanel addressPanel = new JPanel();
-        dccAspectAddressField.setText("");
-        dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
-        addressPanel.add(dccAspectAddressField);
-        addressPanel.add(dccOffSetAddress);
-        dccMastPanel.add(addressPanel);
-
-        dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastPacketSendCount")));
-        packetSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
-        packetSendCountSpinner.setPreferredSize(new JTextField(5).getPreferredSize());
-        dccMastPanel.add(packetSendCountSpinner);
-        packetSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
-
         for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
             log.trace("   aspect: {}", entry.getKey());
             dccMastPanel.add(entry.getValue().getPanel());
+        }
+
+        if (dccAspect.size() % 2 > 0) {
+            dccMastPanel.add(new JLabel());     // finish odd number aspect list
         }
 
         dccMastPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCMastCopyAspectId"))));
@@ -204,9 +227,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         systemPrefixBox.setEnabled(false);
         dccAspectAddressLabel.setEnabled(false);
         dccAspectAddressField.setEnabled(false);
+
+        allowUnLit.setSelected(currentMast.allowUnLit());
         if (currentMast.allowUnLit()) {
-            unLitAspectField.setText("" + currentMast.getUnlitId());
+            unlitIdSpinner.setValue(currentMast.getUnlitId());
         }
+
         // set up DCC IMM send count
         packetSendCountSpinner.setValue(currentMast.getDccSignalMastPacketSendCount());
         log.debug("setMast({}) end", mast);
@@ -292,7 +318,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         currentMast.useAddressOffSet(dccOffSetAddress.isSelected());
         currentMast.setAllowUnLit(allowUnLit.isSelected());
         if (allowUnLit.isSelected()) {
-            currentMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
+            currentMast.setUnlitId((Integer) unlitIdSpinner.getValue());
         }
 
         int sendCount = (Integer) packetSendCountSpinner.getValue(); // from a JSpinner with 1 set as minimum 4 max

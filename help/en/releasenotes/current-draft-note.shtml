@@ -493,6 +493,7 @@
         <h4>Signal Masts</h4>
             <ul>
                 <li>Add an address offset option for DCC Signal Mast Decoder signal masts.</li>
+                <li>Add the ability to select the aspect id for the unlit option.</li>
             </ul>
 
     	<h4>Signal Groups</h4>

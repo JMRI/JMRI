@@ -153,15 +153,13 @@ public class DccSignalMast extends AbstractSignalMast {
 
     @Override
     public void setAspect(@Nonnull String aspect) {
-        // if already set do not send again.
-        if ( getAspect() != null && getAspect().equals(aspect) ) {
-            return;
-        }
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
-            if(useAddressOffSet) {
-                c.sendPacket(NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
-            } else {
-                c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
+            if (getLit()) {
+                if (useAddressOffSet) {
+                    c.sendPacket(NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
+                } else {
+                    c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
+                }
             }
         } else {
             log.warn("Trying to set aspect ({}) that has not been configured on mast {}", aspect, getDisplayName());
@@ -184,12 +182,16 @@ public class DccSignalMast extends AbstractSignalMast {
         if (!allowUnLit() || newLit == getLit()) {
             return;
         }
+        super.setLit(newLit);
         if (newLit) {
             setAspect(getAspect());
         } else {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetSendCount);
+            if (useAddressOffSet) {
+                c.sendPacket(NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetSendCount);
+            } else {
+                c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetSendCount);
+            }
         }
-        super.setLit(newLit);
     }
 
     int unLitId = 31;
