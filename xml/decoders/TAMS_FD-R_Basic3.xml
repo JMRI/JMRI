@@ -122,6 +122,9 @@
 		<label xml:lang="fr">Récupération de la qualité de réception Railcom</label>
 		<label xml:lang="de">Dynamische RailCom-Informationen (Empfangsstatistik)</label>
 	  </variable>
+    <!-- Function settings - LightsPane-->
+    <xi:include href="http://jmri.org/xml/decoders/tams/functioneffects.xml"/>
+
     <!-- Timeout - Advanced Group 1 Option 1-->
     <variable CV="11" item="Advanced Group 1 Option 1" comment="Range 2-255" default="16">
       <decVal min="2" max="255"/>
@@ -144,8 +147,21 @@
                                          (Bereik: 2-255, standaardinstelling: 16) &lt;/html&gt;</tooltip>
       <comment>Range 2-255</comment>
     </variable>
-    <!-- Function settings - LightsPane-->
-    <xi:include href="http://jmri.org/xml/decoders/tams/functioneffects.xml"/>
+    <!-- Decoder lock  Advanced Group 1 Option 2 & 3-->
+    <variable CV="15" item="Advanced Group 1 Option 2" default="3" tooltip="Set this to match value below and decoder will unlock">
+        <decVal/>
+        <label>Decoder Lock ID number</label>
+        <label xml:lang="de">Decoder Lock Wert</label>
+        <label xml:lang="ca">Bloqueig decoder per ID</label>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+    </variable>
+    <variable CV="16" item="Advanced Group 1 Option 3" default="3" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+        <decVal/>
+        <label>Preset Lock ID number</label>
+        <label xml:lang="de">Decoder-Typ Lock Wert</label>
+        <label xml:lang="ca">ID locomotora per tipus</label>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion, etc.</tooltip>
+    </variable>
 
     <!-- Indexes  Advanced Group 2 Option 1 & 2-->
     <variable CV="31" item="Advanced Group 2 Option 1" comment="Range 0-255" default="0">
@@ -185,6 +201,20 @@
                                          voor de functie-uitgangen en speciale functies niet worden gewijzigd.&lt;br&gt;
                                          (Bereik: 0-255, standaardinstelling: 42) &lt;/html&gt;</tooltip>
       <comment>Range 0-255</comment>
+    </variable>
+
+    <!-- Protocols  Advanced Group 2 Option 11,12,13-->
+    <variable item="Advanced Group 2 Option 11" CV="12" mask="XXXXXXXV" default="1">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>DC Analog</label>
+    </variable>
+    <variable item="Advanced Group 2 Option 12" CV="12" mask="XXXXXVXX" default="1">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>DCC</label>
+    </variable>
+    <variable item="Advanced Group 2 Option 13" CV="12" mask="XXVXXXXX" default="1">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>Motorola</label>
     </variable>
 
     <!-- Input switching   -->

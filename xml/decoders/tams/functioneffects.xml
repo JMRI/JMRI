@@ -49,6 +49,17 @@
                                        (Bereik: 0-255, standaardinstelling: 32) &lt;/html&gt;</tooltip>
     <comment>Range 0-255</comment>
   </variable>
+  <variable item="Global lighting option 2" CV="63" mask="XXXXXXXV" default="1">
+  <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+  <label>Delayed directional option switching</label>
+  <label xml:lang="de">Richtungswechsel nur bei Fahrstuffe 0</label>
+  <tooltip>&lt;html&gt;Setting common for all outputs. &lt;br&gt;
+                        0 = Direction-dependent outputs are switched immediately when the direction changes. &lt;br&gt;
+                        1 = Direction-dependent outputs are only switched over in the event of a change of direction when speed level 0 is reached.&lt;/html&gt;</tooltip>
+  <tooltip xml:lang="de">&lt;html&gt;Einstellung gemeinsam für alle Ausgänge. &lt;br&gt;
+                        0 = Richtungsabhängige Ausgänge werden bei einem Richtungswechsel sofort umgeschaltet. &lt;br&gt;
+                        1 = Richtungsabhängige Ausgänge werden bei einem Richtungswechsel erst bei Erreichen der Fahrstufe 0 umgeschaltet. &lt;/html&gt;</tooltip>
+  </variable>
   <variable CV="101" item="Function F0F option 1" comment="Range 1-255" default="20">
     <decVal min="1" max="255"/>
     <label>Flashing frequency F0f</label>
@@ -201,6 +212,6 @@
     <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
     <comment>Range 1-64</comment>
   </variable>
-  
+
 
 </variables>
