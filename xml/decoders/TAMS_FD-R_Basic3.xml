@@ -42,7 +42,7 @@
       <!-- Consist address (consist direction bit 7 not supported) -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
     <!-- Definitions for Tams-Elektronik function mapping according to RCN-227 -->
-    <xi:include href="http://jmri.org/xml/decoders/tams/rcn277mapping.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/rail_community/rcn277mapping.xml"/>
     <!-- Definitions for Railcom/Motorola Panel -->
     <variable item="Enable RailCom" CV="29" mask="XXXXVXXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>

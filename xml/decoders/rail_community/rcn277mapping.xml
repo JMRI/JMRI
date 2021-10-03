@@ -28,7 +28,11 @@
       <revremark>Creation (support for 28 functions forward and reverse + 24 outputs)</revremark>
     </revision>
   </revhistory>
-  <!-- This is an RCN-227 mapping (in German: http://normen.railcommunity.de/RCN-227.pdf)   -->  <variable item="FL(f) controls output 1" CV="257" mask="XXXXXXXV" minOut="1">
+  <!-- This is a mapping, normed as RCN-227 by the Rail Community group (in German: http://normen.railcommunity.de/RCN-227.pdf)   -->
+  <!-- Created for Tams Elektronik FD-R Basic 3 decoder, but is put here to be used for other RCN-227 decoders   -->
+  <!-- Note: only the first 3 bytes (outputs 1-24) are handled here and appear on the standard JMRI mapping pane,   -->
+  <!-- the 4th byte (preclusion mapping) is in another file/pane.   -->
+    <variable item="FL(f) controls output 1" CV="257" mask="XXXXXXXV" minOut="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="FL(f) controls output 2" CV="257" mask="XXXXXXVX" minOut="2">
