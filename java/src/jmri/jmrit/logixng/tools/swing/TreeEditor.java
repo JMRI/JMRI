@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
@@ -1417,6 +1418,9 @@ public class TreeEditor extends TreeViewer {
                                     // Check that the user has clicked on a row.
                                     Rectangle rect = _tree.getPathBounds(path);
                                     if ((e.getY() >= rect.y) && (e.getY() <= rect.y + rect.height)) {
+                                        // Select the row the user clicked on
+                                        _tree.setSelectionPath(path);
+                                        
                                         FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
                                         showPopup(e.getX(), e.getY(), femaleSocket, path);
                                     }
