@@ -145,340 +145,118 @@
       <comment>Range 2-255</comment>
     </variable>
     <!-- Function settings - LightsPane-->
-    <variable CV="99" item="Global lighting option 1" comment="Range 0-255" default="32">
+    <xi:include href="http://jmri.org/xml/decoders/tams/functioneffects.xml"/>
+
+    <!-- Indexes  Advanced Group 2 Option 1 & 2-->
+    <variable CV="31" item="Advanced Group 2 Option 1" comment="Range 0-255" default="0">
       <decVal min="0" max="255"/>
-      <label>Kicking time</label>
-      <label xml:lang="de">Kickzeit</label>
-      <label xml:lang="nl">Kicktijd</label>
-      <tooltip>&lt;html&gt;The kick function must be switched on for the output.&lt;br&gt;
-                           0 = short&lt;br&gt;
-                           255 = long&lt;br&gt;
-                           (Range: 0-255, Default: 32) &lt;/html&gt;</tooltip>
-      <tooltip xml:lang="de">&lt;html&gt;Für den Ausgang muss die Kickfunktion eingeschaltet sein.&lt;br&gt;
-                                         0 = kurz&lt;br&gt;
-                                         255 = lang&lt;br&gt;
-                                         (Bereich: 0-255, voreingestellt: 32) &lt;/html&gt;</tooltip>
-      <tooltip xml:lang="nl">&lt;html&gt;De kick-functie moet worden ingeschakeld voor de uitgang.&lt;br&gt;
-                                         0 = kort&lt;br&gt;
-                                         255 = lang&lt;br&gt;
-                                         (Bereik: 0-255, standaardinstelling: 32) &lt;/html&gt;</tooltip>
+      <label>Index for higher CV paged CV31</label>
+      <label xml:lang="de">Index für höhere CV-Pages CV31</label>
+      <label xml:lang="nl">Index voor hogere CV-pages CV31</label>
+      <tooltip>&lt;html&gt;Function mapping&lt;br&gt;
+                           If different values are entered in CV 31 and/or 32 the function mapping for&lt;br&gt;
+                           the function outputs and special functions cannot be changed.&lt;br&gt;
+                           (Range: 0-255, Default: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Function mapping&lt;br&gt;
+                                         Bei Eingabe abweichender Werte in CV 31 und/oder 32 ist keine Änderung des&lt;br&gt;
+                                         Function Mapping für die Funktionsausgänge und Sonderfunktionen möglich.&lt;br&gt;
+                                         (Bereich: 0-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Functie mapping&lt;br&gt;
+                                         Als in CV 31 en/of 32 verschillende waarden worden ingevoerd, kan de functiemapping&lt;br&gt;
+                                         voor de functie-uitgangen en speciale functies niet worden gewijzigd.&lt;br&gt;
+                                         (Bereik: 0-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
       <comment>Range 0-255</comment>
     </variable>
-    <variable CV="101" item="Function F0F option 1" comment="Range 1-255" default="20">
-      <decVal min="1" max="255"/>
-      <label>Flashing frequency F0f</label>
-      <label xml:lang="de">Blinkfrequenz F0f</label>
-      <label xml:lang="nl">Knipperfrequentie F0f</label>
-      <tooltip>Range: 1-255, Default: 20 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
-      <comment>Range 1-255</comment>
-    </variable>
-    <variable CV="102" item="Function F0R option 1" comment="Range 1-255" default="20">
-      <decVal min="1" max="255"/>
-      <label>Flashing frequency F0r</label>
-      <label xml:lang="de">Blinkfrequenz F0r</label>
-      <label xml:lang="nl">Knipperfrequentie F0r</label>
-      <tooltip>Range: 1-255, Default: 20 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
-      <comment>Range 1-255</comment>
-    </variable>
-    <variable CV="103" item="Function 1 option 1" comment="Range 1-255" default="20">
-      <decVal min="1" max="255"/>
-      <label>Flashing frequency AUX1</label>
-      <label xml:lang="de">Blinkfrequenz AUX1</label>
-      <label xml:lang="nl">Knipperfrequentie AUX1</label>
-      <tooltip>Range: 1-255, Default: 20 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
-      <comment>Range 1-255</comment>
-    </variable>
-    <variable CV="104" item="Function 2 option 1" comment="Range 1-255" default="20">
-      <decVal min="1" max="255"/>
-      <label>Flashing frequency AUX2</label>
-      <label xml:lang="de">Blinkfrequenz AUX2</label>
-      <label xml:lang="nl">Knipperfrequentie AUX2</label>
-      <tooltip>Range: 1-255, Default: 20 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-255, voreingestellt: 20 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-255, standaardinstelling: 20 </tooltip>
-      <comment>Range 1-255</comment>
-    </variable>
-    <variable CV="57" mask="XXXXXXXV" item="Function F0F check 1" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Function inverted</label>
-      <label xml:lang="de">Funktion invertiert</label>
-      <label xml:lang="nl">Functie geïnverteerd</label>
-    </variable>
-    <variable CV="57" mask="XXXXXXVX" item="Function F0F check 2" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Flashing on</label>
-      <label xml:lang="de">Blinken ein</label>
-      <label xml:lang="nl">Knipperen aan</label>
-    </variable>
-    <variable CV="57" mask="XXXXXVXX" item="Function F0F check 3" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Kicking on</label>
-      <label xml:lang="de">Kicken ein</label>
-      <label xml:lang="nl">Kicken aan</label>
-    </variable>
-    <variable CV="58" mask="XXXXXXXV" item="Function F0R check 1" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Function inverted</label>
-      <label xml:lang="de">Funktion invertiert</label>
-      <label xml:lang="nl">Functie geïnverteerd</label>
-    </variable>
-    <variable CV="58" mask="XXXXXXVX" item="Function F0R check 2" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Flashing on</label>
-      <label xml:lang="de">Blinken ein</label>
-      <label xml:lang="nl">Knipperen aan</label>
-    </variable>
-    <variable CV="58" mask="XXXXXVXX" item="Function F0R check 3" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Kicking on</label>
-      <label xml:lang="de">Kicken ein</label>
-      <label xml:lang="nl">Kicken aan</label>
-    </variable>
-    <variable CV="59" mask="XXXXXXXV" item="Function 1 check 1" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Function inverted</label>
-      <label xml:lang="de">Funktion invertiert</label>
-      <label xml:lang="nl">Functie geïnverteerd</label>
-    </variable>
-    <variable CV="59" mask="XXXXXXVX" item="Function 1 check 2" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Flashing on</label>
-      <label xml:lang="de">Blinken ein</label>
-      <label xml:lang="nl">Knipperen aan</label>
-    </variable>
-    <variable CV="59" mask="XXXXXVXX" item="Function 1 check 3" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Kicking on</label>
-      <label xml:lang="de">Kicken ein</label>
-      <label xml:lang="nl">Kicken aan</label>
-    </variable>
-    <variable CV="60" mask="XXXXXXXV" item="Function 2 check 1" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Function inverted</label>
-      <label xml:lang="de">Funktion invertiert</label>
-      <label xml:lang="nl">Functie geïnverteerd</label>
-    </variable>
-    <variable CV="60" mask="XXXXXXVX" item="Function 2 check 2" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Flashing on</label>
-      <label xml:lang="de">Blinken ein</label>
-      <label xml:lang="nl">Knipperen aan</label>
-    </variable>
-    <variable CV="60" mask="XXXXXVXX" item="Function 2 check 3" default="0">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      <label>Kicking on</label>
-      <label xml:lang="de">Kicken ein</label>
-      <label xml:lang="nl">Kicken aan</label>
-    </variable>
-    <variable CV="47" item="Function F0F option 2" comment="Range 1-64" default="64">
-      <decVal min="1" max="64"/>
-      <label>Dimming F0f</label>
-      <label xml:lang="de">Dimmen F0f</label>
-      <label xml:lang="nl">Dimmen F0f</label>
-      <tooltip>Range: 1-64, Default: 64 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
-      <comment>Range 1-64</comment>
-    </variable>
-    <variable CV="48" item="Function F0R option 2" comment="Range 1-64" default="64">
-      <decVal min="1" max="64"/>
-      <label>Dimming F0r</label>
-      <label xml:lang="de">Dimmen F0r</label>
-      <label xml:lang="nl">Dimmen F0r</label>
-      <tooltip>Range: 1-64, Default: 64 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
-      <comment>Range 1-64</comment>
-    </variable>
-    <variable CV="49" item="Function 1 option 2" comment="Range 1-64" default="64">
-      <decVal min="1" max="64"/>
-      <label>Dimming AUX 1</label>
-      <label xml:lang="de">Dimmen AUX 1</label>
-      <label xml:lang="nl">Dimmen AUX 1</label>
-      <tooltip>Range: 1-64, Default: 64 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
-      <comment>Range 1-64</comment>
-    </variable>
-    <variable CV="50" item="Function 2 option 2" comment="Range 1-64" default="64">
-      <decVal min="1" max="64"/>
-      <label>Dimming AUX 2</label>
-      <label xml:lang="de">Dimmen AUX 2</label>
-      <label xml:lang="nl">Dimmen AUX 2</label>
-      <tooltip>Range: 1-64, Default: 64 </tooltip>
-      <tooltip xml:lang="de">Bereich: 1-64, voreingestellt: 64 </tooltip>
-      <tooltip xml:lang="nl">Bereik: 1-64, standaardinstelling: 64 </tooltip>
-      <comment>Range 1-64</comment>
+    <variable CV="32" item="Advanced Group 2 Option 2" comment="Range 0-255" default="42">
+      <decVal min="0" max="255"/>
+      <label>Index for higher CV paged CV32</label>
+      <label xml:lang="de">Index für höhere CV-Pages CV32</label>
+      <label xml:lang="nl">Index voor hogere CV-pages CV32</label>
+      <tooltip>&lt;html&gt;Function mapping&lt;br&gt;
+                           If different values are entered in CV 31 and/or 32 the function mapping for&lt;br&gt;
+                           the function outputs and special functions cannot be changed.&lt;br&gt;
+                           (Range: 0-255, Default: 42) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Function mapping&lt;br&gt;
+                                         Bei Eingabe abweichender Werte in CV 31 und/oder 32 ist keine Änderung des&lt;br&gt;
+                                         Function Mapping für die Funktionsausgänge und Sonderfunktionen möglich.&lt;br&gt;
+                                         (Bereich: 0-255, voreingestellt: 42) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Functie mapping&lt;br&gt;
+                                         Als in CV 31 en/of 32 verschillende waarden worden ingevoerd, kan de functiemapping&lt;br&gt;
+                                         voor de functie-uitgangen en speciale functies niet worden gewijzigd.&lt;br&gt;
+                                         (Bereik: 0-255, standaardinstelling: 42) &lt;/html&gt;</tooltip>
+      <comment>Range 0-255</comment>
     </variable>
 
-      <!-- Definitions for Direction dependant controls -->
-      <variable item="AUX 2 direction mode" CV="53" mask="XXXXXXVV" tooltip="CV53 Bits 0-1">
-        <enumVal>
-          <enumChoice choice="Non Directional" value="0">
-            <choice>Non Directional</choice>
-            <choice xml:lang="fr">Pas d'influence</choice>
-            <choice xml:lang="de">Richtungsunabhängig</choice>
-          </enumChoice>
-          <enumChoice choice="Inactive in Reverse" value="1">
-            <choice>Inactive in Reverse</choice>
-            <choice xml:lang="fr">Inactif en marche arrière</choice>
-            <choice xml:lang="de">Rückwärts aus</choice>
-          </enumChoice>
-		  <enumChoice choice="Inactive in Forward" value="2">
-            <choice>Inactive in Forward</choice>
-            <choice xml:lang="fr">Inactif en marche avant</choice>
-            <choice xml:lang="de">Vorwärts aus</choice>
-          </enumChoice>
-        </enumVal>
-        <label>AUX 2 direction mode</label>
-        <label xml:lang="fr">AUX 2 influence du sens de la marche</label>
-        <label xml:lang="de">AUX 2 Richtungsabhängigkeit</label>
-      </variable>
-      <variable item="AUX 1 direction mode" CV="54" mask="XXXXXXVV" tooltip="CV54 Bits 0-1">
-        <enumVal>
-          <enumChoice choice="Non Directional" value="0">
-            <choice>Non Directional</choice>
-            <choice xml:lang="fr">Pas d'influence</choice>
-            <choice xml:lang="de">Richtungsunabhängig</choice>
-          </enumChoice>
-          <enumChoice choice="Inactive in Reverse" value="1">
-            <choice>Inactive in Reverse</choice>
-            <choice xml:lang="fr">Inactif en marche arrière</choice>
-            <choice xml:lang="de">Rückwärts aus</choice>
-          </enumChoice>
-		  <enumChoice choice="Inactive in Forward" value="2">
-            <choice>Inactive in Forward</choice>
-            <choice xml:lang="fr">Inactif en marche avant</choice>
-            <choice xml:lang="de">Vorwärts aus</choice>
-          </enumChoice>
-        </enumVal>
-        <label>AUX 1 direction mode</label>
-        <label xml:lang="fr">AUX 1 influence du sens de la marche</label>
-        <label xml:lang="de">AUX 1 Richtungsabhängigkeit</label>
-      </variable>
-	  <variable item="AUX 3 direction mode" CV="55" mask="XXXXXXVV" tooltip="CV55 Bits 0-1">
-        <enumVal>
-          <enumChoice choice="Non Directional" value="0">
-            <choice>Non Directional</choice>
-            <choice xml:lang="fr">Pas d'influence</choice>
-            <choice xml:lang="de">Richtungsunabhängig</choice>
-          </enumChoice>
-          <enumChoice choice="Inactive in Reverse" value="1">
-            <choice>Inactive in Reverse</choice>
-            <choice xml:lang="fr">Inactif en marche arrière</choice>
-            <choice xml:lang="de">Rückwärts aus</choice>
-          </enumChoice>
-		  <enumChoice choice="Inactive in Forward" value="2">
-            <choice>Inactive in Forward</choice>
-            <choice xml:lang="fr">Inactif en marche avant</choice>
-            <choice xml:lang="de">Vorwärts aus</choice>
-          </enumChoice>
-        </enumVal>
-        <label>AUX 3 direction mode</label>
-        <label xml:lang="fr">AUX 3 influence du sens de la marche</label>
-        <label xml:lang="de">AUX 3 Richtungsabhängigkeit</label>
-      </variable>
-      <!-- Shunting lights with F3 or F4 (FD-R Basic)-->
-      <variable item="AUX 2 shunting light with F3" CV="53" mask="XXXVXXXX" default="0" tooltip="CV53 Bit 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 2 shunting light with F3</label>
-        <label xml:lang="fr">AUX 2 feux de manoeuvre avec F3</label>
-        <label xml:lang="de">AUX 2 Rangierlicht mit F3</label>
-      </variable>
-      <variable item="AUX 2 shunting light with F4" CV="53" mask="XXVXXXXX" default="0" tooltip="CV53 Bit 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 2 shunting light with F4</label>
-        <label xml:lang="fr">AUX 2 feux de manoeuvre avec F4</label>
-        <label xml:lang="de">AUX 2 Rangierlicht mit F4</label>
-      </variable>
-      <variable item="AUX 1 shunting light with F3" CV="54" mask="XXXVXXXX" default="0" tooltip="CV54 Bit 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 1 shunting light with F3</label>
-        <label xml:lang="fr">AUX 1 feux de manoeuvre avec F3</label>
-        <label xml:lang="de">AUX 1 Rangierlicht mit F3</label>
-      </variable>
-      <variable item="AUX 1 shunting light with F4" CV="54" mask="XXVXXXXX" default="0" tooltip="CV54 Bit 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 1 shunting light with F4</label>
-        <label xml:lang="fr">AUX 1 feux de manoeuvre avec F4</label>
-        <label xml:lang="de">AUX 1 Rangierlicht mit F4</label>
-      </variable>
-	  <variable item="AUX 3 shunting light with F3" CV="55" mask="XXXVXXXX" default="0" tooltip="CV55 Bit 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 3 shunting light with F3</label>
-        <label xml:lang="fr">AUX 3 feux de manoeuvre avec F3</label>
-        <label xml:lang="de">AUX 3 Rangierlicht mit F3</label>
-      </variable>
-      <variable item="AUX 3 shunting light with F4" CV="55" mask="XXVXXXXX" default="0" tooltip="CV55 Bit 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>AUX 3 shunting light with F4</label>
-        <label xml:lang="fr">AUX 3 feux de manoeuvre avec F4</label>
-        <label xml:lang="de">AUX 3 Rangierlicht mit F4</label>
-      </variable>
-      <!-- Definitions for Dimming FD-R basic 2  -->
-      <variable item="AUX 2 Dim" CV="49" default="64" tooltip="CV49">
-        <decVal min="1" max="64"/>
-        <label>AUX 2 Dim</label>
-      </variable>
-      <variable item="AUX 1 Dim" CV="50" default="64" tooltip="CV50">
-        <decVal min="1" max="64"/>
-        <label>AUX 1 Dim</label>
-      </variable>
-	  <variable item="AUX 3 Dim" CV="51" default="64" tooltip="CV51">
-        <decVal min="1" max="64"/>
-        <label>AUX 3 Dim</label>
-      </variable>
-      <!-- Output mode definitions for FD-R-Basic -->
-      <variable item="AUX 2 before ON phase" CV="58" tooltip="CV58" default="255">
-        <decVal min="0" max="255"/>
-        <label>AUX 2 before ON phase</label>
-        <label xml:lang="fr">AUX 2 phase avant ON</label>
-        <label xml:lang="de">AUX 2 Dauer bis zum Einschalten</label>
-      </variable>
-	  <variable item="AUX 2 ON phase" CV="61" tooltip="CV61" default="0">
-        <decVal min="0" max="255"/>
-        <label>AUX 2 ON phase</label>
-        <label xml:lang="fr">AUX 2 phase ON</label>
-        <label xml:lang="de">AUX 2 Dauer Ein innerhalb einer Phase</label>
-      </variable>
-	  <variable item="AUX 1 before ON phase" CV="59" tooltip="CV59" default="255">
-        <decVal min="0" max="255"/>
-        <label>AUX 1 before ON phase</label>
-        <label xml:lang="fr">AUX 1 phase avant ON</label>
-        <label xml:lang="de">AUX 1 Dauer bis zum Einschalten</label>
-      </variable>
-	  <variable item="AUX 1 ON phase" CV="62" tooltip="CV62" default="0">
-        <decVal min="0" max="255"/>
-        <label>AUX 1 ON phase</label>
-        <label xml:lang="fr">AUX 1 phase ON</label>
-        <label xml:lang="de">AUX 1 Dauer Ein innerhalb einer Phase</label>
-      </variable>
-	  <variable item="AUX 3 before ON phase" CV="60" tooltip="CV60" default="255">
-        <decVal min="0" max="255"/>
-        <label>AUX 3 before ON phase</label>
-        <label xml:lang="fr">AUX 3 phase avant ON</label>
-        <label xml:lang="de">AUX 3 Dauer bis zum Einschalten</label>
-      </variable>
-	  <variable item="AUX 3 ON phase" CV="63" tooltip="CV63" default="0">
-        <decVal min="0" max="255"/>
-        <label>AUX 3 ON phase</label>
-        <label xml:lang="fr">AUX 3 phase ON</label>
-        <label xml:lang="de">AUX 3 Dauer Ein innerhalb einer Phase</label>
-      </variable>
-      <!-- Flash frequency configuration   -->
-      <variable item="Common flashing frequency" CV="9" tooltip="CV9 (0: high, 255: low)" default="0">
-        <decVal min="0" max="255"/>
-        <label>Common flashing frequency</label>
-        <label xml:lang="fr">Fréquence de clignotement commune</label>
-        <label xml:lang="de">Gemeinsame Blinkfrequenz</label>
-      </variable>
-    </variables>
+    <!-- Input switching   -->
+    <variable CV="62" mask="XXXXXXXV" item="Switching input to F1" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F1</label>
+      <label xml:lang="de">Schalteingang zu F1</label>
+      <label xml:lang="nl">Schakelingang toe F1</label>
+    </variable>
+    <variable CV="62" mask="XXXXXXVX" item="Switching input to F2" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F2</label>
+      <label xml:lang="de">Schalteingang zu F2</label>
+      <label xml:lang="nl">Schakelingang toe F2</label>
+    </variable>
+    <variable CV="62" mask="XXXXXVXX" item="Switching input to F3" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F3</label>
+      <label xml:lang="de">Schalteingang zu F3</label>
+      <label xml:lang="nl">Schakelingang toe F3</label>
+    </variable>
+    <variable CV="62" mask="XXXXVXXX" item="Switching input to F4" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F4</label>
+      <label xml:lang="de">Schalteingang zu F4</label>
+      <label xml:lang="nl">Schakelingang toe F4</label>
+    </variable>
+    <variable CV="62" mask="XXXVXXXX" item="Switching input to F5" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F5</label>
+      <label xml:lang="de">Schalteingang zu F5</label>
+      <label xml:lang="nl">Schakelingang toe F5</label>
+    </variable>
+    <variable CV="62" mask="XXVXXXXX" item="Switching input to F6" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F6</label>
+      <label xml:lang="de">Schalteingang zu F6</label>
+      <label xml:lang="nl">Schakelingang toe F6</label>
+    </variable>
+    <variable CV="62" mask="XVXXXXXX" item="Switching input to F7" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F7</label>
+      <label xml:lang="de">Schalteingang zu F7</label>
+      <label xml:lang="nl">Schakelingang toe F7</label>
+    </variable>
+    <variable CV="62" mask="VXXXXXXX" item="Switching input to F8" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F8</label>
+      <label xml:lang="de">Schalteingang zu F8</label>
+      <label xml:lang="nl">Schakelingang toe F8</label>
+    </variable>
+    <variable CV="97" item="Switch-on time input" comment="Range 1-255" default="0">
+      <decVal min="0" max="255"/>
+      <label>Minimum switch-on time of the switching input</label>
+      <label xml:lang="de">Mindesteinschaltdauer des Schalteingangs</label>
+      <label xml:lang="nl">Minimale inschakeltijd van de schakelingang</label>
+      <tooltip>&lt;html&gt;Time period for which the input remains at least on after it has been&lt;br&gt;
+                           connected to ground. Increasing the input value by "1" extends the time&lt;br&gt;
+                           period by 0.1 sec.&lt;br&gt;
+                           (Range: 1-255, Default: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Zeitdauer, für die der Eingang mindestens eingeschaltet bleibt,&lt;br&gt;
+                                         nachdem er mit Masse verbunden war. Die Erhöhung des Eingabewertes&lt;br&gt;
+                                         um "1" verlängert die Zeitdauer um 0,1 Sek.&lt;br&gt;
+                                         (Bereich: 1-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Tijdstip waarop de ingang in ieder geval aanblijft nadat deze&lt;br&gt;
+                                         met de massa is verbonden. Door de invoerwaarde met "1" te&lt;br&gt;
+                                         verhogen, wordt de tijdsduur met 0,1 sec. verlengd.&lt;br&gt;
+                                         (Bereik: 1-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+      <comment>Range 1-255</comment>
+    </variable>
+
+  </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
          <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
@@ -515,282 +293,116 @@
     <name>RailCom</name>
   </pane>
   <!-- RailCom configuration   -->
-  <!-- Direction control    -->
-  <pane>
+  <!-- Input Switching -->
+  <pane nameFmt="label">
+    <name>Input switching</name>
+    <name xml:lang="de">Schalteingang</name>
     <column>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
       <row>
+        <separator/>
         <column>
-          <row>
-            <column>
+          <separator/>
+          <grid gridy="NEXT" weightx="1" ipadx="10"> <!-- Inputs -->
+            <griditem gridx="0" gridy="0" gridwidth="10">
+              <label>
+                <text>   </text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="4" anchor="LINE_START">
+              <label>
+                <text>Inputs</text>
+                <text xml:lang="de">Eingang</text>
+                <text xml:lang="nl">Ingang</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="8">
+              <label>
+                <text>Assignment of the functions to the switching input</text>
+                <text xml:lang="de">Zuordnung der Funktionen zum Schalteingang</text>
+                <text xml:lang="nl">Toewijzing van de functies aan de schakelingang</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="1">
+              <label>
+                <text>F1</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F2</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F3</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F4</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F5</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F6</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F7</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F8</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="1">
+              <display item="Switching input to F1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1">
               <label>
                 <text> </text>
               </label>
-              <display item="AUX 1 direction mode"/>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="7">
+              <display item="Switch-on time input"/>
+            </griditem>
+            <griditem gridx="9" gridy="NEXT" gridwidth="1" anchor="LINE_START">
               <label>
-                <text> </text>
+                <text>    </text>
               </label>
-            </column>
-            <column>
-              <label>
-                <text>                                          </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <label>
-                <text>AUX 1 shunting light with  </text>
-                <text xml:lang="fr">AUX 1 feux de manoeuvre avec  </text>
-                <text xml:lang="de">AUX 1 Rangierlicht mit  </text>
-              </label>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 1 shunting light with F3" format="checkbox" layout="above" label="F3"/>
-                <display item="AUX 1 shunting light with F4" format="checkbox" layout="above" label="F4"/>
-              </row>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-          </row>
-          <row>
-            <column>
-              <row>
-                <display item="AUX 1 Dim"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 1 Dim" label="" format="hslider"/>
-              </row>
-            </column>
-            <column>
-              <label>
-                <text>              </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 1 before ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 1 before ON phase" label="" format="hslider"/>
-              </row>
-			  <row>
-                <display item="AUX 1 ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 1 ON phase" label="" format="hslider"/>
-              </row>
-            </column>
-          </row>
+            </griditem>
+          </grid>
+          <separator/>
         </column>
       </row>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <column>
-          <row>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <display item="AUX 2 direction mode"/>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text>                                          </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <label>
-                <text>AUX 2 shunting light with  </text>
-                <text xml:lang="fr">AUX 2 feux de manoeuvre avec  </text>
-                <text xml:lang="de">AUX 2 Rangierlicht mit  </text>
-              </label>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 2 shunting light with F3" format="checkbox" layout="above" label="F3"/>
-                <display item="AUX 2 shunting light with F4" format="checkbox" layout="above" label="F4"/>
-              </row>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-          </row>
-          <row>
-            <column>
-              <row>
-                <display item="AUX 2 Dim"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 2 Dim" label="" format="hslider"/>
-              </row>
-            </column>
-            <column>
-              <label>
-                <text>              </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 2 before ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 2 before ON phase" label="" format="hslider"/>
-              </row>
-			  <row>
-                <display item="AUX 2 ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 2 ON phase" label="" format="hslider"/>
-              </row>
-            </column>
-          </row>
-        </column>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-	  <label>
-        <text> </text>
-      </label>
-      <row>
-        <column>
-          <row>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <display item="AUX 3 direction mode"/>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text>                                          </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <label>
-                <text>AUX 3 shunting light with  </text>
-                <text xml:lang="fr">AUX 3 feux de manoeuvre avec  </text>
-                <text xml:lang="de">AUX 3 Rangierlicht mit  </text>
-              </label>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 3 shunting light with F3" format="checkbox" layout="above" label="F3"/>
-                <display item="AUX 3 shunting light with F4" format="checkbox" layout="above" label="F4"/>
-              </row>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-          </row>
-          <row>
-            <column>
-              <row>
-                <display item="AUX 3 Dim"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 3 Dim" label="" format="hslider"/>
-              </row>
-            </column>
-            <column>
-              <label>
-                <text>              </text>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="AUX 3 before ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 3 before ON phase" label="" format="hslider"/>
-              </row>
-			  <row>
-                <display item="AUX 3 ON phase"/>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="AUX 3 ON phase" label="" format="hslider"/>
-              </row>
-            </column>
-          </row>
-        </column>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Common flashing frequency"/>
-        <!-- FD-R Basic -->
-        <label>
-          <text> </text>
-        </label>
-        <display item="Common flashing frequency" label="" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
     </column>
-    <name>AUX</name>
   </pane>
 </decoder-config>
