@@ -18,7 +18,7 @@
   -->
   <decoder>
     <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH">
-      <model model="FD-R Basic 3" numOuts="4" numFns="28" productID="FD-R-B3">
+      <model model="FD-R Basic 3" numOuts="24" numFns="58" productID="FD-R-B3">
       <output name="1" label="F0f|Front light" maxcurrent="300mA"/>
 		  <output name="2" label="F0r|Rear light" maxcurrent="300mA"/>
 		  <output name="3" label="AUX 3" maxcurrent="100mA"/>
@@ -266,43 +266,6 @@
           <label>
             <text> </text>
           </label>
-
-      <label>
-        <text>Important! This decoder has 2 parallel CVs tables. One</text>
-        <text xml:lang="fr">Important! Ce décodeur possède deux tables de CVs.</text>
-        <text xml:lang="de">Wichtig! Zum Programmieren des Funktionsdecoder-Bereichs   </text>
-      </label>
-      <label>
-        <text>is the actual CV table used for functions, the other</text>
-        <text xml:lang="fr">L'une est la table de CVs réels, pour les fonctions.</text>
-        <text xml:lang="de">des FD-RBasic muss RailCom ausgeschaltet sein.</text>
-      </label>
-      <label>
-        <text>is the RailCom section (only short/consist/long adresses).</text>
-        <text xml:lang="fr">L'autre est la table RailCom.</text>
-        <text xml:lang="de"> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text>It can 'simulate' feedback of a certain locomotive via Railcom,   </text>
-        <text xml:lang="fr">Il peut donc simuler le feedback Railcom d'une loco donnée,</text>
-        <text xml:lang="de">Mit RailCom 'an' können dann unterschiedliche</text>
-      </label>
-      <label>
-        <text>while answering to DCC functions according to the actual CVs.</text>
-        <text xml:lang="fr">tout en répondant aux ordres DCC en fonction des CVs réels.  </text>
-        <text xml:lang="de">Werte für die RailCom Rückmeldung programmiert werden.</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text>Refer to manual</text>
-        <text xml:lang="fr">Voir manuel.</text>
-        <text xml:lang="de">Erklärungen in der Anleitung.</text>
-      </label>
       <label>
         <text> </text>
       </label>
