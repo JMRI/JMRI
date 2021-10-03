@@ -43,6 +43,8 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
     <!-- Definitions for Tams-Elektronik function mapping according to RCN-227 -->
     <xi:include href="http://jmri.org/xml/decoders/rail_community/rcn277mapping.xml"/>
+    <!-- Definitions for Tams-Elektronik function mapping preclusion according to RCN-227 -->
+    <xi:include href="http://jmri.org/xml/decoders/rail_community/rcn277preclusion.xml"/>
     <!-- Analog options -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
     <variable CV="65" mask="XXXXXXXV" item="Analog Control option 1" default="0">
@@ -305,6 +307,8 @@
       </factReset>
     </resets>
   </decoder>
+  <!-- Pane function mapping preclusion according to RCN-227 -->
+  <xi:include href="http://jmri.org/xml/decoders/rail_community/Pane_preclusion.xml"/>
   <!-- RailComconfiguration   -->
   <pane>
     <column>
