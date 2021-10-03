@@ -21,6 +21,7 @@ public class DccSignalMastTest {
 
         Assert.assertEquals("system name", "IF$dsm:AAR-1946:PL-1-high-abs(1)", s.getSystemName());
         Assert.assertEquals("Send count", 0, sentPacketCount);
+        Assert.assertFalse("Use address offset", s.useAddressOffSet());
     }
 
     @Test

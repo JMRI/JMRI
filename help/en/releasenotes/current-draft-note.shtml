@@ -33,6 +33,9 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
+                <li>added support for new servo and vpin turnout messages</li>
+                <li>store definitions as properties in created objects</li>
+                <li>make "Configure DCC++ Base Station" available in startup actions</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -464,7 +467,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Light Controllers triggered by Turnout now have Turnout stored in xml by DisplayName (
+            UserName, or SystemName if no userName set ), rather than SystemName.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -480,7 +484,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Swedish railway signaling system, SE-TSFS-2010,
+                2009 version of the "3H Signaling System", Module 3H</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -490,7 +495,8 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Add an address offset option for DCC Signal Mast Decoder signal masts.</li>
+                <li>Add the ability to select the aspect id for the unlit option.</li>
             </ul>
 
     	<h4>Signal Groups</h4>

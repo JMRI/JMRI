@@ -67,7 +67,7 @@
         layout objects; no additional names are necessary, because there are no more items.
 
 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
