@@ -33,6 +33,7 @@
   <!-- Note: only the first 3 bytes (outputs 1-24) are handled here and appear on the standard JMRI mapping pane,   -->
   <!-- the 4th byte (preclusion mapping) is in another file/pane.   -->
     <variable item="FL(f) controls output 1" CV="257" mask="XXXXXXXV" minOut="1">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="FL(f) controls output 2" CV="257" mask="XXXXXXVX" minOut="2">
@@ -108,6 +109,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="FL(r) controls output 2" CV="261" mask="XXXXXXVX" minOut="2">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="FL(r) controls output 3" CV="261" mask="XXXXXVXX" minOut="3">
@@ -183,6 +185,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F1(f) controls output 3" CV="265" mask="XXXXXVXX" minOut="3" minFn="1">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F1(f) controls output 4" CV="265" mask="XXXXVXXX" minOut="4" minFn="1">
@@ -255,6 +258,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F1(r) controls output 3" CV="269" mask="XXXXXVXX" minOut="3" minFn="1">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F1(r) controls output 4" CV="269" mask="XXXXVXXX" minOut="4" minFn="1">
@@ -330,6 +334,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F2(f) controls output 4" CV="273" mask="XXXXVXXX" minOut="4" minFn="2">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F2(f) controls output 5" CV="273" mask="XXXVXXXX" minOut="5" minFn="2">
@@ -402,6 +407,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F2(r) controls output 4" CV="277" mask="XXXXVXXX" minOut="4" minFn="2">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F2(r) controls output 5" CV="277" mask="XXXVXXXX" minOut="5" minFn="2">

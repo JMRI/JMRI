@@ -202,17 +202,29 @@
                                          (Bereik: 0-255, standaardinstelling: 42) &lt;/html&gt;</tooltip>
       <comment>Range 0-255</comment>
     </variable>
+    <!-- Mapping type read only  Advanced Group 2 Option 3-->
+    <variable CV="96" item="Advanced Group 2 Option 3" readOnly="yes" default="2">
+      <decVal/>
+      <label>Method for function assignment</label>
+      <label xml:lang="de">Methode zur Funktions- zuordnung</label>
+      <tooltip>&lt;html&gt;Defines the method for assigning the functions:&lt;br&gt;
+                           2 = Function assignment via CVs 257 to 512 in the bank selected by CV 31 = 0 and CV 32 = 42&lt;br&gt;
+                           with CVs per function according to RailCommunity standard RCN227 section 2 &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Legt die Methode für die Funktionszuordnung fest:&lt;br&gt;
+                                         2 = Funktionszuordnung über die CVs 257 bis 512 in der durch CV 31 = 0 und CV 32 = 42 ausgewählten Bank&lt;br&gt;
+                                         mit CVs je Funktion entsprechend RailCommunity Norm RCN227 Abschnitt 2 &lt;/html&gt;</tooltip>
+    </variable>
 
     <!-- Protocols  Advanced Group 2 Option 11,12,13-->
-    <variable item="Advanced Group 2 Option 11" CV="12" mask="XXXXXXXV" default="1">
+    <variable item="Advanced Group 2 Option 11" CV="12" mask="XXXXXXXV" default="1" readOnly="yes" >
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>DC Analog</label>
     </variable>
-    <variable item="Advanced Group 2 Option 12" CV="12" mask="XXXXXVXX" default="1">
+    <variable item="Advanced Group 2 Option 12" CV="12" mask="XXXXXVXX" default="1" readOnly="yes" >
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>DCC</label>
     </variable>
-    <variable item="Advanced Group 2 Option 13" CV="12" mask="XXVXXXXX" default="1">
+    <variable item="Advanced Group 2 Option 13" CV="12" mask="XXVXXXXX" default="1" readOnly="yes" >
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Motorola</label>
     </variable>
