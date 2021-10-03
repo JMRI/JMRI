@@ -72,7 +72,7 @@ public interface Module extends Base, NamedBean {
      */
     public static class ParameterData extends VariableData {
         
-        public ReturnValueType _returnValueType;
+        public ReturnValueType _returnValueType = ReturnValueType.None;
         public String _returnValueData;
         
         public ParameterData(
