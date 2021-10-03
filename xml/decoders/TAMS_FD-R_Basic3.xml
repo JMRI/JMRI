@@ -52,24 +52,49 @@
     <label xml:lang="it">Abilita RailCom</label>
     </variable>
     <variable item="Feedback on canal 1" CV="28" mask="XXXXXXXV" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 		<label>Feedback on canal 1</label>
 		<label xml:lang="fr">Feedback sur canal 1</label>
 		<label xml:lang="de">Kanal 1</label>
 	  </variable>
 	  <variable item="Feedback on canal 2" CV="28" mask="XXXXXXVX" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 		<label>Feedback on canal 2</label>
 		<label xml:lang="fr">Feedback sur canal 2</label>
 		<label xml:lang="de">Kanal 2</label>
 	  </variable>
     <variable item="Dynamic canal assignment" CV="28" mask="XXXXXVXX" default="0">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+      <qualifier>
+      <variableref>Feedback on canal 1</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 		<label>Dynamic canal assignment</label>
 		<label xml:lang="fr">Canal feedback dynamique</label>
 		<label xml:lang="de">Anwendung dynamischer Kanal 1</label>
 	  </variable>
     <variable item="Enable RailCom QOS (Quality Of Service)" CV="10" mask="XXXXXXXV" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 		<label>Enable RailCom QOS (Quality Of Service)</label>
 		<label xml:lang="fr">Récupération de la qualité de réception Railcom</label>
