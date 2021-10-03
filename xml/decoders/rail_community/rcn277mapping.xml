@@ -525,6 +525,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F3(f) controls output 19" CV="283" mask="XXXXXVXX" minOut="19" minFn="3">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F3(f) controls output 20" CV="283" mask="XXXXVXXX" minOut="20" minFn="3">
@@ -597,6 +598,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F3(r) controls output 19" CV="287" mask="XXXXXVXX" minOut="19" minFn="3">
+      <defaultItem default="1" include="FD-R-B3"/>
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
     <variable item="F3(r) controls output 20" CV="287" mask="XXXXVXXX" minOut="20" minFn="3">
