@@ -14,14 +14,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="Pierre Billon" lastUpdated="20211002"/>
   <!-- 1 Creation
-		Based on FD-R basic 2 latest definition
+    Based on FD-R basic 2 latest definition
   -->
   <decoder>
     <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH">
       <model model="FD-R Basic 3" numOuts="24" numFns="58" productID="FD-R-B3">
       <output name="1" label="F0f|Front light" maxcurrent="300mA"/>
-		  <output name="2" label="F0r|Rear light" maxcurrent="300mA"/>
-		  <output name="3" label="AUX 3" maxcurrent="100mA"/>
+      <output name="2" label="F0r|Rear light" maxcurrent="300mA"/>
+      <output name="3" label="AUX 3" maxcurrent="100mA"/>
       <output name="4" label="AUX 4" maxcurrent="100mA"/>
         <size length="13" width="9.5" height="3.5" units="mm"/>
         <protocols>
@@ -81,22 +81,22 @@
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label>Feedback on canal 1</label>
-		<label xml:lang="fr">Feedback sur canal 1</label>
-		<label xml:lang="de">Kanal 1</label>
-	  </variable>
-	  <variable item="Feedback on canal 2" CV="28" mask="XXXXXXVX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Feedback on canal 1</label>
+    <label xml:lang="fr">Feedback sur canal 1</label>
+    <label xml:lang="de">Kanal 1</label>
+    </variable>
+    <variable item="Feedback on canal 2" CV="28" mask="XXXXXXVX" default="1">
       <qualifier>
       <variableref>Enable RailCom</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label>Feedback on canal 2</label>
-		<label xml:lang="fr">Feedback sur canal 2</label>
-		<label xml:lang="de">Kanal 2</label>
-	  </variable>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Feedback on canal 2</label>
+    <label xml:lang="fr">Feedback sur canal 2</label>
+    <label xml:lang="de">Kanal 2</label>
+    </variable>
     <variable item="Dynamic canal assignment" CV="28" mask="XXXXXVXX" default="0">
       <qualifier>
       <variableref>Enable RailCom</variableref>
@@ -108,22 +108,22 @@
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label>Dynamic canal assignment</label>
-		<label xml:lang="fr">Canal feedback dynamique</label>
-		<label xml:lang="de">Anwendung dynamischer Kanal 1</label>
-	  </variable>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Dynamic canal assignment</label>
+    <label xml:lang="fr">Canal feedback dynamique</label>
+    <label xml:lang="de">Anwendung dynamischer Kanal 1</label>
+    </variable>
     <variable item="Enable RailCom QOS (Quality Of Service)" CV="10" mask="XXXXXXXV" default="1">
       <qualifier>
       <variableref>Enable RailCom</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label>Enable RailCom QOS (Quality Of Service)</label>
-		<label xml:lang="fr">Récupération de la qualité de réception Railcom</label>
-		<label xml:lang="de">Dynamische RailCom-Informationen (Empfangsstatistik)</label>
-	  </variable>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Enable RailCom QOS (Quality Of Service)</label>
+    <label xml:lang="fr">Récupération de la qualité de réception Railcom</label>
+    <label xml:lang="de">Dynamische RailCom-Informationen (Empfangsstatistik)</label>
+    </variable>
     <!-- Function settings - LightsPane-->
     <xi:include href="http://jmri.org/xml/decoders/tams/functioneffects.xml"/>
 
@@ -316,11 +316,11 @@
       <label>
         <text> </text>
       </label>
-	  <display item="Feedback on canal 1"/>
+    <display item="Feedback on canal 1"/>
       <label>
         <text> </text>
       </label>
-	  <display item="Feedback on canal 2"/>
+    <display item="Feedback on canal 2"/>
       <label>
         <text> </text>
       </label>
