@@ -37,6 +37,9 @@
             <display item="ESU V4 Function Settings General Slider 3" layout="above" format="hslider"/>
             <display item="ESU V4 Function Settings General Check 3" format="checkbox"/>
         </row>
+        <label>
+            <text> </text>
+        </label>
         <row>
             <display item="ESU V4 Function Settings General Slider 4" layout="above" label=""/>
             <display item="ESU V4 Function Settings General Slider 4" layout="above" format="hslider"/>
@@ -48,6 +51,8 @@
         <row>
             <display item="ESU V4 Function Settings General Slider 5" layout="above" label=""/>
             <display item="ESU V4 Function Settings General Slider 5" layout="above" format="hslider"/>
+            <display item="ESU V4 Function Settings General Slider-percent 5" layout="above" label=""/>
+            <display item="ESU V4 Function Settings General Slider-percent 5" layout="above" format="hslider-percent"/>
             <display item="ESU V4 Function Settings General Check 5" format="checkbox"/>
         </row>
         <row>
