@@ -480,9 +480,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setForeground(c);
         _status.setText(msg);
         if (save && msg != null && msg.length() > 0) {
-            log.info(msg);
-            WarrantTableAction.getDefault().writetoLog(msg);
+            if (WarrantPreferences.getDefault().getTrace()) {
+                log.info(msg);
+            }
             _statusHistory.add(msg);
+            WarrantTableAction.getDefault().writetoLog(msg);
             while (_statusHistory.size() > _maxHistorySize) {
                 _statusHistory.remove(0);
             }

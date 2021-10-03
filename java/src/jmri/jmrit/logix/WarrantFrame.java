@@ -83,10 +83,6 @@ public class WarrantFrame extends WarrantRoute {
     JCheckBox    _shareRouteBox = new JCheckBox();
     JCheckBox    _addTracker = new JCheckBox();
     JCheckBox    _runETOnlyBox = new JCheckBox();
-    JRadioButton _eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
-    JRadioButton _halt = new JRadioButton(Bundle.getMessage("Stop"), false);
-    JRadioButton _resume = new JRadioButton(Bundle.getMessage("Resume"), false);
-    JRadioButton _abort = new JRadioButton(Bundle.getMessage("Abort"), false);
     JRadioButton _invisible = new JRadioButton();
     JTextField   _statusBox = new JTextField(90);
     JRadioButton _showRoute = new JRadioButton(Bundle.getMessage("showRoute"), false);
@@ -620,6 +616,7 @@ public class WarrantFrame extends WarrantRoute {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        /*
         //panel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel bPanel = new JPanel();
         bPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -632,42 +629,57 @@ public class WarrantFrame extends WarrantRoute {
         });
         bPanel.add(runButton);
         panel.add(bPanel);
+        */
         runPanel.add(panel);
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+
+        JRadioButton run = new JRadioButton(Bundle.getMessage("ARun"), false);
+        JRadioButton halt = new JRadioButton(Bundle.getMessage("Halt"), false);
+        JRadioButton resume = new JRadioButton(Bundle.getMessage("Resume"), false);
+        JRadioButton eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
+        JRadioButton abort = new JRadioButton(Bundle.getMessage("Abort"), false);
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         ButtonGroup group = new ButtonGroup();
-        group.add(_halt);
-        group.add(_resume);
-        group.add(_eStop);
-        group.add(_abort);
+        group.add(run);
+        group.add(halt);
+        group.add(resume);
+        group.add(eStop);
+        group.add(abort);
         group.add(_invisible);
-        panel.add(_halt);
-        panel.add(_resume);
-        panel.add(_eStop);
-        panel.add(_abort);
+        panel.add(run);
+        panel.add(halt);
+        panel.add(resume);
+        panel.add(eStop);
+        panel.add(abort);
         runPanel.add(panel);
 
-        _halt.addActionListener(new ActionListener() {
+        run.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                runTrain();
+            }
+        });
+       halt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.HALT);
             }
         });
-        _resume.addActionListener(new ActionListener() {
+        resume.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.RESUME);
             }
         });
-        _eStop.addActionListener(new ActionListener() {
+        eStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ESTOP);
             }
         });
-        _abort.addActionListener(new ActionListener() {
+        abort.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ABORT);
@@ -1206,7 +1218,7 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
-    private void runTrain() {
+    protected void runTrain() {
         _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         String msg = null;
         if (isRunning()) {

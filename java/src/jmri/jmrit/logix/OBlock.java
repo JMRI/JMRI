@@ -576,7 +576,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      *                Otherwise, null should not be used.
      * @return error message, if any
      */
-    public String deAllocate(Warrant warrant) {
+    public boolean deAllocate(Warrant warrant) {
+        boolean ret;
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
@@ -586,7 +587,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     sb.append("\"! Owned by warrant \"");
                     sb.append(_warrant.getDisplayName());
                     sb.append("\".");
-                    return sb.toString();
+                    log.warn(sb.toString());
+                    return ret = false;
                 }
             }
             try {
@@ -598,6 +600,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 log.debug("Warrant {} unregistered.", _warrant.getDisplayName(), ex);
                 }
         }
+        if (warrant == null) {
+            return false;
+        }
+        ret = _warrant != null;
         if (_pathName != null) {
             OPath path = getPathByName(_pathName);
             if (path != null) {
@@ -617,7 +623,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _pathName = null;
         _ownsTOs = false;
         setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-        return null;
+        return ret;
     }
 
     public void setOutOfService(boolean set) {
@@ -831,9 +837,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return Bundle.getMessage(ALLOCATED_TO_WARRANT,
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
+        String msg = null;
+        if (pathName == null || warrant == null) {
+            return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
+        }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
-        String msg = null;
         if (path == null) {
             msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }

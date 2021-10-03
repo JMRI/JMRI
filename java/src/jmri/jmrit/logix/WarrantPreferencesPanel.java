@@ -58,6 +58,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JTable _appearanceTable;
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
     private WarrantPreferences.Shutdown _shutdown;
+    private boolean _traceWarrants;
 
     public WarrantPreferencesPanel() {
         initGUI();
@@ -77,6 +78,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         leftPanel.add(throttleIncrementPanel(true, _rampIncre));
         leftPanel.add(throttleScalePanel(true));
         leftPanel.add(speedRosterPanel(true));
+        leftPanel.add(tracePanel(true));
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
 //        rightPanel.add(interpretationPanel());
@@ -269,6 +271,25 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         JPanel p = new JPanel();
         p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "RampIncrement", "ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        return p;
+    }
+
+    private JPanel tracePanel(boolean vertical) {
+        _traceWarrants = WarrantPreferences.getDefault().getTrace();
+        String text = (_traceWarrants ? "ColumnHeadEnabled" : "Disabled");
+        JButton button = new JButton(Bundle.getMessage(text));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _traceWarrants = !_traceWarrants;
+                String text = (_traceWarrants ? "ColumnHeadEnabled" : "Disabled");
+                button.setText(Bundle.getMessage(text));
+                button.setSelected(false);
+            }
+        });
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, button, "warrantTrace", "ToolTipTraceWarrant"));
+        p.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
         return p;
     }
 
@@ -495,6 +516,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
+
         int depth = (Integer) _searchDepth.getValue();
         if (preferences.getSearchDepth() != depth) {
             preferences.setSearchDepth(depth);
@@ -509,6 +531,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         int time = (Integer) _timeIncre.getValue();
         if (preferences.getTimeIncrement() != time) {
             preferences.setTimeIncrement(time);
+            _isDirty = true;
+        }
+
+        if (preferences.getTrace() != _traceWarrants) {
+            preferences.setTrace(_traceWarrants);
             _isDirty = true;
         }
 
