@@ -141,9 +141,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         
         trainManager.addPropertyChangeListener(this);
-
-        setVisible(true);
-
     }
 
     // Save, Delete, Add
@@ -245,13 +242,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
-                checkBoxes.remove("p" + car.getId());
-                checkBoxes.remove("s" + car.getId());
-                checkBoxes.remove("m" + car.getId());
-                log.debug("Car ({}) removed from list", car.toString());
-                if (car.isUtility()) {
-                    clearAndUpdate(); // need to recalculate number of utility cars
-                }
+                removeCarFromList(car);
             }
             update();
         }
