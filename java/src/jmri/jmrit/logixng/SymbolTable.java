@@ -152,7 +152,7 @@ public interface SymbolTable {
     public static class VariableData {
         
         public String _name;
-        public InitialValueType _initalValueType;
+        public InitialValueType _initalValueType = InitialValueType.None;
         public String _initialValueData;
         
         public VariableData(

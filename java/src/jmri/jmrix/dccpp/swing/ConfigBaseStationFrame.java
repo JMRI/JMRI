@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,6 +34,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
@@ -96,8 +99,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private TableRowSorter<TableModel> servoTurnoutSorter;
     private TableRowSorter<TableModel> vpinTurnoutSorter;
     private TableRowSorter<TableModel> outputSorter;
-
-    private List<JMenu> menuList;
 
     private enum CurrentTab {
         SENSOR, DCCTURNOUT, SERVOTURNOUT, VPINTURNOUT, OUTPUT
@@ -365,21 +366,57 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
 
     private void buildMenu() {
+        this.setJMenuBar(new JMenuBar()); //set up the menuBar for the window
+
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        menuList = new ArrayList<>(3);
-
-        menuList.add(fileMenu);
-        menuList.add(editMenu);
-
-        this.setJMenuBar(new JMenuBar());
         this.getJMenuBar().add(fileMenu);
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         this.getJMenuBar().add(editMenu);
+
+        JMenu mSend = new JMenu(Bundle.getMessage("MenuSend"));
+
+        JMenuItem iRequestDefs = new JMenuItem(Bundle.getMessage("RequestDefs"));       
+        iRequestDefs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
+            }
+        });
+        mSend.add(iRequestDefs);
+
+        JMenuItem iRequestStates = new JMenuItem(Bundle.getMessage("RequestStates"));       
+        iRequestStates.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.READ_CS_STATUS)), null); 
+            }
+        });
+        mSend.add(iRequestStates);
+
+        JMenuItem iSaveToEeprom = new JMenuItem(Bundle.getMessage("SaveToEEPROM"));       
+        iSaveToEeprom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), null); 
+            }
+        });
+        mSend.add(iSaveToEeprom);
+
+        JMenuItem iEraseEeprom = new JMenuItem(Bundle.getMessage("ClearEEPROM"));       
+        iEraseEeprom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.CLEAR_EEPROM_CMD)), null); 
+            }
+        });
+        mSend.add(iEraseEeprom);
+        this.getJMenuBar().add(mSend);
     }
 
-    //  handle incoming object creation messages by adding them to the appropriate table
-    //  handle incoming status message by disabling unsupported functions
+    // handle incoming object creation messages by adding them to the appropriate table
+    // handle incoming status message by disabling unsupported functions
     @Override
     public void message(DCCppReply r) {
         // When we get a SensorDefReply message, add the
@@ -772,14 +809,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.YES_OPTION) {
-            tc.sendDCCppMessage(new DCCppMessage("E"), this);
+            tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
             log.debug("Sending: <E> (Write To EEPROM)");
-            // These might not actually be necessary... TODO: check this
-            sensorModel.fireTableDataChanged();
-            dccTurnoutModel.fireTableDataChanged();
-            servoTurnoutModel.fireTableDataChanged();
-            vpinTurnoutModel.fireTableDataChanged();
-            outputModel.fireTableDataChanged();
         }
     }
 
@@ -823,14 +854,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
-                tc.sendDCCppMessage(new DCCppMessage("E"), this);
+                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
                 log.debug("Sending: <E> (Write To EEPROM)");
-                // These might not actually be necessary... TODO: check this
-                sensorModel.fireTableDataChanged();
-                dccTurnoutModel.fireTableDataChanged();
-                servoTurnoutModel.fireTableDataChanged();
-                vpinTurnoutModel.fireTableDataChanged();
-                outputModel.fireTableDataChanged();
             }
 
         } else {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * 
+ *
  */
 public class DccSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -44,6 +44,10 @@ public class DccSignalMastXml
             unlit.setAttribute("allowed", "no");
         }
         e.addContent(unlit);
+
+        if (p.useAddressOffSet()) {
+            e.addContent(new Element("useAddressOffSet").addContent("yes"));
+        }
 
         e.addContent(new Element("packetsendcount").addContent(Integer.toString(p.getDccSignalMastPacketSendCount())));
 
@@ -87,6 +91,12 @@ public class DccSignalMastXml
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
+        }
+
+        if (shared.getChild("useAddressOffSet") != null) {
+            if (shared.getChild("useAddressOffSet").getText().equals("yes")) {
+                m.useAddressOffSet(true);
+            }
         }
 
         if (shared.getChild("packetsendcount") != null) {

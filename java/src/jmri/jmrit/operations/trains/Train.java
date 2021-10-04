@@ -2839,8 +2839,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // run before build scripts
         runScripts(getBuildScripts());
-        setPrinted(false);
-        setSwitchListStatus(UNKNOWN);
         TrainBuilder tb = new TrainBuilder();
         boolean results = tb.build(this);
         // run after build scripts
