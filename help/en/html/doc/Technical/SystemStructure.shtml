@@ -218,7 +218,7 @@ finally, <code>register()</code> does:
 
             <li>Initialize the actual port using <code>adapter.openPort(portName, "JMRI")</code>.
             This uses code specific to the <code>adapter</code> member that was initialized in
-            <code>getInstance()</code>, i.e. in thise case LocoBuffer-USB code.</li>
+            <code>getInstance()</code>, i.e. in this case LocoBuffer-USB code.</li>
 
             <li>Finally, with the port open and available from the <code>adapter</code> object,
             initialize the operation of the system by calling <code>adapter.configure()</code>
@@ -245,7 +245,7 @@ finally, <code>register()</code> does:
                 <li>The first group does some internal housekeeping and creates the object(s) that
                 run the connection</li>
 
-                <li>The second group loads the previously-created SystemConnectionMeno with
+                <li>The second group loads the previously-created SystemConnectionMemo with
                 information about the connection.
                   <p>The <code>getSystemConnectionMemo</code> is in the common
                   <code>LocoBufferAdapter</code> superclass. (There's some code in the inheritance
@@ -277,7 +277,7 @@ finally, <code>register()</code> does:
             itself so that the individual tools will be able to connect to the proper e.g.
             TrafficController, SlotMonitor, etc.</li>
 
-            <li>When an Action is fired later on, the invoked class(es) enquire of the
+            <li>When an Action is fired later on, the invoked class(es) inquire of the
             LocoNetSystemConnectionMemo when they need a resource, instead of referring to an
             instance() method in the resource's class.</li>
           </ul>
@@ -419,7 +419,7 @@ jmri.jmrix.loconet.LnConnectionTypeList
 ...
       </pre>This provides the contents for the 1st-level selection in the top JComboBox, e.g. in
 this case "Digitrax". This (generally) corresponds to selecting a system package within the JMRI
-package that might contain multiple varients of a specific connection. Within
+package that might contain multiple variants of a specific connection. Within
 <code>JmrixConfigPane</code> this is called the "manufacturer" selection.
       <p>The contents of the <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java">
