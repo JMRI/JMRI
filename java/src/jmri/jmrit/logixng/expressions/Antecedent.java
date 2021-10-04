@@ -93,12 +93,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         
         if (_antecedent.isEmpty()) {

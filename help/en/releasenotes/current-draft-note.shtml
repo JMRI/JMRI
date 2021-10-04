@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Andrew Crosland added new code to implement a Service provider Interface for CBUS module support.<br>
+                Initial support is limited to a few modules and allows more human-friendly editing of Node variables.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -31,7 +32,10 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
+                <li>added support for new servo and vpin turnout messages</li>
+                <li>store definitions as properties in created objects</li>
+                <li>make "Configure DCC++ Base Station" available in startup actions</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -86,12 +90,12 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>See CBUS notes.</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Added support for Last Will and Testament (LWT)</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -131,7 +135,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>See CBUS notes.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -394,10 +398,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add a Reporter Action which can be used to copy reports to memory variables or local
-          variables.</li>
-          <li>Add a Reporter Expression which can compare reports to strings, memory variables or
-          local variables.</li>
+          <li>Add Dispatcher Actions and Expressions.</li>
+          <li>Add a <strong>Table</strong> tab to Local Variable and Memory Actions.
+          The table reference is used to identify the cell that has content that will be copied
+          to the selected local or memory variable.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -415,7 +419,9 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>When changing the icons used by an item,
+                the icon display window now shows the choices
+                in alphanumeric order by name.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -461,7 +467,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Light Controllers triggered by Turnout now have Turnout stored in xml by DisplayName (
+            UserName, or SystemName if no userName set ), rather than SystemName.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -477,7 +484,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Swedish railway signaling system, SE-TSFS-2010,
+                2009 version of the "3H Signaling System", Module 3H</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -487,7 +495,8 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Add an address offset option for DCC Signal Mast Decoder signal masts.</li>
+                <li>Add the ability to select the aspect id for the unlit option.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -507,9 +516,10 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Improve the
-                <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py </a>
-                sample script</li>
+                <li>Multiple upgrades to improve the realism
+                of the
+                <a href="https://jmri.org/jython/ctc">example panel's</a>
+                operation and appearance. Much help provided by Bob Milhaupt.</li>
             </ul>
 
    <h3>Switchboard Editor</h3>
@@ -575,6 +585,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The length of logging lines sent to the system console has been reduced
+                by no longer including the date.  The time is still included.
+                If you have a copy of the 'default.lcf' file in your local JMRI
+                setting directory, you won't see this change until you update it.</li>
+            <li>Access to the deprecated SecurityManager class has been removed;
+                Java access security is now enforced by default.</li>
         </ul>
 

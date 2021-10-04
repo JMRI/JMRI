@@ -261,11 +261,6 @@ public class DefaultConditionalNG extends AbstractBase
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
             _femaleSocket.disconnect();

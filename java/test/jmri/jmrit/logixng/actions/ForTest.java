@@ -227,11 +227,6 @@ public class ForTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());

@@ -158,7 +158,7 @@
 
       <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's expressions and wants
       each of them to trigger on change. Turnouts IT1 and IT3 and IT4 are directly accessed in
-      expressions and IT2, IT3 and IT5 are indirect accessed.</p>
+      expressions and IT2 and IT5 are indirect accessed.</p>
 
       <p>Each turnout that is directly addressed in an expression will have the ConditionalNG
       listen to automaticly, so IT1, IT3 and IT4 will be listend to. But in order to listen on

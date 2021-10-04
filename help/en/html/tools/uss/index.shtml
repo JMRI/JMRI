@@ -11,7 +11,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h2>JMRI: Utils USS CTC Tools</h2>
+      <h2>JMRI: Utility USS CTC Tools</h2>
 
       <p class="example">This is the original implementation of CTC and provides capabilities that
       are enabled using scripting. See also <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">the
@@ -31,7 +31,10 @@
       <ul>
         <li>The <a href=
         "https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample
-        script
+        script and it's associated
+        <a href=
+        "https://jmri.org/jython/ctc/TwoColumnMachine.xml">jython/ctc/TwoColumnMachine.xml</a>
+        panel file.
         </li>
 
         <li>The <a href=
@@ -142,51 +145,54 @@
         when a Call On state (on an internal turnout that represents the state) has been set (by
         e.g. a Maintainer Call section used to set that JMRI Turnout in the field).</dd>
       </dl>
-      <!-- 
-      (The following pages exist, but aren't right for the post-4.7.4 content)
-      <dl>
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
-        Turnout Lever</a></dt>
 
-        <dd>Controls a Turnout from a lever on the Panel, along
-        with the two indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
-        Signal Lever</a></dt>
-
-        <dd>Controls a set of Signals from a lever on the Panel,
-        along with the three indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code
-        Button</a></dt>
-
-        <dd>Implements the code button and code lamp.</dd>
-      </dl>
- -->
-      There's a page with a worked example (not yet present), and a separate page describing the
+      There's a separate page describing the
       <a href="Conventions.shtml">naming conventions</a> used in the example, in case you find that
       these will save you some work on the setup.
+
       <p>These tools log information to several JMRI Memory objects, which in turn can be placed
-      onto panels as MemoryIcons.</p>
+      onto panels as MemoryIcons to show e.g. which lock is preventing an operation.
+      Prototype CTC machines don't have these, of course, but they're very useful for
+      model railroad dispatchers.</p>
 
       <dl>
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
+        <dt>IMUSS CTC:CODELINE:1:LOG</dt>
 
         <dd>What the code line is doing</dd>
 
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
+        <dt>IMUSS CTC:SIGNAL LOCK:1:TIME</dt>
 
-        <dd>Whether time is running</dd>
+        <dd>Activity associated with the signals</dd>
 
-        <dt>IMUSS CTC:LOCK:1:LOG</dt>
+        <dt>IMUSS CTC:TURNOUT LOCK:1:LOG</dt>
 
-        <dd>Whether any locks are showing as locked</dd>
+        <dd>Activity associated with turnout locks</dd>
       </dl>
       The "1" in those can change if there's more than one set of objects, i.e. if more than one
       code line is being modelled.
+      <p>These tools also create sensors that indicate whether a particular
+      station is locked due to running time or not. They're called
+      ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:, ISUSS CTC:SIGNALSECTION:2:RUNNINGTIME:1:, etc
+      and can be placed on panels to display that the station is running time.
+      </p>
+      <p>Note that the example panel uses one set of
+      <a href="https://www.jmri.org/resources/icons/USSpanels/">display icons</a>.
+      JMRI has other sets (See
+      <a href="https://www.jmri.org/resources/icons/CTCpanels/">these</a> and others)
+      that let you make up other styles and sizes, and you can always make up your own.
+      For examples of creating CTC panels, please see the
+      <a href="https://www.jmri.org/community/examples/Gallery.shtml">gallery page</a>.
+      Often the best way to create
+      the background is to draw the entire thing as a single background image using
+      graphics tools on your computer.
+      (There's a
+      <a href="https://groups.io/g/CMRI-Users/message/9383">nice summary of CTC lamp colors</a>
+      by Mike Burgett)</p>
+
+      <p>There's also another set of
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC tools</a>
+      for building CTC controls in a more graphical way.</p>
+
       <h3>Standalone Tools</h3>
       These can be created from the USS menu under Tools in JMRI applications. They work by
       creating Logix and/or Routes that implement the desired functionality. You could do that by

@@ -73,12 +73,6 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() {
         _atomicBoolean.set(_newValue);
     }

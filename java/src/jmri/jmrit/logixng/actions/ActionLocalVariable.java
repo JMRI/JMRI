@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 
@@ -23,6 +24,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private NamedBeanHandle<Memory> _memoryHandle;
     private VariableOperation _variableOperation = VariableOperation.SetToString;
     private String _constantValue = "";
+    private String _otherTableCell = "";
     private String _otherLocalVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
@@ -46,7 +48,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
         copy.setVariableOperation(_variableOperation);
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
-        copy.setOtherLocalVariable(_localVariable);
+        copy.setOtherTableCell(_otherTableCell);
+        copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setFormula(_formula);
         copy.setListenToMemory(_listenToMemory);
         return manager.registerAction(copy);
@@ -116,6 +119,37 @@ public class ActionLocalVariable extends AbstractDigitalAction
         return _variableOperation;
     }
 
+    public void setOtherTableCell(@Nonnull String tableCell) {
+        if ((! tableCell.isEmpty()) && (! ReferenceUtil.isReference(tableCell))) {
+            throw new IllegalArgumentException("The table reference \"" + tableCell + "\" is not a valid reference");
+        }
+        _otherTableCell = tableCell;
+    }
+
+    public String getOtherTableCell() {
+        return _otherTableCell;
+    }
+
+    /**
+     * Convert a table reference between direct table mode "table[row, col]"" and reference
+     * table mode "{table[row, col]}".
+     * @param string The current value.
+     * @param toReference If true, return reference table mode, false for direct table mode.
+     * @return the desired mode format.
+     */
+    public static String convertTableReference(String string, boolean toReference) {
+        String tableString = string == null ? "" : string.trim();
+        boolean referenceFormat = ReferenceUtil.isReference(tableString);
+
+        if (toReference) {
+            if (referenceFormat) return tableString;
+            return "{" + tableString + "}";
+        }
+
+        if (! referenceFormat) return tableString;
+        return tableString.isEmpty() ? "" : tableString.substring(1, tableString.length() - 1);
+    }
+
     public void setOtherLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setOtherLocalVariable");
         _otherLocalVariable = localVariable;
@@ -170,12 +204,6 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_MemoryInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
-                    removeMemory();
-                }
-            }
         }
     }
 
@@ -183,12 +211,6 @@ public class ActionLocalVariable extends AbstractDigitalAction
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
     }
 
     /** {@inheritDoc} */
@@ -220,6 +242,12 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 } else {
                     log.warn("ActionLocalVariable should copy memory to variable but memory is null");
                 }
+                break;
+
+            case CopyTableCellToVariable:
+                String refValue = ReferenceUtil.getReference(
+                    getConditionalNG().getSymbolTable(), _otherTableCell);
+                symbolTable.setValue(_localVariable, refValue);
                 break;
 
             case CalculateFormula:
@@ -267,14 +295,25 @@ public class ActionLocalVariable extends AbstractDigitalAction
         switch (_variableOperation) {
             case SetToNull:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Null", _localVariable);
+
             case SetToString:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Value", _localVariable, _constantValue);
+
             case CopyVariableToVariable:
-                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyVariableToVariable", _localVariable, _otherLocalVariable);
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyVariableToVariable",
+                        _localVariable, _otherLocalVariable);
+
+            case CopyTableCellToVariable:
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyTableCellToVariable",
+                        _localVariable, convertTableReference(_otherTableCell, false));
+
             case CopyMemoryToVariable:
-                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable", _localVariable, copyToMemoryName);
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
+                        _localVariable, copyToMemoryName);
+
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);
+
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _variableOperation.name());
         }
@@ -325,6 +364,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         SetToString(Bundle.getMessage("ActionLocalVariable_VariableOperation_SetToString")),
         CopyVariableToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyVariableToVariable")),
         CopyMemoryToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyMemoryToVariable")),
+        CopyTableCellToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyTableCellToVariable")),
         CalculateFormula(Bundle.getMessage("ActionLocalVariable_VariableOperation_CalculateFormula"));
 
         private final String _text;
