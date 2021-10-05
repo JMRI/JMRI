@@ -39,7 +39,7 @@ public class ExpressionNodeMethod implements ExpressionNode {
 //        System.err.format("Function %s, %s%n", _function.getName(), _function.getClass().getName());
     }
     
-    private boolean isAssignableFrom(Class type, Object param) {
+    private boolean isAssignableFrom(Class<?> type, Object param) {
         if (type.isAssignableFrom(param.getClass())) return true;
         if ((type == Byte.TYPE) && (param instanceof Long)) return true;
         if ((type == Short.TYPE) && (param instanceof Long)) return true;
@@ -59,7 +59,7 @@ public class ExpressionNodeMethod implements ExpressionNode {
     private Object callMethod(Method method, Object obj, Object[] params)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         
-        Class[] paramTypes = method.getParameterTypes();
+        Class<?>[] paramTypes = method.getParameterTypes();
         Object[] newParams = new Object[params.length];
         for (int i=0; i < params.length; i++) {
             Object newParam;
@@ -79,7 +79,7 @@ public class ExpressionNodeMethod implements ExpressionNode {
         Object obj = _variable.getValue(symbolTable);
         if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
         Method[] methods = obj.getClass().getMethods();
-        List<Object> parameters = new ArrayList();
+        List<Object> parameters = new ArrayList<>();
         for (ExpressionNode exprNode : _parameterList) {
             parameters.add(exprNode.calculate(symbolTable));
         }
