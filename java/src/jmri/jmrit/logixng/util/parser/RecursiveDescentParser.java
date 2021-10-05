@@ -136,7 +136,8 @@ public class RecursiveDescentParser {
     private final Rule rule14 = new Rule14();
     private final Rule rule16 = new Rule16();
     private final Rule rule20 = new Rule20();
-    private final Rule21 rule21 = new Rule21();
+    private final Rule21_Function rule21_Function = new Rule21_Function();
+    private final Rule21_Method rule21_Method = new Rule21_Method();
     
     private final Rule firstRule = rule1;
     
@@ -497,7 +498,8 @@ public class RecursiveDescentParser {
     }
     
     
-    // Rule15 in Java is unary post-increment, unary post-decrement. I.e. ++ and --. Don't implement here.
+    // Rule15 in Java is unary post-increment, unary post-decrement.
+    // That is: ++ and --. We might want to implement it here.
     
     
     // Parentheses
@@ -525,7 +527,7 @@ public class RecursiveDescentParser {
     
     
     // Identifiers and constants
-    // <rule20> ::= <identifier> | <identifier> ( <rule21> ) | <integer number> | <floating number> | <string>
+    // <rule20> ::= <identifier> | <identifier> ( <rule21> ) | <identifier> . <identifier> ( <rule21> ) | <integer number> | <floating number> | <string>
     private class Rule20 implements Rule {
 
         @Override
@@ -535,16 +537,37 @@ public class RecursiveDescentParser {
             State newState;
             if ((newState = accept(TokenType.IDENTIFIER, state)) != null) {
                 State newState2;
-                if ((newState2 = accept(TokenType.LEFT_PARENTHESIS, newState)) != null) {
-                    ExpressionNodeAndState exprNodeAndState =
-                            rule21.parse(newState2, newState._lastToken._string);
-                    if (exprNodeAndState._state._token == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                if ((newState2 = accept(TokenType.DOT, newState)) != null) {
+                    State newState3;
+                    if ((newState3 = accept(TokenType.IDENTIFIER, newState2)) != null) {
+                        State newState4;
+                        if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState3)) != null) {
+                            ExpressionNodeAndState exprNodeAndState =
+                                    rule21_Method.parse(newState4, newState._lastToken._string, newState3._lastToken._string);
+                            if (exprNodeAndState._state._token == null) {
+                                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                            }
+                            newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
+                            return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState4);
+                        } else {
+                            exprNode = new ExpressionNodeInstanceVariable(newState._lastToken._string, newState3._lastToken._string, _variables);
+                        }
+                    } else {
+                        return null;
                     }
-                    newState2 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
-                    return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState2);
                 } else {
-                    exprNode = new ExpressionNodeIdentifier(newState._lastToken, _variables);
+                    State newState4;
+                    if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState)) != null) {
+                        ExpressionNodeAndState exprNodeAndState =
+                                rule21_Function.parse(newState4, newState._lastToken._string);
+                        if (exprNodeAndState._state._token == null) {
+                            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                        }
+                        newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
+                        return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState4);
+                    } else {
+                        exprNode = new ExpressionNodeIdentifier(newState._lastToken, _variables);
+                    }
                 }
             } else if ((newState = accept(TokenType.INTEGER_NUMBER, state)) != null) {
                 exprNode = new ExpressionNodeIntegerNumber(newState._lastToken);
@@ -563,7 +586,7 @@ public class RecursiveDescentParser {
     
     
     // <rule21> ::= <empty> | <rule21> | <rule21> , <rule3>
-    private class Rule21 {
+    private class Rule21_Function {
 
         public ExpressionNodeAndState parse(State state, String identifier) throws ParserException {
             
@@ -583,6 +606,33 @@ public class RecursiveDescentParser {
                 newState = exprNodeAndState._state;
             }
             ExpressionNode exprNode = new ExpressionNodeFunction(identifier, parameterList);
+            return new ExpressionNodeAndState(exprNode, newState);
+        }
+        
+    }
+    
+    
+    // <rule21> ::= <empty> | <rule21> | <rule21> , <rule3>
+    private class Rule21_Method {
+
+        public ExpressionNodeAndState parse(State state, String variable, String method) throws ParserException {
+            
+            List<ExpressionNode> parameterList = new ArrayList<>();
+            
+            State newState = state;
+            State newState2;
+            if ((accept(TokenType.RIGHT_PARENTHESIS, newState)) == null) {
+                ExpressionNodeAndState exprNodeAndState = rule3.parse(state);
+                parameterList.add(exprNodeAndState._exprNode);
+                
+                while ((newState2 = accept(TokenType.COMMA, exprNodeAndState._state)) != null) {
+                    exprNodeAndState = rule3.parse(newState2);
+                    parameterList.add(exprNodeAndState._exprNode);
+                }
+                
+                newState = exprNodeAndState._state;
+            }
+            ExpressionNode exprNode = new ExpressionNodeMethod(variable, method, _variables, parameterList);
             return new ExpressionNodeAndState(exprNode, newState);
         }
         

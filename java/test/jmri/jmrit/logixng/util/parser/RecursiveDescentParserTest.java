@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -39,6 +38,7 @@ public class RecursiveDescentParserTest {
         
         variables.put("abc", new MyVariable("abc", "ABC"));
         variables.put("x", new MyVariable("x", 12));
+        variables.put("someString", new MyVariable("someString", "A simple string"));
         
         RecursiveDescentParser t = new RecursiveDescentParser(variables);
         ExpressionNode exprNode = t.parseExpression("");
@@ -239,6 +239,21 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals("expression matches", "Function:fastClock()", exprNode.getDefinitionString());
 //        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
         Assert.assertEquals("calculate is correct", minSinceMidnight, (int)exprNode.calculate(symbolTable));
+        
+        
+        
+        exprNode = t.parseExpression("someString.toString()");
+        Assert.assertEquals("expression matches", "Method:someString.toString()", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "A simple string", exprNode.calculate(symbolTable));
+        exprNode = t.parseExpression("someString.length()");
+        Assert.assertEquals("expression matches", "Method:someString.length()", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 15, (int)exprNode.calculate(symbolTable));
+        exprNode = t.parseExpression("someString.substring(2,8)");
+        Assert.assertEquals("expression matches", "Method:someString.substring(IntNumber:2,IntNumber:8)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "simple", exprNode.calculate(symbolTable));
+        exprNode = t.parseExpression("someString.indexOf(\"i\",8)");
+        Assert.assertEquals("expression matches", "Method:someString.indexOf(String:i,IntNumber:8)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (int)exprNode.calculate(symbolTable));
     }
     
     

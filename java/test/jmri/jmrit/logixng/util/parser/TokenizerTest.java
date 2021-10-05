@@ -300,6 +300,33 @@ public class TokenizerTest {
         checkFirstToken(tokens, TokenType.IDENTIFIER, "R12");
         Assert.assertTrue("list is empty", tokens.isEmpty());
         
+        
+        tokens = Tokenizer.getTokens("MyVar.MyField");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyField");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("MyVar.MyMethod()");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyMethod");
+        checkFirstToken(tokens, TokenType.LEFT_PARENTHESIS, "(");
+        checkFirstToken(tokens, TokenType.RIGHT_PARENTHESIS, ")");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("MyVar.MyMethod(myParam)");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyMethod");
+        checkFirstToken(tokens, TokenType.LEFT_PARENTHESIS, "(");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myParam");
+        checkFirstToken(tokens, TokenType.RIGHT_PARENTHESIS, ")");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
     }
     
     // The minimal setup for log4J

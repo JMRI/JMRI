@@ -110,6 +110,7 @@ public class Tokenizer {
                 case RIGHT_SQUARE_BRACKET:
                 case LEFT_CURLY_BRACKET:
                 case RIGHT_CURLY_BRACKET:
+                case DOT:
                 case DOT_DOT:
                 case COMMA:
                 case EQUAL:
@@ -200,13 +201,18 @@ public class Tokenizer {
             return TokenType.SAME_AS_LAST;
         }
         
-        if ((ch == '.') && (nextChar == '.')) {
-            if ((currentToken._tokenType != TokenType.DOT_DOT)) {
-                eatNextChar.set(true);
-                return TokenType.DOT_DOT;
-            } else {
-                // Three dots in a row is an error
-                return TokenType.ERROR;
+        if (ch == '.') {
+            if (nextChar == '.') {
+                if ((currentToken._tokenType != TokenType.DOT_DOT)) {
+                    eatNextChar.set(true);
+                    return TokenType.DOT_DOT;
+                } else {
+                    System.out.println("aaa");
+                    // Three dots in a row is an error
+                    return TokenType.ERROR;
+                }
+            } else if (currentToken._tokenType == TokenType.IDENTIFIER) {
+                return TokenType.DOT;
             }
         }
         
@@ -275,6 +281,7 @@ public class Tokenizer {
                 eatNextChar.set(true);
                 return TokenType.EQUAL;
             } else {
+                System.out.println("bbb");
                 return TokenType.ERROR;
             }
         }
@@ -377,6 +384,7 @@ public class Tokenizer {
         
         if ((currentToken._tokenType == TokenType.FLOATING_NUMBER) &&
                 (Character.isLetterOrDigit(ch))) {
+            System.out.println("ccc");
             return TokenType.ERROR;
         }
         
@@ -388,6 +396,7 @@ public class Tokenizer {
             return TokenType.IDENTIFIER;
         }
         
+        System.out.format("ddd: %s, %c%n", currentToken._tokenType.name(), ch);
         return TokenType.ERROR;
     }
     

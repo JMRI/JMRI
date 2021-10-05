@@ -52,6 +52,7 @@ public enum TokenType {
     SPACE(Integer.MIN_VALUE),           // Any space character outside of a string, like space, newline, ...
     COMMA(-2),              // , , used for parameter lists
     DOT_DOT(-1),            // .. , used for intervalls
+    DOT(-1),                // . , used for method calls and properties, for example myVar.myFunc(parameter)
     ASSIGN(1),              // =
     ASSIGN_ADD(1),          // +=
     ASSIGN_SUBTRACKT(1),    // -=
@@ -114,85 +115,6 @@ public enum TokenType {
                 || (this == TokenType.INTEGER_NUMBER)
                 || (this == TokenType.FLOATING_NUMBER)
                 || (this == TokenType.STRING));
-    }
-    
-    /**
-     * Checks if this token type can follow an other token type.
-     * 
-     * @param previousTokenType the previous token type or null if this is
-     * the first token
-     * @return true if this token type can follow the previous token type, false otherwise.
-     */
-    public boolean canFollow(TokenType previousTokenType) {
-        
-        if (previousTokenType == null) {
-            return true;
-        }
-        
-        // These tokens are only used by the Tokenizer and should never be
-        // visible outside of the Tokenizer.
-        if ((this == ERROR)
-                || (this == SAME_AS_LAST)
-                || (this == NONE)
-                || (this == SPACE)) {
-            return false;
-        }
-        
-        if (this.isLeaf()) {
-            return !previousTokenType.isLeaf();
-        }
-        
-        if (this == TokenType.SUBTRACKT) {
-            // The minus sign may follow any operator
-            return true;
-        }
-        
-        if ((this == TokenType.LEFT_PARENTHESIS)
-                || (this == TokenType.LEFT_CURLY_BRACKET)) {
-            // The left parenthesis and curly bracket may follow any token type
-            // and may be the first token.
-            return true;
-        }
-        
-        if ((this == TokenType.LEFT_SQUARE_BRACKET)
-                && ((previousTokenType == TokenType.RIGHT_PARENTHESIS)
-                        || (previousTokenType == TokenType.RIGHT_CURLY_BRACKET)
-                        || (previousTokenType.isLeaf()))) {
-            // The left parenthesis or bracket may follow any operator
-            return true;
-        }
-        
-        if ((this == TokenType.RIGHT_PARENTHESIS)
-                && ((previousTokenType == TokenType.LEFT_PARENTHESIS)
-                        || (previousTokenType == TokenType.RIGHT_PARENTHESIS)
-                        || (previousTokenType == TokenType.RIGHT_SQUARE_BRACKET)
-                        || (previousTokenType == TokenType.RIGHT_CURLY_BRACKET)
-                        || (previousTokenType.isLeaf()))) {
-            // The left parenthesis or bracket may follow any operator
-            return true;
-        }
-        
-        if ((this == TokenType.RIGHT_SQUARE_BRACKET)
-                && ((previousTokenType == TokenType.LEFT_SQUARE_BRACKET)
-                        || (previousTokenType == TokenType.RIGHT_PARENTHESIS)
-                        || (previousTokenType == TokenType.RIGHT_SQUARE_BRACKET)
-                        || (previousTokenType == TokenType.RIGHT_CURLY_BRACKET)
-                        || (previousTokenType.isLeaf()))) {
-            // The left parenthesis or bracket may follow any operator
-            return true;
-        }
-        
-        if ((this == TokenType.RIGHT_CURLY_BRACKET)
-                && ((previousTokenType == TokenType.LEFT_CURLY_BRACKET)
-                        || (previousTokenType == TokenType.RIGHT_PARENTHESIS)
-                        || (previousTokenType == TokenType.RIGHT_SQUARE_BRACKET)
-                        || (previousTokenType == TokenType.RIGHT_CURLY_BRACKET)
-                        || (previousTokenType.isLeaf()))) {
-            // The left parenthesis or bracket may follow any operator
-            return true;
-        }
-        
-        return previousTokenType.isLeaf();
     }
     
 }
