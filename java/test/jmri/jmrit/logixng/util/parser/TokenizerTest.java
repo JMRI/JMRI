@@ -15,12 +15,6 @@ import org.junit.Test;
  */
 public class TokenizerTest {
 
-    @Test
-    public void testCtor() {
-        Tokenizer t = new Tokenizer();
-        Assert.assertNotNull("not null", t);
-    }
-    
     private void checkFirstToken(
             List<Token> tokens,
             TokenType tokenType, String string) {

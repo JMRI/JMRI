@@ -11,6 +11,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Tokenizer {
     
+    // This class should never be instanciated.
+    private Tokenizer() {
+    }
+    
     private static void addToken(Token currentToken, List<Token> tokens) {
         if ((currentToken._tokenType == TokenType.FLOATING_NUMBER) && isIntegerNumber(currentToken._string)) {
             currentToken._tokenType = TokenType.INTEGER_NUMBER;
