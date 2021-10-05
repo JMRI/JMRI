@@ -6,6 +6,7 @@
 <body>
 <h1>JMRI AAR Graphical Symbols</h1>
 
+These are from "American Railway Signaling Principles and Practices Chapter II. By the Signal Section, A.A.R. Revised August 1946. Figure 1 Graphical Symbols Wayside Signal Operating Characteristics ARA Sig.Sec. 1660A."
 
 <?php
 // find showIcons directory
