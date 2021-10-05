@@ -74,7 +74,7 @@ public class WarrantTableAction extends AbstractAction {
     @Override
     @InvokeOnGuiThread
     public void actionPerformed(ActionEvent e) {
-        WarrantTableFrame.getDefault();
+        WarrantTableFrame.getDefault().setVisible(true);
     }
 
     /**

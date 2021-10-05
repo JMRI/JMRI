@@ -534,19 +534,19 @@ public class NXFrame extends WarrantRoute {
         } else {
             mode = Warrant.MODE_MANUAL;
         }
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
+            WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+            tableFrame.setVisible(true);
             warrant.setNXWarrant(true);
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
             }
             msg = tableFrame.runTrain(warrant, mode);
-            tableFrame.scrollTable();
-        }
-        if (msg != null) {
-            log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
-            tableFrame.getModel().removeWarrant(warrant, false);
+            if (msg != null) {
+                log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
+                tableFrame.getModel().removeWarrant(warrant, false);
+            }
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {

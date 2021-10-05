@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -85,7 +87,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             }
             return newInstance;
         });
-        instance.setVisible(true);
+        if (jmri.util.ThreadingUtil.isGUIThread()) {
+            instance.setVisible(true);
+        }
         return instance;
     }
 
@@ -156,8 +160,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
-
-
+        table.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int lastIndex = table.getRowCount()-1;
+                table.changeSelection(lastIndex, 0,false,false);
+            }
+        });
         _tablePane = new JScrollPane(table);
 
         JLabel title = new JLabel(Bundle.getMessage("ShowWarrants"));
@@ -245,11 +254,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
 
         pack();
-    }
-
-    protected void scrollTable() {
-        JScrollBar bar = _tablePane.getVerticalScrollBar();
-        bar.setValue(bar.getMaximum());
     }
 
     private void haltAllAction() {

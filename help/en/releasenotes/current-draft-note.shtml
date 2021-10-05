@@ -549,7 +549,20 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fixed loss of control when train loses occupation detection 
+             (dirty track or pickup, unreliable sensor, etc). Trains could run 
+             away at their current speed setting.  Speed is set to zero 
+             upon loss of detection.</li>
+            <li>Calculation of ramp times and distances improved. However, good  
+              data of path lengths and train speed profiles is needed.</li>
+            <li>Fixed two places where a freeze of the Warrant List Table could 
+             possibly occur.</li>
+            <li>The address column of the Warrant List table is changed to show a
+             roster id instead of the DCC address.  Un-rostered addresses may still be 
+             entered and the warrants run with such engines. In this case the column
+             entry is the address bracketed with $ signs.</li>
+            <li>Warrant activity can be traced on the console. An Enable/Disable button
+             in Warrant Preferences activates this feature. Default is tracing disabled.</li>
         </ul>
 
    <h3>Web Access</h3>

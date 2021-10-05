@@ -526,17 +526,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         case AUTO_RUN_COLUMN:
-            msg = _frame.runTrain(w, Warrant.MODE_RUN);
-            if (msg != null) {
-                w.deAllocate();
-            }
+            msg = frameRunTrain(w, Warrant.MODE_RUN);
             this.fireTableRowsUpdated(row, row);
             break;
         case MANUAL_RUN_COLUMN:
-            msg = _frame.runTrain(w, Warrant.MODE_MANUAL);
-            if (msg != null) {
-                w.deAllocate();
-            }
+            msg = frameRunTrain(w, Warrant.MODE_MANUAL);
             this.fireTableRowsUpdated(row, row);
             break;
         case CONTROL_COLUMN:
@@ -600,11 +594,16 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
         if (msg != null) {
+            showMessageDialog(msg);
+        }
+    }
+
+    private void showMessageDialog(String msg) {
+        ThreadingUtil.runOnLayoutEventually(() -> {
             JOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
-//            setFrameStatusText(msg, Color.red, true);
-        }
+        });
     }
 
     private void openWarrantFrame(Warrant warrant) {
@@ -649,6 +648,16 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         return w;
     }
 
+    private String frameRunTrain(Warrant w, int mode) {
+        return jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
+            String m = _frame.runTrain(w, mode);
+            if (m != null) {
+                w.deAllocate();
+            }
+            return m;
+        });
+    }
+
     private void setFrameStatusText(String m, Color c, boolean save) {
         ThreadingUtil.runOnLayoutEventually(()-> _frame.setStatusText(m, c, true));
     }
@@ -679,8 +688,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     if (_warNX.contains(bean)
                             && ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) 
                                     || (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT))) {
-                        fireTableRowsDeleted(i, i);
                         removeWarrant(bean, false);
+                        fireTableRowsDeleted(i, i);
                     } else {
                         fireTableRowsUpdated(i, i);
                     }
