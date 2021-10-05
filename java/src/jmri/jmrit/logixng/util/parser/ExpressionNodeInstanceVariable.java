@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
@@ -13,12 +14,12 @@ import jmri.jmrit.logixng.SymbolTable;
 public class ExpressionNodeInstanceVariable implements ExpressionNode {
 
     private final String _variableName;
-    private final String _instanceVariableName;
+    private final String _fieldName;
     private final Variable _variable;
     
-    public ExpressionNodeInstanceVariable(String variableName, String instanceVariableToken, Map<String, Variable> variables) throws IdentifierNotExistsException {
+    public ExpressionNodeInstanceVariable(String variableName, String fieldName, Map<String, Variable> variables) throws IdentifierNotExistsException {
         _variableName = variableName;
-        _instanceVariableName = instanceVariableToken;
+        _fieldName = fieldName;
         Variable variable = variables.get(variableName);
         
         if (variable == null) {
@@ -37,8 +38,16 @@ public class ExpressionNodeInstanceVariable implements ExpressionNode {
     
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
-        if (1==1) throw new RuntimeException("Not implemented yet");
-        return _variable.getValue(symbolTable);
+        Object obj = _variable.getValue(symbolTable);
+        if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+        
+        try {
+            Field field = obj.getClass().getField(_fieldName);
+            if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+            return field.get(obj);
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            throw new ReflectionException("Reflection exception", ex);
+        }
     }
     
     /** {@inheritDoc} */
@@ -53,16 +62,30 @@ public class ExpressionNodeInstanceVariable implements ExpressionNode {
     /** {@inheritDoc} */
     @Override
     public void assignValue(SymbolTable symbolTable, Object value) throws JmriException {
-        if (1==1) throw new RuntimeException("Not implemented yet");
-        if (_variable != null) {
-            _variable.setValue(symbolTable, value);
+        Object obj = _variable.getValue(symbolTable);
+        if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+        
+        try {
+            Field field = obj.getClass().getField(_fieldName);
+            if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+            Class<?> type = field.getType();
+            Object newValue;
+            if (type.isAssignableFrom(value.getClass())) newValue = value;
+            else if ((type == Byte.TYPE) && (value instanceof Long)) newValue = (byte)(long)value;
+            else if ((type == Short.TYPE) && (value instanceof Long)) newValue = (short)(long)value;
+            else if ((type == Integer.TYPE) && (value instanceof Long)) newValue = (int)(long)value;
+            else if ((type == Float.TYPE) && (value instanceof Double)) newValue = (float)(double)value;
+            else throw new RuntimeException(String.format("%s cannot be assigned to %s", value.getClass().getName(), type.getName()));
+            field.set(obj, newValue);
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            throw new ReflectionException("Reflection exception", ex);
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
-        return "InstanceVariable:"+_variableName+"."+_instanceVariableName;
+        return "InstanceVariable:"+_variableName+"."+_fieldName;
     }
     
 }

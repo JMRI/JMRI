@@ -551,6 +551,7 @@ public class RecursiveDescentParser {
                             return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState4);
                         } else {
                             exprNode = new ExpressionNodeInstanceVariable(newState._lastToken._string, newState3._lastToken._string, _variables);
+                            return new ExpressionNodeAndState(exprNode, newState3);
                         }
                     } else {
                         return null;

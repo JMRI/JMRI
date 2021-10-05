@@ -39,6 +39,7 @@ public class RecursiveDescentParserTest {
         variables.put("abc", new MyVariable("abc", "ABC"));
         variables.put("x", new MyVariable("x", 12));
         variables.put("someString", new MyVariable("someString", "A simple string"));
+        variables.put("myTestField", new MyVariable("myTestField", new TestField()));
         
         RecursiveDescentParser t = new RecursiveDescentParser(variables);
         ExpressionNode exprNode = t.parseExpression("");
@@ -254,6 +255,37 @@ public class RecursiveDescentParserTest {
         exprNode = t.parseExpression("someString.indexOf(\"i\",8)");
         Assert.assertEquals("expression matches", "Method:someString.indexOf(String:i,IntNumber:8)", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", 12, (int)exprNode.calculate(symbolTable));
+        
+        
+        
+        exprNode = t.parseExpression("myTestField.myString");
+        Assert.assertEquals("expression matches", "InstanceVariable:myTestField.myString", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "Hello", exprNode.calculate(symbolTable));
+        exprNode = t.parseExpression("myTestField.myInt");
+        Assert.assertEquals("expression matches", "InstanceVariable:myTestField.myInt", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 32, (int)exprNode.calculate(symbolTable));
+        exprNode = t.parseExpression("myTestField.myFloat");
+        Assert.assertEquals("expression matches", "InstanceVariable:myTestField.myFloat", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 31.32, (float)exprNode.calculate(symbolTable), 0.000001);
+        
+        
+        
+        TestField testField = (TestField) variables.get("myTestField").getValue(symbolTable);
+        
+        ExpressionNodeInstanceVariable instanceVariable = new ExpressionNodeInstanceVariable("myTestField", "myString", variables);
+        Assert.assertEquals("Hello", testField.myString);
+        instanceVariable.assignValue(symbolTable, "Something else");
+        Assert.assertEquals("Something else", testField.myString);
+        
+        instanceVariable = new ExpressionNodeInstanceVariable("myTestField", "myInt", variables);
+        Assert.assertEquals(32, testField.myInt);
+        instanceVariable.assignValue(symbolTable, (long)23103);
+        Assert.assertEquals(23103, testField.myInt);
+        
+        instanceVariable = new ExpressionNodeInstanceVariable("myTestField", "myFloat", variables);
+        Assert.assertEquals(31.32, testField.myFloat, 0.000001);
+        instanceVariable.assignValue(symbolTable, (double)112.12);
+        Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
     }
     
     
@@ -301,4 +333,12 @@ public class RecursiveDescentParserTest {
             throw new UnsupportedOperationException("Not supported");
         }
     }
+    
+    
+    private static class TestField {
+        public String myString = "Hello";
+        public int myInt = 32;
+        public float myFloat = (float) 31.32;
+    }
+    
 }
