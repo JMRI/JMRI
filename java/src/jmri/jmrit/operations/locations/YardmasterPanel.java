@@ -4,13 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -327,13 +321,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
-                checkBoxes.remove("p" + car.getId());
-                checkBoxes.remove("s" + car.getId());
-                checkBoxes.remove("m" + car.getId());
-                log.debug("Car ({}) removed from list", car.toString());
-                if (car.isUtility()) {
-                    clearAndUpdate(); // need to recalculate number of utility cars
-                }
+                removeCarFromList(car);
             }
             update();
         }
