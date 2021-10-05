@@ -9,8 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.*;
 
@@ -95,7 +95,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JPanel pButtons = new JPanel();
 
     // check boxes
-    protected Hashtable<String, JCheckBox> checkBoxes = new Hashtable<>();
+    protected ConcurrentHashMap<String, JCheckBox> checkBoxes = new ConcurrentHashMap<>();
     protected List<RollingStock> rollingStock = new ArrayList<>();
 
     // flags
@@ -159,8 +159,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textTrainRouteCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // train route location comment
-        textTrainRouteLocationCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("RouteLocationComment")));
+        textTrainRouteLocationCommentPane
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteLocationComment")));
         textTrainRouteLocationCommentPane.setBackground(null);
         textTrainRouteLocationCommentPane.setEditable(false);
         textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
@@ -255,8 +255,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         pSetouts.revalidate();
         pMoves.revalidate();
 
-        selectButton.setEnabled(checkBoxes.size() > 0 && !isSetMode);
-        clearButton.setEnabled(checkBoxes.size() > 0 && !isSetMode);
+        selectButton.setEnabled(!checkBoxes.isEmpty() && !isSetMode);
+        clearButton.setEnabled(!checkBoxes.isEmpty() && !isSetMode);
         check();
 
         log.debug("update complete");
@@ -264,9 +264,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     private void addCarToTrain() {
         if (JOptionPane.showConfirmDialog(this,
-                MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[]{_train.getName()}),
-                Bundle.getMessage("AddCarsToTrain?"),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[] { _train.getName() }),
+                Bundle.getMessage("AddCarsToTrain?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
     }
@@ -411,14 +410,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
      * in the list "rollingStock" with the prefix "p", "s" or "m" and the car's
      * unique id.
      *
-     * @param rl The RouteLocation
+     * @param rl         The RouteLocation
      * @param isManifest True if manifest, false if switch list
      *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {
-            JLabel header =
-                    new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
+            JLabel header = new JLabel(
+                    Tab + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
             setLabelFont(header);
             pPickups.add(header);
             header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
@@ -570,7 +569,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         pMoves.add(new JLabel(Space));
     }
 
-    // replace the car or engine checkbox and text with only the road and number and a Set button
+    // replace the car or engine checkbox and text with only the road and number and
+    // a Set button
     protected JPanel addSet(RollingStock rs) {
         JPanel pSet = new JPanel();
         pSet.setLayout(new GridBagLayout());
@@ -618,12 +618,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     // returns one of two possible departure strings for a train
     protected String getStatus(RouteLocation rl, boolean isManifest) {
         if (rl == _train.getTrainTerminatesRouteLocation()) {
-            return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
-                    .getTrainTerminatesName()});
+            return MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+                    new Object[] { _train.getTrainTerminatesName() });
         }
-        if (rl != _train.getCurrentRouteLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
-            return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
-                    .getName()});
+        if (rl != _train.getCurrentRouteLocation() &&
+                _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+            return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] { _train.getName() });
         }
         if (!_train.isBuilt()) {
             return _train.getStatus();
@@ -636,10 +636,11 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             } else {
                 text = TrainSwitchListText.getStringTrainDepartsLoads();
             }
-            return MessageFormat.format(text, new Object[]{TrainCommon.splitString(rl.getName()),
-                    rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
-                    _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
-                    _train.getTrainTerminatesName(), _train.getName()});
+            return MessageFormat.format(text,
+                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                            _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
+                            Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+                            _train.getTrainTerminatesName(), _train.getName() });
         } else {
             String text;
             if (isManifest) {
@@ -647,10 +648,21 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             } else {
                 text = TrainSwitchListText.getStringTrainDepartsCars();
             }
-            return MessageFormat.format(text, new Object[]{TrainCommon.splitString(rl.getName()),
-                    rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
-                    Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl), _train.getTrainTerminatesName(),
-                    _train.getName()});
+            return MessageFormat.format(text,
+                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                            _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
+                            Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+                            _train.getTrainTerminatesName(), _train.getName() });
+        }
+    }
+
+    protected void removeCarFromList(Car car) {
+        checkBoxes.remove("p" + car.getId());
+        checkBoxes.remove("s" + car.getId());
+        checkBoxes.remove("m" + car.getId());
+        log.debug("Car ({}) removed from list", car.toString());
+        if (car.isUtility()) {
+            clearAndUpdate(); // need to recalculate number of utility cars
         }
     }
 
@@ -673,8 +685,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource(),
-                e.getOldValue(), e.getNewValue()); // NOI18N
+        log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource(), e.getOldValue(),
+                e.getNewValue()); // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
