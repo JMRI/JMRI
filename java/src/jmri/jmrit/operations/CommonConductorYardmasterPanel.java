@@ -41,6 +41,8 @@ import jmri.jmrit.operations.trains.*;
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
+    protected static final boolean IS_MANIFEST = true;
+    
     protected static final String Tab = "    "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
@@ -166,14 +168,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
-        if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled()) ||
-                (getPreferredSize().width > Control.panelWidth1025 - 200 && !Setup.isTabEnabled())) {
-            pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.X_AXIS));
-            pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
-        } else {
-            pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
-            pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.Y_AXIS));
-        }
+        pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
+        pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.Y_AXIS));
 
         pLocos.add(pPickupLocos);
         pLocos.add(pSetoutLocos);

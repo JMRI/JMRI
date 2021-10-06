@@ -31,8 +31,6 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean IS_MANIFEST = false;
-
     protected Track _track = null;
 
     // text panes

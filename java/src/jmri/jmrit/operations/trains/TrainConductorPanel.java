@@ -25,8 +25,6 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean IS_MANIFEST = true;
-
     // labels
     JLabel textTrainName = new JLabel();
     JLabel textTrainDepartureTime = new JLabel();

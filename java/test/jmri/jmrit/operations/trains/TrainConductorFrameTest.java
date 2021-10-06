@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -37,6 +38,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     }
     
     @Test
+    @Disabled("Test can randomly hang Windows CI Test")
     public void testMoveButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
