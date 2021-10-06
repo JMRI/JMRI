@@ -35,7 +35,8 @@
                 <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
                 <li>added support for new servo and vpin turnout messages</li>
                 <li>store definitions as properties in created objects</li>
-                <li>make "Configure DCC++ Base Station" available in startup actions</li>
+                <li>Config Base Station now available as Startup action</li>
+                <li>Monitor, Send Command, and Config Base Station now multi-connection-aware.</li>
             </ul>
 
         <h4>DCC4pc</h4>

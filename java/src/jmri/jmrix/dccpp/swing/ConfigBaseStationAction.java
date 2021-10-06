@@ -20,6 +20,10 @@ package jmri.jmrix.dccpp.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppMessage;
@@ -50,6 +54,10 @@ public class ConfigBaseStationAction extends DCCppSystemConnectionAction {
         if (f == null || !f.isVisible()) {
             
             DCCppSystemConnectionMemo memo = getSystemConnectionMemo();
+            if (memo == null) {
+                log.error("connection memo was null!");
+                return;
+            }            
             f = new ConfigBaseStationFrame(memo);
             DCCppTrafficController tc = memo.getDCCppTrafficController();
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
@@ -61,5 +69,5 @@ public class ConfigBaseStationAction extends DCCppSystemConnectionAction {
         }
         f.setExtendedState(Frame.NORMAL);
     }
-
+    private static final Logger log = LoggerFactory.getLogger(ConfigBaseStationAction.class);
 }

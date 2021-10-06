@@ -34,6 +34,11 @@ public class PacketGenAction extends DCCppSystemConnectionAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         DCCppSystemConnectionMemo memo = getSystemConnectionMemo();
+        if (memo == null) {
+            log.error("connection memo was null!");
+            return;
+        }
+        
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame(memo);
         try {
