@@ -156,14 +156,14 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         float throttleIncrement = _speedUtil.getRampThrottleIncrement();
                         while (_syncIdx > _warrant.getCurrentOrderIndex() && waittime <= 60*timeIncrement && getSpeedSetting() > 0) {
                             // Until loco reaches end block, continue current speed.
-                            if (waittime == 6*timeIncrement || waittime == 15*timeIncrement|| waittime == 30*timeIncrement) {
+                            if (waittime == 10*timeIncrement || waittime == 25*timeIncrement|| waittime == 55*timeIncrement) {
                                 // maybe train stalled on previous speed step. Bump speed up a notch at 6s, another at 15, etc
                                 setSpeed(getSpeedSetting() + throttleIncrement, _speedType);
                             }
                             wait(timeIncrement);
                             waittime += timeIncrement;
                         }
-                        if (waittime > 60*timeIncrement) {
+                        if (waittime > 120*timeIncrement) {
                             String m = Bundle.getMessage("DidNotReachBlock",
                                     _warrant.getTrainName(), _warrant.getBlockAt(_syncIdx).getDisplayName(), waittime/1000);
                             setFrameStatusText(m, java.awt.Color.red, true);
@@ -1352,9 +1352,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                         log.debug("Extending ramp to reach block {}. speed= {}",
                                                 _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
                                     long waittime = 0;
-                                    while (_endBlockIdx > _warrant.getCurrentOrderIndex() && waittime <= 30*timeIncrement && getSpeedSetting() > 0) {
+                                    while (_endBlockIdx > _warrant.getCurrentOrderIndex() && waittime <= 60*timeIncrement && getSpeedSetting() > 0) {
                                         // Until loco reaches end block, continue current speed.
-                                        if (waittime == 3*timeIncrement || waittime == 9*timeIncrement || waittime == 20*timeIncrement) {
+                                        if (waittime == 5*timeIncrement || waittime == 12*timeIncrement || waittime == 25*timeIncrement) {
                                             // maybe train stalled on previous speed step. Bump speed up a notch at 3s, another at 9
                                             setSpeed(_throttle.getSpeedSetting() + throttleIncrement, _endSpeedType);
                                         }
