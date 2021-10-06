@@ -20,38 +20,38 @@ package jmri.jmrix.dccpp.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppMessage;
-import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppTurnoutManager;
 
-public class ConfigBaseStationAction extends AbstractAction {
+public class ConfigBaseStationAction extends DCCppSystemConnectionAction {
+
+    public ConfigBaseStationAction(String name, DCCppSystemConnectionMemo memo) {
+        super(name, memo);
+    }
+
+    public ConfigBaseStationAction(DCCppSystemConnectionMemo memo) {
+        super(Bundle.getMessage("FieldManageBaseStationFrameTitle"), memo);
+    }
+
+    public ConfigBaseStationAction() {
+        this(InstanceManager.getNullableDefault(DCCppSystemConnectionMemo.class));
+    }
 
     /**
      *
      */
     private ConfigBaseStationFrame f = null;
     
-    public ConfigBaseStationAction(String s, String a) {
-        super(s);
-    }
-
-    public ConfigBaseStationAction() {
-        this(Bundle.getMessage("FieldManageBaseStationFrameTitle"), null);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             
-            DCCppSystemConnectionMemo systemMemo = jmri.InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
-            DCCppSensorManager smgr = (DCCppSensorManager)systemMemo.getSensorManager();
-            DCCppTurnoutManager tmgr = (DCCppTurnoutManager)systemMemo.getTurnoutManager();
-            DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
-            f = new ConfigBaseStationFrame(smgr, tmgr, tc);
+            DCCppSystemConnectionMemo memo = getSystemConnectionMemo();
+            f = new ConfigBaseStationFrame(memo);
+            DCCppTrafficController tc = memo.getDCCppTrafficController();
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             
             // Request definitions for Turnouts, Sensors and Outputs

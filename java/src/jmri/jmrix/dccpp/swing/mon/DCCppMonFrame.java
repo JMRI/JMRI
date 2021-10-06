@@ -61,7 +61,7 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     @Override
     protected String title() {
-        return rb.getString("DCCppMonFrameTitle")+" "+_memo.getUserName();  // NOI18N
+        return rb.getString("DCCppMonFrameTitle")+" (" + _memo.getSystemPrefix() + ")";  // NOI18N
     }
 
     @Override
@@ -129,7 +129,6 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
     @Override
     public synchronized void message(DCCppMessage l) {
         // display the raw data if requested  
-//      logMessage("", "TX: ", l);
         StringBuilder raw = new StringBuilder();
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());
@@ -159,7 +158,6 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
             log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));
         }
 
-//        logMessage("", "RX: ", l);
         // display the raw data if requested  
         StringBuilder raw = new StringBuilder();
         if (rawCheckBox.isSelected()) {

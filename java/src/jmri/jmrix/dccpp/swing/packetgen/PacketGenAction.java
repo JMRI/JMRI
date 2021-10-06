@@ -10,20 +10,17 @@
 package jmri.jmrix.dccpp.swing.packetgen;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+import jmri.jmrix.dccpp.swing.DCCppSystemConnectionAction;
 
-public class PacketGenAction extends AbstractAction {
-
-    jmri.jmrix.dccpp.DCCppSystemConnectionMemo _memo = null;
+public class PacketGenAction extends DCCppSystemConnectionAction {
 
     public PacketGenAction(String s, jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+        super(s, memo);
     }
 
     public PacketGenAction(jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
@@ -36,17 +33,15 @@ public class PacketGenAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        DCCppSystemConnectionMemo memo = getSystemConnectionMemo();
         // create a PacketGenFrame
-        PacketGenFrame f = new PacketGenFrame();
+        PacketGenFrame f = new PacketGenFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
             log.error("Exception: {}",ex);
         }
         f.setVisible(true);
-
-        // connect to the TrafficController
-        f.connect(_memo.getDCCppTrafficController());
     }
     private static final Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 }

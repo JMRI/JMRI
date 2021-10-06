@@ -21,7 +21,6 @@ public class DCCppMonAction extends DCCppSystemConnectionAction {
     }
 
     public DCCppMonAction(DCCppSystemConnectionMemo memo) {
-//        this(Bundle.getMessage("DCCppMonFrameTitle"), memo);
         this("DCC++ Traffic Monitor", memo);
     }
 
