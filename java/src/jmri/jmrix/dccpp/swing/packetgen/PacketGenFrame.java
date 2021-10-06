@@ -61,6 +61,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     // connect to the TrafficController
     public void connect(DCCppTrafficController t) {
         tc = t;
+        setTitle(Bundle.getMessage("PacketGenFrameTitle") + " to " + tc.getSystemConnectionMemo().getUserName());
     }
 
     // private data
