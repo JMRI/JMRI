@@ -140,7 +140,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>Added definition for Tams FD-R Basic 3, including Railcommunity norm RCN-277 mapping for future use on other decoders</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -592,4 +592,3 @@
             <li>Access to the deprecated SecurityManager class has been removed;
                 Java access security is now enforced by default.</li>
         </ul>
-
