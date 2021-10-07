@@ -413,7 +413,14 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed exception when using "hyphen" feature without other characters.</li>
+            <li>Fixed the truncate feature when using utility cars.</li>
+            <li>Fixed automation bug when there are manifest warnings.</li>
+            <li>Fixed AutoHPT model and road bugs.</li>
+            <li>Fixed save after delete of car. </li>
+            <li>Enhancement, show how many warnings in the build report.</li>
+            <li>Enhancement, user can optionally update route departure times when changing train departure times.</li>
+            <li>Enhancement, added medium load priority.</li>
         </ul>
 
    <h3>Panel Editor</h3>
