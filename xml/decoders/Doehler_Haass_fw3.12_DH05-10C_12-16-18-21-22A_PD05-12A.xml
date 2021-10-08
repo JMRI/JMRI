@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20211008"/>
+  <!--  Added DH06A definitions for this latest Fw version -->
   <version version="1.3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210911"/>
   <!--  Added 2nd Generation DH05C and DH10C (more outputs), fixed SUSI mapping pane -->
   <version version="1.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210319"/>
@@ -460,6 +462,21 @@
         <size length="24.2" width="11.0" height="2.4" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <output name="1" label="Front|Light" maxcurrent="20mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="20mA"/>
+        <output name="3" label="Onboard|LED" maxcurrent="20mA"/>
+        <output name="4" label="|"/>    <!-- not available for this decoder -->
+        <output name="5" label="|"/>    <!-- not available for this decoder -->
+        <output name="6" label="|"/>    <!-- not available for this decoder -->
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="16" width="9.3" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
         </protocols>
       </model>
     </family>
