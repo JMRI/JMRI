@@ -373,11 +373,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         this.getJMenuBar().add(fileMenu);
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        this.getJMenuBar().add(editMenu);
 
         JMenu mSend = new JMenu(Bundle.getMessage("MenuSend"));
-
         JMenuItem iRequestDefs = new JMenuItem(Bundle.getMessage("RequestDefs"));       
         iRequestDefs.addActionListener(new ActionListener() {
             @Override
@@ -415,7 +412,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
         });
         mSend.add(iEraseEeprom);
+
         this.getJMenuBar().add(mSend);
+
+        JMenu dccppMenu = new DCCppMenu(_memo);
+        dccppMenu.setText(Bundle.getMessage("MenuDCC++")); // always use generic text
+        this.getJMenuBar().add(dccppMenu);
     }
 
     // handle incoming object creation messages by adding them to the appropriate table
