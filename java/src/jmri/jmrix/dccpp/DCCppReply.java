@@ -215,7 +215,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 if(isNamedPowerReply()) {
                     text = "Power Status: ";
                     text += "Name:" + getPowerDistrictName();
-                    text += "Status:" + getPowerDistrictStatus();
+                    text += " Status:" + getPowerDistrictStatus();
                 } else {
                     text = "Power Status: ";
                     text += (getPowerBool() ? "ON" : "OFF");

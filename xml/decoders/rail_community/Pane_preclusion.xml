@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Pierre Billon - initial version 2021-10-02 -->
+<!-- This is a function output preclusion table according to RCN-277 norm -->
+<!-- Better UI will have to be implemented, for now, input of CVs is done manually as decimal values -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Preclusion</name>
+  <name xml:lang="de">Auschaltfunktion</name>
+  <column>
+    <row>
+      <column>
+        <display item="Functions that preclude FL(f)">
+        </display>
+        <display item="Functions that preclude FL(r)">
+        </display>
+        <display item="Functions that preclude F1(f)">
+        </display>
+        <display item="Functions that preclude F1(r)">
+        </display>
+        <display item="Functions that preclude F2(f)">
+        </display>
+        <display item="Functions that preclude F2(r)">
+        </display>
+        <display item="Functions that preclude F3(f)">
+        </display>
+        <display item="Functions that preclude F3(r)">
+        </display>
+        <display item="Functions that preclude F4(f)">
+        </display>
+        <display item="Functions that preclude F4(r)">
+        </display>
+        <display item="Functions that preclude F5(f)">
+        </display>
+        <display item="Functions that preclude F5(r)">
+        </display>
+        <display item="Functions that preclude F6(f)">
+        </display>
+        <display item="Functions that preclude F6(r)">
+        </display>
+        <display item="Functions that preclude F7(f)">
+        </display>
+        <display item="Functions that preclude F7(r)">
+        </display>
+        <display item="Functions that preclude F8(f)">
+        </display>
+        <display item="Functions that preclude F8(r)">
+        </display>
+        <display item="Functions that preclude F9(f)">
+        </display>
+        <display item="Functions that preclude F9(r)">
+        </display>
+        <display item="Functions that preclude F10(f)">
+        </display>
+        <display item="Functions that preclude F10(r)">
+        </display>
+        <display item="Functions that preclude F11(f)">
+        </display>
+        <display item="Functions that preclude F11(r)">
+        </display>
+        <display item="Functions that preclude F12(f)">
+        </display>
+        <display item="Functions that preclude F12(r)">
+        </display>
+        <display item="Functions that preclude F13(f)">
+        </display>
+        <display item="Functions that preclude F13(r)">
+        </display>
+        <display item="Functions that preclude F14(f)">
+        </display>
+        <display item="Functions that preclude F14(r)">
+        </display>
+        <display item="Functions that preclude F15(f)">
+        </display>
+        <display item="Functions that preclude F15(r)">
+        </display>
+        <display item="Functions that preclude F16(f)">
+        </display>
+        <display item="Functions that preclude F16(r)">
+        </display>
+        <display item="Functions that preclude F17(f)">
+        </display>
+        <display item="Functions that preclude F17(r)">
+        </display>
+        <display item="Functions that preclude F18(f)">
+        </display>
+        <display item="Functions that preclude F18(r)">
+        </display>
+        <display item="Functions that preclude F19(f)">
+        </display>
+        <display item="Functions that preclude F19(r)">
+        </display>
+        <display item="Functions that preclude F20(f)">
+        </display>
+        <display item="Functions that preclude F20(r)">
+        </display>
+        <display item="Functions that preclude F21(f)">
+        </display>
+        <display item="Functions that preclude F21(r)">
+        </display>
+        <display item="Functions that preclude F22(f)">
+        </display>
+        <display item="Functions that preclude F22(r)">
+        </display>
+        <display item="Functions that preclude F23(f)">
+        </display>
+        <display item="Functions that preclude F23(r)">
+        </display>
+        <display item="Functions that preclude F24(f)">
+        </display>
+        <display item="Functions that preclude F24(r)">
+        </display>
+        <display item="Functions that preclude F25(f)">
+        </display>
+        <display item="Functions that preclude F25(r)">
+        </display>
+        <display item="Functions that preclude F26(f)">
+        </display>
+        <display item="Functions that preclude F26(r)">
+        </display>
+        <display item="Functions that preclude F27(f)">
+        </display>
+        <display item="Functions that preclude F27(r)">
+        </display>
+        <display item="Functions that preclude F28(f)">
+        </display>
+        <display item="Functions that preclude F28(r)">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

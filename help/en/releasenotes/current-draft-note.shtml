@@ -35,7 +35,8 @@
                 <li>new sample script (SendDCCppMessages.py) to easily send DCCpp commmand list</li>
                 <li>added support for new servo and vpin turnout messages</li>
                 <li>store definitions as properties in created objects</li>
-                <li>make "Configure DCC++ Base Station" available in startup actions</li>
+                <li>Config Base Station now available as Startup action</li>
+                <li>Monitor, Send Command, and Config Base Station now multi-connection-aware.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -140,7 +141,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>Added definition for Tams FD-R Basic 3, including Railcommunity norm RCN-277 mapping for future use on other decoders</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -413,7 +414,14 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed exception when using "hyphen" feature without other characters.</li>
+            <li>Fixed the truncate feature when using utility cars.</li>
+            <li>Fixed automation bug when there are manifest warnings.</li>
+            <li>Fixed AutoHPT model and road bugs.</li>
+            <li>Fixed save after delete of car. </li>
+            <li>Enhancement, show how many warnings in the build report.</li>
+            <li>Enhancement, user can optionally update route departure times when changing train departure times.</li>
+            <li>Enhancement, added medium load priority.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -592,4 +600,3 @@
             <li>Access to the deprecated SecurityManager class has been removed;
                 Java access security is now enforced by default.</li>
         </ul>
-
