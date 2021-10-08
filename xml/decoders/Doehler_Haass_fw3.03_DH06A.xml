@@ -42,7 +42,7 @@
   -->
   <decoder>
     <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass">
-      <model model="DH06A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A_3.03" comment="DH06A for Köf with no analog support, with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+      <model model="DH06A v3.03 (firmware 3.03+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A_3.03" comment="DH06A for Köf with no analog support, with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
         <output name="1" label="Front|Light" maxcurrent="20mA"/>
         <output name="2" label="Rear|Light" maxcurrent="20mA"/>
         <output name="3" label="Onboard|LED" maxcurrent="20mA"/>
