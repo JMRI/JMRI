@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150223"/>
   <!--  Moved dimmed lights/shunting mode from Adv. Mapping tab to standard mapping table.
 		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
@@ -24,12 +24,12 @@
 		To add new decoders, use the individual file templates as used from firmware 3.03.
 		-->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2013/07/31 Creation 
+  <!-- 1 2013/07/31 Creation
 		First decoder template for the Doehler & Haass DH06A.
-		This is the only DH decoder with NO ANALOG SUPPORT, 
+		This is the only DH decoder with NO ANALOG SUPPORT,
 		built to fit into the small German N 'Köf II' Locomotive.
-		This DH06A file creates the corresponding family, and 
-		includes all decoders defs & specs. 
+		This DH06A file creates the corresponding family, and
+		includes all decoders defs & specs.
 		It requires variables and panes as defined in the doehler_hass/ folder.
   -->
   <decoder>
