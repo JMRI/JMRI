@@ -1417,6 +1417,9 @@ public class TreeEditor extends TreeViewer {
                                     // Check that the user has clicked on a row.
                                     Rectangle rect = _tree.getPathBounds(path);
                                     if ((e.getY() >= rect.y) && (e.getY() <= rect.y + rect.height)) {
+                                        // Select the row the user clicked on
+                                        _tree.setSelectionPath(path);
+                                        
                                         FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
                                         showPopup(e.getX(), e.getY(), femaleSocket, path);
                                     }

@@ -117,9 +117,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
             + "In any case, there's no risk of exposure here.")
-//    public ConfigBaseStationFrame(DCCppSensorManager sm,
-//            DCCppTurnoutManager tm,
-//            DCCppTrafficController t) {
     public ConfigBaseStationFrame(DCCppSystemConnectionMemo memo) {
         super(false, false);
         _memo = memo;
