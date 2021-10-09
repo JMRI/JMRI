@@ -75,14 +75,14 @@ public class ExecuteDelayed
     public Category getCategory() {
         return Category.COMMON;
     }
-
+/*
     private String getVariables(SymbolTable symbolTable) {
         java.io.StringWriter stringWriter = new java.io.StringWriter();
         java.io.PrintWriter writer = new java.io.PrintWriter(stringWriter);
         symbolTable.printSymbolTable(writer);
         return stringWriter.toString();
     }
-    
+*/    
     /**
      * Get a new timer task.
      */
