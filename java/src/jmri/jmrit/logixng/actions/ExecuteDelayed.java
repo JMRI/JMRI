@@ -104,7 +104,7 @@ public class ExecuteDelayed
                             conditionalNG.execute(_internalSocket);
                         }
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException | JmriException e) {
                     log.error("Exception thrown", e);
                 }
             }
