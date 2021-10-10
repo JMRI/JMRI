@@ -46,6 +46,21 @@ public class DefaultSymbolTable implements SymbolTable {
     }
     
     /**
+     * Create a new instance of DefaultSymbolTable from a previous symbol table
+     * and a stack.
+     * @param prevSymbolTable the previous symbol table
+     */
+    public DefaultSymbolTable(SymbolTable prevSymbolTable) {
+        _prevSymbolTable = null;
+        _symbols.putAll(prevSymbolTable.getSymbols());
+        _stack = new DefaultStack();
+        for (int i=0; i < prevSymbolTable.getStack().getCount(); i++) {
+            _stack.setValueAtIndex(i, prevSymbolTable.getStack().getValueAtIndex(i));
+        }
+        _firstSymbolIndex = _stack.getCount();
+    }
+    
+    /**
      * Get the previous symbol table
      * @return the symbol table
      */
@@ -95,7 +110,7 @@ public class DefaultSymbolTable implements SymbolTable {
     
     /** {@inheritDoc} */
     @Override
-    public void printSymbolTable(java.io.PrintStream stream) {
+    public void printSymbolTable(java.io.PrintWriter stream) {
         stream.format("printSymbolTable:%n");
         for (Map.Entry<String, Symbol> entry : _symbols.entrySet()) {
             stream.format("Key: %s, Name: %s, Index: %d, Value: %s%n",
@@ -198,6 +213,12 @@ public class DefaultSymbolTable implements SymbolTable {
         symbolDefinitions.forEach((parameter) -> {
             _symbols.remove(parameter.getName());
         });
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public Stack getStack() {
+        return _stack;
     }
     
     
