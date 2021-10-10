@@ -3,6 +3,7 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
+
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
@@ -14,8 +15,9 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for Tams systems. The Manager handles all the state\
  * changes Requires v1.4.7 or higher of TAMS software to work correctly
  * <P>
- * System names are "TSnnn:yy", where nnn is the Tams Object Number for a given
- * S88 Bus Module and yy is the port on that module.
+ * System names are "TSnnn:yy", where T is the user configurable system prefix,
+ * nnn is the Tams Object Number for a given S88 Bus Module and
+ * yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  * @author Jan Boen and Sergiu Costan
@@ -110,7 +112,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     }*/
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        systemName.substring(getSystemPrefix().length() + 1) +
+                        " into the Module and port format of nn:xx"); // NOI18N
                 //return null;
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
@@ -120,7 +124,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        systemName.substring(getSystemPrefix().length() + 1) +
+                        " into the Module and port format of nn:xx"); // NOI18N
                 //return null;
             }
             if ((board * 2) > maxSE) {//Check if newly defined board number is higher than what we know
@@ -141,10 +147,6 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
-            log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-            /*JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);*/
-            // TODO prevent further execution, return error flag
             throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
         }
 
@@ -153,21 +155,15 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             board = Integer.parseInt(curAddress.substring(0, seperator));
         } catch (NumberFormatException ex) {
-            log.error("First part of {} in front of : should be a number", curAddress);
             throw new JmriException("Module Address passed should be a number");
         }
         try {
             port = Integer.parseInt(curAddress.substring(seperator + 1));
         } catch (NumberFormatException ex) {
-            log.error("Second part of {} after : should be a number", curAddress);
             throw new JmriException("Port Address passed should be a number");
         }
 
         if (port == 0 || port > 16) {
-            log.error("Port number must be between 1 and 16");
-            /*JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);*/
-            // TODO prevent further execution, return error flag
             throw new JmriException("Port number must be between 1 and 16");
         }
         StringBuilder sb = new StringBuilder();
@@ -206,7 +202,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
                 } catch (JmriException e) {
-                    log.error("Error creating system name for {}:{}", board, port);
+                    throw new JmriException("Error creating system name for {}:{}");
                 }
                 s = getBySystemName(tmpSName);
                 if (s == null) {
