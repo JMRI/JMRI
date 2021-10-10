@@ -23,20 +23,20 @@
       <output name="2" label="F0r|Rear light" maxcurrent="300mA"/>
       <output name="3" label="AUX 3" maxcurrent="100mA"/>
       <output name="4" label="AUX 4" maxcurrent="100mA"/>
-      <output name="5" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="6" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="7" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="8" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="9" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="10" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="11" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="12" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="13" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="14" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="15" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="16" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="17" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
-      <output name="18" label="-"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="5" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="6" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="7" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="8" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="9" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="10" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="11" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="12" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="13" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="14" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="15" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="16" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="17" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="18" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
       <output name="19" label="Shunting mode"/>
         <size length="13" width="9.5" height="3.5" units="mm"/>
         <protocols>
