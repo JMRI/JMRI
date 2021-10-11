@@ -1,6 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -296,8 +296,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      *
      * @return properties hashmap
      **/
-    public HashMap<String, Object> getProperties(){
-        HashMap<String, Object> properties = new HashMap<String, Object>();
+    public LinkedHashMap<String, Object> getProperties(){
+        LinkedHashMap<String, Object> properties = new LinkedHashMap<String, Object>();
         switch (getOpCodeChar()) {
             case DCCppConstants.TURNOUT_REPLY:
                 if (isTurnoutDefDCCReply()) {
