@@ -29,8 +29,6 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean IS_MANIFEST = false;
-
     int _visitNumber = 1;
 
     // text panes
@@ -255,9 +253,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     updateLocoPanes(rl);
 
                     // now update the car pick ups and set outs
-                    blockCars(rl, IS_MANIFEST);
+                    blockCars(rl, !IS_MANIFEST);
 
-                    textStatus.setText(getStatus(rl, IS_MANIFEST));
+                    textStatus.setText(getStatus(rl, !IS_MANIFEST));
                 }
                 updateComplete();
             }
