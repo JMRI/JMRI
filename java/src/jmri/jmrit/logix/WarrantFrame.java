@@ -2182,11 +2182,9 @@ public class WarrantFrame extends WarrantRoute {
                         msg = Bundle.getMessage("cannotChangeNoop");
                         break;
                     }
-                    if (command != null) {
-                        if (command.hasBlockName()) {
-                            NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
-                            ts.setNamedBeanHandle(bh);
-                        }
+                    if (command.hasBlockName()) {
+                        NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
+                        ts.setNamedBeanHandle(bh);
                     }
                     break;
                 case BLOCK_COLUMN:
