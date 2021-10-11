@@ -302,9 +302,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 } else if (msg.isListTurnoutsMessage()) {
                     log.debug("List Turnouts Message");
                     r = "H 1 27 3 1"; //TODO: do this for real
+                } else if (msg.isTurnoutCmdMessage()) {
+                    log.debug("Turnout Command Message");
+                    r = "H " + msg.getTOIDString() + " " + msg.getTOStateInt();
                 } else {
-                    log.debug("TURNOUT_CMD detected");
-                    r = "H" + msg.getTOIDString() + " " + msg.getTOStateInt();
+                    log.debug("Unknown TURNOUT_CMD detected");
+                    r = "X";
                 }
                 reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = '{}'", reply);
@@ -313,7 +316,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.OUTPUT_CMD:
                 if (msg.isOutputCmdMessage()) {
                     log.debug("Output Command Message: '{}'", msg);
-                    r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
+                    r = "Y " + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
                     log.debug("Reply String: '{}'", r);
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
