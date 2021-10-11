@@ -397,6 +397,35 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _warrant;
     }
 
+    /*
+     * Does a deAllocation, but keeps the listener
+     */
+    protected boolean releaseWarrant(Warrant w) {
+        if (w != null && w.equals(_warrant)) {
+            if (_pathName != null) {
+                OPath path = getPathByName(_pathName);
+                if (path != null) {
+                    int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
+                    path.setTurnouts(0, false, lockState, false);
+                    Portal portal = path.getFromPortal();
+                    if (portal != null) {
+                        portal.setState(Portal.UNKNOWN);
+                    }
+                    portal = path.getToPortal();
+                    if (portal != null) {
+                        portal.setState(Portal.UNKNOWN);
+                    }
+                }
+                _pathName = null;
+            }
+            _ownsTOs = false;
+            _warrant = null;
+            setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
+            return true;
+        }
+        return false;
+    }
+
     public boolean isAllocatedTo(Warrant warrant) {
         if (warrant == null) {
             return false;
@@ -577,7 +606,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return error message, if any
      */
     public boolean deAllocate(Warrant warrant) {
-        boolean ret;
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
@@ -588,7 +616,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     sb.append(_warrant.getDisplayName());
                     sb.append("\".");
                     log.warn(sb.toString());
-                    return ret = false;
+                    return false;
                 }
             }
             try {
@@ -603,27 +631,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (warrant == null) {
             return false;
         }
-        ret = _warrant != null;
-        if (_pathName != null) {
-            OPath path = getPathByName(_pathName);
-            if (path != null) {
-                int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
-                path.setTurnouts(0, false, lockState, false);
-                Portal portal = path.getFromPortal();
-                if (portal != null) {
-                    portal.setState(Portal.UNKNOWN);
-                }
-                portal = path.getToPortal();
-                if (portal != null) {
-                    portal.setState(Portal.UNKNOWN);
-                }
-            }
-        }
-        _warrant = null;
-        _pathName = null;
-        _ownsTOs = false;
-        setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-        return ret;
+        return releaseWarrant(warrant);
     }
 
     public void setOutOfService(boolean set) {

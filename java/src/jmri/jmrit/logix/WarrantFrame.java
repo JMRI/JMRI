@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.event.*;
 import java.awt.MouseInfo;
@@ -20,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
-import jmri.SpeedStepMode;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
@@ -239,7 +237,7 @@ public class WarrantFrame extends WarrantRoute {
             public void componentResized(ComponentEvent e) {
                 Component c = (Component)e.getSource();
                 int height = c.getHeight();
-                _viewPortDim.height = _rowHeight * 10 + height - 518;
+                _viewPortDim.height = _rowHeight * 10 + height - 530;
                 _throttlePane.getViewport().setPreferredSize(_viewPortDim);
                 _throttlePane.invalidate();
                 _commandTable.invalidate();
@@ -1745,15 +1743,9 @@ public class WarrantFrame extends WarrantRoute {
                     case WAIT_SENSOR:
                         showComboDialog(SENSOR_STATES, dim);
                         break;
-                    case SPEEDSTEP:
-                        String[] items = new String[SpeedStepMode.values().length];
-                        int i = 0;
-                        for (SpeedStepMode sm : SpeedStepMode.values()) {
-                            items[i++] = sm.name; //sm.toString();
-                        }
-                        showComboDialog(items, dim);
-                        break;
                     default:
+                        // includes cases SPEED: and RUN_WARRANT:
+                        // SPEEDSTEP and NOOP not included in ComboBox
                         showTextDialog(dim);
                         break;
                 }
@@ -2132,8 +2124,13 @@ public class WarrantFrame extends WarrantRoute {
                         break;
                     }
                     Command prCmd = ts.getCommand();
-                    if (prCmd != null && !cmd.hasBlockName() && prCmd.hasBlockName()) {
-                        ts.setNamedBeanHandle(null);
+                    if (prCmd != null) {
+                       if (prCmd.equals(Command.NOOP)) {
+                           break;
+                       }
+                       if (!cmd.hasBlockName() && prCmd.hasBlockName()) {
+                           ts.setNamedBeanHandle(null);
+                       }
                     }
                     switch (cmd) {
                         case SPEED:
@@ -2181,6 +2178,10 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     ts.setValue((String) value);
                     Command command = ts.getCommand();
+                    if (command.equals(Command.NOOP)) {
+                        msg = Bundle.getMessage("cannotChangeNoop");
+                        break;
+                    }
                     if (command != null) {
                         if (command.hasBlockName()) {
                             NamedBeanHandle<?> bh = getPreviousBlockHandle(row);

@@ -563,19 +563,18 @@
              entry is the address bracketed with $ signs.</li>
             <li>Warrant activity can be traced on the console. An Enable/Disable button
              in Warrant Preferences activates this feature. Default is tracing disabled.</li>
-            <li>Unscripted speed changes are applied when a warranted train is inordinately
-             late in getting to the next block of the script. If after 10 time intervals
-             (the "Ramp Step Time Increment" in Warrant Preferences), the train has not
-             reached the block the train speed is increased by one "Ramp Step Throttle 
-             Increment". If after another 15 time intervals the train has still has not 
-             reached the block, speed is increased by another ramp speed interval. And 
-             once again after another 25 time intervals. Finally, if the train has not  
-             reached the block within 120 time intervals, (2 minutes if the default 
-             1000ms is the time interval), the warrant is terminated.
+            <li>"Slow Speed Assistance" can be applied when a warranted train is inordinately
+             late in getting to the next block of the script. This done only when train  
+             speeds are less than 10% throttle approaching a block. If the train has not
+             reached the block within 10 seconds of its scheduled script time, train
+             speed is increased by one "Ramp Step Throttle Increment". This is 
+             done at 10 second intervals until either the train reaches the block or has
+             10% throttle speed. Upon entering the block the original speed is restored.
              <br>This feature will allow balky engines with poor low speed characteristics
-             to reach their destinations without having to use extreme percentages for Ramp 
-             Step Throttle Increment. Hopefully this will not interfere with good
-             running engines from keeping to their scripted schedules.</li>
+             to reach their destinations without having to use extreme percentages for the
+             "Ramp Step Throttle Increment". The throttle setting for Slow Speed Assistance
+             may be changed in Warrant Preferences. Slow Speed Assistance can be disabled 
+             by setting 0%.</li>
         </ul>
 
    <h3>Web Access</h3>

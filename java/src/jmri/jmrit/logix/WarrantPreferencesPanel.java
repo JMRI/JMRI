@@ -49,6 +49,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JSpinner _timeIncre;
     private JTextField _rampIncre;
     private JTextField _throttleScale;
+    private JTextField _speedAssistance;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;
     private ArrayList<DataPair<String, Float>> _speedNameMap;
     private SpeedNameTableModel _speedNameModel;
@@ -79,6 +80,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         leftPanel.add(throttleScalePanel(true));
         leftPanel.add(speedRosterPanel(true));
         leftPanel.add(tracePanel(true));
+        leftPanel.add(speedAssistancePanel(true));
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
 //        rightPanel.add(interpretationPanel());
@@ -106,7 +108,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(leftPanel);
         panel.add(rightPanel);
         add(panel);
-    }
+     }
 
     private JPanel layoutScalePanel() {
         JPanel panel = new JPanel();
@@ -293,6 +295,18 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return p;
     }
 
+    private JPanel speedAssistancePanel(boolean vertical) {
+        _speedAssistance = new JTextField(6);
+        _speedAssistance.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getSpeedAssistance()*100));
+        JPanel incrPanel = new JPanel();
+        incrPanel.add(_speedAssistance);
+        incrPanel.add(new JLabel(Bundle.getMessage("percent")));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, incrPanel, "SpeedAssistance", "ToolTipSpeedAssistance"));
+        p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        return p;
+    }
+    
     private JPanel speedRosterPanel(boolean vertical) {
         ButtonGroup bg = new ButtonGroup();
         JPanel p = new JPanel();
@@ -565,6 +579,18 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
         if (preferences.getThrottleScale() != scale) {
             preferences.setThrottleScale(scale);
+            _isDirty = true;
+        }
+
+        scale = preferences.getSpeedAssistance();
+        try {
+            scale = NumberFormat.getNumberInstance().parse(_speedAssistance.getText()).floatValue();
+        } catch (java.text.ParseException pe) {
+            _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getSpeedAssistance()*100));
+        }
+        scale /= 100;
+        if (preferences.getSpeedAssistance() != scale) {
+            preferences.setSpeedAssistance(scale);
             _isDirty = true;
         }
 

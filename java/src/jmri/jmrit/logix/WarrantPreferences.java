@@ -57,6 +57,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static final String PROMPT   = "PROMPT";
     public static final String MERGE_ALL = "MERGE_ALL";
     public static final String TRACE = "Trace";
+    public static final String SPEED_ASSISTANCE = "SpeedAssistance";
 
     private String _fileName;
     private float _scale = 87.1f;
@@ -74,6 +75,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
     
     private boolean _trace = false;         // trace warrant activity to log.info on the console
+    private float _slowSpeedAssistance = 0.10f;
     /**
      * Get the default instance.
      *
@@ -152,6 +154,10 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         Element trace = layoutParm.getChild(TRACE);
         if (trace != null) {
             _trace = "true".equals(trace.getText());
+        }
+        Element speedAssistance = layoutParm.getChild(SPEED_ASSISTANCE);
+        if (speedAssistance != null) {
+            _slowSpeedAssistance = Float.parseFloat(speedAssistance.getText());
         }
     }
 
@@ -317,9 +323,14 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             Element shutdownPref = new Element(SHUT_DOWN);
             shutdownPref.setText(_shutdown.toString());
             prefs.addContent(shutdownPref);
+
             Element tracePref = new Element(TRACE);
             tracePref.setText(_trace ? "true" : "false");
             prefs.addContent(tracePref);
+
+            Element speedAssistancePref = new Element(SPEED_ASSISTANCE);
+            speedAssistancePref.setText(String.valueOf(_slowSpeedAssistance));
+            prefs.addContent(speedAssistancePref);
             root.addContent(prefs);
 
             prefs = new Element(SPEED_MAP_PARAMS);
@@ -421,6 +432,14 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     void setTrace(boolean t) {
         _trace = t;
+    }
+
+    float getSpeedAssistance() {
+        return _slowSpeedAssistance;
+    }
+
+    void setSpeedAssistance(float f) {
+        _slowSpeedAssistance = f;
     }
 
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
