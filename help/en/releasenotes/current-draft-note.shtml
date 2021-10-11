@@ -206,7 +206,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Added DH06A definition for fw 3.12.050</li>
             </ul>
 
         <h4>ESU</h4>
@@ -403,6 +403,9 @@
           <li>Add a <strong>Table</strong> tab to Local Variable and Memory Actions.
           The table reference is used to identify the cell that has content that will be copied
           to the selected local or memory variable.</li>
+          <li>The <strong>Highlight row in ConditionalNG Editor</strong> option in <strong>
+          Preferences &rArr; LogixNG</strong> has been added.  This can be useful for seeing which
+          row is currently selected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
