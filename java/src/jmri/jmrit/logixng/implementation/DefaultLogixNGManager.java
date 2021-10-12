@@ -132,16 +132,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-    public boolean resolveAllTrees(List<String> errors) {
-        boolean result = true;
-        for (LogixNG logixNG : _tsys.values()) {
-            result = result && logixNG.setParentForAllChildren(errors);
-        }
-        return result;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean setupAllLogixNGs(List<String> errors) {
         boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
