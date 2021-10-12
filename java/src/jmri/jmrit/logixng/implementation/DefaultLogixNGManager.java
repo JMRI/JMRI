@@ -143,7 +143,51 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
+        checkItemsHaveParents();
         return result;
+    }
+
+    private void checkItemsHaveParents(SortedSet<? extends MaleSocket> set, List<MaleSocket> beansWithoutParentList) {
+        for (MaleSocket bean : set) {
+            if (((Base)bean).getParent() == null) beansWithoutParentList.add(bean);
+        }
+    }
+
+    private void checkItemsHaveParents() {
+        List<MaleSocket> beansWithoutParentList = new ArrayList<>();
+        checkItemsHaveParents(InstanceManager.getDefault(AnalogActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalBooleanActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(StringActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(AnalogExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(StringExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        
+        if (!beansWithoutParentList.isEmpty()) {
+            List<String> errors = new ArrayList<>();
+            for (Base b : beansWithoutParentList) {
+                b.setup();
+                b.setParentForAllChildren(errors);
+            }
+            for (Base b : beansWithoutParentList) {
+                if (b.getParent() == null) {
+                    log.error("Item has no parent: {}, {}, {}",
+                            b.getSystemName(),
+                            b.getUserName(),
+                            b.getLongDescription());
+                    
+                    for (int i=0; i < b.getChildCount(); i++) {
+                        if (b.getChild(i).isConnected()) {
+                            log.error("    Child: {}, {}, {}",
+                                    b.getChild(i).getConnectedSocket().getSystemName(),
+                                    b.getChild(i).getConnectedSocket().getUserName(),
+                                    b.getChild(i).getConnectedSocket().getLongDescription());
+                        }
+                    }
+                    log.error("                                                                 ");
+                }
+            }
+        }
     }
 
     /** {@inheritDoc} */
