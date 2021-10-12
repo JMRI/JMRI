@@ -342,11 +342,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         switch (col) {
         case WARRANT_COLUMN:
         case TRAIN_NAME_COLUMN:
+        case ADDRESS_COLUMN:
             return new JTextField(13).getPreferredSize().width;
         case ROUTE_COLUMN:
             return new JTextField(25).getPreferredSize().width;
-        case ADDRESS_COLUMN:
-            return new JTextField(13).getPreferredSize().width;
         case ALLOCATE_COLUMN:
         case DEALLOC_COLUMN:
         case SET_COLUMN:

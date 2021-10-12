@@ -20,6 +20,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.ThreadingUtil;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
@@ -1159,7 +1160,7 @@ public class WarrantFrame extends WarrantRoute {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             _warrant.deAllocate();
-            setStatusText(msg, Color.red);
+            setStatus(msg, Color.red);
             return;
         }
 
@@ -1179,7 +1180,7 @@ public class WarrantFrame extends WarrantRoute {
                 msg = Bundle.getMessage("warnStart", getTrainName(), _warrant.getCurrentBlockName());
                 JOptionPane.showMessageDialog(this, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                setStatusText(msg, Color.red);
+                setStatus(msg, Color.red);
                 return;
             } else if (msg.equals("BlockDark")) {
                 msg = Bundle.getMessage("BlockDark", _warrant.getCurrentBlockName(), getTrainName());
@@ -1187,11 +1188,11 @@ public class WarrantFrame extends WarrantRoute {
                         Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                     stopRunTrain();
-                    setStatusText(msg, Color.red);
+                    setStatus(msg, Color.red);
                     return;
                 }
             }
-            setStatusText(msg, Color.black);
+            setStatus(msg, Color.black);
         }
 
         if (_learnThrottle == null) {
@@ -1212,7 +1213,7 @@ public class WarrantFrame extends WarrantRoute {
             stopRunTrain();
             JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
-            setStatusText(msg, Color.red);
+            setStatus(msg, Color.red);
         }
     }
 
@@ -1253,7 +1254,7 @@ public class WarrantFrame extends WarrantRoute {
             JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
             _warrant.deAllocate();
-            setStatusText(msg, Color.black);
+            setStatus(msg, Color.black);
             return;
         }
         _warrant.addPropertyChangeListener(this);
@@ -1264,7 +1265,7 @@ public class WarrantFrame extends WarrantRoute {
             clearWarrant();
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            setStatusText(msg, Color.red);
+            setStatus(msg, Color.red);
             return;
         } else
         
@@ -1279,10 +1280,10 @@ public class WarrantFrame extends WarrantRoute {
                     Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                 clearWarrant();
-                setStatusText(msg, Color.red);
+                setStatus(msg, Color.red);
                 return;
             } else {
-                setStatusText(_warrant.getRunningMessage(), myGreen);
+                setStatus(_warrant.getRunningMessage(), myGreen);
             }
         }
     }
@@ -1310,14 +1311,14 @@ public class WarrantFrame extends WarrantRoute {
                         if ((lastBlock.getState() & OBlock.UNDETECTED) != 0
                                 && currentBlock.equals(orders.get(orders.size() - 2).getBlock())) {
                             setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
-                            setStatusText(Bundle.getMessage("LearningStop"), myGreen);
+                            setStatus(Bundle.getMessage("LearningStop"), myGreen);
                         } else {
                             JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock),
                                     Bundle.getMessage("WarningTitle"),
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        setStatusText(Bundle.getMessage("LearningStop"), myGreen);
+                        setStatus(Bundle.getMessage("LearningStop"), myGreen);
                     }
                 }
             }
@@ -1336,9 +1337,11 @@ public class WarrantFrame extends WarrantRoute {
         return _warrant;
     }
 
-    protected void setStatusText(String msg, Color c) {
-        _statusBox.setForeground(c);
-        _statusBox.setText(msg);
+    private void setStatus(String msg, Color c) {
+        ThreadingUtil.runOnLayoutEventually(()-> {
+            _statusBox.setForeground(c);
+            _statusBox.setText(msg);
+        });
     }
 
     @Override
@@ -1496,7 +1499,7 @@ public class WarrantFrame extends WarrantRoute {
                     break;
                 default:
             }
-            setStatusText(msg, color);
+            setStatus(msg, color);
         }
         invalidate();
     }

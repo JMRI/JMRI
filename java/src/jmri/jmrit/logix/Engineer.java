@@ -1360,7 +1360,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                     if (log.isDebugEnabled()) 
                                         log.debug("Extending ramp to reach block {}. speed= {}",
                                                 _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
-                                    long waittime = 0;
+                                    int waittime = 0;
                                     while (_endBlockIdx > _warrant.getCurrentOrderIndex() && waittime <= 60*timeIncrement && getSpeedSetting() > 0) {
                                         // Until loco reaches end block, continue current speed.
                                         if (waittime == 5*timeIncrement || waittime == 10*timeIncrement || 
@@ -1398,7 +1398,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                     executeComand(_currentCommand, timeIncrement);
                                 }
                                 _currentCommand = _commands.get(++_idxCurrentCommand);
-                                cmdDist = _speedUtil.getTrackSpeed(_normalSpeed) * _currentCommand.getTime();
+                                cmdDist = scriptTrackSpeed * _currentCommand.getTime();
                                 rampDist = 0;
                                 advanceToCommandIndex(_idxCurrentCommand); // skip up to this command
                             }
