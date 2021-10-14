@@ -98,32 +98,32 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         }, "wait for button to be enabled");
         jboSelectAll.doClick();
         
-        JButtonOperator jboMove = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return jboMove.isEnabled();
-        }, "wait for move button to be enabled 3");
-        
-        // Move train using conductor window       
-        jboMove.doClick();
-        Assert.assertEquals("Train moved", "North Industries", train2.getCurrentLocationName());
-        
-        // move to next location
-        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
-        jboSelectAll.doClick();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return jboMove.isEnabled();
-        }, "wait for move button to be enabled 4");
-        jboMove.doClick();
-        Assert.assertEquals("Train moved", "South End Staging", train2.getCurrentLocationName());
-        
-        // terminate train
-        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
-        jboSelectAll.doClick();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return jboMove.isEnabled();
-        }, "wait for move button to be enabled 5");
-        jboMove.doClick();
-        Assert.assertFalse(train2.isBuilt());
+//        JButtonOperator jboMove = new JButtonOperator(jfoc, Bundle.getMessage("Move"));
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return jboMove.isEnabled();
+//        }, "wait for move button to be enabled 3");
+//        
+//        // Move train using conductor window       
+//        jboMove.doClick();
+//        Assert.assertEquals("Train moved", "North Industries", train2.getCurrentLocationName());
+//        
+//        // move to next location
+//        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
+//        jboSelectAll.doClick();
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return jboMove.isEnabled();
+//        }, "wait for move button to be enabled 4");
+//        jboMove.doClick();
+//        Assert.assertEquals("Train moved", "South End Staging", train2.getCurrentLocationName());
+//        
+//        // terminate train
+//        Assert.assertTrue("confirm button is enabled", jboSelectAll.isEnabled());
+//        jboSelectAll.doClick();
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return jboMove.isEnabled();
+//        }, "wait for move button to be enabled 5");
+//        jboMove.doClick();
+//        Assert.assertFalse(train2.isBuilt());
 
         JUnitUtil.dispose(f);
     }
