@@ -8721,7 +8721,12 @@ final public class LayoutEditorTools {
 
         Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
-        //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
+        //Track segment is normally used to determine the alignment,
+        // therefore this is opposite to the block that we are protecting
+
+        //For edge connectors we use the block that is in the currebt layout editor,
+        // and specify the direction of the protecting block (dir)
+
         TrackSegment t = boundary.getConnect2();
         boolean dir = true;
         if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
@@ -8745,7 +8750,12 @@ final public class LayoutEditorTools {
 
         Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
-        //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
+        //Track segment is used to determine the alignment,
+        // therefore this is opposite to the block that we are protecting
+
+        //For edge connectors we use the block that is in the currebt layout editor,
+        // and specify the direction of the protecting block (dir)
+
         TrackSegment t = boundary.getConnect1();
         boolean dir = false;
         if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
