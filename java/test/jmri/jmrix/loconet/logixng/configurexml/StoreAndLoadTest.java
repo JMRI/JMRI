@@ -238,7 +238,7 @@ public class StoreAndLoadTest {
             results = cm.load(secondFile);
             log.debug(results ? "load was successful" : "store failed");
             if (results) {
-                if (! logixNG_Manager.setupAllLogixNGs(new ArrayList<>())) throw new RuntimeException();
+                logixNG_Manager.setupAllLogixNGs();
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
