@@ -7,7 +7,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -86,11 +85,13 @@ public class TrainConductorFrameTest extends OperationsTestCase {
             return p.modifyButton.isEnabled();
         }, "wait for modify button to be enabled");
         
-        // Find conductor window by name
-        JFrameOperator jfoc = new JFrameOperator(
-                Bundle.getMessage("TitleTrainConductor") + " (" + train2.getName() + ")");
-        Assert.assertNotNull(jfoc);
+        Assert.assertEquals("confirm train name", train2.getName(), p.textTrainName.getText());
         
+//        // Find conductor window by name
+//        JFrameOperator jfoc = new JFrameOperator(
+//                Bundle.getMessage("TitleTrainConductor") + " (" + train2.getName() + ")");
+//        Assert.assertNotNull(jfoc);
+//        
 //        // Need to select all before moving train
 //        JButtonOperator jboSelectAll = new JButtonOperator(jfoc, Bundle.getMessage("SelectAll"));
 //        jmri.util.JUnitUtil.waitFor(() -> {
