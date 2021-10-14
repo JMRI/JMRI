@@ -140,19 +140,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
-                    @Override
-                    public void run() {
-                        // If the timer times out, send a request for status
-                        DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                            .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
-                    }
-                };
+                @Override
+                public void run() {
+                    // If the timer times out, send a request for status
+                    DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+                    .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                }
+            };
         } else {
             keepAliveTimer.cancel();
         }
         jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
-    
+
 
     // base class methods for the DCCppSimulatorPortController interface
 
@@ -322,7 +322,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         log.warn("Unknown turnout ID '{}'", msg.getTOIDInt());
                         r = "X";
                     }
-                    
+
                 } else {
                     log.debug("Unknown TURNOUT_CMD detected");
                     r = "X";
@@ -578,20 +578,27 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /* Send list of creation command with states for all defined turnouts and outputs */
     private void generateTurnoutListReply() {
-        turnouts.forEach((key, value) -> { //send back the full create string for each
-            DCCppReply r = new DCCppReply(value.toString());
-            writeReply(r);
-         });
+        if (!turnouts.isEmpty()) { 
+            turnouts.forEach((key, value) -> { //send back the full create string for each
+                DCCppReply r = new DCCppReply(value);
+                writeReply(r);
+            });
+        } else {
+            writeReply(new DCCppReply("X No Turnouts Defined"));            
+        }
     }
 
     /* Send list of turnout states */
     private void generateTurnoutStatesReply() {
-        turnouts.forEach((key, value) -> { 
-            String s = value.toString();
-            s = s.substring(0,2) + key + s.substring(s.length()-2); //command char + id + state
-            DCCppReply r = new DCCppReply(s);
-            writeReply(r);
-         });
+        if (!turnouts.isEmpty()) { 
+            turnouts.forEach((key, value) -> { 
+                String s = value.substring(0,2) + key + value.substring(value.length()-2); //command char + id + state
+                DCCppReply r = new DCCppReply(s);
+                writeReply(r);
+            });
+        } else {
+            writeReply(new DCCppReply("X No Turnouts Defined"));            
+        }
     }
 
     /* 'c' current request message gets multiple reply messages */
