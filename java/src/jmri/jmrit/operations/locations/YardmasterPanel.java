@@ -50,7 +50,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     public YardmasterPanel(Location location) {
         super();
-        initComponents();
 
         _location = location;
 

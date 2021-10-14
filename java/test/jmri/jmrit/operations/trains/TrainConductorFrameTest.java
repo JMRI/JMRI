@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -163,5 +164,41 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertTrue(p.selectButton.isEnabled());
         
         JUnitUtil.dispose(f);
+    }
+    
+//    @Test
+//    public void testLoop() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testModifyButton();
+//            tearDown();
+//        }
+//    }
+//    
+//    @Test
+//    public void testLoop2() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testMoveButton();
+//            tearDown();
+//        }
+//    }
+    
+    @Test
+    public void testLoop3() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testCTor();
+            tearDown();
+        }
+    }
+    
+    @Override
+    @Before
+    public void setUp() {
+        super.setUp();
+
+        // disable build messages
+        InstanceManager.getDefault(TrainManager.class).setBuildMessagesEnabled(false);
     }
 }

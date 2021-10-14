@@ -54,7 +54,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
     public YardmasterByTrackPanel(Location location) {
         super();
-        initComponents();
 
         // this window doesn't use the set button
         modifyButton.setVisible(false);

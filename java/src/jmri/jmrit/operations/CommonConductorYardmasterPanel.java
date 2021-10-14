@@ -105,6 +105,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     public CommonConductorYardmasterPanel() {
         super();
+        initComponents();
     }
 
     public void initComponents() {

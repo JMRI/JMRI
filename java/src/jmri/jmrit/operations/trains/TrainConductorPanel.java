@@ -43,7 +43,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     public TrainConductorPanel(Train train) {
         super();
-        initComponents();
 
         _train = train;
 
