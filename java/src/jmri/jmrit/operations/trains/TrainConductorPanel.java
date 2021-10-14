@@ -236,7 +236,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainManager.TRAINS_SHOW_FULL_NAME_PROPERTY)) {
-            // remove car from list
+            // remove car from list so the text get's updated
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
                 removeCarFromList(car);

@@ -174,21 +174,12 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 //            tearDown();
 //        }
 //    }
-//    
-//    @Test
-//    public void testLoop2() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testMoveButton();
-//            tearDown();
-//        }
-//    }
     
     @Test
-    public void testLoop3() {
+    public void testLoop2() {
         for (int i = 0; i < 1000; i++) {
             setUp();
-            testCTor();
+            testMoveButton();
             tearDown();
         }
     }
