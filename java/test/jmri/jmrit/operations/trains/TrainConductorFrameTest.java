@@ -73,10 +73,10 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         train2.setNumberEngines("2");
         
         TrainConductorFrame f = new TrainConductorFrame(train2);
-        TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
-        Assert.assertNotNull(p);
-        JemmyUtil.waitFor(f);
-        
+//        TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
+//        Assert.assertNotNull(p);
+//        JemmyUtil.waitFor(f);
+//        
         // update panel by building train
 //        Assert.assertTrue(train2.build());
 //        Assert.assertTrue(train2.isBuilt());

@@ -113,9 +113,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
         addComboBoxAction(trackComboBox);
         addButtonAction(nextButton);
-
-        setVisible(true);
-
     }
 
     // Select, Clear, and Next Buttons

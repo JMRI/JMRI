@@ -119,9 +119,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         // listen for trains being built
         addTrainListeners();
-
-        setVisible(true);
-
     }
 
     // Select, Clear, and Set Buttons

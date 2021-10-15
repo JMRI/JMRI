@@ -152,19 +152,19 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         super.buttonActionPerformed(ae);
     }
 
-    private boolean queued = false;
+//    private boolean queued = false;
 
     @Override
     protected void update() {
         log.debug("queue update");
-        if (queued) {
-            return;
-        }
-        queued = true;
+//        if (queued) {
+//            return;
+//        }
+//        queued = true;
         // use invokeLater to prevent deadlock
 //        SwingUtilities.invokeLater(() -> {
             log.debug("run update, setMode: {}", isSetMode);
-            queued = false;
+//            queued = false;
             initialize();
             if (_train != null && _train.getRoute() != null) {
                 textTrainName.setText(_train.getIconName());
