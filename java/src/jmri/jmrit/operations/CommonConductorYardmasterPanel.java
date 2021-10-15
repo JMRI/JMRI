@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -98,7 +99,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     // check boxes
     protected ConcurrentHashMap<String, JCheckBox> checkBoxes = new ConcurrentHashMap<>();
-    protected List<RollingStock> rollingStock = new ArrayList<>();
+    protected List<RollingStock> rollingStock = Collections.synchronizedList(new ArrayList<>());
 
     // flags
     protected boolean isSetMode = false; // when true, cars that aren't selected (checkbox) can be "set"
@@ -193,8 +194,6 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         addButtonAction(selectButton);
         addButtonAction(clearButton);
         addButtonAction(modifyButton);
-
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
     // Select, Clear, and Set Buttons

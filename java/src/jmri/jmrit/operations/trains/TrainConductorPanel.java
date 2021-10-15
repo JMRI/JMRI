@@ -33,7 +33,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     // panels
     JPanel pTrainDepartureTime = new JPanel();
 
-    // major buttons
     /**
      * Default constructor required to use as JavaBean.
      */
@@ -89,8 +88,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         pRow14.add(pButtons);
         pRow14.add(pMoveButton);
 
-        update();
-
         add(pRow2);
         add(pLocation);
         add(textTrainCommentPane);
@@ -102,6 +99,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(movePane);
         add(pStatus);
         add(pRow14);
+        
+        update();
 
         // setup buttons
         addButtonAction(moveButton);
