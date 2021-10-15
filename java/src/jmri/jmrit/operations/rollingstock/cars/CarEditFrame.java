@@ -156,6 +156,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     }
 
     public void load(Car car) {
+        setTitle(Bundle.getMessage("TitleCarEdit"));
         super.load(car);
 
         passengerCheckBox.setSelected(car.isPassenger());
@@ -189,8 +190,6 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         colorComboBox.setSelectedItem(car.getColor());
         groupComboBox.setSelectedItem(car.getKernelName());
-        
-        setTitle(Bundle.getMessage("TitleCarEdit"));
     }
 
     @Override

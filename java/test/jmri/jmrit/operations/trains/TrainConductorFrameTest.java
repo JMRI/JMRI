@@ -128,6 +128,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     }
     
     @Test
+    @Disabled("Test can randomly hang Windows CI Test")
     public void testModifyButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
