@@ -8721,29 +8721,28 @@ final public class LayoutEditorTools {
 
         Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
-        //Track segment is normally used to determine the alignment,
+        //Track segment is used to determine the alignment,
         // therefore this is opposite to the block that we are protecting
 
         //For edge connectors we use the block that is in the currebt layout editor,
         // and specify the direction of the protecting block (dir)
 
-        TrackSegment t = boundary.getConnect2();
-        boolean dir = true;
-        if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
-            t = boundary.getConnect1();
-        } else {
-            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                t = boundary.getConnect1();
-            }
+        boolean dir;
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR){
+            dir = false;
+        }else{
+            dir = true;
         }
-
+        TrackSegment t = boundary.getConnect1();
         Point2D pt2;
-        if (t.getConnect1() == boundary) {
+        if (t.getConnect1() == boundary){
             pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
+            //not called if edge connector
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+
     }
 
     private void placeWestBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
@@ -8756,20 +8755,21 @@ final public class LayoutEditorTools {
         //For edge connectors we use the block that is in the currebt layout editor,
         // and specify the direction of the protecting block (dir)
 
-        TrackSegment t = boundary.getConnect1();
-        boolean dir = false;
-        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
-            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                t = boundary.getConnect2();
-            }
+        boolean dir;
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR){
+            dir = true;
+        }else{
+            dir = false;
         }
-
+        TrackSegment t = boundary.getConnect1();
         Point2D pt2;
-        if (t.getConnect1() == boundary) {
+        if (t.getConnect1() == boundary){
             pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
+            //not called if edge connector
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
+
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
     }
