@@ -11053,16 +11053,16 @@
       <conditionalStateVariable operator="1" negated="no" type="4" systemName="LU-MX" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="3" systemName="LUX6" data="16" delay="0" string="" />
     </conditional>
-    <conditional systemName="IX-OPSC1" userName="OPS 00:00" antecedent="R1" logicType="1" triggerOnChange="yes">
+    <conditional systemName="IX-OPSC1" userName="OPS 01:00" antecedent="R1" logicType="1" triggerOnChange="yes">
       <systemName>IX-OPSC1</systemName>
-      <userName>OPS 00:00</userName>
-      <conditionalStateVariable operator="4" negated="no" type="10" systemName="Clock" dataString="" num1="0" num2="1" triggersCalc="yes" />
+      <userName>OPS 01:00</userName>
+      <conditionalStateVariable operator="4" negated="no" type="10" systemName="Clock" dataString="" num1="60" num2="61" triggersCalc="yes" />
       <conditionalAction option="1" type="16" systemName=" " data="-1" delay="0" string="preference:Scripts/EMRA OPs Power Cycle.py" />
     </conditional>
-    <conditional systemName="IX-OPSC2" userName="OPS 12:00" antecedent="R1" logicType="1" triggerOnChange="yes">
+    <conditional systemName="IX-OPSC2" userName="OPS 11:00" antecedent="R1" logicType="1" triggerOnChange="yes">
       <systemName>IX-OPSC2</systemName>
-      <userName>OPS 12:00</userName>
-      <conditionalStateVariable operator="4" negated="no" type="10" systemName="Clock" dataString="" num1="720" num2="721" triggersCalc="yes" />
+      <userName>OPS 11:00</userName>
+      <conditionalStateVariable operator="4" negated="no" type="10" systemName="Clock" dataString="" num1="660" num2="661" triggersCalc="yes" />
       <conditionalAction option="1" type="16" systemName=" " data="-1" delay="0" string="preference:Scripts/EMRA OPs Power Cycle.py" />
     </conditional>
     <conditional systemName="IX-VEC1" userName="VEM-turnouts active" antecedent="R1 and R2 and R3 and R4 and R5 and R6" logicType="2" triggerOnChange="yes">
