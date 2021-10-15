@@ -72,7 +72,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
         
-        TrainConductorFrame f = new TrainConductorFrame(train2);
+//        TrainConductorFrame f = new TrainConductorFrame(train2);
 //        TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
 //        Assert.assertNotNull(p);
 //        JemmyUtil.waitFor(f);
@@ -127,7 +127,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 //        jboMove.doClick();
 //        Assert.assertFalse(train2.isBuilt());
 
-        JUnitUtil.dispose(f);
+//        JUnitUtil.dispose(f);
     }
     
     @Test
