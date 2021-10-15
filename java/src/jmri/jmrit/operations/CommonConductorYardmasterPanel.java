@@ -621,7 +621,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] { _train.getName() });
         }
-        if (!_train.isBuilt()) {
+        if (!_train.isBuilt() || rl == null) {
             return _train.getStatus();
         }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {

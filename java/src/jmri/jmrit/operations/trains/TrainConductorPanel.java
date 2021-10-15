@@ -3,7 +3,10 @@ package jmri.jmrit.operations.trains;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,7 +162,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         queued = true;
         // use invokeLater to prevent deadlock
-        SwingUtilities.invokeLater(() -> {
+//        SwingUtilities.invokeLater(() -> {
             log.debug("run update, setMode: {}", isSetMode);
             queued = false;
             initialize();
@@ -202,7 +205,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 }
                 updateComplete();
             }
-        });
+//        });
     }
 
     @Override
