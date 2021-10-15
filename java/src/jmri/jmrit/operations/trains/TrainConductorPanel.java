@@ -203,8 +203,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 } else {
                     moveButton.setText(Bundle.getMessage("Move"));
                 }
-                updateComplete();
             }
+            updateComplete();
 //        });
     }
 
@@ -215,6 +215,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }
+        super.dispose();
     }
 
     @Override
