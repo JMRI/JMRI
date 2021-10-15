@@ -177,23 +177,25 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 //        }
 //    }
     
-//    @Test
-//    public void testLoop2() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testMoveButton();
-//            tearDown();
-//        }
-//    }
-    
     @Test
     public void testLoop2() {
         for (int i = 0; i < 1000; i++) {
             setUp();
-            testCTor();
+            testMoveButton();
             tearDown();
         }
-    }  
+    }
+    
+    // Passes Window CI test in 128s. 
+    
+//    @Test
+//    public void testLoop2() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testCTor();
+//            tearDown();
+//        }
+//    }  
     
     @Override
     @Before
