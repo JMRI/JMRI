@@ -110,7 +110,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
         if (_train != null) {
             textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
-            textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
+//            textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
             
             // show train comment box only if there's a comment
             if (_train.getComment().equals(Train.NONE)) {
@@ -124,7 +124,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 textTrainRouteCommentPane.setVisible(
                         !_train.getRoute().getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
                 textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
-                textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
+//                textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
             }
 
             // Does this train have a unique railroad name?

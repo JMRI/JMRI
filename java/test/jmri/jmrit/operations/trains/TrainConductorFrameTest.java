@@ -70,7 +70,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
         
-        TrainConductorFrame f = new TrainConductorFrame(null);
+        TrainConductorFrame f = new TrainConductorFrame(train2);
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         Assert.assertNotNull(p);
         JemmyUtil.waitFor(f);
@@ -174,6 +174,8 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 //            tearDown();
 //        }
 //    }
+    
+    // Passes Window CI test in 132s when train is null.
     
     @Test
     public void testLoop2() {
