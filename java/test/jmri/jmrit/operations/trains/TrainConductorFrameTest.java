@@ -41,8 +41,6 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     public void testMoveButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        Setup.setPrintLoadsAndEmptiesEnabled(true);
-        
         JUnitOperationsUtil.initOperationsData();
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -72,7 +70,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
         
-        TrainConductorFrame f = new TrainConductorFrame(train2);
+        TrainConductorFrame f = new TrainConductorFrame(null);
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         Assert.assertNotNull(p);
         JemmyUtil.waitFor(f);
