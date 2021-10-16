@@ -200,8 +200,17 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     // now update the car pick ups and set outs
                     blockCars(rl, IS_MANIFEST);
                 }
-                updateComplete();
+
+                textStatus.setText(getStatus(rl, IS_MANIFEST));
+
+                // adjust move button text
+                if (rl == _train.getTrainTerminatesRouteLocation()) {
+                    moveButton.setText(Bundle.getMessage("Terminate"));
+                } else {
+                    moveButton.setText(Bundle.getMessage("Move"));
+                }
             }
+            updateComplete();
         });
     }
 
