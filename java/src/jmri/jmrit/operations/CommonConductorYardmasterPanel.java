@@ -678,6 +678,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         });
         rollingStock.clear();
     }
+    
+    @Override
+    public void dispose() {
+        _train = null;
+        _location = null;
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
