@@ -70,6 +70,8 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
         
+        Setup.setPrintRouteCommentsEnabled(false);
+        
         TrainConductorFrame f = new TrainConductorFrame(train2);
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         Assert.assertNotNull(p);
