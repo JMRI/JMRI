@@ -204,7 +204,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     moveButton.setText(Bundle.getMessage("Move"));
                 }
             }
-            updateComplete();
+//            updateComplete();
 //        });
     }
 
