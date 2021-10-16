@@ -10606,7 +10606,7 @@
       <logixConditional systemName="IX-LU-BRIDGEC9" order="8" />
       <logixConditional systemName="IX-LU-BRIDGEC10" order="9" />
     </logix>
-    <logix userName="OPS" enabled="yes">
+    <logix userName="OPS" enabled="no">
       <systemName>IX-OPS</systemName>
       <userName>OPS</userName>
       <logixConditional systemName="IX-OPSC1" order="0" />
