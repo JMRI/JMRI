@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -39,7 +39,6 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     }
     
     @Test
-    @Disabled("Test can randomly hang Windows CI Test")
     public void testMoveButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
@@ -72,12 +71,15 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
         
+        // need to disable so test dead locks don't occur
         Setup.setPrintRouteCommentsEnabled(false);
         
         TrainConductorFrame f = new TrainConductorFrame(train2);
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         Assert.assertNotNull(p);
         JemmyUtil.waitFor(f);
+        
+        train2.build();
         
         // update panel by building train
         Assert.assertTrue(train2.build());
@@ -151,6 +153,9 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
         
+        // need to disable so test dead locks don't occur
+        Setup.setPrintRouteCommentsEnabled(false);
+        
         TrainConductorFrame f = new TrainConductorFrame(train2);        
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         JemmyUtil.waitFor(f);
@@ -170,26 +175,26 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
     
-//    @Test
-//    public void testLoop() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testModifyButton();
-//            tearDown();
-//        }
-//    }
+    @Test
+    public void testLoop() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testModifyButton();
+            tearDown();
+        }
+    }
     
     // Passes Window CI test with train, but no JTextPane() modifications.  149s
     // Passes Window CI test in 132s when train is null.
     
-    @Test
-    public void testLoop2() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testMoveButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop2() {
+//        for (int i = 0; i < 1; i++) {
+//            setUp();
+//            testMoveButton();
+//            tearDown();
+//        }
+//    }
     
     // Passes Window CI test in 128s. 
     
@@ -202,8 +207,8 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 //        }
 //    }  
     
+    @BeforeEach
     @Override
-    @Before
     public void setUp() {
         super.setUp();
 
