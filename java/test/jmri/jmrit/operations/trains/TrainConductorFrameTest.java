@@ -148,7 +148,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         // improve test coverage
         train2.setRailroadName("SFF Railroad Name");
-        train2.setComment("SFF comment for testing");
+//        train2.setComment("SFF comment for testing");
         
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
@@ -177,7 +177,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     
     @Test
     public void testLoop() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             setUp();
             testModifyButton();
             tearDown();
