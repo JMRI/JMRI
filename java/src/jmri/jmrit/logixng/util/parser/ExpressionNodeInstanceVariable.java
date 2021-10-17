@@ -43,7 +43,6 @@ public class ExpressionNodeInstanceVariable implements ExpressionNode {
         
         try {
             Field field = obj.getClass().getField(_fieldName);
-            if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
             return field.get(obj);
         } catch (NoSuchFieldException | IllegalAccessException ex) {
             throw new ReflectionException("Reflection exception", ex);
@@ -67,7 +66,6 @@ public class ExpressionNodeInstanceVariable implements ExpressionNode {
         
         try {
             Field field = obj.getClass().getField(_fieldName);
-            if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
             Class<?> type = field.getType();
             Object newValue;
             if (type.isAssignableFrom(value.getClass())) newValue = value;
