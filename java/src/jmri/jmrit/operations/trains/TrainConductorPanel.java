@@ -110,8 +110,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
 
             // show train comment box only if there's a comment
-            // WARNING setting visible false and then setting the foreground color can cause
-            // a lockup!
             if (_train.getComment().equals(Train.NONE)) {
                 textTrainCommentPane.setVisible(false);
             } else {
@@ -119,8 +117,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
             }
             // show route comment box only if there's a route comment
-            // WARNING setting visible false and then setting the foreground color can cause
-            // a lockup!
             if (_train.getRoute() != null &&
                     !_train.getRoute().getComment().equals(Route.NONE) &&
                     !Setup.isPrintRouteCommentsEnabled()) {
