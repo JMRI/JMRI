@@ -19,6 +19,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
@@ -155,6 +157,10 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         
         // need to disable so test dead locks don't occur
         Setup.setPrintRouteCommentsEnabled(false);
+        Setup.setPrintLocationCommentsEnabled(false);
+        Route route = train2.getRoute();
+        RouteLocation rl = route.getDepartsRouteLocation();
+        rl.setComment(RouteLocation.NONE);
         
         TrainConductorFrame f = new TrainConductorFrame(train2);        
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
