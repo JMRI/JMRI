@@ -177,7 +177,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     
     @Test
     public void testLoop() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 1000; i++) {
             setUp();
             testModifyButton();
             tearDown();
