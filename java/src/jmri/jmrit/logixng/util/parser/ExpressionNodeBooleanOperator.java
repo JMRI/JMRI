@@ -45,7 +45,17 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         
+        Object leftValue = _leftSide.calculate(symbolTable);
         Object rightValue = _rightSide.calculate(symbolTable);
+        
+        if (rightValue == null) {
+            // null is false
+            // !null is true
+            return (_tokenType == TokenType.BOOLEAN_NOT);
+        }
+        
+        if (leftValue == null) return false;
+        
         if (!(rightValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(rightValue)) {
                 // Convert to true or false
@@ -60,7 +70,6 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
             return ! right;
         }
         
-        Object leftValue = _leftSide.calculate(symbolTable);
         if (!(leftValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(leftValue)) {
                 // Convert to true or false

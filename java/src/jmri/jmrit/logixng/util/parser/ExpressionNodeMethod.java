@@ -78,12 +78,14 @@ public class ExpressionNodeMethod implements ExpressionNode {
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         Object obj = _variable.getValue(symbolTable);
         if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+        
         Method[] methods = obj.getClass().getMethods();
         List<Object> parameters = new ArrayList<>();
         for (ExpressionNode exprNode : _parameterList) {
             parameters.add(exprNode.calculate(symbolTable));
         }
         Object[] params = parameters.toArray();
+        
         Exception exception = null;
         for (Method m : methods) {
             if (!m.getName().equals(_method)) continue;
@@ -94,7 +96,9 @@ public class ExpressionNodeMethod implements ExpressionNode {
             }
         }
         if (exception != null) throw new ReflectionException("Reflection exception", exception);
-        throw new CannotCallMethodException("Can not call method", _variableName, _method);
+        List<String> paramList = new ArrayList<>();
+        for (Object o : params) paramList.add(String.format("%s:%s", o, o != null ? o.getClass().getName() : "null"));
+        throw new CannotCallMethodException(String.format("Can not call method %s.%s(%s)", _variableName, _method, String.join(", ", paramList)), _variableName, _method);
     }
     
     /** {@inheritDoc} */

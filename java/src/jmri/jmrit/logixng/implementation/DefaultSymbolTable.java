@@ -154,6 +154,14 @@ public class DefaultSymbolTable implements SymbolTable {
                     initialValue = variable.getInitialValueData();
                     break;
                     
+                case Array:
+                    initialValue = new java.util.ArrayList<>();
+                    break;
+                    
+                case Map:
+                    initialValue = new java.util.HashMap<>();
+                    break;
+                    
                 case LocalVariable:
                     initialValue = symbolTable.getValue(variable.getInitialValueData());
 //                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
