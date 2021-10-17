@@ -181,8 +181,8 @@ public class DefaultAnonymousTable implements AnonymousTable {
         Integer columnNumber = columnNames.get(columnName);
         if (columnNumber == null) {
             try {
-                int row = Integer.parseInt(columnName);
-                if (row >= 0 && row <= _numRows) return row;
+                int column = Integer.parseInt(columnName);
+                if (column >= 0 && column <= _numColumns) return column;
             } catch (NumberFormatException e) {
                 // Do nothing
             }
