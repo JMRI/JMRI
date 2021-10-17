@@ -1,7 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.awt.GraphicsEnvironment;
 import java.io.PrintWriter;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -16,19 +18,19 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {
 
-    
+
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
-    
-    
+
+
     public DefaultLogixNGManager() {
         // The LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
@@ -72,7 +74,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public LogixNG createLogixNG(String systemName, String userName)
             throws IllegalArgumentException {
-        
+
         // Check that LogixNG does not already exist
         LogixNG x;
         if (userName != null && !userName.equals("")) {
@@ -93,10 +95,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         x = new DefaultLogixNG(systemName, userName);
         // save in the maps
         register(x);
-        
+
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
-        
+
         return x;
     }
 
@@ -104,7 +106,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public LogixNG createLogixNG(String userName) throws IllegalArgumentException {
         return createLogixNG(getAutoSystemName(), userName);
     }
-    
+
     @Override
     public LogixNG getLogixNG(String name) {
         LogixNG x = getByUserName(name);
@@ -132,17 +134,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-    public boolean resolveAllTrees(List<String> errors) {
-        boolean result = true;
-        for (LogixNG logixNG : _tsys.values()) {
-            result = result && logixNG.setParentForAllChildren(errors);
-        }
-        return result;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean setupAllLogixNGs(List<String> errors) {
+    public void setupAllLogixNGs() {
+        List<String> errors = new ArrayList<>();
         boolean result = true;
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
@@ -153,7 +146,86 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
-        return result;
+        if (errors.size() > 0) {
+            messageDialog("SetupErrorsTitle", errors, null);
+        }
+        checkItemsHaveParents();
+    }
+
+    /**
+     * Display LogixNG setup errors when not running in headless mode.
+     * @param titleKey The bundle key for the dialog title.
+     * @param messages A ArrayList of messages that have been localized.
+     * @param helpKey The bundle key for additional information about the errors
+     */
+    private void messageDialog(String titleKey, List<String> messages, String helpKey) {
+        if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+            StringBuilder sb = new StringBuilder("<html>");
+            messages.forEach(msg -> {
+                sb.append(msg);
+                sb.append("<br>");
+            });
+            if (helpKey != null) {
+                sb.append("<br>");
+                sb.append(Bundle.getMessage(helpKey));
+            }
+            sb.append("/<html>");
+            JOptionPane.showMessageDialog(null,
+                    sb.toString(),
+                    Bundle.getMessage(titleKey),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void checkItemsHaveParents(SortedSet<? extends MaleSocket> set, List<MaleSocket> beansWithoutParentList) {
+        for (MaleSocket bean : set) {
+            if (((Base)bean).getParent() == null) beansWithoutParentList.add(bean);
+        }
+    }
+
+    private void checkItemsHaveParents() {
+        List<MaleSocket> beansWithoutParentList = new ArrayList<>();
+        checkItemsHaveParents(InstanceManager.getDefault(AnalogActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalBooleanActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(StringActionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(AnalogExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+        checkItemsHaveParents(InstanceManager.getDefault(StringExpressionManager.class).getNamedBeanSet(), beansWithoutParentList);
+
+        if (!beansWithoutParentList.isEmpty()) {
+            List<String> errors = new ArrayList<>();
+            List<String> msgs = new ArrayList<>();
+            for (Base b : beansWithoutParentList) {
+                b.setup();
+                b.setParentForAllChildren(errors);
+            }
+            for (Base b : beansWithoutParentList) {
+                if (b.getParent() == null) {
+                    log.error("Item has no parent: {}, {}, {}",
+                            b.getSystemName(),
+                            b.getUserName(),
+                            b.getLongDescription());
+                    msgs.add(Bundle.getMessage("NoParentMessage",
+                            b.getSystemName(),
+                            b.getUserName(),
+                            b.getLongDescription()));
+
+                    for (int i=0; i < b.getChildCount(); i++) {
+                        if (b.getChild(i).isConnected()) {
+                            log.error("    Child: {}, {}, {}",
+                                    b.getChild(i).getConnectedSocket().getSystemName(),
+                                    b.getChild(i).getConnectedSocket().getUserName(),
+                                    b.getChild(i).getConnectedSocket().getLongDescription());
+                        }
+                    }
+                    log.error("                                                                 ");
+                    List<String> cliperrors = new ArrayList<String>();
+                    _clipboard.add((MaleSocket) b, cliperrors);
+                }
+            }
+            messageDialog("ParentErrorsTitle", msgs, "NoParentHelp");
+        }
     }
 
     /** {@inheritDoc} */
@@ -161,23 +233,23 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public void activateAllLogixNGs() {
         activateAllLogixNGs(true, true);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread) {
-        
+
         _isActive = true;
-        
+
         // This may take a long time so it must not be done on the GUI thread.
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
             Set<LogixNG> activeLogixNGs = new HashSet<>();
-            
+
             // Activate and execute the initialization LogixNGs first.
             List<LogixNG> initLogixNGs =
                     InstanceManager.getDefault(LogixNG_InitializationManager.class)
                             .getList();
-            
+
             for (LogixNG logixNG : initLogixNGs) {
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
@@ -187,13 +259,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             }
-            
+
             // Activate and execute all the rest of the LogixNGs.
             _tsys.values().stream()
                     .sorted()
                     .filter((logixNG) -> !(activeLogixNGs.contains(logixNG)))
                     .forEachOrdered((logixNG) -> {
-                
+
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
                     logixNG.execute();
@@ -202,7 +274,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                 }
             });
         };
-        
+
         if (runOnSeparateThread) new Thread(runnable).start();
         else runnable.run();
     }
@@ -235,7 +307,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public void setLoadDisabled(boolean s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void printTree(
@@ -243,10 +315,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, Locale.getDefault(), writer, indent, lineNumber);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void printTree(
@@ -255,7 +327,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         for (LogixNG logixNG : getNamedBeanSet()) {
             logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
@@ -264,8 +336,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
         InstanceManager.getDefault(LogixNG_InitializationManager.class).printTree(locale, writer, indent);
     }
-    
-    
+
+
     static volatile DefaultLogixNGManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
@@ -273,7 +345,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
-        
+
         if (_instance == null) {
             _instance = new DefaultLogixNGManager();
         }
@@ -285,25 +357,25 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public Class<LogixNG> getNamedBeanClass() {
         return LogixNG.class;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Clipboard getClipboard() {
         return _clipboard;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerManager(Manager<? extends MaleSocket> manager) {
         _managers.put(manager.getClass().getName(), manager);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Manager<? extends MaleSocket> getManager(String className) {
         return _managers.get(className);
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }
