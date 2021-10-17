@@ -142,7 +142,7 @@ public class For extends AbstractDigitalAction
                 _doActionSocket.getName());
     }
 
-    public FemaleDigitalActionSocket getThenActionSocket() {
+    public FemaleDigitalActionSocket getInitActionSocket() {
         return _initActionSocket;
     }
 

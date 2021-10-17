@@ -148,7 +148,7 @@
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
-  
+
   <xs:simpleType name="systemNameType">
     <xs:annotation>
         <xs:documentation>
@@ -163,7 +163,7 @@
              <xs:pattern value="..*"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="turnoutSystemNameType">
     <xs:annotation>
         <xs:documentation>
@@ -249,7 +249,7 @@
   <xs:simpleType name="beanNameType">
     <xs:annotation>
         <xs:documentation>
-          General definition of a name, either a 
+          General definition of a name, either a
           system or user name (non-null).
           Centralized so we can later enforce naming, linking, etc.
         </xs:documentation>
@@ -283,7 +283,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="screenColorType"> 
+  <xs:simpleType name="screenColorType">
     <xs:union>
        <xs:simpleType>
           <xs:annotation>
@@ -299,8 +299,8 @@
           <xs:annotation>
              <xs:documentation>
                 Provide possible colors for screen use, not for signals.
-                Lower case values historically were encoded in 
-                jmri.util.ColorUtil, but are now encoded in 
+                Lower case values historically were encoded in
+                jmri.util.ColorUtil, but are now encoded in
                 jmri.NamedBeanBundle.properties.  Some code in jmri.jmrit
                 has used upper case first letters, so those are included
                 just in case the values appear in files.
@@ -320,6 +320,7 @@
              <xs:enumeration value="Blue"/>
              <xs:enumeration value="Magenta"/>
              <xs:enumeration value="Cyan"/>
+             <xs:enumeration value="Brown"/>
              <xs:enumeration value="black"/>
              <xs:enumeration value="darkgray"/>
              <xs:enumeration value="darkGray"/>
@@ -335,6 +336,7 @@
              <xs:enumeration value="blue"/>
              <xs:enumeration value="magenta"/>
              <xs:enumeration value="cyan"/>
+             <xs:enumeration value="brown"/>
           </xs:restriction>
        </xs:simpleType>
     </xs:union>
@@ -365,7 +367,7 @@
   <xs:simpleType name="urlType">
     <xs:annotation>
         <xs:documentation>
-          Only valid URLs for resource access. 
+          Only valid URLs for resource access.
           Checks for a valid prefix, then a pathname without an invalid filename character.
           A: through Z: accepted for Windows.
           Any HTTP(S) URL should be accepted.
@@ -383,10 +385,10 @@
           CV names can currently be numbers n or the n.n, n.n.n etc indexed forms.
           As a special case, when there's more than one group, the 1st can be alpha numeric to indicate the type
           of formatting, e.g. "T2CV.12.34" for TCS.
-          
+
           Each of the n groups in n.n et al can actually be n=n with a single equals sign.
-          
-          Commas, hyphens, dollar signs and quotes (single or double) need to remain 
+
+          Commas, hyphens, dollar signs and quotes (single or double) need to remain
           reserved away from CV names to permit later grouping of CV names
           in other contexts.
           Spaces are reserved because they're just plain confusing.
@@ -481,7 +483,7 @@
     </xs:annotation>
     <xs:restriction base="xs:string" />
   </xs:simpleType>
-  
+
   <xs:simpleType name="familyModelNameType">
     <xs:annotation>
         <xs:documentation>
@@ -495,5 +497,5 @@
     </xs:restriction>
   </xs:simpleType>
 
-  
+
 </xs:schema>
