@@ -170,7 +170,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 
     @Test
     public void testLoop() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             setUp();
             testModifyButton();
             tearDown();
@@ -182,7 +182,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
 
     @Test
     public void testLoop2() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             setUp();
             testMoveButton();
             tearDown();
@@ -197,12 +197,11 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         // disable build messages
         InstanceManager.getDefault(TrainManager.class).setBuildMessagesEnabled(false);
 
+        JUnitOperationsUtil.initOperationsData();
         // need to disable all references to JTextPane() so test dead locks don't occur
         // on Windows CI tests
         Setup.setPrintRouteCommentsEnabled(false);
         Setup.setPrintLocationCommentsEnabled(false);
-        
-        JUnitOperationsUtil.initOperationsData();
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         Route route = train2.getRoute();
         RouteLocation rl = route.getDepartsRouteLocation();
