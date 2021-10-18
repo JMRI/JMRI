@@ -51,10 +51,10 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
             // For example, if myArray is an array, the formula might be:
-            //   myArray.add("Hello")
+            //   myArray.add("Hello") || myArray.add(" ") || myArray.add("World!")
             leftValue = _leftSide.calculate(symbolTable);
-            if (leftValue == null) leftValue = false;
         }
+        if (leftValue == null) leftValue = false;
         
         Object rightValue = _rightSide.calculate(symbolTable);
         if (rightValue == null) rightValue = false;
