@@ -41,6 +41,9 @@ public class RecursiveDescentParserTest {
         variables.put("someString", new MyVariable("someString", "A simple string"));
         variables.put("myTestField", new MyVariable("myTestField", new TestField()));
         
+        Variable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
         RecursiveDescentParser t = new RecursiveDescentParser(variables);
         ExpressionNode exprNode = t.parseExpression("");
         Assert.assertTrue("expression node is null", null == exprNode);
@@ -286,6 +289,48 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals(31.32, testField.myFloat, 0.000001);
         instanceVariable.assignValue(symbolTable, 112.12);
         Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
+        
+        
+        exprNode = t.parseExpression("myVar = 12");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:12)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 12, (long)(Long)myVar.getValue(symbolTable));
+        
+        myVar.setValue(symbolTable, 10);
+        exprNode = t.parseExpression("myVar += 12");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)+=(IntNumber:12)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Integer)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 22, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 22, (long)(Long)myVar.getValue(symbolTable));
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar -= 12");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)-=(IntNumber:12)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", -2, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", -2, (long)(Long)myVar.getValue(symbolTable));
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar *= 12");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)*=(IntNumber:12)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 120, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 120, (long)(Long)myVar.getValue(symbolTable));
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar /= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)/=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 5, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 5, (long)(Long)myVar.getValue(symbolTable));
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar %= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)%=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 1, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 1, (long)(Long)myVar.getValue(symbolTable));
+        
     }
     
     
@@ -311,7 +356,7 @@ public class RecursiveDescentParserTest {
     private static class MyVariable implements Variable {
         
         private final String _name;
-        private final Object _value;
+        private Object _value;
         
         private MyVariable(String name, Object value) {
             _name = name;
@@ -330,7 +375,7 @@ public class RecursiveDescentParserTest {
 
         @Override
         public void setValue(SymbolTable symbolTable, Object value) {
-            throw new UnsupportedOperationException("Not supported");
+            _value = value;
         }
     }
     

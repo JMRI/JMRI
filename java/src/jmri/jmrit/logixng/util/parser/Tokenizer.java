@@ -218,7 +218,6 @@ public class Tokenizer {
                     eatNextChar.set(true);
                     return TokenType.DOT_DOT;
                 } else {
-                    System.out.println("aaa");
                     // Three dots in a row is an error
                     return TokenType.ERROR;
                 }
@@ -292,7 +291,6 @@ public class Tokenizer {
                 eatNextChar.set(true);
                 return TokenType.EQUAL;
             } else {
-                System.out.println("bbb");
                 return TokenType.ERROR;
             }
         }
@@ -395,7 +393,6 @@ public class Tokenizer {
         
         if ((currentToken._tokenType == TokenType.FLOATING_NUMBER) &&
                 (Character.isLetterOrDigit(ch))) {
-            System.out.println("ccc");
             return TokenType.ERROR;
         }
         
@@ -407,7 +404,6 @@ public class Tokenizer {
             return TokenType.IDENTIFIER;
         }
         
-        System.out.format("ddd: %s, %c%n", currentToken._tokenType.name(), ch);
         return TokenType.ERROR;
     }
     

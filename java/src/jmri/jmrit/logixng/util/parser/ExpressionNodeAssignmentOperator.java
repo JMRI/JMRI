@@ -225,6 +225,30 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                 operStr = "%";
                 break;
                 
+            case ASSIGN:
+                operStr = "=";
+                break;
+                
+            case ASSIGN_ADD:
+                operStr = "+=";
+                break;
+                
+            case ASSIGN_SUBTRACKT:
+                operStr = "-=";
+                break;
+                
+            case ASSIGN_MULTIPLY:
+                operStr = "*=";
+                break;
+                
+            case ASSIGN_DIVIDE:
+                operStr = "/=";
+                break;
+                
+            case ASSIGN_MODULO:
+                operStr = "%=";
+                break;
+                
             default:
                 throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
         }
