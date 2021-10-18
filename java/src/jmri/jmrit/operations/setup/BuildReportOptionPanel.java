@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 
@@ -123,8 +122,6 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
         addRadioButtonAction(buildReportNor);
         addRadioButtonAction(buildReportMax);
         addRadioButtonAction(buildReportVD);
-
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
     // Save button
