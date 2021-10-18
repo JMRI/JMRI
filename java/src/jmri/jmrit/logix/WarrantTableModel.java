@@ -355,8 +355,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case CONTROL_COLUMN:
             return new JTextField(60).getPreferredSize().width;
         case EDIT_COLUMN:
+            return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
         case DELETE_COLUMN:
-            return new JButton("Delete").getPreferredSize().width;
+            return new JButton(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
         default:
             // fall out
             break;
@@ -784,7 +785,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             } else if (property.equals("RampDone")) {
                 boolean halt = ((Boolean) e.getOldValue()).booleanValue();
                 String speed = (String) e.getNewValue();
-                if (halt || speed.equals(Warrant.Stop) || speed.equals(Warrant.EStop))  {
+                if (halt || speed.equals(Warrant.EStop))  {
                     setFrameStatusText(Bundle.getMessage("RampHalt",
                             bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
                 } else {

@@ -1449,8 +1449,6 @@ public class WarrantFrame extends WarrantRoute {
                                             _warrant.getTrainName(),
                                             newBlock.getDisplayName());
                         }
-                    } else if (e.getPropertyName().equals("blockRelease")) {
-                        return;
                     } else if (e.getPropertyName().equals("ReadyToRun")) {
                         msg = _warrant.getRunningMessage();
                     } else if (e.getPropertyName().equals("SpeedChange")) {

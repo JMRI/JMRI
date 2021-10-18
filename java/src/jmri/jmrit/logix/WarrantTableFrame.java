@@ -420,7 +420,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
-        w.deAllocate();
         String msg = _model.checkAddressInUse(w);
         if (msg == null) {
             msg = w.checkforTrackers();

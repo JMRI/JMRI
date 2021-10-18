@@ -598,12 +598,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Remove allocation state Remove listener regardless of ownership
+     * Remove allocation state // maybe restore this? Remove listener regardless of ownership
      *
      * @param warrant warrant that has reserved this block. null is allowed for
      *                Conditionals and CircuitBuilder to reset the block.
      *                Otherwise, null should not be used.
-     * @return error message, if any
+     * @return true if warrant deallocated.
      */
     public boolean deAllocate(Warrant warrant) {
         if (_warrant != null) {
