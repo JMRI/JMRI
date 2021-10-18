@@ -8724,24 +8724,57 @@ final public class LayoutEditorTools {
         //Track segment is used to determine the alignment,
         // therefore this is opposite to the block that we are protecting
 
-        //For edge connectors we use the block that is in the currebt layout editor,
-        // and specify the direction of the protecting block (dir)
+        //For edge connectors we need to do two things:
+        // - change the dir value as east and west are swapped
+        // - and as we have only one track segment on any one layout editor
+        // so we determine where the track segment would end if we did a mirror image
+        // so that the calculations for angled segments is correct
 
-        boolean dir;
-        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR){
-            dir = false;
-        }else{
-            dir = true;
+        System.out.println("East bound Icon: boundary.getType: " + boundary.getType());
+        TrackSegment t = boundary.getConnect2();
+        boolean dir = true;
+        boolean shouldUseConnect2 = true;
+
+        if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
+            t = boundary.getConnect1();
+        } else{
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                t = boundary.getConnect1();
+            }
         }
-        TrackSegment t = boundary.getConnect1();
+
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            System.out.println("type edge connector");
+            t = boundary.getConnect1();  //have to use connect1 as there is only one track segment attached to edge connector
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                shouldUseConnect2 = false;
+            }
+        }
+
         Point2D pt2;
         if (t.getConnect1() == boundary){
             pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            //not called if edge connector
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
-        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            Point2D p3 = (Point2D) pt2.clone();
+            if (shouldUseConnect2) {
+                //use a point opposite pt2  (= p + p- pt2 using vector addition)
+                double px = p.getX();
+                double py = p.getY();
+                double p2x = pt2.getX();
+                double p2y = pt2.getY();
+                double p3x = px + px - p2x;
+                double p3y = py + py - p2y;
+                p3.setLocation(p3x, p3y);
+            }
+            dir = false;  //east and west are swapped with edge connectors
+            setIconOnPanel(t, icon, dir, p, p3, isRightSide, fromPoint);
+        } else{
+            setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+        }
 
     }
 
@@ -8752,26 +8785,53 @@ final public class LayoutEditorTools {
         //Track segment is used to determine the alignment,
         // therefore this is opposite to the block that we are protecting
 
-        //For edge connectors we use the block that is in the currebt layout editor,
-        // and specify the direction of the protecting block (dir)
+        //For edge connectors we need to do two things:
+        // - change the dir value as east and west are swapped
+        // - and as we have only one track segment on any one layout editor
+        // so we determine where the track segment would end if we did a mirror image
+        // so that the calculations for angled segments is correct
 
-        boolean dir;
-        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR){
-            dir = true;
-        }else{
-            dir = false;
-        }
         TrackSegment t = boundary.getConnect1();
+        boolean dir = false;
+        boolean shouldUseConnect2 = false;
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                t = boundary.getConnect2();
+            }
+        }
+
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            System.out.println("type edge connector");
+            t = boundary.getConnect1(); //have to use connect1 as there is only one track segment attached to edge connector
+            if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
+                shouldUseConnect2 = true;
+            }
+        }
+
         Point2D pt2;
-        if (t.getConnect1() == boundary){
+        if (t.getConnect1() == boundary) {
             pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            //not called if edge connector
             pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
 
-        setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
-
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+            Point2D p3 = (Point2D) pt2.clone();
+            if (shouldUseConnect2) {
+                //use a point opposite pt2  (= p + p - pt2 using vector addition)
+                double px = p.getX();
+                double py = p.getY();
+                double p2x = pt2.getX();
+                double p2y = pt2.getY();
+                double p3x = px + px - p2x;
+                double p3y = py + py - p2y;
+                p3.setLocation(p3x, p3y);
+            }
+            dir = true;  //east and west are swapped with edge connectors
+            setIconOnPanel(t, icon, dir, p, p3, isRightSide, fromPoint);
+        } else{
+            setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
+        }
     }
 
     private void setIconOnPanel(@Nonnull TrackSegment t,
@@ -8789,9 +8849,9 @@ final public class LayoutEditorTools {
         }
         Point loc;
         if (triX == 0 || triX == 360) {
-            //In a vertical Striaght Line
+            //In a vertical Straight Line
             if (isEastBound) {
-                log.debug("In a vertical striaghtline facing South");
+                log.debug("In a vertical straightline facing South");
                 loc = northToSouth(pt1, l, isRightSide, fromPoint);
             } else {
                 log.debug("In a vertical striaghtline facing North");
@@ -8825,6 +8885,7 @@ final public class LayoutEditorTools {
             }
 
             int rotateDEG = ((int) Math.toDegrees(radAngleFromDatum));
+
             if (log.isDebugEnabled()) {
                 double tanx = o / a;
                 double angletanRAD = Math.atan2(o, a);
