@@ -29,7 +29,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     /**
      * Ctor including user name.
      *
-     * @param sys  system name for haed
+     * @param sys  system name for head
      * @param user userName user name for mast
      * @param lit  named bean for turnout switching the Lit property
      * @param on   Appearance constant from {@link jmri.SignalHead} for the
@@ -45,7 +45,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     /**
      * Ctor using only a system name.
      *
-     * @param sys system name for haed
+     * @param sys system name for head
      * @param lit named bean for turnout switching the Lit property
      * @param on  Appearance constant from {@link jmri.SignalHead} for the
      *            output on (Turnout thrown) appearance
