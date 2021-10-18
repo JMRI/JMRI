@@ -168,26 +168,26 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
-    public void testLoop() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testModifyButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testModifyButton();
+//            tearDown();
+//        }
+//    }
 
     // Passes Window CI test with train, but no JTextPane() modifications. 149s
     // Passes Window CI test in 132s when train is null.
 
-    @Test
-    public void testLoop2() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testMoveButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop2() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testMoveButton();
+//            tearDown();
+//        }
+//    }
 
     @BeforeEach
     @Override
