@@ -3637,6 +3637,8 @@ public class StoreAndLoadTest {
         "32",           // Integer
         "41.429",       // FloatingNumber
         "My string",    // String
+        "",             // Array
+        "",             // Map
         "index",        // LocalVariable
         "IM2",          // Memory
         "{IM3}",        // Reference
