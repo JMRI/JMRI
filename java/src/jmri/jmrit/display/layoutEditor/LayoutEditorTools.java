@@ -8730,7 +8730,6 @@ final public class LayoutEditorTools {
         // so we determine where the track segment would end if we did a mirror image
         // so that the calculations for angled segments is correct
 
-        System.out.println("East bound Icon: boundary.getType: " + boundary.getType());
         TrackSegment t = boundary.getConnect2();
         boolean dir = true;
         boolean shouldUseConnect2 = true;
@@ -8744,7 +8743,6 @@ final public class LayoutEditorTools {
         }
 
         if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
-            System.out.println("type edge connector");
             t = boundary.getConnect1();  //have to use connect1 as there is only one track segment attached to edge connector
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 shouldUseConnect2 = false;
@@ -8801,7 +8799,6 @@ final public class LayoutEditorTools {
         }
 
         if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
-            System.out.println("type edge connector");
             t = boundary.getConnect1(); //have to use connect1 as there is only one track segment attached to edge connector
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 shouldUseConnect2 = true;
