@@ -284,7 +284,7 @@ public class RecursiveDescentParserTest {
         
         instanceVariable = new ExpressionNodeInstanceVariable("myTestField", "myFloat", variables);
         Assert.assertEquals(31.32, testField.myFloat, 0.000001);
-        instanceVariable.assignValue(symbolTable, (double)112.12);
+        instanceVariable.assignValue(symbolTable, 112.12);
         Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
     }
     

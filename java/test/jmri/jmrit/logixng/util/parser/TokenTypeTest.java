@@ -1,16 +1,10 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.EnumSet;
-import java.util.ArrayList;
-import java.util.List;
-
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -128,5 +122,5 @@ public class TokenTypeTest {
         JUnitUtil.tearDown();
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TokenTypeTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TokenTypeTest.class);
 }
