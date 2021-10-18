@@ -108,6 +108,13 @@ public class Tokenizer {
                 case ERROR:
                     throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntaxAtIndex", i));
                     
+                case ASSIGN:
+                case ASSIGN_ADD:
+                case ASSIGN_SUBTRACKT:
+                case ASSIGN_MULTIPLY:
+                case ASSIGN_DIVIDE:
+                case ASSIGN_MODULO:
+                
                 case LEFT_PARENTHESIS:
                 case RIGHT_PARENTHESIS:
                 case LEFT_SQUARE_BRACKET:
