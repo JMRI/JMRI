@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
 
     /**
-     * Ctor using only a system name.
+     * Ctor including user name.
      *
      * @param sys  system name for haed
      * @param user userName user name for mast
@@ -43,7 +43,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     /**
-     * Ctor including user name.
+     * Ctor using only a system name.
      *
      * @param sys system name for haed
      * @param lit named bean for turnout switching the Lit property
