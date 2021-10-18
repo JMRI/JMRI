@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.*;
 
@@ -106,36 +107,41 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         addButtonAction(moveButton);
 
         if (_train != null) {
-            // use invokeLater to prevent deadlock
-            SwingUtilities.invokeLater(() -> {
-                textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
-                textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
+            // use to prevent deadlock
+            try {
+                SwingUtilities.invokeAndWait(() -> {
+                    textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
+                    textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
 
-                // show train comment box only if there's a comment
-                if (_train.getComment().equals(Train.NONE)) {
-                    textTrainCommentPane.setVisible(false);
-                } else {
-                    textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
-                    textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
-                }
-                // show route comment box only if there's a route comment
-                if (_train.getRoute() != null &&
-                        !_train.getRoute().getComment().equals(Route.NONE) &&
-                        !Setup.isPrintRouteCommentsEnabled()) {
-                    textTrainRouteCommentPane.setVisible(false);
-                } else {
-                    textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
-                    textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
-                }
+                    // show train comment box only if there's a comment
+                    if (_train.getComment().equals(Train.NONE)) {
+                        textTrainCommentPane.setVisible(false);
+                    } else {
+                        textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
+                        textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
+                    }
+                    // show route comment box only if there's a route comment
+                    if (_train.getRoute() != null &&
+                            !_train.getRoute().getComment().equals(Route.NONE) &&
+                            !Setup.isPrintRouteCommentsEnabled()) {
+                        textTrainRouteCommentPane.setVisible(false);
+                    } else {
+                        textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
+                        textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
+                    }
 
-                // Does this train have a unique railroad name?
-                if (!_train.getRailroadName().equals(Train.NONE)) {
-                    textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
-                    textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
-                } else {
-                    textRailRoadName.setText(Setup.getRailroadName());
-                }
-            });
+                    // Does this train have a unique railroad name?
+                    if (!_train.getRailroadName().equals(Train.NONE)) {
+                        textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
+                        textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
+                    } else {
+                        textRailRoadName.setText(Setup.getRailroadName());
+                    }
+                });
+            } catch (InvocationTargetException | InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             // listen for train changes
             _train.addPropertyChangeListener(this);

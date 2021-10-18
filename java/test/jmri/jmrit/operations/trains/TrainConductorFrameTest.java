@@ -18,8 +18,6 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
@@ -144,7 +142,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         train2.setRailroadName("SFF Railroad Name");
 
         // to prevent dead lock
-//        train2.setComment("SFF comment for testing");
+        train2.setComment("SFF comment for testing");
 
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
@@ -159,35 +157,42 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
 
         Assert.assertFalse(p.selectButton.isEnabled());
+        Assert.assertFalse(p.clearButton.isEnabled());
         // the modify button text becomes "Done"
         Assert.assertEquals("Button text", Bundle.getMessage("Done"), p.modifyButton.getText());
         Assert.assertTrue("confirm button is enabled", p.modifyButton.isEnabled());
         JemmyUtil.enterClickAndLeave(p.modifyButton);
         Assert.assertTrue(p.selectButton.isEnabled());
+        Assert.assertTrue(p.clearButton.isEnabled());
+        
+        JemmyUtil.enterClickAndLeave(p.selectButton);
+        Assert.assertTrue(p.moveButton.isEnabled());
+        JemmyUtil.enterClickAndLeave(p.clearButton);
+        Assert.assertFalse(p.moveButton.isEnabled());
 
         JUnitUtil.dispose(f);
     }
 
-//    @Test
-//    public void testLoop() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testModifyButton();
-//            tearDown();
-//        }
-//    }
+    @Test
+    public void testLoop() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testModifyButton();
+            tearDown();
+        }
+    }
 
     // Passes Window CI test with train, but no JTextPane() modifications. 149s
     // Passes Window CI test in 132s when train is null.
 
-//    @Test
-//    public void testLoop2() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testMoveButton();
-//            tearDown();
-//        }
-//    }
+    @Test
+    public void testLoop2() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testMoveButton();
+            tearDown();
+        }
+    }
 
     @BeforeEach
     @Override
@@ -200,11 +205,11 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         // need to disable all references to JTextPane() so test dead locks don't occur
         // on Windows CI tests
-        Setup.setPrintRouteCommentsEnabled(false);
-        Setup.setPrintLocationCommentsEnabled(false);
-        Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
-        Route route = train2.getRoute();
-        RouteLocation rl = route.getDepartsRouteLocation();
-        rl.setComment(RouteLocation.NONE);
+//        Setup.setPrintRouteCommentsEnabled(false);
+//        Setup.setPrintLocationCommentsEnabled(false);
+//        Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
+//        Route route = train2.getRoute();
+//        RouteLocation rl = route.getDepartsRouteLocation();
+//        rl.setComment(RouteLocation.NONE);
     }
 }
