@@ -50,7 +50,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     public YardmasterPanel(Location location) {
         super();
-        initComponents();
 
         _location = location;
 
@@ -120,9 +119,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         // listen for trains being built
         addTrainListeners();
-
-        setVisible(true);
-
     }
 
     // Select, Clear, and Set Buttons
@@ -216,13 +212,14 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     textRailRoadName.setText(Setup.getRailroadName());
                 }
 
-                // determine how many times this train visits this location and if it is the last stop
+                // determine how many times this train visits this location and if it is the
+                // last stop
                 RouteLocation rl = null;
                 List<RouteLocation> routeList = route.getLocationsBySequenceList();
                 int visitNumber = 0;
                 for (int i = 0; i < routeList.size(); i++) {
-                    if (TrainCommon.splitString(routeList.get(i).getName()).equals(
-                            TrainCommon.splitString(_location.getName()))) {
+                    if (TrainCommon.splitString(routeList.get(i).getName())
+                            .equals(TrainCommon.splitString(_location.getName()))) {
                         visitNumber++;
                         if (visitNumber == _visitNumber) {
                             rl = routeList.get(i);
@@ -245,8 +242,10 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     // update comment and location name
                     textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE) &&
                             Setup.isSwitchListRouteLocationCommentEnabled());
-                    textTrainRouteLocationCommentPane.setText(rl.getComment());
-                    textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+                    if (textTrainRouteLocationCommentPane.isVisible()) {
+                        textTrainRouteLocationCommentPane.setText(rl.getComment());
+                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+                    }
                     textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
                     // check for locos
@@ -269,8 +268,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         trainComboBox.addItem(null);
         if (_location != null) {
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(_location);
-            trains.stream().filter((train) -> (TrainCommon.isThereWorkAtLocation(train, _location))).forEach(
-                    (train) -> {
+            trains.stream().filter((train) -> (TrainCommon.isThereWorkAtLocation(train, _location)))
+                    .forEach((train) -> {
                         trainComboBox.addItem(train);
                     });
         }
@@ -308,8 +307,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null) ||
                 (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) &&

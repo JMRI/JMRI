@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.setup.Control;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
 
@@ -33,14 +32,6 @@ public class OperationsPanel extends JPanel {
 
     public OperationsPanel() {
         super();
-    }
-
-    public void initMinimumSize() {
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight250));
-    }
-
-    public void initMinimumSize(Dimension dimension) {
-        setMinimumSize(dimension);
     }
 
     public void dispose() {

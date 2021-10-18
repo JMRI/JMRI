@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -98,13 +99,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     // check boxes
     protected ConcurrentHashMap<String, JCheckBox> checkBoxes = new ConcurrentHashMap<>();
-    protected List<RollingStock> rollingStock = new ArrayList<>();
+    protected List<RollingStock> rollingStock = Collections.synchronizedList(new ArrayList<>());
 
     // flags
     protected boolean isSetMode = false; // when true, cars that aren't selected (checkbox) can be "set"
 
     public CommonConductorYardmasterPanel() {
         super();
+        initComponents();
     }
 
     public void initComponents() {
@@ -192,8 +194,6 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         addButtonAction(selectButton);
         addButtonAction(clearButton);
         addButtonAction(modifyButton);
-
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
     // Select, Clear, and Set Buttons
@@ -621,7 +621,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] { _train.getName() });
         }
-        if (!_train.isBuilt()) {
+        if (!_train.isBuilt() || rl == null) {
             return _train.getStatus();
         }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
@@ -677,6 +677,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             rs.removePropertyChangeListener(this);
         });
         rollingStock.clear();
+    }
+    
+    @Override
+    public void dispose() {
+        _train = null;
+        _location = null;
     }
 
     @Override
