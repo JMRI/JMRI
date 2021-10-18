@@ -110,11 +110,4 @@ public enum TokenType {
         return _priority > tokenType._priority;
     }
     
-    public boolean isLeaf() {
-        return ((this == TokenType.IDENTIFIER)
-                || (this == TokenType.INTEGER_NUMBER)
-                || (this == TokenType.FLOATING_NUMBER)
-                || (this == TokenType.STRING));
-    }
-    
 }

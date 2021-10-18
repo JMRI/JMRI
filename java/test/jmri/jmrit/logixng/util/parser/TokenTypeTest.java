@@ -15,46 +15,6 @@ import org.junit.Test;
 public class TokenTypeTest {
 
     @Test
-    public void testLeaf() {
-        Assert.assertFalse("TokenType is leaf", TokenType.ERROR.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.SAME_AS_LAST.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.NONE.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.SPACE.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.COMMA.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.DOT_DOT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BOOLEAN_OR.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BOOLEAN_AND.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BINARY_OR.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BINARY_XOR.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BINARY_AND.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.EQUAL.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.NOT_EQUAL.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.LESS_THAN.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.LESS_OR_EQUAL.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.GREATER_THAN.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.GREATER_OR_EQUAL.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.SHIFT_LEFT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.SHIFT_RIGHT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.ADD.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.SUBTRACKT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.MULTIPLY.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.DIVIDE.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.MODULO.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BOOLEAN_NOT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.BINARY_NOT.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.LEFT_PARENTHESIS.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.RIGHT_PARENTHESIS.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.LEFT_SQUARE_BRACKET.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.RIGHT_SQUARE_BRACKET.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.LEFT_CURLY_BRACKET.isLeaf());
-        Assert.assertFalse("TokenType is leaf", TokenType.RIGHT_CURLY_BRACKET.isLeaf());
-        Assert.assertTrue("TokenType is leaf", TokenType.IDENTIFIER.isLeaf());
-        Assert.assertTrue("TokenType is leaf", TokenType.INTEGER_NUMBER.isLeaf());
-        Assert.assertTrue("TokenType is leaf", TokenType.FLOATING_NUMBER.isLeaf());
-        Assert.assertTrue("TokenType is leaf", TokenType.STRING.isLeaf());
-    }
-    
-    @Test
     public void testTokenType() {
         // Test precedence functions
         
