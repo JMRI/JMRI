@@ -390,6 +390,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testDiagAndControlCommands() { /* test diagnostic and control commands (new in DCC++EX 3.1.7) */
+        msg = new DCCppMessage("D EXRAIL ON");
+        Assert.assertEquals("Monitor string", "Diag Cmd: 'D EXRAIL ON'",       msg.toMonitorString());
+        msg = new DCCppMessage("/START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/START 1224 4'",  msg.toMonitorString());
+        msg = new DCCppMessage("/ START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/ START 1224 4'", msg.toMonitorString());
+        msg = new DCCppMessage("/PAUSE");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/PAUSE'",         msg.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteDirectCVMsg() {
         msg = DCCppMessage.makeWriteDirectCVMsg(29, 12, 1, 2);
         log.debug("write cv message = '{}'", msg);
