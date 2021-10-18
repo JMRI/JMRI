@@ -140,7 +140,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 });
             } catch (InvocationTargetException | InterruptedException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
             }
 
             // listen for train changes

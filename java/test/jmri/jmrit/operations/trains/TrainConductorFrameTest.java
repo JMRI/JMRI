@@ -18,6 +18,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
@@ -142,7 +144,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         train2.setRailroadName("SFF Railroad Name");
 
         // to prevent dead lock
-        train2.setComment("SFF comment for testing");
+//        train2.setComment("SFF comment for testing");
 
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
@@ -205,11 +207,11 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         // need to disable all references to JTextPane() so test dead locks don't occur
         // on Windows CI tests
-//        Setup.setPrintRouteCommentsEnabled(false);
-//        Setup.setPrintLocationCommentsEnabled(false);
-//        Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
-//        Route route = train2.getRoute();
-//        RouteLocation rl = route.getDepartsRouteLocation();
-//        rl.setComment(RouteLocation.NONE);
+        Setup.setPrintRouteCommentsEnabled(false);
+        Setup.setPrintLocationCommentsEnabled(false);
+        Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
+        Route route = train2.getRoute();
+        RouteLocation rl = route.getDepartsRouteLocation();
+        rl.setComment(RouteLocation.NONE);
     }
 }
