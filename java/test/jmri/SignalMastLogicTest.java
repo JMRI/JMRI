@@ -86,7 +86,6 @@ public class SignalMastLogicTest {
     @Test
     public void testRename() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        if (1==(1+0)) throw new RuntimeException("This should fail!!!");  // Daniel Bergqvist
 
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
