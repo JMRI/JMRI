@@ -371,6 +371,8 @@ public class ActionMemory extends AbstractDigitalAction
         }
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
+        
+        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
@@ -385,12 +387,12 @@ public class ActionMemory extends AbstractDigitalAction
 
                 case CopyTableCellToMemory:
                     String refValue = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _otherTableCell);
+                        conditionalNG.getSymbolTable(), _otherTableCell);
                     memory.setValue(refValue);
                     break;
 
                 case CopyVariableToMemory:
-                    Object variableValue = getConditionalNG()
+                    Object variableValue = conditionalNG
                                     .getSymbolTable().getValue(_otherLocalVariable);
                     memory.setValue(variableValue);
                     break;
@@ -412,7 +414,7 @@ public class ActionMemory extends AbstractDigitalAction
                                 return;
                             }
                             memory.setValue(_otherExpressionNode.calculate(
-                                    getConditionalNG().getSymbolTable()));
+                                    conditionalNG.getSymbolTable()));
                         } catch (JmriException e) {
                             ref.set(e);
                         }
