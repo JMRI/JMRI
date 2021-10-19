@@ -168,7 +168,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         // Setup action. This connects the child actions to this action
         expression.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE61232");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load digital expression IQDE61232");
         
         for (int i=0; i < 5; i++) {
             Map.Entry<String,String> entry = actionSystemNames.get(i);

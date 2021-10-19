@@ -113,8 +113,8 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         // Setup action. This connects the child actions to this action
         expression.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load string expression IQSE52");
-        jmri.util.JUnitAppender.assertMessage("cannot load string action IQSA554");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load string expression IQSE52");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load string action IQSA554");
         
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());

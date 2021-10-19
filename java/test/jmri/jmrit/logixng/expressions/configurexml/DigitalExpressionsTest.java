@@ -25,52 +25,52 @@ public class DigitalExpressionsTest {
         b = new AndXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new AntecedentXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ExpressionLightXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ExpressionSensorXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ExpressionTurnoutXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new FalseXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new HoldXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new OrXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new TriggerOnceXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new TrueXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
     }
     
     // The minimal setup for log4J

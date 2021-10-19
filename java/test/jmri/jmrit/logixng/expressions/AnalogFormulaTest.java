@@ -184,7 +184,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         // Setup action. This connects the child actions to this action
         expression.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load analog expression IQAE61232");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load analog expression IQAE61232");
         
         for (int i=0; i < 5; i++) {
             AnalogFormula.SocketData socketName = actionSystemNames.get(i);

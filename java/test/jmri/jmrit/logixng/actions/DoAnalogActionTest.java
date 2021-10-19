@@ -113,8 +113,8 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         // Setup action. This connects the child actions to this action
         expression.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load analog expression IQAE52");
-        jmri.util.JUnitAppender.assertMessage("cannot load analog action IQAA554");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load analog expression IQAE52");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load analog action IQAA554");
         
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());

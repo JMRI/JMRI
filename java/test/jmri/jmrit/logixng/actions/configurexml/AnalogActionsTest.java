@@ -25,12 +25,12 @@ public class AnalogActionsTest {
         b = new AnalogActionMemoryXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new AnalogManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
     }
     
     // The minimal setup for log4J

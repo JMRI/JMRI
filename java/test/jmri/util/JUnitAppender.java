@@ -627,19 +627,12 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("No message present: " + msg);
             return;
         }
-        LoggingEvent evt = list.remove(0);
-
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
-            if (list.isEmpty()) {
-                Assert.fail("Message not found: " + msg);
-                return;
-            }
-            evt = list.remove(0);
+        
+        for (LoggingEvent evt : list) {
+            if (compare(evt, msg)) return;
         }
-
-        if (!compare(evt, msg)) {
-            Assert.fail("Looking for message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
-        }
+        
+        Assert.fail("Message not found: " + msg);
     }
 
     /**

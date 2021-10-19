@@ -5479,7 +5479,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     log.error("provideLayoutBlock: Failure to auto-assign for empty LayoutBlock name");
                 }
             } else {
-                log.debug("provideLayoutBlock: no name given and not assigning auto block names");
+                log.warn("provideLayoutBlock: no name given and not assigning auto block names");
             }
         } else {
             // check if this Layout Block already exists

@@ -133,7 +133,7 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
         // Setup action. This connects the child actions to this action
         action.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load analog action IQAA61232");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load analog action IQAA61232");
         
         for (int i=0; i < 5; i++) {
             Map.Entry<String,String> entry = actionSystemNames.get(i);

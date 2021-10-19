@@ -150,14 +150,14 @@ public class JUnitAppenderTest {
     public void testExpectedMessageAsError() {
         String msg = "Message for testing";
         log.error(msg);
-        JUnitAppender.assertMessage(msg);
+        JUnitAppender.assertErrorMessage(msg);
     }
 
     @Test
     public void testExpectedMessageAsWarn() {
         String msg = "Message for testing";
         log.warn(msg);
-        JUnitAppender.assertMessage(msg);
+        JUnitAppender.assertWarnMessage(msg);
     }
 
     @Test

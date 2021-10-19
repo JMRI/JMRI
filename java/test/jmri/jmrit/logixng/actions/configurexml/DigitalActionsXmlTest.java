@@ -25,12 +25,12 @@ public class DigitalActionsXmlTest {
         b = new ActionLightXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ActionSensorXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         // If the ActionScript is in a panel file, it will be replaced with
         // the ActionSimpleScript. That's why the ActionScriptXml class is
@@ -38,42 +38,42 @@ public class DigitalActionsXmlTest {
         b = new ActionSimpleScriptXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ActionThrottleXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ActionTurnoutXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new DoAnalogActionXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new DoStringActionXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new IfThenElseXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new DigitalManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
         
         b = new ShutdownComputerXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
+        JUnitAppender.assertErrorMessage("Invalid method called");
     }
     
     @Test

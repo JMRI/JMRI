@@ -104,7 +104,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         // Setup action. This connects the child actions to this action
         action.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA554");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load digital action IQDA554");
         
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());

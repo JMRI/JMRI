@@ -130,9 +130,9 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         // Setup action. This connects the child actions to this action
         expression.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE52");
-        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA554");
-        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA594");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load digital expression IQDE52");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load digital action IQDA554");
+        jmri.util.JUnitAppender.assertErrorMessage("cannot load digital action IQDA594");
         
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
