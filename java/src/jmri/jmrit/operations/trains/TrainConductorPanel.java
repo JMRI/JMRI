@@ -118,7 +118,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             }
             // show route comment box only if there's a route comment
             if (_train.getRoute() != null &&
-                    !_train.getRoute().getComment().equals(Route.NONE) &&
+                    _train.getRoute().getComment().equals(Route.NONE) ||
                     !Setup.isPrintRouteCommentsEnabled()) {
                 textTrainRouteCommentPane.setVisible(false);
             } else {
