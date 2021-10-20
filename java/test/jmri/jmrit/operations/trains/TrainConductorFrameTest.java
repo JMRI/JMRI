@@ -159,11 +159,18 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
 
         Assert.assertFalse(p.selectButton.isEnabled());
+        Assert.assertFalse(p.clearButton.isEnabled());
         // the modify button text becomes "Done"
         Assert.assertEquals("Button text", Bundle.getMessage("Done"), p.modifyButton.getText());
         Assert.assertTrue("confirm button is enabled", p.modifyButton.isEnabled());
         JemmyUtil.enterClickAndLeave(p.modifyButton);
         Assert.assertTrue(p.selectButton.isEnabled());
+        Assert.assertTrue(p.clearButton.isEnabled());
+        
+        JemmyUtil.enterClickAndLeave(p.selectButton);
+        Assert.assertTrue(p.moveButton.isEnabled());
+        JemmyUtil.enterClickAndLeave(p.clearButton);
+        Assert.assertFalse(p.moveButton.isEnabled());
 
         JUnitUtil.dispose(f);
     }
