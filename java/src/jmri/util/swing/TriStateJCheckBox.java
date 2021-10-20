@@ -78,6 +78,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon, UIResource {
         setSelectedIcon(icon);
         setRolloverEnabled( false );
         setOpaque(true);
+        log.debug("started TriStateJCheckBox with Icon: {}",icon);
     }
  
     /**
