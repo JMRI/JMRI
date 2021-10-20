@@ -266,11 +266,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Generate comment text for certain replies, used when objects are created from the message
+     * Generate properties list for certain replies
      *
-     * @return comment text
+     * @return list of all properties as a string
      **/
-    public String toComment(){
+    public String getPropertiesAsString(){
         StringBuilder text = new StringBuilder();
         StringBuilder comma = new StringBuilder();
         switch (getOpCodeChar()) {
