@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.plaf.UIResource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Steve Young Copyright (c) 2021
  */
-public class TriStateJCheckBox extends JCheckBox implements Icon  {
+public class TriStateJCheckBox extends JCheckBox implements Icon, UIResource {
    
     /**
      * Enum of TriStateJCheckBox state values.
@@ -51,6 +52,12 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      */
     public TriStateJCheckBox () {
         super();
+        Icon ico = UIManager.getIcon("CheckBox.icon"); // NOI18N
+        if (ico != null){
+            icon=ico;
+        } else {
+            icon = new javax.swing.plaf.metal.MetalCheckBoxIcon();
+        }
         initProperties();
     }
     
@@ -61,13 +68,14 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      * @param text the text of the check box.
      */
     public TriStateJCheckBox (String text) {
+        this();
         super.setText(text);
-        initProperties();
     }
     
     private void initProperties(){
         setModel(new TriStateModel(State.UNCHECKED));
         setIcon(this);
+        setSelectedIcon(icon);
         setRolloverEnabled( false );
         setOpaque(true);
     }
@@ -126,39 +134,16 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
         ((TriStateModel) model).setSelected(selected);    
     }
     
-    private final static Icon icon = UIManager.getIcon("CheckBox.icon");
+    private final Icon icon;
     
     /**
-     * Paint the Icon dependant on state, special handling for Nimbus LAF.
+     * Paint the Icon dependant on state.
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
-        String laf = UIManager.getLookAndFeel().getName();
-        log.debug("laf is: {}",laf);
-        if ("Nimbus".equals(laf)){
-            
-            // Nimbus handled differently in that no .icon is available.
-            // There may well be a better way of doing this?
-            
-            Painter<JComponent> painter;
-            if (getState() == TriStateJCheckBox.State.CHECKED){
-                painter = (Painter)UIManager.get("CheckBox[Selected].iconPainter");
-            } else {
-                painter = (Painter)UIManager.get("CheckBox[Enabled].iconPainter");
-            }
-            if (painter != null && g instanceof Graphics2D){
-                JComponent jc = (c instanceof JComponent) ? (JComponent)c : null;
-                Graphics2D gfx = (Graphics2D)g;
-                gfx.translate(x, y);
-                painter.paint(gfx, jc , getIconWidth(), getIconHeight());
-                gfx.translate(-x, -y);
-            }
-            
-        } else { // not Nimbus so use Default L&F Icon.
-            icon.paintIcon(c, g, x, y);
-        }
+        
+        icon.paintIcon(c, g, x, y);
         
         if ((((TriStateModel) model).getState() != TriStateJCheckBox.State.PARTIAL)
             || c == null || g == null){
@@ -181,7 +166,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      */
     @Override
     public int getIconWidth() {
-        return (icon==null ? 16 : icon.getIconWidth());
+        return (icon.getIconWidth());
     }
 
     /**
@@ -189,7 +174,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      */
     @Override
     public int getIconHeight() {
-        return (icon==null ? 16 : icon.getIconHeight());
+        return (icon.getIconHeight());
     }
     
     
