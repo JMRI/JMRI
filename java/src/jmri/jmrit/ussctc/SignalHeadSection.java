@@ -11,9 +11,12 @@ import jmri.util.*;
  * Implements {@link Section} for both the field and CTC machine parts.
  * <p>
  * Based on the Signal interface.
+ * <p>
+ * Note that this intentionally does not turn off indicators when the code button
+ * is pressed unless a change has been requested.  This is a model-railroad compromise
+ * to speed up the dispatcher's ability to see what's going on.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017, 2021
- * TODO: Update state diagram
  */
 public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupThreeBits> {
 
@@ -272,8 +275,6 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
      */
     @Override
     public void codeValueDelivered(CodeGroupThreeBits value) {
-        // @TODO add lock checking here; this is part of vital logic implementation
-
         // Set signals. While doing that, remember command as indication, so that the
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
