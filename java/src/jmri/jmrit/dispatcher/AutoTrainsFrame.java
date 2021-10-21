@@ -495,6 +495,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 panel.setVisible(true);
                 ActiveTrain at = aat.getActiveTrain();
                 JLabel tName = _trainLabels.get(i);
+                updateStatusLabel(_throttleStatus.get(i),_throttles.get(i).getSpeedSetting(),_throttles.get(i).getIsForward());
                 tName.setText(at.getTrainName());
                 JButton stopButton = _stopButtons.get(i);
                 if (at.getStatus() == ActiveTrain.STOPPED) {
