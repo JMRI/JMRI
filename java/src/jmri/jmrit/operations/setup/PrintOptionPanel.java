@@ -419,8 +419,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addComboBoxAction(manifestFormatComboBox);
 
         Setup.getDefault().addPropertyChangeListener(this);
-
-        initMinimumSize();
     }
 
     // Add Remove Logo and Save buttons

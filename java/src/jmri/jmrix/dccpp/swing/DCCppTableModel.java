@@ -86,15 +86,16 @@ public abstract class DCCppTableModel extends AbstractTableModel {
         }
     }
 
-    public boolean contains(List<Object> v) {
-        Iterator<List<Object>> it = rowData.iterator();
-        while (it.hasNext()) {
-            List<Object> r = it.next();
-            if (r.get(0) == v.get(0)) {
-                return true;
+    /* find index of row in rowData with matching id (assume first column) 
+     *   returns index or -1 if matching row not found                    */
+    public int findRow(List<Object> v) {
+        for (int i = 0; i < rowData.size(); i++) {
+            if (rowData.get(i).get(0).equals(v.get(0))) {
+                return i;
             }
         }
-        return false;
+        return -1; //not found
+        
     }
 
     public void insertData(List<Object> v, boolean isnew) {
@@ -102,8 +103,11 @@ public abstract class DCCppTableModel extends AbstractTableModel {
         v.add(isnew); // is new
         v.add(false); // is dirty (no)
         v.add(false); // is marked for delete (of course not)
-        if (!rowData.contains(v)) {
-            rowData.add(v);
+        int index = findRow(v); //uses first value in row
+        if (index < 0) { // add or update row in table
+            rowData.add(v);            
+        } else {
+            rowData.set(index, v);                        
         }
         fireTableDataChanged();
     }

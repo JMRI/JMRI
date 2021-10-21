@@ -236,9 +236,9 @@
             Physical quantities such as delays and currents will be scaled to display the physical value, rather
             that the raw node variable value shown in the generic tab. Hover over individual objects for tool tips
             or refer to the node documentation for full details.</p>
-        
-        <p>Changes in the edit tab will be reflected in the generic tab, and vice-versa.</p?
-       
+
+        <p>Changes in the edit tab will be reflected in the generic tab, and vice-versa.</p>
+
 
       </div>
 

@@ -2323,6 +2323,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // define the train
         Train train1 = tmanager.newTrain("TestAlternateTrack1");
         train1.setRoute(route);
+        
+        // improve test coverage
+        Setup.setPrintTruncateManifestEnabled(true);
+        acton.setSwitchListEnabled(true);
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -17044,6 +17048,40 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testHyphenFeature() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford Test");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        
+        // must accept car type "-"
+        acton.addTypeName("-");
+        actonYard1.addTypeName("-");
+        chelmsford.addTypeName("-");
+        chelmsfordSpur1.addTypeName("-");
+        train.addTypeName("-");
+
+        // 3 cars at Acton Yard using hyphen for road and car type
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "-", "40", "DAB", "1958", actonYard1, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-", "3", "-", "40", "DAB", "1958", actonYard1, 2);
+
+        Assert.assertTrue(new TrainBuilder().build(train));
+        
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("Train assignment", train, c2.getTrain());
+        Assert.assertEquals("Train assignment", train, c3.getTrain());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
 
     private void setupCustomCarLoad() {
 

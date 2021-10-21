@@ -29,6 +29,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _installDebuggerCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
+    JCheckBox _treeEditorHighlightRow;
     private JComboBox<ErrorHandlingType> _errorHandlingComboBox;
     
     
@@ -68,6 +69,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
         preferences.setInstallDebugger(_installDebuggerCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
+        preferences.setTreeEditorHighlightRow(_treeEditorHighlightRow.isSelected());
         preferences.setErrorHandlingType(_errorHandlingComboBox.getItemAt(_errorHandlingComboBox.getSelectedIndex()));
         return didSet;
     }
@@ -84,15 +86,20 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _showSystemUserNamesCheckBox = new JCheckBox(Bundle.getMessage("LabelShowSystemUserNames"));
         _showSystemUserNamesCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabeShowSystemUserNames"));
 
+        _treeEditorHighlightRow = new JCheckBox(Bundle.getMessage("LabelTreeEditorHighlightRow"));
+        _treeEditorHighlightRow.setToolTipText(Bundle.getMessage("ToolTipTreeEditorHighlightRow"));
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
         
         gridPanel.add(_startLogixNGOnLoadCheckBox);
         gridPanel.add(_installDebuggerCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
+        gridPanel.add(_treeEditorHighlightRow);
         
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
         _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
+        _treeEditorHighlightRow.setSelected(preferences.getTreeEditorHighlightRow());
         
         _errorHandlingComboBox = new JComboBox<>();
         for (ErrorHandlingType type : ErrorHandlingType.values()) {

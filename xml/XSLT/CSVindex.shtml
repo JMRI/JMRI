@@ -14,7 +14,6 @@
                                 alt=""></a>
 
     <h1>JMRI Decoder Comma-Separated Values files</h1>
-    <p>
     <ul>
         <li><a href="pages/decodersizes.csv">decodersizes.csv</a>&nbsp;&nbsp;&nbsp;Physical size for each defined decoder</li>
         <li><a href="pages/decoderpower.csv">decoderpower.csv</a>&nbsp;&nbsp;&nbsp;Power limits and connector by decoder</li>

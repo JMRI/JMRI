@@ -115,17 +115,10 @@ public abstract class AppsBase {
         // all loaded, initialize objects as necessary
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        
+
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-        java.util.List<String> errors = new ArrayList<>();
-        if (!logixNG_Manager.setupAllLogixNGs(errors)) {
-            for (String s : errors) log.error(s);
-            JOptionPane.showMessageDialog(null,
-                    "<html>"+String.join("<br>", errors)+"</html>",
-                    Bundle.getMessage("TitleError"),
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        logixNG_Manager.setupAllLogixNGs();
         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
             logixNG_Manager.activateAllLogixNGs();
         }

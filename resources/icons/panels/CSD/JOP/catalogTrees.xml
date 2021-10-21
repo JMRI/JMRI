@@ -366,6 +366,18 @@
           <leaf name="SensorStateActive" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_blue.png" />
           <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/tower/tower-auxiliary/tower_auxiliary_black.png" />
         </node>
+        <node nodeName="Hlavní návěstidlo">
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/button/signal_main_off.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/button/signal_main_x.png" />
+          <leaf name="SensorStateActive" path="program:resources/icons/panels/CSD/JOP/button/signal_main_on.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/button/signal_main_u.png" />
+        </node>
+        <node nodeName="Seřaďovací návěstidlo">
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/button/signal_shunt_off.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/button/signal_shunt_x.png" />
+          <leaf name="SensorStateActive" path="program:resources/icons/panels/CSD/JOP/button/signal_shunt_on.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/button/signal_shunt_u.png" />
+        </node>
         <node nodeName="LargeJewel">
           <leaf name="SensorStateInactive" path="program:resources/icons/USS/sensor/red-off.gif" />
           <leaf name="BeanStateInconsistent" path="program:resources/icons/USS/sensor/amber-on.gif" />

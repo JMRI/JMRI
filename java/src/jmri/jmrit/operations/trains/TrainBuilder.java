@@ -120,6 +120,8 @@ public class TrainBuilder extends TrainBuilderBase {
 
         // operations automations use wait for train built to create custom manifests
         // and switch lists
+        _train.setPrinted(false);
+        _train.setSwitchListStatus(Train.UNKNOWN);
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
         _train.setBuilt(true);
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon
@@ -1881,7 +1883,7 @@ public class TrainBuilder extends TrainBuilderBase {
             return false; // the only false return
         }
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
-                new Object[] { car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
+                new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried by train

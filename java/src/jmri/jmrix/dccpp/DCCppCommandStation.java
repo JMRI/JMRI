@@ -185,6 +185,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return ret;  
     }
 
+    /**
+     * Can this command station handle the Servo and Vpin Turnout creation message formats?
+     * @return true if yes or false if no
+     */
+    public boolean isServoTurnoutCreationSupported() {
+        boolean ret = false;
+        try {
+            // SERVO and VPIN turnout commands added at 3.1.7
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.1.7") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive

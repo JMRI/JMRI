@@ -31,8 +31,6 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
-    protected static final boolean IS_MANIFEST = false;
-
     protected Track _track = null;
 
     // text panes
@@ -56,7 +54,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
     public YardmasterByTrackPanel(Location location) {
         super();
-        initComponents();
 
         // this window doesn't use the set button
         modifyButton.setVisible(false);
@@ -116,9 +113,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
         addComboBoxAction(trackComboBox);
         addButtonAction(nextButton);
-
-        setVisible(true);
-
     }
 
     // Select, Clear, and Next Buttons
