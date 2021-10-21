@@ -41,15 +41,12 @@ public interface Table {
      * will be returned.
      * @param row the row of the cell or null if all rows should be returned
      * @return the value of the cell
+     * @throws RowNotFoundException if the row is not found
      */
     @CheckReturnValue
-    default public Object getCell(@Nonnull String row) {
-        int rowNumber = getRowNumber(row);
-        if (rowNumber == -1) {
-            throw new IllegalArgumentException("Row '"+row+"' is not found");
-        }
-        
-        return getCell(rowNumber, 1);
+    default public Object getCell(@Nonnull String row)
+            throws RowNotFoundException {
+        return getCell(getRowNumber(row), 1);
     }
     
     /**
@@ -62,19 +59,12 @@ public interface Table {
      * integer value, that index is used, where column 0 is the name of the
      * column.
      * @return the value of the cell
+     * @throws RowNotFoundException if the row is not found
+     * @throws ColumnNotFoundException if the column is not found
      */
-    default public Object getCell(@Nonnull String row, @Nonnull String column) {
-        int rowNumber = getRowNumber(row);
-        if (rowNumber == -1) {
-            throw new IllegalArgumentException("Row '"+row+"' is not found");
-        }
-        
-        int columnNumber = getColumnNumber(column);
-        if (columnNumber == -1) {
-            throw new IllegalArgumentException("Column '"+column+"' is not found");
-        }
-        
-        return getCell(rowNumber, columnNumber);
+    default public Object getCell(@Nonnull String row, @Nonnull String column)
+            throws RowNotFoundException, ColumnNotFoundException {
+        return getCell(getRowNumber(row), getColumnNumber(column));
     }
     
     /**
@@ -92,14 +82,11 @@ public interface Table {
      * will be returned.
      * @param value the new value of the cell
      * @param row the row of the cell
+     * @throws RowNotFoundException if the row is not found
      */
-    default public void setCell(Object value, String row) {
-        int rowNumber = getRowNumber(row);
-        if (rowNumber == -1) {
-            throw new IllegalArgumentException("Row '"+row+"' is not found");
-        }
-        
-        setCell(value, rowNumber, 1);
+    default public void setCell(Object value, String row)
+            throws RowNotFoundException {
+        setCell(value, getRowNumber(row), 1);
     }
     
     /**
@@ -111,19 +98,12 @@ public interface Table {
      * @param column the column of the cell. If this string is a name of a
      * column, that column is used. If it's not a name of a column, but an
      * integer value, that index is used, where column 0 is the name of the column.
+     * @throws RowNotFoundException if the row is not found
+     * @throws ColumnNotFoundException if the column is not found
      */
-    default public void setCell(Object value, String row, String column) {
-        int rowNumber = getRowNumber(row);
-        if (rowNumber == -1) {
-            throw new IllegalArgumentException("Row '"+row+"' is not found");
-        }
-        
-        int columnNumber = getColumnNumber(column);
-        if (columnNumber == -1) {
-            throw new IllegalArgumentException("Column '"+column+"' is not found");
-        }
-        
-        setCell(value, rowNumber, columnNumber);
+    default public void setCell(Object value, String row, String column)
+            throws RowNotFoundException, ColumnNotFoundException {
+        setCell(value, getRowNumber(row), getColumnNumber(column));
     }
     
     /**
@@ -142,18 +122,20 @@ public interface Table {
      * Get the row number by name of row.
      * @param rowName the name of the row. If there is no row with this name,
      * and rowName is a positive integer, that row number will be returned.
-     * @return the row number or -1 if there is no row with that name
+     * @return the row number
+     * @throws RowNotFoundException if the row is not found
      */
-    public int getRowNumber(String rowName);
+    public int getRowNumber(String rowName) throws RowNotFoundException;
     
     /**
      * Get the row number by name of row.
      * @param columnName the name of the column. If there is no column with
      * this name, and columnName is a positive integer, that column number will
      * be returned.
-     * @return the column number or -1 if there is no column with that name
+     * @return the column number
+     * @throws ColumnNotFoundException if the column is not found
      */
-    public int getColumnNumber(String columnName);
+    public int getColumnNumber(String columnName) throws ColumnNotFoundException;
     
     /**
      * Store the table to a CSV file.
@@ -178,5 +160,71 @@ public interface Table {
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException;
+
+
+
+
+    public static class RowNotFoundException extends IllegalArgumentException {
+
+        /**
+         * Constructs a <code>RowNotFoundException</code>.
+         *
+         * @param  name the name of the row.
+         */
+        public RowNotFoundException(String name) {
+            super(Bundle.getMessage("Table_RowNotFound", name));
+        }
+
+        /**
+         * Constructs a <code>RowNotFoundException</code>.
+         *
+         * <p>Note that the detail message associated with <code>cause</code> is
+         * <i>not</i> automatically incorporated in this exception's detail
+         * message.
+         *
+         * @param  name the name of the row.
+         * @param  cause the cause (which is saved for later retrieval by the
+         *         {@link Throwable#getCause()} method).  (A {@code null} value
+         *         is permitted, and indicates that the cause is nonexistent or
+         *         unknown.)
+         * @since 1.5
+         */
+        public RowNotFoundException(String name, Throwable cause) {
+            super(Bundle.getMessage("Table_RowNotFound", name), cause);
+        }
+
+    }
+
+
+    public static class ColumnNotFoundException extends IllegalArgumentException {
+
+        /**
+         * Constructs a <code>ColumnNotFoundException</code>.
+         *
+         * @param  name the name of the row.
+         */
+        public ColumnNotFoundException(String name) {
+            super(Bundle.getMessage("Table_ColumnNotFound", name));
+        }
+
+        /**
+         * Constructs a <code>ColumnNotFoundException</code>.
+         *
+         * <p>Note that the detail message associated with <code>cause</code> is
+         * <i>not</i> automatically incorporated in this exception's detail
+         * message.
+         *
+         * @param  name the name of the row.
+         * @param  cause the cause (which is saved for later retrieval by the
+         *         {@link Throwable#getCause()} method).  (A {@code null} value
+         *         is permitted, and indicates that the cause is nonexistent or
+         *         unknown.)
+         * @since 1.5
+         */
+        public ColumnNotFoundException(String name, Throwable cause) {
+            super(Bundle.getMessage("Table_ColumnNotFound", name), cause);
+        }
+
+    }
 
 }

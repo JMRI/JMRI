@@ -170,7 +170,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
             return rowNumber;
         }
         // If here, the row is not found
-        return -1;
+        throw new RowNotFoundException(rowName);
     }
 
     /**
@@ -190,7 +190,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
             return columnNumber;
         }
         // If here, the row is not found
-        return -1;
+        throw new ColumnNotFoundException(columnName);
     }
 
     @Override
