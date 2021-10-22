@@ -187,7 +187,6 @@ public interface Table {
          *         {@link Throwable#getCause()} method).  (A {@code null} value
          *         is permitted, and indicates that the cause is nonexistent or
          *         unknown.)
-         * @since 1.5
          */
         public RowNotFoundException(String name, Throwable cause) {
             super(Bundle.getMessage("Table_RowNotFound", name), cause);
@@ -219,7 +218,6 @@ public interface Table {
          *         {@link Throwable#getCause()} method).  (A {@code null} value
          *         is permitted, and indicates that the cause is nonexistent or
          *         unknown.)
-         * @since 1.5
          */
         public ColumnNotFoundException(String name, Throwable cause) {
             super(Bundle.getMessage("Table_ColumnNotFound", name), cause);

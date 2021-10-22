@@ -189,7 +189,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
         } else {
             return columnNumber;
         }
-        // If here, the row is not found
+        // If here, the column is not found
         throw new ColumnNotFoundException(columnName);
     }
 
