@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Timeout(60)
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-@DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//@DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
 public class LinkedWarrantTest {
 
     private OBlockManager _OBlockMgr;

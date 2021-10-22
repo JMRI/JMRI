@@ -33,7 +33,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     @Test
     public void testEditSingleSlipDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         createTurnouts();
         createBlocks();

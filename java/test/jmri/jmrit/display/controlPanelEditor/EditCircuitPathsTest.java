@@ -30,7 +30,7 @@ public class EditCircuitPathsTest {
     @Test
     public void testBasicOps() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
         frame.makeCircuitMenu(true);

@@ -25,7 +25,7 @@ public class EditPortalFrameTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalFrameTest");
         frame.makeCircuitMenu(true);

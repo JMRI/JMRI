@@ -46,7 +46,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testRoutePanel() throws Exception {
         NXFrame nxFrame = new NXFrame();
         assertThat(nxFrame).withFailMessage("NXFrame").isNotNull();
@@ -71,7 +71,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testNXWarrantSetup() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -137,7 +137,7 @@ public class NXFrameTest {
     @Test
     @Timeout(60)
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testNXWarrant() throws Exception {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.
@@ -259,7 +259,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testWarrantLoopRun() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -304,7 +304,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testWarrantRampHalt() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");

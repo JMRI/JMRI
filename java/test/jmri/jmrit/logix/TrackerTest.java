@@ -51,7 +51,7 @@ public class TrackerTest {
     @Test
     public void testMultipleStartBlocks() throws Exception {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+//        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display

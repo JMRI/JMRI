@@ -88,7 +88,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testSendOneNowOneLater() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 

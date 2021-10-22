@@ -37,7 +37,7 @@ public class TrackerTableActionTest {
     @Test
     public void testTracking1() throws Exception {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+//        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
@@ -99,7 +99,7 @@ public class TrackerTableActionTest {
     @Test
     public void testTrackingDark() throws Exception {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+//        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
@@ -145,7 +145,7 @@ public class TrackerTableActionTest {
     @Test
     public void testMultipleTrackers() throws Exception {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+//        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display

@@ -27,7 +27,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
     @Test
     public void testEditLHTurnoutDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         LayoutTurnoutEditor editor = new LayoutLHTurnoutEditor(layoutEditor);
         turnoutTestSequence(editor, leftHandLayoutTurnoutView);

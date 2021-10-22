@@ -536,7 +536,7 @@ public class LightControlTest {
 
     @Test
     public void testTimedSensorFollowing() throws jmri.JmriException {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 

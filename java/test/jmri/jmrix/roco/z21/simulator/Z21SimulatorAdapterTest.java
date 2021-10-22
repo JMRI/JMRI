@@ -35,7 +35,7 @@ public class Z21SimulatorAdapterTest {
      */
     @Test
     @Disabled("test is currently too unreliable in CI environments.  The class under test frequently fails to bind to the port")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testConnection() {
         // connect the port
         assertThatCode( () ->
@@ -98,7 +98,7 @@ public class Z21SimulatorAdapterTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+//    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void Z21BroadCastFlagsReply() {
         cannedMessageCheck("getZ21BroadCastFlagsReply", "08 00 51 00 00 00 00 00");
     }

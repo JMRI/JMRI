@@ -35,7 +35,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     
     @Test
     public void testIncomingFunctions() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
     
         // CbusThrottleManager cbtm = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",tm);
@@ -187,7 +187,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     
     @Test
     public void testIncomingSpeedDirection() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
@@ -314,7 +314,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testMessage() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         
         Assert.assertNotNull("exists",tm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
