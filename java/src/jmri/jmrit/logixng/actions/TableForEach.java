@@ -167,7 +167,7 @@ public class TableForEach extends AbstractDigitalAction
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
-            int row = table.getRowNumber(_rowOrColumnName);
+            int row = table.getRowNumber(rowOrColumnName);
             for (int column=1; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(0, column);
