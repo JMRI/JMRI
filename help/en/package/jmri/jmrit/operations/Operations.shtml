@@ -3091,17 +3091,16 @@
       roads that the track will not service, you will see "E" and the number of roads that you want
       to exclude from this track.</p>
 
-      <h4 id="TrackWorkComments">Manifest Comments</h4>
-      You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
-      pickup and set out occurs to a track. Only one of the three messages will be added to your
-      paperwork when there's work for the selected track. The checkboxes at the bottom of the
-      window allow you to decide which paperwork gets the comment.
-      
-      <p>You can also modify the color of the text by adding the color control text &lt;FONT
-      color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
-      the color change by placing &lt;/FONT&gt; at the end of the line.</p>
-         
-      <h4 id="Pools">Track Pools</h4>
+   <h4 id="TrackWorkComments">Manifest Comments</h4>
+   You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
+   pickup and set out occurs to a track. Only one of the three messages will be added to your
+   paperwork when there's work for the selected track. The checkboxes at the bottom of the window
+   allow you to decide which paperwork gets the comment.
+
+   <p>You can also select the color of the text for each of the comments using the color
+    selector to the right of the text message.</p>
+
+   <h4 id="Pools">Track Pools</h4>
       OperationsPro™ allows you to "pool" a set of tracks at a location. Tracks in a pool share
       their track lengths with each other. This is useful if you've divided a location into track
       segments and you want each segment to adjust its length based on the program's demands. To
