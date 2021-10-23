@@ -24,8 +24,7 @@ public class YardmasterFrameTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Location l = new Location("Location Test Attridutes id", "Location Test Name");
-        YardmasterFrame t = new YardmasterFrame(l);
+        YardmasterFrame t = new YardmasterFrame(null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
@@ -71,6 +70,15 @@ public class YardmasterFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
+    
+  @Test
+  public void testLoop2() {
+      for (int i = 0; i < 1000; i++) {
+          setUp();
+          testLocationWithWork();
+          tearDown();
+      }
+  }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterFrameTest.class);
 }
