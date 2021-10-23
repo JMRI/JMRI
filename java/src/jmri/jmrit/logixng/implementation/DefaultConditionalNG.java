@@ -152,6 +152,11 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
+            } catch (AbortConditionalNGExecutionException e) {
+//                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+//                        conditionalNG.getSystemName(), e, e);
+                log.warn("ConditionalNG {} was aborted during execute: {}",
+                        conditionalNG.getSystemName(), e.getCause(), e.getCause());
             } catch (JmriException | RuntimeException e) {
 //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                        conditionalNG.getSystemName(), e, e);
