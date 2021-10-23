@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.TableForEach;
 import jmri.jmrit.logixng.TableRowOrColumn;
+import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -20,14 +21,30 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class TableForEachSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPane;
-    private JPanel _panelTable = new javax.swing.JPanel();
-    private JPanel _panelReference = new javax.swing.JPanel();
-    private JPanel _panelFormula = new javax.swing.JPanel();
+    private JTabbedPane _tabbedTablePane;
+    private JPanel _panelTable;
+    private JPanel _panelReference;
+    private JPanel _panelLocalVariable;
+    private JPanel _panelFormula;
     private BeanSelectPanel<NamedTable> tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
+    private JTextField _referenceTextField;
+    private JTextField _localVariableTextField;
+    private JTextField _formulaTextField;
+    
+    private JLabel _panelRowOrColumnLabel;
+    private JTabbedPane _tabbedRowOrColumnPane;
+    private JPanel _panelRowOrColumnName;
+    private JPanel _panelRowOrColumnReference;
+    private JPanel _panelRowOrColumnLocalVariable;
+    private JPanel _panelRowOrColumnFormula;
     private JComboBox<String> _rowOrColumnNameComboBox;
     private JTextField _rowOrColumnNameTextField;
+    
+    private JTextField _referenceRowOrColumnTextField;
+    private JTextField _localRowOrColumnVariableTextField;
+    private JTextField _formulaRowOrColumnTextField;
+    
     private JTextField _localVariable;
     
     @Override
@@ -41,37 +58,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        JPanel tableBeanPanelPanel = new JPanel();
-        tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Table")));
-        
-        _tabbedPane = new JTabbedPane();
-        _panelTable = new javax.swing.JPanel();
-        _panelReference = new javax.swing.JPanel();
-        _panelFormula = new javax.swing.JPanel();
-        
-        _tabbedPane.addTab("Table", _panelTable); // NOI1aa8N
-        _tabbedPane.addTab("Reference", _panelReference); // NOIaa18N
-        _tabbedPane.addTab("Formula", _panelFormula); // NOI1aa8N
-        
-        _tabbedPane.addChangeListener((evt) -> {
-            boolean isPanelTable = (_tabbedPane.getSelectedComponent() == _panelTable);
-            _rowOrColumnNameComboBox.setVisible(isPanelTable);
-            _rowOrColumnNameTextField.setVisible(!isPanelTable);
-        });
-        
-        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        _panelTable.add(tableBeanPanel);
-        
-        JTextField referenceTextField = new JTextField();
-        referenceTextField.setColumns(30);
-        _panelReference.add(referenceTextField);
-        
-        JTextField formulaTextField = new JTextField();
-        formulaTextField.setColumns(30);
-        _panelFormula.add(formulaTextField);
-        
-        tableBeanPanelPanel.add(_tabbedPane);
-        panel.add(tableBeanPanelPanel);
+        _panelRowOrColumnLabel = new JLabel(Bundle.getMessage("TableForEachSwing_RowName"));
         
         _tableRowOrColumnComboBox = new JComboBox<>();
         for (TableRowOrColumn item : TableRowOrColumn.values()) {
@@ -79,29 +66,12 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         }
         JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
         _tableRowOrColumnComboBox.addActionListener((evt) -> {
-            _rowOrColumnNameComboBox.removeAllItems();
-            NamedTable table = tableBeanPanel.getNamedBean();
-            if (table != null) {
-                if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                    for (int column=0; column <= table.numColumns(); column++) {
-                        // If the header is null or empty, treat the row as a comment
-                        Object header = table.getCell(0, column);
-                        if ((header != null) && (!header.toString().isEmpty())) {
-                            _rowOrColumnNameComboBox.addItem(header.toString());
-                        }
-                    }
-                } else {
-                    for (int row=0; row <= table.numRows(); row++) {
-                        // If the header is null or empty, treat the row as a comment
-                        Object header = table.getCell(row, 0);
-                        if ((header != null) && (!header.toString().isEmpty())) {
-                            _rowOrColumnNameComboBox.addItem(header.toString());
-                        }
-                    }
-                }
-                if (action != null) {
-                    _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
-                }
+            setupRowOrColumnNameComboBox(action != null ? action.getRowOrColumnName() : null);
+            
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Row) {
+                _panelRowOrColumnLabel.setText(Bundle.getMessage("TableForEachSwing_RowName"));
+            } else {
+                _panelRowOrColumnLabel.setText(Bundle.getMessage("TableForEachSwing_ColumnName"));
             }
         });
         
@@ -110,15 +80,84 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
         panel.add(tableRowOrColumnPanel);
         
-        JPanel rowOrColumnNamePanel = new JPanel();
-        rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumnName")));
+        JPanel tabbedPanesPanel = new JPanel();
+        tabbedPanesPanel.setLayout(new BoxLayout(tabbedPanesPanel, BoxLayout.X_AXIS));
+        
+        _tabbedTablePane = new JTabbedPane();
+        _panelTable = new javax.swing.JPanel();
+        _panelReference = new javax.swing.JPanel();
+        _panelLocalVariable = new javax.swing.JPanel();
+        _panelFormula = new javax.swing.JPanel();
+        
+        _tabbedTablePane.addTab(NamedBeanAddressing.Direct.toString(), _panelTable);
+        _tabbedTablePane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
+        _tabbedTablePane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
+        _tabbedTablePane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
+        
+        _tabbedTablePane.addChangeListener((evt) -> {
+            boolean isPanelTable = (_tabbedTablePane.getSelectedComponent() == _panelTable);
+            _rowOrColumnNameComboBox.setVisible(isPanelTable);
+            _rowOrColumnNameTextField.setVisible(!isPanelTable);
+        });
+        
+        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        _panelTable.add(tableBeanPanel);
+        
+        tableBeanPanel.getBeanCombo().addActionListener((evt) -> {
+            setupRowOrColumnNameComboBox(action != null ? action.getRowOrColumnName() : null);
+        });
+        
+        _referenceTextField = new JTextField();
+        _referenceTextField.setColumns(20);
+        _panelReference.add(_referenceTextField);
+        
+        _localVariableTextField = new JTextField();
+        _localVariableTextField.setColumns(20);
+        _panelLocalVariable.add(_localVariableTextField);
+        
+        _formulaTextField = new JTextField();
+        _formulaTextField.setColumns(20);
+        _panelFormula.add(_formulaTextField);
+        
+        tabbedPanesPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Table")));
+        
+        tabbedPanesPanel.add(_tabbedTablePane);
+        
+        _tabbedRowOrColumnPane = new JTabbedPane();
+        _panelRowOrColumnName = new javax.swing.JPanel();
+        _panelRowOrColumnReference = new javax.swing.JPanel();
+        _panelRowOrColumnLocalVariable = new javax.swing.JPanel();
+        _panelRowOrColumnFormula = new javax.swing.JPanel();
+        
+        _tabbedRowOrColumnPane.addTab(NamedBeanAddressing.Direct.toString(), _panelRowOrColumnName);
+        _tabbedRowOrColumnPane.addTab(NamedBeanAddressing.Reference.toString(), _panelRowOrColumnReference);
+        _tabbedRowOrColumnPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelRowOrColumnLocalVariable);
+        _tabbedRowOrColumnPane.addTab(NamedBeanAddressing.Formula.toString(), _panelRowOrColumnFormula);
+        
         _rowOrColumnNameComboBox = new JComboBox<>();
-        rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
+        _panelRowOrColumnName.add(_rowOrColumnNameComboBox);
         _rowOrColumnNameTextField = new JTextField(20);
         _rowOrColumnNameTextField.setVisible(false);
-        rowOrColumnNamePanel.add(_rowOrColumnNameTextField);
-        panel.add(rowOrColumnNamePanel);
+        _panelRowOrColumnName.add(_rowOrColumnNameTextField);
         JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
+        
+        _referenceRowOrColumnTextField = new JTextField();
+        _referenceRowOrColumnTextField.setColumns(20);
+        _panelRowOrColumnReference.add(_referenceRowOrColumnTextField);
+        
+        _localRowOrColumnVariableTextField = new JTextField();
+        _localRowOrColumnVariableTextField.setColumns(20);
+        _panelRowOrColumnLocalVariable.add(_localRowOrColumnVariableTextField);
+        
+        _formulaRowOrColumnTextField = new JTextField();
+        _formulaRowOrColumnTextField.setColumns(20);
+        _panelRowOrColumnFormula.add(_formulaRowOrColumnTextField);
+        
+        tabbedPanesPanel.add(_panelRowOrColumnLabel);
+        
+        tabbedPanesPanel.add(_tabbedRowOrColumnPane);
+        
+        panel.add(tabbedPanesPanel);
         
         JPanel localVariablePanel = new JPanel();
         localVariablePanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_LocalVariable")));
@@ -127,17 +166,102 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         panel.add(localVariablePanel);
         
         if (action != null) {
+            _tableRowOrColumnComboBox.setSelectedItem(action.getRowOrColumn());
+            
+            switch (action.getAddressing()) {
+                case Direct: _tabbedTablePane.setSelectedComponent(_panelTable); break;
+                case Reference: _tabbedTablePane.setSelectedComponent(_panelReference); break;
+                case LocalVariable: _tabbedTablePane.setSelectedComponent(_panelLocalVariable); break;
+                case Formula: _tabbedTablePane.setSelectedComponent(_panelFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+            }
+            
             if (action.getTable() != null) {
                 tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
             }
-            _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
+            
+            _referenceTextField.setText(action.getTableReference());
+            _localVariableTextField.setText(action.getTableLocalVariable());
+            _formulaTextField.setText(action.getTableFormula());
+            
+            switch (action.getRowOrColumnAddressing()) {
+                case Direct: _tabbedRowOrColumnPane.setSelectedComponent(_panelRowOrColumnName); break;
+                case Reference: _tabbedRowOrColumnPane.setSelectedComponent(_panelRowOrColumnReference); break;
+                case LocalVariable: _tabbedRowOrColumnPane.setSelectedComponent(_panelRowOrColumnLocalVariable); break;
+                case Formula: _tabbedRowOrColumnPane.setSelectedComponent(_panelRowOrColumnFormula); break;
+                default: throw new IllegalArgumentException("invalid _rowOrColumnAddressing state: " + action.getRowOrColumnAddressing().name());
+            }
+            
+            _rowOrColumnNameTextField.setText(action.getRowOrColumnName());
+            _referenceRowOrColumnTextField.setText(action.getRowOrColumnReference());
+            _localRowOrColumnVariableTextField.setText(action.getRowOrColumnLocalVariable());
+            _formulaRowOrColumnTextField.setText(action.getRowOrColumnFormula());
+            
             _localVariable.setText(action.getLocalVariableName());
+        }
+    }
+    
+    private void setupRowOrColumnNameComboBox(String rowOrColumnName) {
+        _rowOrColumnNameComboBox.removeAllItems();
+        NamedTable table = tableBeanPanel.getNamedBean();
+        if (table != null) {
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                for (int column=0; column <= table.numColumns(); column++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(0, column);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            } else {
+                for (int row=0; row <= table.numRows(); row++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(row, 0);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            }
+            _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        // Create a temporary action to test formula
+        TableForEach action = new TableForEach("IQDA1", null);
+        
+        try {
+            if (_tabbedTablePane.getSelectedComponent() == _panelTable) {
+                action.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelReference) {
+                action.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelLocalVariable) {
+                action.setAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelFormula) {
+                action.setAddressing(NamedBeanAddressing.Formula);
+                action.setTableFormula(_formulaTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+            }
+            
+            if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnName) {
+                action.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnReference) {
+                action.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnLocalVariable) {
+                action.setAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnFormula) {
+                action.setRowOrColumnFormula(_formulaRowOrColumnTextField.getText());
+                action.setAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedRowOrColumnPane has unknown selection");
+            }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+            return false;
+        }
         return true;
     }
     
@@ -156,27 +280,63 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TableForEach but is a: "+object.getClass().getName());
         }
         
+        
         TableForEach action = (TableForEach)object;
-        NamedTable table = tableBeanPanel.getNamedBean();
-        if (table != null) {
-            NamedBeanHandle<NamedTable> handle
-                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(table.getDisplayName(), table);
-            action.setTable(handle);
-        } else {
-            action.removeTable();
-        }
-        action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
-        if (_tabbedPane.getSelectedComponent() == _panelTable) {
-            if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
-                action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+        action.setRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
+        
+        try {
+            if (_tabbedTablePane.getSelectedComponent() == _panelTable) {
+                action.setAddressing(NamedBeanAddressing.Direct);
+                NamedTable table = tableBeanPanel.getNamedBean();
+                if (table != null) {
+                    NamedBeanHandle<NamedTable> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(table.getDisplayName(), table);
+                    action.setTable(handle);
+                } else {
+                    action.removeTable();
+                }
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelReference) {
+                action.setAddressing(NamedBeanAddressing.Reference);
+                action.setTableReference(_referenceTextField.getText());
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelLocalVariable) {
+                action.setAddressing(NamedBeanAddressing.LocalVariable);
+                action.setTableLocalVariable(_localVariableTextField.getText());
+            } else if (_tabbedTablePane.getSelectedComponent() == _panelFormula) {
+                action.setAddressing(NamedBeanAddressing.Formula);
+                action.setTableFormula(_formulaTextField.getText());
             } else {
-                action.setRowOrColumnName("");
+                throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
             }
-        } else {
-            action.setRowOrColumnName(_rowOrColumnNameTextField.getText());
+            
+            if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnName) {
+                action.setRowOrColumnAddressing(NamedBeanAddressing.Direct);
+                if (_tabbedTablePane.getSelectedComponent() == _panelTable) {
+                    if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+                        action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
+                    } else {
+                        action.setRowOrColumnName("");
+                    }
+                } else {
+                    action.setRowOrColumnName(_rowOrColumnNameTextField.getText());
+                }
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnReference) {
+                action.setRowOrColumnAddressing(NamedBeanAddressing.Reference);
+                action.setRowOrColumnReference(_referenceRowOrColumnTextField.getText());
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnLocalVariable) {
+                action.setRowOrColumnAddressing(NamedBeanAddressing.LocalVariable);
+                action.setRowOrColumnLocalVariable(_localRowOrColumnVariableTextField.getText());
+            } else if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnFormula) {
+                action.setRowOrColumnAddressing(NamedBeanAddressing.Formula);
+                action.setRowOrColumnFormula(_formulaRowOrColumnTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
+            }
+            
+            action.setLocalVariableName(_localVariable.getText());
+        } catch (ParserException e) {
+            throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
-        action.setLocalVariableName(_localVariable.getText());
     }
     
     /** {@inheritDoc} */

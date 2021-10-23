@@ -18,7 +18,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <jmriversion>
     <major>4</major>
     <minor>25</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -80,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:06 PM">
+    <memory value="1:15 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Sep 25 14:06:29 CDT 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Oct 22 01:15:47 CEST 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -17440,7 +17440,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0164</systemName>
       <localVariable />
+      <tableAddressing>Direct</tableAddressing>
+      <tableReference />
+      <tableLocalVariable />
+      <tableFormula />
+      <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName />
+      <rowOrColumnReference />
+      <rowOrColumnLocalVariable />
+      <rowOrColumnFormula />
       <tableRowOrColumn>Column</tableRowOrColumn>
       <Socket>
         <socketName>gar6tbjl2s</socketName>
@@ -17497,7 +17505,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
       <table>IQT1</table>
+      <tableAddressing>Direct</tableAddressing>
+      <tableReference />
+      <tableLocalVariable />
+      <tableFormula />
+      <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>North yard</rowOrColumnName>
+      <rowOrColumnReference />
+      <rowOrColumnLocalVariable />
+      <rowOrColumnFormula />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <Socket>
         <socketName>t3ga6iwyju</socketName>
@@ -17609,7 +17625,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
       <table>IQT1</table>
+      <tableAddressing>Direct</tableAddressing>
+      <tableReference>{MyTableRef}</tableReference>
+      <tableLocalVariable>MyTableVar</tableLocalVariable>
+      <tableFormula>MyTableFormula</tableFormula>
+      <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>Second turnout</rowOrColumnName>
+      <rowOrColumnReference>{MyRowOrColumnRef}</rowOrColumnReference>
+      <rowOrColumnLocalVariable>MyRowOrColumnVar</rowOrColumnLocalVariable>
+      <rowOrColumnFormula>MyRowOrColumnFormula</rowOrColumnFormula>
       <tableRowOrColumn>Column</tableRowOrColumn>
       <Socket>
         <socketName>yw8m1pcmnn</socketName>
@@ -20228,9 +20252,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Sep 25 14:06:30 CDT 2021</date>
+      <date>Fri Oct 22 01:15:50 CEST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.4ish+das+20210925T1851Z+Rbef9f0ff70 on Sat Sep 25 14:06:30 CDT 2021-->
+  <!--Written by JMRI version 4.25.5ish+daniel+2021-10-21T23:15:30Z+R6ca5a12 on Fri Oct 22 01:15:50 CEST 2021-->
 </layout-config>
