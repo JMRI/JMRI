@@ -29,6 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -43,7 +44,7 @@ import jmri.jmrit.operations.trains.*;
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
     protected static final boolean IS_MANIFEST = true;
-    
+
     protected static final String Tab = "    "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
@@ -77,6 +78,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JTextPane textTrainCommentPane = new JTextPane();
     protected JTextPane textTrainRouteCommentPane = new JTextPane();
     protected JTextPane textTrainRouteLocationCommentPane = new JTextPane();
+    protected JTextPane textSwitchListCommentPane = new JTextPane();
 
     // panels
     protected JPanel pRailRoadName = new JPanel();
@@ -84,6 +86,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JPanel pTrainDescription = new JPanel();
 
     protected JPanel pLocationName = new JPanel();
+
+    protected JPanel pTrackComments = new JPanel();
 
     protected JPanel pLocos = new JPanel();
     protected JPanel pPickupLocos = new JPanel();
@@ -126,6 +130,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         movePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocalMoves")));
 
         // Set up the panels
+        pTrackComments.setLayout(new BoxLayout(pTrackComments, BoxLayout.Y_AXIS));
         pPickupLocos.setLayout(new BoxLayout(pPickupLocos, BoxLayout.Y_AXIS));
         pSetoutLocos.setLayout(new BoxLayout(pSetoutLocos, BoxLayout.Y_AXIS));
         pPickups.setLayout(new BoxLayout(pPickups, BoxLayout.Y_AXIS));
@@ -168,6 +173,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textTrainRouteLocationCommentPane.setBackground(null);
         textTrainRouteLocationCommentPane.setEditable(false);
         textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
+        
+        // Switch list location comment
+        textSwitchListCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+        textSwitchListCommentPane.setBackground(null);
+        textSwitchListCommentPane.setEditable(false);
+        textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
+
 
         // row 12
         pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
@@ -218,6 +230,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     protected void initialize() {
         removePropertyChangeListerners();
+        pTrackComments.removeAll();
         pPickupLocos.removeAll();
         pSetoutLocos.removeAll();
         pPickups.removeAll();
@@ -239,12 +252,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     protected void updateComplete() {
+        pTrackComments.repaint();
         pPickupLocos.repaint();
         pSetoutLocos.repaint();
         pPickups.repaint();
         pSetouts.repaint();
         pMoves.repaint();
 
+        pTrackComments.revalidate();
         pPickupLocos.revalidate();
         pSetoutLocos.revalidate();
         pPickups.revalidate();
@@ -329,6 +344,123 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             checkBox.setSelected(enable);
         }
         isSetMode = false;
+    }
+
+    protected void loadTrainDescription() {
+        textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
+        textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
+    }
+
+    /**
+     * show train comment box only if there's a comment
+     */
+    protected void loadTrainComment() {
+        if (_train.getComment().equals(Train.NONE)) {
+            textTrainCommentPane.setVisible(false);
+        } else {
+            textTrainCommentPane.setVisible(true);
+            textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
+            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
+        }
+    }
+
+    protected void loadRailroadName() {
+        // Does this train have a unique railroad name?
+        if (!_train.getRailroadName().equals(Train.NONE)) {
+            textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
+            textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
+        } else {
+            textRailRoadName.setText(Setup.getRailroadName());
+        }
+    }
+
+    protected void loadLocationComment(Location location) {
+        textLocationCommentPane
+                .setVisible(!location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
+        if (textLocationCommentPane.isVisible()) {
+            textLocationCommentPane.setText(TrainCommon.getTextColorString(location.getComment()));
+            textLocationCommentPane.setForeground(TrainCommon.getTextColor(location.getComment()));
+        }
+    }
+
+    protected void loadLocationSwitchListComment(Location location) {
+        textSwitchListCommentPane.setVisible(!location.getSwitchListComment().equals(Location.NONE));
+        if (textSwitchListCommentPane.isVisible()) {
+            textSwitchListCommentPane.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
+            textSwitchListCommentPane.setForeground(TrainCommon.getTextColor(location.getSwitchListComment()));
+        }
+    }
+
+    /**
+     * show route comment box only if there's a route comment
+     */
+    protected void loadRouteComment() {
+        if (_train.getRoute() != null && _train.getRoute().getComment().equals(Route.NONE) ||
+                !Setup.isPrintRouteCommentsEnabled()) {
+            textTrainRouteCommentPane.setVisible(false);
+        } else {
+            textTrainRouteCommentPane.setVisible(true);
+            textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
+            textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
+        }
+    }
+
+    protected void loadRouteLocationComment(RouteLocation rl) {
+        textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
+        if (textTrainRouteLocationCommentPane.isVisible()) {
+            textTrainRouteLocationCommentPane.setText(rl.getComment());
+            textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+        }
+    }
+
+    protected void updateTrackComments(RouteLocation rl, boolean isManifest) {
+        Location location = rl.getLocation();
+        if (location != null) {
+            List<Track> tracks = location.getTracksByNameList(null);
+            for (Track track : tracks) {
+                if (isManifest && !track.isPrintManifestCommentEnabled() ||
+                        !isManifest && !track.isPrintSwitchListCommentEnabled()) {
+                    continue;
+                }
+                // any pick ups or set outs to this track?
+                boolean pickup = false;
+                boolean setout = false;
+                List<Car> carList = carManager.getByTrainDestinationList(_train);
+                for (Car car : carList) {
+                    if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track) {
+                        pickup = true;
+                    }
+                    if (car.getRouteDestination() == rl &&
+                            car.getDestinationTrack() != null &&
+                            car.getDestinationTrack() == track) {
+                        setout = true;
+                    }
+                }
+                // display the appropriate comment if there's one
+                if (pickup || setout) {
+                    JTextPane commentTextPane = new JTextPane();
+                    if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
+                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentBoth()));
+                    } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
+                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentPickup()));
+                    } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
+                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentSetout()));
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentSetout()));
+                    }
+                    if (!commentTextPane.getText().isEmpty()) {
+                        commentTextPane.setBorder(
+                                BorderFactory.createTitledBorder(Bundle.getMessage("Comment") + " " + track.getName()));
+                        commentTextPane.setBackground(null);
+                        commentTextPane.setEditable(false);
+                        commentTextPane.setMaximumSize(new Dimension(2000, 200));
+                        pTrackComments.add(commentTextPane);
+                        pTrackComments.setVisible(true);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -678,7 +810,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         });
         rollingStock.clear();
     }
-    
+
     @Override
     public void dispose() {
         _train = null;

@@ -34,7 +34,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     protected Track _track = null;
 
     // text panes
-    JTextPane textSwitchListCommentPane = new JTextPane();
     JTextPane textTrackCommentPane = new JTextPane();
     JTextPane textTrackCommentWorkPane = new JTextPane();
 
@@ -59,11 +58,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         modifyButton.setVisible(false);
 
         _location = location;
-
-        textSwitchListCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-        textSwitchListCommentPane.setBackground(null);
-        textSwitchListCommentPane.setEditable(false);
-        textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         textTrackCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackComment")));
         textTrackCommentPane.setBackground(null);
@@ -95,16 +89,14 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         add(pTrackSelect);
         add(textTrackCommentPane);
         add(textTrackCommentWorkPane);
+        add(pTrackComments);
         add(pTrackPane);
         add(pButtons);
 
         if (_location != null) {
             textLocationName.setText(_location.getName());
-            textLocationCommentPane.setText(_location.getComment());
-            textLocationCommentPane.setVisible(!_location.getComment().equals(Location.NONE)
-                    && Setup.isPrintLocationCommentsEnabled());
-            textSwitchListCommentPane.setText(_location.getSwitchListComment());
-            textSwitchListCommentPane.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
+            loadLocationComment(_location);
+            loadLocationSwitchListComment(_location);
             updateTrackComboBox();
             _location.addPropertyChangeListener(this);
         }
@@ -377,11 +369,14 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             pHoldCars.setMaximumSize(new Dimension(2000, pHoldCars.getHeight()));
             pHoldCars.revalidate();
             if (pickup && !setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentPickup());
+                textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentPickup()));
+                textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentPickup()));
             } else if (!pickup && setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentSetout());
+                textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentSetout()));
+                textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentSetout()));
             } else if (pickup && setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentBoth());
+                textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentBoth()));
+                textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentBoth()));
             }
             textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
         } else {
