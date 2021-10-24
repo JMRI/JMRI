@@ -4,18 +4,17 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 import javax.swing.*;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.util.swing.SplitButtonColorChooserPanel;
 
 public class TrackEditCommentsFrame extends OperationsFrame {
 
@@ -67,21 +66,21 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         pCb.setLayout(new GridBagLayout());
         addItem(pCb, commentBothScroller, 1, 0);
         
-        addItem(pCb, getColorChooserPanel(track.getCommentBoth(), commentColorChooserBoth), 2, 0);
+        addItem(pCb, OperationsPanel.getColorChooserPanel(track.getCommentBoth(), commentColorChooserBoth), 2, 0);
 
         JPanel pCp = new JPanel();
         pCp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentPickup")));
         pCp.setLayout(new GridBagLayout());
         addItem(pCp, commentPickupScroller, 1, 0);
         
-        addItem(pCp, getColorChooserPanel(track.getCommentPickup(), commentColorChooserPickup), 2, 0);
+        addItem(pCp, OperationsPanel.getColorChooserPanel(track.getCommentPickup(), commentColorChooserPickup), 2, 0);
 
         JPanel pCs = new JPanel();
         pCs.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentSetout")));
         pCs.setLayout(new GridBagLayout());
         addItem(pCs, commentSetoutScroller, 1, 0);
         
-        addItem(pCs, getColorChooserPanel(track.getCommentSetout(), commentColorChooserSetout), 2, 0);
+        addItem(pCs, OperationsPanel.getColorChooserPanel(track.getCommentSetout(), commentColorChooserSetout), 2, 0);
 
         commentBothTextArea.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
         commentPickupTextArea.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
@@ -126,17 +125,6 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         }
     }
     
-    private JPanel getColorChooserPanel(String text, JColorChooser chooser) {
-        JPanel pTextColorPanel = new JPanel();
-        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TextColor")));
-        chooser.setColor(TrainCommon.getTextColor(text));
-        AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
-        chooser.setChooserPanels(commentColorPanels);
-        chooser.setPreviewPanel(new JPanel());
-        pTextColorPanel.add(chooser);
-        return pTextColorPanel;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
             .getName());
 }

@@ -4,12 +4,15 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -35,7 +38,6 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        JUnitOperationsUtil.initOperationsData();
         // increase coverage by requiring text headers
         Setup.setPrintHeadersEnabled(true);
         
@@ -94,5 +96,22 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class);
+    @BeforeEach
+    @Override
+    public void setUp() {
+        super.setUp();
+
+        // disable build messages
+        InstanceManager.getDefault(TrainManager.class).setBuildMessagesEnabled(false);
+
+        JUnitOperationsUtil.initOperationsData();
+        // need to disable all references to JTextPane() so test dead locks don't occur
+        // on Windows CI tests
+        Setup.setPrintRouteCommentsEnabled(false);
+        Setup.setPrintLocationCommentsEnabled(false);
+        Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
+        Route route = train2.getRoute();
+        RouteLocation rl = route.getDepartsRouteLocation();
+        rl.setComment(RouteLocation.NONE);
+    }
 }
