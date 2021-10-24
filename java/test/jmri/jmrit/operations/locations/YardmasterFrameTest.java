@@ -70,17 +70,16 @@ public class YardmasterFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(ymFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
-  @Test
-  public void testLoop2() {
-      for (int i = 0; i < 1000; i++) {
-          setUp();
-          testLocationWithWork();
-          tearDown();
-      }
-  }
+//  @Test
+//  public void testLoop2() {
+//      for (int i = 0; i < 1000; i++) {
+//          setUp();
+//          testLocationWithWork();
+//          tearDown();
+//      }
+//  }
 
     @BeforeEach
     @Override

@@ -84,6 +84,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         add(textTrainCommentPane);
         add(textTrainRouteCommentPane);
         add(textTrainRouteLocationCommentPane);
+        add(pTrackComments);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
