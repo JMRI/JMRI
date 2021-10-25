@@ -1,4 +1,4 @@
-package jmri.util.swing;
+package jmri.util.com.sun;
 
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultButtonModel;
