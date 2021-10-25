@@ -193,6 +193,22 @@
       <a href="https://www.jmri.org/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC tools</a>
       for building CTC controls in a more graphical way.</p>
 
+      <h4>Model Railroad Compromizes</h4>
+
+      Activity on a model railroad is typically much faster than on the prototype railroad.
+      It can be very frustrating to a dispatcher, particularly one who doesn't use the
+      panel every day, to have the panel's indicators and operations falling behind the
+      railroad.  To help with this, these tools allow two compromises.  See the
+      sample scripts for examples of how to tune these.
+      <ol>
+        <li>You can adjust the timing of the various operations. By default, they're
+            somewhat faster than the prototype. You can make them faster or slower.
+        <li>On the prototype, indicator lamps go off when the code button is pushed and
+            only come back on when an indication is received back. By default, these
+            tools will keep the indicators lit when no change has been requested.  This
+            makes it easier for the dispatcher to consider their next move while
+            actions are occurring.
+      </ol>
       <h3>Standalone Tools</h3>
       These can be created from the USS menu under Tools in JMRI applications. They work by
       creating Logix and/or Routes that implement the desired functionality. You could do that by

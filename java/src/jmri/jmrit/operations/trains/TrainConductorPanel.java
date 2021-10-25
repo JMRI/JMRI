@@ -9,13 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Conductor Panel. Shows work for a train one location at a time.
@@ -94,6 +91,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(textTrainRouteCommentPane); // train route comment
         add(textTrainRouteLocationCommentPane); // train route location comment
         add(textLocationCommentPane);
+        add(pTrackComments);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -106,41 +104,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         addButtonAction(moveButton);
 
         if (_train != null) {
-            // use invokeLater to prevent deadlock
-            SwingUtilities.invokeLater(() -> {
-                textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
-                textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
-
-                // show train comment box only if there's a comment
-                if (_train.getComment().equals(Train.NONE)) {
-                    textTrainCommentPane.setVisible(false);
-                } else {
-                    textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
-                    textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
-                }
-                // show route comment box only if there's a route comment
-                if (_train.getRoute() != null &&
-                        !_train.getRoute().getComment().equals(Route.NONE) &&
-                        !Setup.isPrintRouteCommentsEnabled()) {
-                    textTrainRouteCommentPane.setVisible(false);
-                } else {
-                    textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
-                    textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
-                }
-
-                // Does this train have a unique railroad name?
-                if (!_train.getRailroadName().equals(Train.NONE)) {
-                    textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
-                    textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
-                } else {
-                    textRailRoadName.setText(Setup.getRailroadName());
-                }
-            });
-
+            loadTrainDescription();
+            loadTrainComment();
+            loadRouteComment();
+            loadRailroadName();
             // listen for train changes
             _train.addPropertyChangeListener(this);
         }
-
         trainManager.addPropertyChangeListener(this);
     }
 
@@ -171,11 +141,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 textTrainName.setText(_train.getIconName());
                 RouteLocation rl = _train.getCurrentRouteLocation();
                 if (rl != null) {
-                    textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
-                    if (textTrainRouteLocationCommentPane.isVisible()) {
-                        textTrainRouteLocationCommentPane.setText(rl.getComment());
-                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
-                    }
+                    loadRouteLocationComment(rl);
 
                     textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled() ? rl.getLocation().getName()
                             : TrainCommon.splitString(rl.getLocation().getName()));
@@ -183,16 +149,14 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                             !rl.getDepartureTime().equals(RouteLocation.NONE));
                     textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
 
-                    textLocationCommentPane.setVisible(!rl.getLocation().getComment().equals(Location.NONE) &&
-                            Setup.isPrintLocationCommentsEnabled());
-                    if (textLocationCommentPane.isVisible()) {
-                        textLocationCommentPane.setText(TrainCommon.getTextColorString(rl.getLocation().getComment()));
-                        textLocationCommentPane.setForeground(TrainCommon.getTextColor(rl.getLocation().getComment()));
-                    }
+                    loadLocationComment(rl.getLocation());
 
                     textNextLocationName
                             .setText(trainManager.isShowLocationHyphenNameEnabled() ? _train.getNextLocationName()
                                     : TrainCommon.splitString(_train.getNextLocationName()));
+                    
+                    updateTrackComments(rl, IS_MANIFEST);
+                            
                     // check for locos
                     updateLocoPanes(rl);
 

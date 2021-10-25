@@ -13,7 +13,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -30,9 +29,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     int _visitNumber = 1;
-
-    // text panes
-    JTextPane textSwitchListComment = new JTextPane();
 
     // combo boxes
     JComboBox<Train> trainComboBox = new JComboBox<>();
@@ -60,12 +56,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         pRow2.add(pLocationName); // row 2a (location name)
         pRow2.add(pRailRoadName); // row 2b (railroad name)
 
-        // row 5 (switch list comment)
-        textSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-        textSwitchListComment.setBackground(null);
-        textSwitchListComment.setEditable(false);
-        textSwitchListComment.setMaximumSize(new Dimension(2000, 200));
-
         // row 6
         JPanel pRow6 = new JPanel();
         pRow6.setLayout(new BoxLayout(pRow6, BoxLayout.X_AXIS));
@@ -90,10 +80,11 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         add(pRow2);
         add(pRow6);
         add(textLocationCommentPane);
-        add(textSwitchListComment);
+        add(textSwitchListCommentPane);
         add(textTrainCommentPane);
         add(textTrainRouteCommentPane);
         add(textTrainRouteLocationCommentPane);
+        add(pTrackComments);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -102,11 +93,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         if (_location != null) {
             textLocationName.setText(_location.getName());
-            textLocationCommentPane.setText(_location.getComment());
-            textLocationCommentPane.setVisible(
-                    !_location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
-            textSwitchListComment.setText(_location.getSwitchListComment());
-            textSwitchListComment.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
+            loadLocationComment(_location);
+            loadLocationSwitchListComment(_location);
             updateTrainsComboBox();
         }
 
@@ -195,27 +183,17 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             textStatus.setText("");
 
             if (_train != null && _train.getRoute() != null) {
-                Route route = _train.getRoute();
                 pButtons.setVisible(true);
-                textTrainDescription.setText(_train.getDescription());
-                // show train comment box only if there's a comment
-                textTrainCommentPane.setVisible(!_train.getComment().equals(Train.NONE));
-                textTrainCommentPane.setText(_train.getComment());
-                // show route comment box only if there's a route comment
-                textTrainRouteCommentPane
-                        .setVisible(!route.getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
-                textTrainRouteCommentPane.setText(route.getComment());
-                // Does this train have a unique railroad name?
-                if (!_train.getRailroadName().equals(Train.NONE)) {
-                    textRailRoadName.setText(_train.getRailroadName());
-                } else {
-                    textRailRoadName.setText(Setup.getRailroadName());
-                }
+
+                loadTrainDescription();
+                loadTrainComment();
+                loadRouteComment();
+                loadRailroadName();
 
                 // determine how many times this train visits this location and if it is the
                 // last stop
                 RouteLocation rl = null;
-                List<RouteLocation> routeList = route.getLocationsBySequenceList();
+                List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
                 int visitNumber = 0;
                 for (int i = 0; i < routeList.size(); i++) {
                     if (TrainCommon.splitString(routeList.get(i).getName())
@@ -239,14 +217,12 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                         pTrainVisit.setVisible(true); // show the visit panel
                     }
 
-                    // update comment and location name
-                    textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE) &&
-                            Setup.isSwitchListRouteLocationCommentEnabled());
-                    if (textTrainRouteLocationCommentPane.isVisible()) {
-                        textTrainRouteLocationCommentPane.setText(rl.getComment());
-                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+                    if (Setup.isSwitchListRouteLocationCommentEnabled()) {
+                        loadRouteLocationComment(rl);
                     }
                     textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
+
+                    updateTrackComments(rl, !IS_MANIFEST);
 
                     // check for locos
                     updateLocoPanes(rl);

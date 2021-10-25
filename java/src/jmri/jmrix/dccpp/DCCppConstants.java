@@ -79,6 +79,7 @@ public final class DCCppConstants {
     public static final char WRITE_DCC_PACKET_PROG  = 'P';
     public static final char LIST_REGISTER_CONTENTS = 'L';
     public static final char DIAG_CMD               = 'D'; // Send various diagnostics commands
+    public static final char CONTROL_CMD            = '/'; // Send various control commands (e.g. </START 1224 4>), replies via DIAG_REPLY
  
     // Message Replies
     public static final char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
@@ -98,7 +99,7 @@ public final class DCCppConstants {
     public static final char MADC_FAIL_REPLY  = 'X';
     public static final char MADC_SUCCESS_REPLY = 'O';
     public static final char COMM_TYPE_REPLY = 'N';
-    public static final char DIAG_REPLY      = '*'; //
+    public static final char DIAG_REPLY      = '*';
 
     // Message / Reply Regexes
     public static final String THROTTLE_CMD_REGEX = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
@@ -141,6 +142,7 @@ public final class DCCppConstants {
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
     public static final String DIAG_CMD_REGEX         = "\\s*D\\s.*"; //D alone or followed by various commands
+    public static final String CONTROL_CMD_REGEX      = "\\s*/\\s.*"; // slash followed by various commands
     public static final String ESTOP_ALL_REGEX        = "\\s*!"; 
 
     // Reply Regexes

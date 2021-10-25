@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.util.Optional;
 
 import javax.swing.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -17,8 +18,10 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 
 /**
  * Panel for operations
@@ -278,6 +281,18 @@ public class OperationsPanel extends JPanel {
         }
         return null;
     }
+    
+    public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
+        JPanel pTextColorPanel = new JPanel();
+        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TextColor")));
+        chooser.setColor(TrainCommon.getTextColor(text));
+        AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
+        chooser.setChooserPanels(commentColorPanels);
+        chooser.setPreviewPanel(new JPanel());
+        pTextColorPanel.add(chooser);
+        return pTextColorPanel;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

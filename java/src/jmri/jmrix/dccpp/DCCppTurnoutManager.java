@@ -89,10 +89,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                     //  and send the message on to the newly created object.
                     DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
                     t.setFeedbackMode(Turnout.MONITORING);
-                    t.setComment(l.toComment());
-                    l.getProperties().forEach((key, value) -> {
-                       t.setProperty(key, value); //copy the properties from message to turnout
-                    });
+//                    t.setComment(l.toComment());  //removed to avoid confusion since this is only set, not updated 
                     t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
@@ -117,10 +114,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                     // to the newly created object.
                     DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
                     t.setFeedbackMode(Turnout.EXACT);
-                    t.setComment(l.toComment());
-                    l.getProperties().forEach((key, value) -> {
-                       t.setProperty(key, value); //copy the properties from message to turnout
-                    });
+//                  t.setComment(l.toComment());  //removed to avoid confusion since this is only set, not updated 
                     t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
