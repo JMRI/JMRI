@@ -1,8 +1,5 @@
 package jmri.util;
 
-import com.sun.jna.platform.win32.Advapi32Util;
-import com.sun.jna.platform.win32.Win32Exception;
-import com.sun.jna.platform.win32.WinReg;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -34,6 +31,8 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  */
 public class PortNameMapper {
+
+    private static final boolean getNew = true;
 
     private static final HashMap<String, SerialPortFriendlyName> SERIAL_PORT_NAMES = new HashMap<String, SerialPortFriendlyName>();
 
@@ -71,52 +70,66 @@ public class PortNameMapper {
 
     private static void getDetailsFromWinRegistry(String path) {
         ArrayList<String> friendlyName = new ArrayList<>();
-        if (!Advapi32Util.registryKeyExists(WinReg.HKEY_LOCAL_MACHINE, path)) {
+        System.out.format("Daniel: path: %s%n", path);
+        if (!Advapi32Util.registryKeyExists(path)) {
+            System.out.format("Daniel: reg key does not exists: path: %s%n", path);
             return;
         }
-        String[] regEntries = Advapi32Util.registryGetKeys(WinReg.HKEY_LOCAL_MACHINE, path);
+        String[] regEntries = Advapi32Util.registryGetKeys(path, getNew);
         if (regEntries == null) {
+            System.out.format("Daniel: no register entries: path: %s%n", path);
             return;
         }
+        System.out.format("Daniel: scan reg entries: %d%n", regEntries.length);
         for (String regEntry : regEntries) {
-            String[] subRegEntries = Advapi32Util.registryGetKeys(WinReg.HKEY_LOCAL_MACHINE, path + regEntry);
+            String[] subRegEntries = Advapi32Util.registryGetKeys(path + regEntry, getNew);
             if (subRegEntries != null) {
                 if (subRegEntries.length > 0) {
                     String name = null;
                     String port = null;
-                    TreeMap<String, Object> values = Advapi32Util.registryGetValues(WinReg.HKEY_LOCAL_MACHINE, path + regEntry + "\\" + subRegEntries[0]);
+                    TreeMap<String, Object> values = Advapi32Util.registryGetValues(path + regEntry + "\\" + subRegEntries[0]);
                     if (values.containsKey("Class")) {
                         String pathKey = path + regEntry + "\\" + subRegEntries[0];
-                        String deviceClass = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "Class");
+                        String deviceClass = Advapi32Util.registryGetStringValue(pathKey, "Class");
                         if (deviceClass.equals("Ports") || deviceClass.equals("Modem")) {
                             try {
-                                name = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "FriendlyName");
+                                name = Advapi32Util.registryGetStringValue(pathKey, "FriendlyName");
+                                System.out.format("Daniel: friendly name: %s%n", name);
                             }
-                            catch (Win32Exception | NullPointerException e) {
+//                            catch (Win32Exception | NullPointerException e) {
+                            catch (RuntimeException e) {
                                     log.warn("'FriendlyName' not found while querying 'HKLM.{}`.  JMRI cannot use the device, so will skip it.", pathKey );
+                                    System.out.format("Daniel: friendly name not found: %s%n", pathKey);
                                     }
                             try {
                                 String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
-                                port = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey2, "PortName");
-                            } catch (Win32Exception | NullPointerException e) {
+                                port = Advapi32Util.registryGetStringValue(pathKey2, "PortName");
+                                System.out.format("Daniel: pathKey2: %s, port: %n", pathKey2, port);
+//                            } catch (Win32Exception | NullPointerException e) {
+                            } catch (RuntimeException e) {
                                 // ...\\Device Parameters does not exist for some odd-ball Windows 
                                 // serial devices, so cannot get the "PortName" from there.
                                 // Instead, leave port as null and ignore the exception
+                                System.out.format("Daniel: pathKey2 doesn't work%n");
                             }
                         }
                     }
                     if ((name != null) && (port != null)) {
+                        System.out.format("Daniel: found name %s and port: %s%n", name, port);
                         SERIAL_PORT_NAMES.put(port, new SerialPortFriendlyName(port, name));
                     } else if (name != null) {
+                        System.out.format("Daniel: found name: %s%n", name);
                         friendlyName.add(name);
                     }
                 }
             }
         }
+        System.out.format("Daniel: get comm ports%n");
         for (int i = 0; i < friendlyName.size(); i++) {
             int commst = friendlyName.get(i).lastIndexOf('(') + 1;
             int commls = friendlyName.get(i).lastIndexOf(')');
             String commPort = friendlyName.get(i).substring(commst, commls);
+            System.out.format("Daniel: commPort: %s%n", commPort);
             SERIAL_PORT_NAMES.put(commPort, new SerialPortFriendlyName(commPort, friendlyName.get(i)));
         }
     }
