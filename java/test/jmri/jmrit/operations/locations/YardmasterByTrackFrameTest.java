@@ -87,14 +87,14 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
-//    @Test
-//    public void testLoop2() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testPanel();
-//            tearDown();
-//        }
-//    }
+    @Test
+    public void testLoop2() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testPanel();
+            tearDown();
+        }
+    }
 
     @BeforeEach
     @Override
