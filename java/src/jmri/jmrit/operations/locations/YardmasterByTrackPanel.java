@@ -402,7 +402,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         textTrackCommentWorkPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         textTrackCommentWorkPane.setBackground(null);
         textTrackCommentWorkPane.setEditable(false);
-//        textTrackCommentWorkPane.setMaximumSize(new Dimension(2000, 50));
         return textTrackCommentWorkPane;
     }
 
