@@ -944,7 +944,7 @@ public class SpeedUtil {
         clearStats();
         _changetime = exitTime;
     }
- 
+
     private void setSpeedProfile(RosterSpeedProfile profile, float throttle, float measuredSpeed, boolean isForward) {
         int keyIncrement = Math.round(getThrottleSpeedStepIncrement() * 1000);
         TreeMap<Integer, SpeedStep> speeds = profile.getProfileSpeeds();
@@ -1006,7 +1006,7 @@ public class SpeedUtil {
     }
 
     /*
-     * The engineer makes this notification befoe setting a new speed
+     * The engineer makes this notification before setting a new speed
      */
     synchronized protected void speedChange(float newSpeed) {
         _numchanges++;

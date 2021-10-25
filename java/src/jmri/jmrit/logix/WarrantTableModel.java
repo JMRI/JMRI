@@ -651,9 +651,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     private String frameRunTrain(Warrant w, int mode) {
         return jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
             String m = _frame.runTrain(w, mode);
-            if (m != null) {
-                w.deAllocate();
-            }
             return m;
         });
     }

@@ -430,6 +430,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             if (msg == null) {
                 msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
             }
+            if (msg != null) {
+                w.deAllocate();
+            }
         }
         if (msg != null) {
             return Bundle.getMessage("CannotRun", w.getDisplayName(), msg);
