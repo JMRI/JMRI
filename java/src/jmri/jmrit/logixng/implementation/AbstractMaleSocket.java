@@ -722,5 +722,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
+        return getObject().toString();
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMaleSocket.class);
 }
