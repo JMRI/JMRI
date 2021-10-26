@@ -1,4 +1,4 @@
-package jmri.util.swing;
+package jmri.util.com.sun;
 
 import jmri.util.JUnitUtil;
 
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
  * @author Steve Young Copyright (C) 2020
  */
 public class ToggleOrPressButtonModelTest {
-    
+
     @Test
     public void testCTor() {
         ToggleOrPressButtonModel t = new ToggleOrPressButtonModel(null,true);
