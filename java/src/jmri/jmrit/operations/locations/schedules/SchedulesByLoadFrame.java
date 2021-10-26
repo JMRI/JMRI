@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012, 2015
+ * @author Dan Boudreau Copyright (C) 2012, 2015, 2021
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -143,7 +143,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
 
         // determine if load is default empty or load
-        boolean defaultLoad = (load == carLoads.getDefaultLoadName() || load == carLoads.getDefaultEmptyName());
+        boolean defaultLoad = load.equals(carLoads.getDefaultLoadName()) || load.equals(carLoads.getDefaultEmptyName());
 
         for (Location location : locationManager.getLocationsByNameList()) {
             // only spurs have schedules
