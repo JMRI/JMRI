@@ -252,7 +252,12 @@ public class DefaultLogixNGManagerTest {
         Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
         Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
         
-        logixNG_Manager.deleteBean(logixNG, "CanDelete");
+        try {
+            logixNG_Manager.deleteBean(logixNG, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("", e.getMessage());
+        }
         logixNG_Manager.deleteBean(logixNG, "DoDelete");
         
         System.out.format("%s%n", logixNG_Manager.getBySystemName(logixNG.getSystemName()));
