@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.beans.PropertyVetoException;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
@@ -155,7 +157,7 @@ public class DefaultLogixNGManagerTest {
     }
     
     @Test
-    public void testDeleteLogixNG() throws SocketAlreadyConnectedException {
+    public void testDeleteLogixNG() throws SocketAlreadyConnectedException, PropertyVetoException {
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNG_Manager = InstanceManager.getDefault(ConditionalNG_Manager.class);
         AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
@@ -250,7 +252,8 @@ public class DefaultLogixNGManagerTest {
         Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
         Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
         
-        logixNG_Manager.deleteLogixNG(logixNG);
+        logixNG_Manager.deleteBean(logixNG, "CanDelete");
+        logixNG_Manager.deleteBean(logixNG, "DoDelete");
         
         System.out.format("%s%n", logixNG_Manager.getBySystemName(logixNG.getSystemName()));
         System.out.format("%s%n", conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
