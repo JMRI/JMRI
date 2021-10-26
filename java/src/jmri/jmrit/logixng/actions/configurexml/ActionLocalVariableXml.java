@@ -17,7 +17,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
     public ActionLocalVariableXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -31,28 +31,29 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         Element element = new Element("ActionLocalVariable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
-        
+
         NamedBeanHandle<Memory> memoryName = p.getMemory();
         if (memoryName != null) {
             element.addContent(new Element("memory").addContent(memoryName.getName()));
         }
-        
+
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
-        
+
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
+        element.addContent(new Element("otherTableCell").addContent(p.getOtherTableCell()));
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
@@ -81,17 +82,22 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
                 log.error("cannot set variable operation: " + queryType.getTextTrim(), e);
             }
         }
-        
+
         Element constant = shared.getChild("constant");
         if (constant != null) {
             h.setConstantValue(constant.getTextTrim());
         }
-        
+
+        Element otherTableCell = shared.getChild("otherTableCell");
+        if (otherTableCell != null) {
+            h.setOtherTableCell(otherTableCell.getTextTrim());
+        }
+
         Element otherVariable = shared.getChild("otherVariable");
         if (otherVariable != null) {
             h.setOtherLocalVariable(otherVariable.getTextTrim());
         }
-        
+
         Element formula = shared.getChild("formula");
         if (formula != null) {
             try {
@@ -100,10 +106,10 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
                 log.error("cannot set data: " + formula.getTextTrim(), e);
             }
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableXml.class);
 }

@@ -151,8 +151,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_item.png"><img src=
-        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list" width=
-        "136" height="296"></a>
+        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
       </div>
 
       <h5>Block</h5>
@@ -198,6 +197,35 @@
 
         <li><strong>Other:</strong> Evaluate to true if the state of the specified conditional is
         unknown or inconsistent.</li>
+      </ul>
+
+      <h5>Dispatcher</h5>
+
+      <p>A Dispatcher train only exists from the time it is created until it is terminated.
+      LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
+      See the <em>Saving and Retrieving Active Train Information</em> section at
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/NewTrain.shtml">
+      Activate New Train</a>.  The train is started using the LogixNG Dispatcher
+      <em>Load train from train info file</em> Action.  If the related train does not exist when
+      the expression is evaluated, the result will be false. That means a false result is either
+      actually false or the train does not exist.</p>
+
+      <p>Train Mode:</p>
+      <ul>
+        <li><strong>Automatic</strong></li>
+        <li><strong>Dispatched</strong></li>
+        <li><strong>Manual</strong></li>
+      </ul>
+
+      <p>Train Status:</p>
+      <ul>
+        <li><strong>Running</strong></li>
+        <li><strong>Paused</strong></li>
+        <li><strong>Waiting</strong></li>
+        <li><strong>Working</strong></li>
+        <li><strong>Ready</strong></li>
+        <li><strong>Stopped</strong></li>
+        <li><strong>Done</strong></li>
       </ul>
 
       <h5>Entry/Exit</h5>
@@ -356,6 +384,26 @@
         "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog" width="718" height=
         "252"></a>
       </div>
+
+      <h5>Reporter</h5>
+
+      <p>Compare the content of one of the three Reporter data fields to a string, a memory variable
+      or a local variable.  See the <strong>Memory</strong> description for a list of the
+      comparisons.</p>
+
+      <ul>
+        <li><strong>Current Report:</strong> The current value unless the hardware says there is
+        nothing to report.  In that case the value will be null.</li>
+
+        <li><strong>Last Report:</strong> Normally the current report and last report are the same.
+        If the current report is null, this will be most recent valid report.  If no report has ever
+        been received, this will be null.</li>
+
+        <li><strong>State:</strong> A number that represents the last report.</li>
+      </ul>
+
+      <p>Note:  The meaning of the reports and the state number are defined by originating
+      hardware.</p>
 
       <h5>Script</h5>
 

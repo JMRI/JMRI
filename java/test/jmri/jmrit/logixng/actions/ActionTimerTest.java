@@ -211,11 +211,6 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         ActionTimer a1 = new ActionTimer("IQDA321", null);
         Assert.assertEquals("strings are equal", "Timer", a1.getShortDescription());

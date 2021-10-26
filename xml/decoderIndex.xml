@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.23.9ish+jake+20210713T0443Z+R9b0d600d89 on Tue Jul 13 00:44:04 EDT 2021-->
-  <decoderIndex version="1064">
+  <!--Written by JMRI version 4.25.4ish+jake+20211011T1123Z+R565b51e922 on Mon Oct 11 07:24:00 EDT 2021-->
+  <decoderIndex version="1068">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4045,7 +4045,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH06A.xml">
-        <model model="DH06A" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A" comment="DH06A for Köf with no analog support" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A" comment="DH06A for Köf with no analog support" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -4314,7 +4314,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH06A.xml">
-        <model model="DH06A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A_3.03" comment="DH06A for Köf with no analog support, with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A v3.03 (firmware 3.03+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A_3.03" comment="DH06A for Köf with no analog support, with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -4605,7 +4605,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH06A.xml">
-        <model model="DH06A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="16" productID="DH06A_3.04" comment="DH06A for Köf with no analog support, with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A v3.04 (firmware 3.04+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="16" productID="DH06A_3.04" comment="DH06A for Köf with no analog support, with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -5058,7 +5058,7 @@
         </model>
       </family>
       <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_DH06A.xml">
-        <model model="DH06A v3.05.104 (firmware 3.05+)" lowVersionID="104" highVersionID="104" numOuts="3" numFns="16" productID="DH06A_2014.10" comment="DH06A for Köf with no analog support, with update from October 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A v3.05.104 (firmware 3.05+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="3" numFns="16" productID="DH06A_2014.10" comment="DH06A for Köf with no analog support, with update from October 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -5077,7 +5077,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH06A v3.05.114 (firmware 3.05+)" lowVersionID="114" highVersionID="114" numOuts="3" numFns="16" productID="DH06A_2014.11" comment="DH06A for Köf with no analog support, with update from November 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A v3.05.114 (firmware 3.05+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="114" highVersionID="114" numOuts="3" numFns="16" productID="DH06A_2014.11" comment="DH06A for Köf with no analog support, with update from November 2014" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -5096,7 +5096,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH06A v3.05.15 (firmware 3.05+)" lowVersionID="15" highVersionID="15" numOuts="3" numFns="16" productID="DH06A_2015.01" comment="DH06A for Köf with no analog support, with update from January 2015" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <model model="DH06A v3.05.15 (firmware 3.05+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="3" numFns="16" productID="DH06A_2015.01" comment="DH06A for Köf with no analog support, with update from January 2015" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
           <output name="1" label="Front|Light" maxcurrent="20mA" />
           <output name="2" label="Rear|Light" maxcurrent="20mA" />
           <output name="3" label="Onboard|LED" maxcurrent="20mA" />
@@ -7717,6 +7717,48 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model model="DH05C Gen. 2 (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="20mA">
+            <!-- New in Gen 2 decoder  -->
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="20mA">
+            <!-- New in Gen 2 decoder  -->
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimming (with std mapping)|or AUX 5 or SUSI ZCLK" maxcurrent="20mA">
+            <label xml:lang="de">Abblendlicht (mit Std. Fn.-zuord.)|o. AUX 5 o. SUSI ZCLK</label>
+            <label xml:lang="ca">AUX 5 (SUSI ZCLK)|(Intensitat de llums con std. Mapping)</label>
+          </output>
+          <output name="8" label="Shunting (with std mapping)|or AUX 6 or SUSI ZDAT" maxcurrent="20mA">
+            <label xml:lang="de">Rangiergang (mit Std. Fn.-zuordnungen)|o. AUX 6 o. SUSI ZDAT</label>
+            <label xml:lang="ca">Marxa de maniobres (con std. Mapping)|o AUX 6 o SUSI ZDAT</label>
+          </output>
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
         <model model="DH10C (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
@@ -7753,6 +7795,48 @@
             <label xml:lang="ca">Marxa Maniobres</label>
           </output>
           <size length="14.2" width="9.3" height="1.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH10C Gen. 2 (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1A">
+            <!-- New in Gen 2 decoder  -->
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1A">
+            <!-- New in Gen 2 decoder  -->
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimming (with std mapping)|or AUX 5 or SUSI ZCLK" maxcurrent="20mA">
+            <label xml:lang="de">Abblendlicht (mit Std. Fn.-zuord.)|o. AUX 5 o. SUSI ZCLK</label>
+            <label xml:lang="ca">AUX 5 (SUSI ZCLK)|(Intensitat de llums con std. Mapping)</label>
+          </output>
+          <output name="8" label="Shunting (with std mapping)|or AUX 6 or SUSI ZDAT" maxcurrent="20mA">
+            <label xml:lang="de">Rangiergang (mit Std. Fn.-zuordnungen)|o. AUX 6 o. SUSI ZDAT</label>
+            <label xml:lang="ca">Marxa de maniobres (con std. Mapping)|o AUX 6 o SUSI ZDAT</label>
+          </output>
+          <size length="12.7" width="8.9" height="1.4" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
@@ -8025,6 +8109,24 @@
           <size length="24.2" width="11.0" height="2.4" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+          <output name="1" label="Front|Light" maxcurrent="20mA" />
+          <output name="2" label="Rear|Light" maxcurrent="20mA" />
+          <output name="3" label="Onboard|LED" maxcurrent="20mA" />
+          <output name="4" label="|" />
+          <!-- not available for this decoder -->
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="16" width="9.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
           </protocols>
         </model>
       </family>
@@ -9630,7 +9732,10 @@
           <!-- suppress unused item -->
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokSound 5 micro E24 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+        <model show="no" model="LokSound 5 micro E24 DCC" replacementModel="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <model model="LokSound 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
@@ -27855,6 +27960,48 @@
           <output name="3" label="AUX 3|Rear light" maxcurrent="100mA" />
           <!-- Order of outputs conform to Tams implementation (2/1/3)   -->
           <size length="12.5" width="9.5" height="3.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH" file="TAMS_FD-R_Basic3.xml">
+        <model model="FD-R Basic 3" numOuts="19" numFns="58" productID="FD-R-B3">
+          <output name="1" label="F0f|Front light" maxcurrent="300mA" />
+          <output name="2" label="F0r|Rear light" maxcurrent="300mA" />
+          <output name="3" label="AUX 3" maxcurrent="100mA" />
+          <output name="4" label="AUX 4" maxcurrent="100mA" />
+          <output name="5" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="6" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="7" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="8" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="9" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="10" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="11" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="12" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="13" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="14" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="15" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="16" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="17" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="18" label="|" />
+          <!-- Empty function, placeholder for shunting mode as output 19    -->
+          <output name="19" label="Shunting mode" />
+          <size length="13" width="9.5" height="3.5" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
             <protocol>motorola</protocol>

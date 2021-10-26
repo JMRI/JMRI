@@ -865,11 +865,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             case CODE_BUILD_FAILED:
                 return BUILD_FAILED;
             case CODE_BUILT:
-                // getNumberCarsWorked() is assumed to be constant if status is
-                // "built" or "partially built"
                 return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
             case CODE_PARTIAL_BUILT:
-                // 0 should be number of cars requested to be worked
                 return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(),
                         this.getNumberCarsRequested()); // NOI18N
             case CODE_TERMINATED:
@@ -1809,9 +1806,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
-                    new Object[] { car.toString(), rldest.getTrainDirectionString() }));
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
-                    new Object[] { track.getName() }));
+                    new Object[] { car.toString(), rldest.getTrainDirectionString(), track.getName() }));
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {
@@ -2843,8 +2838,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         runScripts(getBuildScripts());
         TrainBuilder tb = new TrainBuilder();
         boolean results = tb.build(this);
-        setPrinted(false);
-        setSwitchListStatus(UNKNOWN);
         // run after build scripts
         runScripts(getAfterBuildScripts());
         return results;

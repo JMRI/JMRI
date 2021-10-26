@@ -1,17 +1,10 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+
+import javax.swing.*;
+
 import jmri.InstanceManager;
 
 /**
@@ -21,8 +14,6 @@ import jmri.InstanceManager;
  * 
  */
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
-
-//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
@@ -131,8 +122,6 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
         addRadioButtonAction(buildReportNor);
         addRadioButtonAction(buildReportMax);
         addRadioButtonAction(buildReportVD);
-
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
     // Save button

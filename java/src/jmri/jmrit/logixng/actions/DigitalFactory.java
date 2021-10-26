@@ -21,6 +21,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionAudio.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionBlock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionClock.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionDispatcher.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionEntryExit.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLight.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLightIntensity.class));
@@ -30,6 +31,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionMemory.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionOBlock.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionPower.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionReporter.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSensor.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalHead.class));

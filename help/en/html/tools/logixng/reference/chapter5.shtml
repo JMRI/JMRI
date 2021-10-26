@@ -155,8 +155,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_item.png"><img src=
-        "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list" width=
-        "184" height="386"></a>
+        "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list"></a>
       </div>
 
       <h5>Audio</h5>
@@ -219,6 +218,28 @@
 
         <li><strong>Stop Fast Clock:</strong> Pauses the JMRI fast clock. If the fast clock is not
         running, this action has no effect.</li>
+      </ul>
+
+      <h5>Dispatcher</h5>
+
+      <p>A Dispatcher train only exists from the time it is created until it is terminated.
+      LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
+      See the <em>Saving and Retrieving Active Train Information</em> section at
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/NewTrain.shtml">
+      Activate New Train</a>.  If the related train does not exist when the LogixNG action occurs,
+      the action will be ignored.  There will be no notification.</p>
+
+      <ul>
+        <li><strong>Load train from train info file:</strong> Create a new Dispatcher train using
+        the selected train info file.</li>
+        <li><strong>Terminate train:</strong> Terminate a Dispatcher train that was previously
+        started using LogixNG.</li>
+        <li><strong>Set train priority:</strong> Change the priority of a train.  The default is
+        5.  The allowed range is 0 to 100.</li>
+        <li><strong>Set Reset when Done:</strong> Enable or disable the <em>Reset when Done</em>
+        option.</li>
+        <li><strong>Set Terminate when Done</strong> Enable or disable the <em>Terminate when Done</em>
+        option.</li>
       </ul>
 
       <h5>Enable/Disable Logix</h5>
@@ -303,8 +324,16 @@
         <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
         value for the selected local variable.</li>
 
-        <li><strong>Memory:</strong> Selet the <strong>Memory</strong> tab and select the memory
+        <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
+
+        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
+        the data that will be copied to the selected local variable. For example,
+        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
+        the table reference is OK, such as when using the
+        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
+        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
+        for details about tables.</li>
       </ul>
 
       <h5>Memory</h5>
@@ -318,8 +347,16 @@
         <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
         value for the selected memory.</li>
 
-        <li><strong>Memory:</strong> Selet the <strong>Memory</strong> tab and select the memory
+        <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected memory.</li>
+
+        <li><strong>Table:</strong> Enter the table name, row name and column name that contains
+        the data that will be copied to the selected memory variable. For example,
+        <strong><em>table name[row name, column name]</em></strong>.  Having curly brackets around
+        the table reference is OK, such as when using the
+        <a href="../../../../package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml#copyToClipboard">
+        copy to clipboard</a> table feature.  See <a href="chapter11.shtml"> Chapter 11 - Tables</a>
+        for details about tables.</li>
       </ul>
 
       <h5>OBlock</h5>
@@ -349,6 +386,25 @@
 
         <li><strong>On:</strong> Turn track power on.</li>
       </ul>
+
+      <h5>Reporter</h5>
+
+      <p>The Reporter action is used to copy the report content to a memory variable or a LogixNG
+      local variable.  There are three kinds of information.</p>
+
+      <ul>
+        <li><strong>Current Report:</strong> The current value unless the hardware says there is
+        nothing to report.  In that case the value will be null.</li>
+
+        <li><strong>Last Report:</strong> Normally the current report and last report are the same.
+        If the current report is null, this will be most recent valid report.  If no report has ever
+        been received, this will be null.</li>
+
+        <li><strong>State:</strong> A number that represents the last report.</li>
+      </ul>
+
+      <p>Note:  The meaning of the reports and the state number are defined by originating
+      hardware.</p>
 
       <h5>Route</h5>
 

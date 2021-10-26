@@ -384,7 +384,7 @@ public class TrainSwitchLists extends TrainCommon {
                                         printPickupCarHeader(fileOut, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
                                     }
                                     if (car.isUtility()) {
-                                        pickupUtilityCars(fileOut, carList, car, !IS_MANIFEST);
+                                        pickupUtilityCars(fileOut, carList, car, false, !IS_MANIFEST);
                                     } else {
                                         pickUpCar(fileOut, car, !IS_MANIFEST);
                                     }
@@ -437,7 +437,7 @@ public class TrainSwitchLists extends TrainCommon {
                                     printDropCarHeader(fileOut, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
                                 }
                                 if (car.isUtility()) {
-                                    setoutUtilityCars(fileOut, carList, car, !IS_MANIFEST);
+                                    setoutUtilityCars(fileOut, carList, car, false, !IS_MANIFEST);
                                 } else {
                                     dropCar(fileOut, car, !IS_MANIFEST);
                                 }

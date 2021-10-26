@@ -97,7 +97,8 @@
         <li>
           <a href="https://github.com/JMRI/JMRI/pulls/danielb987">Daniel Bergqvist</a>,
           <!-- danielb987 --> primary author of the <a href=
-          "https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>.
+          "https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>
+          who also does a lot of GitHub administration, particularly of PRs.
         </li>
 
         <li>Andrew Berridge, who debugged and fixed problems with the SPROG serial interface</li>
@@ -114,7 +115,8 @@
         <li>Lolke Bijlsma provided a decoder definition for the Shine Plus decoder series from
         Train-O-Rama.</li>
 
-        <li>Pierre Billon, who translated decoder files to German and French and provided decoder
+        <li>Pierre Billon, <!-- PierreMc -->
+        who translated decoder files to German and French and provided decoder
         definitions for Doehler and Haass.</li>
 
         <li>Ian Birchenough, who contributed (with Phil Grainger) six ZTC decoder definition files,
@@ -127,7 +129,8 @@
         <li>Bob Blackwell, who moderates the jmriusers mailing list, accumulating the decoder ID
         info, and updated the DecoderPro manual</li>
 
-        <li>Herve Blorec, who worked on the French translation</li>
+        <li>Herve Blorec, <!-- bzh56420 -->
+        who worked on the French translation</li>
 
         <li>Don Borden, who loaned a Soundtraxx decoder for testing the dual-decoder support</li>
 
@@ -203,6 +206,9 @@
 
         <li>Geoff Bunza, <!-- gbglacier -->
          who provided serial input and output scripts for Arduino.</li>
+
+        <li>Mike Burgett,
+         who provided information on prototype CTC layout and behavior.</li>
 
         <li>Bob Byck, who did extensive testing of test release 1.7.3</li>
 
@@ -368,11 +374,12 @@
 
         <li>John Forsythe, who helped with the timing needs of TCS decoders</li>
 
-        <li>Enzo Fortuna, who created the Italian translation</li>
+        <li>Enzo Fortuna, <!-- enzofortuna -->
+        who created the Italian translation</li>
 
-        <li>Marc Fournier, <!-- Marcfour -->
-         who improved the TCS decoder definition and did the detail work to update the Soundtraxx
-        manufacturer name.</li>
+        <li>Marc Fournier, <!-- Marcfour  MarcFoum-->
+         who improved the TCS decoder definition, did the detail work to update the Soundtraxx
+        manufacturer name, and fixed some Soundtraxx variable names.</li>
 
         <li>Paul Fraker, who wrote the documentation for the Throttles and provided MRC decoder
         definitions</li>
@@ -490,7 +497,8 @@
         <li>Brian Jackson <!-- brianjackson1 -->
          who updated the Hornby TTS library</li>
 
-        <li>Bob Jacobsen, who wrote some of the early code and does packaging and user support</li>
+        <li>Bob Jacobsen, <!-- bobjacobsen -->
+        who wrote some of the early code and does packaging and user support</li>
 
         <li>Martin Jahner, who fixed the constant checkboxen and built a replacement library for
         Mac OS X</li>
@@ -659,9 +667,11 @@
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
-        <li>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor,
-        provided a lot of usability improvements in the LocoNet monitor, and updated several
-        LocoNet-related help pages.</li>
+        <li>Bob Milhaupt, <-- devel-bobm -->
+        who fixed a problem with transponding messages in the LocoNet monitor,
+        provided a lot of usability improvements in the LocoNet monitor, updated several
+        LocoNet-related help pages, and provided significant help with the
+        <a href="http://jmri.org/help/en/html/tools/uss/index.shtml">USSCTC tools</a>.</li>
 
         <li>Dennis Miller, who greatly improved the CV printing, added the run-time help system and
         repackaged the window icons</li>
@@ -712,6 +722,9 @@
         on Mac OS X <a id="P"></a>
         </li>
 
+        <li>Pål <-paoSoft -->
+        who worked on the LocoNet refresh algorithm</li>
+
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of
         text and clocks on panels, providing a "factory reset" feature for decoders, and fixing
@@ -754,7 +767,8 @@
         "Q"></a> <a id="R"></a>
         </li>
 
-        <li>Balazs Racz, who fixed a bug in startup and improved our tech documentation, updated
+        <li>Balazs Racz, <-- balazsracz -->
+        who fixed a bug in startup and improved our tech documentation, updated
         the OpenLCB support to their version 0.7, and added support for bean properties to the
         Tables</li>
 
@@ -778,7 +792,8 @@
         <li>Wim Ros, who provide help with the direct connection to the Intellibox</li>
 
         <li>Heiko Rosemann, <!-- newHeiko -->
-         who created the Slackware repository version of JMRI</li>
+         who created the Slackware repository version of JMRI and worked on
+         WiThrottle protocol issues.</li>
 
         <li>Klaus Ruebsam, who is hosting German and English JMRI discussion groups on his
           <a href="http://www.dcc-portal.net/">http://www.dcc-portal.net/</a> website.
@@ -903,6 +918,9 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
+        <li>Benny Tjäder, <-- etxbct -->
+        who provided the MQTT Last Will support and a Swedish signal system.
+
         <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         is an active jmriusers moderator.</li>
@@ -928,7 +946,8 @@
         implementation.
         </li>
 
-        <li>Mark Underwood, who provided a fix for a problem with looping sounds and added support
+        <li>Mark Underwood, <!-- msunderwd -->
+        who provided a fix for a problem with looping sounds and added support
         for the DCC++ hardware. <a id="V"></a>
         </li>
 

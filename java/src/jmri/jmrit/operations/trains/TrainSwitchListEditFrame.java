@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -620,14 +621,19 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
-    private static class TrainSwitchListCommentFrame extends OperationsFrame {
+    public static class TrainSwitchListCommentFrame extends OperationsFrame {
 
         // text area
         JTextArea commentTextArea = new JTextArea(10, 90);
         JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Dimension minScrollerDim = new Dimension(1200, 500);
+
+        // text color chooser
+        JColorChooser commentColorChooser = new JColorChooser();
+
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
         Location _location;
 
@@ -646,33 +652,40 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             pC.setLayout(new GridBagLayout());
             commentScroller.setMinimumSize(minScrollerDim);
             addItem(pC, commentScroller, 1, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListComment(), commentColorChooser), 2, 0);
+            JScrollPane panelPane = new JScrollPane(pC);
 
-            commentTextArea.setText(location.getSwitchListComment());
+            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
 
             JPanel pB = new JPanel();
             pB.setLayout(new GridBagLayout());
-            addItem(pB, saveButton, 0, 0);
+            addItem(pB, cancelButton, 0, 0);
+            addItem(pB, saveButton, 1, 0);
 
-            getContentPane().add(pC);
+            getContentPane().add(panelPane);
             getContentPane().add(pB);
 
             addButtonAction(saveButton);
+            addButtonAction(cancelButton);
 
-            pack();
             setTitle(location.getName());
-            setVisible(true);
+            initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));
         }
 
         // Buttons
         @Override
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             if (ae.getSource() == saveButton) {
-                _location.setSwitchListComment(commentTextArea.getText());
+                _location.setSwitchListComment(
+                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
                 // save location file
                 OperationsXml.save();
                 if (Setup.isCloseWindowOnSaveEnabled()) {
                     super.dispose();
                 }
+            }
+            if (ae.getSource() == cancelButton) {
+                super.dispose();
             }
         }
     }

@@ -89,21 +89,21 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         loadCommon(h, shared);
         
         Element socketName = shared.getChild("LocoAddressSocket").getChild("socketName");
-        h.getChild(0).setName(socketName.getTextTrim());
+        h.getLocoAddressSocket().setName(socketName.getTextTrim());
         Element socketSystemName = shared.getChild("LocoAddressSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoAddressSocketSystemName(socketSystemName.getTextTrim());
         }
         
         socketName = shared.getChild("LocoSpeedSocket").getChild("socketName");
-        h.getChild(1).setName(socketName.getTextTrim());
+        h.getLocoSpeedSocket().setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("LocoSpeedSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoSpeedSocketSystemName(socketSystemName.getTextTrim());
         }
         
         socketName = shared.getChild("LocoDirectionSocket").getChild("socketName");
-        h.getChild(2).setName(socketName.getTextTrim());
+        h.getLocoDirectionSocket().setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("LocoDirectionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoDirectionSocketSystemName(socketSystemName.getTextTrim());

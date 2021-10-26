@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.25.3-SNAPSHOT</version>
+    <version>4.25.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -33,7 +33,7 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.8</ant.version>
+        <ant.version>1.10.11</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>

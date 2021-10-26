@@ -64,12 +64,6 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     public void setAnalogIO(@Nonnull String analogIOName) {
         assertListenersAreNotRegistered(log, "setAnalogIO");
         AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean(analogIOName);

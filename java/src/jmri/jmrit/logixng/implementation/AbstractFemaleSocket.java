@@ -253,12 +253,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public FemaleSocket getChild(int index) {
         throw new UnsupportedOperationException("Not supported.");
     }

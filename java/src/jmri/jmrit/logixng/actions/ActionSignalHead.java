@@ -345,12 +345,6 @@ public class ActionSignalHead extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private int getAppearanceFromName(String name) {
         if (_signalHeadHandle == null) throw new UnsupportedOperationException("_signalHeadHandle is null");
 
@@ -363,7 +357,7 @@ public class ActionSignalHead extends AbstractDigitalAction
         throw new IllegalArgumentException("Appearance "+name+" is not valid for signal head "+sh.getSystemName());
     }
 
-    private int getNewAppearance() throws JmriException {
+    private int getNewAppearance(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_appearanceAddressing) {
             case Direct:
@@ -371,10 +365,10 @@ public class ActionSignalHead extends AbstractDigitalAction
 
             case Reference:
                 return getAppearanceFromName(ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _appearanceReference));
+                        conditionalNG.getSymbolTable(), _appearanceReference));
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return getAppearanceFromName(TypeConversionUtil
                         .convertToString(symbolTable.getValue(_appearanceLocalVariable), false));
 
@@ -382,7 +376,7 @@ public class ActionSignalHead extends AbstractDigitalAction
                 return _appearanceExpressionNode != null
                         ? getAppearanceFromName(TypeConversionUtil.convertToString(
                                 _appearanceExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false))
+                                        conditionalNG.getSymbolTable()), false))
                         : -1;
 
             default:
@@ -474,12 +468,14 @@ public class ActionSignalHead extends AbstractDigitalAction
 
         OperationType operation = getOperation();
 
+        final ConditionalNG conditionalNG = getConditionalNG();
+
         AtomicReference<JmriException> ref = new AtomicReference<>();
         jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 switch (operation) {
                     case Appearance:
-                        int newAppearance = getNewAppearance();
+                        int newAppearance = getNewAppearance(conditionalNG);
                         if (newAppearance != -1) {
                             signalHead.setAppearance(newAppearance);
                         }

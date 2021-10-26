@@ -118,12 +118,6 @@ public class StringActionStringIO extends AbstractStringAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "StringActionStringIO_Short");
     }

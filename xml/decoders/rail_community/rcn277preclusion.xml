@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-10-02</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation (manual entry of CVs)</revremark>
+    </revision>
+  </revhistory>
+  <!-- This is a mapping, normed as RCN-227 by the Rail Community group (in German: http://normen.railcommunity.de/RCN-227.pdf)   -->
+  <!-- Created for Tams Elektronik FD-R Basic 3 decoder, but is put here to be used for other RCN-227 decoders   -->
+  <!-- Note: this handles the preclusion options, which allows turning off some functions as defined in the mapping table   -->
+    <variable item="Functions that preclude FL(f)" CV="260" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude FL(r)" CV="264" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F1(f)" CV="268" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F1(r)" CV="272" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F2(f)" CV="276" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F2(r)" CV="280" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F3(f)" CV="284" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F3(r)" CV="288" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F4(f)" CV="292" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F4(r)" CV="296" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F5(f)" CV="300" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F5(r)" CV="304" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F6(f)" CV="308" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F6(r)" CV="312" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F7(f)" CV="316" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F7(r)" CV="320" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F8(f)" CV="324" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F8(r)" CV="328" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F9(f)" CV="332" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F9(r)" CV="336" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F10(f)" CV="340" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F10(r)" CV="344" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F11(f)" CV="348" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F11(r)" CV="332" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F12(f)" CV="356" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F12(r)" CV="360" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F13(f)" CV="364" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F13(r)" CV="368" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F14(f)" CV="372" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F14(r)" CV="376" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F15(f)" CV="380" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F15(r)" CV="384" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F16(f)" CV="388" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F16(r)" CV="392" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F17(f)" CV="396" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F17(r)" CV="400" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F18(f)" CV="404" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F18(r)" CV="408" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F19(f)" CV="412" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F19(r)" CV="416" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F20(f)" CV="420" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F20(r)" CV="424" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F21(f)" CV="428" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F21(r)" CV="432" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F22(f)" CV="436" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F22(r)" CV="440" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F23(f)" CV="444" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F23(r)" CV="448" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F24(f)" CV="452" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F24(r)" CV="456" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F25(f)" CV="460" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F25(r)" CV="464" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F26(f)" CV="468" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F26(r)" CV="472" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F27(f)" CV="476" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F27(r)" CV="480" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F28(f)" CV="484" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+    <variable item="Functions that preclude F28(r)" CV="488" default="255">
+      <decVal/>
+      <tooltip>&lt;html&gt;Default 255=No function overrides and turns off this specific function&lt;br&gt;
+                           Add values 0 to 28 for F0 to F28 &lt;/html&gt;</tooltip>
+    </variable>
+</variables>

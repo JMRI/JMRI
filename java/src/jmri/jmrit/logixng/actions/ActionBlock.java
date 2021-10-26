@@ -301,12 +301,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewOperation() throws JmriException {
 
         switch (_operationAddressing) {

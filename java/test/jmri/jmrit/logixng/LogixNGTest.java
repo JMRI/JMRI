@@ -112,18 +112,6 @@ public class LogixNGTest {
     }
 
     @Test
-    public void testIsExternal() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        boolean hasThrown = false;
-        try {
-            logixNG.isExternal();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
-    }
-
-    @Test
     public void testSwapConditionalNG() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "A conditionalNG");  // NOI18N

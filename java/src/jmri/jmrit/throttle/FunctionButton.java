@@ -14,7 +14,7 @@ import javax.swing.*;
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
-import jmri.util.swing.ToggleOrPressButtonModel;
+import jmri.util.com.sun.ToggleOrPressButtonModel;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -48,15 +48,15 @@ public class FunctionButton extends JToggleButton {
     private FunctionButtonPropertyEditor editor ;
     private String iconPath;
     private String selectedIconPath;
-    private String dropFolder;    
+    private String dropFolder;
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
     private int img_size = DEFAULT_IMG_SIZE;
 
-    private final static int BUT_HGHT = 24;    
+    private final static int BUT_HGHT = 24;
     private final static int BUT_MAX_WDTH = 256;
     private final static int BUT_MIN_WDTH = 100;
-    
+
     public final static int DEFAULT_FONT_SIZE = 12;
     public final static int DEFAULT_IMG_SIZE = 48;
 
@@ -75,7 +75,7 @@ public class FunctionButton extends JToggleButton {
     public static int getButtonWidth() {
         return BUT_MIN_WDTH;
     }
-    
+
     /**
      * Get the Image Button Width.
      * @return width.
@@ -91,7 +91,7 @@ public class FunctionButton extends JToggleButton {
     public void setButtonImageSize(int is) {
         img_size = is;
     }
-    
+
     /**
      * Construct the FunctionButton.
      */
@@ -100,10 +100,10 @@ public class FunctionButton extends JToggleButton {
         listeners = new ArrayList<>();
         initGUI();
     }
-    
-    private void initGUI(){      
+
+    private void initGUI(){
         _model = new ToggleOrPressButtonModel(this, true);
-        setModel(_model);       
+        setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
         setFont(new Font("Monospaced", Font.PLAIN, DEFAULT_FONT_SIZE));
@@ -135,7 +135,7 @@ public class FunctionButton extends JToggleButton {
      * Does not send update to layout, just updates button status.
      * <p>
      * To update AND send to layout use setSelected(boolean).
-     * 
+     *
      * @param isOn True if the function should be active.
      */
     public void setState(boolean isOn) {
@@ -155,7 +155,7 @@ public class FunctionButton extends JToggleButton {
     /**
      * Set the locking state of the button.
      * <p>
-     * Changes in this parameter are only be sent to the 
+     * Changes in this parameter are only be sent to the
      * listeners if the dirty bit is set.
      *
      * @param isLockable True if the a clicking and releasing the button changes
@@ -234,7 +234,7 @@ public class FunctionButton extends JToggleButton {
     public void setButtonLabel(String label) {
         buttonLabel = label;
     }
-    
+
     /**
      * Set Button Text.
      * {@inheritDoc}
@@ -281,27 +281,27 @@ public class FunctionButton extends JToggleButton {
             if (getButtonLabel() != null) {
                 int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 64; // pad out the width a bit
                 butWidth = Math.min(butWidth, FunctionButton.BUT_MAX_WDTH );
-                butWidth = Math.max(butWidth, FunctionButton.BUT_MIN_WDTH );                
+                butWidth = Math.max(butWidth, FunctionButton.BUT_MIN_WDTH );
                 setPreferredSize(new Dimension( butWidth, FunctionButton.BUT_HGHT));
             } else {
                 setPreferredSize(new Dimension(BUT_MIN_WDTH, BUT_HGHT));
             }
         }
-    }    
+    }
 
     /**
      * Change the state of the function.
      * Sets internal state, setSelected, and sends to listeners.
      *
      * @param newState The new state. True = Is on, False = Is off.
-     * @deprecated since 4.19.6; use 
+     * @deprecated since 4.19.6; use
      * {@link jmri.jmrit.throttle.FunctionButton#setSelected(boolean) } instead
      */
     @Deprecated
     public void changeState(boolean newState) {
         setSelected(newState);
     }
-    
+
     /**
      * Change the state of the function.
      * Sets internal state, setSelected, and sends to listeners.
@@ -324,7 +324,7 @@ public class FunctionButton extends JToggleButton {
      *
      * @param l The FunctionListener that wants notifications via the
      *          FunctionListener.notifyFunctionStateChanged.
-     * @deprecated since 4.19.6; use 
+     * @deprecated since 4.19.6; use
      * {@link jmri.jmrit.throttle.FunctionButton#addFunctionListener(jmri.jmrit.throttle.FunctionListener) } instead
      */
     @Deprecated
@@ -352,14 +352,14 @@ public class FunctionButton extends JToggleButton {
     public void removeFunctionListener(FunctionListener l) {
         listeners.remove(l);
     }
-    
+
     /**
      * Set the folder where droped images in function button property panel will be stored
-     * 
+     *
      * @param df the folder path
      */
     void setDropFolder(String df) {
-        dropFolder = df;        
+        dropFolder = df;
     }
 
     /**
@@ -376,7 +376,7 @@ public class FunctionButton extends JToggleButton {
         public void mouseClicked(MouseEvent e) {
             checkTrigger(e);
         }
-        
+
         /**
          * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
@@ -394,7 +394,7 @@ public class FunctionButton extends JToggleButton {
         public void mouseReleased(MouseEvent e) {
             checkTrigger( e);
         }
-        
+
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger() && e.getComponent().isEnabled() ) {
                 initPopupMenu();
@@ -402,24 +402,24 @@ public class FunctionButton extends JToggleButton {
             }
         }
     }
-        
+
     private void initPopupMenu() {
         if (popupMenu == null) {
             JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
             propertiesItem.addActionListener((ActionEvent e) -> {
                 if (editor == null) {
-                    editor = new FunctionButtonPropertyEditor(this);            
+                    editor = new FunctionButtonPropertyEditor(this);
                 }
                 editor.resetProperties();
                 editor.setLocation(MouseInfo.getPointerInfo().getLocation());
                 editor.setVisible(true);
-                editor.setDropFolder(dropFolder);                
+                editor.setDropFolder(dropFolder);
             });
             popupMenu = new JPopupMenu();
             popupMenu.add(propertiesItem);
         }
     }
-    
+
     /**
      * Collect the prefs of this object into XML Element.
      * <ul>
@@ -585,15 +585,15 @@ public class FunctionButton extends JToggleButton {
     public boolean isSelectedImageOK() {
         return isSelectedImageOK;
     }
-    
-    /** 
+
+    /**
      * Set Throttle.
      * @param throttle the throttle that this button is associated with.
      */
     protected void setThrottle( Throttle throttle) {
         _throttle = throttle;
     }
-    
+
     /**
      * Get Throttle for this button.
      * @return throttle associated with this button.  May be null if no throttle currently associated.
