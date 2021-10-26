@@ -10,7 +10,6 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.Assert;
 import org.junit.Test;
-//import org.junit.jupiter.api.*;
 
 /**
  * Test DefaultLogixNG
@@ -516,7 +515,6 @@ public class DefaultLogixNGManagerTest {
 
     // The minimal setup for log4J
     @Before
-//    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -528,7 +526,6 @@ public class DefaultLogixNGManagerTest {
     }
 
     @After
-//    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
