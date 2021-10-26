@@ -143,7 +143,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
 
         // determine if load is default empty or load
-        boolean defaultLoad = load.equals(carLoads.getDefaultLoadName()) || load.equals(carLoads.getDefaultEmptyName());
+        boolean defaultLoad = carLoads.getDefaultLoadName().equals(load) || carLoads.getDefaultEmptyName().equals(load);
 
         for (Location location : locationManager.getLocationsByNameList()) {
             // only spurs have schedules
