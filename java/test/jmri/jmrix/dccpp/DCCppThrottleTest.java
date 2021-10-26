@@ -44,6 +44,19 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
+     * 
+     */
+    @Test
+    @Override
+    public void testGetIsForward() {
+        Assert.assertTrue(instance.getIsForward());
+        instance.setIsForward(true);
+        Assert.assertTrue(instance.getIsForward());
+        instance.setIsForward(false);
+        Assert.assertFalse(instance.getIsForward());
+    }
+
+    /**
      * Test of setF0 method, of class AbstractThrottle.
      */
     @Test
