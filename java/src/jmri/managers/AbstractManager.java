@@ -452,7 +452,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                     message.append(e.getMessage()).append("<hr>"); // NOI18N
                 }
             }
-            throw new PropertyVetoException(message.toString(), evt);
+            String msg = message.toString();
+            if (!msg.isEmpty()) throw new PropertyVetoException(msg, evt);
         } else {
             try {
                 vetoableChangeSupport.fireVetoableChange(evt);
