@@ -49,7 +49,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetIsForward() {
-        Assert.assertTrue(instance.getIsForward());
+        Assert.assertTrue(instance.getIsForward()); //new throttle defaults to Forward
         instance.setIsForward(true);
         Assert.assertTrue(instance.getIsForward());
         instance.setIsForward(false);
