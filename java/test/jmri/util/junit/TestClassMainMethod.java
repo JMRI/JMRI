@@ -69,6 +69,9 @@ public class TestClassMainMethod {
                 // will directly invoke Maim in the class
                 Method method = cl.getMethod("main", String[].class);
                 method.invoke(null, new Object[] {new String[] { /* put args here */ }});
+                // if main returns, we get to here and exit.
+                System.err.println("return from invoking main");
+                System.exit(0);
             } catch (InvocationTargetException e) {
                 // main threw an exception, report
                 System.err.println(e);
