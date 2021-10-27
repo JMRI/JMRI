@@ -222,12 +222,17 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             }
         } catch (ALException e) {
             if (log.isDebugEnabled()) {
-                log.debug("Error initialising JOAL: {}", e);
+                log.warn("Error initialising JOAL: {}", e);
+            }
+            return false;
+        } catch (UnsatisfiedLinkError e) {
+            if (log.isDebugEnabled()) {
+                log.warn("Error loading OpenAL libraries: {}", e);
             }
             return false;
         } catch (RuntimeException e) {
             if (log.isDebugEnabled()) {
-                log.debug("Error initialising OpenAL: {}", e);
+                log.warn("Error initialising OpenAL: {}", e);
             }
             return false;
         }
