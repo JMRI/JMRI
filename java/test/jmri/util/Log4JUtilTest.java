@@ -19,7 +19,7 @@ public class Log4JUtilTest {
 
         log.debug("DEBUG message"); // should be suppressed see tests.lcf
 
-        Assert.assertTrue(JUnitAppender.verifyNoBacklog());        
+        Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class Log4JUtilTest {
         Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message"));
         JUnitAppender.assertWarnMessage("WARN message");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
-        
+
         Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger"); // same message, different logger
         Assert.assertTrue(Log4JUtil.warnOnce(log2, "WARN message"));
         Assert.assertFalse(Log4JUtil.warnOnce(log2, "WARN message"));
@@ -49,7 +49,7 @@ public class Log4JUtilTest {
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
 
         Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
-        JUnitAppender.assertWarnMessage("WARN message 2");        
+        JUnitAppender.assertWarnMessage("WARN message 2");
         Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
    }
@@ -70,7 +70,7 @@ public class Log4JUtilTest {
         JUnitAppender.assertWarnMessage("Test A B");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
-    
+
     // The following two tests are _identical_.  We run them twice to make
     // sure that two separate tests are properly detecting deprecation messages
     @Test
@@ -82,7 +82,7 @@ public class Log4JUtilTest {
         JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
 
-        // logging turned off 
+        // logging turned off
         JUnitLoggingUtil.setDeprecatedLogging(true);
         Log4JUtil.deprecationWarning(log, "method 1");
         Log4JUtil.deprecationWarning(log, "method 1");
@@ -97,40 +97,15 @@ public class Log4JUtilTest {
         JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
 
-        // logging turned off 
+        // logging turned off
         JUnitLoggingUtil.setDeprecatedLogging(true);
         Log4JUtil.deprecationWarning(log, "method 1");
         Log4JUtil.deprecationWarning(log, "method 1");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
-    
+
     private IllegalArgumentException getTraceBack() { return new IllegalArgumentException("for test"); }
-    
-    @Test
-    public void testShortenStacktrace() {
-        IllegalArgumentException ex = getTraceBack();
-        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
-        
-        Assert.assertEquals(3, Log4JUtil.shortenStacktrace(ex, 3).getStackTrace().length);
-    }
 
-    @Test
-    public void testShortenStacktraceTooLong() {
-        IllegalArgumentException ex = getTraceBack();
-        Assert.assertTrue("Need short enough trace for test", ex.getStackTrace().length < 3000);
-        // make sure it doesn't throw an exception
-        int len = ex.getStackTrace().length;
-        Assert.assertEquals(len, Log4JUtil.shortenStacktrace(ex, 3010).getStackTrace().length);
-    }
-
-    @Test
-    public void testShortenStacktraceNoArg() {
-        IllegalArgumentException ex = getTraceBack();
-        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
-        
-        Assert.assertEquals(2, Log4JUtil.shortenStacktrace(ex).getStackTrace().length);
-    }
-    
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
