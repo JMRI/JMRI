@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.modules.merg;
+package jmri.jmrix.can.cbus.swing.modules.base;
 
 import java.awt.GraphicsEnvironment;
 
@@ -13,16 +13,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * Test simple functioning of CansolPaneProvider
+ * Test simple functioning of Sol8BasePaneProvider
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
-public class CansolPaneProviderTest {
+public class Sol8BasePaneProviderTest {
     
     @org.junit.jupiter.api.Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CansolPaneProvider t = new CansolPaneProvider();
+        Sol8BasePaneProvider t = new Sol8BasePaneProvider();
         Assert.assertNotNull("exists",t);
     }
     

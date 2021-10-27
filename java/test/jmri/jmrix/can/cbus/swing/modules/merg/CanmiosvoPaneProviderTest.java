@@ -13,16 +13,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * Test simple functioning of CansolPaneProvider
+ * Test simple functioning of CanmiosvoPaneProvider
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
-public class CansolPaneProviderTest {
+public class CanmiosvoPaneProviderTest {
     
     @org.junit.jupiter.api.Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CansolPaneProvider t = new CansolPaneProvider();
+        CanmiosvoPaneProvider t = new CanmiosvoPaneProvider();
         Assert.assertNotNull("exists",t);
     }
     

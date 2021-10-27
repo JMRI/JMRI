@@ -51,7 +51,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         editGui = provider.getEditNVFrame(nodeNVModel, _node);
         editGuiInstance = provider.getEditNVFrameInstance();
         showGui(editGui);
-
+        
         this.setVisible(!(_node == null));
     }
     

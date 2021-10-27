@@ -219,7 +219,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int newNV2 = _nvArray[Servo8BasePaneProvider.STARTUP_POS] & (~(1<<(index-1)));
             int newNV3 = _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
             
-            // Startup action is in NV10 and NV11, 1 bit per output 
+            // Startup action is in NV2 and NV3, 1 bit per output 
             if (servo[index].action.off.isSelected()) {
                 // 11
                 newNV2 |= (1<<(index-1));

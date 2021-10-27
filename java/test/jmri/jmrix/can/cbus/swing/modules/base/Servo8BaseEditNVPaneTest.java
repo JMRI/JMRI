@@ -1,10 +1,9 @@
-package jmri.jmrix.can.cbus.swing.modules.merg;
+package jmri.jmrix.can.cbus.swing.modules.base;
 
 import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.*;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -13,16 +12,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * Test simple functioning of CansolPaneProvider
+ * Test simple functioning of Servo8BaseEditNVPane
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
-public class CansolPaneProviderTest {
+public class Servo8BaseEditNVPaneTest {
     
     @org.junit.jupiter.api.Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CansolPaneProvider t = new CansolPaneProvider();
+        CbusNode nd = new CbusNode(memo, 12345);
+        int [] nvs = new int[] {1, 1};
+        nd.getNodeNvManager().setNVs(nvs);
+        Servo8BaseEditNVPane t = new Servo8BaseEditNVPane(model, nd);
         Assert.assertNotNull("exists",t);
     }
     
