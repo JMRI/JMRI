@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>new throttles now default to Forward instead of Reverse</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -564,6 +564,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Keith Usher provided a new
+                <a href="http://jmri.org/resources/icons/mediumschematics/searchlights/">mediumschematics serachlights icon set</a>
+                at resources/icons/mediumschematics/searchlights/
+            </li>
         </ul>
 
