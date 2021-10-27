@@ -186,7 +186,6 @@ public class CbusModulesCommon {
          * @param init  Initial value
          * @param min   Minimum value
          * @param max   Maximum value
-         * @param step  Step
          */
         public void init(int min, int max, int init) {
             GridLayout grid = new GridLayout(1, 1);

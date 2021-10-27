@@ -344,7 +344,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
          * Writes output number to NV37, adding 128 for ON event
          */
         protected void testActionListener(ActionEvent e) {
-            // TODO:
             int val;
             for (int i = 1; i <= OUTPUTS; i++) {
                 val = 0;
