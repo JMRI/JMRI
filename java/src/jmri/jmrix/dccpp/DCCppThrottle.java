@@ -40,6 +40,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         super(memo);
         tc = controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
+        this.isForward = true; //loco should default to forward
         log.debug("DCCppThrottle constructor");
     }
 
@@ -61,6 +62,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
+        this.isForward = true; //loco should default to forward
         log.debug("DCCppThrottle constructor called for address {}", address);
     }
 
