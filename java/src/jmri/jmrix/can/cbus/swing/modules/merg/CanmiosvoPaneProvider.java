@@ -1,26 +1,26 @@
-package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
+package jmri.jmrix.can.cbus.swing.modules.merg;
 
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
-import jmri.jmrix.can.cbus.swing.modules.base.Sol8BasePaneProvider;
+import jmri.jmrix.can.cbus.swing.modules.*;
+import jmri.jmrix.can.cbus.swing.modules.base.Servo8BasePaneProvider;
 
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns configuration objects for a SPROG DCC CANSOLIO
+ * Returns configuration objects for a MERG CANMIO-SVO
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
 @ServiceProvider(service = CbusConfigPaneProvider.class)
-public class CansolioPaneProvider extends Sol8BasePaneProvider {
+public class CanmiosvoPaneProvider extends Servo8BasePaneProvider {
     
-    String type = "CANSOLIO";
+    String type = "CANMIO_SVO";
     
-    public CansolioPaneProvider() {
+    public CanmiosvoPaneProvider() {
         super();
     }
     
@@ -34,9 +34,7 @@ public class CansolioPaneProvider extends Sol8BasePaneProvider {
     /** {@inheritDoc} */
     @Override
     public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-            _nVarEditFrame = new CansolioEditNVPane(dataModel, node);
-        }
+        _nVarEditFrame = new CanmiosvoEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }
 }

@@ -10,7 +10,6 @@ import javax.swing.event.*;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
 import org.slf4j.Logger;
@@ -47,7 +46,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     private final UpdateNV startupUpdateFn = new UpdateStartup();
     private final UpdateNV feedbackUpdateFn = new UpdateFeedback();
 
-    private CbusModulesCommon.TitledSpinner feedbackSpinner;
+    private TitledSpinner feedbackSpinner;
     
     protected Canacc8EditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
@@ -80,7 +79,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         c.gridy = 3;
-        feedbackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("FeedbackDelayUnits"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
+        feedbackSpinner = new TitledSpinner(Bundle.getMessage("FeedbackDelayUnits"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
         feedbackSpinner.setToolTip(Bundle.getMessage("FeedbackDelayTt"));
         feedbackSpinner.init(_nvArray[Canacc8PaneProvider.FEEDBACK_DELAY]*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
@@ -110,7 +109,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
                 out[nv].setButtons(value, oldSpinnerValue);
                 out[nv].pulseSpinner.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
-                 log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue());
+                log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue());
             } else if (nv == 9) {
                 log.debug("Update feedback delay to {}", value);
                 feedbackSpinner.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
@@ -121,7 +120,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 }
             } else if (nv == 12) {
                 // Not used
-                log.debug("Update unknow");
+                log.debug("Update unknown");
                 
             } else {
                 throw new IllegalArgumentException("Unexpected NV index");
@@ -157,7 +156,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     /**
      * Update the NVs controlling the startup action
-     * 
      */
     protected class UpdateStartup implements UpdateNV {
         
@@ -210,7 +208,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         protected JRadioButton cont;
         protected JRadioButton single;
         protected JRadioButton repeat;
-        protected CbusModulesCommon.TitledSpinner pulseSpinner;
+        protected TitledSpinner pulseSpinner;
         protected StartupActionPane action;
         protected boolean buttonFlag = false;
 
@@ -251,7 +249,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(single);
             buttons.add(repeat);
 
-            pulseSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
+            pulseSpinner = new TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
             pulseSpinner.setToolTip(Bundle.getMessage("PulseWidthTt"));
             pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
@@ -360,7 +358,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     }
     
     /**
-     * Construct pane to allow configuration of the oputput startup action
+     * Construct pane to allow configuration of the output startup action
      */
     private class StartupActionPane extends JPanel {
         
