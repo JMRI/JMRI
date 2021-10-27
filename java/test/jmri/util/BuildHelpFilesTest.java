@@ -60,7 +60,7 @@ public class BuildHelpFilesTest {
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            String contents = _template.replaceFirst("<!--HELP_KEY-->", helpKey);
+            String contents = _template.replace("<!--HELP_KEY-->", helpKey);
             printWriter.print(contents);
         }
     }
