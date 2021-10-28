@@ -205,7 +205,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
-        // Install a debug throttle manager and override 
+        // Install a debug throttle manager and override
         DebugThrottleManager tm = new DebugThrottleManager(port.getSystemConnectionMemo() ) {
             /**
              * Only address 128 and above can be a long address
@@ -237,11 +237,11 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
             }
 
             @Override
-            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {                
+            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
                 if (slotsInUse > 0) slotsInUse--;
                 log.debug("Throttle {} disposed. slotsInUse={}, maxSlots={}", t, slotsInUse, maxSlots);
                 return super.disposeThrottle(t, l);
-            }    
+            }
         };
 
         port.getSystemConnectionMemo().setThrottleManager(tm);
@@ -257,14 +257,12 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         sourceThread.start();
     }
 
-    @SuppressWarnings("deprecation")  // Thread.suspend() not being removed
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
-        sourceThread.suspend();
+        ((LnHexFilePort)port).suspendReading(true);
     }
 
-    @SuppressWarnings("deprecation")  // Thread.resume() not being removed
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
-        sourceThread.resume();
+        ((LnHexFilePort)port).suspendReading(false);
     }
 
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
