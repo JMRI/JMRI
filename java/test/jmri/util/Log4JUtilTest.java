@@ -104,7 +104,8 @@ public class Log4JUtilTest {
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
 
-    private IllegalArgumentException getTraceBack() { return new IllegalArgumentException("for test"); }
+    // debugging tool
+    // private IllegalArgumentException getTraceBack() { return new IllegalArgumentException("for test"); }
 
     @BeforeEach
     public void setUp() throws Exception {
