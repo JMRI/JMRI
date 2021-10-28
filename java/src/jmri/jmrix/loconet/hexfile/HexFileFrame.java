@@ -258,11 +258,11 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
     }
 
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
-        ((LnHexFilePort)port).suspendReading(true);
+        port.suspendReading(true);
     }
 
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
-        ((LnHexFilePort)port).suspendReading(false);
+        port.suspendReading(false);
     }
 
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
