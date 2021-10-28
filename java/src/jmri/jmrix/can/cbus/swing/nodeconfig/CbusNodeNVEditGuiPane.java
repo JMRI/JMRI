@@ -92,6 +92,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * May need to take node out of learn mode
      */
+    @Override
     public void dispose() {
         if ((provider != null) && (_node != null)) {
             if (provider.nvWriteInLearn()) {

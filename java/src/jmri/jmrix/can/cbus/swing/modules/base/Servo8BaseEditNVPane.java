@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * write NVs. NVs are written in "real time" as the user interacts withthe GUI.
  * This allows the servo positions to be observed during setup. The NVs will be
  * stored by the module when it is taken out of learn mode. The entry/exit to/from
- * learn mode is handled in {@link CbusNodeNVEditGuiPane} when changing the displayed
+ * learn mode is handled in CbusNodeNVEditGuiPane when changing the displayed
  * node.
  *
  * @author Andrew Crosland Copyright (C) 2021
