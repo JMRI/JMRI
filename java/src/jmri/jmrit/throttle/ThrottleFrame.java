@@ -879,9 +879,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             repaint();
         }
         throttleWindow.updateGUI();
-        // Make sure the throttle frame as the focus, to receive keyboard inputs        
-        Component src = (Component) e.getSource();
-        src.requestFocusInWindow();
     }
 
     public void saveThrottle() {
