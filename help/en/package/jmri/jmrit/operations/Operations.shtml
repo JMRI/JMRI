@@ -2064,10 +2064,6 @@
       the wrong place on your railroad is very prototypical. Save time and effort and let your
       operators find those misplaced cars for you.
       
-      <p>You can also modify the color of the text by adding the color control text &lt;FONT
-      color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
-      the color change by placing &lt;/FONT&gt; at the end of the line.</p>
-      
       <h3 id="HazardousComment">Hazardous Comment</h3>
 
       <p>The program will add the "Hazardous Comment" to the Manifests and switch lists when a car
@@ -2259,10 +2255,6 @@
       <p>You can enter an optional comment for your location. If you want the comment to print on
       your Manifests you must select the print location comments <a href=
       "#ManifestComments">option</a>.</p>
-      
-      <p>You can also modify the color of the text by adding the color control text &lt;FONT
-      color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
-      the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
       <h3 id="Yardmaster">Yardmaster</h3>
 
@@ -4342,10 +4334,6 @@
       
       <h4>Train Comment</h4>      
       <p>You can enter an optional comment for your train that will appear on your Manifests.</p>
-      
-      <p>You can also modify the color of the text by adding the color control text &lt;FONT
-      color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
-      the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
       <h4 id="TrainReset">Reset Train</h4>
       The "Reset Train" button allows you to remove locomotives and cars that have been assigned to
