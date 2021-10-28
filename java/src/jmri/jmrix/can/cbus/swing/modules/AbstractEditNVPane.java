@@ -54,4 +54,8 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * @param e the change event
      */
     abstract public void tableChanged(TableModelEvent e);
+
+    public void dispose() {
+        super.dispose();
+    }
 }

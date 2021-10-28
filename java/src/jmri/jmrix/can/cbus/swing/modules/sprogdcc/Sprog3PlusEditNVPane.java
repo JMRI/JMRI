@@ -12,6 +12,9 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
@@ -229,7 +232,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("Unexpected NV index");
+                    log.debug("Update unknown NV {}", nv);
                     
             }
         }
@@ -601,6 +604,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    //private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

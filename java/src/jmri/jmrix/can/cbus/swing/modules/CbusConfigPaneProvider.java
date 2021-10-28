@@ -9,6 +9,9 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.spi.JmriServiceProviderInterface;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Pane for configuring events in a CBUS module
@@ -83,7 +86,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * 
      * @return true if node expects NV writes only in learn mode
      */
-    protected boolean nvWriteInLearn() {
+    public boolean nvWriteInLearn() {
         return false;
     }
     
@@ -109,6 +112,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
         if (p != null) {
             return p;
         } else {
+            log.debug("node {} NN {} name {} gets unknown provider", node, node.getNodeNumber(), node.getName());
             return new UnknownPaneProvider();
         }
     }
@@ -155,5 +159,5 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
 
     static volatile Map<String, CbusConfigPaneProvider> instanceMap = null;
 
-//    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
 }

@@ -109,22 +109,20 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
             int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _nvArray[nv] = value;
             if ((nv > 0) && (nv <= 8)) {
-                log.debug("Update NV {} to {}", nv, value);
+                //log.debug("Update NV {} to {}", nv, value);
                 pulse[nv].getModel().setValue(value*TIME_STEP_SIZE);
             } else if (nv == 9) {
-                log.debug("Update recharge delay to {}", value);
+                //log.debug("Update recharge delay to {}", value);
                 rechargeSpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else if (nv == 10) {
-                log.debug("Update fire delay to {}", value);
+                //log.debug("Update fire delay to {}", value);
                 fireDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else if (nv == 11) {
-                log.debug("Update enable delay to {}", value);
+                //log.debug("Update enable delay to {}", value);
                 enableDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
-            } else if ((nv >= 12) && (nv <= 16)) {
-                // Not used
-                log.debug("Update unknow");
             } else {
-                throw new IllegalArgumentException("Unexpected NV index " + nv);
+                // Not used
+                log.debug("Update unknown NV {}", nv);
             }
         }
     }

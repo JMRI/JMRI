@@ -56,4 +56,7 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
         return initial;
     }
 
+    public void dispose() {
+        super.dispose();
+    }
 }

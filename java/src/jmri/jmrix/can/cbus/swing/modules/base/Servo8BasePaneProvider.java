@@ -154,7 +154,7 @@ public class Servo8BasePaneProvider extends CbusConfigPaneProvider {
     
     /** {@inheritDoc} */
     @Override
-    protected boolean nvWriteInLearn() {
+    public boolean nvWriteInLearn() {
         return true;
     }
 

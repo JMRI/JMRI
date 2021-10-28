@@ -17,6 +17,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Node Variable edit frame for a basic 8 channel servo module
+ * 
+ * SBUS Servo modules behave differently in that they need to be in learn mode to
+ * write NVs. NVs are written in "real time" as the user interacts withthe GUI.
+ * This allows the servo positions to be observed during setup. The NVs will be
+ * stored by the module when it is taken out of learn mode. The entry/exit to/from
+ * learn mode is handled in {@link CbusNodeNVEditGuiPane} when changing the displayed
+ * node.
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
@@ -87,43 +94,49 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int sv = (nv - Servo8BasePaneProvider.OUT1_ON)/4 + 1;   // Outout channel number for NV 5 - 36
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
             int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            _nvArray[nv] = value;
-            if (nv == Servo8BasePaneProvider.CUTOFF) {
-                log.debug("Update cutoff to {}", value);
-                for (int i = 1; i <= OUTPUTS; i++) {
-                    servo[i].cutoff.setSelected((value & (1<<(i-1))) > 0);
-                }
-            } else if ((nv == Servo8BasePaneProvider.STARTUP_POS) || (nv == Servo8BasePaneProvider.STARTUP_MOVE)) {
-                log.debug("Update startup action {}", value);
-                for (int i = 1; i <= OUTPUTS; i++) {
-                    servo[i].action.setButtons();
-                }
-            } else if (nv == Servo8BasePaneProvider.SEQUENCE) {
-                log.debug("Update sequential to {}", value);
-                for (int i = 1; i <= OUTPUTS; i++) {
-                    servo[i].seq.setSelected((value & (1<<(i-1))) > 0);
-                }
-            } else if (nv > Servo8BasePaneProvider.OUT8_OFF_SPD) {
-                // Not used
-                log.debug("Update unknown");
-            } else {
-                // Four NVs per output
-                if (((nv - Servo8BasePaneProvider.OUT1_ON) % 4) == 0) {
-                    // ON position
-                    log.debug("Update ON pos NV {} output {} to {}", nv, sv, value);
-                    servo[sv].onPosSlider.setValue(value);
-                } else if (((nv - Servo8BasePaneProvider.OUT1_OFF) % 4) == 0) {
-                    // OFF position
-                    log.debug("Update OFF pos NV {} output {} to {}", nv, sv, value);
-                    servo[sv].offPosSlider.setValue(value);
-                } else if (((nv - Servo8BasePaneProvider.OUT1_ON_SPD) % 4) == 0) {
-                    // ON speed, this will trigger the spinner change listener to call updateOnSpd
-                    log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
-                    servo[sv].onSpdSpinner.getModel().setValue(value & 7);
+            int oldVal = _nvArray[nv];
+            if (oldVal != value) {
+                // Only do something if the value has changed
+                // JSpinner is very trigger happy with state change updates and setting a new value
+                // will trigger another round of updates
+                _nvArray[nv] = value;
+                if (nv == Servo8BasePaneProvider.CUTOFF) {
+                    //log.debug("Update cutoff to {}", value);
+                    for (int i = 1; i <= OUTPUTS; i++) {
+                        servo[i].cutoff.setSelected((value & (1<<(i-1))) > 0);
+                    }
+                } else if ((nv == Servo8BasePaneProvider.STARTUP_POS) || (nv == Servo8BasePaneProvider.STARTUP_MOVE)) {
+                    //log.debug("Update startup action {}", value);
+                    for (int i = 1; i <= OUTPUTS; i++) {
+                        servo[i].action.setButtons();
+                    }
+                } else if (nv == Servo8BasePaneProvider.SEQUENCE) {
+                    //log.debug("Update sequential to {}", value);
+                    for (int i = 1; i <= OUTPUTS; i++) {
+                        servo[i].seq.setSelected((value & (1<<(i-1))) > 0);
+                    }
+                } else if (nv > Servo8BasePaneProvider.OUT8_OFF_SPD) {
+                    // Not used
+                    log.debug("Update unknown NV {}", nv);
                 } else {
-                    // OFF speed, this will trigger the spinner change listener to call updateOffSpd
-                    log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
-                    servo[sv].offSpdSpinner.getModel().setValue(value & 7);
+                    // Four NVs per output
+                    if (((nv - Servo8BasePaneProvider.OUT1_ON) % 4) == 0) {
+                        // ON position
+                        //log.debug("Update ON pos NV {} output {} to {}", nv, sv, value);
+                        servo[sv].onPosSlider.setValue(value);
+                    } else if (((nv - Servo8BasePaneProvider.OUT1_OFF) % 4) == 0) {
+                        // OFF position
+                        //log.debug("Update OFF pos NV {} output {} to {}", nv, sv, value);
+                        servo[sv].offPosSlider.setValue(value);
+                    } else if (((nv - Servo8BasePaneProvider.OUT1_ON_SPD) % 4) == 0) {
+                        // ON speed, this will trigger the spinner change listener to call updateOnSpd
+                        //log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
+                        servo[sv].onSpdSpinner.getModel().setValue(value & 7);
+                    } else {
+                        // OFF speed, this will trigger the spinner change listener to call updateOffSpd
+                        //log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
+                        servo[sv].offSpdSpinner.getModel().setValue(value & 7);
+                    }
                 }
             }
         }
@@ -143,9 +156,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON;
             _nvArray[nv_index] = pos;
-            log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
-            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            //log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
         }
     }
     
@@ -163,9 +177,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF;
             _nvArray[nv_index] = pos;
-            log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
-            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            //log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
         }
     }
     
@@ -183,9 +198,11 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON_SPD;
             _nvArray[nv_index] = spd;
-            log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
-            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            //log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
+            // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
         }
     }
     
@@ -203,9 +220,11 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF_SPD;
             _nvArray[nv_index] = spd;
-            log.debug("UpdateOffSpeed index {} nv {} spd {}", index, nv_index, spd);
-            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            //log.debug("UpdateOffSpeed index {} nv {} spd {}", index, nv_index, spd);
+            // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
         }
     }
     
@@ -216,24 +235,26 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         
         @Override
         public void setNewVal(int index) {
-            int newNV2 = _nvArray[Servo8BasePaneProvider.STARTUP_POS] & (~(1<<(index-1)));
-            int newNV3 = _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
+            int newPos = _nvArray[Servo8BasePaneProvider.STARTUP_POS] & (~(1<<(index-1)));
+            int newMove = _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
             
             // Startup action is in NV2 and NV3, 1 bit per output 
             if (servo[index].action.off.isSelected()) {
                 // 11
-                newNV2 |= (1<<(index-1));
-                newNV3 |= (1<<(index-1));
+                newPos |= (1<<(index-1));
+                newMove |= (1<<(index-1));
             } else if (servo[index].action.saved.isSelected()) {
                 // 01
-                newNV3 |= (1<<(index-1));
+                newMove |= (1<<(index-1));
             }
             
-            _nvArray[Servo8BasePaneProvider.STARTUP_POS] = newNV2;
-            _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] = newNV3;
-            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
-            _dataModel.setValueAt(newNV2, Servo8BasePaneProvider.STARTUP_POS - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            _dataModel.setValueAt(newNV3, Servo8BasePaneProvider.STARTUP_MOVE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _nvArray[Servo8BasePaneProvider.STARTUP_POS] = newPos;
+            _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] = newMove;
+            _dataModel.setValueAt(newPos, Servo8BasePaneProvider.STARTUP_POS - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(newMove, Servo8BasePaneProvider.STARTUP_MOVE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_POS, newPos);
+            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_MOVE, newMove);
         }
     }
     
@@ -355,6 +376,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
                     val = i;
                 }
                 if (val > 0) {
+                    // Send to module immediately
                     _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.LAST, val);
                 }
             }
@@ -370,6 +392,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             }
             log.debug("Cutoff Action now {}", newCutoff);
             _dataModel.setValueAt(newCutoff, Servo8BasePaneProvider.CUTOFF - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.CUTOFF, newCutoff);
         }
         
         /**
@@ -382,6 +406,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             }
             log.debug("Sequential Action now {}", newSeq);
             _dataModel.setValueAt(newSeq, Servo8BasePaneProvider.SEQUENCE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            // Send to module immediately
+            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.SEQUENCE, newSeq);
         }
     }
     

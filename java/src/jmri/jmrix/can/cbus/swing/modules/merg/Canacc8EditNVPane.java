@@ -105,25 +105,22 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _nvArray[nv] = value;
             if ((nv > 0) && (nv <= 8)) {
-                log.debug("Update NV {} to {}", nv, value);
+                //log.debug("Update NV {} to {}", nv, value);
                 int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
                 out[nv].setButtons(value, oldSpinnerValue);
                 out[nv].pulseSpinner.getModel().setValue((value & 0x7f)*PULSE_WIDTH_STEP_SIZE);
                 log.debug("NV {} Now {}", nv, ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue());
             } else if (nv == 9) {
-                log.debug("Update feedback delay to {}", value);
+                //log.debug("Update feedback delay to {}", value);
                 feedbackSpinner.getModel().setValue(value*FEEDBACK_DELAY_STEP_SIZE);
             } else if ((nv == 10) || (nv == 11)) {
-                log.debug("Update startup action", value);
+                //log.debug("Update startup action", value);
                 for (int i = 1; i <= 8; i++) {
                     out[i].action.setButtons();
                 }
-            } else if (nv == 12) {
-                // Not used
-                log.debug("Update unknown");
-                
             } else {
-                throw new IllegalArgumentException("Unexpected NV index");
+                // Not used
+                log.debug("Update unknown NV {}", nv);
             }
         }
     }
