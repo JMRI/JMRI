@@ -264,6 +264,7 @@ public class FunctionButton extends JToggleButton {
      *    Button UI updated according to above result.
      */
     public void updateLnF() {
+        setFocusable(false); // for throttle window keyboard controls
         setVisible(isDisplayed);
         setBorderPainted(!isImageOK());
         setContentAreaFilled(!isImageOK());
