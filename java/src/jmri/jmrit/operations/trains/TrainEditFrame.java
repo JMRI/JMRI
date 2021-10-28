@@ -515,6 +515,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkModel() || !checkEngineRoad()) {
             return;
         }
+        if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
+                !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
+                !_train.getComment().equals(
+                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()))) {
+            _train.setModified(true);
+        }
         _train.setDepartureTime(hourBox.getSelectedItem().toString(), minuteBox.getSelectedItem().toString());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {
@@ -533,11 +539,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             _train.setRequirements(Train.NO_CABOOSE_OR_FRED);
         }
         _train.setCabooseRoad((String) roadCabooseBox.getSelectedItem());
-        if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
-                !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
-                !_train.getComment().equals(commentTextArea.getText())) {
-            _train.setModified(true);
-        }
         _train.setName(trainNameTextField.getText().trim());
         _train.setDescription(trainDescriptionTextField.getText());
         _train.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
