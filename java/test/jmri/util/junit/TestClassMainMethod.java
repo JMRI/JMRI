@@ -69,6 +69,9 @@ public class TestClassMainMethod {
                 // will directly invoke Maim in the class
                 Method method = cl.getMethod("main", String[].class);
                 method.invoke(null, new Object[] {new String[] { /* put args here */ }});
+                // if main returns, we return from here; threads may still be running
+                // i.e. if this is a JMRI app.
+                return;
             } catch (InvocationTargetException e) {
                 // main threw an exception, report
                 System.err.println(e);
