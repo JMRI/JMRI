@@ -177,14 +177,14 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-//    @Test
-//    public void testLoop() {
-//        for (int i = 0; i < 1000; i++) {
-//            setUp();
-//            testModifyButton();
-//            tearDown();
-//        }
-//    }
+    @Test
+    public void testLoop() {
+        for (int i = 0; i < 1000; i++) {
+            setUp();
+            testModifyButton();
+            tearDown();
+        }
+    }
 
     // Passes Window CI test with train, but no JTextPane() modifications. 149s
     // Passes Window CI test in 132s when train is null.
@@ -215,5 +215,16 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Route route = train2.getRoute();
         RouteLocation rl = route.getDepartsRouteLocation();
         rl.setComment(RouteLocation.NONE);
+        Location l = rl.getLocation();
+        Track t = l.getTrackByName("North End 1", null);
+        t.setCommentBoth(Track.NONE);
+        t.setCommentPickup(Track.NONE);
+        t.setCommentSetout(Track.NONE);
+        rl = route.getRouteLocationBySequenceNumber(2);
+        l = rl.getLocation();
+        t = l.getTrackByName("NI Yard", null);
+        t.setCommentBoth(Track.NONE);
+        t.setCommentPickup(Track.NONE);
+        t.setCommentSetout(Track.NONE);
     }
 }
