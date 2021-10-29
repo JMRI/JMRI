@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -132,6 +133,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     }
 
     @Test
+    @Disabled("Intermittent hang on Windows CI Test")
     public void testModifyButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -175,14 +177,14 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
-    public void testLoop() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testModifyButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testModifyButton();
+//            tearDown();
+//        }
+//    }
 
     // Passes Window CI test with train, but no JTextPane() modifications. 149s
     // Passes Window CI test in 132s when train is null.
