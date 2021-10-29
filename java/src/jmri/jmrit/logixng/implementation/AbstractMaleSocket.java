@@ -724,6 +724,15 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     /** {@inheritDoc} */
     @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).getListenerRefsIncludingChildren(list);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String toString() {
         return getObject().toString();
     }
