@@ -1436,13 +1436,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>

@@ -217,18 +217,15 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             ALut.alutInit();
             al = ALFactory.getAL();
             al.alGetError();
-            if (log.isInfoEnabled()) {
-                log.info("Initialised JOAL using OpenAL: vendor - {} version - {}", al.alGetString(AL.AL_VENDOR), al.alGetString(AL.AL_VERSION));
-            }
+            log.info("Initialised JOAL using OpenAL: vendor - {} version - {}", al.alGetString(AL.AL_VENDOR), al.alGetString(AL.AL_VERSION));
         } catch (ALException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Error initialising JOAL: {}", e);
-            }
+            log.warn("Error initialising JOAL: {}", e);
+            return false;
+        } catch (UnsatisfiedLinkError e) {
+            log.warn("Error loading OpenAL libraries: {}", e);
             return false;
         } catch (RuntimeException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Error initialising OpenAL: {}", e);
-            }
+            log.warn("Error initialising OpenAL: {}", e);
             return false;
         }
 
