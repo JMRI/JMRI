@@ -1255,39 +1255,37 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-                if (listenerRefsCount > 0) { // warn of listeners attached before delete
 
+                if (listenerRefsCount > 0) { // warn of listeners attached before delete
                     String prompt = _conditionalNG.getFemaleSocket().isConnected()
                             ? "DeleteWithChildrenPrompt" : "DeletePrompt";
                     JLabel question = new JLabel(Bundle.getMessage(prompt, _conditionalNG.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
 
-                    if (listenerRefsCount > 0) {
-                        ArrayList<String> listeners = new ArrayList<>();
-                        for (String listenerRef : listenerRefs) {
-                            if (!listeners.contains(listenerRef)) {
-                                listeners.add(listenerRef);
-                            }
+                    ArrayList<String> listeners = new ArrayList<>();
+                    for (String listenerRef : listenerRefs) {
+                        if (!listeners.contains(listenerRef)) {
+                            listeners.add(listenerRef);
                         }
-
-                        message.append("<br>");
-                        message.append(Bundle.getMessage("ReminderInUse", listenerRefsCount));
-                        message.append("<ul>");
-                        for (String listener : listeners) {
-                            message.append("<li>");
-                            message.append(listener);
-                            message.append("</li>");
-                        }
-                        message.append("</ul>");
-
-                        JEditorPane pane = new JEditorPane();
-                        pane.setContentType("text/html");
-                        pane.setText("<html>" + message.toString() + "</html>");
-                        pane.setEditable(false);
-                        JScrollPane jScrollPane = new JScrollPane(pane);
-                        container.add(jScrollPane);
                     }
+
+                    message.append("<br>");
+                    message.append(Bundle.getMessage("ReminderInUse", listenerRefsCount));
+                    message.append("<ul>");
+                    for (String listener : listeners) {
+                        message.append("<li>");
+                        message.append(listener);
+                        message.append("</li>");
+                    }
+                    message.append("</ul>");
+
+                    JEditorPane pane = new JEditorPane();
+                    pane.setContentType("text/html");
+                    pane.setText("<html>" + message.toString() + "</html>");
+                    pane.setEditable(false);
+                    JScrollPane jScrollPane = new JScrollPane(pane);
+                    container.add(jScrollPane);
                 } else {
                     String prompt = _conditionalNG.getFemaleSocket().isConnected()
                             ? "DeleteWithChildrenPrompt" : "DeletePrompt";
