@@ -143,6 +143,10 @@ public class OperationsFrame extends JmriJFrame {
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         this.getContentPane().adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
     }
+    
+    protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
+        this.getContentPane().adjustTextAreaColumnWidth(scrollPane, textArea, size);
+    }
 
     /**
      * Load the table width, position, and sorting status from the user
