@@ -132,6 +132,7 @@ public class TrainConductorFrameTest extends OperationsTestCase {
     }
 
     @Test
+//    @Disabled("Intermittent hang on Windows CI Test")
     public void testModifyButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -175,6 +176,9 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    // test fails with 5,000 loops without any JTextPane access
+    // However each loop produces 5 lines of null pointer text to console.
+    
 //    @Test
 //    public void testLoop() {
 //        for (int i = 0; i < 1000; i++) {
@@ -213,5 +217,16 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Route route = train2.getRoute();
         RouteLocation rl = route.getDepartsRouteLocation();
         rl.setComment(RouteLocation.NONE);
+        Location l = rl.getLocation();
+        Track t = l.getTrackByName("North End 1", null);
+        t.setCommentBoth(Track.NONE);
+        t.setCommentPickup(Track.NONE);
+        t.setCommentSetout(Track.NONE);
+        rl = route.getRouteLocationBySequenceNumber(2);
+        l = rl.getLocation();
+        t = l.getTrackByName("NI Yard", null);
+        t.setCommentBoth(Track.NONE);
+        t.setCommentPickup(Track.NONE);
+        t.setCommentSetout(Track.NONE);
     }
 }
