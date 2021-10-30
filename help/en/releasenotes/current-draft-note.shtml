@@ -595,6 +595,7 @@
             	<li>Make sure you have Rosetta 2 installed.
             		macOS requires this to launch a
             		JMRI application from its app icon.
+            		(See FB9730830)
             	</ol>
             	If you want to check whether JMRI is running in 
             	Apple Silicon native more or Intel emulation 
