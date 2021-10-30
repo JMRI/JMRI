@@ -572,5 +572,17 @@
                 <a href="http://jmri.org/resources/icons/mediumschematics/searchlights/">mediumschematics serachlights icon set</a>
                 at resources/icons/mediumschematics/searchlights/
             </li>
+            <li>Limited support for native running on Apple Silicon is now available.
+            	Please note:
+            	<ul>
+            	<li>There is no support for the JInput library, which is 
+            		used for JInput-specific connections.
+            	<li>There is no support for the BlueCove library, which is 
+            		used for Digitrax over BlueTooth connections.
+            	<li>Sound support is currently limited, with work 
+            		on-going.
+            	</ul>
+            	JMRI runs fine, without the above limitations, in Rosetta
+            	(Intel emulation) mode on Apple Silicon macs.
         </ul>
 
