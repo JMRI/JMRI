@@ -424,7 +424,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == LightState.Toggle) {
-                if (light.getCommandedState() == Turnout.CLOSED) {
+                if (light.getKnownState() == Turnout.CLOSED) {
                     light.setCommandedState(Turnout.THROWN);
                 } else {
                     light.setCommandedState(Turnout.CLOSED);
