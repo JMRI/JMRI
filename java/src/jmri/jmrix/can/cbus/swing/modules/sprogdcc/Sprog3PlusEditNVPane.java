@@ -12,6 +12,9 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
@@ -152,7 +155,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            int value;
+            try {
+                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            } catch (NullPointerException ex) {
+                // nvArray does not exist yet
+                return;
+            }
             _nvArray[nv] = value;
             
             switch (nv) {
@@ -229,7 +238,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("Unexpected NV index");
+                    log.debug("Update unknown NV {}", nv);
                     
             }
         }
@@ -601,6 +610,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    //private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

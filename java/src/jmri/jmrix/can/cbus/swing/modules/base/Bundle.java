@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.modules.merg;
+package jmri.jmrix.can.cbus.swing.modules.base;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
