@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
@@ -25,8 +26,6 @@ import org.junit.jupiter.api.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
-import org.openide.util.Exceptions;
-
 
 /*
 * Tests for the LogixNGTableAction Class
@@ -453,12 +452,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     }
 
     private JEditorPane findTextArea(Container container) {
-        for (java.awt.Component component : ((Container)container).getComponents()) {
+        for (Component component : container.getComponents()) {
 //            System.out.format("Component: %s,%n", component.getClass().getName());
             if (component instanceof JEditorPane) {
                 return (JEditorPane) component;
             }
-            if (container instanceof java.awt.Container) {
+            if (component instanceof Container) {
                 JEditorPane textArea = findTextArea((Container) component);
                 if (textArea != null) return textArea;
             }
