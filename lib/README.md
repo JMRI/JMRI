@@ -256,7 +256,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - support for direct USB device usage
 - from https://github.com/usb4java/usb4java/releases/tag/usb4java-1.3.0
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
-
+- lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
 ## For unit tests & development work only:
 
