@@ -98,8 +98,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(pStatus);
         add(pRow14);
 
-        update();
-
         // setup buttons
         addButtonAction(moveButton);
 
@@ -112,6 +110,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             _train.addPropertyChangeListener(this);
         }
         trainManager.addPropertyChangeListener(this);
+        
+        update();
     }
 
     @Override
