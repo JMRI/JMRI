@@ -253,7 +253,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         if (!found) {
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
-            return;
         }
     }
 
@@ -449,8 +448,8 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void getListenerRefsIncludingChildren(List<String> list) {
         list.addAll(getListenerRefs());
-        for (int i=0; i < getChildCount(); i++) {
-            getChild(i).getListenerRefsIncludingChildren(list);
+        for (int i=0; i < getNumConditionalNGs(); i++) {
+            getConditionalNG(i).getListenerRefsIncludingChildren(list);
         }
     }
 

@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static jmri.NamedBean.UNKNOWN;
 
@@ -11,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 

@@ -217,6 +217,16 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         return panel5;
     }
 
+    @Override
+    protected void getListenerRefsIncludingChildren(LogixNG logixNG, java.util.List<String> list) {
+        logixNG.getListenerRefsIncludingChildren(list);
+    }
+
+    @Override
+    protected boolean hasChildren(LogixNG logixNG) {
+        return logixNG.getNumConditionalNGs() > 0;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
 
 }

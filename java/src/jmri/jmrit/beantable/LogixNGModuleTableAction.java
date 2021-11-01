@@ -248,6 +248,16 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         return panel5;
     }
 
+    @Override
+    protected void getListenerRefsIncludingChildren(Module module, java.util.List<String> list) {
+        module.getListenerRefsIncludingChildren(list);
+    }
+
+    @Override
+    protected boolean hasChildren(Module module) {
+        return module.getRootSocket().isConnected();
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
 
 }

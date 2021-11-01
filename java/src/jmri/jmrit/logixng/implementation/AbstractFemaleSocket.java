@@ -488,9 +488,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public void getListenerRefsIncludingChildren(List<String> list) {
-        list.addAll(getListenerRefs());
-        for (int i=0; i < getChildCount(); i++) {
-            getChild(i).getListenerRefsIncludingChildren(list);
+        if (isConnected()) {
+            getConnectedSocket().getListenerRefsIncludingChildren(list);
         }
     }
 
