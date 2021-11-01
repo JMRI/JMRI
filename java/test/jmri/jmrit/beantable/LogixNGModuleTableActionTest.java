@@ -914,7 +914,6 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String labelText) {
-        RuntimeException e = new RuntimeException("Caller");
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
