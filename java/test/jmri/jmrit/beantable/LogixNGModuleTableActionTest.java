@@ -13,13 +13,10 @@ import javax.swing.tree.TreePath;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;
-import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -28,7 +25,6 @@ import org.junit.jupiter.api.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 
 /*
@@ -709,7 +705,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
-    public void testDeleteLogixNG() throws InterruptedException {
+    public void testDeleteModule() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractLogixNGTableAction moduleTable = (AbstractLogixNGTableAction) a;
 
@@ -923,12 +919,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            try {
             new JLabelOperator(jdo, labelText);     // Throws exception if not found
-            } catch (Exception e2) {
-                e.printStackTrace();
-                throw e2;
-            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
@@ -938,7 +929,6 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
     private JEditorPane findTextArea(Container container) {
         for (Component component : container.getComponents()) {
-//            System.out.format("Component: %s,%n", component.getClass().getName());
             if (component instanceof JEditorPane) {
                 return (JEditorPane) component;
             }
@@ -951,25 +941,13 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     Thread createModalDialogOperatorThread_WithListenerRefs(String dialogTitle, String buttonText, String listenerRefs) {
-        RuntimeException e = new RuntimeException("Caller");
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            try {
             JEditorPane textArea = findTextArea((Container) jdo.getComponent(0));
             Assert.assertNotNull(textArea);
             Assert.assertEquals(listenerRefs, textArea.getText());
-//            if (textArea != null) {
-//                System.out.format("TextArea found: '%s'%n", textArea.getText());
-//            } else {
-//                System.out.format("TextArea not found%n");
-//            }
-//            new JLabelOperator(jdo, labelText);     // Throws exception if not found
-            } catch (Exception e2) {
-                e.printStackTrace();
-                throw e2;
-            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
