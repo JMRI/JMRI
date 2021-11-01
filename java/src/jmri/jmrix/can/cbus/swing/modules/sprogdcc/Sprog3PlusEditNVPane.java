@@ -155,7 +155,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            int value;
+            try {
+                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            } catch (NullPointerException ex) {
+                // nvArray does not exist yet
+                return;
+            }
             _nvArray[nv] = value;
             
             switch (nv) {
