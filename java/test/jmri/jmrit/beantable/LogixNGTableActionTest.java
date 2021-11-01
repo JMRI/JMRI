@@ -438,12 +438,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            try {
             new JLabelOperator(jdo, labelText);     // Throws exception if not found
-            } catch (Exception e2) {
-                e.printStackTrace();
-                throw e2;
-            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
@@ -453,7 +448,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
     private JEditorPane findTextArea(Container container) {
         for (Component component : container.getComponents()) {
-//            System.out.format("Component: %s,%n", component.getClass().getName());
             if (component instanceof JEditorPane) {
                 return (JEditorPane) component;
             }
@@ -466,25 +460,13 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     }
 
     Thread createModalDialogOperatorThread_WithListenerRefs(String dialogTitle, String buttonText, String listenerRefs) {
-        RuntimeException e = new RuntimeException("Caller");
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            try {
             JEditorPane textArea = findTextArea((Container) jdo.getComponent(0));
             Assert.assertNotNull(textArea);
             Assert.assertEquals(listenerRefs, textArea.getText());
-//            if (textArea != null) {
-//                System.out.format("TextArea found: '%s'%n", textArea.getText());
-//            } else {
-//                System.out.format("TextArea not found%n");
-//            }
-//            new JLabelOperator(jdo, labelText);     // Throws exception if not found
-            } catch (Exception e2) {
-                e.printStackTrace();
-                throw e2;
-            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
