@@ -118,6 +118,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     
     /**
      * Set the Node and update panes
+     * 
+     * Show the edit GUI if available.
+     * 
      * @param node the CbusNode of Interest, can be null
      */
     @Override
@@ -199,7 +202,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     }
     
     /**
-     * Removes the  NV Model listener from the Node
+     * Removes the NV Model listener from the Node.
+     * 
+     * Also dispose of the edit gui cleanly to take node out of learn mode
      */
     @Override
     public void dispose(){
@@ -208,6 +213,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
             nodeNVModel.dispose();
         }
         
+        if (editNVGui != null) {
+            editNVGui.dispose();
+        }
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarPane.class);

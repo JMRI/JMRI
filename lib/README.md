@@ -158,8 +158,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
-##### Joal 2.3.1
-- from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+##### Joal 2.4.0-rc-20210111
+- from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
 - -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
@@ -168,47 +168,59 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - plus helper native libraries:
   for MacOS X 10.4+
     extracted from joal-natives-macosx-universal.jar
-      libjoal.jnilib
+      libjoal.dylib
+      libopenal.dylib
     extracted from gluegen-rt-natives-macosx-universal.jar
-      libgluegen-rt.jnilib
+      libgluegen_rt.dylib
 
 - for Windows x86
     extracted from joal-natives-windows-i586.jar
       joal.dll
+      soft_oal.dll
     extracted from glugen-rt-natives-windows-i586.jar
-      gluegen-rt.dll
+      gluegen_rt.dll
 
 - for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
+      soft_oal.dll
     extracted from glugen-rt-natives-windows-amd64.jar
-      gluegen-rt.dll
+      gluegen_rt.dll
 
 - for Linux i386
     extracted from joal-natives-linux-i586.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-i586.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
 - for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-amd64.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
 - for Linux armv6l
-    extracted from joal-natives-linux-armv6.jar
+    extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
-    extracted from glugen-rt-natives-linux-armv6.jar
-      libgluegen-rt.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-armv6hf.jar
+      libgluegen_rt.so
 
 - for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
-NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
+- for Linux aarch64
+    extracted from joal-natives-linux-aarch64.jar
+      libjoal.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-aarch64.jar
+      libgluegen_rt.so
 
 ##### jmdns.jar
 - Version 3.5.5 (2018-12-04)

@@ -1,16 +1,18 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.beans.PropertyVetoException;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.DigitalMany;
+import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.expressions.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DefaultLogixNG
@@ -153,9 +155,514 @@ public class DefaultLogixNGManagerTest {
                 "If Then Else. Execute on change",
                 maleSocket2.getLongDescription());
     }
+    
+    @Test
+    public void testDeleteLogixNG() throws SocketAlreadyConnectedException, PropertyVetoException {
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        ConditionalNG_Manager conditionalNG_Manager = InstanceManager.getDefault(ConditionalNG_Manager.class);
+        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        LogixNG logixNG = logixNG_Manager.createLogixNG("IQ1", "Some name");
+        Assert.assertNotNull("exists", logixNG);
+        
+        ConditionalNG conditionalNG = conditionalNG_Manager
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
+        Assert.assertNotNull("exists", conditionalNG);
+        
+        FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+        MaleDigitalActionSocket actionManySocket = digitalActionManager
+                        .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionManySocket);
+
+        femaleSocket = actionManySocket.getChild(0);
+        MaleDigitalActionSocket actionIfThenSocket = digitalActionManager
+                        .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionIfThenSocket);
+
+        femaleSocket = actionIfThenSocket.getChild(0);
+        MaleDigitalExpressionSocket expressionOrSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(new Or(digitalExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionOrSocket);
+        
+        femaleSocket = actionManySocket.getChild(1);
+        MaleDigitalActionSocket actionDoAnalogActionSocket = digitalActionManager
+                        .registerAction(new DoAnalogAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoAnalogActionSocket);
+
+        femaleSocket = actionDoAnalogActionSocket.getChild(0);
+        MaleAnalogExpressionSocket expressionAnalogExpressionConstantSocket =
+                analogExpressionManager
+                        .registerExpression(new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionAnalogExpressionConstantSocket);
+        
+        femaleSocket = actionDoAnalogActionSocket.getChild(1);
+        MaleAnalogActionSocket actionAnalogManySocket =
+                InstanceManager.getDefault(AnalogActionManager.class)
+                        .registerAction(new AnalogMany(analogActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionAnalogManySocket);
+
+        femaleSocket = actionManySocket.getChild(2);
+        MaleDigitalActionSocket actionDoStringActionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(new DoStringAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoStringActionSocket);
+
+        femaleSocket = actionDoStringActionSocket.getChild(0);
+        MaleStringExpressionSocket expressionStringExpressionConstantSocket =
+                stringExpressionManager
+                        .registerExpression(new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionStringExpressionConstantSocket);
+        
+        femaleSocket = actionDoStringActionSocket.getChild(1);
+        MaleStringActionSocket actionStringManySocket = stringActionManager
+                        .registerAction(new StringMany(stringActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionStringManySocket);
+
+        femaleSocket = actionManySocket.getChild(3);
+        MaleDigitalActionSocket logix = digitalActionManager
+                        .registerAction(new Logix(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(logix);
+
+        femaleSocket = logix.getChild(1);
+        MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
+                        .registerAction(new DigitalBooleanOnChange(
+                                digitalBooleanActionManager.getAutoSystemName(),
+                                null,
+                                DigitalBooleanOnChange.Trigger.CHANGE));
+        femaleSocket.connect(onChange);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(
+                                digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setDigitalExpression(expressionOrSocket);
+        
+        
+        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        
+        try {
+            logixNG_Manager.deleteBean(logixNG, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("Expression is in use by \"IQDE:AUTO:0002\"", e.getMessage());
+        }
+        lastResultOfDigitalExpression.removeDigitalExpression();
+        
+        try {
+            logixNG_Manager.deleteBean(logixNG, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("", e.getMessage());
+        }
+        logixNG_Manager.deleteBean(logixNG, "DoDelete");
+        
+        Assert.assertNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+    }
+    
+    @Test
+    public void testDeleteConditionalNG() throws SocketAlreadyConnectedException, PropertyVetoException {
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        ConditionalNG_Manager conditionalNG_Manager = InstanceManager.getDefault(ConditionalNG_Manager.class);
+        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        LogixNG logixNG = logixNG_Manager.createLogixNG("IQ1", "Some name");
+        Assert.assertNotNull("exists", logixNG);
+        
+        ConditionalNG conditionalNG = conditionalNG_Manager
+                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
+        Assert.assertNotNull("exists", conditionalNG);
+        
+        FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+        MaleDigitalActionSocket actionManySocket = digitalActionManager
+                        .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionManySocket);
+
+        femaleSocket = actionManySocket.getChild(0);
+        MaleDigitalActionSocket actionIfThenSocket = digitalActionManager
+                        .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionIfThenSocket);
+
+        femaleSocket = actionIfThenSocket.getChild(0);
+        MaleDigitalExpressionSocket expressionOrSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(new Or(digitalExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionOrSocket);
+        
+        femaleSocket = actionManySocket.getChild(1);
+        MaleDigitalActionSocket actionDoAnalogActionSocket = digitalActionManager
+                        .registerAction(new DoAnalogAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoAnalogActionSocket);
+
+        femaleSocket = actionDoAnalogActionSocket.getChild(0);
+        MaleAnalogExpressionSocket expressionAnalogExpressionConstantSocket =
+                analogExpressionManager
+                        .registerExpression(new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionAnalogExpressionConstantSocket);
+        
+        femaleSocket = actionDoAnalogActionSocket.getChild(1);
+        MaleAnalogActionSocket actionAnalogManySocket =
+                InstanceManager.getDefault(AnalogActionManager.class)
+                        .registerAction(new AnalogMany(analogActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionAnalogManySocket);
+
+        femaleSocket = actionManySocket.getChild(2);
+        MaleDigitalActionSocket actionDoStringActionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(new DoStringAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoStringActionSocket);
+
+        femaleSocket = actionDoStringActionSocket.getChild(0);
+        MaleStringExpressionSocket expressionStringExpressionConstantSocket =
+                stringExpressionManager
+                        .registerExpression(new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionStringExpressionConstantSocket);
+        
+        femaleSocket = actionDoStringActionSocket.getChild(1);
+        MaleStringActionSocket actionStringManySocket = stringActionManager
+                        .registerAction(new StringMany(stringActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionStringManySocket);
+
+        femaleSocket = actionManySocket.getChild(3);
+        MaleDigitalActionSocket logix = digitalActionManager
+                        .registerAction(new Logix(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(logix);
+
+        femaleSocket = logix.getChild(1);
+        MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
+                        .registerAction(new DigitalBooleanOnChange(
+                                digitalBooleanActionManager.getAutoSystemName(),
+                                null,
+                                DigitalBooleanOnChange.Trigger.CHANGE));
+        femaleSocket.connect(onChange);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(
+                                digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setDigitalExpression(expressionOrSocket);
+        
+        
+        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        
+        try {
+            conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("Expression is in use by \"IQDE:AUTO:0002\"", e.getMessage());
+        }
+        lastResultOfDigitalExpression.removeDigitalExpression();
+        
+        try {
+            conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("", e.getMessage());
+        }
+        conditionalNG_Manager.deleteBean(conditionalNG, "DoDelete");
+        
+        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+    }
+    
+    @Test
+    public void testDeleteModule() throws SocketAlreadyConnectedException, PropertyVetoException {
+        FemaleSocketManager femaleSocketManager = InstanceManager.getDefault(FemaleSocketManager.class);
+        ModuleManager moduleManager = InstanceManager.getDefault(ModuleManager.class);
+        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        jmri.jmrit.logixng.Module module = moduleManager
+                .createModule("A module", femaleSocketManager.getSocketTypeByType("DefaultFemaleDigitalActionSocket"));  // NOI18N
+        Assert.assertNotNull("exists", module);
+        
+        FemaleSocket femaleSocket = module.getRootSocket();
+        MaleDigitalActionSocket actionManySocket = digitalActionManager
+                        .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionManySocket);
+
+        femaleSocket = actionManySocket.getChild(0);
+        MaleDigitalActionSocket actionIfThenSocket = digitalActionManager
+                        .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionIfThenSocket);
+
+        femaleSocket = actionIfThenSocket.getChild(0);
+        MaleDigitalExpressionSocket expressionOrSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(new Or(digitalExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionOrSocket);
+        
+        femaleSocket = actionManySocket.getChild(1);
+        MaleDigitalActionSocket actionDoAnalogActionSocket = digitalActionManager
+                        .registerAction(new DoAnalogAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoAnalogActionSocket);
+
+        femaleSocket = actionDoAnalogActionSocket.getChild(0);
+        MaleAnalogExpressionSocket expressionAnalogExpressionConstantSocket =
+                analogExpressionManager
+                        .registerExpression(new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionAnalogExpressionConstantSocket);
+        
+        femaleSocket = actionDoAnalogActionSocket.getChild(1);
+        MaleAnalogActionSocket actionAnalogManySocket =
+                InstanceManager.getDefault(AnalogActionManager.class)
+                        .registerAction(new AnalogMany(analogActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionAnalogManySocket);
+
+        femaleSocket = actionManySocket.getChild(2);
+        MaleDigitalActionSocket actionDoStringActionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(new DoStringAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoStringActionSocket);
+
+        femaleSocket = actionDoStringActionSocket.getChild(0);
+        MaleStringExpressionSocket expressionStringExpressionConstantSocket =
+                stringExpressionManager
+                        .registerExpression(new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionStringExpressionConstantSocket);
+        
+        femaleSocket = actionDoStringActionSocket.getChild(1);
+        MaleStringActionSocket actionStringManySocket = stringActionManager
+                        .registerAction(new StringMany(stringActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionStringManySocket);
+
+        femaleSocket = actionManySocket.getChild(3);
+        MaleDigitalActionSocket logix = digitalActionManager
+                        .registerAction(new Logix(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(logix);
+
+        femaleSocket = logix.getChild(1);
+        MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
+                        .registerAction(new DigitalBooleanOnChange(
+                                digitalBooleanActionManager.getAutoSystemName(),
+                                null,
+                                DigitalBooleanOnChange.Trigger.CHANGE));
+        femaleSocket.connect(onChange);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(
+                                digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setDigitalExpression(expressionOrSocket);
+        
+        
+        Assert.assertNotNull(moduleManager.getBySystemName(module.getSystemName()));
+        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        
+        try {
+            moduleManager.deleteBean(module, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("Expression is in use by \"IQDE:AUTO:0002\"", e.getMessage());
+        }
+        lastResultOfDigitalExpression.removeDigitalExpression();
+        
+        try {
+            moduleManager.deleteBean(module, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("", e.getMessage());
+        }
+        moduleManager.deleteBean(module, "DoDelete");
+        
+        Assert.assertNull(moduleManager.getBySystemName(module.getSystemName()));
+        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+    }
+    
+    @Test
+    public void testDeleteAction() throws SocketAlreadyConnectedException, PropertyVetoException {
+//        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+//        ConditionalNG_Manager conditionalNG_Manager = InstanceManager.getDefault(ConditionalNG_Manager.class);
+        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        
+//        LogixNG logixNG = logixNG_Manager.createLogixNG("IQ1", "Some name");
+//        Assert.assertNotNull("exists", logixNG);
+        
+//        ConditionalNG conditionalNG = conditionalNG_Manager
+//                .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
+//        Assert.assertNotNull("exists", conditionalNG);
+        
+//        FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+        MaleDigitalActionSocket actionManySocket = digitalActionManager
+                        .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+//        femaleSocket.connect(actionManySocket);
+
+        FemaleSocket femaleSocket = actionManySocket.getChild(0);
+        MaleDigitalActionSocket actionIfThenSocket = digitalActionManager
+                        .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionIfThenSocket);
+
+        femaleSocket = actionIfThenSocket.getChild(0);
+        MaleDigitalExpressionSocket expressionOrSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(new Or(digitalExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionOrSocket);
+        
+        femaleSocket = actionManySocket.getChild(1);
+        MaleDigitalActionSocket actionDoAnalogActionSocket = digitalActionManager
+                        .registerAction(new DoAnalogAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoAnalogActionSocket);
+
+        femaleSocket = actionDoAnalogActionSocket.getChild(0);
+        MaleAnalogExpressionSocket expressionAnalogExpressionConstantSocket =
+                analogExpressionManager
+                        .registerExpression(new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionAnalogExpressionConstantSocket);
+        
+        femaleSocket = actionDoAnalogActionSocket.getChild(1);
+        MaleAnalogActionSocket actionAnalogManySocket =
+                InstanceManager.getDefault(AnalogActionManager.class)
+                        .registerAction(new AnalogMany(analogActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionAnalogManySocket);
+
+        femaleSocket = actionManySocket.getChild(2);
+        MaleDigitalActionSocket actionDoStringActionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(new DoStringAction(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionDoStringActionSocket);
+
+        femaleSocket = actionDoStringActionSocket.getChild(0);
+        MaleStringExpressionSocket expressionStringExpressionConstantSocket =
+                stringExpressionManager
+                        .registerExpression(new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null));
+        femaleSocket.connect(expressionStringExpressionConstantSocket);
+        
+        femaleSocket = actionDoStringActionSocket.getChild(1);
+        MaleStringActionSocket actionStringManySocket = stringActionManager
+                        .registerAction(new StringMany(stringActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionStringManySocket);
+
+        femaleSocket = actionManySocket.getChild(3);
+        MaleDigitalActionSocket logix = digitalActionManager
+                        .registerAction(new Logix(digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(logix);
+
+        femaleSocket = logix.getChild(1);
+        MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
+                        .registerAction(new DigitalBooleanOnChange(
+                                digitalBooleanActionManager.getAutoSystemName(),
+                                null,
+                                DigitalBooleanOnChange.Trigger.CHANGE));
+        femaleSocket.connect(onChange);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(
+                                digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setDigitalExpression(expressionOrSocket);
+        
+        
+//        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+//        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        
+        try {
+            digitalActionManager.deleteBean(actionManySocket, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("Expression is in use by \"IQDE:AUTO:0002\"", e.getMessage());
+        }
+        lastResultOfDigitalExpression.removeDigitalExpression();
+        
+        try {
+            digitalActionManager.deleteBean(actionManySocket, "CanDelete");
+        } catch (PropertyVetoException e) {
+            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
+            Assert.assertEquals("", e.getMessage());
+        }
+        digitalActionManager.deleteBean(actionManySocket, "DoDelete");
+        
+//        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+//        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+    }
+    
+    @Test
+    public void testDeleteTable() throws SocketAlreadyConnectedException {
+//        Assert.fail("Not implemented yet");
+    }
+    
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -166,7 +673,7 @@ public class DefaultLogixNGManagerTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
