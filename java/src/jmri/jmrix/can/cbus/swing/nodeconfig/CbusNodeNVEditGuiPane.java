@@ -43,15 +43,15 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
      * @param node node to display
      */
     protected void setNode(CbusNode node) {
-        CbusNode oldNode = _node;
-        _node = node;
-        
-        if (oldNode != null) {
-            if (CbusConfigPaneProvider.getProviderByNode(oldNode).nvWriteInLearn()) {
+
+        if (_node != null) {
+            if (_node.getNvWriteInLearn()) {
                 // Take old node out of learn mode
-                _node.send.nodeExitLearnEvMode(oldNode.getNodeNumber());
+                _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
             }
         }
+        
+        _node = node;
         
         if (pane1!=null){
             this.removeAll();
@@ -65,6 +65,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         
         if (provider.nvWriteInLearn()) {
             // Node needs to be in learn mode for NV updates (e.g. for servo node)
+            _node.setNvWriteInLearn(true);
             _node.send.nodeEnterLearnEvMode(_node.getNodeNumber());
         }
 
@@ -94,8 +95,8 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void dispose() {
-        if ((provider != null) && (_node != null)) {
-            if (provider.nvWriteInLearn()) {
+        if (_node != null) {
+            if (_node.getNvWriteInLearn()) {
                 // Take node out of learn mode
                 _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
             }
