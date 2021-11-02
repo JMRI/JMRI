@@ -311,7 +311,7 @@ public class ExpressionLight extends AbstractDigitalExpression
             checkLightState = LightState.valueOf(getNewState());
         }
 
-        LightState currentLightState = LightState.get(light.getCommandedState());
+        LightState currentLightState = LightState.get(light.getKnownState());
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentLightState == checkLightState;
         } else {
