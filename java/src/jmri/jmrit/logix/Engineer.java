@@ -618,7 +618,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      * signal or occupation stopping condition ahead.  Caller
      * follows with call for type of stop to make.
      * Track condition override of throttle script.
-     * @param stop true if train should stop
+     * @param wait true if train should stop
      */
     private synchronized void setWaitforClear(boolean wait) {
         if (log.isDebugEnabled()) 
@@ -698,7 +698,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      * or from setMovement()-overrun, possible collision risk.
      * Do not ramp.
      * @param eStop true for emergency stop
-     * @param setHalt for user restart needed, otherwise some kind of clear
      */
     private synchronized void setStop(boolean eStop) {
         float speed = _throttle.getSpeedSetting();

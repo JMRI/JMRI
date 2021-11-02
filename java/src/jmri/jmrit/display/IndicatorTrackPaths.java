@@ -24,7 +24,6 @@ public class IndicatorTrackPaths {
     protected ArrayList<String> _paths;      // list of paths that this icon displays
     private boolean _showTrain;         // this track icon should display _loco when occupied
     private LocoLabel _loco = null;
-    private boolean _removingLocoLabel = false;
 
     protected IndicatorTrackPaths() {
     }

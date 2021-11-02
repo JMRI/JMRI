@@ -2820,8 +2820,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
 
-        float scriptSpeed = _speedUtil.getBlockSpeedInfo(idxSpeedChange).getEntranceSpeed();
-        float endSpeed = _speedUtil.modifySpeed(scriptSpeed, speedType);
         // Must start the ramp in current block. (_idxCurrentOrder)
         // find the time when ramp should start in this block, then use thread CommandDelay
         // waitSpeed is throttleSpeed when ramp is started. Start with it being at the entrance to the block.
@@ -2830,7 +2828,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         int cmdIdx = blkSpeedInfo.getFirstIndex();
         int endIdx = blkSpeedInfo.getLastIndex();
-        float modSetting;
+        float scriptSpeed;        float modSetting;
         float trackSpeed;
         float timeRatio; // time adjustment for current speed type.
         if (_idxCurrentOrder == 0) {
