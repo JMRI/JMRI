@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -636,8 +636,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             button.setBorderPainted(false);
             button.setContentAreaFilled(false);
             button.setText(null);
-            button.setRolloverEnabled(true);
-            button.setFocusable(false);
+            button.setRolloverEnabled(true);            
         } else {
             button.setBorder((new JButton()).getBorder());
             button.setBorderPainted(true);
@@ -646,8 +645,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             button.setIcon(null);
             button.setSelectedIcon(null);
             button.setRolloverIcon(null);            
-            button.setRolloverEnabled(false);
-            button.setFocusable(true);
+            button.setRolloverEnabled(false);            
         }
     }
 
@@ -688,8 +686,33 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner = new JSpinner();
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
         speedSpinner.setModel(speedSpinnerModel);
-        speedSpinner.setFocusable(false);
         speedSpinner.setMinimumSize(new Dimension(20,20));
+
+        // customize speed spinner keyboard and focus interactions to not conflict with throttle keyboard shortcuts
+        speedSpinner.getActionMap().put("doNothing", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //do nothing
+            }
+        });
+        speedSpinner.getActionMap().put("giveUpFocus", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               InstanceManager.getDefault(ThrottleFrameManager.class).getCurrentThrottleFrame().getRootPane().requestFocusInWindow();
+            }
+        });
+        
+        for ( int i : new ArrayList<>(Arrays.asList(
+                KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9,
+                KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD1, KeyEvent.VK_NUMPAD2, KeyEvent.VK_NUMPAD3, KeyEvent.VK_NUMPAD4, KeyEvent.VK_NUMPAD5, KeyEvent.VK_NUMPAD6, KeyEvent.VK_NUMPAD7, KeyEvent.VK_NUMPAD8, KeyEvent.VK_NUMPAD9,
+                KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN, 
+                KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE
+        ))) {
+            speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(i, 0, true), "doNothing");
+            speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(i, 0, false), "doNothing");
+        }
+        speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "giveUpFocus");
+        speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "giveUpFocus");
 
         EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));

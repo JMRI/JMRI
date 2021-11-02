@@ -406,23 +406,23 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
 
     @Test
-    public void testTurnoutDefComments() {
+    public void testTurnoutDefProperties() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 23 DCC 5 0 1");
-        Assert.assertEquals("Type:DCC,ID:23,Address:5,Index:0,DCC Address:17", l.toComment());
+        Assert.assertEquals("Type:DCC,ID:23,Address:5,Index:0,DCC Address:17", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 24 SERVO 100 410 205 2 1");
-        Assert.assertEquals("Type:SERVO,ID:24,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.toComment());
+        Assert.assertEquals("Type:SERVO,ID:24,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 1124 SERVO 100 410 205 2 0");
-        Assert.assertEquals("Type:SERVO,ID:1124,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.toComment());
+        Assert.assertEquals("Type:SERVO,ID:1124,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 50 1");
-        Assert.assertEquals("Type:VPIN,ID:12345,Pin:50", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:50", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0");
-        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 30000 LCN 0");
-        Assert.assertEquals("Type:LCN,ID:30000", l.toComment());
+        Assert.assertEquals("Type:LCN,ID:30000", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 30001 LCN 1");
-        Assert.assertEquals("Type:LCN,ID:30001", l.toComment());
+        Assert.assertEquals("Type:LCN,ID:30001", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0 ignore unexpected values at the end");
-        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.getPropertiesAsString());
     }
 
     @Test
@@ -434,7 +434,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(181,   p.get("ID"));
         Assert.assertEquals(181,   p.get("Pin"));
         Assert.assertEquals(1,     p.get("IFlag"));
-        Assert.assertEquals("Type:OUTPUT,ID:181,Pin:181,IFlag:1", r.toComment());
+        Assert.assertEquals("Type:OUTPUT,ID:181,Pin:181,IFlag:1", r.getPropertiesAsString());
     }
 
 
@@ -447,7 +447,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(111,   p.get("ID"));
         Assert.assertEquals(222,   p.get("Pin"));
         Assert.assertFalse((boolean) p.get("Pullup"));
-        Assert.assertEquals("Type:SENSOR,ID:111,Pin:222,Pullup:false", r.toComment());
+        Assert.assertEquals("Type:SENSOR,ID:111,Pin:222,Pullup:false", r.getPropertiesAsString());
         r = DCCppReply.parseDCCppReply("Q 111 222 1");
         p = r.getProperties();
         Assert.assertTrue((boolean) p.get("Pullup"));

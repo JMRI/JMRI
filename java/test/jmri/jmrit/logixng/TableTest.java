@@ -38,19 +38,19 @@ public class TableTest {
         
         expectException(() -> {
             t.getCell("Bad row", "Seventh column");
-        }, IllegalArgumentException.class, "Row 'Bad row' is not found");
+        }, Table.RowNotFoundException.class, "Row \"Bad row\" is not found");
         
         expectException(() -> {
             t.getCell("Second row", "Bad column");
-        }, IllegalArgumentException.class, "Column 'Bad column' is not found");
+        }, Table.ColumnNotFoundException.class, "Column \"Bad column\" is not found");
         
         expectException(() -> {
             t.setCell("Hello", "Bad row", "Seventh column");
-        }, IllegalArgumentException.class, "Row 'Bad row' is not found");
+        }, Table.RowNotFoundException.class, "Row \"Bad row\" is not found");
         
         expectException(() -> {
             t.setCell("Hello", "Second row", "Bad column");
-        }, IllegalArgumentException.class, "Column 'Bad column' is not found");
+        }, Table.ColumnNotFoundException.class, "Column \"Bad column\" is not found");
     }
     
     @Test
@@ -135,19 +135,14 @@ public class TableTest {
         @Override
         public int getRowNumber(String rowName) {
             Integer i = rowHeaders.get(rowName);
-            return i != null ? i : -1;
+            if (i == null) throw new RowNotFoundException(rowName);
+            return i;
         }
 
         @Override
         public int getColumnNumber(String columnName) {
             Integer i = columnHeaders.get(columnName);
-            if (i == null) {
-                try {
-                    i = Integer.parseInt(columnName);
-                } catch (NumberFormatException e) {
-                    return -1;
-                }
-            }
+            if (i == null) throw new ColumnNotFoundException(columnName);
             return i;
         }
 

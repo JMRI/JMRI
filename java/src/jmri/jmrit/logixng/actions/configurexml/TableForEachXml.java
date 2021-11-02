@@ -1,14 +1,15 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.actions.TableForEach;
-
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.TableRowOrColumn;
+import jmri.jmrit.logixng.actions.TableForEach;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Handle XML configuration for TableForEach objects.
@@ -38,11 +39,23 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         storeCommon(p, element);
 
         element.addContent(new Element("localVariable").addContent(p.getLocalVariableName()));
+        
         if (p.getTable() != null) {
             element.addContent(new Element("table").addContent(p.getTable().getName()));
         }
+
+        element.addContent(new Element("tableAddressing").addContent(p.getAddressing().name()));
+        element.addContent(new Element("tableReference").addContent(p.getTableReference()));
+        element.addContent(new Element("tableLocalVariable").addContent(p.getTableLocalVariable()));
+        element.addContent(new Element("tableFormula").addContent(p.getTableFormula()));
+
+        element.addContent(new Element("rowOrColumnAddressing").addContent(p.getRowOrColumnAddressing().name()));
         element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
-        element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
+        element.addContent(new Element("rowOrColumnReference").addContent(p.getRowOrColumnReference()));
+        element.addContent(new Element("rowOrColumnLocalVariable").addContent(p.getRowOrColumnLocalVariable()));
+        element.addContent(new Element("rowOrColumnFormula").addContent(p.getRowOrColumnFormula()));
+
+        element.addContent(new Element("tableRowOrColumn").addContent(p.getRowOrColumn().name()));
         
         Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
@@ -62,7 +75,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
     }
     
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -73,7 +86,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         Element tableRowOrColumnElement = shared.getChild("tableRowOrColumn");
         TableRowOrColumn tableRowOrColumn =
                 TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
-        h.setTableRowOrColumn(tableRowOrColumn);
+        h.setRowOrColumn(tableRowOrColumn);
         
         Element socketName = shared.getChild("Socket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
@@ -87,6 +100,43 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
             h.setTable(tableName.getTextTrim());
         }
         
+        try {
+            Element elem = shared.getChild("tableAddressing");
+            if (elem != null) {
+                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            elem = shared.getChild("tableReference");
+            if (elem != null) h.setTableReference(elem.getTextTrim());
+
+            elem = shared.getChild("tableLocalVariable");
+            if (elem != null) h.setTableLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("tableFormula");
+            if (elem != null) h.setTableFormula(elem.getTextTrim());
+
+
+            elem = shared.getChild("rowOrColumnAddressing");
+            if (elem != null) {
+                h.setRowOrColumnAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+
+            Element rowOrColumnName = shared.getChild("rowOrColumnName");
+            if (rowOrColumnName != null) h.setRowOrColumnName(rowOrColumnName.getTextTrim());
+
+            elem = shared.getChild("rowOrColumnReference");
+            if (elem != null) h.setRowOrColumnReference(elem.getTextTrim());
+
+            elem = shared.getChild("rowOrColumnLocalVariable");
+            if (elem != null) h.setRowOrColumnLocalVariable(elem.getTextTrim());
+
+            elem = shared.getChild("rowOrColumnFormula");
+            if (elem != null) h.setRowOrColumnFormula(elem.getTextTrim());
+
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
+        }
+
         Element rowOrColumnName = shared.getChild("rowOrColumnName");
         if (rowOrColumnName != null) {
             h.setRowOrColumnName(rowOrColumnName.getTextTrim());
