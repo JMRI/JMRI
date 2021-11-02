@@ -313,7 +313,7 @@ If you're developing any additional (post-4.25.5) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.25.5 release name at the top. Enter the 4.23.6 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.25.5 release name at the top. Enter the 4.25.4 most recent release at the bottom.  Click "OK"
 
 - Update
 
