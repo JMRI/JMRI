@@ -1209,7 +1209,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         public void doDelete() {
             try {
-                _curLogixNG.deleteConditionalNG(_curLogixNG.getConditionalNG(_row));
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "DoDelete");  // NOI18N
                 _conditionalNGTableModel.fireTableRowsDeleted(_row, _row);
                 _numConditionalNGs--;
