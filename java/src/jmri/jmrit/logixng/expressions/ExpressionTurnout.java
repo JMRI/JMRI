@@ -311,7 +311,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             checkTurnoutState = TurnoutState.valueOf(getNewState());
         }
 
-        TurnoutState currentTurnoutState = TurnoutState.get(turnout.getCommandedState());
+        TurnoutState currentTurnoutState = TurnoutState.get(turnout.getKnownState());
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentTurnoutState == checkTurnoutState;
         } else {

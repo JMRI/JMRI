@@ -5,18 +5,17 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.beans.PropertyVetoException;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-
 
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
@@ -129,7 +128,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected void deleteBean(NamedTable bean) {
-        InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(bean);
+        try {
+            InstanceManager.getDefault(NamedTableManager.class).deleteBean(bean, "DoDelete");
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+        }
     }
 
     @Override
@@ -336,6 +340,17 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             autoSystemName();
         });
         return panel5;
+    }
+
+    @Override
+    protected void getListenerRefsIncludingChildren(NamedTable table, java.util.List<String> list) {
+        // Do nothing
+    }
+
+    @Override
+    protected boolean hasChildren(NamedTable table) {
+        // Tables doesn't have children
+        return false;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableAction.class);

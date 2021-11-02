@@ -1800,27 +1800,14 @@ public class TreeEditor extends TreeViewer {
             InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse", boo);
         }
         
-        private void findAllChilds(FemaleSocket femaleSocket, List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
-            if (!femaleSocket.isConnected()) return;
-            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
-            sockets.add(new HashMap.SimpleEntry<>(femaleSocket, maleSocket));
-            for (int i=0; i < maleSocket.getChildCount(); i++) {
-                findAllChilds(maleSocket.getChild(i), sockets);
-            }
-        }
-        
-        public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
-            for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                try {
-                    FemaleSocket femaleSocket = entry.getKey();
-                    femaleSocket.disconnect();
-                    
-                    MaleSocket maleSocket = entry.getValue();
-                    maleSocket.getManager().deleteBean(maleSocket, "DoDelete");
-                } catch (PropertyVetoException e) {
-                    //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-                    log.error(e.getMessage());
-                }
+        public void doDelete() {
+            try {
+                _currentFemaleSocket.disconnect();
+
+                _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
+            } catch (PropertyVetoException e) {
+                //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+                log.error(e.getMessage());
             }
         }
         
@@ -1831,19 +1818,18 @@ public class TreeEditor extends TreeViewer {
         public Void doInBackground() {
             _treePane._femaleRootSocket.unregisterListeners();
             
-            List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
-            
-            findAllChilds(_currentFemaleSocket, sockets);
-            
             StringBuilder message = new StringBuilder();
             try {
-                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                    entry.getValue().getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
-                }
+                _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                     log.warn(e.getMessage());
-                    message.append(Bundle.getMessage("VetoDeleteBean", ((NamedBean)_maleSocket.getObject()).getBeanType(), ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                    message.append(Bundle.getMessage(
+                            "VetoDeleteBean",
+                            ((NamedBean)_maleSocket.getObject()).getBeanType(),
+                            ((NamedBean)_maleSocket.getObject()).getDisplayName(
+                                    NamedBean.DisplayOptions.USERNAME_SYSTEMNAME),
+                            e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -1851,10 +1837,12 @@ public class TreeEditor extends TreeViewer {
                 }
                 message.append(e.getMessage());
             }
-            int count = _maleSocket.getListenerRefs().size();
+            List<String> listenerRefs = new ArrayList<>();
+            _maleSocket.getListenerRefsIncludingChildren(listenerRefs);
+            int count = listenerRefs.size();
             log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
-                doDelete(sockets);
+                doDelete();
             } else {
                 final JDialog dialog = new JDialog();
                 dialog.setTitle(Bundle.getMessage("WarningTitle"));
@@ -1865,21 +1853,22 @@ public class TreeEditor extends TreeViewer {
                 if (count > 0) { // warn of listeners attached before delete
                     
                     String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                    JLabel question = new JLabel(Bundle.getMessage(prompt, ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                    JLabel question = new JLabel(Bundle.getMessage(
+                            prompt,
+                            ((NamedBean)_maleSocket.getObject())
+                                    .getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     
-                    ArrayList<String> listenerRefs = new ArrayList<>();
+                    ArrayList<String> tempListenerRefs = new ArrayList<>();
                     
-                    for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                        listenerRefs.addAll(entry.getValue().getListenerRefs());
-                    }
+                    tempListenerRefs.addAll(listenerRefs);
                     
-                    if (listenerRefs.size() > 0) {
+                    if (tempListenerRefs.size() > 0) {
                         ArrayList<String> listeners = new ArrayList<>();
-                        for (int i = 0; i < listenerRefs.size(); i++) {
-                            if (!listeners.contains(listenerRefs.get(i))) {
-                                listeners.add(listenerRefs.get(i));
+                        for (int i = 0; i < tempListenerRefs.size(); i++) {
+                            if (!listeners.contains(tempListenerRefs.get(i))) {
+                                listeners.add(tempListenerRefs.get(i));
                             }
                         }
                         
@@ -1931,7 +1920,7 @@ public class TreeEditor extends TreeViewer {
                     if (remember.isSelected()) {
                         setDisplayDeleteMsg(0x02);
                     }
-                    doDelete(sockets);
+                    doDelete();
                     dialog.dispose();
                 });
                 container.add(remember);

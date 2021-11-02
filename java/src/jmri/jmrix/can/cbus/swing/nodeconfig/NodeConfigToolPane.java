@@ -553,6 +553,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         
       //  nodeTable = null;
       //  eventScroll = null;
+      
+        // May need to take a node out of learn mode so signal that we are closing
+        // Currently only applies to servo modules and the NV edit gui pane
+        getTabs().forEach((pn) -> {
+            if (pn instanceof CbusNodeEditNVarPane) {
+                pn.dispose();
+            }
+        });
+        
         super.dispose();
     }
 

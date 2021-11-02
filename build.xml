@@ -118,7 +118,7 @@
          packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
+        <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -138,8 +138,8 @@
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/jna-4.4.0.jar"/>
-        <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
+        <pathelement location="${libdir}/jna-5.9.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.6.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
@@ -175,6 +175,7 @@
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86-64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-darwin-x86-64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-darwin-aarch64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86-64.jar"/>
         <pathelement location="${libdir}/usb-api-1.0.2.jar"/>

@@ -63,10 +63,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
 
-        if (isUsb && NmraPacket.isAccSignalDecoderPkt(packet)
+        if (NmraPacket.isAccSignalDecoderPkt(packet)
                 && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
                 && (NmraPacket.getAccSignalDecoderPktAddress(packet) <= 2044)) {
-            // intercept NMRA signal cmds to USB systems
+            // intercept only those NMRA signal cmds we can handle with NCE binary commands
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
             log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);

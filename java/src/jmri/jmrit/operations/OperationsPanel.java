@@ -1,9 +1,6 @@
 package jmri.jmrit.operations;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
@@ -281,11 +278,14 @@ public class OperationsPanel extends JPanel {
         }
         return null;
     }
-    
     public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
+        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser);
+    }
+    
+    public static JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser) {
         JPanel pTextColorPanel = new JPanel();
-        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TextColor")));
-        chooser.setColor(TrainCommon.getTextColor(text));
+        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(title));
+        chooser.setColor(color);
         AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
         chooser.setChooserPanels(commentColorPanels);
         chooser.setPreviewPanel(new JPanel());

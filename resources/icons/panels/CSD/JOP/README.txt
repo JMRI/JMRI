@@ -3,12 +3,10 @@ Czechoslovak State Railways - Ceskoslovenske statni drahy - CSD
 Unified control place - Jednotne obsluzne pracoviste - JOP
 These files were contributed by Petr Sidlo
 
-The catalogTrees.xml file contains preset items for the Control Panel Editor 
-in the style of ČSD JOP. 
+In directory template_1 and template_2 are the catalogTrees.xml files
+that contains preset items for the Control Panel Editor in the style of CSD JOP. 
 To use it, copy it to the profile directory.
-The catalogTrees2.xml file is an alternative file with a limited number of colors. 
 
-Soubor catalogTrees.xml obsahuje prednastavene polozky pro Control Panel Editor 
-ve stylu CSD JOP. 
+V adresari template_1 a template_2 jsou soubory catalogTrees.xml ktere
+obsahuji prednastavene polozky pro Control Panel Editor ve stylu CSD JOP. 
 Pro jeho pouziti ho prekopirujte do adresare s vasim profilem.
-Soubor catalogTrees2.xml je alternativni soubor s omezenym poctem barev.

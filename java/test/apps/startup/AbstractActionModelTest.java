@@ -12,12 +12,12 @@ import org.junit.Assert;
  * @author Randall Wood
  */
 public class AbstractActionModelTest {
-    
+
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-    
+
     @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
@@ -60,6 +60,9 @@ public class AbstractActionModelTest {
         Assert.assertFalse("Invalid class is invalid", instance.isValid());
         instance.setClassName(this.getClass().getName());
         Assert.assertTrue("Has class found in classpath", instance.isValid());
+
+        // suppress deprecation warning that's expected
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("apps.startup.StartupActionFactoryScaffold is deprecated, please remove references to it");
     }
 
     public class AbstractActionModelImpl extends AbstractActionModel {
@@ -69,5 +72,5 @@ public class AbstractActionModelTest {
             // empty method not tested as abstract in class being tested
         }
     }
-    
+
 }
