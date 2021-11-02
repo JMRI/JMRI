@@ -1005,6 +1005,13 @@ public class SpeedUtil {
         _numchanges = 0;
     }
 
+    protected float getDistanceTravelled() {
+        float speed = _throttle.getSpeedSetting();
+        if (speed > 0) {
+            speedChange(speed);
+        }
+        return _distanceTravelled;
+    }
     /*
      * The engineer makes this notification before setting a new speed
      */

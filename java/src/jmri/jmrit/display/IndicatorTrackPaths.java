@@ -24,6 +24,7 @@ public class IndicatorTrackPaths {
     protected ArrayList<String> _paths;      // list of paths that this icon displays
     private boolean _showTrain;         // this track icon should display _loco when occupied
     private LocoLabel _loco = null;
+    private boolean _removingLocoLabel = false;
 
     protected IndicatorTrackPaths() {
     }
@@ -80,7 +81,7 @@ public class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String getStatus(OBlock block, int state) {
+    synchronized protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -119,7 +120,7 @@ public class IndicatorTrackPaths {
 
     @jmri.InvokeOnLayoutThread
     // LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
-    protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
+    synchronized protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
             removeLocoIcon();
             return;

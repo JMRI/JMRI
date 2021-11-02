@@ -697,27 +697,19 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             if (row < 0) { // warrant deleted
                 return;
             }
+
             if (property.equals("blockChange")) {
                 OBlock oldBlock = (OBlock) e.getOldValue();
                 OBlock newBlock = (OBlock) e.getNewValue();
                 if (newBlock == null) {
-                    setFrameStatusText(
-                            Bundle.getMessage("ChangedRoute",
-                                    bean.getDisplayName(),
-                                    oldBlock.getDisplayName(),
-                                    bean.getTrainName()), Color.red, true);
+                    setFrameStatusText(Bundle.getMessage("ChangedRoute",
+                            bean.getDisplayName(), oldBlock.getDisplayName(),
+                            bean.getTrainName()), Color.red, true);
                 } else {
-                    setFrameStatusText(
-                            Bundle.getMessage("TrackerBlockEnter",
-                                    bean.getTrainName(),
-                                    newBlock.getDisplayName()), myGreen, true);
+                    setFrameStatusText(Bundle.getMessage("TrackerBlockEnter",
+                            bean.getTrainName(), 
+                            newBlock.getDisplayName()), myGreen, true);
                 }
-            } else if (property.equals("SpeedRestriction")) {
-                String name = (String) e.getOldValue();
-                String speed = (String) e.getNewValue();
-                setFrameStatusText(Bundle.getMessage("SpeedRestriction",
-                        bean.getTrainName(), speed, name),
-                        Color.red, true);
             } else if (property.equals("SpeedChange")) {
                 fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("WaitForSync")) {
@@ -725,26 +717,31 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             } else if (property.equals("waiting")) {
                 fireTableCellUpdated(row, CONTROL_COLUMN);
                 setFrameStatusText((String)e.getNewValue(), myGreen, true);
+            } else if (property.equals("SignalOverrun")) {
+                String name = (String) e.getOldValue();
+                String speed = (String) e.getNewValue();
+                setFrameStatusText(Bundle.getMessage("SignalOverrun",
+                        bean.getTrainName(), speed, name), Color.red, true);
+            } else if (property.equals("OccupyOverrun")) {
+                String name = (String) e.getOldValue();
+                String train = (String) e.getNewValue();
+                setFrameStatusText(Bundle.getMessage("OccupyOverrun",
+                        bean.getTrainName(), train, name), Color.red, true);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
                 if (newMode == Warrant.MODE_ABORT) {
                     if (oldMode != Warrant.MODE_NONE) {
-                        setFrameStatusText(
-                                Bundle.getMessage("warrantAbort",
-                                               bean.getTrainName(),
-                                               bean.getDisplayName()), myGreen,
-                                               true);                        
+                        setFrameStatusText(Bundle.getMessage("warrantAbort",
+                                bean.getTrainName(), bean.getDisplayName()),
+                                myGreen, true);                        
                     } else {
-                        setFrameStatusText(
-                                Bundle.getMessage("warrantAnnull",
-                                               bean.getTrainName(),
-                                               bean.getDisplayName()), myGreen,
-                                               true);
+                        setFrameStatusText(Bundle.getMessage("warrantAnnull",
+                                bean.getTrainName(), bean.getDisplayName()),
+                                myGreen, true);
                     }
                 } else if (oldMode == Warrant.MODE_NONE && newMode != Warrant.MODE_NONE) {
                     // OK to run warrant, but look for problems ahead that may restrict extent of warrant
-
                     // From here on messages are status information, not abort info
                     String msg1 = bean.checkStartBlock();  // notify first block occupied by this train
                     if (msg1 == null) {
@@ -769,14 +766,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     if (lastBlock.equals(curBlock)) {
                         setFrameStatusText(Bundle.getMessage("warrantComplete",
                                 bean.getTrainName(), bean.getDisplayName(), 
-                                lastBlock.getDisplayName()), myGold,
-                                true);
+                                lastBlock.getDisplayName()), myGold, true);
                         
                     } else {
                         setFrameStatusText(Bundle.getMessage("warrantEnd",
                                 bean.getTrainName(), bean.getDisplayName(), 
-                                lastBlock.getDisplayName()), myGold,
-                                true);                        
+                                lastBlock.getDisplayName()), myGold, true);                        
                     }
                 }
             } else if (property.equals("RampDone")) {
@@ -786,9 +781,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     setFrameStatusText(Bundle.getMessage("RampHalt",
                             bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
                 } else {
-                    setFrameStatusText(Bundle.getMessage("RampSpeed",
-                            bean.getTrainName(), speed, bean.getCurrentBlockName()), myGreen, true);
-                }
+                    if (WarrantPreferences.getDefault().getTrace()) {
+                        log.info(Bundle.getMessage("RampSpeed", bean.getTrainName(), speed, bean.getCurrentBlockName()));
+                    }
+               }
                 fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("ReadyToRun")) {
                 setFrameStatusText(Bundle.getMessage("TrainReady", bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);

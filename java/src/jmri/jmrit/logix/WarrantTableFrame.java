@@ -57,7 +57,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String resume = Bundle.getMessage("Resume");
     static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
-    static final String retry = Bundle.getMessage("Retry");
+    static final String retry = Bundle.getMessage("MoveToNext");
     static final String[] controls = {" ", ramp, resume, halt, speedup, retry, stop, abort,
                             (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 

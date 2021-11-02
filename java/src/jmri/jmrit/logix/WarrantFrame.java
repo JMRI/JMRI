@@ -182,17 +182,6 @@ public class WarrantFrame extends WarrantRoute {
         } else {
             setTrainName(warrant.getTrainName());
         }
-
-        ActionListener checkBoxChange = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _dirty = true;
-            }
-        };
-        _shareRouteBox.addActionListener(checkBoxChange);
-        _addTracker.addActionListener(checkBoxChange);
-        _noRampBox.addActionListener(checkBoxChange);
-        _runETOnlyBox.addActionListener(checkBoxChange);
         _dirty = false;
     }
 
@@ -1085,7 +1074,12 @@ public class WarrantFrame extends WarrantRoute {
                             return Bundle.getMessage("badThrottleCommand", 
                                     i+1, cmd.toString(), valType.toString());
                         }
-                        String msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                        String msg = ts.getBeanDisplayName();
+                        if (msg == null) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
                         if (msg != null) {
                             return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
                                     i+1, cmd.toString(), valType.toString());
@@ -1093,6 +1087,11 @@ public class WarrantFrame extends WarrantRoute {
                         break;
                     case RUN_WARRANT:
                         if (valType != ValueType.VAL_INT) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        msg = ts.getBeanDisplayName();
+                        if (msg == null) {
                             return Bundle.getMessage("badThrottleCommand", 
                                     i+1, cmd.toString(), valType.toString());
                         }
@@ -1454,10 +1453,18 @@ public class WarrantFrame extends WarrantRoute {
                     } else if (e.getPropertyName().equals("SpeedChange")) {
                         msg = _warrant.getRunningMessage();
                         color = Color.black;
-                    } else if (e.getPropertyName().equals("SpeedRestriction")) {
-                        msg = Bundle.getMessage("speedChange", _warrant.getTrainName(),
-                                _warrant.getCurrentBlockName(), e.getNewValue());
-                        color = Color.black;
+                    } else if (property.equals("SignalOverrun")) {
+                        String name = (String) e.getOldValue();
+                        String speed = (String) e.getNewValue();
+                        msg = Bundle.getMessage("SignalOverrun",
+                                _warrant.getTrainName(), speed, name);
+                        color = Color.red;
+                    } else if (property.equals("OccupyOverrun")) {
+                        String name = (String) e.getOldValue();
+                        String train = (String) e.getNewValue();
+                        msg = Bundle.getMessage("OccupyOverrun",
+                                _warrant.getTrainName(), train, name);
+                        color = Color.red;
                     } else if (e.getPropertyName().equals("runMode")) {
                         int oldMode = ((Integer) e.getOldValue()).intValue();
                         int newMode = ((Integer) e.getNewValue()).intValue();
@@ -2114,6 +2121,7 @@ public class WarrantFrame extends WarrantRoute {
                             msg = Bundle.getMessage("InvalidTime", (String) value);
                         } else {
                             ts.setTime(time);
+                            _dirty = true;
                         }
                     } catch (NumberFormatException nfe) {
                         msg = Bundle.getMessage("InvalidTime", (String) value);
@@ -2137,6 +2145,7 @@ public class WarrantFrame extends WarrantRoute {
                         case SPEED:
                         case FORWARD:
                             ts.setCommand(cmd);
+                            _dirty = true;
                             break;
                         case FKEY:
                         case LATCHF:
@@ -2164,11 +2173,12 @@ public class WarrantFrame extends WarrantRoute {
                         case RUN_WARRANT:
                         case SPEEDSTEP:
                             ts.setCommand(cmd);
+                            _dirty = true;
                             break;
                         default:
                             msg = Bundle.getMessage("badCommand", cmd.toString());
                     }
-                    break;
+                   break;
                 case VALUE_COLUMN:
                     if (value == null || ((String) value).length() == 0) {
                         break;
@@ -2186,6 +2196,7 @@ public class WarrantFrame extends WarrantRoute {
                     if (command.hasBlockName()) {
                         NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
                         ts.setNamedBeanHandle(bh);
+                        _dirty = true;
                     }
                     break;
                 case BLOCK_COLUMN:
@@ -2208,6 +2219,7 @@ public class WarrantFrame extends WarrantRoute {
                             if (!name.equals(value)) {
                                 msg = Bundle.getMessage("commandInBlock", name);
                                 ts.setNamedBeanHandle(bh);
+                                _dirty = true;
                             }
                         }
                     }
@@ -2220,7 +2232,6 @@ public class WarrantFrame extends WarrantRoute {
                 showWarning(msg);
             } else {
                 fireTableRowsUpdated(row, row);
-                _dirty = true;
             }
         }
 

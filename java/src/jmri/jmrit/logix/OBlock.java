@@ -526,7 +526,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * OCCUPIED by a non-warranted train, but the allocation is permitted.
      *
      * @param warrant the Warrant
-     * @return name of block if block is already allocated to another warrant or
+     * @return message with if block is already allocated to another warrant or
      *         block is OUT_OF_SERVICE
      */
     public String allocate(Warrant warrant) {
