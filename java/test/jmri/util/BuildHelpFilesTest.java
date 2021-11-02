@@ -57,10 +57,23 @@ public class BuildHelpFilesTest {
         if (Files.exists(path)) {
             return;
         }
+        
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
+        
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            
+            String expandedHelpKey = helpKey.replace(".", "/");
+            int pos = expandedHelpKey.indexOf('_');
+            if (pos == -1) {
+                expandedHelpKey = expandedHelpKey + ".shtml";
+            } else {
+                expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
+                        + "#" + expandedHelpKey.substring(pos+1);
+            }
+            
             String contents = _template.replace("<!--HELP_KEY-->", helpKey);
+            contents = contents.replace("<!--URL_HELP_KEY-->", expandedHelpKey);
             printWriter.print(contents);
         }
     }
