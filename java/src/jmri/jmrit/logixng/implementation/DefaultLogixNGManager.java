@@ -1,15 +1,18 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
@@ -376,6 +379,48 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         return _managers.get(className);
     }
 
+    /**
+     * Inform all registered listeners of a vetoable change.If the propertyName
+     * is "CanDelete" ALL listeners with an interest in the bean will throw an
+     * exception, which is recorded returned back to the invoking method, so
+     * that it can be presented back to the user.However if a listener decides
+     * that the bean can not be deleted then it should throw an exception with
+     * a property name of "DoNotDelete", this is thrown back up to the user and
+     * the delete process should be aborted.
+     *
+     * @param p   The programmatic name of the property that is to be changed.
+     *            "CanDelete" will inquire with all listeners if the item can
+     *            be deleted. "DoDelete" tells the listener to delete the item.
+     * @param old The old value of the property.
+     * @throws java.beans.PropertyVetoException If the recipients wishes the
+     *                                          delete to be aborted (see above)
+     */
+    @OverridingMethodsMustInvokeSuper
+    public void fireVetoableChange(String p, Object old) throws PropertyVetoException {
+        PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, null);
+        for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
+            vc.vetoableChange(evt);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+//    @OverridingMethodsMustInvokeSuper
+    public final void deleteBean(@Nonnull LogixNG logixNG, @Nonnull String property) throws PropertyVetoException {
+        for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
+            ConditionalNG child = logixNG.getConditionalNG(i);
+            InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(child, property);
+        }
+        
+        // throws PropertyVetoException if vetoed
+        fireVetoableChange(property, logixNG);
+        if (property.equals("DoDelete")) { // NOI18N
+            deregister(logixNG);
+            logixNG.dispose();
+        }
+    }
+    
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }

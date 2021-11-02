@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -253,6 +251,15 @@ public abstract class AbstractBase
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
             log.error(method + " must not be called when listeners are registered", e);
             throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).getListenerRefsIncludingChildren(list);
         }
     }
 

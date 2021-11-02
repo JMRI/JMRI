@@ -58,9 +58,24 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     
     /** {@inheritDoc} */
     @Override
+//    @OverridingMethodsMustInvokeSuper
+    public final void deleteBean(@Nonnull E n, @Nonnull String property) throws PropertyVetoException {
+        this.deleteBean((MaleSocket)n, property);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     @OverridingMethodsMustInvokeSuper
-    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
+//    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
     public void deleteBean(@Nonnull MaleSocket socket, @Nonnull String property) throws PropertyVetoException {
+        for (int i=0; i < socket.getChildCount(); i++) {
+            FemaleSocket child = socket.getChild(i);
+            if (child.isConnected()) {
+                MaleSocket maleSocket = child.getConnectedSocket();
+                maleSocket.getManager().deleteBean(maleSocket, property);
+            }
+        }
+        
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, socket);
         if (property.equals("DoDelete")) { // NOI18N
