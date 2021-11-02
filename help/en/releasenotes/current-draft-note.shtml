@@ -572,5 +572,37 @@
                 <a href="http://jmri.org/resources/icons/mediumschematics/searchlights/">mediumschematics serachlights icon set</a>
                 at resources/icons/mediumschematics/searchlights/
             </li>
+            <li>Limited support for native running on Apple Silicon is now available.
+            	Please note:
+            	<ul>
+            	<li>There is no support for the JInput library, which is 
+            		used for JInput-specific connections.
+            	<li>There is no support for the BlueCove library, which is 
+            		used for Digitrax over BlueTooth connections.
+            	<li>Sound support is currently limited, with work 
+            		on-going.
+            	</ul>
+            	JMRI runs fine, without the above limitations, in Rosetta
+            	(Intel emulation) mode on Apple Silicon macs. 
+            	To run JMRI in native mode:
+            	<ol>
+            	<li>Install an Apple Silicon Java from 
+            		<a href="https://www.azul.com/downloads/?version=java-8-lts&os=macos&architecture=arm-64-bit&package=jdk">Azul</a>. 
+            	<li>If needed, remove any
+            		Intel-mode Java installations.
+            		(These may cause JMRI to start 
+            		in Intel-emulation mode)
+            	<li>Make sure you have Rosetta 2 installed.
+            		macOS requires this to launch a
+            		JMRI application from its app icon.
+            		(See FB9730830)
+            	</ol>
+            	If you want to check whether JMRI is running in 
+            	Apple Silicon native more or Intel emulation 
+            	mode, select Context... from the JMRI Help menu.
+            	Then look for the `os.arch` value about 2/3 of the 
+            	way down.  If it's `aarch64`, JMRI is running on
+            	Apple Silicon natively. `x86_64` indicates Intel-simulation
+            	mode.
         </ul>
 
