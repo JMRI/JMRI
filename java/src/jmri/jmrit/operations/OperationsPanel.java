@@ -1,13 +1,11 @@
 package jmri.jmrit.operations;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
 import javax.swing.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -17,8 +15,10 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 
 /**
  * Panel for operations
@@ -278,6 +278,21 @@ public class OperationsPanel extends JPanel {
         }
         return null;
     }
+    public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
+        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser);
+    }
+    
+    public static JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser) {
+        JPanel pTextColorPanel = new JPanel();
+        pTextColorPanel.setBorder(BorderFactory.createTitledBorder(title));
+        chooser.setColor(color);
+        AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
+        chooser.setChooserPanels(commentColorPanels);
+        chooser.setPreviewPanel(new JPanel());
+        pTextColorPanel.add(chooser);
+        return pTextColorPanel;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

@@ -93,10 +93,11 @@ which checks the dates of the control files to make sure they've benen updated w
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### purejavacomm-1.0.1.jar
-- version 1.0.1
-- from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
-- javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
+##### purejavacomm-1.0.5.jar
+- version 1.0.5
+- from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
+- formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
+- javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
 ##### security.policy
 - (JMRI file)
@@ -157,8 +158,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
-##### Joal 2.3.1
-- from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+##### Joal 2.4.0-rc-20210111
+- from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
 - -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
@@ -167,59 +168,72 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - plus helper native libraries:
   for MacOS X 10.4+
     extracted from joal-natives-macosx-universal.jar
-      libjoal.jnilib
+      libjoal.dylib
+      libopenal.dylib
     extracted from gluegen-rt-natives-macosx-universal.jar
-      libgluegen-rt.jnilib
+      libgluegen_rt.dylib
 
 - for Windows x86
     extracted from joal-natives-windows-i586.jar
       joal.dll
+      soft_oal.dll
     extracted from glugen-rt-natives-windows-i586.jar
-      gluegen-rt.dll
+      gluegen_rt.dll
 
 - for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
+      soft_oal.dll
     extracted from glugen-rt-natives-windows-amd64.jar
-      gluegen-rt.dll
+      gluegen_rt.dll
 
 - for Linux i386
     extracted from joal-natives-linux-i586.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-i586.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
 - for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-amd64.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
 - for Linux armv6l
-    extracted from joal-natives-linux-armv6.jar
+    extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
-    extracted from glugen-rt-natives-linux-armv6.jar
-      libgluegen-rt.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-armv6hf.jar
+      libgluegen_rt.so
 
 - for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
+      libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
-      libgluegen-rt.so
+      libgluegen_rt.so
 
-NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
+- for Linux aarch64
+    extracted from joal-natives-linux-aarch64.jar
+      libjoal.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-aarch64.jar
+      libgluegen_rt.so
 
 ##### jmdns.jar
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jna-4.4.0.jar
+##### jna-5.9.0.jar
 - Java Native Access library
-- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.9.0
+- See also https://github.com/java-native-access/jna
 
-##### jna-platform-4.4.0.jar
+##### jna-platform-5.9.0.jar
 - Java Native Access platform-specific utilities library
-- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.9.0
 
 
 ##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
@@ -285,7 +299,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 
 ##### i18nchecker.jar
-- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  
+- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
 - From https://github.com/JMRI/i18nchecker
 - Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
 - See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
@@ -299,7 +313,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
     see https://github.com/talsma-ict/umldoclet
-    
+
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
@@ -344,7 +358,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from http://javacsv.sourceforge.net
 - No longer used as of JMRI 4.19.3
 
-##### crimson.jar    
+##### crimson.jar
 - version 1.1.3
 - from http://xml.apache.org/crimson/
 - No longer used as of JMRI 2.7.6

@@ -670,6 +670,12 @@ public abstract class FemaleSocketTestBase {
             throw new UnsupportedOperationException("Not supported");
         }
 
+        /** {@inheritDoc} */
+        @Override
+        public void getListenerRefsIncludingChildren(List<String> list) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
         @Override
         public int getNumPropertyChangeListeners() {
             throw new UnsupportedOperationException("Not supported");

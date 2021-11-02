@@ -34,9 +34,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     protected Track _track = null;
 
     // text panes
-    JTextPane textSwitchListCommentPane = new JTextPane();
     JTextPane textTrackCommentPane = new JTextPane();
-    JTextPane textTrackCommentWorkPane = new JTextPane();
 
     // combo boxes
     JComboBox<Track> trackComboBox = new JComboBox<>();
@@ -60,20 +58,10 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
         _location = location;
 
-        textSwitchListCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-        textSwitchListCommentPane.setBackground(null);
-        textSwitchListCommentPane.setEditable(false);
-        textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
-
         textTrackCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackComment")));
         textTrackCommentPane.setBackground(null);
         textTrackCommentPane.setEditable(false);
         textTrackCommentPane.setMaximumSize(new Dimension(2000, 200));
-
-        textTrackCommentWorkPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MenuItemComments")));
-        textTrackCommentWorkPane.setBackground(null);
-        textTrackCommentWorkPane.setEditable(false);
-        textTrackCommentWorkPane.setMaximumSize(new Dimension(2000, 200));
 
         JPanel pTrackSelect = new JPanel();
         pTrackSelect.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
@@ -94,17 +82,14 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         add(textSwitchListCommentPane);
         add(pTrackSelect);
         add(textTrackCommentPane);
-        add(textTrackCommentWorkPane);
+        add(pTrackComments);
         add(pTrackPane);
         add(pButtons);
 
         if (_location != null) {
             textLocationName.setText(_location.getName());
-            textLocationCommentPane.setText(_location.getComment());
-            textLocationCommentPane.setVisible(!_location.getComment().equals(Location.NONE)
-                    && Setup.isPrintLocationCommentsEnabled());
-            textSwitchListCommentPane.setText(_location.getSwitchListComment());
-            textSwitchListCommentPane.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
+            loadLocationComment(_location);
+            loadLocationSwitchListComment(_location);
             updateTrackComboBox();
             _location.addPropertyChangeListener(this);
         }
@@ -167,18 +152,22 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         trainCommon.clearUtilityCarTypes(); // reset the utility car counts
         checkBoxes.clear();
         pTrack.removeAll();
-        boolean pickup = false;
-        boolean setout = false;
         if (_track != null) {
             pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getName()));
-            textTrackCommentPane.setText(_track.getComment());
+            textTrackCommentPane.setText(TrainCommon.getTextColorString(_track.getComment()));
+            textTrackCommentPane.setForeground(TrainCommon.getTextColor(_track.getComment()));
             textTrackCommentPane.setVisible(!_track.getComment().equals(Track.NONE));
-            textTrackCommentWorkPane.setText("");
             for (Train train : trainManager.getTrainsArrivingThisLocationList(_track.getLocation())) {
                 JPanel pTrain = new JPanel();
                 pTrain.setLayout(new BoxLayout(pTrain, BoxLayout.Y_AXIS));
-                pTrain.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(TrainSwitchListText
-                        .getStringScheduledWork(), new Object[]{train.getName(), train.getDescription()})));
+                pTrain.setBorder(BorderFactory
+                        .createTitledBorder(MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
+                                new Object[] { train.getName(), train.getDescription() })));
+                // Track work comments
+                boolean pickup = false;
+                boolean setout = false;
+                JTextPane textTrackCommentWorkPane = getTrackWorkCommentPane();
+                pTrain.add(textTrackCommentWorkPane);
                 // List locos first
                 List<Engine> engList = engManager.getByTrainBlockingList(train);
                 if (Setup.isPrintHeadersEnabled()) {
@@ -248,7 +237,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             rollingStock.add(car);
                             String text;
                             if (car.isUtility()) {
-                                text = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                                text = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST,
+                                        !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
                                     continue; // this car type has already been processed
                                 }
@@ -269,8 +259,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     for (Car car : carList) {
                         if (car.getDestinationTrack() == _track &&
                                 car.getRouteDestination() != car.getRouteLocation()) {
-                            JLabel header = new JLabel(Tab +
-                                    trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
+                            JLabel header = new JLabel(
+                                    Tab + trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
                             pTrain.add(header);
                             break;
@@ -278,8 +268,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 for (Car car : carList) {
-                    if (car.getDestinationTrack() == _track &&
-                            car.getRouteLocation() != car.getRouteDestination()) {
+                    if (car.getDestinationTrack() == _track && car.getRouteLocation() != car.getRouteDestination()) {
                         car.addPropertyChangeListener(this);
                         rollingStock.add(car);
                         String text;
@@ -313,7 +302,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 }
                 for (Car car : carList) {
                     if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
-                            car.getRouteLocation() != null && car.getRouteLocation() == car.getRouteDestination()) {
+                            car.getRouteLocation() != null &&
+                            car.getRouteLocation() == car.getRouteDestination()) {
                         car.addPropertyChangeListener(this);
                         rollingStock.add(car);
                         String text;
@@ -325,7 +315,12 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         } else {
                             text = trainCommon.localMoveCar(car, !IS_MANIFEST);
                         }
-                        setout = true;
+                        if (car.getTrack() == _track) {
+                            pickup = true;
+                        }
+                        if (car.getDestinationTrack() == _track) {
+                            setout = true;
+                        }
                         JCheckBox checkBox = new JCheckBox(text);
                         setCheckBoxFont(checkBox);
                         pTrain.add(checkBox);
@@ -333,6 +328,17 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         pTrack.add(pTrain);
                     }
                 }
+                if (pickup && !setout) {
+                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentPickup()));
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentPickup()));
+                } else if (!pickup && setout) {
+                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentSetout()));
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentSetout()));
+                } else if (pickup && setout) {
+                    textTrackCommentWorkPane.setText(TrainCommon.getTextColorString(_track.getCommentBoth()));
+                    textTrackCommentWorkPane.setForeground(TrainCommon.getTextColor(_track.getCommentBoth()));
+                }
+                textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
                 pTrackPane.validate();
                 pTrain.setMaximumSize(new Dimension(2000, pTrain.getHeight()));
                 pTrain.revalidate();
@@ -352,19 +358,28 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             for (Car car : carList) {
                 String text;
                 if (car.isUtility()) {
-                    String s = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                    String s = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST,
+                            !TrainCommon.IS_TWO_COLUMN_TRACK);
                     if (s == null)
                         continue;
                     text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[]{TrainCommon.padAndTruncateIfNeeded(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getTypeName().split(TrainCommon.HYPHEN)[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(), Control.max_len_string_length_name),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
+                            new Object[] {
+                                    TrainCommon.padAndTruncateIfNeeded(car.getRoadName(),
+                                            InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()),
+                                            Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getTypeName().split(TrainCommon.HYPHEN)[0],
+                                            InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(),
+                                            Control.max_len_string_length_name),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLoadName(),
+                                            InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(_track.getName(),
+                                            InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(),
+                                            InstanceManager.getDefault(CarColors.class).getMaxNameLength()) });
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);
@@ -376,19 +391,18 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             pTrackPane.validate();
             pHoldCars.setMaximumSize(new Dimension(2000, pHoldCars.getHeight()));
             pHoldCars.revalidate();
-            if (pickup && !setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentPickup());
-            } else if (!pickup && setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentSetout());
-            } else if (pickup && setout) {
-                textTrackCommentWorkPane.setText(_track.getCommentBoth());
-            }
-            textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
         } else {
             pTrackPane.setBorder(BorderFactory.createTitledBorder(""));
             textTrackCommentPane.setVisible(false);
-            textTrackCommentWorkPane.setVisible(false);
         }
+    }
+
+    private JTextPane getTrackWorkCommentPane() {
+        JTextPane textTrackCommentWorkPane = new JTextPane();
+        textTrackCommentWorkPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+        textTrackCommentWorkPane.setBackground(null);
+        textTrackCommentWorkPane.setEditable(false);
+        return textTrackCommentWorkPane;
     }
 
     private void updateTrackComboBox() {
@@ -412,10 +426,10 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        //        if (Control.showProperty) {
-        log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                .getNewValue());
-        //        }
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
+        }
         if (e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY)) {
             update();
         }
