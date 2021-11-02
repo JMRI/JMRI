@@ -93,7 +93,13 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int nv = row + 1;
             int sv = (nv - Servo8BasePaneProvider.OUT1_ON)/4 + 1;   // Outout channel number for NV 5 - 36
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            int value;
+            try {
+                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            } catch (NullPointerException ex) {
+                // nvArray does not exist yet
+                return;
+            }
             int oldVal = _nvArray[nv];
             if (oldVal != value) {
                 // Only do something if the value has changed
