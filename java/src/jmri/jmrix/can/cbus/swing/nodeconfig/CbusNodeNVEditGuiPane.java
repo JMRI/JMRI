@@ -26,7 +26,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel editGui;
     private CbusNode _node;
     private CbusConfigPaneProvider provider;
-    private AbstractEditNVPane editGuiInstance;
 
     protected CbusNodeNVEditGuiPane(CbusNodeNVTableDataModel nVModel) {
         super();
@@ -60,7 +59,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         
         provider = CbusConfigPaneProvider.getProviderByNode(_node);
         editGui = provider.getEditNVFrame(nodeNVModel, _node);
-        editGuiInstance = provider.getEditNVFrameInstance();
         showGui(editGui);
         
         if (provider.nvWriteInLearn()) {
@@ -85,8 +83,10 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     protected void tableChanged(TableModelEvent e) {
-        if (editGuiInstance != null) {
-            editGuiInstance.tableChanged(e);
+        if (provider != null) {
+            if (provider.getEditNVFrameInstance() != null) {
+                provider.getEditNVFrameInstance().tableChanged(e);
+            }
         }
     }
     
