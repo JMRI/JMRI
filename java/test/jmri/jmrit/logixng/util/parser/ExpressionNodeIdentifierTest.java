@@ -58,8 +58,8 @@ public class ExpressionNodeIdentifierTest {
     public void testConstants() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         Map<String, Variable> variables = new HashMap<>();
-        Assert.assertEquals(Math.PI, (double)(Double)getConstant("MathPI",symbolTable,variables), 0.000000001);
-        Assert.assertEquals(Math.E, (double)(Double)getConstant("MathE",symbolTable,variables), 0.000000001);
+        Assert.assertEquals(Math.PI, (Double)getConstant("MathPI",symbolTable,variables), 0.000000001);
+        Assert.assertEquals(Math.E, (Double)getConstant("MathE",symbolTable,variables), 0.000000001);
         Assert.assertEquals(NamedBean.UNKNOWN, (int)(Integer)getConstant("Unknown",symbolTable,variables));
         Assert.assertEquals(NamedBean.INCONSISTENT, (int)(Integer)getConstant("Inconsistent",symbolTable,variables));
         Assert.assertEquals(Turnout.CLOSED, (int)(Integer)getConstant("Closed",symbolTable,variables));

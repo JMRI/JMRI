@@ -35,8 +35,6 @@ public class MathFunctions implements FunctionFactory {
     @Override
     public Set<Constant> getConstants() {
         Set<Constant> constantClasses = new HashSet<>();
-        System.out.format("PI: %1.5f%n", Math.PI);
-        System.out.format("E: %1.5f%n", Math.E);
         constantClasses.add(new Constant(getModule(), "MathPI", Math.PI));
         constantClasses.add(new Constant(getModule(), "MathE", Math.E));
         return constantClasses;
