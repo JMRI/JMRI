@@ -6,11 +6,7 @@ import java.util.Set;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -35,6 +31,21 @@ public class MathFunctions implements FunctionFactory {
         functionClasses.add(new SinFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        Set<Constant> constantClasses = new HashSet<>();
+        System.out.format("PI: %1.5f%n", Math.PI);
+        System.out.format("E: %1.5f%n", Math.E);
+        constantClasses.add(new Constant(getModule(), "MathPI", Math.PI));
+        constantClasses.add(new Constant(getModule(), "MathE", Math.E));
+        return constantClasses;
+    }
+
+    @Override
+    public String getConstantDescription() {
+        return Bundle.getMessage("Math.ConstantDescriptions");
+    }
     
     
     
@@ -43,6 +54,11 @@ public class MathFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new MathFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new MathFunctions().getConstantDescription();
         }
         
         @Override
@@ -86,6 +102,11 @@ public class MathFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new MathFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new MathFunctions().getConstantDescription();
         }
         
         @Override

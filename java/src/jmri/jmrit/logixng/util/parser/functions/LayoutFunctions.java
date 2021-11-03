@@ -6,11 +6,7 @@ import java.util.Set;
 
 import jmri.*;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -41,9 +37,36 @@ public class LayoutFunctions implements FunctionFactory {
         functionClasses.add(new SetSignalMastAspectFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        Set<Constant> constantClasses = new HashSet<>();
+        constantClasses.add(new Constant(getModule(), "Unknown", NamedBean.UNKNOWN));
+        constantClasses.add(new Constant(getModule(), "Inconsistent", NamedBean.INCONSISTENT));
+        constantClasses.add(new Constant(getModule(), "Inactive", Sensor.INACTIVE));
+        constantClasses.add(new Constant(getModule(), "Active", Sensor.ACTIVE));
+        constantClasses.add(new Constant(getModule(), "Closed", Turnout.CLOSED));
+        constantClasses.add(new Constant(getModule(), "Thrown", Turnout.THROWN));
+        constantClasses.add(new Constant(getModule(), "Dark", SignalHead.DARK));
+        constantClasses.add(new Constant(getModule(), "Red", SignalHead.RED));
+        constantClasses.add(new Constant(getModule(), "FlashRed", SignalHead.FLASHRED));
+        constantClasses.add(new Constant(getModule(), "Yellow", SignalHead.YELLOW));
+        constantClasses.add(new Constant(getModule(), "FlashYellow", SignalHead.FLASHYELLOW));
+        constantClasses.add(new Constant(getModule(), "Green", SignalHead.GREEN));
+        constantClasses.add(new Constant(getModule(), "FlashGreen", SignalHead.FLASHGREEN));
+        constantClasses.add(new Constant(getModule(), "Lunar", SignalHead.LUNAR));
+        constantClasses.add(new Constant(getModule(), "FlashLunar", SignalHead.FLASHLUNAR));
+        constantClasses.add(new Constant(getModule(), "Held", SignalHead.HELD));
+        return constantClasses;
+    }
+
+    @Override
+    public String getConstantDescription() {
+        return Bundle.getMessage("Layout.ConstantDescriptions");
+    }
     
-    
-    
+
+
     public static class GetTurnoutStateFunction implements Function {
         
         @Override
@@ -54,6 +77,11 @@ public class LayoutFunctions implements FunctionFactory {
         @Override
         public String getName() {
             return "getTurnoutState";
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
         }
         
         @Override
@@ -84,6 +112,11 @@ public class LayoutFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new LayoutFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
         }
         
         @Override
@@ -126,6 +159,11 @@ public class LayoutFunctions implements FunctionFactory {
         }
         
         @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
+        }
+        
+        @Override
         public String getName() {
             return "getSensorState";
         }
@@ -158,6 +196,11 @@ public class LayoutFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new LayoutFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
         }
         
         @Override
@@ -200,6 +243,11 @@ public class LayoutFunctions implements FunctionFactory {
         }
         
         @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
+        }
+        
+        @Override
         public String getName() {
             return "getSignalHeadAppearance";
         }
@@ -232,6 +280,11 @@ public class LayoutFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new LayoutFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
         }
         
         @Override
@@ -274,6 +327,11 @@ public class LayoutFunctions implements FunctionFactory {
         }
         
         @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
+        }
+        
+        @Override
         public String getName() {
             return "getSignalMastAspect";
         }
@@ -306,6 +364,11 @@ public class LayoutFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new LayoutFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new LayoutFunctions().getConstantDescription();
         }
         
         @Override
