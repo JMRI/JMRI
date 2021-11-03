@@ -200,7 +200,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     /**
      * Set if node must be in learn mode to write NVs
      * 
-     * @param nvwil 
+     * @param nvwil true or false for node requires learn mode
      */
     public void setNvWriteInLearn(boolean nvwil) {
         _nvWriteInLearn = nvwil;
