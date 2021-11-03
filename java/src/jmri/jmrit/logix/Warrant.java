@@ -1660,22 +1660,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else {
             // signal protecting next block just released its hold
             _waitForSignal = false;
-            if (_idxProtectSignal == _idxCurrentOrder && 
-                    _engineer.getRunState() == WAIT_FOR_CLEAR && _engineer.getSpeedSetting() <= 0) {
-/*                int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
-                if (idxStop == _idxCurrentOrder + 1 ) {
-                    // Most likely train overran signal and set _stoppingBlock. if not, either way signal says proceed
-                    OBlock block = getBlockAt(idxStop);
-                    if (block.allocate(this) == null) { // OK warrant owns block
-                        // _waitForBlock = false; - Don't. can't absolutely guarantee no other train is there
-                        block.setValue(_trainName);
-                        block.setState(block.getState() | OBlock.RUNNING);
-                        _idxCurrentOrder++;         // advance marker and claim occupation
-                    } else {
-                        return;
-                    }
-                }*/
-            }
             if (WarrantPreferences.getDefault().getTrace()) {
                 log.info(Bundle.getMessage("SignalCleared", _protectSignal.getDisplayName(), speedType, _trainName));
             }
@@ -2397,22 +2381,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return speedType;
     }
 
-    /*
-     * Stop current CommandDelay thread and any executing ramp thread
-     * @param hold if true, and ramp thread is executing, hold the ramp lock
-     * to prevent main engineer thread from running. Caller will (must)
-     * immediately follow with a call to engineer.rampSpeedTo().
-     */
-    synchronized private void cancelDelayRamp() {
+    private void cancelDelayRamp() {
         if (_delayCommand != null) {
             _delayCommand.interrupt();
             log.debug("{}: cancelDelayRamp called.", getDisplayName());
-            _delayCommand = null;
+//            _delayCommand = null;
         }
-    }
-
-    private void rampDelayDone() {
-        _delayCommand = null;
     }
 
     @Override
@@ -2495,7 +2469,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _engineer.rampSpeedTo(nextSpeedType, _endBlockIdx);
                 }
             }
-            rampDelayDone();
+            _delayCommand = null;
         }
     }
 
@@ -2568,9 +2542,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 speedType = Warrant.Stop;
                 log.warn(_message);
             }
-        }
-        if (speedType == null) {
-            speedType = Normal;
         }
 
         if (log.isDebugEnabled()) {
@@ -2905,14 +2876,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType, endBlockIdx);
         } else {    // cancelDelayRamp has been called
-            synchronized(this) {
+//            synchronized(this) {
                 _delayCommand = new CommandDelay(speedType, waitTime, waitSpeed, endBlockIdx);
                 _delayCommand.start();
                 if (log.isDebugEnabled()) {
                     log.debug("{}: CommandDelay: will wait {}ms, then Ramp to {} in block {}.",
                             getDisplayName(), waitTime, speedType, getBlockAt(endBlockIdx).getDisplayName());
                 }
-            }
+//            }
         }
     }
 

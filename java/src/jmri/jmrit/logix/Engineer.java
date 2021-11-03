@@ -141,8 +141,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 // commands are ahead of current train position
                 // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notify() to free the wait
-                _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                synchronized (_synchBlock) {
+                synchronized (this) {
+                    _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
                     boolean bumpedSpeed = false;
                     float speed = _throttle.getSpeedSetting();
                     try {
@@ -158,7 +158,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 waittime = 10000;    // 10 seconds
                         }
                         while (!_synchBlock.equals(_warrant.getCurrentBlockOrder().getBlock())) {
-                            _synchBlock.wait(waittime);
+                            wait(waittime);
                             if (bumpedSpeed) {
                                 setSpeed(speed);
                             }
@@ -190,25 +190,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     }
                 }
             }
-                /*
-                _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                synchronized (_synchBlock) {
-                    try {
-                        if (log.isDebugEnabled()) 
-                            log.debug("{}: Wait for train to enter \"{}\".",
-                                _warrant.getDisplayName(), _synchBlock.getDisplayName());
-                        _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
-                        _synchBlock.wait();
-                    } catch (InterruptedException ie) {
-                        log.error("At _waitForSync {}", ie);
-                        _warrant.debugInfo();
-                        Thread.currentThread().interrupt();
-                    }
-                    finally {
-                        _synchBlock = null;
-                    }
-                }
-            }*/
             if (_abort) {
                 break;
             }
@@ -388,9 +369,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         // block went active. if waiting on sync, clear it
         boolean waitForSync = true;
         if (_synchBlock != null && !isRamping()) {
-            synchronized (_synchBlock) {
+            synchronized (this) {
                 if (_synchBlock.equals(block)) {
-                    _synchBlock.notifyAll();
+                    notifyAll();
                     waitForSync = false;
                 }
             }
