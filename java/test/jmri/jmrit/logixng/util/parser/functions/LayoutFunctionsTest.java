@@ -70,7 +70,6 @@ public class LayoutFunctionsTest {
         
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
-        // Test unsupported token type
         hasThrown.set(false);
         try {
             getTurnoutStateFunction.calculate(symbolTable, getParameterList());
@@ -157,7 +156,6 @@ public class LayoutFunctionsTest {
         
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
-        // Test unsupported token type
         hasThrown.set(false);
         try {
             getSensorStateFunction.calculate(symbolTable, getParameterList());
@@ -244,7 +242,6 @@ public class LayoutFunctionsTest {
         
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
-        // Test unsupported token type
         hasThrown.set(false);
         try {
             getSignalHeadStateFunction.calculate(symbolTable, getParameterList());
@@ -333,7 +330,6 @@ public class LayoutFunctionsTest {
         
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
-        // Test unsupported token type
         hasThrown.set(false);
         try {
             getSignalMastAspectFunction.calculate(symbolTable, getParameterList());
@@ -354,7 +350,6 @@ public class LayoutFunctionsTest {
         
         MySignalMast sm = new MySignalMast();
         InstanceManager.getDefault(SignalMastManager.class).register(sm);
-//        InstanceManager.getDefault(SignalMastManager.class).newSignalMast("IT1", "My turnout");
         sm.setState(SignalMast.UNKNOWN);
         
         sm._lastAspect = null;
@@ -497,10 +492,6 @@ public class LayoutFunctionsTest {
             return _appearance;
         }
 
-        public void setTestAppearance(int appearance) {
-            _appearance = appearance;
-        }
-
         @Override
         public void setAppearance(int appearance) {
             _lastAppearance = appearance;
@@ -520,7 +511,6 @@ public class LayoutFunctionsTest {
     }
     
     
-//    private static class MySignalMast extends jmri.implementation.VirtualSignalHead {
     private static class MySignalMast extends jmri.implementation.AbstractSignalMast {
 
         private String _lastAspect = null;
@@ -536,25 +526,11 @@ public class LayoutFunctionsTest {
             return _aspect;
         }
 
-        public void setTestAspect(String aspect) {
-            _aspect = aspect;
-        }
-
         @Override
         public void setAspect(String aspect) {
             _lastAspect = aspect;
             _aspect = null;
         }
-
-//        @Override
-//        public void setLit(boolean newLit) {
-//            throw new UnsupportedOperationException("Not supported");
-//        }
-
-//        @Override
-//        public void setHeld(boolean newHeld) {
-//            throw new UnsupportedOperationException("Not supported");
-//        }
 
     }
     
