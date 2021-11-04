@@ -575,18 +575,26 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             userName.setText(curTransit.getUserName());
             List<TransitSection> tsList = curTransit.getTransitSectionList();
             for (int i = 0; i < tsList.size(); i++) {
+                sequence.clear();
+                direction.clear();
+                action.clear();
+                alternate.clear();
+                safe.clear();
+                sensorStopAllocation.clear();
+
                 TransitSection ts = tsList.get(i);
                 if (ts != null) {
                     sectionList.add(ts.getSection());
-                    sequence.set(i, ts.getSequenceNumber());
-                    direction.set(i, ts.getDirection());
-                    action.set(i, ts.getTransitSectionActionList());
-                    alternate.set(i, ts.isAlternate());
-                    safe.set(i, ts.isSafe());
-                    sensorStopAllocation.set(i, ts.getStopAllocatingSensor());
+                    sequence.add(ts.getSequenceNumber());
+                    direction.add(ts.getDirection());
+                    action.add(ts.getTransitSectionActionList());
+                    alternate.add(ts.isAlternate());
+                    safe.add(ts.isSafe());
+                    sensorStopAllocation.add(ts.getStopAllocatingSensor());
                 }
             }
             int index = sectionList.size() - 1;
+            if (index >= alternate.size()) index = alternate.size() - 1;
             while (alternate.get(index) && (index > 0)) {
                 index--;
             }
@@ -909,7 +917,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     void updateSeqNum() {
         int seqMax = 0;
         for (int i = 0; i < sectionList.size(); i++) {
-            if (sequence.get(i) > seqMax) {
+            if (i < sequence.size() && sequence.get(i) > seqMax) {
                 seqMax = sequence.get(i);
             }
         }
