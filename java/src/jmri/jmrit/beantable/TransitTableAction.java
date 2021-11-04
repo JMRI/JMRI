@@ -282,7 +282,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final List<Boolean> safe = new ArrayList<>();
     private String sensorList[];
     private final List<String> sensorStopAllocation = new ArrayList<>();
-    private final int maxSections = 150;  // must be equal to the dimension of the above arrays
     private final List<Section> primarySectionBoxList = new ArrayList<>();
     private final List<Integer> priSectionDirection = new ArrayList<>();
     private final List<Section> alternateSectionBoxList = new ArrayList<>();
@@ -612,14 +611,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     private void deleteAllSections(ActionEvent e) {
         sectionList.clear();
-        for (int i = 0; i < maxSections; i++) {
-            direction.set(i, Section.FORWARD);
-            sequence.set(i, 0);
-            action.set(i, null);
-            alternate.set(i, false);
-            safe.set(i, false);
-            sensorStopAllocation.set(i, "");
-        }
+        direction.clear();
+        sequence.clear();
+        action.clear();
+        alternate.clear();
+        safe.clear();
+        sensorStopAllocation.clear();
         curSection = null;
         curSectionDirection = 0;
         prevSection = null;
@@ -631,12 +628,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     void addNextSectionPressed(ActionEvent e) {
-        if (sectionList.size() > maxSections) {
-            JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         if (primarySectionBoxList.isEmpty()) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message25"), Bundle.getMessage("ErrorTitle"),
@@ -648,17 +639,17 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if (s != null) {
             int j = sectionList.size();
             sectionList.add(s);
-            direction.set(j, priSectionDirection.get(index));
+            direction.add(priSectionDirection.get(index));
             curSequenceNum++;
-            sequence.set(j, curSequenceNum);
-            safe.set(j, addAsSafe.isSelected());
+            sequence.add(curSequenceNum);
+            safe.add(addAsSafe.isSelected());
             if (stopAllocatingSensorBox.getSelectedIndex() >= 0) {
-                sensorStopAllocation.set(j, (String)stopAllocatingSensorBox.getSelectedItem());
+                sensorStopAllocation.add((String)stopAllocatingSensorBox.getSelectedItem());
             } else {
-                sensorStopAllocation.set(j, "");
+                sensorStopAllocation.add("");
             }
-            action.set(j, new ArrayList<>());
-            alternate.set(j, false);
+            action.add(new ArrayList<>());
+            alternate.add(false);
             if ((sectionList.size() == 2) && (curSection != null)) {
                 if (forwardConnected(curSection, s, 0)) {
                     direction.set(0, Section.REVERSE);
@@ -934,12 +925,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
             for (int i = sectionList.size(); i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
-                    sequence.remove(j);
-                    direction.remove(j);
-                    action.remove(j);
-                    alternate.remove(j);
-                    safe.remove(j);
-                    sensorStopAllocation.remove(j);
+                    sequence.remove(i);
+                    direction.remove(i);
+                    action.remove(i);
+                    alternate.remove(i);
+                    safe.remove(i);
+                    sensorStopAllocation.remove(i);
                     sectionList.remove(i);
                 }
             }
@@ -1076,12 +1067,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     void addAlternateSectionPressed(ActionEvent e) {
-        if (sectionList.size() > maxSections) {
-            JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         if (alternateSectionBoxList.isEmpty()) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message24"), Bundle.getMessage("ErrorTitle"),
@@ -1091,13 +1076,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         int index = alternateSectionBox.getSelectedIndex();
         Section s = alternateSectionBoxList.get(index);
         if (s != null) {
-            int j = sectionList.size();
             sectionList.add(s);
-            direction.set(j, altSectionDirection.get(index));
-            sequence.set(j, curSequenceNum);
-            action.set(j, new ArrayList<>());
-            alternate.set(j, true);
-            safe.set(j, addAsSafe.isSelected());
+            direction.add(altSectionDirection.get(index));
+            sequence.add(curSequenceNum);
+            action.add(new ArrayList<>());
+            alternate.add(true);
+            safe.add(addAsSafe.isSelected());
             initializeSectionCombos();
         }
         updateSeqNum();
