@@ -708,12 +708,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     void insertAtBeginningPressed(ActionEvent e) {
-        if (sectionList.size() > maxSections) {
-            JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         if (insertAtBeginningBoxList.isEmpty()) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message35"), Bundle.getMessage("ErrorTitle"),
@@ -956,12 +950,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     void addAlternateForSeqPressed(ActionEvent e) {
-        if (sectionList.size() > maxSections) {
-            JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         int seq = getSeqNum();
         if (seq == 0) {
             return;
