@@ -368,7 +368,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     protected void clearWaitForSync(OBlock block) {
         // block went active. if waiting on sync, clear it
         boolean waitForSync = true;
-        if (_synchBlock != null && !isRamping()) {
+        if (_synchBlock != null && !_atClear && !_halt && !isRamping()) {
             synchronized (this) {
                 if (_synchBlock.equals(block)) {
                     notifyAll();
