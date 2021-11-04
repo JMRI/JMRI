@@ -155,7 +155,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
                 // nvArray does not exist yet
                 return;
             }
-            _nvArray[nv] = value;
             
             switch (nv) {
                 case CanCmdPaneProvider.CMD_STATION_NUMBER:
@@ -184,7 +183,8 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
                     
                 case CanCmdPaneProvider.NN_MAP_DCC_HI:
                 case CanCmdPaneProvider.NN_MAP_DCC_LO:
-                    nnMapDccSpinner.getModel().setValue(_nvArray[CanCmdPaneProvider.NN_MAP_DCC_HI]*256 + _nvArray[CanCmdPaneProvider.NN_MAP_DCC_LO]);
+                    nnMapDccSpinner.getModel().setValue(getSelectValue(CanCmdPaneProvider.NN_MAP_DCC_HI,
+                            CanCmdPaneProvider.NN_MAP_DCC_LO, 0));
                     break;
                     
                 case CanCmdPaneProvider.WALKABOUT_TIMEOUT:
@@ -229,7 +229,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int cmdStaNo = ((SpinnerNumberModel)cmdStaNoSpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = cmdStaNo;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(cmdStaNo, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -244,7 +243,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int flags = csFlags[index].getFlags();
-            _nvArray[CanCmdPaneProvider.USER_FLAGS + index] = flags;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(flags, CanCmdPaneProvider.USER_FLAGS + index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -267,7 +265,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             }
             // Limit to 10mA precision
             limit = (int)(fLimit*100 + 0.5);
-            _nvArray[index] = limit;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(limit, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -284,8 +281,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             int mapNn = ((SpinnerNumberModel)nnMapDccSpinner.getModel()).getNumber().intValue();
             int mapNnHi = mapNn/256;
             int mapNnLo = mapNn%256;
-            _nvArray[index] = mapNnHi;
-            _nvArray[index + 1] = mapNnLo;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(mapNnHi, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(mapNnLo, index, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -298,7 +293,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int sodDelay = ((SpinnerNumberModel)sodDelaySpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = sodDelay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(sodDelay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -310,7 +304,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int interval = ((SpinnerNumberModel)intervalSpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = interval;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(interval, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -322,7 +315,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int ack = ((SpinnerNumberModel)ackSpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = ack;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(ack, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -334,7 +326,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int mult = ((SpinnerNumberModel)multSpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = mult;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(mult, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -346,7 +337,6 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int delay = ((SpinnerNumberModel)multSpinner.getModel()).getNumber().intValue();
-            _nvArray[index] = delay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -384,25 +374,25 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             walkaboutSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("WalkaboutTimeout"), CanCmdPaneProvider.WALKABOUT_TIMEOUT, walkaboutUpdateFn);
             walkaboutSpinner.setToolTip(Bundle.getMessage("WalkaboutTimeoutTt"));
-            walkaboutSpinner.init(_nvArray[CanCmdPaneProvider.WALKABOUT_TIMEOUT], 1, 60, 255);
+            walkaboutSpinner.init(getSelectValue(CanCmdPaneProvider.WALKABOUT_TIMEOUT, 1), 1, 60, 255);
             gridPane.add(walkaboutSpinner, c);
             c.gridy++;
             
             multSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("CurrentMultiplier"), CanCmdPaneProvider.CURRENT_MULTIPLIER, multUpdateFn);
             multSpinner.setToolTip(Bundle.getMessage("CurrentMultiplierTt"));
-            multSpinner.init(_nvArray[CanCmdPaneProvider.CURRENT_MULTIPLIER], 1, 10, 255);
+            multSpinner.init(getSelectValue(CanCmdPaneProvider.CURRENT_MULTIPLIER, 1), 1, 10, 255);
             gridPane.add(multSpinner, c);
             c.gridy++;
             
             ackSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("IncCurrentForAck"), CanCmdPaneProvider.INC_CURRENT_FOR_ACK, ackUpdateFn);
             ackSpinner.setToolTip(Bundle.getMessage("IncCurrentForAckTt"));
-            ackSpinner.init(_nvArray[CanCmdPaneProvider.INC_CURRENT_FOR_ACK], 1, 3, 255);
+            ackSpinner.init(getSelectValue(CanCmdPaneProvider.INC_CURRENT_FOR_ACK, 1), 1, 3, 255);
             gridPane.add(ackSpinner, c);
             c.gridy++;
             
             intervalSpinner = new TitledSpinner(Bundle.getMessage("SendCurrentInterval"), CanCmdPaneProvider.SEND_CURRENT_INTERVAL, intervalUpdateFn);
             intervalSpinner.setToolTip(Bundle.getMessage("SendCurrentIntervalTt"));
-            intervalSpinner.init(_nvArray[CanCmdPaneProvider.SEND_CURRENT_INTERVAL], 0, 255, 1);
+            intervalSpinner.init(getSelectValue(CanCmdPaneProvider.SEND_CURRENT_INTERVAL), 0, 255, 1);
             gridPane.add(intervalSpinner, c);
             c.gridy++;
             
@@ -410,7 +400,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("MainLimit"), CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(_nvArray[CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT], 1, 96, 255);
+            mainSpinner.init(getSelectValue(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1, 96, 255);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
@@ -428,7 +418,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             progSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("ProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(_nvArray[CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT], 1, 96, 255);
+            progSpinner.init(getSelectValue(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1, 96, 255);
             gridPane.add(progSpinner, c);
             c.gridy++;
             
@@ -471,7 +461,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             nnMapDccSpinner = new CbusModulesCommon.TitledSpinner(Bundle.getMessage("NnMapDcc"), CanCmdPaneProvider.NN_MAP_DCC_HI, nnMapUpdateFn);
             nnMapDccSpinner.setToolTip(Bundle.getMessage("NnMapDccTt"));
-            int nn = _nvArray[CanCmdPaneProvider.NN_MAP_DCC_HI]*256 + _nvArray[CanCmdPaneProvider.NN_MAP_DCC_LO];
+            int nn = getSelectValue(CanCmdPaneProvider.NN_MAP_DCC_HI, CanCmdPaneProvider.NN_MAP_DCC_LO, 0);
             nnMapDccSpinner.init(nn, 0, 65535, 1);
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
@@ -501,7 +491,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
 
             sodDelaySpinner = new TitledSpinner(Bundle.getMessage("SodDelay"), CanCmdPaneProvider.SOD_DELAY, sodDelayUpdateFn);
             sodDelaySpinner.setToolTip(Bundle.getMessage("SodDelayTt"));
-            sodDelaySpinner.init(_nvArray[CanCmdPaneProvider.SOD_DELAY], 0, 255, 1);
+            sodDelaySpinner.init(getSelectValue(CanCmdPaneProvider.SOD_DELAY), 0, 255, 1);
             gridPane.add(sodDelaySpinner, c);
             c.gridy++;
 

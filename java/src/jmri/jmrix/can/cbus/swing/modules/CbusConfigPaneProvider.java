@@ -111,10 +111,15 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
         if (p != null) {
             return p;
-        } else {
-            log.debug("node {} NN {} name {} gets unknown provider", node, node.getNodeNumber(), node.getName());
-            return new UnknownPaneProvider();
+        } else if (node.getResyncName() != null) {
+            // Get the saved name during a resync
+            p = instanceMap.get(node.getResyncName());
+            if (p != null) {
+                return p;
+            }
         }
+        log.info("node gets unknown provider: {}", node);
+        return new UnknownPaneProvider();
     }
 
     /**

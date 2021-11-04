@@ -93,19 +93,18 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int nv = row + 1;
             int sv = (nv - Servo8BasePaneProvider.OUT1_ON)/4 + 1;   // Outout channel number for NV 5 - 36
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value;
+            int value = getSelectValue(nv);
             try {
                 value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             } catch (NullPointerException ex) {
                 // nvArray does not exist yet
                 return;
             }
-            int oldVal = _nvArray[nv];
+            int oldVal = getSelectValue(nv);
             if (oldVal != value) {
                 // Only do something if the value has changed
                 // JSpinner is very trigger happy with state change updates and setting a new value
                 // will trigger another round of updates
-                _nvArray[nv] = value;
                 if (nv == Servo8BasePaneProvider.CUTOFF) {
                     //log.debug("Update cutoff to {}", value);
                     for (int i = 1; i <= OUTPUTS; i++) {
@@ -161,7 +160,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int pos = servo[index].onPosSlider.getValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON;
-            _nvArray[nv_index] = pos;
             //log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             // Send to module immediately
@@ -182,7 +180,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int pos = servo[index].offPosSlider.getValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF;
-            _nvArray[nv_index] = pos;
             //log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             // Send to module immediately
@@ -203,7 +200,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int spd = ((SpinnerNumberModel)servo[index].onSpdSpinner.getModel()).getNumber().intValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON_SPD;
-            _nvArray[nv_index] = spd;
             //log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
             // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -225,7 +221,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int spd = ((SpinnerNumberModel)servo[index].offSpdSpinner.getModel()).getNumber().intValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF_SPD;
-            _nvArray[nv_index] = spd;
             //log.debug("UpdateOffSpeed index {} nv {} spd {}", index, nv_index, spd);
             // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
@@ -241,8 +236,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         
         @Override
         public void setNewVal(int index) {
-            int newPos = _nvArray[Servo8BasePaneProvider.STARTUP_POS] & (~(1<<(index-1)));
-            int newMove = _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
+            int newPos = getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (~(1<<(index-1)));
+            int newMove = getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (~(1<<(index-1)));
             
             // Startup action is in NV2 and NV3, 1 bit per output 
             if (servo[index].action.off.isSelected()) {
@@ -254,8 +249,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
                 newMove |= (1<<(index-1));
             }
             
-            _nvArray[Servo8BasePaneProvider.STARTUP_POS] = newPos;
-            _nvArray[Servo8BasePaneProvider.STARTUP_MOVE] = newMove;
             _dataModel.setValueAt(newPos, Servo8BasePaneProvider.STARTUP_POS - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(newMove, Servo8BasePaneProvider.STARTUP_MOVE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             // Send to module immediately
@@ -466,10 +459,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             buttons.add(saved);
             setButtons();
             // Startup action is in NV2 and NV3, 1 bit per output 
-            if ((_nvArray[Servo8BasePaneProvider.STARTUP_POS] & (1<<(_index-1)))>0) {
+            if ((getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {
@@ -491,10 +484,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
          */
         public void setButtons() {
             // Startup action is in NV2 and NV3, 1 bit per output 
-            if ((_nvArray[Servo8BasePaneProvider.STARTUP_POS] & (1<<(_index-1)))>0) {
+            if ((getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[Servo8BasePaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {

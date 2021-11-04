@@ -25,43 +25,38 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel pane1;
     private JPanel editGui;
     private CbusNode _node;
-    private CbusConfigPaneProvider provider;
+    private CbusConfigPaneProvider _provider;
 
     protected CbusNodeNVEditGuiPane(CbusNodeNVTableDataModel nVModel) {
         super();
-        super.initComponents();
         nodeNVModel = nVModel;
         _node = null;
-        provider = null;
-        this.setLayout(new BorderLayout());
+        _provider = null;
     }
     
     /**
-     * Helper function
+     * Set the current node, keeping existing gui provider
      * 
      * @param node node to display
      */
     protected void setNode(CbusNode node) {
-
         if (_node != null) {
             if (_node.getNvWriteInLearn()) {
                 // Take old node out of learn mode
                 _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
             }
         }
-        
         _node = node;
         
-        if (pane1!=null){
+        if (pane1 != null) {
             this.removeAll();
             this.initComponents();
         }
         
-        provider = CbusConfigPaneProvider.getProviderByNode(_node);
-        editGui = provider.getEditNVFrame(nodeNVModel, _node);
+        editGui = _provider.getEditNVFrame(nodeNVModel, _node);
         showGui(editGui);
         
-        if (provider.nvWriteInLearn()) {
+        if (_provider.nvWriteInLearn()) {
             // Node needs to be in learn mode for NV updates (e.g. for servo node)
             _node.setNvWriteInLearn(true);
             _node.send.nodeEnterLearnEvMode(_node.getNodeNumber());
@@ -70,7 +65,20 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         this.setVisible(!(_node == null));
     }
     
+    /**
+     * Set the current node and associated gui provider
+     * 
+     * @param node node to display
+     * @param provider edit gui provider for the node
+     */
+    protected void setNode(CbusNode node, CbusConfigPaneProvider provider) {
+        _provider = provider;
+        setNode(node);
+    }
+    
     protected void showGui(JPanel editGui){
+        
+        this.setLayout(new BorderLayout());
         
         pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -83,10 +91,8 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     protected void tableChanged(TableModelEvent e) {
-        if (provider != null) {
-            if (provider.getEditNVFrameInstance() != null) {
-                provider.getEditNVFrameInstance().tableChanged(e);
-            }
+        if (_provider != null) {
+            _provider.getEditNVFrameInstance().tableChanged(e);
         }
     }
     

@@ -9,6 +9,8 @@ import javax.swing.event.TableModelListener;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
+import jmri.jmrix.can.cbus.swing.modules.UnknownPaneProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,11 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     private JPanel buttonPane;
     private CbusNodeNVEditTablePane genericNVTable;
     private CbusNodeNVEditGuiPane editNVGui;
+    private CbusConfigPaneProvider provider;
+    
+    private static final int GENERIC = 0;
+    private static final int EDIT = 1;
+    private static final int TEMPLATE = 2;
     
     /**
      * Create a new instance of CbusNodeEditNVarPane.
@@ -96,9 +103,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         tabbedPane.addTab(("Edit"), editNVGui);
         tabbedPane.addTab(("Template"), template);
         
-        tabbedPane.setEnabledAt(1,false);
-        tabbedPane.setEnabledAt(2,false);
-        tabbedPane.setSelectedIndex(0);
+        tabbedPane.setEnabledAt(EDIT,false);
+        tabbedPane.setEnabledAt(TEMPLATE,false);
+        tabbedPane.setSelectedIndex(GENERIC);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(tabbedPane, BorderLayout.CENTER);
@@ -130,15 +137,16 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         nodeNVModel.setNode(nodeOfInterest);
         setSaveCancelButtonsActive ( false );
         genericNVTable.setNode( nodeOfInterest );
-        
-        if (editNVGui != null) {
-            editNVGui.setNode(nodeOfInterest);
-            
-            tabbedPane.setEnabledAt(1,true);
-            tabbedPane.setSelectedIndex(1);
+
+        provider = CbusConfigPaneProvider.getProviderByNode(nodeOfInterest);
+        editNVGui.setNode(nodeOfInterest, provider);
+
+        if (!(provider instanceof UnknownPaneProvider)) {
+            tabbedPane.setEnabledAt(EDIT, true);
+            tabbedPane.setSelectedIndex(EDIT);
         } else {
-            tabbedPane.setEnabledAt(1,false);
-            tabbedPane.setSelectedIndex(0);
+            tabbedPane.setEnabledAt(EDIT, false);
+            tabbedPane.setSelectedIndex(GENERIC);
         }
         
         validate();
@@ -163,9 +171,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     @Override
     protected void cancelOption(){
         nodeNVModel.resetNewNvs();
-        if (editNVGui != null) {
-            editNVGui.setNode(nodeOfInterest);
-        }
+        editNVGui.setNode(nodeOfInterest);
     }
     
     /**
@@ -185,9 +191,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     @Override
     public void tableChanged(TableModelEvent e) {
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
-        if (editNVGui != null) {
-            editNVGui.tableChanged(e);
-        }
+        editNVGui.tableChanged(e);
     }
     
     /**
@@ -213,9 +217,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
             nodeNVModel.dispose();
         }
         
-        if (editNVGui != null) {
-            editNVGui.dispose();
-        }
+        editNVGui.dispose();
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarPane.class);

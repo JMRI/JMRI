@@ -81,7 +81,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         c.gridy = 3;
         feedbackSpinner = new TitledSpinner(Bundle.getMessage("FeedbackDelayUnits"), Canacc8PaneProvider.FEEDBACK_DELAY, feedbackUpdateFn);
         feedbackSpinner.setToolTip(Bundle.getMessage("FeedbackDelayTt"));
-        feedbackSpinner.init(_nvArray[Canacc8PaneProvider.FEEDBACK_DELAY]*FEEDBACK_DELAY_STEP_SIZE, 0, 
+        feedbackSpinner.init(getSelectValue(Canacc8PaneProvider.FEEDBACK_DELAY)*FEEDBACK_DELAY_STEP_SIZE, 0, 
                 FEEDBACK_DELAY_STEP_SIZE*255, FEEDBACK_DELAY_STEP_SIZE);
         
         gridPane.add(feedbackSpinner, c);
@@ -102,14 +102,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value;
-            try {
-                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            } catch (NullPointerException ex) {
-                // nvArray does not exist yet
-                return;
-            }
-            _nvArray[nv] = value;
+            int value = getSelectValue(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
                 int oldSpinnerValue = ((SpinnerNumberModel)out[nv].pulseSpinner.getModel()).getNumber().intValue()/PULSE_WIDTH_STEP_SIZE;
@@ -148,10 +141,9 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 pulseWidth |= 0x80;
             }
             // Preserve continuous (bit 7) from old value unless we selected single button
-            if ((_nvArray[index] >= 0x80) && !(out[index].buttonFlag && out[index].single.isSelected())) {
+            if ((getSelectValue(index) >= 0x80) && !(out[index].buttonFlag && out[index].single.isSelected())) {
                 pulseWidth |= 0x80;
             }
-            _nvArray[index] = pulseWidth;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(pulseWidth, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -164,8 +156,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         
         @Override
         public void setNewVal(int index) {
-            int newNV10 = _nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (~(1<<(index-1)));
-            int newNV11 = _nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (~(1<<(index-1)));
+            int newNV10 = getSelectValue(Canacc8PaneProvider.STARTUP_POSITION) & (~(1<<(index-1)));
+            int newNV11 = getSelectValue(Canacc8PaneProvider.STARTUP_MOVE) & (~(1<<(index-1)));
             
             // Startup action is in NV10 and NV11, 1 bit per output 
             if (out[index].action.off.isSelected()) {
@@ -177,11 +169,9 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                 newNV11 |= (1<<(index-1));
             }
             
-            _nvArray[Canacc8PaneProvider.STARTUP_POSITION] = newNV10;
-            _nvArray[Canacc8PaneProvider.STARTUP_MOVE] = newNV11;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
-            _dataModel.setValueAt(newNV10, 9, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            _dataModel.setValueAt(newNV11, 10, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(newNV10, Canacc8PaneProvider.STARTUP_POSITION-1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(newNV11, Canacc8PaneProvider.STARTUP_MOVE-1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
     
@@ -195,7 +185,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
             double delay = ((SpinnerNumberModel)feedbackSpinner.getModel()).getNumber().doubleValue();
             int newInt = (int)(delay/FEEDBACK_DELAY_STEP_SIZE);
-            _nvArray[index] = newInt;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(newInt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -254,10 +243,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
 
             pulseSpinner = new TitledSpinner(Bundle.getMessage("PulseWidth"), _index, pulseUpdateFn);
             pulseSpinner.setToolTip(Bundle.getMessage("PulseWidthTt"));
-            pulseSpinner.init(((_nvArray[_index] & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
+            pulseSpinner.init(((getSelectValue(_index) & 0x7f)*PULSE_WIDTH_STEP_SIZE), 0, 
                     PULSE_WIDTH_NUM_STEPS*PULSE_WIDTH_STEP_SIZE, PULSE_WIDTH_STEP_SIZE);
 
-            setButtonsInit(_nvArray[index]);
+            setButtonsInit(getSelectValue(index));
 
             gridPane.add(cont, c);
             c.gridy++;
@@ -409,10 +398,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
             buttons.add(saved);
             setButtons();
             // Startup action is in NV10 and NV11, 1 bit per output 
-            if ((_nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (1<<(_index-1)))>0) {
+            if ((getSelectValue(Canacc8PaneProvider.STARTUP_POSITION) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue(Canacc8PaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {
@@ -434,10 +423,10 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
          */
         public void setButtons() {
             // Startup action is in NV10 and NV11, 1 bit per output 
-            if ((_nvArray[Canacc8PaneProvider.STARTUP_POSITION] & (1<<(_index-1)))>0) {
+            if ((getSelectValue(Canacc8PaneProvider.STARTUP_POSITION) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((_nvArray[Canacc8PaneProvider.STARTUP_MOVE] & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue(Canacc8PaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {

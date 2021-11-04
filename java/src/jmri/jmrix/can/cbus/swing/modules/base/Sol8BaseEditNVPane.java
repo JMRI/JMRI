@@ -61,7 +61,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
                 int index = y*4 + x + 1;            // NVs indexed from 1
                 pulse[index] = new TitledSpinner((Bundle.getMessage("OutputX", index)) + " " + Bundle.getMessage("PulseWidthUnits"), index, pulseUpdateFn);
                 pulse[index].setToolTip(Bundle.getMessage("CanSolOutputTt"));
-                pulse[index].init(_nvArray[index]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+                pulse[index].init(getSelectValue(index)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
                 gridPane.add(pulse[index], c);
                 c.gridx++;
             }
@@ -72,21 +72,21 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         
         rechargeSpinner = new TitledSpinner(Bundle.getMessage("RechargeTimeUnits"), RECHARGE_TIME, rechargeUpdateFn);
         rechargeSpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
-        rechargeSpinner.init(_nvArray[RECHARGE_TIME]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        rechargeSpinner.init(getSelectValue(RECHARGE_TIME)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(rechargeSpinner, c);
         c.gridx++;
 
         fireDelaySpinner = new TitledSpinner(Bundle.getMessage("FireDelayUnits"), FIRE_DELAY, fireDelayUpdateFn);
         fireDelaySpinner.setToolTip(Bundle.getMessage("FireDelayTt"));
-        fireDelaySpinner.init(_nvArray[FIRE_DELAY]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        fireDelaySpinner.init(getSelectValue(FIRE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(fireDelaySpinner, c);
         c.gridx++;
 
         enableDelaySpinner = new TitledSpinner(Bundle.getMessage("EnableDelayUnits"), ENABLE_DELAY, enableDelayUpdateFn);
         enableDelaySpinner.setToolTip(Bundle.getMessage("EnableDelayTt"));
-        enableDelaySpinner.init(_nvArray[ENABLE_DELAY]*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        enableDelaySpinner.init(getSelectValue(ENABLE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(enableDelaySpinner, c);
 
@@ -113,7 +113,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
                 // nvArray does not exist yet
                 return;
             }
-            _nvArray[nv] = value;
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
                 pulse[nv].getModel().setValue(value*TIME_STEP_SIZE);
@@ -142,7 +141,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int delay = ((SpinnerNumberModel)pulse[index].getModel()).getNumber().intValue()/TIME_STEP_SIZE;
-            _nvArray[index] = delay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -157,7 +155,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int delay = ((SpinnerNumberModel)rechargeSpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
-            _nvArray[index] = delay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -172,7 +169,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int delay = ((SpinnerNumberModel)fireDelaySpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
-            _nvArray[index] = delay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -187,7 +183,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         @Override
         public void setNewVal(int index) {
             int delay = ((SpinnerNumberModel)enableDelaySpinner.getModel()).getNumber().intValue()/TIME_STEP_SIZE;
-            _nvArray[index] = delay;
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }

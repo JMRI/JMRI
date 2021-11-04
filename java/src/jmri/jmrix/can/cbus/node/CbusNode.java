@@ -25,6 +25,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     public static int BOOT_PROG_TIMEOUT_SLOW = 50;
     public static int BOOT_CONFIG_TIMEOUT_TIME = 50;
     private String _nodeNameFromName;
+    private String resyncName = null;
     
     /**
      * Create a new CbusNode
@@ -113,6 +114,29 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      */
     public int getNodeFlags() {
         return _flags;
+    }
+    
+    /**
+     * Get name of node being resync'ed
+     * 
+     * @return String node name
+     */
+    public String getResyncName() {
+        return resyncName;
+    }
+    
+    /**
+     * Save module name when Resync is in progress
+     *
+     * Resync resets all node parameters, etc. To re0display the NV edit GUI
+     * before the resync completes we save a copy of the name of the node.
+     */
+    protected void saveForResync() {
+        if (!CbusNodeConstants.getModuleType(this.getNodeParamManager().getParameter(1),this.getNodeParamManager().getParameter(3)).isEmpty() ){
+            resyncName =  CbusNodeConstants.getModuleType(this.getNodeParamManager().getParameter(1),this.getNodeParamManager().getParameter(3));
+        } else {
+            resyncName = null;
+        }
     }
     
     /**
