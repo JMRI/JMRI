@@ -34,6 +34,10 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### JavaVersionCheckWindow.jar
+- Specific class files that have to be compiled with Java 8
+  - This is used to launch the warning dialog when running on Java 8
+
 ##### apiguardian-api-1.1.0.jar
 - version 1.1.0
 - provides Javadoc markers of API stability
