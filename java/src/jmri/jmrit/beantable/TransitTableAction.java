@@ -724,21 +724,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         Section s = insertAtBeginningBoxList.get(index);
         if (s != null) {
             sectionList.add(0, s);
-            for (int i = sectionList.size() - 2; i > 0; i--) {
-                direction.set(i + 1, direction.get(i));
-                alternate.set(i + 1, alternate.get(i));
-                action.set(i + 1, action.get(i));
-                sequence.set(i + 1, sequence.get(i) + 1);
-                safe.set(i + 1, safe.get(i));
-                sensorStopAllocation.set(i + 1, sensorStopAllocation.get(i));
-            }
-            direction.set(0, insertAtBeginningDirection.get(index));
+            direction.add(0, insertAtBeginningDirection.get(index));
             curSequenceNum++;
-            sequence.set(0, 1);
-            alternate.set(0, false);
-            safe.set(0, addAsSafe.isSelected());
-            sensorStopAllocation.set(0, "");
-            action.set(0, new ArrayList<>());
+            sequence.add(0, 1);
+            alternate.add(0, false);
+            safe.add(0, addAsSafe.isSelected());
+            sensorStopAllocation.add(0, "");
+            action.add(0, new ArrayList<>());
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction.get(0);
                 prevSection = s;
@@ -948,14 +940,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
             for (int i = sectionList.size(); i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
-                    for (int j = i; j < sectionList.size() - 1; j++) {
-                        sequence.set(j, sequence.get(j + 1));
-                        direction.set(j, direction.get(j + 1));
-                        action.set(j, action.get(j + 1));
-                        alternate.set(j, alternate.get(j + 1));
-                        safe.set(j, safe.get(j + 1));
-                        sensorStopAllocation.set(j, sensorStopAllocation.get(j + 1));
-                    }
+                    sequence.remove(j);
+                    direction.remove(j);
+                    action.remove(j);
+                    alternate.remove(j);
+                    safe.remove(j);
+                    sensorStopAllocation.remove(j);
                     sectionList.remove(i);
                 }
             }
@@ -1082,24 +1072,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         index = index + 1 + altOldList.size();
         sectionList.add(index, possibles.get(k));
-        for (int i = sectionList.size() - 2; i >= index; i--) {
-            direction.set(i + 1, direction.get(i));
-            alternate.set(i + 1, alternate.get(i));
-            action.set(i + 1, action.get(i));
-            sequence.set(i + 1, sequence.get(i));
-            safe.set(i + 1, safe.get(i));
-            sensorStopAllocation.set(i + 1, sensorStopAllocation.get(i));
-        }
-        direction.set(index, possiblesDirection.get(k));
-        sequence.set(index, sequence.get(index - 1));
-        alternate.set(index, true);
-        safe.set(index, addAsSafe.isSelected());
+        direction.add(index, possiblesDirection.get(k));
+        sequence.add(index, sequence.get(index - 1));
+        alternate.add(index, true);
+        safe.add(index, addAsSafe.isSelected());
         if (stopAllocatingSensorBox.getSelectedIndex() < 0) {
-            sensorStopAllocation.set(index, "");
+            sensorStopAllocation.add(index, "");
         } else {
-            sensorStopAllocation.set(index, (String) stopAllocatingSensorBox.getSelectedItem());
+            sensorStopAllocation.add(index, (String) stopAllocatingSensorBox.getSelectedItem());
         }
-        action.set(index, new ArrayList<>());
+        action.add(index, new ArrayList<>());
         initializeSectionCombos();
         updateSeqNum();
         sectionTableModel.fireTableDataChanged();
