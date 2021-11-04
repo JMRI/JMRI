@@ -395,7 +395,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * scripting.
      * @return the speed slider
      */
-    public int getSpeedSlider() {
+    public JSlider getSpeedSlider() {
         return speedSlider;
     }
 
