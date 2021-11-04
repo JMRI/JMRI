@@ -617,6 +617,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         alternate.clear();
         safe.clear();
         sensorStopAllocation.clear();
+        direction.add(Section.FORWARD);
+        sequence.add(0);
+        action.add(null);
+        alternate.add(false);
+        safe.add(false);
+        sensorStopAllocation.add("");
         curSection = null;
         curSectionDirection = 0;
         prevSection = null;
@@ -1192,13 +1198,14 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         primarySectionBoxList.clear();
         alternateSectionBoxList.clear();
         insertAtBeginningBoxList.clear();
+        priSectionDirection.clear();
         if (sectionList.isEmpty()) {
             // no Sections currently in Transit - all Sections and all Directions OK
             for (Section s : sectionManager.getNamedBeanSet()) {
                 String sName = s.getDisplayName();
                 primarySectionBox.addItem(sName);
                 primarySectionBoxList.add(s);
-                priSectionDirection.set(primarySectionBoxList.size() - 1, Section.FORWARD);
+                priSectionDirection.add(Section.FORWARD);
             }
         } else {
             // limit to Sections that connect to the current Section and are not the previous Section
@@ -1207,11 +1214,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 if ((s != prevSection) && (forwardConnected(s, curSection, curSectionDirection))) {
                     primarySectionBox.addItem(sName);
                     primarySectionBoxList.add(s);
-                    priSectionDirection.set(primarySectionBoxList.size() - 1, Section.FORWARD);
+                    priSectionDirection.add(Section.FORWARD);
                 } else if ((s != prevSection) && (reverseConnected(s, curSection, curSectionDirection))) {
                     primarySectionBox.addItem(sName);
                     primarySectionBoxList.add(s);
-                    priSectionDirection.set(primarySectionBoxList.size() - 1, Section.REVERSE);
+                    priSectionDirection.add(Section.REVERSE);
                 }
             }
             // check if there are any alternate Section choices
