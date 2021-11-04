@@ -2381,11 +2381,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return speedType;
     }
 
-    private void cancelDelayRamp() {
+    synchronized private void cancelDelayRamp() {
         if (_delayCommand != null) {
             _delayCommand.interrupt();
             log.debug("{}: cancelDelayRamp called.", getDisplayName());
-//            _delayCommand = null;
+            _delayCommand = null;
         }
     }
 
@@ -2469,8 +2469,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _engineer.rampSpeedTo(nextSpeedType, _endBlockIdx);
                 }
             }
-            _delayCommand = null;
+            endDelayCommand();
         }
+    }
+
+    synchronized private void endDelayCommand() {
+        _delayCommand = null;
     }
 
     private void clearWaitFlags(boolean removeListeners) {
@@ -2876,14 +2880,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType, endBlockIdx);
         } else {    // cancelDelayRamp has been called
-//            synchronized(this) {
-                _delayCommand = new CommandDelay(speedType, waitTime, waitSpeed, endBlockIdx);
-                _delayCommand.start();
-                if (log.isDebugEnabled()) {
-                    log.debug("{}: CommandDelay: will wait {}ms, then Ramp to {} in block {}.",
-                            getDisplayName(), waitTime, speedType, getBlockAt(endBlockIdx).getDisplayName());
-                }
-//            }
+            _delayCommand = new CommandDelay(speedType, waitTime, waitSpeed, endBlockIdx);
+            _delayCommand.start();
+            if (log.isDebugEnabled()) {
+                log.debug("{}: CommandDelay: will wait {}ms, then Ramp to {} in block {}.",
+                        getDisplayName(), waitTime, speedType, getBlockAt(endBlockIdx).getDisplayName());
+            }
         }
     }
 
