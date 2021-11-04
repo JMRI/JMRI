@@ -92,56 +92,46 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             int sv = (nv - Servo8BasePaneProvider.OUT1_ON)/4 + 1;   // Outout channel number for NV 5 - 36
-            CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
             int value = getSelectValue(nv);
-            try {
-                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            } catch (NullPointerException ex) {
-                // nvArray does not exist yet
-                return;
-            }
-            int oldVal = getSelectValue(nv);
-            if (oldVal != value) {
-                // Only do something if the value has changed
-                // JSpinner is very trigger happy with state change updates and setting a new value
-                // will trigger another round of updates
-                if (nv == Servo8BasePaneProvider.CUTOFF) {
-                    //log.debug("Update cutoff to {}", value);
-                    for (int i = 1; i <= OUTPUTS; i++) {
-                        servo[i].cutoff.setSelected((value & (1<<(i-1))) > 0);
-                    }
-                } else if ((nv == Servo8BasePaneProvider.STARTUP_POS) || (nv == Servo8BasePaneProvider.STARTUP_MOVE)) {
-                    //log.debug("Update startup action {}", value);
-                    for (int i = 1; i <= OUTPUTS; i++) {
-                        servo[i].action.setButtons();
-                    }
-                } else if (nv == Servo8BasePaneProvider.SEQUENCE) {
-                    //log.debug("Update sequential to {}", value);
-                    for (int i = 1; i <= OUTPUTS; i++) {
-                        servo[i].seq.setSelected((value & (1<<(i-1))) > 0);
-                    }
-                } else if (nv > Servo8BasePaneProvider.OUT8_OFF_SPD) {
-                    // Not used
-                    log.debug("Update unknown NV {}", nv);
+            // Only do something if the value has changed
+            // JSpinner is very trigger happy with state change updates and setting a new value
+            // will trigger another round of updates
+            if (nv == Servo8BasePaneProvider.CUTOFF) {
+                //log.debug("Update cutoff to {}", value);
+                for (int i = 1; i <= OUTPUTS; i++) {
+                    servo[i].cutoff.setSelected((value & (1<<(i-1))) > 0);
+                }
+            } else if ((nv == Servo8BasePaneProvider.STARTUP_POS) || (nv == Servo8BasePaneProvider.STARTUP_MOVE)) {
+                //log.debug("Update startup action {}", value);
+                for (int i = 1; i <= OUTPUTS; i++) {
+                    servo[i].action.setButtons();
+                }
+            } else if (nv == Servo8BasePaneProvider.SEQUENCE) {
+                //log.debug("Update sequential to {}", value);
+                for (int i = 1; i <= OUTPUTS; i++) {
+                    servo[i].seq.setSelected((value & (1<<(i-1))) > 0);
+                }
+            } else if (nv > Servo8BasePaneProvider.OUT8_OFF_SPD) {
+                // Not used
+                log.debug("Update unknown NV {}", nv);
+            } else {
+                // Four NVs per output
+                if (((nv - Servo8BasePaneProvider.OUT1_ON) % 4) == 0) {
+                    // ON position
+                    //log.debug("Update ON pos NV {} output {} to {}", nv, sv, value);
+                    servo[sv].onPosSlider.setValue(value);
+                } else if (((nv - Servo8BasePaneProvider.OUT1_OFF) % 4) == 0) {
+                    // OFF position
+                    //log.debug("Update OFF pos NV {} output {} to {}", nv, sv, value);
+                    servo[sv].offPosSlider.setValue(value);
+                } else if (((nv - Servo8BasePaneProvider.OUT1_ON_SPD) % 4) == 0) {
+                    // ON speed, this will trigger the spinner change listener to call updateOnSpd
+                    //log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
+                    servo[sv].onSpdSpinner.getModel().setValue(value & 7);
                 } else {
-                    // Four NVs per output
-                    if (((nv - Servo8BasePaneProvider.OUT1_ON) % 4) == 0) {
-                        // ON position
-                        //log.debug("Update ON pos NV {} output {} to {}", nv, sv, value);
-                        servo[sv].onPosSlider.setValue(value);
-                    } else if (((nv - Servo8BasePaneProvider.OUT1_OFF) % 4) == 0) {
-                        // OFF position
-                        //log.debug("Update OFF pos NV {} output {} to {}", nv, sv, value);
-                        servo[sv].offPosSlider.setValue(value);
-                    } else if (((nv - Servo8BasePaneProvider.OUT1_ON_SPD) % 4) == 0) {
-                        // ON speed, this will trigger the spinner change listener to call updateOnSpd
-                        //log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
-                        servo[sv].onSpdSpinner.getModel().setValue(value & 7);
-                    } else {
-                        // OFF speed, this will trigger the spinner change listener to call updateOffSpd
-                        //log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
-                        servo[sv].offSpdSpinner.getModel().setValue(value & 7);
-                    }
+                    // OFF speed, this will trigger the spinner change listener to call updateOffSpd
+                    //log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
+                    servo[sv].offSpdSpinner.getModel().setValue(value & 7);
                 }
             }
         }

@@ -154,7 +154,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
             int value = getSelectValue(nv);
             
             switch (nv) {

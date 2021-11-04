@@ -105,14 +105,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
-            int value;
-            try {
-                value = (int)model.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            } catch (NullPointerException ex) {
-                // nvArray does not exist yet
-                return;
-            }
+            int value = getSelectValue(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
                 pulse[nv].getModel().setValue(value*TIME_STEP_SIZE);

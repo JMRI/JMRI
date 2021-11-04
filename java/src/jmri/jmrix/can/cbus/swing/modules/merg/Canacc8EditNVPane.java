@@ -101,7 +101,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)e.getSource();
             int value = getSelectValue(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
