@@ -400,7 +400,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed pick up car error on Manifests when using route blocking order.</li>
         </ul>
 
    <h3>Panel Editor</h3>
