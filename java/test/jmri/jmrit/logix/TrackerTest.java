@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Paul Bender Copyright (C) 2017
  */
 public class TrackerTest {
-
+/*
     @Test
     public void testCTor() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -111,7 +111,7 @@ public class TrackerTest {
         }
         _OBlockMgr.dispose();
     }
-
+*/
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
