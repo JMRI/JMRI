@@ -141,6 +141,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 // commands are ahead of current train position
                 // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notify() to free the wait
+                /*
                 synchronized (this) {
                     _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
                     boolean bumpedSpeed = false;
@@ -186,6 +187,24 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                             float entrySpeed = _speedUtil.modifySpeed(_speedUtil.getBlockSpeedInfo(idx).getEntranceSpeed(), _speedType);
                             setSpeed(entrySpeed);
                         }
+                        _synchBlock = null;
+                    }
+                }*/
+                synchronized (this) {
+                    _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
+                    try {
+                        if (log.isDebugEnabled()) {
+                            log.debug("{}: Wait for train to enter \"{}\".",
+                                    _warrant.getDisplayName(), _synchBlock.getDisplayName());
+                        }
+                        _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
+                        wait();
+                    } catch (InterruptedException ie) {
+                        log.error("At _waitForSync {}", ie);
+                        _warrant.debugInfo();
+                        Thread.currentThread().interrupt();
+                    }
+                    finally {
                         _synchBlock = null;
                     }
                 }
