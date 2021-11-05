@@ -57,12 +57,12 @@ public class BuildHelpFilesTest {
         if (Files.exists(path)) {
             return;
         }
-        
+
         FileWriter fileWriter = new FileWriter(FileUtil.getProgramPath()
                 + "help/" + _lang + "/local/stub/"+helpKey+".html");
-        
+
         try (PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            
+
             String expandedHelpKey = helpKey.replace(".", "/");
             int pos = expandedHelpKey.indexOf('_');
             if (pos == -1) {
@@ -71,7 +71,7 @@ public class BuildHelpFilesTest {
                 expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
                         + "#" + expandedHelpKey.substring(pos+1);
             }
-            
+
             String contents = _template.replace("<!--HELP_KEY-->", helpKey);
             contents = contents.replace("<!--URL_HELP_KEY-->", expandedHelpKey);
             printWriter.print(contents);
@@ -80,13 +80,16 @@ public class BuildHelpFilesTest {
 
     private void parseNode(String helpKey, Node node, String pad) {
         for (Node child : node.childNodes()) {
-//            System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
-            if ("a".equals(child.nodeName().toLowerCase())) {
-                String name = child.attributes().get("name");
-                if ((name != null) && !name.isEmpty()) {
+//             System.out.format("%s%s, %s%n", pad, child.nodeName(), child.getClass().getName());
+            String name = child.attributes().get("id");
+            if (name == null || name.isEmpty()) {
+                name = child.attributes().get("name");      // The French help still uses the name attribute
+            }
+            if ((name != null) && !name.isEmpty()) {
+                if (!name.equals("mBody") && !name.equals("mainContent")) {     // Exclude standard id names
                     String subHelpKey = helpKey+"_"+name;
                     _htmlPagesHelpKeys.add(subHelpKey);
-//                    System.out.format("HelpKey: %s%n", subHelpKey);
+//                     System.out.format("HelpKey: %s%n", subHelpKey);
                 }
             }
             parseNode(helpKey, child, pad+"    ");

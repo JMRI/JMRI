@@ -462,9 +462,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.25.5+R96551bed89.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R96551bed89.dmg) | e75b63bc8901d98a9a821e875a484e05e89fc50da5bc98070a75b34970b5998d
-[JMRI.4.25.5+R96551bed89.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R96551bed89.exe) | 8cbdfc2cdcf43167eaf250f3c31bf29b78760e321431afb94f3143f052f67dc8
-[JMRI.4.25.5+R96551bed89.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R96551bed89.tgz) | 37390cd48f0caaae8d2150eb4defffe074cce48d680bf8f883305071a8f30167
+[JMRI.4.25.5+R8682bb138b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R8682bb138b.dmg) | 8815d2580ccd4308fcd4b8a2dff2849ca7f5e7f10fdd826a0eaea434aa3e1439
+[JMRI.4.25.5+R8682bb138b.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R8682bb138b.exe) | 03f795a562c3aee91935be9a3cfbf6c60ae2fd831a25cf87ea7c8769b4311683
+[JMRI.4.25.5+R8682bb138b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.5/JMRI.4.25.5+R8682bb138b.tgz) | 7bb1fa846f8bdc115bda8d0d4ec6b67b816d4ee6cecc27cdbe89a0cc571c2e7e
 
 ```
 
@@ -621,13 +621,8 @@ You might want to edit it, i.e. to add
 - Take a break!
 
 
-
-
-
 ====================================================================================
 ====================================================================================
-
-
 
 
 # Additional Information
@@ -702,15 +697,6 @@ Ant will do the various builds, construct the distribution directories, and fina
     (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
-
-To do a direct download:
-
-```
-curl -o release.zip "https://builds.jmri.org/jenkins/job/TestReleases/job/4.25.6/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip""
-```
-and expansion;
-
-================================================================================
 ## Notes for those attempting this on MS Windows platform:
 
 Given that many of the steps involved assume the behaviour of certain POSIX commands (for which there are either no direct equivalent or have subtle behavioural differences), it is easiest to perform these tasks via Cygwin:
@@ -764,19 +750,6 @@ Also, it will be necessary to work in a Cygwin-specific SVN repository as one ch
 Some of the operations that are performed will still generate files with CRLF line-ends (even within the Cygwin environment) - for these, run the changed files through 'dos2unix'. To get a list of changed files, use 'svn st' at top of repo.
 
 ================================================================================
-Manual process for making help file indexes:
-
-```
-        cd help/en/
-        rm ~/.jhelpdev    (to make sure the right preferences are chosen)
-        ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
-        (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
-        (click "Create All", takes a bit of time, wait for button to release)
-        (quit)
-        ant index TOC
-```
-
-================================================================================
 
 `ant make-test-release-branch` does (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
 
@@ -805,25 +778,5 @@ github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.25.6 -n "JMRI.4.2
 
 (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
 
-
-
-================================================================================
-
-Instructions for uploading javadoc, XSLT if not being done automatically
-
-
-- Create and upload the Javadocs (As of May 2016, the [Jenkins server](https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just start a run of that Jenkins job. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step):
-```
-    ant javadoc-uml uploadjavadoc
-```
-
-- Create and upload the XSLT'd decoder pages
-```
-    (cd xml/XSLT; ant xslt upload)
-```
-
-Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
-
-================================================================================
 
 
