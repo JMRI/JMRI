@@ -11,6 +11,7 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 import static jmri.jmrix.can.cbus.swing.modules.merg.CansolPaneProvider.*;
 
+/**
  * Node Variable edit frame for a basic 8-channel solenoid module
  *
  * @author Andrew Crosland Copyright (C) 2021
