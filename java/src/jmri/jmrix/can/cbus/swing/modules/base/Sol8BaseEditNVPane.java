@@ -119,8 +119,8 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
                 //log.debug("Update enable delay to {}", value);
                 enableDelaySpinner.getModel().setValue(value*TIME_STEP_SIZE);
             } else {
-                // Not used
-                log.debug("Update unknown NV {}", nv);
+                // Not used, or row was -1
+//                log.debug("Update unknown NV {}", nv);
             }
         }
     }

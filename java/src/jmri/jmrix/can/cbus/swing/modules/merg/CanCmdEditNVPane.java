@@ -207,8 +207,8 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("Unexpected NV index");
-                    
+                    // Not used, or row was -1
+//                    log.debug("Update unknown NV {}", nv);
             }
         }
     }

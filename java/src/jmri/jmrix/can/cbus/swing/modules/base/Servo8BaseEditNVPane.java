@@ -9,6 +9,7 @@ import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
 import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
@@ -88,14 +89,23 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
     /** {@inheritDoc} */
     @Override
     public void tableChanged(TableModelEvent e) {
+//        log.debug("servo gui table changed");
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
             int sv = (nv - Servo8BasePaneProvider.OUT1_ON)/4 + 1;   // Outout channel number for NV 5 - 36
-            int value = getSelectValue(nv);
-            // Only do something if the value has changed
-            // JSpinner is very trigger happy with state change updates and setting a new value
-            // will trigger another round of updates
+//            int value = getSelectValue(nv);
+            int value;
+            try {
+                value = (int)_dataModel.getValueAt(row, NV_SELECT_COLUMN);
+            } catch (NullPointerException ex) {
+                // NVs are not available yet, e.g. during resync
+                // CBUS servo modules support "live update" od servo settings.
+                // We do not want to update sliders, etc., before the NV Array is available as doing so
+                // will trigger calls to the update Fns which will send NV writes with incorrect values.
+                // 
+                return;
+            }
             if (nv == Servo8BasePaneProvider.CUTOFF) {
                 //log.debug("Update cutoff to {}", value);
                 for (int i = 1; i <= OUTPUTS; i++) {
@@ -114,7 +124,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             } else if (nv > Servo8BasePaneProvider.OUT8_OFF_SPD) {
                 // Not used
                 log.debug("Update unknown NV {}", nv);
-            } else {
+            } else if (nv > 0) {
                 // Four NVs per output
                 if (((nv - Servo8BasePaneProvider.OUT1_ON) % 4) == 0) {
                     // ON position
@@ -133,6 +143,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
                     //log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
                     servo[sv].offSpdSpinner.getModel().setValue(value & 7);
                 }
+            } else {
+                // row was -1, do nothing
             }
         }
     }

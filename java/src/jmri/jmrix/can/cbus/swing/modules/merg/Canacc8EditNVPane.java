@@ -117,8 +117,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
                     out[i].action.setButtons();
                 }
             } else {
-                // Not used
-                log.debug("Update unknown NV {}", nv);
+                // Not used, or row was -1
+//                log.debug("Update unknown NV {}", nv);
             }
         }
     }

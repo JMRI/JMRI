@@ -44,7 +44,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @param row index of NV
      * 
-     * @return the NV value, 0 if NV not acailable yet
+     * @return the NV value, 0 if NV not available yet
      */
     protected int getSelectValue(int row) {
         try {

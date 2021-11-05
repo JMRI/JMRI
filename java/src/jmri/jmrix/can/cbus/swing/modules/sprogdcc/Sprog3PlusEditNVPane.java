@@ -232,7 +232,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 default:
-                    log.debug("Update unknown NV {}", nv);
+                    // Not used, or row was -1
+//                    log.debug("Update unknown NV {}", nv);
                     
             }
         }
