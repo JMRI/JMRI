@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Paul Bender Copyright (C) 2017
  */
 public class SCWarrantTest extends WarrantTest {
-
+/*
     @Test
     public void testIsRouteFree() throws JmriException {
         sEast.setState(Sensor.INACTIVE);
@@ -221,6 +221,6 @@ public class SCWarrantTest extends WarrantTest {
         //JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
-
+*/
     // private final static Logger log = LoggerFactory.getLogger(SCWarrantTest.class);
 }
