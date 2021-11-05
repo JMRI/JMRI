@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules.base;
 
-import jmri.jmrix.can.cbus.swing.modules.sprogdcc.*;
-
 import java.util.*;
 
 import javax.annotation.Nonnull;

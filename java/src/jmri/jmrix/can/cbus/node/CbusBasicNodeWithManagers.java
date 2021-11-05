@@ -29,6 +29,7 @@ public class CbusBasicNodeWithManagers extends CbusBasicNode {
     protected int _fwBuild;
     private int _manu;
     private int _type;
+    private boolean _nvWriteInLearn;
     
     private String _nodeUserName;
     
@@ -53,6 +54,7 @@ public class CbusBasicNodeWithManagers extends CbusBasicNode {
         _evManager = new CbusNodeEventManager(_memo,this);
         thisNodeBackupFile = new CbusNodeBackupManager(this);
         _nodeStats = new CbusNodeStats(this);
+        _nvWriteInLearn = false;
         
         _manu = -1;
         _type = -1;
@@ -174,6 +176,24 @@ public class CbusBasicNodeWithManagers extends CbusBasicNode {
      */
     public String getUserName() {
         return _nodeUserName;
+    }
+    
+    /**
+     * Set if node must be in learn mode to write NVs
+     * 
+     * @param nvwil true or false for node requires learn mode
+     */
+    public void setNvWriteInLearn(boolean nvwil) {
+        _nvWriteInLearn = nvwil;
+    }
+    
+    /**
+     * Get state of write in learn flag
+     * 
+     * @return true if node must be in learn to write NVs
+     */
+    public boolean getNvWriteInLearn() {
+        return _nvWriteInLearn;
     }
     
     /**

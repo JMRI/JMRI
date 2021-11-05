@@ -11,10 +11,6 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 import static jmri.jmrix.can.cbus.swing.modules.merg.CansolPaneProvider.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/**
  * Node Variable edit frame for a basic 8-channel solenoid module
  *
  * @author Andrew Crosland Copyright (C) 2021
@@ -181,6 +177,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Sol8BaseEditNVPane.class);
+//    private final static Logger log = LoggerFactory.getLogger(Sol8BaseEditNVPane.class);
 
 }

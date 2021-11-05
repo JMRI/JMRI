@@ -12,12 +12,6 @@ import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon;
 import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 /**
  * Node Variable edit frame for a MERG CANACC8 CBUS module
  *
@@ -596,6 +590,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+//    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

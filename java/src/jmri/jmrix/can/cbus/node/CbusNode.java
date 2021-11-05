@@ -16,7 +16,6 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private int _flags;
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
-    private boolean _nvWriteInLearn;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
     public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
     public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
@@ -37,7 +36,6 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         super(connmemo,nodenumber);
         
         _sendsWRACKonNVSET = true;
-        _nvWriteInLearn = false;
         _flags = -1;
         _userComment = "";
         _nodeNameFromName = "";
@@ -219,24 +217,6 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
             }
             notifyPropertyChangeListener("BACKUPS", null, null);
         }
-    }
-    
-    /**
-     * Set if node must be in learn mode to write NVs
-     * 
-     * @param nvwil true or false for node requires learn mode
-     */
-    public void setNvWriteInLearn(boolean nvwil) {
-        _nvWriteInLearn = nvwil;
-    }
-    
-    /**
-     * Get state of write in learn flag
-     * 
-     * @return true if node must be in learn to write NVs
-     */
-    public boolean getNvWriteInLearn() {
-        return _nvWriteInLearn;
     }
     
     /**
