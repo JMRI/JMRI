@@ -36,6 +36,11 @@ public class LayoutFunctionsTest {
     private final ExpressionNode exprSensorInactive = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.INACTIVE), 0));
     private final ExpressionNode exprSensorActive = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.ACTIVE), 0));
     
+    private final ExpressionNode exprLightIL1 = new ExpressionNodeString(new Token(TokenType.NONE, "IL1", 0));
+    private final ExpressionNode exprLightMyLight = new ExpressionNodeString(new Token(TokenType.NONE, "My light", 0));
+    private final ExpressionNode exprLightOff = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.INACTIVE), 0));
+    private final ExpressionNode exprLightOn = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.ACTIVE), 0));
+    
     private final int SignalHead_Red = 1;
     private final int SignalHead_Green = 2;
     
@@ -54,6 +59,38 @@ public class LayoutFunctionsTest {
         List<ExpressionNode> list = new ArrayList<>();
         Collections.addAll(list, exprNodes);
         return list;
+    }
+    
+    @Test
+    public void testTurnoutExistsFunction() throws Exception {
+        LayoutFunctions.TurnoutExistsFunction turnoutExistsFunction = new LayoutFunctions.TurnoutExistsFunction();
+        Assert.assertEquals("strings matches", "turnoutExists", turnoutExistsFunction.getName());
+        Assert.assertNotNull("Function has description", turnoutExistsFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            turnoutExistsFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse("Turnout doesn't exists",
+                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
+        
+        Assert.assertFalse("Turnout doesn't exists",
+                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
+        
+        MyTurnout t = new MyTurnout();
+        InstanceManager.getDefault(TurnoutManager.class).register(t);
+        Assert.assertTrue("Turnout exists",
+                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
+        Assert.assertTrue("Turnout exists",
+                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
     }
     
     @Test
@@ -143,6 +180,38 @@ public class LayoutFunctionsTest {
     }
     
     @Test
+    public void testSensorExistsFunction() throws Exception {
+        LayoutFunctions.SensorExistsFunction sensorExistsFunction = new LayoutFunctions.SensorExistsFunction();
+        Assert.assertEquals("strings matches", "sensorExists", sensorExistsFunction.getName());
+        Assert.assertNotNull("Function has description", sensorExistsFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            sensorExistsFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse("Sensor doesn't exists",
+                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
+        
+        Assert.assertFalse("Sensor doesn't exists",
+                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
+        
+        MySensor t = new MySensor();
+        InstanceManager.getDefault(SensorManager.class).register(t);
+        Assert.assertTrue("Sensor exists",
+                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
+        Assert.assertTrue("Sensor exists",
+                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
+    }
+    
+    @Test
     public void testGetSetSensorStateFunction() throws Exception {
         LayoutFunctions.GetSensorStateFunction getSensorStateFunction = new LayoutFunctions.GetSensorStateFunction();
         Assert.assertEquals("strings matches", "getSensorState", getSensorStateFunction.getName());
@@ -229,6 +298,156 @@ public class LayoutFunctionsTest {
     }
     
     @Test
+    public void testLightExistsFunction() throws Exception {
+        LayoutFunctions.LightExistsFunction lightExistsFunction = new LayoutFunctions.LightExistsFunction();
+        Assert.assertEquals("strings matches", "lightExists", lightExistsFunction.getName());
+        Assert.assertNotNull("Function has description", lightExistsFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            lightExistsFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse("Light doesn't exists",
+                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        
+        Assert.assertFalse("Light doesn't exists",
+                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        
+        MyLight t = new MyLight();
+        InstanceManager.getDefault(LightManager.class).register(t);
+        Assert.assertTrue("Light exists",
+                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        Assert.assertTrue("Light exists",
+                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+    }
+    
+    @Test
+    public void testGetSetLightStateFunction() throws Exception {
+        LayoutFunctions.GetLightStateFunction getLightStateFunction = new LayoutFunctions.GetLightStateFunction();
+        Assert.assertEquals("strings matches", "getLightState", getLightStateFunction.getName());
+        Assert.assertNotNull("Function has description", getLightStateFunction.getDescription());
+        
+        LayoutFunctions.SetLightStateFunction setLightStateFunction = new LayoutFunctions.SetLightStateFunction();
+        Assert.assertEquals("strings matches", "setLightState", setLightStateFunction.getName());
+        Assert.assertNotNull("Function has description", setLightStateFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            getLightStateFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assertions.assertThrows(CalculateException.class, () -> {
+            Assert.assertEquals("Light has correct state", Light.ON,
+                    (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        });
+        
+        Assertions.assertThrows(CalculateException.class, () -> {
+            Assert.assertEquals("Light has correct state", Light.ON,
+                    (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        });
+        
+        MyLight s = new MyLight();
+        InstanceManager.getDefault(LightManager.class).register(s);
+        s.setState(Light.UNKNOWN);
+        
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.ON);
+        Assert.assertEquals("Light has correct state", Light.ON,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        
+        s.setTestKnownState(Light.ON);
+        Assert.assertEquals("Light has correct state", Light.ON,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        
+        s.setTestKnownState(Light.OFF);
+        Assert.assertEquals("Light has correct state", Light.OFF,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        
+        s.setTestKnownState(Light.OFF);
+        Assert.assertEquals("Light has correct state", Light.OFF,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.ON);
+        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+                (int)setLightStateFunction.calculate(symbolTable,
+                        getParameterList(exprLightIL1, exprLightOn)));
+        Assert.assertEquals("Light is set", Light.ON, s._lastSetState);
+        
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.ON);
+        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+                (int)setLightStateFunction.calculate(symbolTable,
+                        getParameterList(exprLightMyLight, exprLightOn)));
+        Assert.assertEquals("Light is set", Light.ON, s._lastSetState);
+        
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.OFF);
+        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+                (int)setLightStateFunction.calculate(symbolTable,
+                        getParameterList(exprLightIL1, exprLightOff)));
+        Assert.assertEquals("Light is set", Light.OFF, s._lastSetState);
+        
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.OFF);
+        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+                (int)setLightStateFunction.calculate(symbolTable,
+                        getParameterList(exprLightMyLight, exprLightOff)));
+        Assert.assertEquals("Light is set", Light.OFF, s._lastSetState);
+    }
+    
+    @Test
+    public void testSignalHeadExistsFunction() throws Exception {
+        LayoutFunctions.SignalHeadExistsFunction signalHeadExistsFunction = new LayoutFunctions.SignalHeadExistsFunction();
+        Assert.assertEquals("strings matches", "signalHeadExists", signalHeadExistsFunction.getName());
+        Assert.assertNotNull("Function has description", signalHeadExistsFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            signalHeadExistsFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse("SignalHead doesn't exists",
+                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
+        
+        Assert.assertFalse("SignalHead doesn't exists",
+                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
+        
+        MySignalHead t = new MySignalHead();
+        InstanceManager.getDefault(SignalHeadManager.class).register(t);
+        Assert.assertTrue("SignalHead exists",
+                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
+        Assert.assertTrue("SignalHead exists",
+                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
+    }
+    
+    @Test
     public void testGetSetSignalHeadAppearanceFunction() throws Exception {
         LayoutFunctions.GetSignalHeadAppearanceFunction getSignalHeadStateFunction = new LayoutFunctions.GetSignalHeadAppearanceFunction();
         Assert.assertEquals("strings matches", "getSignalHeadAppearance", getSignalHeadStateFunction.getName());
@@ -262,7 +481,6 @@ public class LayoutFunctionsTest {
         
         MySignalHead sh = new MySignalHead();
         InstanceManager.getDefault(SignalHeadManager.class).register(sh);
-//        InstanceManager.getDefault(SignalHeadManager.class).newSignalHead("IT1", "My turnout");
         sh.setState(SignalHead.UNKNOWN);
         sh.setState(SignalHead_Red);
         
@@ -314,6 +532,38 @@ public class LayoutFunctionsTest {
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
                         getParameterList(exprSignalHeadMySignalHead, exprSignalHeadRed)));
         Assert.assertEquals("SignalHead is set", SignalHead_Red, sh._lastAppearance);
+    }
+    
+    @Test
+    public void testSignalMastExistsFunction() throws Exception {
+        LayoutFunctions.SignalMastExistsFunction signalMastExistsFunction = new LayoutFunctions.SignalMastExistsFunction();
+        Assert.assertEquals("strings matches", "signalMastExists", signalMastExistsFunction.getName());
+        Assert.assertNotNull("Function has description", signalMastExistsFunction.getDescription());
+        
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        hasThrown.set(false);
+        try {
+            signalMastExistsFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        
+        Assert.assertFalse("SignalMast doesn't exists",
+                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
+        
+        Assert.assertFalse("SignalMast doesn't exists",
+                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
+        
+        MySignalMast t = new MySignalMast();
+        InstanceManager.getDefault(SignalMastManager.class).register(t);
+        Assert.assertTrue("SignalMast exists",
+                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
+        Assert.assertTrue("SignalMast exists",
+                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
     }
     
     @Test
@@ -465,6 +715,39 @@ public class LayoutFunctionsTest {
 
         @Override
         public void setKnownState(int newState) throws jmri.JmriException {
+            _lastSetState = newState;
+            _knownState = Sensor.UNKNOWN;
+        }
+
+        @Override
+        public void requestUpdateFromLayout() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+    }
+    
+    
+    private static class MyLight extends jmri.implementation.AbstractLight {
+
+        private int _knownState = Turnout.UNKNOWN;
+        private int _lastSetState = Sensor.UNKNOWN;
+
+        public MyLight() {
+            super("IL1", "My light");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public int getKnownState() {
+            return _knownState;
+        }
+
+        public void setTestKnownState(int newState) throws jmri.JmriException {
+            _knownState = newState;
+        }
+
+        @Override
+        public void setState(int newState) {
             _lastSetState = newState;
             _knownState = Sensor.UNKNOWN;
         }
