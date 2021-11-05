@@ -130,7 +130,7 @@ public class SCWarrantTest extends WarrantTest {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initRosterConfigManager();
-
+/*
         // setup the sc warrant preliminaries.
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         bWest = _OBlockMgr.createNewOBlock("OB1", "West");
@@ -217,6 +217,7 @@ public class SCWarrantTest extends WarrantTest {
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new SCWarrant("IW1", "SCWarrant test", 5);
+*/
     }
 
     @AfterEach
