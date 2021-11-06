@@ -40,6 +40,7 @@ public class SCWarrant extends Warrant {
         super(sName, uName);
         log.debug("new SCWarrant {} TTP={}",uName,TTP);
         timeToPlatform = TTP;
+        setNoRamp(true);
     }
 
     public long getTimeToPlatform() {
