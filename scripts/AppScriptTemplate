@@ -204,7 +204,8 @@ BUNDLEDIR=""
 ARGS=
 
 # set DEBUG to any non-empty string to see debugging output
-DEBUG=${DEBUG:-}
+# JMRI 4.99 sets it on by default with the X below
+DEBUG=X${DEBUG:-}
 
 # set default classpaths additions
 pre_classpath=""
@@ -284,6 +285,7 @@ fi
 parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
+[ -n "${DEBUG}" ] && echo "initial JAVA_HOME: '${JAVA_HOME}' OS: '${OS}'" | tee -a ${launcher_log}
 if [ -z "${JAVA_HOME}" ] ; then
     #
     # macOS / OS X get special treatment
@@ -306,6 +308,7 @@ if [ -z "${JAVA_HOME}" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
             # Test if java is present and version 11 through 17
             java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
+            [ -n "${DEBUG}" ] && echo "JAVA_HOME/bin/java: '${java_version}'" | tee -a ${launcher_log}
             if [[ ! "${java_version}" =~ \"11|\"12|\"13|\"14|\"15|\"16|\"17 ]] ; then
                 JAVA_HOME=""
             fi
@@ -317,6 +320,7 @@ if [ -z "${JAVA_HOME}" ] ; then
         for jversion in 11 12 13 14 15 16 17 ; do
             if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
                 # Test for any JDKs
+                [ -n "${DEBUG}" ] && echo "test for Java: '${jversion}'" | tee -a ${launcher_log}
                 JAVA_HOME=$( /usr/libexec/java_home --version ${jversion} --failfast 2>/dev/null )
                 if [ -n "${JAVA_HOME}" ] ; then
                     JAVACMD="${JAVA_HOME}/bin/java"
