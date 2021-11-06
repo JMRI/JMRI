@@ -12,6 +12,7 @@ import jmri.spi.JmriServiceProviderInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Pane for configuring events in a CBUS module
  * 
@@ -75,7 +76,20 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     final public String toString() {
         return getModuleType();
     }
-        
+    
+    /**
+     * CANSERVO8C and related modules only accept NV writes in learn mode.
+     * 
+     * This is used by the MERG FCU to update servo positions in "real time" in
+     * response to interaction with the GUI. The Node Manager can support this
+     * behaviour if this method is overridden.
+     * 
+     * @return true if node expects NV writes only in learn mode
+     */
+    public boolean nvWriteInLearn() {
+        return false;
+    }
+    
     /**
      * Get a module provider from a module name
      * 
@@ -98,6 +112,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
         if (p != null) {
             return p;
         } else {
+            log.debug("node {} NN {} name {} gets unknown provider", node, node.getNodeNumber(), node.getName());
             return new UnknownPaneProvider();
         }
     }
@@ -144,5 +159,5 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
 
     static volatile Map<String, CbusConfigPaneProvider> instanceMap = null;
 
-//    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
 }

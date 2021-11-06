@@ -1175,7 +1175,7 @@
       <a href="#TerminateTrain">Terminate</a> the train when all of the cars have been spotted to
       their specified tracks.</p>
 
-      <h3>Save</h3>
+      <h4>Save</h4>
 
       <p>When you're finished with the settings window, press the save button to store your
       settings in a file named "Operations.xml". You can find this file in JMRI-&gt; "profile name"
@@ -2063,6 +2063,7 @@
       railroads unfortunately misplace cars as part of their operations, so having a few cars in
       the wrong place on your railroad is very prototypical. Save time and effort and let your
       operators find those misplaced cars for you.
+      
       <h3 id="HazardousComment">Hazardous Comment</h3>
 
       <p>The program will add the "Hazardous Comment" to the Manifests and switch lists when a car
@@ -2417,21 +2418,23 @@
       A spur is used to service an industry. To add a spur, select the "Spurs" radio button and
       then press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a>
       window. Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more
-      information. When entering the length of the spur, enter the length of the cars that will
-      service the industry plus the coupler lengths. For example, let's say you have an industry
-      that can service two 50' boxcars, the track length in this case is 100' plus 8' for the
-      couplers (4' for each car), for a total of 108'. You could optionally round up the length to
-      110' or more.
-      <p>When a car is placed at a spur the car's load status is modified. The program provides two
-      load names for all cars, the default empty or "E", and the default load or "L". If a car has
-      one of these loads when it arrives at a spur, the load name will change to the other, i.e.
-      "E" becomes "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>,
-      it too will be replaced by the default empty "E" when the program sets a car out to a spur.
-      You can also configure your car to return to a specific location or track when the car's load
-      is removed, and optionally change the car's default "E" load to a custom empty load. See
-      <a href="#ReturnWhenEmpty">Return When Empty</a> for more details.</p>
+   information. When entering the length of the spur, enter the length of the cars that will service
+   the industry plus the coupler lengths. For example, let's say you have an industry that can
+   service two 50' boxcars, the track length in this case is 100' plus 8' for the couplers (4' for
+   each car), for a total of 108'. You could optionally round up the length to 110' or more.
+   <p>
+    When a car is placed at a spur the car's load status is modified. The program provides two load
+    names for all cars, the default empty or "E", and the default load or "L". If a car has one of
+    these loads when it arrives at a spur, the load name will change to the other, i.e. "E" becomes
+    "L" and "L" becomes "E". If a car has a <a href="#EditCarLoads">custom load</a>, it too will be
+    replaced by the default empty "E" when the program sets a car out to a spur. You can also
+    configure your car to return to a specific location or track when the car's load is removed, and
+    optionally change the car's default "E" load to a custom empty load. See <a
+     href="#ReturnWhenEmpty">Return When Empty</a> and <a href="#ReturnWhenLoaded">Return When
+     Loaded</a> for more details.
+   </p>
 
-      <p>You can if you want, control which trains or routes can pick up or set out cars to your
+   <p>You can if you want, control which trains or routes can pick up or set out cars to your
       spurs. If you do restrict which trains or routes can pull cars from a track, you must also
       restrict the track's car types, loads, and roads to the same ones that your trains can
       service, otherwise you can have cars stranded on the track.</p>
@@ -2504,7 +2507,7 @@
       deliver cars in the order you entered in the schedule table. Car types at the top of the
       table are requested first and once the last car type is delivered, the schedule resumes from
       the top. A pointer shows the next car type to be delivered. Select the "Sequential" radio
-      button in the top left corner and press "Save" if car type and load delivery order is
+      button in the top left corner and press "Save" if car type and load delivery order is as
       desired.</p>
 
       <p>Match mode eliminates the sequential aspects of a schedule. In match mode, the program
@@ -3080,12 +3083,16 @@
       roads that the track will not service, you will see "E" and the number of roads that you want
       to exclude from this track.</p>
 
-      <h4 id="TrackWorkComments">Manifest Comments</h4>
-      You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
-      pickup and set out occurs to a track. Only one of the three messages will be added to your
-      paperwork when there's work for the selected track. The checkboxes at the bottom of the
-      window allow you to decide which paperwork gets the comment.
-      <h4 id="Pools">Track Pools</h4>
+   <h4 id="TrackWorkComments">Manifest Comments</h4>
+   You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
+   pickup and set out occurs to a track. Only one of the three messages will be added to your
+   paperwork when there's work for the selected track. The checkboxes at the bottom of the window
+   allow you to decide which paperwork gets the comment.
+
+   <p>You can also select the color of the text for each of the comments using the color
+    selector to the right of the text message.</p>
+
+   <h4 id="Pools">Track Pools</h4>
       OperationsPro™ allows you to "pool" a set of tracks at a location. Tracks in a pool share
       their track lengths with each other. This is useful if you've divided a location into track
       segments and you want each segment to adjust its length based on the program's demands. To
@@ -3550,14 +3557,15 @@
       the locations have an associated <a href="#LocationReporter">Id Tag Reader at Location</a>
       and the Id Tag associated with this car is read by that Reporter, then the location will be
       updated. See <a href="#Options">Options</a> to enable this feature.
-      <h3>Add (Copy)</h3>
+      
+      <h4>Add (Copy)</h4>
       Press the "Add" button to enter a new car into your roster. You can also use the "Add" button
       to make a copy of a car. Select an existing car using the "Edit" button in the "Cars" window,
       and then modify the car's road number, and any other car attributes, then press the "Add"
       button to create another car for your roster. Pressing the "Add" button also causes the new
       car to be saved. See the "Save" button below.
-      <h3>Save</h3>
-
+      
+      <h4>Save</h4>
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
       create a file named "OperationsCarRoster.xml". You can find this file in JMRI-&gt; "profile
       name" -&gt; operations. A backup file with the last settings for all of your cars is also
@@ -3937,7 +3945,8 @@
       the locations have an associated <a href="#LocationReporter">Id Tag Reader at Location</a>
       and the Id Tag associated with this locomotive is read by that Reporter, then the location
       will be updated. See <a href="#Options">Options</a> to enable this feature.
-      <h3>Save</h3>
+      
+      <h4>Save</h4>
 
       <p>Press "Save" to store the locomotive's settings. The program will create a file named
       "OperationsEngineRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
@@ -4079,7 +4088,7 @@
       train's Manifests. Press the "Add" button under the table heading "Comment" to add a comment
       to a location.</p>
 
-      <h3>Save Route</h3>
+      <h4>Save Route</h4>
 
       <p>Press "Save Route" to save your route. The program will create a file named
       "OperationsRouteRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
@@ -4322,8 +4331,11 @@
       remove a caboose anywhere in the train's route, see <a href=
       "#OptionalTrainRequirements">Optional Train Requirements (Locomotive or Caboose Changes en
       Route)</a> under <a href="#TrainBuildOptions">Train Build Options</a> for more info.</p>
+      
+      <h4>Train Comment</h4>      
+      <p>You can enter an optional comment for your train that will appear on your Manifests.</p>
 
-      <h3 id="TrainReset">Reset Train</h3>
+      <h4 id="TrainReset">Reset Train</h4>
       The "Reset Train" button allows you to remove locomotives and cars that have been assigned to
       a train. Useful when you want to try various build options and don't what to physically move
       locomotives and cars on the railroad. Note that you can only reset a built train that hasn't
@@ -4333,7 +4345,7 @@
       and car wait values. Therefore new train builds can be different after using the train reset
       function.</p>
 
-      <h3>Save Train</h3>
+      <h4>Save Train</h4>
 
       <p>Press "Save Train" to save your train. The program will create a file named
       "OperationsTrainRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;

@@ -519,6 +519,15 @@ public interface Base extends PropertyChangeProvider {
     public ArrayList<String> getListenerRefs();
 
     /**
+     * Returns a list of all the listeners references for this object
+     * and all its children.
+     *
+     * @param list a list of textual references
+     */
+    @CheckReturnValue
+    public void getListenerRefsIncludingChildren(List<String> list);
+
+    /**
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      *

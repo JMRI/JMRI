@@ -21,8 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Andrew Crosland added new code to implement a Service provider Interface for CBUS module support.<br>
-                Initial support is limited to a few modules and allows more human-friendly editing of Node variables.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -87,7 +86,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li>See CBUS notes.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -132,7 +131,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>See CBUS notes.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -401,15 +400,13 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed pick up car error on Manifests when using route blocking order.</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>When changing the icons used by an item,
-                the icon display window now shows the choices
-                in alphanumeric order by name.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -501,10 +498,7 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Multiple upgrades to improve the realism
-                of the
-                <a href="https://jmri.org/jython/ctc">example panel's</a>
-                operation and appearance. Much help provided by Bob Milhaupt.</li>
+                <li></li>
             </ul>
 
    <h3>Switchboard Editor</h3>
@@ -516,7 +510,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added ControlPanel.getSpeedSlider() for scripting</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -570,11 +564,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The length of logging lines sent to the system console has been reduced
-                by no longer including the date.  The time is still included.
-                If you have a copy of the 'default.lcf' file in your local JMRI
-                setting directory, you won't see this change until you update it.</li>
-            <li>Access to the deprecated SecurityManager class has been removed;
-                Java access security is now enforced by default.</li>
+            <li></li>
         </ul>
 

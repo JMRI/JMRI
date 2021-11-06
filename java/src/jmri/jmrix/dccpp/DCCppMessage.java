@@ -171,6 +171,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TURNOUT_CMD:
                 if ((match(toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
+                } else if ((match(toString(), DCCppConstants.TURNOUT_ADD_DCC_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_ADD_DCC_REGEX;
+                } else if ((match(toString(), DCCppConstants.TURNOUT_ADD_SERVO_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_ADD_SERVO_REGEX;
+                } else if ((match(toString(), DCCppConstants.TURNOUT_ADD_VPIN_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_ADD_VPIN_REGEX;
                 } else if ((match(toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
                 } else if ((match(toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
@@ -256,6 +262,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.DIAG_CMD:
                 myRegex = DCCppConstants.DIAG_CMD_REGEX;                
+                break;
+            case DCCppConstants.CONTROL_CMD:
+                myRegex = DCCppConstants.CONTROL_CMD_REGEX;                
                 break;
             default:
                 myRegex = "";
@@ -343,15 +352,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "ID: " + getTOIDString();
                     text += ", Address: " + getTOAddressString();
                     text += ", Subaddr: " + getTOSubAddressString();
+                } else if (isTurnoutAddDCCMessage()) {
+                    text = "Add Turnout DCC: ";
+                    text += "ID:" + getTOIDString();
+                    text += ", Address:" + getTOAddressString();
+                    text += ", Subaddr:" + getTOSubAddressString();
+                } else if (isTurnoutAddServoMessage()) {
+                    text = "Add Turnout Servo: ";
+                    text += "ID:" + getTOIDString();
+                    text += ", Pin:" + getTOPinInt();
+                    text += ", ThrownPos:" + getTOThrownPositionInt();
+                    text += ", ClosedPos:" + getTOClosedPositionInt();
+                    text += ", Profile:" + getTOProfileInt();
+                } else if (isTurnoutAddVpinMessage()) {
+                    text = "Add Turnout Vpin: ";
+                    text += "ID:" + getTOIDString();
+                    text += ", Pin:" + getTOPinInt();
                 } else if (isTurnoutDeleteMessage()) {
                     text = "Delete Turnout: ";
                     text += "ID: " + getTOIDString();
                 } else if (isListTurnoutsMessage()) {
                     text = "List Turnouts...";
-                } else {
+                } else if (isTurnoutCmdMessage()) {
                     text = "Turnout Cmd: ";
                     text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
+                } else {
+                    text = "Unmatched Turnout Cmd: " + toString();                    
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
@@ -470,6 +497,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;               
             case DCCppConstants.DIAG_CMD:
                 text = "Diag Cmd: '" + toString() + "'";
+                break;               
+            case DCCppConstants.CONTROL_CMD:
+                text = "Control Cmd: '" + toString() + "'";
                 break;               
             case DCCppConstants.ESTOP_ALL_CMD:
                 text = "eStop All Locos Cmd: '" + toString() + "'";
@@ -728,6 +758,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public boolean isTurnoutAddMessage() {
         return (this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null);
+    }
+
+    public boolean isTurnoutAddDCCMessage() {
+        return (this.match(DCCppConstants.TURNOUT_ADD_DCC_REGEX) != null);
+    }
+
+    public boolean isTurnoutAddServoMessage() {
+        return (this.match(DCCppConstants.TURNOUT_ADD_SERVO_REGEX) != null);
+    }
+
+    public boolean isTurnoutAddVpinMessage() {
+        return (this.match(DCCppConstants.TURNOUT_ADD_VPIN_REGEX) != null);
     }
 
     public boolean isTurnoutDeleteMessage() {
@@ -1178,7 +1220,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getTOAddressString() {
-        if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage() || this.isTurnoutAddDCCMessage()) {
             return (getValueString(2));
         } else {
             log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
@@ -1187,7 +1229,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getTOAddressInt() {
-        if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage() || this.isTurnoutAddDCCMessage()) {
             return (getValueInt(2));
         } else {
             log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
@@ -1196,7 +1238,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getTOSubAddressString() {
-        if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage() || this.isTurnoutAddDCCMessage()) {
             return (getValueString(3));
         } else {
             log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
@@ -1205,8 +1247,44 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getTOSubAddressInt() {
-        if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage() || this.isTurnoutAddDCCMessage()) {
             return (getValueInt(3));
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }
+
+    public int getTOThrownPositionInt() {
+        if (this.isTurnoutAddServoMessage()) {
+            return (getValueInt(3));
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }
+
+    public int getTOClosedPositionInt() {
+        if (this.isTurnoutAddServoMessage()) {
+            return (getValueInt(4));
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }
+
+    public int getTOProfileInt() {
+        if (this.isTurnoutAddServoMessage()) {
+            return (getValueInt(5));
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }
+
+    public int getTOPinInt() {
+        if (this.isTurnoutAddServoMessage() || this.isTurnoutAddVpinMessage()) {
+            return (getValueInt(2));
         } else {
             log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return (0);
@@ -1439,7 +1517,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_TRACK_CURRENT:
             case DCCppConstants.READ_CS_STATUS:
             case DCCppConstants.READ_MAXNUMSLOTS:
-//            case DCCppConstants.GET_FREE_MEMORY:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 retv = true;
@@ -1625,6 +1702,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public static DCCppMessage makeTurnoutListMsg() {
         return (new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.TURNOUT_LIST_REGEX));
+    }
+
+    public static DCCppMessage makeMessage(String msg) {
+        return (new DCCppMessage(msg));
     }
 
     /**

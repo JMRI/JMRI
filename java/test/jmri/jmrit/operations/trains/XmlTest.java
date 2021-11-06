@@ -2,23 +2,25 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+
+import org.jdom2.JDOMException;
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-
-import org.jdom2.JDOMException;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Xml class Last manually cross-checked on 20090131
@@ -118,6 +120,7 @@ public class XmlTest extends OperationsTestCase {
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location Arlington = lmanager.newLocation("Arlington");
         Location Westford = lmanager.newLocation("Westford");
+        Track trackWestford = Westford.addTrack("Track at Westford", Track.SPUR);
         Location Bedford = lmanager.newLocation("Bedford");
 
         RouteLocation startA = A.addLocation(Westford);
@@ -134,15 +137,14 @@ public class XmlTest extends OperationsTestCase {
         RouteLocation endC = C.addLocation(Westford);
 
         TrainManager manager = InstanceManager.getDefault(TrainManager.class);
-        List<Train> temptrainList = manager.getTrainsByIdList();
 
-        Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
+
+        Assert.assertEquals("Starting Number of Trains", 0, manager.getTrainsByIdList().size());
         Train t1 = manager.newTrain("Test Number 1");
         Train t2 = manager.newTrain("Test Number 2");
         Train t3 = manager.newTrain("Test Number 3");
 
-        temptrainList = manager.getTrainsByIdList();
-        Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
+        Assert.assertEquals("New Number of Trains", 3, manager.getTrainsByIdList().size());
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = eManager.newRS("UP", "1");
@@ -168,7 +170,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setOwnerOption("t3 X owner option");
         t3.setRailroadName("t3 X railroad name");
         t3.setRequirements(Train.CABOOSE);
-        t3.setRoadOption("t3 X raod option");
+        t3.setRoadOption("t3 X road option");
         t3.setRoute(B);
         t3.setStatusCode(Train.CODE_UNKNOWN);
 
@@ -191,6 +193,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setBuildFailed(true);
         t1.setBuildTrainNormalEnabled(true);
         t1.setBuilt(false);
+        t1.setStatusCode(Train.CODE_BUILD_FAILED);
         t1.setBuiltEndYear("1956");
         t1.setBuiltStartYear("1932");
         t1.setCabooseRoad("t1 caboose road");
@@ -202,13 +205,17 @@ public class XmlTest extends OperationsTestCase {
         t1.setEngineRoad("t1 engine road");
         t1.setLeadEngine(e1);
         t1.setLoadOption("t1 load option");
+        t1.addLoadName("t1 load name 1");
         t1.setManifestLogoPathName("t1 pathName");
         t1.setNumberEngines("1");
         t1.setOwnerOption("t1 owner option");
+        t1.addOwnerName("t1 owner name 1");
         t1.setRailroadName("t1 railroad name");
         t1.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t1.setRoadOption("t1 raod option");
+        t1.setRoadOption("t1 road option");
+        t1.addRoadName("t1 road name 1");
         t1.setRoute(C);
+        t1.setTerminationTrack(trackWestford);
         t1.setSecondLegCabooseRoad("t1 second leg caboose road");
         t1.setSecondLegEndRouteLocation(midC);
         t1.setSecondLegEngineModel("t1 second leg engine model");
@@ -217,7 +224,6 @@ public class XmlTest extends OperationsTestCase {
         t1.setSecondLegOptions(Train.ADD_CABOOSE);
         t1.setSecondLegStartRouteLocation(endC);
         t1.setSendCarsToTerminalEnabled(true);
-        t1.setStatusCode(Train.CODE_UNKNOWN);
         t1.setSwitchListStatus(Train.PRINTED);
         t1.setThirdLegCabooseRoad("t1 third leg caboose road");
         t1.setThirdLegEndRouteLocation(startC);
@@ -248,9 +254,14 @@ public class XmlTest extends OperationsTestCase {
         t3.setOwnerOption("t3 owner option");
         t3.setRailroadName("t3 railroad name");
         t3.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t3.setRoadOption("t3 raod option");
+        t3.setRoadOption("t3 road option");
         t3.setRoute(A);
+        t3.setDepartureTrack(trackWestford);
         t3.setStatusCode(Train.CODE_UNKNOWN);
+        t3.addAfterBuildScript("After build script path");
+        t3.addBuildScript("Build script path");
+        t3.addMoveScript("Move script path");
+        t3.addTerminationScript("Termination script path");
 
         t5.setBuildEnabled(true);
         t5.setBuildFailed(false);
@@ -272,7 +283,7 @@ public class XmlTest extends OperationsTestCase {
         t5.setOwnerOption("t5 owner option");
         t5.setRailroadName("t5 railroad name");
         t5.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t5.setRoadOption("t5 raod option");
+        t5.setRoadOption("t5 road option");
         t5.setRoute(B);
         t5.setStatusCode(Train.CODE_UNKNOWN);
 
@@ -283,6 +294,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 build failed", true, t1.isBuildFailed());
         Assert.assertEquals("t1 build normal", true, t1.isBuildTrainNormalEnabled());
         Assert.assertEquals("t1 built", false, t1.isBuilt());
+        Assert.assertEquals("t1 status code", Train.CODE_BUILD_FAILED, t1.getStatusCode());
+        Assert.assertEquals("t1 status", Train.BUILD_FAILED, t1.getStatus());
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
@@ -295,13 +308,17 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("t1 has a lead engine", t1.getLeadEngine());
         Assert.assertEquals("t1 lead engine number", "1", t1.getLeadEngine().getNumber());
         Assert.assertEquals("t1 load option", "t1 load option", t1.getLoadOption());
+        Assert.assertEquals("t1 load name", "t1 load name 1", t1.getLoadNames()[0]);
         Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoPathName());
         Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
         Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
+        Assert.assertEquals("t1 Owner name", "t1 owner name 1", t1.getOwnerNames()[0]);
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
-        Assert.assertEquals("t1 road option", "t1 raod option", t1.getRoadOption());
+        Assert.assertEquals("t1 road option", "t1 road option", t1.getRoadOption());
+        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
+        Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());
         Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndRouteLocation());
@@ -313,7 +330,6 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 second leg options", Train.ADD_CABOOSE, t1.getSecondLegOptions());
         Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartRouteLocation());
         Assert.assertEquals("t1 send cars to terminal", true, t1.isSendCarsToTerminalEnabled());
-        Assert.assertEquals("t1 status", Train.UNKNOWN, t1.getStatus());
         Assert.assertEquals("t1 switch list status", Train.PRINTED, t1.getSwitchListStatus());
         Assert.assertEquals("t1 third leg caboose road", "t1 third leg caboose road", t1
                 .getThirdLegCabooseRoad());
@@ -349,8 +365,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.NO_CABOOSE_OR_FRED, t3.getRequirements());
-        Assert.assertEquals("t3 road option", "t3 raod option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 road option", t3.getRoadOption());
         Assert.assertEquals("t3 route", A, t3.getRoute());
+        Assert.assertEquals("t3 departure track", trackWestford, t3.getDepartureTrack());
         // test second leg defaults
         Assert.assertEquals("t3 second leg caboose road", "", t3.getSecondLegCabooseRoad());
         Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndRouteLocation());
@@ -370,6 +387,11 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 third leg number of engines", "0", t3.getThirdLegNumberEngines());
         Assert.assertEquals("t3 third leg options", Train.NO_CABOOSE_OR_FRED, t3.getThirdLegOptions());
         Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
+        // test scripts
+        Assert.assertEquals("After script", "After build script path", t3.getAfterBuildScripts().get(0));
+        Assert.assertEquals("Build script", "Build script path", t3.getBuildScripts().get(0));
+        Assert.assertEquals("Move script", "Move script path", t3.getMoveScripts().get(0));
+        Assert.assertEquals("Termination script", "Termination script path", t3.getTerminationScripts().get(0));
 
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
         Assert.assertEquals("t5 build failed", false, t5.isBuildFailed());
@@ -390,7 +412,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
         Assert.assertEquals("t5 requirements", Train.NO_CABOOSE_OR_FRED, t5.getRequirements());
-        Assert.assertEquals("t5 road option", "t5 raod option", t5.getRoadOption());
+        Assert.assertEquals("t5 road option", "t5 road option", t5.getRoadOption());
         Assert.assertEquals("t5 route", B, t5.getRoute());
         Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());
 
@@ -401,9 +423,8 @@ public class XmlTest extends OperationsTestCase {
         Setup.setPanelName("");
 
         manager = InstanceManager.getDefault(TrainManager.class);
-        temptrainList = manager.getTrainsByIdList();
-
-        Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
+ 
+        Assert.assertEquals("Starting Number of Trains", 0, manager.getTrainsByIdList().size());
 
         // confirm that none of the trains exist
         t1 = manager.getTrainByName("Test Number 1");
@@ -423,9 +444,7 @@ public class XmlTest extends OperationsTestCase {
         // now reload train data from file
         InstanceManager.getDefault(TrainManagerXml.class).readFile(InstanceManager.getDefault(TrainManagerXml.class).getDefaultOperationsFilename());
 
-        temptrainList = manager.getTrainsByIdList();
-
-        Assert.assertEquals("Number of Trains", 6, temptrainList.size());
+        Assert.assertEquals("Number of Trains", 6, manager.getTrainsByIdList().size());
 
         t1 = manager.getTrainByName("Test Number 1");
         t2 = manager.getTrainByName("Test Number 2");
@@ -445,6 +464,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 build failed", true, t1.isBuildFailed());
         Assert.assertEquals("t1 build normal", true, t1.isBuildTrainNormalEnabled());
         Assert.assertEquals("t1 built", false, t1.isBuilt());
+        Assert.assertEquals("t1 status code", Train.CODE_BUILD_FAILED, t1.getStatusCode());
+        Assert.assertEquals("t1 status", Train.BUILD_FAILED, t1.getStatus());
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
@@ -457,13 +478,17 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("t1 has a lead engine", t1.getLeadEngine());
         Assert.assertEquals("t1 lead engine number", "1", t1.getLeadEngine().getNumber());
         Assert.assertEquals("t1 load option", "t1 load option", t1.getLoadOption());
+        Assert.assertEquals("t1 load name", "t1 load name 1", t1.getLoadNames()[0]);
         Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoPathName());
         Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
         Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
+        Assert.assertEquals("t1 Owner name", "t1 owner name 1", t1.getOwnerNames()[0]);
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
-        Assert.assertEquals("t1 road option", "t1 raod option", t1.getRoadOption());
+        Assert.assertEquals("t1 road option", "t1 road option", t1.getRoadOption());
+        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
+        Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());
         Assert.assertEquals("t1 second leg end location", midC, t1.getSecondLegEndRouteLocation());
@@ -475,7 +500,6 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 second leg options", Train.ADD_CABOOSE, t1.getSecondLegOptions());
         Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartRouteLocation());
         Assert.assertEquals("t1 send cars to terminal", true, t1.isSendCarsToTerminalEnabled());
-        Assert.assertEquals("t1 status", Train.UNKNOWN, t1.getStatus());
         Assert.assertEquals("t1 switch list status", Train.PRINTED, t1.getSwitchListStatus());
         Assert.assertEquals("t1 third leg caboose road", "t1 third leg caboose road", t1
                 .getThirdLegCabooseRoad());
@@ -511,8 +535,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.NO_CABOOSE_OR_FRED, t3.getRequirements());
-        Assert.assertEquals("t3 road option", "t3 raod option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 road option", t3.getRoadOption());
         Assert.assertEquals("t3 route", A, t3.getRoute());
+        Assert.assertEquals("t3 departure track", trackWestford, t3.getDepartureTrack());
         // test second leg defaults
         Assert.assertEquals("t3 second leg caboose road", "", t3.getSecondLegCabooseRoad());
         Assert.assertEquals("t3 second leg end location", null, t3.getSecondLegEndRouteLocation());
@@ -532,7 +557,12 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 third leg number of engines", "0", t3.getThirdLegNumberEngines());
         Assert.assertEquals("t3 third leg options", Train.NO_CABOOSE_OR_FRED, t3.getThirdLegOptions());
         Assert.assertEquals("t3 third leg start location", null, t3.getThirdLegStartRouteLocation());
-
+        // test scripts
+        Assert.assertEquals("After script", "After build script path", t3.getAfterBuildScripts().get(0));
+        Assert.assertEquals("Build script", "Build script path", t3.getBuildScripts().get(0));
+        Assert.assertEquals("Move script", "Move script path", t3.getMoveScripts().get(0));
+        Assert.assertEquals("Termination script", "Termination script path", t3.getTerminationScripts().get(0));
+       
         Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
         Assert.assertEquals("t5 build failed", false, t5.isBuildFailed());
         Assert.assertEquals("t5 built", true, t5.isBuilt());
@@ -552,16 +582,15 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
         Assert.assertEquals("t5 requirements", Train.NO_CABOOSE_OR_FRED, t5.getRequirements());
-        Assert.assertEquals("t5 road option", "t5 raod option", t5.getRoadOption());
+        Assert.assertEquals("t5 road option", "t5 road option", t5.getRoadOption());
         Assert.assertEquals("t5 route", B, t5.getRoute());
         Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());
 
         // now test the train backup file
         manager.dispose();
         manager = InstanceManager.getDefault(TrainManager.class);
-        temptrainList = manager.getTrainsByIdList();
 
-        Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
+        Assert.assertEquals("Starting Number of Trains", 0, manager.getTrainsByIdList().size());
 
         // set file name to backup
         InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml.bak");
@@ -571,9 +600,7 @@ public class XmlTest extends OperationsTestCase {
         // restore file name
         InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        temptrainList = manager.getTrainsByIdList();
-
-        Assert.assertEquals("Number of Trains", 3, temptrainList.size());
+        Assert.assertEquals("Number of Trains", 3, manager.getTrainsByIdList().size());
 
         t1 = manager.getTrainByName("Test Number 1");
         t2 = manager.getTrainByName("Test Number 2");
@@ -604,8 +631,13 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 X owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 X railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.CABOOSE, t3.getRequirements());
-        Assert.assertEquals("t3 raod option", "t3 X raod option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 X road option", t3.getRoadOption());
         Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
+        Assert.assertEquals("After script", 0, t3.getAfterBuildScripts().size());
+        Assert.assertEquals("Build script", 0, t3.getBuildScripts().size());
+        Assert.assertEquals("Move script", 0, t3.getMoveScripts().size());
+        Assert.assertEquals("Termination script", 0, t3.getTerminationScripts().size());
+
     }
 
     // from here down is testing infrastructure

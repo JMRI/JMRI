@@ -79,7 +79,7 @@ public interface SymbolTable {
      * Print the symbol table on a stream
      * @param stream the stream
      */
-    public void printSymbolTable(java.io.PrintStream stream);
+    public void printSymbolTable(java.io.PrintWriter stream);
     
     /**
      * Validates the name of a symbol
@@ -97,6 +97,13 @@ public interface SymbolTable {
         return true;
     }
     
+    /**
+     * Get the stack.
+     * This method is only used internally by DefaultSymbolTable.
+     * 
+     * @return the stack
+     */
+    public Stack getStack();
     
     
     /**
@@ -152,7 +159,7 @@ public interface SymbolTable {
     public static class VariableData {
         
         public String _name;
-        public InitialValueType _initalValueType;
+        public InitialValueType _initalValueType = InitialValueType.None;
         public String _initialValueData;
         
         public VariableData(

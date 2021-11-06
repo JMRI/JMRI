@@ -458,32 +458,32 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
 
         switch (query) {
             case Aspect:
-                if (_signalMastHandle.getBean().getAspect() != null) {
-                    result = getNewAspect().equals(_signalMastHandle.getBean().getAspect());
+                if (signalMast.getAspect() != null) {
+                    result = getNewAspect().equals(signalMast.getAspect());
                 }
                 break;
             case NotAspect:
-                if (_signalMastHandle.getBean().getAspect() != null) {
-                    result = ! getNewAspect().equals(_signalMastHandle.getBean().getAspect());
+                if (signalMast.getAspect() != null) {
+                    result = ! getNewAspect().equals(signalMast.getAspect());
                 }
                 break;
             case Lit:
-                result = _signalMastHandle.getBean().getLit();
+                result = signalMast.getLit();
                 break;
             case NotLit:
-                result = ! _signalMastHandle.getBean().getLit();
+                result = ! signalMast.getLit();
                 break;
             case Held:
-                result = _signalMastHandle.getBean().getHeld();
+                result = signalMast.getHeld();
                 break;
             case NotHeld:
-                result = ! _signalMastHandle.getBean().getHeld();
+                result = ! signalMast.getHeld();
                 break;
             case IsPermissiveSmlDisabled:
-                result = _signalMastHandle.getBean().isPermissiveSmlDisabled();
+                result = signalMast.isPermissiveSmlDisabled();
                 break;
             case IsPermissiveSmlNotDisabled:
-                result = ! _signalMastHandle.getBean().isPermissiveSmlDisabled();
+                result = ! signalMast.isPermissiveSmlDisabled();
                 break;
             default:
                 throw new RuntimeException("Unknown enum: "+_queryType.name());

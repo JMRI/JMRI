@@ -12,7 +12,10 @@ import jmri.*;
  * static inner classes to ensure they're functionally separate, connected only
  * by the code they exchange. They're combined in this single class
  * to make sure they work together.
- *
+ * <p>
+ * Note that this intentionally does not turn off indicators when the code button
+ * is pressed unless a change has been requested.  This is a model-railroad compromise
+ * to speed up the dispatcher's ability to see what's going on.
  * <p>
  * The state diagram for the central section is presented in three parts to make it more useful:
  *<ul>

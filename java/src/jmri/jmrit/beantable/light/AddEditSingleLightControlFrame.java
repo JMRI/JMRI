@@ -448,35 +448,17 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             // Set type of control
             g.setControlType(Light.SENSOR_CONTROL);
             // Get sensor control information
-            Sensor s = null;
             String sensorName = sensor1Box.getSelectedItemDisplayName();
             if (sensorName == null) {
                 // no sensor selected
                 g.setControlType(Light.NO_CONTROL);
-                notifyUser(Bundle.getMessage("LightWarn8"),Color.gray);
-            } else {
-                // name was selected, check for user name first
-                s = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(s);
-                    }
-                }
+                notifyUser(Bundle.getMessage("LightWarn8"),Color.red);
+                return false;
             }
             int sState =  ( Bundle.getMessage("SensorStateInactive").equals(stateBox.getSelectedItem()) 
                 ? Sensor.INACTIVE : Sensor.ACTIVE);
             g.setControlSensorName(sensorName);
             g.setControlSensorSense(sState);
-            if (s == null) {
-                notifyUser(Bundle.getMessage("LightWarn1"),Color.red);
-                return false;
-            }
         } else if (LightControlTableModel.fastClockControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
             g.setControlType(Light.FAST_CLOCK_CONTROL);
@@ -499,8 +481,6 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             }
 
         } else if (LightControlTableModel.turnoutStatusControl.equals(typeBox.getSelectedItem())) {
-            boolean error = false;
-            Turnout t = null;
             // Set type of control
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
@@ -508,57 +488,35 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             if (turnoutName == null) {
                 // no turnout selected
                 g.setControlType(Light.NO_CONTROL);
-                notifyUser(Bundle.getMessage("LightWarn10"),Color.gray);
-            } else {
-
-                // TODO : Remove Turnouts which are actually lights ( ???? )
-                // from the JComboBox list, not after the user has selected one.
-
-                // Ensure that this Turnout is not already a Light
-                // String prefix = Objects.requireNonNull(prefixBox.getSelectedItem()).getSystemPrefix();                
-                String prefix = InstanceManager.getDefault(LightManager.class).getSystemPrefix();
-                if (turnoutName.charAt(prefix.length()) == 'T') {
-                    // must be a standard format name (not just a number)
-                    String testSN = prefix + "L"
-                            + turnoutName.substring(prefix.length() + 1);
-                    Light testLight = InstanceManager.getDefault(LightManager.class).
-                            getBySystemName(testSN);
-                    if (testLight != null) {
-                        // Requested turnout bit is already assigned to a Light
-                        notifyUser(Bundle.getMessage("LightWarn3") + " " + testSN + ".",Color.red);
-                        error = true;
-                    }
-                }
-                if (!error) {
-                    // Requested turnout bit is not assigned to a Light
-                    t = InstanceManager.turnoutManagerInstance().
-                            getByUserName(turnoutName);
-                    if (t == null) {
-                        // not user name, try system name
-                        t = InstanceManager.turnoutManagerInstance().
-                                getBySystemName(turnoutName);
-                        if (t != null) {
-                            // update turnout system name in case it changed
-                            turnoutName = t.getSystemName();
-                            turnoutBox.setSelectedItem(t);
-                        }
-                    }
-                }
+                notifyUser(Bundle.getMessage("LightWarn10"),Color.red);
+                return false;
             }
+            
+            // TODO : Remove Turnouts which are actually lights ( ???? )
+            // from the JComboBox list.
+            
+            // IMPROVED TODO : Disable creation of Turnouts or Lights with matching
+            // hardware addresses ( except the L or T element ) at time of Bean creation
+            
+            String testLightaddr = jmri.util.StringUtil.replaceLast(turnoutName, "T", "L");
+            Light testLight = InstanceManager.getDefault(LightManager.class).
+                getBySystemName(testLightaddr);
+            if (testLight != null) {
+                // Requested turnout bit is already assigned to a Light
+                notifyUser(Bundle.getMessage("LightWarn3") + " " + testLight.getDisplayName(),Color.red);
+                return false;
+            }
+            
             // Initialize the requested Turnout State
             int tState = Turnout.CLOSED;
             if (Objects.equals(stateBox.getSelectedItem(), InstanceManager.
                     turnoutManagerInstance().getThrownText())) {
                 tState = Turnout.THROWN;
             }
-            g.setControlTurnout(turnoutName);
+            g.setControlTurnout(turnoutBox.getSelectedItemDisplayName());
             g.setControlTurnoutState(tState);
-            if (t == null) {
-                notifyUser(Bundle.getMessage("LightWarn2"),Color.red);
-                return false;
-            }
+            
         } else if (LightControlTableModel.timedOnControl.equals(typeBox.getSelectedItem())) {
-            Sensor s = null;
             // Set type of control
             g.setControlType(Light.TIMED_ON_CONTROL);
             // Get trigger sensor control information
@@ -566,31 +524,13 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             if (triggerSensorName == null) {
                 // Trigger sensor not selected
                 g.setControlType(Light.NO_CONTROL);
-                notifyUser(Bundle.getMessage("LightWarn8"),Color.gray);
-            } else {
-                // sensor was selected, try user name first
-                s = InstanceManager.sensorManagerInstance().getByUserName(triggerSensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(triggerSensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        triggerSensorName = s.getSystemName();
-                        sensorOnBox.setSelectedItem(s);
-                    }
-                }
-            }
+                notifyUser(Bundle.getMessage("LightWarn8"),Color.red);
+                return false;
+            } 
             g.setControlTimedOnSensorName(triggerSensorName);
             int dur = (Integer) timedOnSpinner.getValue();
             g.setTimedOnDuration(dur);
-            if (s == null) {
-                notifyUser(Bundle.getMessage("LightWarn8"),Color.red);
-                return false;
-            }
         } else if (LightControlTableModel.twoSensorControl.equals(typeBox.getSelectedItem())) {
-            Sensor s = null;
-            Sensor s2;
             // Set type of control
             g.setControlType(Light.TWO_SENSOR_CONTROL);
             // Get sensor control information
@@ -599,33 +539,8 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             if (sensorName == null || sensor2Name == null) {
                 // no sensor(s) selected
                 g.setControlType(Light.NO_CONTROL);
-                notifyUser(Bundle.getMessage("LightWarn8"),Color.gray);
-            } else {
-                // name was selected, check for user name first
-                s = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensorName);
-                if (s == null) {
-                    // not user name, try system name
-                    s = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensorName);
-                    if (s != null) {
-                        // update sensor system name in case it changed
-                        sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(s);
-                    }
-                }
-                s2 = InstanceManager.sensorManagerInstance().
-                        getByUserName(sensor2Name);
-                if (s2 == null) {
-                    // not user name, try system name
-                    s2 = InstanceManager.sensorManagerInstance().
-                            getBySystemName(sensor2Name);
-                    if (s2 != null) {
-                        // update sensor system name in case it changed
-                        sensor2Name = s2.getSystemName();
-                        sensor2Box.setSelectedItem(s2);
-                    }
-                }
+                notifyUser(Bundle.getMessage("LightWarn8"),Color.red);
+                return false;
             }
             int sState = Sensor.ACTIVE;
             if (Objects.equals(stateBox.getSelectedItem(), Bundle.getMessage("SensorStateInactive"))) {
@@ -634,10 +549,6 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             g.setControlSensorName(sensorName);
             g.setControlSensor2Name(sensor2Name);
             g.setControlSensorSense(sState);
-            if (s == null) {
-                notifyUser(Bundle.getMessage("LightWarn1"),Color.red);
-                return false;
-            }
         } else if (LightControlTableModel.noControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
             g.setControlType(Light.NO_CONTROL);

@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.KeyStroke;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +40,10 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     };
     // moving through running throttle frames
     private int[][] nextRunThrottleFrameKeys = {
-        {KeyEvent.CTRL_MASK,KeyEvent.VK_END}
+        {KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_END}
     };
     private int[][] prevRunThrottleFrameKeys = {
-        {KeyEvent.CTRL_MASK,KeyEvent.VK_HOME}
+        {KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_HOME}
     };      
     
     // moving through internal windows
@@ -93,11 +95,11 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     };
     private int[][] accelerateMoreKeys = {
         {0,KeyEvent.VK_PAGE_UP},
-        {KeyEvent.CTRL_MASK,KeyEvent.VK_LEFT}
+        {KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_LEFT}
     };
     private int[][] decelerateMoreKeys = {
         {0,KeyEvent.VK_PAGE_DOWN},
-        {KeyEvent.CTRL_MASK,KeyEvent.VK_RIGHT}
+        {KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_RIGHT}
     };    
     
     // function buttons
@@ -112,28 +114,27 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         {{0,KeyEvent.VK_F7},{0,KeyEvent.VK_NUMPAD7}}, // F7
         {{0,KeyEvent.VK_F8},{0,KeyEvent.VK_NUMPAD8}}, // F8
         {{0,KeyEvent.VK_F9},{0,KeyEvent.VK_NUMPAD9}}, // F9
-        {{0,KeyEvent.VK_F10},{0,KeyEvent.VK_DECIMAL},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD0}}, // F10
-        {{0,KeyEvent.VK_F11},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F1},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD1}}, // F11
-        {{0,KeyEvent.VK_F12},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F2},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD2}}, // F12
-        {{0,KeyEvent.VK_F13},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F3},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD3}}, // F13
-        {{0,KeyEvent.VK_F14},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F4},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD4}}, // F14
-        {{0,KeyEvent.VK_F15},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F5},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD5}}, // F15
-        {{0,KeyEvent.VK_F16},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F6},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD6}}, // F16
-        {{0,KeyEvent.VK_F17},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F7},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD7}}, // F17
-        {{0,KeyEvent.VK_F18},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F8},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD8}}, // F18
-        {{0,KeyEvent.VK_F19},{KeyEvent.SHIFT_MASK,KeyEvent.VK_F9},{KeyEvent.SHIFT_MASK,KeyEvent.VK_NUMPAD9}}, // F19
-        {{0,KeyEvent.VK_F20},{KeyEvent.CTRL_MASK,KeyEvent.VK_F10},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD0}}, // F20
-        {{0,KeyEvent.VK_F21},{KeyEvent.CTRL_MASK,KeyEvent.VK_F1},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD1}}, // F21
-        {{0,KeyEvent.VK_F22},{KeyEvent.CTRL_MASK,KeyEvent.VK_F2},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD2}}, // F22
-        {{0,KeyEvent.VK_F23},{KeyEvent.CTRL_MASK,KeyEvent.VK_F3},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD3}}, // F23
-        {{0,KeyEvent.VK_F24},{KeyEvent.CTRL_MASK,KeyEvent.VK_F4},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD4}}, // F24
-        {{KeyEvent.CTRL_MASK,KeyEvent.VK_F5},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD5}}, // F25
-        {{KeyEvent.CTRL_MASK,KeyEvent.VK_F6},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD6}}, // F26
-        {{KeyEvent.CTRL_MASK,KeyEvent.VK_F7},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD7}}, // F27
-        {{KeyEvent.CTRL_MASK,KeyEvent.VK_F8},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD8}}  // F28 
+        {{0,KeyEvent.VK_F10},{0,KeyEvent.VK_DECIMAL},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD0}}, // F10
+        {{0,KeyEvent.VK_F11},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F1},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD1}}, // F11
+        {{0,KeyEvent.VK_F12},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F2},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD2}}, // F12
+        {{0,KeyEvent.VK_F13},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F3},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD3}}, // F13
+        {{0,KeyEvent.VK_F14},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F4},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD4}}, // F14
+        {{0,KeyEvent.VK_F15},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F5},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD5}}, // F15
+        {{0,KeyEvent.VK_F16},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F6},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD6}}, // F16
+        {{0,KeyEvent.VK_F17},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F7},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD7}}, // F17
+        {{0,KeyEvent.VK_F18},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F8},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD8}}, // F18
+        {{0,KeyEvent.VK_F19},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_F9},{KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_NUMPAD9}}, // F19
+        {{0,KeyEvent.VK_F20},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F10},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD0}}, // F20
+        {{0,KeyEvent.VK_F21},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F1},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD1}}, // F21
+        {{0,KeyEvent.VK_F22},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F2},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD2}}, // F22
+        {{0,KeyEvent.VK_F23},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F3},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD3}}, // F23
+        {{0,KeyEvent.VK_F24},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F4},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD4}}, // F24
+        {{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F5},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD5}}, // F25
+        {{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F6},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD6}}, // F26
+        {{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F7},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD7}}, // F27
+        {{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F8},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD8}}  // F28 
         // simply add more lines for more functions controls...
-     // {{KeyEvent.CTRL_MASK,KeyEvent.VK_F9},{KeyEvent.CTRL_MASK,KeyEvent.VK_NUMPAD9}}, // F29
-     // {{KeyEvent.CTRL_MASK,KeyEvent.VK_F10}}, // F29
+        // {{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_F9},{KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_NUMPAD9}}, // F29
     };
         
     /**
@@ -283,6 +284,54 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     public int[][] getFunctionsKeys(int fn) {
         return functionsKeys[fn];
     }
+    
+    public KeyStroke[] getKeyStrokes(String evtString) {
+        int [][] keys = null;
+        boolean onKeyRelease = true;
+        switch (evtString) {
+            // Throttle commands
+            case "accelerate"      : keys = getAccelerateKeys(); onKeyRelease = false; break;
+            case "decelerate"      : keys = getDecelerateKeys(); onKeyRelease = false; break;
+            case "accelerateMore"  : keys = getAccelerateMoreKeys(); onKeyRelease = false; break;
+            case "decelerateMore"  : keys = getDecelerateMoreKeys(); onKeyRelease = false; break;
+            case "idle"            : keys = getIdleKeys(); break;
+            case "stop"            : keys = getStopKeys(); break;
+            case "forward"         : keys = getForwardKeys(); break;
+            case "reverse"         : keys = getReverseKeys(); break;
+            case "switchDirection" : keys = getSwitchDirectionKeys(); break;
+            // Throttle inner window cycling
+            case "nextJInternalFrame"     : keys = getNextThrottleInternalWindowKeys(); break;
+            case "previousJInternalFrame" : keys = getPrevThrottleInternalWindowKeys(); break;
+            case "showControlPanel"       : keys = getMoveToControlPanelKeys(); break;
+            case "showFunctionPanel"      : keys = getMoveToFunctionPanelKeys(); break;
+            case "showAddressPanel"       : keys = getMoveToAddressPanelKeys(); break;
+            // Throttle frames
+            case "nextThrottleFrame"            : keys = getNextThrottleFrameKeys(); break;
+            case "previousThrottleFrame"        : keys = getPrevThrottleFrameKeys(); break;
+            case "nextRunningThrottleFrame"     : keys = getNextRunThrottleFrameKeys(); break;
+            case "previousRunningThrottleFrame" : keys = getPrevRunThrottleFrameKeys(); break;       
+            // Throttle windows
+            case "nextThrottleWindow"     : keys = getNextThrottleWindowKeys(); break;
+            case "previousThrottleWindow" : keys = getPrevThrottleWindowKeys(); break;
+            default:
+        }
+        // function buttons
+        if (evtString.matches("fn_.*_.*")) {
+            String[]tokens = evtString.split("_");
+            keys = functionsKeys[Integer.parseInt(tokens[1])];
+            if("Pressed".equals(tokens[2])) {
+                onKeyRelease = false;
+            } 
+        }
+        if (keys == null) {       
+            return new KeyStroke[0];
+        }        
+        KeyStroke[] ks = new KeyStroke[keys.length];
+        for (int i = 0 ; i < ks.length; i++) {
+            ks[i] = KeyStroke.getKeyStroke(keys[i][1], keys[i][0], onKeyRelease);
+        }
+        return ks;
+    }    
     
     /**
      * @return the number of functions shortcuts

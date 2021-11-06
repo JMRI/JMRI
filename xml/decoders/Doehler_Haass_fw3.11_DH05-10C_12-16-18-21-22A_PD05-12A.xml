@@ -405,10 +405,8 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.06.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.11.xml"/>
       <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
-      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <!-- SECTION 1 - Standard variables with defaults for most decoders  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
-      <!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
-      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
       <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>

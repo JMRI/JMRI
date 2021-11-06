@@ -25,12 +25,15 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel pane1;
     private JPanel editGui;
     private CbusNode _node;
+    private CbusConfigPaneProvider provider;
     private AbstractEditNVPane editGuiInstance;
 
     protected CbusNodeNVEditGuiPane(CbusNodeNVTableDataModel nVModel) {
         super();
         super.initComponents();
         nodeNVModel = nVModel;
+        _node = null;
+        provider = null;
         this.setLayout(new BorderLayout());
     }
     
@@ -40,17 +43,30 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
      * @param node node to display
      */
     protected void setNode(CbusNode node) {
+        CbusNode oldNode = _node;
         _node = node;
+        
+        if (oldNode != null) {
+            if (CbusConfigPaneProvider.getProviderByNode(oldNode).nvWriteInLearn()) {
+                // Take old node out of learn mode
+                _node.send.nodeExitLearnEvMode(oldNode.getNodeNumber());
+            }
+        }
         
         if (pane1!=null){
             this.removeAll();
             this.initComponents();
         }
         
-        CbusConfigPaneProvider provider = CbusConfigPaneProvider.getProviderByNode(_node);
+        provider = CbusConfigPaneProvider.getProviderByNode(_node);
         editGui = provider.getEditNVFrame(nodeNVModel, _node);
         editGuiInstance = provider.getEditNVFrameInstance();
         showGui(editGui);
+        
+        if (provider.nvWriteInLearn()) {
+            // Node needs to be in learn mode for NV updates (e.g. for servo node)
+            _node.send.nodeEnterLearnEvMode(_node.getNodeNumber());
+        }
 
         this.setVisible(!(_node == null));
     }
@@ -71,6 +87,20 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         if (editGuiInstance != null) {
             editGuiInstance.tableChanged(e);
         }
+    }
+    
+    /**
+     * May need to take node out of learn mode
+     */
+    @Override
+    public void dispose() {
+        if ((provider != null) && (_node != null)) {
+            if (provider.nvWriteInLearn()) {
+                // Take node out of learn mode
+                _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
+            }
+        }
+        super.dispose();
     }
     
 //    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);

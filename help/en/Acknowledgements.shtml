@@ -722,6 +722,9 @@
         on Mac OS X <a id="P"></a>
         </li>
 
+        <li>Pål <-paoSoft -->
+        who worked on the LocoNet refresh algorithm</li>
+
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of
         text and clocks on panels, providing a "factory reset" feature for decoders, and fixing
@@ -789,7 +792,8 @@
         <li>Wim Ros, who provide help with the direct connection to the Intellibox</li>
 
         <li>Heiko Rosemann, <!-- newHeiko -->
-         who created the Slackware repository version of JMRI</li>
+         who created the Slackware repository version of JMRI and worked on
+         WiThrottle protocol issues.</li>
 
         <li>Klaus Ruebsam, who is hosting German and English JMRI discussion groups on his
           <a href="http://www.dcc-portal.net/">http://www.dcc-portal.net/</a> website.
@@ -914,6 +918,9 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
+        <li>Benny Tjäder, <-- etxbct -->
+        who provided the MQTT Last Will support and a Swedish signal system.
+
         <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         is an active jmriusers moderator.</li>
@@ -943,6 +950,8 @@
         who provided a fix for a problem with looping sounds and added support
         for the DCC++ hardware. <a id="V"></a>
         </li>
+
+        <li>Keith Usher, who provided a medium icon set</li>
 
         <li>Darryl Van Nort, who provided a definition for an MRC decoder</li>
 

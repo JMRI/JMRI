@@ -144,7 +144,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
-        "LogixNG Preferences" width="297" height="198"></a>
+        "LogixNG Preferences" width="25%" height="25%"></a>
       </div>
 
       <dl>
@@ -166,13 +166,16 @@
         LogixNG. In certain developer situations, making the names visible can be helpful. The
         default is unchecked.</dd>
 
+        <dt>Highlight row in ConditionalNG editor</dt>
+
+        <dd>When this option is enabled, the currently selected row will be highlighted.  This can
+        provide visual feedback, such as when the popup menu is open.</dd>
+
         <dt>Error Handling Options</dt>
 
-        <dd>
-          LogixNG has robust error handling. The combo box selection provides the default setting.
-          Individual expressions and actions can override the default setting. For details, see
-          <a href="ErrorHandling.shtml">Error Handling</a>
-        </dd>
+        <dd>LogixNG has robust error handling. The combo box selection provides the default setting.
+        Individual expressions and actions can override the default setting. For details, see
+        <a href="ErrorHandling.shtml">Error Handling</a></dd>
 
         <dd>
         </dd>

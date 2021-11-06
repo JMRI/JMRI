@@ -74,17 +74,10 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                        
+
                         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-                        List<String> errors = new ArrayList<>();
-                        if (! logixNG_Manager.setupAllLogixNGs(errors)) {
-                            for (String s : errors) log.error(s);
-                            JOptionPane.showMessageDialog(null,
-                                    String.join("<br>", errors),
-                                    Bundle.getMessage("TitleError"),
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+                        logixNG_Manager.setupAllLogixNGs();
                         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
                             logixNG_Manager.activateAllLogixNGs();
                         }
