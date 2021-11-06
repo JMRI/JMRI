@@ -21,22 +21,14 @@
       for future JMRI versions. (For pre-Java-1.8 content, see the <a href=
       "JVMCapabilitiesOlder.shtml">historical page</a>.)</p>
 
-      <p>Note: The Java community is moving from a "few big Java releases, years apart" development
+      <p>Note: The Java community has moved from a "few big Java releases, years apart" development
       cycle to a cycle with a new release every six months, and a long-term support (LTS) release
       every three years. (For background, see <a href=
       "https://mreinhold.org/blog/forward-faster#Proposal">here</a>, <a href=
       "http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">
-      here</a>, <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>). It's
-      not yet clear what this will mean for JMRI's development and migration path. Much discussion
-      is necessary.</p>
-
-      <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in January 2019, and
-      intends to release the next Long Term Support version (notionally known as both Java 11 and
-      Java 18.9) in September of 2018. Given that some users will need to move forward for other
-      applications once Java 8 is End Of Life, at a minimum we'll have to have JMRI running under
-      both Java 8 and Java 11/18.9 by January 2019. For more information on this, see also this
-      <a href=
-      "http://www.javamagazine.mozaicreader.com/NovemberDecember2018/default/52/0/#&amp;pageSet=52&amp;page=0&amp;contentItem=0">
+      here</a>, <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
+      For more information on this, see also this
+      <a href="https://archive.org/details/JavaMagazine2018.1112/page/n52/mode/2up">
       Java Magazine article from November 2018</a> .</p>
 
       <h2>Capabilities</h2>
