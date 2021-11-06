@@ -127,6 +127,7 @@ public class SCWarrantTest extends WarrantTest {
         JUnitUtil.initRosterConfigManager();
 
         // setup the sc warrant preliminaries.
+        WarrantPreferences.getDefault().setSpeedAssistance(0);
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         bWest = _OBlockMgr.createNewOBlock("OB1", "West");
         bEast = _OBlockMgr.createNewOBlock("OB2", "East");
