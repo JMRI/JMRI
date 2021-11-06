@@ -141,9 +141,25 @@
         </tr>
 
         <tr>
-          <td>(Probably) 5.0</td>
+          <td>4.24</td>
           <td>Production version, culmination of Spring 2021 series</td>
-          <td>June 2021</td>
+          <td>July 2021</td>
+          <td>8</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.26</td>
+          <td>Production version, culmination of Fall 2021 series</td>
+          <td>January 2022</td>
+          <td>8</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>(Probably) 5.0</td>
+          <td>Production version, culmination of Spring 2022 series</td>
+          <td>June 2022</td>
           <td>11</td>
           <td>11</td>
         </tr>
@@ -152,44 +168,32 @@
       <h3>Java and JMRI in the Near Future</h3>
       The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This has
       continued through the following release series. Java 8 will continue to be the requirement
-      through at least Fall of 2020. This involves doing development, test and production release
+      through the Fall of 2021. This involves doing development, test and production release
       builds using Java 1.8.0_181. (We also <a href=
       "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on
       Jenkins with Java 1.8_0_151</a> to ensure Windows XP compatibility)
-      <p>The current long-term-support Java release is Java 11 from Fall of 2018. Oracle has
+      <p>The next long-term-support (LTS) Java release is Java 11 from Fall of 2018. Oracle has
       <a href=
       "https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">
       aligned their Java and the OpenJDK from that point</a>. Because some people will need to have
-      that on their computers for other purposes, we ensure JMRI can build and run on Oracle Java 8
+      that on their computers for other purposes, we have been building and running JMRI
+      for testing purposes on Oracle Java 8
       through 11 and OpenJDK version 11 by using <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a> to</p>
-
-      <ul>
-        <li>Build and run AllTest on each of the JDKs for Java 9, 10, 11; and</li>
-
-        <li>Run allTest from each of those JDK 9, 10 and 11 builds on a Java 8u181 JRE; and</li>
-
-        <li>Run AllTest from our JDK 8 builds on each of the Java 9, 10 and 11 JREs.</li>
-      </ul>
+      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a>.
       You can follow the current status of these on the <a href="CI-status.shtml">CI Status
       page</a>.
-      <p>At some point, the Java version required by JMRI has to move forward. For example, Oracle
-      <a href=
-      "http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has
-      announced</a> that they'll stop providing standalone JRE installers by the end of 2020, by
-      which time JMRI distributions will have to contain the Java runtime components or it won't be
-      possible to run JMRI on newly-bought PCs (<a href="http://adoptopenjdk.net">will continue to
-      provide independent JREs</a>). That in turn might require tools like jlink from Java 9 or
-      later.</p>
+      <p>Java 17 is the current LTS release.  JMRI is built and tests are run on it too,
+      but we don't recommend using it due to some remaining compatibility issues.
 
-      <p>While we don't know with certainty when JMRI development will move past Java 8, we expect
-      that it will be during the Spring 2021 development releases, leading to the June 2021
+      <p>In the near future, the Java version required by JMRI will move forward. We expect
+      that it will be during the Spring 2022 development releases, leading to the June 2022
       production releases requiring Java 11 and therefore being called JMRI 5.0. There might be one
       or two JMRI updates and minor releases early in Spring that would still work with Java 8.</p>
 
       <h4>Java Release and Operating System Support</h4>
       More information on Java releases and the operating systems that support them is on a
       <a href="JVMCapabilities.shtml">separate page</a>.
+
       <h2>Migration Notes</h2>
 
       <p>This is a section of notes for various code migrations that are in progress or
@@ -197,17 +201,6 @@
       but they may effect external users of the JMRI libraries.</p>
 
       <ul>
-        <li>At some point, we have to migrate away from <a href="Help.shtml">JavaHelp and
-        JHelpDev</a>. At a minimum, we'll need to <a href=
-        "http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html">replace the
-        renderer</a>. There are <a href=
-        "http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">several
-        alternative help systems</a> available. <a href=
-        "http://www.oracle.com/technetwork/topics/index-083946.html">Oracle Help</a> might be a
-        good choice. DocBook as a tool for generating multiple documentation forms is also being
-        considered.
-        </li>
-
         <li>USB access technology has advanced a lot since support for some basic libraries was
         added to JMRI. At some point, we should replace those early library versions, but it will
         break some user scripts.</li>
