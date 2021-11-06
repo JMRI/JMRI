@@ -8,6 +8,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Block;
+import jmri.BlockManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
@@ -64,9 +66,10 @@ import java.nio.file.StandardCopyOption;
             // running with no signals
             checkAndSetSpeedsSML();
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+            BlockManager bm = InstanceManager.getDefault(BlockManager.class);
             
             // trains fills one block 
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
 
             // *******************************************************************************
             //  Here start left to right train fits in deepest block
@@ -86,38 +89,38 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start - Stop / Resume");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -126,7 +129,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -138,38 +141,38 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To restart 3 sections clear");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to begin section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -181,14 +184,14 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            resetSensors(sm);
+            resetSensors(sm,bm);
 
             // *******************************************************************************
             //  Here start left to right train fits in 2 deepest blocks
             // *******************************************************************************
             
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
 
             d.loadTrainFromTrainInfo("FWDREV80.xml");
 
@@ -205,37 +208,37 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start - Stop / Resume");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             assertEquals(speedStopping, aat.getThrottle().getSpeedSetting(),"Throttle should be in reverse");
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6, 5 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -244,7 +247,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -256,36 +259,36 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To restart 3 sections clear");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to begin section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2, 3 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -296,14 +299,14 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            resetSensors(sm);
+            resetSensors(sm,bm);
             
             // *******************************************************************************
             //  Here start left to right train fits in all three blocks
             // *******************************************************************************
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
 
             d.loadTrainFromTrainInfo("FWDREV120.xml");
 
@@ -320,35 +323,35 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
             // fully in block 4
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -357,7 +360,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -369,36 +372,36 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To restart 3 sections clear");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to begin section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2 , 3");
-             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+             JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2, 3, 4 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 4 inactive.");
@@ -408,12 +411,12 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            resetSensors(sm);
+            resetSensors(sm,bm);
 
             // *******************************************************************************
             //  Here start right to left train fits in deepest block
             // *******************************************************************************
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
 
             d.loadTrainFromTrainInfo("REVFWD40.xml");
 
@@ -430,38 +433,38 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -470,7 +473,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -479,38 +482,38 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
 
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
            JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -521,13 +524,13 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            resetSensors(sm);
+            resetSensors(sm,bm);
             
             // *******************************************************************************
             //  Here start right to left train fits in deepest 2 blocks
             // *******************************************************************************
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
 
             d.loadTrainFromTrainInfo("REVFWD80.xml");
 
@@ -544,37 +547,37 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
             // fully in block 4
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section block 3");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2, 3");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2, 3 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -583,7 +586,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -592,37 +595,37 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
 
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
             // fully in block 4
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section Block 5");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 5, 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6, 5 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -633,14 +636,14 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(200);
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
-            resetSensors(sm);
+            resetSensors(sm,bm);
             
             // *******************************************************************************
             //  Here start right to left train fits in entire section
             // *******************************************************************************
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
 
             d.loadTrainFromTrainInfo("REVFWD120.xml");
 
@@ -658,34 +661,34 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Failed To Start");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 2");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 1, 2 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -694,7 +697,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.waitFor(waitInterval);
 
             // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"),Sensor.ACTIVE);
             
             // and reverses
             assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -703,37 +706,37 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
 
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.OCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "2 sections clear speed normal");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedMedium;
                 }, "1 section clear speed medium");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block1"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block2"), Block.UNOCCUPIED);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block3"), Block.UNOCCUPIED);
             // fully in block 4 
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block5"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Failed To Slow on entry to final section");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block6"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 6");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 7"), Sensor.ACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block7"), Block.OCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6, 5 still active");
-            JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.INACTIVE);
+            JUnitUtil.setBeanStateAndWait(bm.getBlock("Block4"), Block.UNOCCUPIED);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
@@ -754,11 +757,14 @@ import java.nio.file.StandardCopyOption;
         }
         
         // reset to inactive all sensors except clock.
-        private void resetSensors(SensorManager sm) {
+        private void resetSensors(SensorManager sm, BlockManager bm) {
             for (Sensor sensor:sm.getNamedBeanSet()) {
                 if (!sensor.getSystemName().equals("ISCLOCKRUNNING")) {
                     JUnitUtil.setBeanState(sensor, Sensor.INACTIVE);
                 }
+            }
+            for (Block block:bm.getNamedBeanSet()) {
+                JUnitUtil.setBeanState(block, Block.UNOCCUPIED);
             }
         }
         
