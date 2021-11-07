@@ -750,14 +750,16 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
         if (_throttle != null) {
             if (_throttle.getSpeedSetting() > 0.0f) {
-                _throttle.setSpeedSetting(-1.0f);
-                setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
-            }
-            if (abort && turnOffFunctions) {
-                _throttle.setF0(false);
-                _throttle.setF1(false);
-                _throttle.setF2(false);
-                _throttle.setF3(false);
+                if (abort) {
+                    _throttle.setSpeedSetting(-1.0f);
+                }
+                setSpeed(0.0f);
+                if (turnOffFunctions) {
+                    _throttle.setF0(false);
+                    _throttle.setF1(false);
+                    _throttle.setF2(false);
+                    _throttle.setF3(false);
+                }
             }
             _warrant.releaseThrottle(_throttle);
         }
