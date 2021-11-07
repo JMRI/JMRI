@@ -342,15 +342,21 @@ public class LinkedWarrantTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initConditionalManager();
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
-        JUnitUtil.initDebugThrottleManager();
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
@@ -380,6 +386,8 @@ public class LinkedWarrantTest {
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
+        InstanceManager.getDefault(WarrantManager.class).dispose();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

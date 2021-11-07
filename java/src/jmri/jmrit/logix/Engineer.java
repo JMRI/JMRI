@@ -911,13 +911,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         Warrant warrant =  (Warrant)bean;
 
         int num = Math.round(cmdVal.getFloat());    // loops only
-        if (_warrant.equals(warrant)) {
-            if (num <= 0) {
-                return;
-            }
-            num--;  // decrement loop count
-            cmdVal.setFloat(num);
+        if (num <= 0) { // do the countdown for all linked warrants.
+            return;
         }
+        num--;  // decrement loop count
+        cmdVal.setFloat(num);
         java.awt.Color color = java.awt.Color.red;
 
         String msg = null;
