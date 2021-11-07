@@ -24,144 +24,88 @@
 
       <h2>JMRI Releases</h2>
 
-      <p>This section describes the (notional) plans for JMRI releases in the future.</p>
+      <p>This section describes the history and (notional) plans for JMRI releases in the future.</p>
 
       <table border="1">
         <tr>
-          <th>Release</th>
-          <th>Description</th>
-          <th>Date</th>
-          <td>JRE</td>
-          <td>JDK</td>
+          <th style="text-align:center">Release</th>
+          <th style="text-align:left">Description</th>
+          <th style="text-align:center">Date</th>
+          <td style="text-align:center">JRE</td>
+          <td style="text-align:center">JDK</td>
         </tr>
 
         <tr>
-          <td>3.11.*</td>
+          <td style="text-align:center">3.11.*</td>
           <td>Development series</td>
           <td>
           </td>
-          <td>1.6</td>
-          <td>8</td>
+          <td style="text-align:center">1.6</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.0</td>
+          <td style="text-align:center">4.0</td>
           <td>Production version, culmination of 3.11.* series</td>
-          <td>July 2015 <strong>(done)</strong></td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">July 2015</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.2</td>
+          <td style="text-align:center">4.2</td>
           <td>Production version, culmination of 4.1.* series</td>
-          <td>December 2015 <strong>(done)</strong></td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">December 2015</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.4</td>
-          <td>Production version, culmination of 4.3.* series</td>
-          <td>Early Summer 2016</td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">...</td>
+          <td>...</td>
+          <td style="text-align:center">...</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.6</td>
-          <td>Production version, culmination of 4.5.* series</td>
-          <td>Late Fall 2016</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.8</td>
-          <td>Production version, culmination of 4.7.* series</td>
-          <td>Early Summer 2017</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.10</td>
-          <td>Production version, culmination of 4.9.* series</td>
-          <td>December 2017</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.12</td>
-          <td>Production version, culmination of 4.11.* series</td>
-          <td>July 2018</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.14</td>
-          <td>Production version, culmination of 4.13.* series</td>
-          <td>December 2018</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.16</td>
-          <td>Production version, culmination of 4.15.* series</td>
-          <td>July 2019</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.18</td>
-          <td>Production version, culmination of Fall 2019 series</td>
-          <td>December 2019</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.20</td>
-          <td>Production version, culmination of Spring 2020 series</td>
-          <td>July 2020</td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.22</td>
+          <td style="text-align:center">4.22</td>
           <td>Production version, culmination of Fall 2020 series</td>
-          <td>February 2021</td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">February 2021</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.24</td>
+          <td style="text-align:center">4.24</td>
           <td>Production version, culmination of Spring 2021 series</td>
-          <td>July 2021</td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">July 2021</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.26</td>
+          <td style="text-align:center">4.26</td>
           <td>Production version, culmination of Fall 2021 series</td>
-          <td>January 2022</td>
-          <td>8</td>
-          <td>8</td>
+          <td style="text-align:center">January 2022</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>(Probably) 5.0</td>
+          <td style="text-align:center">(Intended) 5.0</td>
           <td>Production version, culmination of Spring 2022 series</td>
-          <td>June 2022</td>
-          <td>11</td>
-          <td>11</td>
+          <td style="text-align:center">June 2022</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.2</td>
+          <td>Production version, culmination of Fall 2022 series</td>
+          <td style="text-align:center">Jan 2023</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
         </tr>
       </table>
 
