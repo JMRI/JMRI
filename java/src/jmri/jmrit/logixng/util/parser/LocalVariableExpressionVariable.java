@@ -23,7 +23,13 @@ public class LocalVariableExpressionVariable implements Variable {
 
     @Override
     public Object getValue(SymbolTable symbolTable) throws JmriException {
-        return symbolTable.getValue(_name);
+        try {
+            return symbolTable.getValue(_name);
+        } catch (SymbolTable.SymbolNotFound e) {
+            Constant constant = InstanceManager.getDefault(FunctionManager.class).getConstant(_name);
+            if (constant != null) return constant.getValue();
+            throw e;
+        }
     }
 
     @Override
