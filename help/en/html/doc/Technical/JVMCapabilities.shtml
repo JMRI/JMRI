@@ -38,7 +38,7 @@
       "JRE" column lists the first runtime environment that could run the feature, including the
       needed JVM and library support.</p>
 
-      <table style="width: 100%; padding: 10px 15px 10px 15px;">
+      <table style="width: 100%; padding: 10px 15px 10px 15px;" border="1">
         <tr>
           <th>Feature</th>
           <th>JDK</th>
