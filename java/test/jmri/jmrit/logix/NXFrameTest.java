@@ -390,8 +390,7 @@ public class NXFrameTest {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
-            JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+            JUnitUtil.waitFor(300);     // waitEmpty(150) causes a lot of failures on Travis GUI
 
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -405,7 +404,6 @@ public class NXFrameTest {
             }
             if (sensor != null) {
                 JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
                 sensor.setState(Sensor.INACTIVE);
                 NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             }
@@ -414,8 +412,6 @@ public class NXFrameTest {
                 block = nextBlock;
             }
         }
-        JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
 
