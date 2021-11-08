@@ -400,7 +400,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed pick up car error on Manifests when using route blocking order.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -458,7 +458,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added
+            <a href="https://jmri.org/jython/KeyListenerExample.py">KeyListenerExample</li>,
+            a sample script that shows how to listen to the keyboard.
         </ul>
 
     <h3>Signals</h3>
@@ -510,7 +512,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added ControlPanel.getSpeedSlider() for scripting</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -564,6 +566,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Simplify JmriHelp, eliminate static stub files.</li>
         </ul>
 

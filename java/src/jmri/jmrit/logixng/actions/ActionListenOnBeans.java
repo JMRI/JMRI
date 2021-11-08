@@ -152,8 +152,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
-                namedBeanReference._handle.getBean()
-                        .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                if (namedBeanReference._type.getPropertyName() != null) {
+                    namedBeanReference._handle.getBean()
+                            .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                } else {
+                    namedBeanReference._handle.getBean()
+                            .addPropertyChangeListener(this);
+                }
             }
         }
         _listenersAreRegistered = true;
@@ -214,7 +219,10 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
 
         public void setType(NamedBeanType type) {
-            if (type == null) throw new NullPointerException("type is null");
+            if (type == null) {
+                log.warn("type is null");
+                type = NamedBeanType.Turnout;
+            }
             _type = type;
         }
 
