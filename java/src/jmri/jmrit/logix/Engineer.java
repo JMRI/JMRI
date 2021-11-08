@@ -399,7 +399,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     wait(20);
                     time += 20;
                 }
-                catch (InterruptedException ie) { // ignore
+                catch (InterruptedException ie) {
                     log.debug("InterruptedException during rampSpeedTo {}", ie);
                     Thread.currentThread().interrupt();
                     return;
