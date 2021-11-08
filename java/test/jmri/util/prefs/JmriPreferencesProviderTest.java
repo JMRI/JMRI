@@ -107,9 +107,11 @@ public class JmriPreferencesProviderTest {
      */
     @Test
     public void testFindCNBForPackage() {
-        ClassLoader cl = getClass().getClassLoader();
-        assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
-        assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
+        // in Java 11, this would be better as:
+        // ClassLoader cl = getClass().getClassLoader();
+        // assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
+        // assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
+        assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(Package.getPackage("jmri.util")));
     }
 
     /**
