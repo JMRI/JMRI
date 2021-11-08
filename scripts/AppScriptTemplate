@@ -204,8 +204,7 @@ BUNDLEDIR=""
 ARGS=
 
 # set DEBUG to any non-empty string to see debugging output
-# JMRI 4.99 sets it on by default with the X below
-DEBUG=X${DEBUG:-}
+DEBUG=${DEBUG:-}
 
 # set default classpaths additions
 pre_classpath=""
