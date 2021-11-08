@@ -150,10 +150,4 @@ public class Servo8BasePaneProvider extends CbusConfigPaneProvider {
         return _nVarEditFrame.getContent();
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean nvWriteInLearn() {
-        return true;
-    }
-
 }

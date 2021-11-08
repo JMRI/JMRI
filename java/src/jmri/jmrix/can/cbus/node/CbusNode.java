@@ -16,6 +16,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private int _flags;
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
+    private boolean _nvWriteInLearnOnly;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
     public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
     public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
@@ -36,6 +37,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         super(connmemo,nodenumber);
         
         _sendsWRACKonNVSET = true;
+        _nvWriteInLearnOnly = false;
         _flags = -1;
         _userComment = "";
         _nodeNameFromName = "";
@@ -239,6 +241,33 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      */
     public boolean getsendsWRACKonNVSET() {
         return _sendsWRACKonNVSET;
+    }
+    
+    
+    /**
+     * CANSERVO8C and related modules only accept NV writes in learn mode.
+     * 
+     * This was used by the MERG FCU to update servo positions in "real time" in
+     * response to interaction with the GUI. Call this method to indicate that a
+     * node must be in learn mode to support NV writes.
+     * 
+     * @param nvWriteInLearn true if node requires to be in learn mode for NV writes
+     */
+    public void setnvWriteInLearnOnly( Boolean nvWriteInLearn ){
+        _nvWriteInLearnOnly = nvWriteInLearn;
+    }
+    
+    /**
+     * CANSERVO8C and related modules only accept NV writes in learn mode.
+     * 
+     * This was used by the MERG FCU to update servo positions in "real time" in
+     * response to interaction with the GUI. Call this method to query if a
+     * node must be in learn mode to support NV writes.
+     * 
+     * @return true if sends WRACK, else false
+     */
+    public boolean getnvWriteInLearnOnly() {
+        return _nvWriteInLearnOnly;
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNode.class);
