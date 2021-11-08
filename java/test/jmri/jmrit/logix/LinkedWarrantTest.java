@@ -67,7 +67,6 @@ public class LinkedWarrantTest {
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after first leg").isEqualTo(block.getSensor().getDisplayName());
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * route.length);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -80,7 +79,6 @@ public class LinkedWarrantTest {
         }, "Loopy 2 starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after second leg").isEqualTo(block.getSensor().getDisplayName());
-        JUnitUtil.waitFor(600 * route.length);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -93,7 +91,6 @@ public class LinkedWarrantTest {
         }, "Loopy 3 starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after last leg").isEqualTo(block.getSensor().getDisplayName());
-        JUnitUtil.waitFor(600 * route.length);
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -146,8 +143,6 @@ public class LinkedWarrantTest {
         // Run the train, then checks end location
         assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(block.getSensor().getDisplayName());
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * (route.length - 1) for return
-        JUnitUtil.waitFor(600 * route1.length);
         
         // "Loop&Fred" links to "WestToEast". Get start for "WestToEast" occupied quickly
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
@@ -164,10 +159,6 @@ public class LinkedWarrantTest {
         block = _OBlockMgr.getOBlock("OB11");
 
         assertThat(NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train after second leg").isEqualTo(block.getSensor().getDisplayName());
-        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * (route.length - 1) for return
-        JUnitUtil.waitFor(600 * route2.length);
-        
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -222,7 +213,6 @@ public class LinkedWarrantTest {
         assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(outEndSensorName);
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * (route.length - 1) for return
-        JUnitUtil.waitFor(600 * routeOut.length);
         
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -236,8 +226,6 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after second leg").isEqualTo(backEndSensorName);
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * (route.length - 1) for return
-        JUnitUtil.waitFor(600 * routeBack.length);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -251,9 +239,7 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after third leg").isEqualTo(outEndSensorName);
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * routeOut.length);
-
+ 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -266,8 +252,6 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after fourth leg").isEqualTo(backEndSensorName);
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * routeBack.length);
 
             // passed test - cleanup.  Do it here so failure leaves traces.
             JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -328,7 +312,6 @@ public class LinkedWarrantTest {
         assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Tinker after first leg").isEqualTo(block.getSensor().getDisplayName());
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * route1.length);
 
         Warrant ww = _warrantMgr.getWarrant("Evers");
 
@@ -342,8 +325,6 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Evers after second leg").isEqualTo(block.getSensor().getDisplayName());
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * route2.length);
 
         Warrant www = _warrantMgr.getWarrant("Chance");
 
@@ -357,8 +338,6 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName()).withFailMessage("Chance after third leg").isEqualTo(block.getSensor().getDisplayName());
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
-        // i.e. wait at least 600 * route.length for return
-        JUnitUtil.waitFor(600 * route3.length);
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
