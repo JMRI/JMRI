@@ -3,6 +3,9 @@
 # changed to include whatever desired, e.g. throw a turnout,
 # program a CV, etc.
 #
+# For more info on KeyListener: https://docs.oracle.com/javase/8/docs/api/java/awt/event/KeyEvent.html
+# For handling ctrl ahd shift keys: https://docs.oracle.com/javase/8/docs/api/java/awt/event/InputEvent.html#getModifiersEx--
+#
 # Author: Bob Jacobsen, copyright 2004, 2021
 # Part of the JMRI distribution
 
