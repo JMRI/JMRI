@@ -393,7 +393,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>11</version><!--$NO-MVN-MAN-VER$-->
+                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
                 <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
