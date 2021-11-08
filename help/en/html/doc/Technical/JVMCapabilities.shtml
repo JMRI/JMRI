@@ -333,7 +333,22 @@
         </tr>
 
         <tr>
-          <td>Win 11+ (64-bit)</td>
+          <td>Linux Fedora 33</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td style="background-color: #FF8080">Linux Fedora 32</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>Linux Centos 7</td>
+          <td>11+</td>
+        </tr>
+
+        <tr>
+          <td>Win 11 (64-bit)</td>
           <td>11+</td>
         </tr>
 
@@ -509,7 +524,7 @@
               <a href="https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a>
             </th>
             <th>
-              <a href="https://jmri.org/install/Linux.shtml#sysreq">Linux</a>
+              <a href="https://jmri.org/install/Linux.shtml#sysreq">Oracle<br>Linux<br>(RHEL)</a>
             </th>
             <th>
               <a href="https://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a>
@@ -524,22 +539,22 @@
             <td>11</td>
             <td>10.10</td>
             <td>Windows Vista or later<br>64 bit only</td>
-            <td>5.5+</td>
+            <td>5.5</td>
             <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
-            <td>12.04+</td>
+            <td>12.04</td>
             <td>14.04LTS</td>
           </tr>
 
           <tr>
             <td>4.*</td>
             <td>1.8</td>
-            <td>10.8.3+ Mountain Lion</td>
+            <td>10.8.3 Mountain Lion</td>
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-            <td>5.5+</td>
+            <td>5.5</td>
             <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
-            <td>12.04+</td>
+            <td>12.04</td>
             <td>14.04LTS</td>
           </tr>
 
@@ -548,7 +563,7 @@
             <td>1.7</td>
             <td>10.7.3 Lion</td>
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-            <td>5.5+</td>
+            <td>5.5</td>
             <!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>12.04</td>
