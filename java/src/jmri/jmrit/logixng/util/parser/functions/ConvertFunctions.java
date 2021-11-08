@@ -6,10 +6,7 @@ import java.util.Set;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -35,6 +32,17 @@ public class ConvertFunctions implements FunctionFactory {
         functionClasses.add(new StrFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getConstantDescription() {
+        // This module doesn't define any constants
+        return null;
+    }
     
     
     
@@ -43,6 +51,11 @@ public class ConvertFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
         }
         
         @Override
@@ -73,6 +86,11 @@ public class ConvertFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
         }
         
         @Override
@@ -109,6 +127,11 @@ public class ConvertFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
         }
         
         @Override

@@ -17,6 +17,12 @@ public enum NamedBeanType {
     Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> {
         return InstanceManager.getDefault(SensorManager.class);
     }),
+    SignalHead(Bundle.getMessage("BeanNameSignalHead"), SignalHead.class, null, () -> {
+        return InstanceManager.getDefault(SignalHeadManager.class);
+    }),
+    SignalMast(Bundle.getMessage("BeanNameSignalMast"), SignalMast.class, null, () -> {
+        return InstanceManager.getDefault(SignalMastManager.class);
+    }),
     Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> {
         return InstanceManager.getDefault(TurnoutManager.class);
     });

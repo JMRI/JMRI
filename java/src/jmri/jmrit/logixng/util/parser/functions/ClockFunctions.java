@@ -5,11 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -33,6 +29,17 @@ public class ClockFunctions implements FunctionFactory {
         functionClasses.add(new FastClockFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getConstantDescription() {
+        // This module doesn't define any constants
+        return null;
+    }
     
     
     
@@ -41,6 +48,11 @@ public class ClockFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new ClockFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
         }
         
         @Override
@@ -95,6 +107,11 @@ public class ClockFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new ClockFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
         }
         
         @Override

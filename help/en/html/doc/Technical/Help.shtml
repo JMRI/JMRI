@@ -255,8 +255,6 @@
         "font-family: monospace;">addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
         </pre>The help file is then located at
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
-        <p>You should add the new page to the JmriHelp index to have JMRI accept it as a Help
-        target (see the next heading).</p>
 
         <p>A number of help files have been put in place without any contents; hopefully some users
         will edit them and contribute them back.</p>
@@ -270,7 +268,7 @@
 
       <div>
         <p><strong>HelpUtil</strong> is called when the <strong>Window Help</strong> or
-        <strong>General Help</strong> menu items are selected. The <strong>helpkey</strong>
+        <strong>General Help</strong> menu item is selected. The <strong>helpkey</strong>
         specified in the JMRI code is used to display the appropriate help page in the browser.</p>
 
         <p>Using <strong>Preferences ⇒ Help</strong>, the user can choose to have the local help
@@ -282,9 +280,11 @@
 
         <h3>Creating the JmriHelp files</h3>
 
-        <p>When a new <strong>helpkey</strong> has been defined in the JMRI code, it needs to be
-        added to the index and/or the table contents. These files are used to build the necessary
-        content to link the helpkey to the local help page.</p>
+        <p>When a new <strong>helpkey</strong> has been defined in the JMRI code, it can be
+        added to the index and/or the table contents.  This step is optional.  Displaying the help
+        page triggered by <strong>Window Help</strong> is independent of the table of contents and
+        index.  Since the default file based presentation does not display sidebars, it can be
+        helpful to include at least a basic entry in the TOC and/or Index to simplify navigation.</p>
 
         <h4>Update JmriHelp_**Index.xml and/or JmriHelp_**TOC.xml</h4>
 
@@ -294,6 +294,7 @@
         <p>These are xml files that can edited with any xml aware file editor. Each line in the
         file consists of a user friendly <strong>text</strong> name and the <strong>target</strong>
         helpkey.</p>
+
         <code>&lt;indexitem text="Setting The Internal Clock "
         target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/&gt;<br>
         &lt;tocitem text="Setting the Internal Clock "
@@ -307,27 +308,26 @@
           <li><strong>index.html</strong> -- This is the web page loaded by the local browser when
           <strong>Help ⇒ Window Help</strong> or <strong>Help ⇒ General Help</strong> is invoked by
           JMRI. The page contains the table of contents in the left column and the selected help
-          page in an iframe on the right.</li>
+          page in an iframe on the right.  At the top are buttons for selecting the table of
+          contents or the index.</li>
 
           <li><strong>jmri_map.xml</strong> -- This file contains the helpkeys and the actual URL
-          for the help pag from the JmriHelp_**TOC.xml and JmriHelp_**Index.xml files along with
+          for the help page from the JmriHelp_**TOC.xml and JmriHelp_**Index.xml files along with
           other helpkeys that were not included in either the table of contents or index.</li>
 
           <li><strong>alternate_map.txt</strong> -- This contains a list of non-standard helpkeys
           and the target help page.</li>
 
-          <li><strong>stub_template.html</strong> -- This file is used to build the stub files in
-          the stub diretory.</li>
+          <li><strong>stub_template.html</strong> -- This file is used to build the stub file that
+          translates the helpkey into a file name to be loaded by the browser.</li>
 
-          <li><strong>stub</strong> -- This directory contains the stub files which are used to
-          link a JMRI helpkey to the index.html.</li>
         </ul>
 
         <p>The Java process to pass a file name to a browser does not support query (?) or id (#)
-        parameters. The build process creates a stub file for each entry in jmri_map.xml. The file
-        name is <strong>&lt;helpkey&gt;.html</strong>. The stub file does a re-direct to
-        <strong>local/index.html#helpkey</strong>. The javascript in index.html converts the
-        helpkey into the file name to be loaded into the iframe.</p>
+        parameters. HelpUtil builds a <strong>stub.html</strong> file in the <strong>
+        settings:jmrihelp</strong> location.  The stub file does a re-direct to <strong>
+        local/index.html#helpkey</strong>. Javascript in index.html converts the helpkey into the
+        file name to be loaded into the iframe.</p>
 
         <p>After JmriHelp_**TOC.xml and JmriHelp_**Index.xml have been updated, run the ant
         <strong>buildhelp</strong> target. This is run using the main JMRI ant build.xml file, not
@@ -496,17 +496,16 @@
         is nominally a test program, but it has a <code>public static main()</code> which makes it
         possible to be called from ant. It is excluded from <strong>alltest</strong> .</p>
 
-        <p>The program uses the <strong>JmriHelp_**</strong> files, the
-        <strong>alternate_map.txt</strong> file and scans of the help tree to create the
-        <strong>jmri_map.xml</strong> file and the stub files.</p>
+        <p>The program uses the <strong>JmriHelp_**</strong> files and the <strong>alternate_map.txt
+        </strong> file to create the <strong>jmri_map.xml</strong> file.</p>
 
-        <p>When the program is done, the <strong>buildhelp</strong> target calls
-        <strong>ant</strong> in each language location. The language specific ant process builds
-        the <strong>webtoc.shtml</strong> and <strong>webindex.shtml</strong> files from
-        JmriHelp_**TOC.xml, JmriHelp_**Index.xml and jmri_map.xml using <strong>format.xsl</strong>
-        . The third step builds the <strong>local/index.html</strong> file using the
-        <strong>JmriHelp_**TOC.xml</strong> and <strong>jmri_map.xml</strong> files using
-        <strong>formatLocalTOC.xsl</strong>.</p>
+        <p>When the program is done, the <strong>buildhelp</strong> target calls <strong>ant</strong>
+        in each language location. The language specific ant process builds the <strong>webtoc.shtml
+        </strong> and <strong>webindex.shtml</strong> files from JmriHelp_**TOC.xml,
+        JmriHelp_**Index.xml and jmri_map.xml using <strong>format.xsl</strong>. The third step
+        builds the <strong>local/index.html</strong> file using the <strong>JmriHelp_**TOC.xml
+        </strong>,  <strong>JmriHelp_**Index.xml</strong> and <strong>jmri_map.xml</strong> files
+        using <strong>formatLocalTOC.xsl</strong>.</p>
 
         <p><a href="#helpTop">[Go to top of page]</a>
         </p>
