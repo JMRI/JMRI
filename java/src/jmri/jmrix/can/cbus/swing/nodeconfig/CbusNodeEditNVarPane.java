@@ -25,6 +25,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     private JPanel infoPane;
     private CbusNodeNVTableDataModel nodeNVModel;
     private JButton saveNvButton;
+    private JButton liveUpdateNvButton;
     private JButton resetNvButton;
     private JPanel buttonPane;
     private CbusNodeNVEditTablePane genericNVTable;
@@ -62,7 +63,10 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         infoPane.setLayout(new BorderLayout() );
         
         saveNvButton = new JButton(("Save"));
-        saveNvButton.setToolTipText(("Update Node"));
+        saveNvButton.setToolTipText(Bundle.getMessage("SaveNvButtonTt"));
+        
+        liveUpdateNvButton = new JButton(Bundle.getMessage("LiveUpdateNode"));
+        liveUpdateNvButton.setToolTipText(("LiveUpdateNodeTt"));
         
         resetNvButton = new JButton(Bundle.getMessage("Reset"));
         resetNvButton.setToolTipText(("Reset table New NV values"));
@@ -77,7 +81,13 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         };
         saveNvButton.addActionListener(save);
         
+        ActionListener liveUpdate = ae -> {
+            liveUpdateOption();
+        };
+        liveUpdateNvButton.addActionListener(liveUpdate);
+        
         buttonPane = new JPanel();
+        buttonPane.add(liveUpdateNvButton );
         buttonPane.add(saveNvButton );
         buttonPane.add(resetNvButton ); 
         
@@ -115,12 +125,32 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     }
     
     /**
+     * Put the node into learn mode so that NV writes are performed immediately.
+     * e.g., for live update of servo position NVs.
+     */
+    protected void liveUpdateOption() {
+        nodeOfInterest.send.nodeEnterLearnEvMode(nodeOfInterest.getNodeNumber());
+        saveNvButton.setEnabled(true);
+        nodeOfInterest.setliveUpdate(true);
+    }
+    
+    /**
      * {@inheritDoc}
+     * 
+     * If node was in learn mode then there's nothing to save but we take it out
+     * of learn mode which will trigger the module to flush NVs to non-volatile 
+     * storage if necessary.
      */
     @Override
     protected void saveOption(){
-        getMainPane().showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
-    true,false,false, null ); // from, to, nvs, clear events, events, null uses mainpane frame
+        if (nodeOfInterest.getnvWriteInLearnOnly()) {
+            nodeOfInterest.send.nodeExitLearnEvMode(nodeOfInterest.getNodeNumber());
+            saveNvButton.setEnabled(false);
+            nodeOfInterest.setliveUpdate(false);
+        } else {
+            getMainPane().showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
+                    true,false,false, null ); // from, to, nvs, clear events, events, null uses mainpane frame
+        }
     }
     
     /**
@@ -136,6 +166,14 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         
         nodeNVModel.setNode(nodeOfInterest);
         setSaveCancelButtonsActive ( false );
+        if (nodeOfInterest.getnvWriteInLearnOnly()) {
+            liveUpdateNvButton.setVisible(true);
+            liveUpdateNvButton.setEnabled(true);
+            saveNvButton.setEnabled(true);
+        } else {
+            liveUpdateNvButton.setVisible(false);
+            liveUpdateNvButton.setEnabled(false);
+        }
         genericNVTable.setNode( nodeOfInterest );
 
         provider = CbusConfigPaneProvider.getProviderByNode(nodeOfInterest);
@@ -152,7 +190,6 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         validate();
         repaint();
         setVisible(true);
-        
     }
     
     /**
@@ -176,10 +213,17 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     
     /**
      * Set the Save / Reset NV button status
+     * 
+     * Save button is always enabled when in live update
+     * 
      * @param newstate true if buttons should be enabled, else false
      */
     public void setSaveCancelButtonsActive ( boolean newstate ) {
-        saveNvButton.setEnabled(newstate);
+        if (liveUpdateNvButton.isVisible()) {
+            saveNvButton.setEnabled(true);
+        } else {
+            saveNvButton.setEnabled(newstate);
+        }
         resetNvButton.setEnabled(newstate);
     }
 

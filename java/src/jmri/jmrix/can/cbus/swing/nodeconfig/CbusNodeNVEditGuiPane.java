@@ -7,11 +7,8 @@ import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane providing a Cbus event editing gui
@@ -40,12 +37,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
      * @param node node to display
      */
     protected void setNode(CbusNode node) {
-        if (_node != null) {
-            if (_node.getnvWriteInLearnOnly()) {
-                // Take old node out of learn mode
-                _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
-            }
-        }
         _node = node;
         
         if (pane1 != null) {
@@ -56,10 +47,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         editGui = _provider.getEditNVFrame(nodeNVModel, _node);
         showGui(editGui);
         
-        if (_node.getnvWriteInLearnOnly()) {
-            _node.send.nodeEnterLearnEvMode(_node.getNodeNumber());
-        }
-
         this.setVisible(!(_node == null));
     }
     

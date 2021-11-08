@@ -17,6 +17,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
     private boolean _nvWriteInLearnOnly;
+    private boolean _liveUpdate;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
     public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
     public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
@@ -38,6 +39,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         
         _sendsWRACKonNVSET = true;
         _nvWriteInLearnOnly = false;
+        _liveUpdate = false;
         _flags = -1;
         _userComment = "";
         _nodeNameFromName = "";
@@ -268,6 +270,24 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      */
     public boolean getnvWriteInLearnOnly() {
         return _nvWriteInLearnOnly;
+    }
+    
+    /**
+     * Set flag to say node is in live update mode.
+     * 
+     * @param liveUpdate true if in live update mode
+     */
+    public void setliveUpdate(boolean liveUpdate) {
+        _liveUpdate = liveUpdate;
+    }
+    
+    /**
+     * Get live update mode
+     * 
+     * @return true in live update
+     */
+    public boolean getliveUpdate() {
+        return _liveUpdate;
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNode.class);

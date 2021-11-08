@@ -164,8 +164,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON;
             //log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
+            }
         }
     }
     
@@ -184,8 +186,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF;
             //log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), nv_index, pos);
+            }
         }
     }
     
@@ -205,8 +209,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             //log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
             // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
+            }
         }
     }
     
@@ -226,8 +232,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             //log.debug("UpdateOffSpeed index {} nv {} spd {}", index, nv_index, spd);
             // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), nv_index, spd);
+            }
         }
     }
     
@@ -253,9 +261,11 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             
             _dataModel.setValueAt(newPos, Servo8BasePaneProvider.STARTUP_POS - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(newMove, Servo8BasePaneProvider.STARTUP_MOVE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_POS, newPos);
-            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_MOVE, newMove);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_POS, newPos);
+                _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.STARTUP_MOVE, newMove);
+            }
         }
     }
     
@@ -393,8 +403,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             }
             log.debug("Cutoff Action now {}", newCutoff);
             _dataModel.setValueAt(newCutoff, Servo8BasePaneProvider.CUTOFF - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.CUTOFF, newCutoff);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.CUTOFF, newCutoff);
+            }
         }
         
         /**
@@ -407,8 +419,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             }
             log.debug("Sequential Action now {}", newSeq);
             _dataModel.setValueAt(newSeq, Servo8BasePaneProvider.SEQUENCE - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
-            // Send to module immediately
-            _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.SEQUENCE, newSeq);
+            if (_node.getliveUpdate()) {
+                // Send to module immediately in live update mode
+                _node.send.nVSET(_node.getNodeNumber(), Servo8BasePaneProvider.SEQUENCE, newSeq);
+            }
         }
     }
     
