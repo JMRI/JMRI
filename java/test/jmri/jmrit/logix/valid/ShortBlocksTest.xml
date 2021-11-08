@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>21</minor>
-    <test>3</test>
+    <minor>25</minor>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -53,7 +53,7 @@
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:37 PM">
+    <memory value="12:53 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -283,163 +283,159 @@
         <command commandType="4" fKey="2" />
         <commandValue valueType="21" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0048419847">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.008" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB12" trackSpeed="0.010289218">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.016800001" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1149" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1149" beanName="OB1" trackSpeed="0.010289218">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="0" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="0" beanName="OB1" trackSpeed="0.015736451">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.026480002" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB1" trackSpeed="0.02239418">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.037128" />
       </throttleSetting>
-      <throttleSetting elapsedTime="659" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="659" beanName="OB3" trackSpeed="0.02239418">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="340" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="340" beanName="OB3" trackSpeed="0.029657155">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.048840802" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.037525382">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.061724886" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.045998856">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.07589738" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.05507758">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.091487125" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.065972045">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.10863584" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.07686651">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.12749943" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.08957672">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.14824937" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.09878795">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.17107432" />
       </throttleSetting>
-      <throttleSetting elapsedTime="206" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="206" beanName="OB5" trackSpeed="0.09878795">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="793" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="793" beanName="OB5" trackSpeed="0.10214546">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.19618174" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.10718386">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.22379991" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.116689965">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2541799" />
       </throttleSetting>
-      <throttleSetting elapsedTime="280" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="280" beanName="OB6" trackSpeed="0.116689965">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="719" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="719" beanName="OB6" trackSpeed="0.12794074">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2875979" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB6" trackSpeed="0.14507456">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.3243577" />
       </throttleSetting>
-      <throttleSetting elapsedTime="266" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="266" beanName="OB7" trackSpeed="0.14507456">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1010" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1010" beanName="OB7" trackSpeed="0.12794074">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2875979" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.116689965">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2541799" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.10718386">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.22379991" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.10214546">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.19618174" />
       </throttleSetting>
-      <throttleSetting elapsedTime="552" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="552" beanName="OB9" trackSpeed="0.10214546">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="447" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="447" beanName="OB9" trackSpeed="0.09878795">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.17107432" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.08957672">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.14824937" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.07686651">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.12749943" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.065972045">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.10863584" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.05507758">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.091487125" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.045998856">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.07589738" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.037525382">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.061724886" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.029657155">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.048840802" />
       </throttleSetting>
-      <throttleSetting elapsedTime="113" beanName="OB11" trackSpeed="0.0">
+      <throttleSetting elapsedTime="113" beanName="OB11" trackSpeed="0.029657155">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="886" beanName="OB11" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1886" beanName="OB11" trackSpeed="0.015736451">
         <command commandType="1" fKey="-1" />
-        <commandValue valueType="1" speedMode="unknown" floatValue="0.037128" />
+        <commandValue valueType="1" speedMode="unknown" floatValue="0.03" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB11" trackSpeed="0.0">
-        <command commandType="1" fKey="-1" />
-        <commandValue valueType="1" speedMode="unknown" floatValue="0.026480002" />
-      </throttleSetting>
-      <throttleSetting elapsedTime="279" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="279" beanName="OB12" trackSpeed="0.015736451">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.006">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.01" />
       </throttleSetting>
@@ -451,7 +447,7 @@
         <command commandType="9" fKey="-1" />
         <commandValue valueType="3" speedMode="unknown" floatValue="2.0" />
       </throttleSetting>
-      <train trainId="" dccAddress="555" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Loopy" />
+      <train trainId="Pete555" dccAddress="555" dccType="dcc_long" runBlind="false" shareRoute="false" noRamp="false" trainName="Loopy" />
     </warrant>
     <warrant systemName="IW2" userName="WestToEast" wtype="normal">
       <blockOrder pathName="MainWest" entryName="" exitName="WestToWestApproach">
@@ -675,7 +671,7 @@
         <command commandType="4" fKey="0" />
         <commandValue valueType="21" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <train trainId="" dccAddress="11" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Fred" />
+      <train trainId="$11(L)$" dccAddress="11" dccType="dcc_long" runBlind="false" shareRoute="false" noRamp="false" trainName="Fred" />
     </warrant>
     <warrant systemName="IW3" userName="Loop&amp;Fred" wtype="normal">
       <blockOrder pathName="MainLoop" entryName="" exitName="WestToLoop">
@@ -729,163 +725,163 @@
         <command commandType="4" fKey="2" />
         <commandValue valueType="21" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0039265216">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.008" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB12" trackSpeed="0.008245695">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.016800001" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1149" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1149" beanName="OB1" trackSpeed="0.008245695">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="0" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="0" beanName="OB1" trackSpeed="0.012996786">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.026480002" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB1" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB1" trackSpeed="0.018222986">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.037128" />
       </throttleSetting>
-      <throttleSetting elapsedTime="659" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="659" beanName="OB3" trackSpeed="0.018222986">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="340" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="340" beanName="OB3" trackSpeed="0.023971805">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.048840802" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.03029551">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.061724886" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.037251584">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.07589738" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.044903267">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.091487125" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.053320117">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.10863584" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.062578656">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.12749943" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.07276304">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.14824937" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB3" trackSpeed="0.08396587">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.17107432" />
       </throttleSetting>
-      <throttleSetting elapsedTime="206" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="206" beanName="OB5" trackSpeed="0.08396587">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="793" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="793" beanName="OB5" trackSpeed="0.09628897">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.19618174" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.109844394">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.22379991" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB5" trackSpeed="0.124755345">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2541799" />
       </throttleSetting>
-      <throttleSetting elapsedTime="280" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="280" beanName="OB6" trackSpeed="0.124755345">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="719" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="719" beanName="OB6" trackSpeed="0.1411574">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2875979" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB6" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB6" trackSpeed="0.15919967">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.3243577" />
       </throttleSetting>
-      <throttleSetting elapsedTime="266" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="266" beanName="OB7" trackSpeed="0.15919967">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1010" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1010" beanName="OB7" trackSpeed="0.1411574">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2875979" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.124755345">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.2541799" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.109844394">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.22379991" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB7" trackSpeed="0.09628897">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.19618174" />
       </throttleSetting>
-      <throttleSetting elapsedTime="552" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="552" beanName="OB9" trackSpeed="0.09628897">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="447" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="447" beanName="OB9" trackSpeed="0.08396587">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.17107432" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.07276304">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.14824937" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.062578656">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.12749943" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.053320117">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.10863584" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.044903267">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.091487125" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.037251584">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.07589738" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.03029551">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.061724886" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB9" trackSpeed="0.023971805">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.048840802" />
       </throttleSetting>
-      <throttleSetting elapsedTime="113" beanName="OB11" trackSpeed="0.0">
+      <throttleSetting elapsedTime="113" beanName="OB11" trackSpeed="0.023971805">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="886" beanName="OB11" trackSpeed="0.0">
+      <throttleSetting elapsedTime="886" beanName="OB11" trackSpeed="0.018222986">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.037128" />
       </throttleSetting>
-      <throttleSetting elapsedTime="1000" beanName="OB11" trackSpeed="0.0">
+      <throttleSetting elapsedTime="1000" beanName="OB11" trackSpeed="0.012996786">
         <command commandType="1" fKey="-1" />
-        <commandValue valueType="1" speedMode="unknown" floatValue="0.026480002" />
+        <commandValue valueType="1" speedMode="unknown" floatValue="0.026" />
       </throttleSetting>
-      <throttleSetting elapsedTime="279" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="279" beanName="OB12" trackSpeed="0.012996786">
         <command commandType="6" fKey="-1" />
         <commandValue valueType="2" speedMode="unknown" floatValue="0.0" />
       </throttleSetting>
-      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0">
+      <throttleSetting elapsedTime="100" beanName="OB12" trackSpeed="0.0049081515">
         <command commandType="1" fKey="-1" />
         <commandValue valueType="1" speedMode="unknown" floatValue="0.01" />
       </throttleSetting>
@@ -897,7 +893,7 @@
         <command commandType="9" fKey="-1" />
         <commandValue valueType="3" speedMode="unknown" floatValue="2.0" />
       </throttleSetting>
-      <train trainId="" dccAddress="12" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Mabel" />
+      <train trainId="$12(L)$" dccAddress="12" dccType="dcc_long" runBlind="false" shareRoute="false" noRamp="false" trainName="Mabel" />
     </warrant>
     <warrant systemName="IW4" userName="EastToWestLink" wtype="normal">
       <blockOrder pathName="MainEast" entryName="" exitName="EastToEastApproch">
@@ -1089,7 +1085,7 @@
         <command commandType="9" fKey="-1" />
         <commandValue valueType="3" speedMode="unknown" floatValue="2.0" />
       </throttleSetting>
-      <train trainId="" dccAddress="123" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="goBack" />
+      <train trainId="$123(L)$" dccAddress="123" dccType="dcc_long" runBlind="false" shareRoute="false" noRamp="false" trainName="goBack" />
     </warrant>
     <warrant systemName="IW5" userName="WestToEastLink" wtype="normal">
       <blockOrder pathName="MainWest" entryName="" exitName="WestToWestApproach">
@@ -1285,14 +1281,14 @@
         <command commandType="9" fKey="-1" />
         <commandValue valueType="3" speedMode="unknown" floatValue="2.0" />
       </throttleSetting>
-      <train trainId="" dccAddress="123" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="goOut" />
+      <train trainId="$123(L)$" dccAddress="123" dccType="dcc_long" runBlind="false" shareRoute="false" noRamp="false" trainName="goOut" />
     </warrant>
   </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Mar 26 11:50:31 PDT 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="LinkedWarrantsTest" x="261" y="595" height="370" width="932" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="115" greenBackground="173" blueBackground="110" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="LinkedWarrantsTest" x="563" y="483" height="370" width="932" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="115" greenBackground="173" blueBackground="110" state="0" shapeSelect="yes">
     <indicatortrackicon x="261" y="96" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WestApproach"</tooltip>
       <occupancyblock>WestApproach</occupancyblock>
@@ -1871,104 +1867,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Wed Oct 28 14:47:41 PDT 2020</date>
+      <date>Mon Nov 08 12:49:37 PST 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed Oct 28 14:48:20 PDT 2020</date>
-      <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
+      <date>Mon Nov 08 12:50:32 PST 2021</date>
+      <filename>/C:/GitB/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Tue Oct 27 15:34:33 PDT 2020</date>
+          <date>Mon Nov 08 12:35:48 PST 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Tue Oct 27 15:35:08 PDT 2020</date>
-          <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
+          <date>Mon Nov 08 12:37:42 PST 2021</date>
+          <filename>/C:/GitB/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Mon Nov 18 12:11:46 PST 2019</date>
+              <date>Wed Oct 28 14:47:41 PDT 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Mon Nov 18 12:13:02 PST 2019</date>
+              <date>Wed Oct 28 14:48:20 PDT 2020</date>
               <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Sep 15 12:20:45 PDT 2019</date>
+                  <date>Tue Oct 27 15:34:33 PDT 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Sep 15 12:21:19 PDT 2019</date>
+                  <date>Tue Oct 27 15:35:08 PDT 2020</date>
                   <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Sep 15 12:09:00 PDT 2019</date>
+                      <date>Mon Nov 18 12:11:46 PST 2019</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Sep 15 12:09:40 PDT 2019</date>
+                      <date>Mon Nov 18 12:13:02 PST 2019</date>
                       <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Sep 15 12:02:35 PDT 2019</date>
+                          <date>Sun Sep 15 12:20:45 PDT 2019</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Sep 15 12:03:16 PDT 2019</date>
+                          <date>Sun Sep 15 12:21:19 PDT 2019</date>
                           <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Sep 15 12:06:03 PDT 2019</date>
+                          <date>Sun Sep 15 12:22:29 PDT 2019</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Sep 15 12:12:22 PDT 2019</date>
+                      <date>Mon Nov 18 12:35:27 PST 2019</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Sep 15 12:22:29 PDT 2019</date>
+                  <date>Tue Oct 27 15:37:12 PDT 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Mon Nov 18 12:35:27 PST 2019</date>
+              <date>Wed Oct 28 14:48:33 PDT 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Tue Oct 27 15:37:12 PDT 2020</date>
+          <date>Mon Nov 08 12:39:09 PST 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Oct 28 14:48:33 PDT 2020</date>
+      <date>Mon Nov 08 12:53:54 PST 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+pete_+2020-10-28T21:47:34Z+R65b6992216 on Wed Oct 28 14:48:33 PDT 2020-->
+  <!--Written by JMRI version 4.25.6ish+pete_+2021-11-08T20:49:28Z+Raedc52e84e on Mon Nov 08 12:53:54 PST 2021-->
 </layout-config>

@@ -403,7 +403,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
-    private void setFrameStatusText(String m, Color c, boolean save) {
+    private static void setFrameStatusText(String m, Color c, boolean save) {
         ThreadingUtil.runOnLayoutEventually(()-> WarrantTableFrame.getDefault().setStatusText(m, c, true));
     }
 
@@ -948,7 +948,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
         final String m = msg;
         java.awt.Color c = color;
-        setFrameStatusText(m, c, true);
+        Engineer.setFrameStatusText(m, c, true);
         log.debug("Exit runWarrant - {}",msg);
     }
 
@@ -1016,8 +1016,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
             String m = msg;
             java.awt.Color c = color;
-            ThreadingUtil.runOnLayoutEventually(() -> // delay until current warrant can complete
-                WarrantTableFrame.getDefault().setStatusText(m, c, true));
+            Engineer.setFrameStatusText(m, c, true);
         }
     }
 
