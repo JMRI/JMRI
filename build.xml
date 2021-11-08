@@ -906,8 +906,8 @@
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
-                javac.deprecation="on"
-            >
+                javac.deprecation="off"
+            > <!-- deprecation off during initial Java 11 work -->
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
             </javac-options>
