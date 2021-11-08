@@ -458,7 +458,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added
+            <a href="https://jmri.org/jython/KeyListenerExample.py">KeyListenerExample</li>,
+            a sample script that shows how to listen to the keyboard.
         </ul>
 
     <h3>Signals</h3>
