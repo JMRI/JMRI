@@ -122,12 +122,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 }
 
                 // block pick up cars
-                boolean found = false; // begin blocking at rl
                 for (RouteLocation rld : train.getTrainBlockingOrder()) {
-                    if (rld != rl && !found) {
-                        continue;
-                    }
-                    found = true;
                     for (Car car : carList) {
                         if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
                             newWork = true;
