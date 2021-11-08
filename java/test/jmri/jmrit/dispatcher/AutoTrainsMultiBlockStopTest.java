@@ -129,7 +129,9 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
 
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
 
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
@@ -247,7 +249,9 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
 
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
 
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
@@ -360,7 +364,9 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
 
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
 
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
@@ -473,7 +479,9 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
 
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
 
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
@@ -699,7 +707,9 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
 
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
 
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
