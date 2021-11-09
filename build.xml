@@ -421,13 +421,17 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="show-java-version"> <!-- check build system requirements, not for user use -->
+        <echo message="Ant Java version: ${ant.java.version}"/>
+        <echo message="JRE Java version: ${java.version}"/>
+    </target>
+
     <target name="check-java-version-requirement"> <!-- check build system requirements, not for user use -->
         <fail message="Unsupported Java version: ${ant.java.version}.
-          Make sure that the Java version is 9 or greater.">
+          Make sure that the Java version is 11 or greater.">
           <condition>
             <not>
               <or>
-                <matches pattern="^1\.9" string="${ant.java.version}"/>
                 <matches pattern="^1[1-9]" string="${ant.java.version}"/>
               </or>
             </not>
