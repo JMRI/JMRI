@@ -136,7 +136,7 @@ public class JemmyUtil {
     }
     
     static public void waitFor(JmriJFrame f) {
-        int count = 2;
+        int count = 3;
         f.requestFocus();
         while (!f.isActive() && count > 0) {
             jmri.util.JUnitUtil.waitFor(() -> {

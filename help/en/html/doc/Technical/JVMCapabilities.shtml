@@ -21,22 +21,14 @@
       for future JMRI versions. (For pre-Java-1.8 content, see the <a href=
       "JVMCapabilitiesOlder.shtml">historical page</a>.)</p>
 
-      <p>Note: The Java community is moving from a "few big Java releases, years apart" development
+      <p>Note: The Java community has moved from a "few big Java releases, years apart" development
       cycle to a cycle with a new release every six months, and a long-term support (LTS) release
       every three years. (For background, see <a href=
       "https://mreinhold.org/blog/forward-faster#Proposal">here</a>, <a href=
       "http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">
-      here</a>, <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>). It's
-      not yet clear what this will mean for JMRI's development and migration path. Much discussion
-      is necessary.</p>
-
-      <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in January 2019, and
-      intends to release the next Long Term Support version (notionally known as both Java 11 and
-      Java 18.9) in September of 2018. Given that some users will need to move forward for other
-      applications once Java 8 is End Of Life, at a minimum we'll have to have JMRI running under
-      both Java 8 and Java 11/18.9 by January 2019. For more information on this, see also this
-      <a href=
-      "http://www.javamagazine.mozaicreader.com/NovemberDecember2018/default/52/0/#&amp;pageSet=52&amp;page=0&amp;contentItem=0">
+      here</a>, <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
+      For more information on this, see also this
+      <a href="https://archive.org/details/JavaMagazine2018.1112/page/n52/mode/2up">
       Java Magazine article from November 2018</a> .</p>
 
       <h2>Capabilities</h2>
@@ -46,7 +38,7 @@
       "JRE" column lists the first runtime environment that could run the feature, including the
       needed JVM and library support.</p>
 
-      <table style="width: 100%; padding: 10px 15px 10px 15px;">
+      <table style="width: 100%; padding: 10px 15px 10px 15px;" border="1">
         <tr>
           <th>Feature</th>
           <th>JDK</th>
@@ -194,6 +186,20 @@
 
         <tr>
           <td>
+            A standard installation of
+            <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
+            is available that can
+            <a href="https://www.graalvm.org/reference-manual/python/">run parts of Python 3.7</a>.
+            Although this is "far from complete", no other project appears to be emerging to
+            include Python 3 support in i.e. Jython. Having this available can let JMRI start a
+            gentler migration.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
             The Nashorn interpreter will be removed in Java 15. Some adaptation will be needed to
             have a JavaScript interpreter, perhaps <a href=
             "https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
@@ -203,17 +209,6 @@
           <td>15</td>
         </tr>
 
-        <tr>
-          <td>
-            A standard installation of GraalVM is available that can <a href=
-            "https://www.graalvm.org/reference-manual/python/">run parts of Python 3.7</a>.
-            Although this is "far from complete", no other project appears to be emerging to
-            include Python 3 support in i.e. Jython. Having this available can let JMRI start a
-            gentler migration.
-          </td>
-          <td>11</td>
-          <td>11</td>
-        </tr>
       </table>
       (* indicates that a compatibility library is used in the early version)
       <h2>JRE availability</h2>
@@ -222,8 +217,8 @@
       operating system versions. Please note that not all users of that operating system will have
       updated to this Java version; many will be using an older one.</p>
 
-      <p>JMRI development requires Java 8u101 or later. 8u101 contains a certificate change that's
-      needed to link to some remote Javadocs.</p>
+      <p>JMRI development requires Java 8u101 or later through January 2022. 8u101 contains a certificate change that's
+      needed to link to some remote Javadocs. After that, Java 11 will be required.</p>
 
       <p><a href="http://www.oracle.com/technetwork/java/javase/config-417990.html">Oracle's page
       on Java 1.7 requirements</a> says "Note: As of April 8, 2014 Microsoft stopped supporting
@@ -237,15 +232,33 @@
       "https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java
       download archive page</a> for links to that.</p>
 
-      <p>As of April 18, 2018, the the <a href=
-      "https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:</p>
+      <p>Java <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">plans
+      for end of life</a> of various versions:</p>
 
-      <blockquote cite="https://java.com/en/download/release_notice.jsp">
-        Public updates for Oracle Java SE 8 will remain available for individual, personal use
-        through at least the end of 2020.
-      </blockquote>
+      <ul>
+        <li>Java 8 will <a href=
+        "https://www.oracle.com/java/technologies/java-se-support-roadmap.html">keep receiving
+        free updates through March 2022</a> for personal use. Note that Oracle is <a href=
+        "https://blogs.oracle.com/java-platform-group/end-of-public-updates-is-a-process%2c-not-an-event">
+          no longer actively maintaining Java 8</a>.
+        </li>
 
-      <p>For more details, see the Java pages for:</p>
+        <li>
+          <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, made available in
+          September 2018, will be a "Long Term Support" (LTS) release. That means five years of
+          support,
+          <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through September 2023</a>.
+        </li>
+
+        <li>Java 9, 10, and 12 through 16 will not be LTS releases, and support will end shortly
+        after the following release comes out.</li>
+
+        <li>Java 17 is the current LTS release, made available in September of 2021. It is also
+        expected to get five years of support,
+        <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through September 2026</a>.</li>
+      </ul>
+
+      <p>For more information, see the Java pages for:</p>
 
       <ul>
         <li>
@@ -284,43 +297,28 @@
         <li>
           <a href="https://openjdk.java.net/projects/jdk/15/">Java 15 (Sept 2020)</a>
         </li>
-      </ul>
 
-      <p>Java <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">plans
-      for end of life</a> of various versions:</p>
-
-      <ul>
-        <li>Java 8 will <a href=
-        "https://www.oracle.com/java/technologies/java-se-support-roadmap.html">keep receiving
-        updates indefinitely</a> for personal use. which 18-month warning expected when
-        "indefinitely" ends. Note that Oracle is <a href=
-        "https://blogs.oracle.com/java-platform-group/end-of-public-updates-is-a-process%2c-not-an-event">
-          no longer actively maintaining Java 8</a>. Commercial support for security patches ends
-          in Spring 2020 for many organizations.
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/16/">Java 16 (March 2021)</a>
         </li>
 
         <li>
-          <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, made available in
-          September 2018, will be a "Long Term Support" (LTS) release. That means five years of
-          support, <a href=
-          "https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through 2023</a>.
+          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 (Sept 2021)</a>
         </li>
 
-        <li>Java 9, 10, and 12 through 16 will not be LTS releases, and support will end shortly
-        after the following release comes out.</li>
-
-        <li>Java 17 is announced as the next LTS release, expected in September of 2021. It is also
-        expected to get five years of support.</li>
       </ul>
+
       Model railroaders may not care if they're using a Java version that's supported. Some of them
       don't connect their layout computers to the internet; some have single-purpose machines that,
       if messed up, they'll just reload. But other JMRI users have multi-purpose machines whose
       security matters; essentially all of the JMRI developers are in this situation. At least some
       of the developers use dual-purpose machines that are required to meet various security and
-      update standards. For those, Java 8 is going to increasing become a liability.
+      update standards. For those, Java 8 has increasing become a liability.
+
       <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). <a href=
       "https://adoptopenjdk.net/">AdoptOpenJDK</a> continues to make 32 and 64-bit JREs and JDKs
-      available.</p>
+      available. Light red indicates unable to run Java 8 or later; darker red means able to
+      run Java 8, but not Java 11.</p>
 
       <table border="1">
         <tr>
@@ -335,22 +333,37 @@
         </tr>
 
         <tr>
-          <td>Win 1!+ (64-bit)</td>
+          <td>Linux Fedora 33</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td style="background-color: #FF8080">Linux Fedora 32</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>Linux Centos 7</td>
           <td>11+</td>
         </tr>
 
         <tr>
-          <td>Win 8 (32-bit)</td>
+          <td>Win 11 (64-bit)</td>
+          <td>11+</td>
+        </tr>
+
+        <tr>
+          <td style="background-color: #FF8080">Win 8 (32-bit)</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td>Win 7 (32-bit)</td>
+          <td style="background-color: #FF8080">Win 7 (32-bit)</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td>Win Server 2008 (32-bit)</td>
+          <td style="background-color: #FF8080">Win Server 2008 (32-bit)</td>
           <td>8</td>
         </tr>
 
@@ -390,7 +403,7 @@
         </tr>
 
         <tr>
-          <td>Win Server 2008 R2 (64-bit)</td>
+          <td style="background-color: #FF8080">Win Server 2008 R2 (64-bit)</td>
           <td>10</td>
         </tr>
 
@@ -410,7 +423,7 @@
         </tr>
 
         <tr>
-          <td>Windows Vista (32-bit)</td>
+          <td style="background-color: #FF8080">Windows Vista (32-bit)</td>
           <td>
             8<br>
             <a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
@@ -424,7 +437,7 @@
         </tr>
 
         <tr>
-          <td>Windows XP</td>
+          <td style="background-color: #FF8080">Windows XP</td>
           <td>
             8<br>
             <a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
@@ -453,7 +466,7 @@
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3 Mountain Lion</td>
+          <td style="background-color: #FF8080">Mac OS X 10.8.3 Mountain Lion</td>
           <td>8</td>
         </tr>
 
@@ -511,7 +524,7 @@
               <a href="https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a>
             </th>
             <th>
-              <a href="https://jmri.org/install/Linux.shtml#sysreq">Linux</a>
+              <a href="https://jmri.org/install/Linux.shtml#sysreq">Oracle<br>Linux<br>(RHEL)</a>
             </th>
             <th>
               <a href="https://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a>
@@ -522,14 +535,26 @@
           </tr>
 
           <tr>
-            <td>4.2</td>
-            <td>1.8</td>
-            <td>10.8.3+ Mountain Lion</td>
-            <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-            <td>5.5+</td>
+            <td>5.*</td>
+            <td>11</td>
+            <td>10.10</td>
+            <td>Windows Vista or later<br>64 bit only</td>
+            <td>5.5</td>
             <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
-            <td>12.04+</td>
+            <td>12.04</td>
+            <td>14.04LTS</td>
+          </tr>
+
+          <tr>
+            <td>4.*</td>
+            <td>1.8</td>
+            <td>10.8.3 Mountain Lion</td>
+            <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+            <td>5.5</td>
+            <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
+
+            <td>12.04</td>
             <td>14.04LTS</td>
           </tr>
 
@@ -538,7 +563,7 @@
             <td>1.7</td>
             <td>10.7.3 Lion</td>
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-            <td>5.5+</td>
+            <td>5.5</td>
             <!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>12.04</td>

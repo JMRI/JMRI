@@ -40,7 +40,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
 //            System.out.format("Existing functions: %s, %s%n", entry.getValue().getModule(), entry.getValue().getName());
             Module m = _modules.get(entry.getValue().getModule());
             if (m == null) {
-                m = new Module(entry.getValue().getModule());
+                m = new Module(entry.getValue().getModule(), entry.getValue().getConstantDescriptions());
                 _modules.put(m._name, m);
             }
             m._functions.add(entry.getValue());
@@ -72,7 +72,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
             if (_functionComboBox.getSelectedIndex() > -1) {
                 SortableFunction f = _functionComboBox
                         .getItemAt(_functionComboBox.getSelectedIndex());
-                _documentationEditorPane.setText(f._function.getDescription());
+                _documentationEditorPane.setText(f._functionDescr);
                 _documentationEditorPane.setCaretPosition(0);
             } else {
                 _documentationEditorPane.setText("");
@@ -186,8 +186,11 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         if (_moduleComboBox.getSelectedIndex() > -1) {
             Module module = _moduleComboBox.getItemAt(_moduleComboBox.getSelectedIndex());
             List<SortableFunction> list = new ArrayList<>();
+            if (module._constantDescriptions != null) {
+                list.add(new SortableFunction(Bundle.getMessage("FunctionsHelpDialog_Constants"), module._constantDescriptions));
+            }
             for (Function f : module._functions) {
-                list.add(new SortableFunction(f.getName(), f));
+                list.add(new SortableFunction(f.getName(), f.getDescription()));
             }
             Collections.sort(list);
             for (SortableFunction function : list) {
@@ -203,10 +206,12 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
     private static class Module implements Comparable<Module> {
         
         private final String _name;
+        private final String _constantDescriptions;
         private final List<Function> _functions = new ArrayList<>();
         
-        private Module(String name) {
+        private Module(String name, String constantDescriptions) {
             _name = name;
+            _constantDescriptions = constantDescriptions;
         }
         
         @Override
@@ -235,11 +240,11 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
     private static class SortableFunction implements Comparable<SortableFunction> {
         
         private final String _name;
-        private final Function _function;
+        private final String _functionDescr;
         
-        private SortableFunction(String name, Function function) {
+        private SortableFunction(String name, String functionDescr) {
             _name = name;
-            _function = function;
+            _functionDescr = functionDescr;
         }
         
         @Override
