@@ -49,10 +49,11 @@
 -err:-unusedTypeArgs
 -err:+unusedTypeParameter
 
-# Checks temporarily defeated at start of Java 11 work
--err:-allDeprecation
--err:-dep-ann
--err:-deprecation
+-err:-unusedExceptionParam
+
+-err:+allDeprecation
+-err:+dep-ann
+-err:+deprecation
 
 # Checks we choose to enforce
 -err:+allOver-ann
@@ -119,6 +120,8 @@
 
     # 14 outstanding items
 -warn:-deadCode
+-err:-deadCode
+-err:-allDeadCode
 -warn:-allDeadCode
 
     # 22 outstanding items
