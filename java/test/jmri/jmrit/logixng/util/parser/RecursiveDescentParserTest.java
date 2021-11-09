@@ -28,6 +28,7 @@ public class RecursiveDescentParserTest {
         Assert.assertNotNull("not null", t);
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void testParseAndCalculate() throws Exception {
         
@@ -539,7 +540,10 @@ public class RecursiveDescentParserTest {
     }
     
     
-    private static class MyVariable implements Variable {
+    public static class MyVariable implements Variable {
+        // If this class is private instead of public, we will get the error:
+        // The method myFunc(String) from the type RecursiveDescentParserTest.MyVariable is never used locally
+        // But the myFunc(String) is used by formula.
         
         private final String _name;
         private Object _value;
