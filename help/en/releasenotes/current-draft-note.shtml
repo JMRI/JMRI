@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>More module GUI editors added. </li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -86,7 +86,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>Support for CBUS CANMIO-SVO live updates during servo position setting</li>
             </ul>
 
         <h4>MQTT</h4>
