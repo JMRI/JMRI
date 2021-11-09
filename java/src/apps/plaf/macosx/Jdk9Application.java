@@ -80,5 +80,4 @@ class Jdk9Application extends Application {
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Jdk9Application.class);
-
 }
