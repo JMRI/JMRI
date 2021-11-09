@@ -68,12 +68,6 @@ public class RecursiveDescentParser {
             return null;
         }
         
-//        if (exprNodeAndState._exprNode != null) {
-//            System.err.format("Expression: \"%s\"%n", exprNodeAndState._exprNode.getDefinitionString());
-//        } else {
-//            System.err.format("Expression: null%n");
-//        }
-        
         if ((exprNodeAndState._state != null)
                 && (exprNodeAndState._state._tokenIndex < _tokens.size())) {
             
@@ -205,18 +199,14 @@ public class RecursiveDescentParser {
                     throw new InvalidSyntaxException(Bundle.getMessage("LeftSideCannotBeAssigned"));
                 }
                 
-//                TokenType operatorTokenType = newState._token._tokenType;
                 newState = next(newState);
                 ExpressionNodeAndState middleSide = rule3.parse(newState);
                 
-//                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
-//                leftSide = new ExpressionNodeAndState(exprNode, middleSide._state);
                 newState = middleSide._state;
                 
                 if ((newState._token != null)
                         && ((newState._token._tokenType == TokenType.TERNARY_COLON))) {
                     
-//                    TokenType operatorTokenType = newState._token._tokenType;
                     newState = next(newState);
                     ExpressionNodeAndState rightRightSide = rule3.parse(newState);
                     
@@ -456,7 +446,7 @@ public class RecursiveDescentParser {
     }
     
     
-    // Rule3 in Java is cast object and object creation. Not relevant here.
+    // Rule13 in Java is cast object and object creation. Not relevant here.
     
     
     // Unary pre-increment, unary pre-decrement, unary plus, unary minus, unary logical NOT, unary bitwise NOT
@@ -534,49 +524,24 @@ public class RecursiveDescentParser {
     //              | <rule20> . <rule20>
     //              | <rule20> . <identifier> ( <rule21> )
     
-            // <rule20> ::= <identifier>
-            //              | <identifier> ( <rule21> )
-            //              | <identifier> [ <rule21> ]
-            //              | <identifier> { <rule21> }
-            //              | <identifier> . <identifier>
-            //              | <identifier> . <identifier> ( <rule21> )
-            //              | <identifier> . <identifier> [ <rule21> ]
-            //              | <identifier> . <identifier> { <rule21> }
-            //              | <identifier> . <identifier>
-            //              | <identifier> . <identifier> . <identifier> ( <rule21> )
-            //              | <identifier> . <identifier> . <identifier> [ <rule21> ]
-            //              | <identifier> . <identifier> . <identifier> { <rule21> }
-            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> ( <rule21> )
-            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> [ <rule21> ]
-            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> { <rule21> }
-/*    
-    List<String> list1 = new ArrayList<>();
-    List<String> list2 = new ArrayList<>();
-    List<String> list3 = new ArrayList<>();
-    List<String> list4 = new ArrayList<>();
-    list1.add(0,list2);
-    list2.add(0,list2);
-    list3.add(0,list2);
-    list4.add(0,"Hello");
-    list1.get(0).get(0).get(0) = "SomethingElse";
-*/
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <identifier> [ <rule21> ]
+    //              | <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> { <rule21> }
     //              | <integer number>
     //              | <floating number>
     //              | <string>
-    
-    
-    // Identifiers and constants
-    // <rule20> ::= <identifier>
-    //              | <identifier> <rule20a>
-    //              | <integer number>
-    //              | <floaing number>
-    //              | <string>
-    // 
-    // <rule20a> :: = <rule20b> | <rule20b> <rule20a>
-    // 
-    // <rule20b> :: = . <identifier>
-    //              | [ <rule21> ]
-    //              | { <rule21> }
     private class Rule20 implements Rule {
 
         @Override
@@ -617,11 +582,8 @@ public class RecursiveDescentParser {
             }
             
             
-            int count=0;
             boolean completed = false;
             do {
-                if (count++ > 100) throw new RuntimeException("Infinite loop");
-                
                 State newState2;
                 if ((newState2 = accept(TokenType.DOT, newState)) != null) {
                     State newState3;
@@ -642,7 +604,6 @@ public class RecursiveDescentParser {
                             exprNode = new ExpressionNodeComplex(
                                     exprNode,
                                     new ExpressionNodeInstanceVariable(newState3._lastToken._string, _variables));
-//                            exprNode = new ExpressionNodeInstanceVariable(newState3._lastToken._string, _variables);
                             expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
                             newState = newState3;
                         }
@@ -659,7 +620,6 @@ public class RecursiveDescentParser {
                     exprNode = new ExpressionNodeComplex(
                             exprNode,
                             new ExpressionNodeArray(exprNodeAndState2._exprNode));
-//                    exprNode = new ExpressionNodeArray(exprNodeAndState2._exprNode);
                     expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
                     newState = newState3;
                 } else if ((newState2 = accept(TokenType.LEFT_CURLY_BRACKET, newState)) != null) {
@@ -672,7 +632,6 @@ public class RecursiveDescentParser {
                     exprNode = new ExpressionNodeComplex(
                             exprNode,
                             new ExpressionNodeMap(exprNodeAndState2._exprNode));
-//                    exprNode = new ExpressionNodeMap(exprNodeAndState2._exprNode);
                     expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
                     newState = newState3;
                 } else {
