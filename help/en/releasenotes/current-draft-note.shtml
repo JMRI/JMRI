@@ -91,7 +91,10 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>
+                    Add protection against a concurrent-modification
+                    error that can happen during very fast operations.
+                </li>
             </ul>
 
         <h4>MRC</h4>

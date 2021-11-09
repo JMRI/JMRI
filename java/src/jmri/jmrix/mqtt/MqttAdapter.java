@@ -30,17 +30,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
 
+<<<<<<< Updated upstream
     // 0.1 to get it to the front of the list
     private final static String MQTT_USERNAME_OPTION = "0.1";
 
     // 0.2 to get it to the front of the list
     private final static String MQTT_PASSWORD_OPTION = "0.2";
 
+=======
+>>>>>>> Stashed changes
     public boolean retained = true;  // public for script access
     public int      qosflag = 2;     // public for script access
-    
+
     /**
-     * Otherwise known as "Channel", this is prepended to the 
+     * Otherwise known as "Channel", this is prepended to the
      * topic for all JMRI inward and outward communications.
      * Typically set by preferences at startup.  Changing it
      * after startup might have no or bad effect.
@@ -56,6 +59,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
+<<<<<<< Updated upstream
         
         options.put(MQTT_USERNAME_OPTION, new Option(Bundle.getMessage("MQTT_Username"),
                 new String[]{""},  Option.Type.TEXT));
@@ -65,22 +69,27 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         
         option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
         options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"), 
+=======
+        option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
+
+        options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"),
+>>>>>>> Stashed changes
                                             new String[]{baseTopic}, Option.Type.TEXT));
-                                            
-        options.put("10.3", new Option(Bundle.getMessage("NameTopicTurnoutSend"),    
+
+        options.put("10.3", new Option(Bundle.getMessage("NameTopicTurnoutSend"),
                 new String[]{Bundle.getMessage("TopicTurnoutSend")},  Option.Type.TEXT));
-        options.put("10.5", new Option(Bundle.getMessage("NameTopicTurnoutRcv"),     
+        options.put("10.5", new Option(Bundle.getMessage("NameTopicTurnoutRcv"),
                 new String[]{Bundle.getMessage("TopicTurnoutRcv")},  Option.Type.TEXT));
-        
-        
+
+
         options.put("11.3", new Option(Bundle.getMessage("NameTopicSensorSend"),
                                             new String[]{Bundle.getMessage("TopicSensorSend")},   Option.Type.TEXT));
         options.put("11.5", new Option(Bundle.getMessage("NameTopicSensorRcv"),
                                             new String[]{Bundle.getMessage("TopicSensorRcv")},   Option.Type.TEXT));
-                                            
-        options.put("12.3", new Option(Bundle.getMessage("NameTopicLightSend"),    
+
+        options.put("12.3", new Option(Bundle.getMessage("NameTopicLightSend"),
                                        new String[]{Bundle.getMessage("TopicLightSend")},  Option.Type.TEXT));
-        options.put("12.5", new Option(Bundle.getMessage("NameTopicLightRcv"),     
+        options.put("12.5", new Option(Bundle.getMessage("NameTopicLightRcv"),
                                        new String[]{Bundle.getMessage("TopicLightRcv")},  Option.Type.TEXT));
 
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
@@ -131,6 +140,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public void connect() throws IOException {
         log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         try {
             if ( getOptionState(option2Name)!= null && ! getOptionState(option2Name).trim().isEmpty()) {
                 baseTopic = getOptionState(option2Name);
@@ -154,7 +167,11 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
 
+<<<<<<< Updated upstream
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), 
+=======
+            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(),
+>>>>>>> Stashed changes
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
 
@@ -171,7 +188,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             throw new IOException("Can't create MQTT client", ex);
         }
     }
-    
+
     @Override
     @API(status=API.Status.MAINTAINED)
     public MqttSystemConnectionMemo getSystemConnectionMemo() {
@@ -287,18 +304,19 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         log.debug("Message received, topic : {}", topic);
-        
+
         boolean found = false;
-        for (Map.Entry<String,ArrayList<MqttEventListener>> e : mqttEventListeners.entrySet()) {
+        Set<> tempEntrySet = new HashSet<Map.Entry<String,ArrayList<MqttEventListener>>> (mqttEventListeners.entrySet()); // Avoid CME
+        for (Map.Entry<String,ArrayList<MqttEventListener>> e : tempEntrySet) {
             // does key match received topic, including wildcards?
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
                 found = true;
                 e.getValue().forEach((mel) -> {
                     mel.notifyMqttMessage(topic, mm.toString());
-                });              
+                });
             }
         }
-        
+
         if (!found) {
             log.error("No one subscribed to {}", topic);
             throw new Exception("No subscriber for MQTT topic " + topic);
