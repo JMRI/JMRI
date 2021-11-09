@@ -97,6 +97,11 @@ public class AddEntryExitPairPanelTest {
             panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         }
         panels = null;
+
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
