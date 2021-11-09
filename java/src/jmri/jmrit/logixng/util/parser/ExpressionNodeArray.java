@@ -26,7 +26,7 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
         
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
         
-        return ((List)parameter).get(index);
+        return ((List<Object>)parameter).get(index);
     }
     
     /** {@inheritDoc} */
@@ -50,7 +50,7 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
         
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
         
-        ((List)parameter).set(index, value);
+        ((List<Object>)parameter).set(index, value);
     }
     
     /** {@inheritDoc} */

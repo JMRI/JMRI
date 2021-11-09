@@ -25,7 +25,7 @@ public class ExpressionNodeMap implements ExpressionNodeWithParameter {
         
         Object index = _exprNode.calculate(symbolTable);
         
-        return ((Map)parameter).get(index);
+        return ((Map<Object,Object>)parameter).get(index);
     }
     
     /** {@inheritDoc} */
@@ -49,7 +49,7 @@ public class ExpressionNodeMap implements ExpressionNodeWithParameter {
         
         Object index = _exprNode.calculate(symbolTable);
         
-        ((Map)parameter).put(index, value);
+        ((Map<Object,Object>)parameter).put(index, value);
     }
     
     /** {@inheritDoc} */
