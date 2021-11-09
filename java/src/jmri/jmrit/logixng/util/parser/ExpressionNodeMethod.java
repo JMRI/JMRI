@@ -11,32 +11,14 @@ import jmri.jmrit.logixng.SymbolTable;
  * 
  * @author Daniel Bergqvist 2021
  */
-public class ExpressionNodeMethod implements ExpressionNode {
+public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
 
-    private final String _variableName;
-    private final Variable _variable;
     private final String _method;
     private final List<ExpressionNode> _parameterList;
     
-    
-    public ExpressionNodeMethod(String variableName, String method, Map<String, Variable> variables, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
-        _variableName = variableName;
-        Variable variable = variables.get(variableName);
-        
-        if (variable == null) {
-            // Assume the identifier is a local variable.
-            // Local variables may not be known when the expression is parsed.
-            
-            variable = new LocalVariableExpressionVariable(variableName);
-        }
-        
-        _variable = variable;
-        
-        
+    public ExpressionNodeMethod(String method, Map<String, Variable> variables, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
         _method = method;
         _parameterList = parameterList;
-        
-//        System.err.format("Function %s, %s%n", _function.getName(), _function.getClass().getName());
     }
     
     private boolean isAssignableFrom(Class<?> type, Object param) {
@@ -75,11 +57,10 @@ public class ExpressionNodeMethod implements ExpressionNode {
     }
     
     @Override
-    public Object calculate(SymbolTable symbolTable) throws JmriException {
-        Object obj = _variable.getValue(symbolTable);
-        if (obj == null) throw new NullPointerException("Identifier "+_variable.getName()+" is null");
+    public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
+        if (parameter == null) throw new NullPointerException("Parameter is null");
         
-        Method[] methods = obj.getClass().getMethods();
+        Method[] methods = parameter.getClass().getMethods();
         List<Object> parameters = new ArrayList<>();
         for (ExpressionNode exprNode : _parameterList) {
             parameters.add(exprNode.calculate(symbolTable));
@@ -90,15 +71,17 @@ public class ExpressionNodeMethod implements ExpressionNode {
         for (Method m : methods) {
             if (!m.getName().equals(_method)) continue;
             try {
-                if (canCall(m, params)) return callMethod(m, obj, params);
+                if (canCall(m, params)) return callMethod(m, parameter, params);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 exception = ex;
             }
         }
+        
         if (exception != null) throw new ReflectionException("Reflection exception", exception);
+        
         List<String> paramList = new ArrayList<>();
         for (Object o : params) paramList.add(String.format("%s:%s", o, o != null ? o.getClass().getName() : "null"));
-        throw new CannotCallMethodException(String.format("Can not call method %s.%s(%s)", _variableName, _method, String.join(", ", paramList)), _variableName, _method);
+        throw new CannotCallMethodException(String.format("Can not call method %s(%s) on object %s", _method, String.join(", ", paramList), parameter), _method);
     }
     
     /** {@inheritDoc} */
@@ -106,8 +89,6 @@ public class ExpressionNodeMethod implements ExpressionNode {
     public String getDefinitionString() {
         StringBuilder str = new StringBuilder();
         str.append("Method:");
-        str.append(_variableName);
-        str.append(".");
         str.append(_method);
         str.append("(");
         for (int i=0; i < _parameterList.size(); i++) {

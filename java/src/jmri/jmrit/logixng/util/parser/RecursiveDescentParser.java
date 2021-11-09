@@ -527,60 +527,160 @@ public class RecursiveDescentParser {
     
     
     // Identifiers and constants
-    // <rule20> ::= <identifier> | <identifier> ( <rule21> ) | <identifier> . <identifier> ( <rule21> ) | <integer number> | <floating number> | <string>
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <rule20> [ <rule21> ]
+    //              | <rule20> { <rule21> }
+    //              | <rule20> . <rule20>
+    //              | <rule20> . <identifier> ( <rule21> )
+    
+            // <rule20> ::= <identifier>
+            //              | <identifier> ( <rule21> )
+            //              | <identifier> [ <rule21> ]
+            //              | <identifier> { <rule21> }
+            //              | <identifier> . <identifier>
+            //              | <identifier> . <identifier> ( <rule21> )
+            //              | <identifier> . <identifier> [ <rule21> ]
+            //              | <identifier> . <identifier> { <rule21> }
+            //              | <identifier> . <identifier>
+            //              | <identifier> . <identifier> . <identifier> ( <rule21> )
+            //              | <identifier> . <identifier> . <identifier> [ <rule21> ]
+            //              | <identifier> . <identifier> . <identifier> { <rule21> }
+            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> ( <rule21> )
+            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> [ <rule21> ]
+            //              | <identifier> . <identifier> ( <rule21> ) . <identifier> { <rule21> }
+/*    
+    List<String> list1 = new ArrayList<>();
+    List<String> list2 = new ArrayList<>();
+    List<String> list3 = new ArrayList<>();
+    List<String> list4 = new ArrayList<>();
+    list1.add(0,list2);
+    list2.add(0,list2);
+    list3.add(0,list2);
+    list4.add(0,"Hello");
+    list1.get(0).get(0).get(0) = "SomethingElse";
+*/
+    //              | <integer number>
+    //              | <floating number>
+    //              | <string>
+    
+    
+    // Identifiers and constants
+    // <rule20> ::= <identifier>
+    //              | <identifier> <rule20a>
+    //              | <integer number>
+    //              | <floaing number>
+    //              | <string>
+    // 
+    // <rule20a> :: = <rule20b> | <rule20b> <rule20a>
+    // 
+    // <rule20b> :: = . <identifier>
+    //              | [ <rule21> ]
+    //              | { <rule21> }
     private class Rule20 implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
             ExpressionNode exprNode;
-
             State newState;
+            
+            if ((newState = accept(TokenType.INTEGER_NUMBER, state)) != null) {
+                exprNode = new ExpressionNodeIntegerNumber(newState._lastToken);
+                return new ExpressionNodeAndState(exprNode, newState);
+            } else if ((newState = accept(TokenType.FLOATING_NUMBER, state)) != null) {
+                exprNode = new ExpressionNodeFloatingNumber(newState._lastToken);
+                return new ExpressionNodeAndState(exprNode, newState);
+            }
+            
+            
+            ExpressionNodeAndState expressionNodeAndState;
             if ((newState = accept(TokenType.IDENTIFIER, state)) != null) {
+                State newState2;
+                if ((newState2 = accept(TokenType.LEFT_PARENTHESIS, newState)) != null) {
+                    ExpressionNodeAndState exprNodeAndState =
+                            rule21_Function.parse(newState2, newState._lastToken._string);
+                    if (exprNodeAndState._state._token == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                    exprNode = exprNodeAndState._exprNode;
+                    newState2 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNodeAndState._exprNode, newState2);
+                } else {
+                    exprNode = new ExpressionNodeIdentifier(newState._lastToken, _variables);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState);
+                }
+            } else if ((newState = accept(TokenType.STRING, state)) != null) {
+                exprNode = new ExpressionNodeString(newState._lastToken);
+                expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState);
+            } else {
+                return null;
+            }
+            
+            
+            int count=0;
+            boolean completed = false;
+            do {
+                if (count++ > 100) throw new RuntimeException("Infinite loop");
+                
                 State newState2;
                 if ((newState2 = accept(TokenType.DOT, newState)) != null) {
                     State newState3;
                     if ((newState3 = accept(TokenType.IDENTIFIER, newState2)) != null) {
                         State newState4;
                         if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState3)) != null) {
-                            ExpressionNodeAndState exprNodeAndState =
+                            ExpressionNodeAndState exprNodeAndState2 =
                                     rule21_Method.parse(newState4, newState._lastToken._string, newState3._lastToken._string);
-                            if (exprNodeAndState._state._token == null) {
+                            if (exprNodeAndState2._state._token == null) {
                                 throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
                             }
-                            newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
-                            return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState4);
+                            newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState2._state);
+                            exprNode = new ExpressionNodeComplex(
+                                    exprNode, (ExpressionNodeWithParameter) exprNodeAndState2._exprNode);
+                            expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState4);
+                            newState = newState4;
                         } else {
-                            exprNode = new ExpressionNodeInstanceVariable(newState._lastToken._string, newState3._lastToken._string, _variables);
-                            return new ExpressionNodeAndState(exprNode, newState3);
+                            exprNode = new ExpressionNodeComplex(
+                                    exprNode,
+                                    new ExpressionNodeInstanceVariable(newState3._lastToken._string, _variables));
+//                            exprNode = new ExpressionNodeInstanceVariable(newState3._lastToken._string, _variables);
+                            expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                            newState = newState3;
                         }
                     } else {
-                        return null;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
                     }
+                } else if ((newState2 = accept(TokenType.LEFT_SQUARE_BRACKET, newState)) != null) {
+                    State newState3;
+                    ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
+                    if (exprNodeAndState2._state._token == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                    newState3 = expect(TokenType.RIGHT_SQUARE_BRACKET, exprNodeAndState2._state);
+                    exprNode = new ExpressionNodeComplex(
+                            exprNode,
+                            new ExpressionNodeArray(exprNodeAndState2._exprNode));
+//                    exprNode = new ExpressionNodeArray(exprNodeAndState2._exprNode);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                    newState = newState3;
+                } else if ((newState2 = accept(TokenType.LEFT_CURLY_BRACKET, newState)) != null) {
+                    State newState3;
+                    ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
+                    if (exprNodeAndState2._state._token == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
+                    newState3 = expect(TokenType.RIGHT_CURLY_BRACKET, exprNodeAndState2._state);
+                    exprNode = new ExpressionNodeComplex(
+                            exprNode,
+                            new ExpressionNodeMap(exprNodeAndState2._exprNode));
+//                    exprNode = new ExpressionNodeMap(exprNodeAndState2._exprNode);
+                    expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
+                    newState = newState3;
                 } else {
-                    State newState4;
-                    if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState)) != null) {
-                        ExpressionNodeAndState exprNodeAndState =
-                                rule21_Function.parse(newState4, newState._lastToken._string);
-                        if (exprNodeAndState._state._token == null) {
-                            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
-                        }
-                        newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
-                        return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState4);
-                    } else {
-                        exprNode = new ExpressionNodeIdentifier(newState._lastToken, _variables);
-                    }
+                    completed = true;
                 }
-            } else if ((newState = accept(TokenType.INTEGER_NUMBER, state)) != null) {
-                exprNode = new ExpressionNodeIntegerNumber(newState._lastToken);
-            } else if ((newState = accept(TokenType.FLOATING_NUMBER, state)) != null) {
-                exprNode = new ExpressionNodeFloatingNumber(newState._lastToken);
-            } else if ((newState = accept(TokenType.STRING, state)) != null) {
-                exprNode = new ExpressionNodeString(newState._lastToken);
-            } else {
-                return null;
-            }
+            } while (!completed);
             
-            return new ExpressionNodeAndState(exprNode, newState);
+            return expressionNodeAndState;
         }
         
     }
@@ -633,7 +733,7 @@ public class RecursiveDescentParser {
                 
                 newState = exprNodeAndState._state;
             }
-            ExpressionNode exprNode = new ExpressionNodeMethod(variable, method, _variables, parameterList);
+            ExpressionNode exprNode = new ExpressionNodeMethod(method, _variables, parameterList);
             return new ExpressionNodeAndState(exprNode, newState);
         }
         

@@ -221,7 +221,12 @@ public class Tokenizer {
                     // Three dots in a row is an error
                     return TokenType.ERROR;
                 }
-            } else if (currentToken._tokenType == TokenType.IDENTIFIER) {
+            } else if ((currentToken._tokenType == TokenType.IDENTIFIER)
+                    || (currentToken._tokenType == TokenType.NONE)
+                    || (currentToken._tokenType == TokenType.RIGHT_PARENTHESIS)
+                    || (currentToken._tokenType == TokenType.RIGHT_SQUARE_BRACKET)
+                    || (currentToken._tokenType == TokenType.RIGHT_CURLY_BRACKET)
+                    ) {
                 return TokenType.DOT;
             }
         }
