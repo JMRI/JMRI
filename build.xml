@@ -120,7 +120,6 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
-        <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.7.jar"/>
         <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
@@ -223,7 +222,6 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-jupiter-5.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.6.0.jar"/>
@@ -886,7 +884,6 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
-                <compilerarg value="-XaddExports:java.desktop/com.apple.eawt=ALL-UNNAMED"/><!-- Java 11 this seems to not work -->
                 <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
