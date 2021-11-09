@@ -290,7 +290,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
         boolean found = false;
         Map<String,ArrayList<MqttEventListener>> tempMap
-            = new HashMap<String,ArrayList<MqttEventListener>> (mqttEventListeners); // Avoid CME
+            = new HashMap<String,ArrayList<MqttEventListener>> (mqttEventListeners); // Avoid ConcurrentModificationException
         for (Map.Entry<String,ArrayList<MqttEventListener>> e : tempMap.entrySet()) {
             // does key match received topic, including wildcards?
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
