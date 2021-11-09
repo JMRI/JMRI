@@ -56,7 +56,7 @@ public class ThrottleFrameTest {
                 to.getAddressValue());
         // don't release the throttle here.  When the frame is disposed,
         // the throttle will still be attached, which causes a different code
-        // path to be executed. 
+        // path to be executed.
     }
 
     @Test
@@ -349,6 +349,7 @@ public class ThrottleFrameTest {
             InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
             JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
         }
+        JUnitUtil.clearShutDownManager();
         panel = null;
         frame = null;
         to = null;

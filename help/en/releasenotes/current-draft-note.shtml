@@ -567,5 +567,10 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Simplify JmriHelp, eliminate static stub files.</li>
+            <li>This is the first test release that requires Java 11.
+                As part of that, there were extensive changes to
+                the underlying infrastructure. See PR
+                <a href="https://github.com/JMRI/JMRI/pull/10278">#10278</a>.
+            </li>
         </ul>
 

@@ -882,6 +882,7 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
+                <compilerarg value="-XaddExports:java.desktop/com.apple.eawt=ALL-UNNAMED"/><!-- Java 11 this seems to not work -->
                 <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
@@ -907,7 +908,7 @@
         <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
-            >
+            > <!-- deprecation off during initial Java 11 work -->
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
             </javac-options>
@@ -1907,7 +1908,7 @@
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
-            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
@@ -2007,7 +2008,7 @@
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
 
-            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>

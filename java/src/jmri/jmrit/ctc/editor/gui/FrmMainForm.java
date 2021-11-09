@@ -82,7 +82,7 @@ public class FrmMainForm extends JFrame {
      * @return The key stroke with the platform's accelerator character
      */
     private KeyStroke getAccelerator(int keycode) {
-        int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         return KeyStroke.getKeyStroke(keycode, modifier);
     }
 

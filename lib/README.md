@@ -34,6 +34,10 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### JavaVersionCheckWindow.jar
+- Specific class files that have to be compiled with Java 8
+  - This is used to launch the warning dialog when running on Java 8
+
 ##### apiguardian-api-1.1.0.jar
 - version 1.1.0
 - provides Javadoc markers of API stability
@@ -281,8 +285,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.10 from
-    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
+- Eclipse compiler 4.19 from
+    - https://archive.eclipse.org/eclipse/downloads/drops4/R-4.19-202103031800/ (via selecting ecj-4.10.jar) March 3, 2021
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar

@@ -498,7 +498,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
         @Override
-        public boolean shouldYieldFocus(javax.swing.JComponent input) {
+        public boolean shouldYieldFocus(javax.swing.JComponent input, javax.swing.JComponent target) {
             if (input instanceof ValidatedTextField) {
 
                 if (((ValidatedTextField) input).forceUpper) {
@@ -538,7 +538,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             javax.swing.JTextField source = (javax.swing.JTextField) e.getSource();
-            shouldYieldFocus(source); //ignore return value
+            shouldYieldFocus(source, null); //ignore return value
             source.selectAll();
         }
     }
