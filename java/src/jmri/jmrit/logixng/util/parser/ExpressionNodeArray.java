@@ -19,6 +19,7 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
         _exprNode = exprNode;
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
@@ -43,6 +44,7 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
      * @param value the value to assign
      * @throws jmri.JmriException if an error occurs
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
