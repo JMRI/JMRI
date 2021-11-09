@@ -364,7 +364,6 @@ public class LinkedWarrantTest {
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);

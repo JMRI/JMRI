@@ -389,8 +389,9 @@ public class NXFrameTest {
     protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
-        JUnitUtil.waitFor(400);
+        JUnitUtil.waitFor(200);
         for (int i = 1; i < route.length; i++) {
+            JUnitUtil.waitFor(400);
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
             boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
@@ -410,7 +411,6 @@ public class NXFrameTest {
                 sensor = nextSensor;
                 block = nextBlock;
             }
-            JUnitUtil.waitFor(400);
         }
         return sensor;
     }
