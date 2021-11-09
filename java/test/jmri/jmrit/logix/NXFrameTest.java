@@ -389,7 +389,7 @@ public class NXFrameTest {
     protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(400);
         for (int i = 1; i < route.length; i++) {
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -401,7 +401,7 @@ public class NXFrameTest {
             } else {
                 nextSensor = null;
             }
-            JUnitUtil.waitFor(200);     // waitEmpty(150) causes a lot of failures on Travis GUI
+            JUnitUtil.waitFor(300);     // waitEmpty(150) causes a lot of failures on Travis GUI
             if (sensor != null) {
                 sensor.setState(Sensor.INACTIVE);
                 NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
