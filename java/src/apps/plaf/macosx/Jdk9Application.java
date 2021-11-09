@@ -19,11 +19,7 @@ import java.lang.reflect.Method;
  * </code></pre> A Try-Catch block will need to catch
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
- * <p>
- * This wrapper currently provides incomplete support for the Apple
- * {@link com.apple.eawt.Application} class, as it only provides support for
- * those integration aspects that were implemented in JMRI 3.1.
- *
+  *
  * @author Randall Wood     (c) 2016
  * @author Daniel Bergqvist (c) 2021
  * @see Application
