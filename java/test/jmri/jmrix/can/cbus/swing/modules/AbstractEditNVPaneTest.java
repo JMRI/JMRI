@@ -38,7 +38,7 @@ public class AbstractEditNVPaneTest {
         }
 
         @Override
-        public JPanel getContent() {
+        public AbstractEditNVPane getContent() {
             return null;
         }
 

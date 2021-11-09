@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.modules;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
@@ -65,7 +64,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @param node the node to be edited
      * @return the edit frame
      */
-    abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
+    abstract public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
     /**
      * Return string representation of the node

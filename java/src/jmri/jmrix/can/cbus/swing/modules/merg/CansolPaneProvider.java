@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.swing.modules.merg;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
@@ -33,7 +32,7 @@ public class CansolPaneProvider extends Sol8BasePaneProvider {
 
     /** {@inheritDoc} */
     @Override
-    public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
+    public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         _nVarEditFrame = new CansolEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }

@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules;
 
-import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
@@ -28,7 +27,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @return the JPanel containing the edit gui
      */
-    abstract public JPanel getContent();
+    abstract public AbstractEditNVPane getContent();
     
     /**
      * The node table model has changed.

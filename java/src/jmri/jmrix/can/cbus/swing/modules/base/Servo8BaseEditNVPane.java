@@ -54,8 +54,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
     
     /** {@inheritDoc} */
     @Override
-    public JPanel getContent() {
-        JPanel newPane = new JPanel(new BorderLayout());
+    public AbstractEditNVPane getContent() {
         
         JPanel gridPane = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -78,12 +77,9 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         }
 
         JScrollPane scroll = new JScrollPane(gridPane);
+        add(scroll);
         
-        newPane.add(scroll, BorderLayout.CENTER);
-        newPane.validate();
-        newPane.repaint();
-        
-        return newPane;
+        return this;
     }
     
     /** {@inheritDoc} */

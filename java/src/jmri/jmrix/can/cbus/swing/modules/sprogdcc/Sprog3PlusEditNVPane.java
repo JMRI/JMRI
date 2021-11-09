@@ -120,9 +120,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
     /** {@inheritDoc} */
     @Override
-    public JPanel getContent() {
-        
-        JPanel newPane = new JPanel(new BorderLayout());
+    public AbstractEditNVPane getContent() {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         
@@ -134,12 +132,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         tabbedPane.addTab("CBUS Diagnostics", cbusPane);
         
         JScrollPane scroll = new JScrollPane(tabbedPane);
+        add(scroll);
         
-        newPane.add(scroll, BorderLayout.CENTER);
-        newPane.validate();
-        newPane.repaint();
-        
-        return newPane;
+        return this;
     }
 
     /** {@inheritDoc} */

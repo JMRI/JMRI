@@ -54,10 +54,8 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
     
     /** {@inheritDoc} */
     @Override
-    public JPanel getContent() {
+    public AbstractEditNVPane getContent() {
        
-        JPanel newPane = new JPanel(new BorderLayout());
-        
         JPanel gridPane = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -87,12 +85,9 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         gridPane.add(feedbackSpinner, c);
 
         JScrollPane scroll = new JScrollPane(gridPane);
+        add(scroll);
         
-        newPane.add(scroll, BorderLayout.CENTER);
-        newPane.validate();
-        newPane.repaint();
-        
-        return newPane;
+        return this;
     }
     
     /** {@inheritDoc} */
