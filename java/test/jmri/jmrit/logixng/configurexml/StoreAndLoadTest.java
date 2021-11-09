@@ -1509,6 +1509,19 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.logixng.actions.DigitalFormula actionFormula =
+                new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFormula);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFormula = new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        actionFormula.setComment("A comment");
+        actionFormula.setFormula("n + 1");
+        maleSocket = digitalActionManager.registerAction(actionFormula);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         DoAnalogAction doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
         maleSocket.setEnabled(false);
@@ -2997,16 +3010,16 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
-        jmri.jmrit.logixng.expressions.DigitalFormula formula =
+        jmri.jmrit.logixng.expressions.DigitalFormula expressionFormula =
                 new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
-        formula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        formula.setComment("A comment");
-        formula.setFormula("n + 1");
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        expressionFormula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
+        expressionFormula.setComment("A comment");
+        expressionFormula.setFormula("n + 1");
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
