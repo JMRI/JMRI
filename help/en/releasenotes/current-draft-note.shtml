@@ -473,7 +473,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug in the CCOR-1967 set that kept one
+                    aspect from displaying properly.</li>
             </ul>
 
         <h4>Signal Heads</h4>
