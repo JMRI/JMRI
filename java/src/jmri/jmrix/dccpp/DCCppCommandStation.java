@@ -192,8 +192,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
     public boolean isServoTurnoutCreationSupported() {
         boolean ret = false;
         try {
-            // SERVO and VPIN turnout commands added at 3.1.7
-            ret = (jmri.Version.compareCanonicalVersions(version, "3.1.7") >= 0);
+            // SERVO and VPIN turnout commands added at 3.2.0
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.2.0") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  
