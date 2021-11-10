@@ -1516,8 +1516,9 @@ public class JUnitUtil {
                  || name.startsWith("SocketListener(")
                  || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
                  || name.startsWith("SocketListener(")
-                 || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
-                )) {
+                 || name.startsWith("junit-jupiter-timeout-watcher")  // JUnit
+                 || (name.startsWith("SwingWorker-pool-1-thread-")
+                ) ) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
@@ -1582,6 +1583,7 @@ public class JUnitUtil {
                             }
                             e.dispose();
                         }));
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     /* GraphicsEnvironment utility methods */
