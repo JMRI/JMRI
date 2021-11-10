@@ -23,7 +23,7 @@ public class VSDConfigDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDConfigDialog t = new VSDConfigDialog(new JPanel(), "test", new VSDConfig(), false, false);
         Assert.assertNotNull("exists", t);
-        
+
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
@@ -38,6 +38,7 @@ public class VSDConfigDialogTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
