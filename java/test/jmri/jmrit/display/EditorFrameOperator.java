@@ -90,7 +90,6 @@ public class EditorFrameOperator extends JFrameOperator {
 
         for (int i = 0; i<max; i++) {
             Thread t = list[i];
-            Thread.State topState = t.getState();
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
                 continue;
             }
