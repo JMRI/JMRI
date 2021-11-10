@@ -141,6 +141,8 @@ public class Tokenizer {
                 case BINARY_AND:
                 case BINARY_OR:
                 case BINARY_NOT:
+                case INCREMENT:
+                case DECREMENT:
                 case IDENTIFIER:
                 case SPACE:
                 case NONE:
@@ -336,11 +338,21 @@ public class Tokenizer {
         }
         
         if (ch == '+') {
-            return TokenType.ADD;
+            if (nextChar == '+') {
+                eatNextChar.set(true);
+                return TokenType.INCREMENT;
+            } else {
+                return TokenType.ADD;
+            }
         }
         
         if (ch == '-') {
-            return TokenType.SUBTRACKT;
+            if (nextChar == '-') {
+                eatNextChar.set(true);
+                return TokenType.DECREMENT;
+            } else {
+                return TokenType.SUBTRACKT;
+            }
         }
         
         if (ch == '*') {

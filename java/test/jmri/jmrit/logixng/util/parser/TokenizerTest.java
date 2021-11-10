@@ -21,8 +21,8 @@ public class TokenizerTest {
         
         Assert.assertTrue("list is not empty", tokens.size() > 0);
 //        System.out.format("Type: %s, String: '%s'%n", tokens.get(0).getTokenType(), tokens.get(0).getString());
-        Assert.assertTrue("token type matches", tokens.get(0).getTokenType() == tokenType);
-        Assert.assertTrue("string matches", string.equals(tokens.get(0).getString()));
+        Assert.assertEquals("token type matches", tokenType, tokens.get(0).getTokenType());
+        Assert.assertEquals("string matches", string, tokens.get(0).getString());
         
         tokens.remove(0);
     }
@@ -373,6 +373,30 @@ public class TokenizerTest {
         checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
         checkFirstToken(tokens, TokenType.MULTIPLY, "*");
         checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("++myVar");
+        checkFirstToken(tokens, TokenType.INCREMENT, "+");          // The plus sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("--myVar");
+        checkFirstToken(tokens, TokenType.DECREMENT, "-");          // The minus sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar++");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.INCREMENT, "+");          // The plus sign is eaten by the parser and not included in the _string.
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar--");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.DECREMENT, "-");          // The minus sign is eaten by the parser and not included in the _string.
         Assert.assertTrue("list is empty", tokens.isEmpty());
         
         

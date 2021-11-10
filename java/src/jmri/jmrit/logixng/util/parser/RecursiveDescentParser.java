@@ -128,6 +128,7 @@ public class RecursiveDescentParser {
     private final Rule rule11 = new Rule11();
     private final Rule rule12 = new Rule12();
     private final Rule rule14 = new Rule14();
+    private final Rule rule15 = new Rule15();
     private final Rule rule16 = new Rule16();
     private final Rule rule20 = new Rule20();
     private final Rule21_Function rule21_Function = new Rule21_Function();
@@ -480,7 +481,33 @@ public class RecursiveDescentParser {
                     return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
                     
                 } else {
-                    return rule16.parse(state);
+                    newState = accept(TokenType.INCREMENT, state);
+
+                    if (newState != null) {
+                        ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
+                        if (exprNodeAndState == null) {
+                            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                        }
+
+                        ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, true);
+                        return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                    } else {
+                        newState = accept(TokenType.DECREMENT, state);
+
+                        if (newState != null) {
+                            ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
+                            if (exprNodeAndState == null) {
+                                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                            }
+
+                            ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, true);
+                            return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
+
+                        } else {
+                            return rule15.parse(state);
+                        }
+                    }
                 }
             }
         }
@@ -488,8 +515,32 @@ public class RecursiveDescentParser {
     }
     
     
-    // Rule15 in Java is unary post-increment, unary post-decrement.
-    // That is: ++ and --. We might want to implement it here.
+    // Rule15 in Java is unary post-increment, unary post-decrement, ++ and --.
+    private class Rule15 implements Rule {
+
+        @Override
+        public ExpressionNodeAndState parse(State state) throws ParserException {
+            
+            ExpressionNodeAndState exprNodeAndState = rule16.parse(state);
+            
+            State newState = accept(TokenType.INCREMENT, exprNodeAndState._state);
+            
+            if (newState != null) {
+                ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, false);
+                return new ExpressionNodeAndState(exprNode, newState);
+            } else {
+                newState = accept(TokenType.DECREMENT, exprNodeAndState._state);
+                
+                if (newState != null) {
+                    ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(newState._lastToken._tokenType, exprNodeAndState._exprNode, false);
+                    return new ExpressionNodeAndState(exprNode, newState);
+                } else {
+                    return exprNodeAndState;
+                }
+            }
+        }
+        
+    }
     
     
     // Parentheses

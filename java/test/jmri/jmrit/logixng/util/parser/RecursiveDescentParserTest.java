@@ -347,6 +347,63 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals("myVar is correct", 1, (long)(Long)myVar.getValue(symbolTable));
         
         
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("++myVar");
+        Assert.assertNotNull(exprNode);
+        Assert.assertEquals("expression matches", "++(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 11, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 11, (long)(Long)myVar.getValue(symbolTable));
+        
+        int i = 10; // The purpuse of these tests is to ensure LogixNG formula ++ follows Java ++
+        myVar.setValue(symbolTable, (long)10);
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", ++i, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar++");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)++", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 11, (long)(Long)myVar.getValue(symbolTable));
+        
+        i = 10;     // The purpuse of these tests is to ensure LogixNG formula ++ follows Java ++
+        myVar.setValue(symbolTable, (long)10);
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", i++, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("--myVar");
+        Assert.assertEquals("expression matches", "--(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 9, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 9, (long)(Long)myVar.getValue(symbolTable));
+        
+        i = 10;     // The purpuse of these tests is to ensure LogixNG formula -- follows Java --
+        myVar.setValue(symbolTable, (long)10);
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", --i, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        
+        
+        myVar.setValue(symbolTable, (long)10);
+        exprNode = t.parseExpression("myVar--");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)--", exprNode.getDefinitionString());
+        Assert.assertEquals("myVar is correct", 10, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 9, (long)(Long)myVar.getValue(symbolTable));
+        
+        i = 10;     // The purpuse of these tests is to ensure LogixNG formula -- follows Java --
+        myVar.setValue(symbolTable, (long)10);
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        Assert.assertEquals("calculate is correct", i--, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+        
+        
         
         List<Object> myList = new ArrayList<>();
         myList.add(0, "Test");

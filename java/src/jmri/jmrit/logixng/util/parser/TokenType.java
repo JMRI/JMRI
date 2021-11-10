@@ -81,6 +81,8 @@ public enum TokenType {
     MODULO(12),         // %
     BOOLEAN_NOT(14),    // !
     BINARY_NOT(14),     // ~
+    INCREMENT(14),      // ++
+    DECREMENT(14),      // --
     LEFT_PARENTHESIS(16),       // (
     RIGHT_PARENTHESIS(16),      // )
     LEFT_SQUARE_BRACKET(16),    // [
