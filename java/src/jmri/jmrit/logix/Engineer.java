@@ -962,7 +962,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             oldWarrant = oldWar;
             newWarrant = newWar;
             num = n;
-            timeLimit = time + 10000L;    // max wait time to launch is command et + 10 seconds..
+            timeLimit = time + 15000L;    // max wait time to launch is command et + 15 seconds..
             if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {}, {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num, time);
          }
