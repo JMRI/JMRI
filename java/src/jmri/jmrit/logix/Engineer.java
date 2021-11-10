@@ -72,7 +72,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     @Override
     @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
     public void run() {
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("Engineer started warrant {} _throttle= {}", _warrant.getDisplayName(), _throttle.getClass().getName());
 
         int cmdBlockIdx = 0;
@@ -95,7 +95,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     cmdBlockIdx = idx;
                 }
             }
-            if (cmdBlockIdx < _warrant.getCurrentOrderIndex() || 
+            if (cmdBlockIdx < _warrant.getCurrentOrderIndex() ||
                     (command.equals(Command.NOOP) && (cmdBlockIdx <= _warrant.getCurrentOrderIndex()))) {
                 // Train advancing too fast, need to process commands more quickly,
                 // allow some time for whistle toots etc.
@@ -117,13 +117,13 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             synchronized (this) {
                 if (!Warrant.Normal.equals(_speedType)) {
                     cmdWaitTime = (long)(cmdWaitTime*_timeRatio); // extend et when speed has been modified from scripted speed
-                }                
+                }
                 try {
                     if (cmdWaitTime > 0) {
                         wait(cmdWaitTime);
                     }
                 } catch (InterruptedException ie) {
-                    log.error("At time wait {}", ie);
+                    log.debug("InterruptedException during time wait {}", ie);
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } catch (java.lang.IllegalArgumentException iae) {
@@ -175,7 +175,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                             }
                         }
                     } catch (InterruptedException ie) {
-                        log.error("At _waitForSync {}", ie);
+                        log.debug("InterruptedException during _waitForSync {}", ie);
                         _warrant.debugInfo();
                         Thread.currentThread().interrupt();
                     }
@@ -226,7 +226,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName(), _idxCurrentCommand+1);
                         wait();
                     } catch (InterruptedException ie) {
-                        log.error("At _atClear {}", ie);
+                        log.debug("InterruptedException during _atClear {}", ie);
                         _warrant.debugInfo();
                         Thread.currentThread().interrupt();
                     }
@@ -251,7 +251,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName());
                         wait();
                     } catch (InterruptedException ie) {
-                        log.error("At _atHalt {}", ie);
+                        log.debug("InterruptedException during _atHalt {}", ie);
                         _warrant.debugInfo();
                         Thread.currentThread().interrupt();
                     }
@@ -290,7 +290,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
         }
         // shut down
-        setSpeed(0.0f); // for safety to be sure train stops                               
+        setSpeed(0.0f); // for safety to be sure train stops
         _warrant.stopWarrant(_abort, true);
     }
 
@@ -353,7 +353,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      */
     private void advanceToCommandIndex(int idx) {
         _idxSkipToSpeedCommand = idx;
-        if (log.isTraceEnabled()) 
+      if (log.isTraceEnabled())
             log.debug("advanceToCommandIndex to {} - {}", _idxSkipToSpeedCommand+1, _commands.get(idx));
             // Note: command indexes biased from 0 to 1 to match Warrant display of commands, which are 1-based.
     }
@@ -741,7 +741,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
     public void stopRun(boolean abort, boolean turnOffFunctions) {
         if (abort) {
-            _abort =true;            
+            _abort =true;
         }
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
@@ -776,7 +776,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     private void setFunction(int cmdNum, ValueType type) {
-        if ( cmdNum < 0 || cmdNum > 28 ) {       
+        if ( cmdNum < 0 || cmdNum > 28 ) {
             throw new java.lang.IllegalArgumentException("setFunction " + cmdNum + " out of range");
         }
         if (type == ValueType.VAL_ON) {
@@ -789,7 +789,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     private void setFunctionMomentary(int cmdNum, ValueType type) {
-        if ( cmdNum < 0 || cmdNum > 28 ) {       
+        if ( cmdNum < 0 || cmdNum > 28 ) {
             log.error("Function value {} out of range",cmdNum);
             throw new java.lang.IllegalArgumentException("setFunctionMomentary " + cmdNum + " out of range");
         }
@@ -854,7 +854,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             return;
         }
         _waitSensor.addPropertyChangeListener(this);
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("Listen for propertyChange of {}, wait for State= {}", _waitSensor.getDisplayName(), _sensorWaitState);
         // suspend commands until sensor changes state
         synchronized (this) {   // DO NOT USE _waitForSensor for synch
@@ -863,7 +863,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 try {
                     _warrant.fireRunStatus("SensorWaitCommand", type.toString(), _waitSensor.getDisplayName());
                     wait();
-                    String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually' 
+                    String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
                     _warrant.fireRunStatus("SensorWaitCommand", null, name);
                 } catch (InterruptedException ie) {
                     log.error("Engineer interrupted at _waitForSensor ",ie);
@@ -892,7 +892,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     @Override
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Sensor change on another thread is expected even when Engineer (this) has not done any modifing")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
         if ((evt.getPropertyName().equals("KnownState")
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
@@ -1100,7 +1100,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     !endSpeedType.equals(_endSpeedType)) {
                 return false;
             }
-            return true;                    
+            return true;
         }
 
         int getEndBlockIndex() {
@@ -1110,7 +1110,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         /**
          * @param blockIdx  index of block order where ramp finishes
          * @param cmdIdx   current command index
-         * @return command index of block where commands should not be executed 
+         * @return command index of block where commands should not be executed
          */
         int getCommandIndexLimit(int blockIdx, int cmdIdx) {
             // get next block
@@ -1289,7 +1289,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
                                     // At last speed change to set throttle was 0.0, but train has not 
                                     // reached the last block. Let loco creep to end block at current setting.
-                                    if (log.isDebugEnabled()) 
+                                    if (log.isDebugEnabled())
                                         log.debug("Extending ramp to reach block {}. speed= {}",
                                                 _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
                                     int waittime = 0;
@@ -1305,7 +1305,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                             waittime += timeIncrement;
                                         } catch (InterruptedException ie) {
                                             stop = true;
-                                        }   
+                                        }
                                     }
                                     try {
                                         wait(timeIncrement);
@@ -1372,7 +1372,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                             }
                         }
                     }
-                    
+
                 } finally {
                     if (log.isDebugEnabled()) {
                         log.debug("Ramp Done. End Blk= {}, _idxCurrentCommand={} resumeIdx={}, commandIndexLimit={}. warrant {}",

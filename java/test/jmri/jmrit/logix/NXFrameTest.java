@@ -460,6 +460,7 @@ public class NXFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.removeMatchingThreads("Engineer(");
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();

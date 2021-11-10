@@ -229,6 +229,7 @@ public class LearnWarrantTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("Engineer(");
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             List<ShutDownTask> list = new ArrayList<>();
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
