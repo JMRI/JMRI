@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
