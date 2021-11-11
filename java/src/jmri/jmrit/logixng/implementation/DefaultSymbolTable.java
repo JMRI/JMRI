@@ -90,7 +90,7 @@ public class DefaultSymbolTable implements SymbolTable {
     public Object getValue(String name) {
         Symbol symbol = _symbols.get(name);
         if (symbol == null) {
-            throw new IllegalArgumentException(String.format("Symbol '%s' does not exist in symbol table", name));
+            throw new SymbolNotFound(String.format("Symbol '%s' does not exist in symbol table", name));
         }
         return _stack.getValueAtIndex(_firstSymbolIndex + symbol.getIndex());
     }

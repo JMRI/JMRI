@@ -205,4 +205,11 @@ public interface SymbolTable {
     }
     
     
+    public static class SymbolNotFound extends IllegalArgumentException {
+        
+        public SymbolNotFound(String message) {
+            super(message);
+        }
+    }
+    
 }

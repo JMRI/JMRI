@@ -175,6 +175,7 @@
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86-64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-darwin-x86-64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-darwin-aarch64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86-64.jar"/>
         <pathelement location="${libdir}/usb-api-1.0.2.jar"/>

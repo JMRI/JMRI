@@ -67,7 +67,7 @@ public class MatrixSignalMastTest {
             clear.append("0");
             stop.append("1");
         }
-        
+
         m.setBitstring("Clear", clear.toString());
         m.setBitstring("Stop", stop.toString());
         m.setBitstring("Unlit", stop.toString());
@@ -85,11 +85,11 @@ public class MatrixSignalMastTest {
 
         m.setLit(true);
         Assertions.assertTrue(m.getLit());
-        
+
         Assertions.assertEquals(10, m.getOutputs().size());
 
     }
-    
+
     @Test
     @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testLit() {
@@ -209,6 +209,10 @@ public class MatrixSignalMastTest {
 
     @AfterEach
     public void tearDown() {
+        // has dumpd a bunch of stuff to AWT thread
+        JUnitUtil.releaseThread(this, 20);
+
+        JUnitUtil.clearTurnoutThreads();
         JUnitUtil.tearDown();
     }
 

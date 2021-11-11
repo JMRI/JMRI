@@ -19,6 +19,12 @@ public interface Function {
     public String getModule();
     
     /**
+     * Get the descriptions of the constants in the module.
+     * @return the description of the constants
+     */
+    public String getConstantDescriptions();
+    
+    /**
      * Get name of the function, for example "sin" or "int"
      * @return the name
      */

@@ -28,6 +28,7 @@ public class VSDecoderTest {
 
         // this created an an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

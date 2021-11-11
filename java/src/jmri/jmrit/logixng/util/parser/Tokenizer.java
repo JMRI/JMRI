@@ -66,6 +66,9 @@ public class Tokenizer {
                 boolean done = false;
                 while (!done) {
                     i++;
+                    if (i >= expression.length()) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("UnexpectedEndOfString"));
+                    }
                     ch = expression.charAt(i);
                     nextChar = ' ';    // An extra space at the end of the _string doesn't matter
                     if (i+1 < expression.length()) {
