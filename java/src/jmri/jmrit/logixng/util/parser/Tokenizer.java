@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.util.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Parses and calculates an expression, for example "sin(2*pi*x)/3"
@@ -31,7 +31,7 @@ public class Tokenizer {
 //        System.out.format("%n%n%n");
 //        System.out.format("getTokens(): %s%n", expression);
         
-        AtomicBoolean eatNextChar = new AtomicBoolean(false);
+        AtomicInteger eatNextChar = new AtomicInteger(0);
         
         char ch = ' ';
         char lastChar;
@@ -96,7 +96,16 @@ public class Tokenizer {
             }
             
             
-            TokenType nextToken = getTokenType(currentToken, ch, nextChar, eatNextChar);
+            char nextNextChar = ' ';        // An extra space at the end of the _string doesn't matter
+            char nextNextNextChar = ' ';    // An extra space at the end of the _string doesn't matter
+            if (i+2 < expression.length()) {
+                nextNextChar = expression.charAt(i+2);
+            }
+            if (i+3 < expression.length()) {
+                nextNextNextChar = expression.charAt(i+3);
+            }
+            
+            TokenType nextToken = getTokenType(currentToken, ch, nextChar, nextNextChar, nextNextNextChar, eatNextChar);
 //            System.out.format("index %d: %s, %c%n", i, nextToken.name(), ch);
             
             if (nextToken == TokenType.SAME_AS_LAST) {
@@ -114,7 +123,12 @@ public class Tokenizer {
                 case ASSIGN_MULTIPLY:
                 case ASSIGN_DIVIDE:
                 case ASSIGN_MODULO:
-                
+                case ASSIGN_AND:
+                case ASSIGN_OR:
+                case ASSIGN_XOR:
+                case ASSIGN_SHIFT_LEFT:
+                case ASSIGN_SHIFT_RIGHT:
+                case ASSIGN_UNSIGNED_SHIFT_RIGHT:
                 case LEFT_PARENTHESIS:
                 case RIGHT_PARENTHESIS:
                 case LEFT_SQUARE_BRACKET:
@@ -135,11 +149,15 @@ public class Tokenizer {
                 case MULTIPLY:
                 case DIVIDE:
                 case MODULO:
+                case SHIFT_LEFT:
+                case SHIFT_RIGHT:
+                case UNSIGNED_SHIFT_RIGHT:
                 case BOOLEAN_AND:
                 case BOOLEAN_OR:
                 case BOOLEAN_NOT:
                 case BINARY_AND:
                 case BINARY_OR:
+                case BINARY_XOR:
                 case BINARY_NOT:
                 case INCREMENT:
                 case DECREMENT:
@@ -185,9 +203,7 @@ public class Tokenizer {
                 currentToken._string += ch;
             }
             
-            if (eatNextChar.get()) {
-                i++;
-            }
+            i += eatNextChar.get();
 //            System.out.format("New string: '%s'%n", currentToken._string);
         }
         
@@ -198,9 +214,9 @@ public class Tokenizer {
         return tokens;
     }
     
-    private static TokenType getTokenType(Token currentToken, char ch, char nextChar, AtomicBoolean eatNextChar) {
+    private static TokenType getTokenType(Token currentToken, char ch, char nextChar, char nextNextChar, char nextNextNextChar, AtomicInteger eatNextChar) {
         
-        eatNextChar.set(false);
+        eatNextChar.set(0);
         
         if (ch == '"') {
             return TokenType.STRING;
@@ -217,7 +233,7 @@ public class Tokenizer {
         if (ch == '.') {
             if (nextChar == '.') {
                 if ((currentToken._tokenType != TokenType.DOT_DOT)) {
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.DOT_DOT;
                 } else {
                     // Three dots in a row is an error
@@ -248,19 +264,19 @@ public class Tokenizer {
         if (nextChar == '=') {
             switch (ch) {
                 case '+':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.ASSIGN_ADD;
                 case '-':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.ASSIGN_SUBTRACKT;
                 case '*':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.ASSIGN_MULTIPLY;
                 case '/':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.ASSIGN_DIVIDE;
                 case '%':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.ASSIGN_MODULO;
                 default:
                     // Do nothing
@@ -270,11 +286,16 @@ public class Tokenizer {
         if (ch == '<') {
             switch (nextChar) {
                 case '=':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.LESS_OR_EQUAL;
                 case '<':
-                    eatNextChar.set(true);
-                    return TokenType.SHIFT_LEFT;
+                    if (nextNextChar == '=') {
+                        eatNextChar.set(2);
+                        return TokenType.ASSIGN_SHIFT_LEFT;
+                    } else {
+                        eatNextChar.set(1);
+                        return TokenType.SHIFT_LEFT;
+                    }
                 default:
                     return TokenType.LESS_THAN;
             }
@@ -283,11 +304,24 @@ public class Tokenizer {
         if (ch == '>') {
             switch (nextChar) {
                 case '=':
-                    eatNextChar.set(true);
+                    eatNextChar.set(1);
                     return TokenType.GREATER_OR_EQUAL;
                 case '>':
-                    eatNextChar.set(true);
-                    return TokenType.SHIFT_RIGHT;
+                    if (nextNextChar == '=') {
+                        eatNextChar.set(2);
+                        return TokenType.ASSIGN_SHIFT_RIGHT;
+                    } else if (nextNextChar == '>') {
+                        if (nextNextNextChar == '=') {
+                            eatNextChar.set(3);
+                            return TokenType.ASSIGN_UNSIGNED_SHIFT_RIGHT;
+                        } else {
+                            eatNextChar.set(2);
+                            return TokenType.UNSIGNED_SHIFT_RIGHT;
+                        }
+                    } else {
+                        eatNextChar.set(1);
+                        return TokenType.SHIFT_RIGHT;
+                    }
                 default:
                     return TokenType.GREATER_THAN;
             }
@@ -295,7 +329,7 @@ public class Tokenizer {
         
         if (ch == '=') {
             if (nextChar == '=') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.EQUAL;
             } else {
                 return TokenType.ERROR;
@@ -304,7 +338,7 @@ public class Tokenizer {
         
         if (ch == '!') {
             if (nextChar == '=') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.NOT_EQUAL;
             } else {
                 return TokenType.BOOLEAN_NOT;
@@ -313,8 +347,11 @@ public class Tokenizer {
         
         if (ch == '|') {
             if (nextChar == '|') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.BOOLEAN_OR;
+            } else if (nextChar == '=') {
+                eatNextChar.set(1);
+                return TokenType.ASSIGN_OR;
             } else {
                 return TokenType.BINARY_OR;
             }
@@ -322,8 +359,11 @@ public class Tokenizer {
         
         if (ch == '&') {
             if (nextChar == '&') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.BOOLEAN_AND;
+            } else if (nextChar == '=') {
+                eatNextChar.set(1);
+                return TokenType.ASSIGN_AND;
             } else {
                 return TokenType.BINARY_AND;
             }
@@ -339,7 +379,7 @@ public class Tokenizer {
         
         if (ch == '+') {
             if (nextChar == '+') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.INCREMENT;
             } else {
                 return TokenType.ADD;
@@ -348,7 +388,7 @@ public class Tokenizer {
         
         if (ch == '-') {
             if (nextChar == '-') {
-                eatNextChar.set(true);
+                eatNextChar.set(1);
                 return TokenType.DECREMENT;
             } else {
                 return TokenType.SUBTRACKT;
@@ -368,7 +408,12 @@ public class Tokenizer {
         }
         
         if (ch == '^') {
-            return TokenType.BINARY_XOR;
+            if (nextChar == '=') {
+                eatNextChar.set(1);
+                return TokenType.ASSIGN_XOR;
+            } else {
+                return TokenType.BINARY_XOR;
+            }
         }
         
         if (ch == '(') {

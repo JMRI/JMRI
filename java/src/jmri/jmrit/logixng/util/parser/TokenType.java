@@ -20,6 +20,12 @@ public enum TokenType {
     ASSIGN_MULTIPLY,    // *=
     ASSIGN_DIVIDE,      // /=
     ASSIGN_MODULO,      // %=
+    ASSIGN_AND,         // &=
+    ASSIGN_OR,          // |=
+    ASSIGN_XOR,         // ^=
+    ASSIGN_SHIFT_LEFT,             // <<=
+    ASSIGN_SHIFT_RIGHT,            // >>=
+    ASSIGN_UNSIGNED_SHIFT_RIGHT,   // >>>=
     TERNARY_QUESTION_MARK,   // ?
     TERNARY_COLON,           // :
     BOOLEAN_OR,         // ||
@@ -33,8 +39,9 @@ public enum TokenType {
     LESS_OR_EQUAL,      // <=
     GREATER_THAN,       // >
     GREATER_OR_EQUAL,   // >=
-    SHIFT_LEFT,         // <<
-    SHIFT_RIGHT,        // >>
+    SHIFT_LEFT,             // <<
+    SHIFT_RIGHT,            // >>
+    UNSIGNED_SHIFT_RIGHT,   // >>>
     ADD,                // +
     SUBTRACKT,          // -
     MULTIPLY,           // *

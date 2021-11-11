@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -39,8 +40,6 @@ public class RecursiveDescentParserTest {
         
         variables.put("abc", new MyVariable("abc", "ABC"));
         variables.put("x", new MyVariable("x", 12));
-        variables.put("someString", new MyVariable("someString", "A simple string"));
-        variables.put("myTestField", new MyVariable("myTestField", new TestField()));
         
         Variable myVar = new MyVariable("myVar", "");
         variables.put(myVar.getName(), myVar);
@@ -159,37 +158,6 @@ public class RecursiveDescentParserTest {
                 "((IntNumber:12)+((IntNumber:31)*((IntNumber:23)-(IntNumber:1))))+((IntNumber:21)*((((((((IntNumber:9)*(IntNumber:2))+(IntNumber:3))-(IntNumber:2))/(IntNumber:23))+(IntNumber:3))/(IntNumber:3))+(IntNumber:4)))"
                         .equals(exprNode.getDefinitionString()));
         
-        exprNode = t.parseExpression("random()");
-        Assert.assertTrue("expression matches", "Function:random()".equals(exprNode.getDefinitionString()));
-        Object result = exprNode.calculate(symbolTable);
-//        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
-        Assert.assertTrue("calculate is probably correct", (result instanceof Double) && (((Double)result) >= 0.0) && (((Double)result) <= 1.0));
-        exprNode = t.parseExpression("int(23.56)");
-        Assert.assertTrue("expression matches", "Function:int(FloatNumber:23.56)".equals(exprNode.getDefinitionString()));
-//        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
-        Assert.assertTrue("calculate is correct", ((Integer)23).equals(exprNode.calculate(symbolTable)));
-        exprNode = t.parseExpression("sin(180,\"deg\")");
-        Assert.assertEquals("expression matches", "Function:sin(IntNumber:180,String:\"deg\")", exprNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 0, (Double)exprNode.calculate(symbolTable), 1e-15);
-        exprNode = t.parseExpression("int(x*2+5)");
-        Assert.assertTrue("expression matches", "Function:int(((Identifier:x)*(IntNumber:2))+(IntNumber:5))".equals(exprNode.getDefinitionString()));
-        exprNode = t.parseExpression("int((x))");
-        Assert.assertTrue("expression matches", "Function:int(Identifier:x)".equals(exprNode.getDefinitionString()));
-//        exprNode = t.parseExpression("abc(x*(2+3),23,\"Abc\",2)");
-//        Assert.assertTrue(
-//                "expression matches",
-//                "Function:abc((Identifier:x)*((IntNumber:2)+(IntNumber:3)),IntNumber:23,String:Abc,IntNumber:2)"
-//                        .equals(exprNode.getDefinitionString()));
-        
-        exceptionIsThrown.set(false);
-        try {
-            t.parseExpression("abc(123)");
-        } catch (FunctionNotExistsException e) {
-//            System.err.format("Error message: %s%n", e.getMessage());
-            Assert.assertTrue("exception message matches", "The function \"abc\" does not exists".equals(e.getMessage()));
-            exceptionIsThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
 /*        
         exceptionIsThrown.set(false);
         try {
@@ -203,27 +171,6 @@ public class RecursiveDescentParserTest {
 */        
         exceptionIsThrown.set(false);
         try {
-            t.parseExpression("abc(123)");
-        } catch (FunctionNotExistsException e) {
-//            System.err.format("Error message: %s%n", e.getMessage());
-            Assert.assertTrue("exception message matches", "The function \"abc\" does not exists".equals(e.getMessage()));
-            exceptionIsThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
-        exceptionIsThrown.set(false);
-        try {
-            exprNode = t.parseExpression("sin(1,2,3)");
-            exprNode.calculate(symbolTable);
-        } catch (WrongNumberOfParametersException e) {
-//            System.err.format("Error message: %s%n", e.getMessage());
-            Assert.assertTrue("exception message matches", "Function \"sin\" has wrong number of parameters".equals(e.getMessage()));
-            exceptionIsThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
-        exceptionIsThrown.set(false);
-        try {
             exprNode = t.parseExpression("123+\"abc\"");
             exprNode.calculate(symbolTable);
         } catch (CalculateException e) {
@@ -232,77 +179,6 @@ public class RecursiveDescentParserTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
-        
-        
-        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
-        fastClock.setRun(false);
-        fastClock.setTime(new Date(0,0,0,11,05));   // 11:05
-        
-        int minSinceMidnight = (11 * 60) + 5;
-        exprNode = t.parseExpression("fastClock()");
-        Assert.assertEquals("expression matches", "Function:fastClock()", exprNode.getDefinitionString());
-//        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
-        Assert.assertEquals("calculate is correct", minSinceMidnight, (int)exprNode.calculate(symbolTable));
-        
-        
-        
-        ExpressionNode expressionNode = t.parseExpression("\"A simple string\".toString()");
-        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:toString()", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", "A simple string", expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("\"A simple string\".length()");
-        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:length()", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 15, (int)expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("\"A simple string\".substring(2,8)");
-        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:substring(IntNumber:2,IntNumber:8)", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", "simple", expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("\"A simple string\".indexOf(\"i\",8)");
-        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:indexOf(String:\"i\",IntNumber:8)", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 12, (int)expressionNode.calculate(symbolTable));
-        
-        expressionNode = t.parseExpression("someString.toString()");
-        Assert.assertEquals("expression matches", "Identifier:someString->Method:toString()", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", "A simple string", expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("someString.length()");
-        Assert.assertEquals("expression matches", "Identifier:someString->Method:length()", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 15, (int)expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("someString.substring(2,8)");
-        Assert.assertEquals("expression matches", "Identifier:someString->Method:substring(IntNumber:2,IntNumber:8)", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", "simple", expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("someString.indexOf(\"i\",8)");
-        Assert.assertEquals("expression matches", "Identifier:someString->Method:indexOf(String:\"i\",IntNumber:8)", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 12, (int)expressionNode.calculate(symbolTable));
-        
-        
-        
-        TestField testField = (TestField) variables.get("myTestField").getValue(symbolTable);
-        
-        expressionNode = t.parseExpression("myTestField.myString");
-        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myString", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", "Hello", expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("myTestField.myInt");
-        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myInt", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 32, (int)expressionNode.calculate(symbolTable));
-        expressionNode = t.parseExpression("myTestField.myFloat");
-        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myFloat", expressionNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 31.32, (float)expressionNode.calculate(symbolTable), 0.000001);
-        
-        
-        
-        ExpressionNodeInstanceVariable instanceVariable = new ExpressionNodeInstanceVariable("myString", variables);
-        Assert.assertEquals("Hello", testField.myString);
-        instanceVariable.assignValue(testField, symbolTable, "Something else");
-        Assert.assertEquals("Something else", testField.myString);
-        
-        instanceVariable = new ExpressionNodeInstanceVariable("myInt", variables);
-        Assert.assertEquals(32, testField.myInt);
-        instanceVariable.assignValue(testField, symbolTable, (long)23103);
-        Assert.assertEquals(23103, testField.myInt);
-        
-        instanceVariable = new ExpressionNodeInstanceVariable("myFloat", variables);
-        Assert.assertEquals(31.32, testField.myFloat, 0.000001);
-        instanceVariable.assignValue(testField, symbolTable, 112.12);
-        Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
         
         
         
@@ -402,6 +278,690 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
         Assert.assertEquals("calculate is correct", i--, (long)(Long)exprNode.calculate(symbolTable));
         Assert.assertEquals("myVar is correct", i, (long)(Long)myVar.getValue(symbolTable));
+    }
+    
+    
+    //             <rule2> = <rule1> ||
+    //             <rule2> += <rule1> ||
+    //             <rule2> -= <rule1> ||
+    //             <rule2> *= <rule1> ||
+    //             <rule2> /= <rule1> ||
+    //             <rule2> %= <rule1> ||
+    //             <rule2> &= <rule1> ||
+    //             <rule2> ^= <rule1> ||
+    //             <rule2> |= <rule1> ||
+    //             <rule2> <<= <rule1> ||
+    //             <rule2> >>= <rule1> ||
+    //             <rule2> >>>= <rule1>
+    @Test
+    public void testRule1() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        myVar._value = 10;
+        ExpressionNode exprNode = t.parseExpression("myVar = 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar += 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)+=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar -= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)-=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 8, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar *= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)*=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 20, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar /= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)/=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 3, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar %= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)%=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 1, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar &= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)&=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar ^= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)^=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 9, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar |= 3");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)|=(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 11, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 1000;
+        exprNode = t.parseExpression("myVar <<= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)<<=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 1000 << 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = 1000;
+        Assert.assertEquals("calculate is correct", 4000, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = -1000;
+        exprNode = t.parseExpression("myVar <<= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)<<=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -1000 << 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = 1000;
+        Assert.assertEquals("calculate is correct", 4000, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 1000;
+        exprNode = t.parseExpression("myVar >>= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)>>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 1000 >> 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = 1000;
+        Assert.assertEquals("calculate is correct", 250, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = -1000;
+        exprNode = t.parseExpression("myVar >>= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)>>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -1000 >> 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = -1000;
+        Assert.assertEquals("calculate is correct", -250, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 1000;
+        exprNode = t.parseExpression("myVar >>>= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)>>>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 1000 >>> 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = 1000;
+        Assert.assertEquals("calculate is correct", 250, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = -1000;
+        exprNode = t.parseExpression("myVar >>>= 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)>>>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -1000L >>> 2, (long)(Long)exprNode.calculate(symbolTable));
+        myVar._value = -1000;
+        Assert.assertEquals("calculate is correct", 4611686018427387654L, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Rule2 is ternary. <rule3> | <rule3> ? <rule2> : <rule2>
+    @Ignore
+    @Test
+    public void testRule2() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        myVar._value = 2;
+        ExpressionNode exprNode = t.parseExpression("myVar < 4 ? \"Hello\" : \"World\"");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "Hello", exprNode.calculate(symbolTable));
+        myVar._value = 10;
+        Assert.assertEquals("calculate is correct", "World", exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Logical OR
+    // <rule3> ::= <rule4> | <rule4> || <rule4>
+    @Test
+    public void testRule3() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("(1 < 2) || (5 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))||((IntNumber:5)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("(1 < 2) || (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))||((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("(2 < 2) || (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:2)<(IntNumber:2))||((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Logical AND
+    // <rule4> ::= <rule5> | <rule5> && <rule5>
+    @Test
+    public void testRule4() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("(1 < 2) && (5 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))&&((IntNumber:5)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("(1 < 2) && (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))&&((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("(2 < 2) && (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:2)<(IntNumber:2))&&((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Bitwise OR
+    // <rule5> ::= <rule6> | <rule6> | <rule6>
+    @Test
+    public void testRule5() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("2 | 10");
+        Assert.assertEquals("expression matches", "(IntNumber:2)|(IntNumber:10)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 | 5");
+        Assert.assertEquals("expression matches", "(IntNumber:2)|(IntNumber:5)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 7, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Bitwise XOR
+    // <rule6> ::= <rule7> | <rule7> ^ <rule7>
+    @Test
+    public void testRule6() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("2 ^ 10");
+        Assert.assertEquals("expression matches", "(IntNumber:2)^(IntNumber:10)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 8, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 ^ 5");
+        Assert.assertEquals("expression matches", "(IntNumber:2)^(IntNumber:5)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 7, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Bitwise AND
+    // <rule7> ::= <rule8> | <rule8> & <rule8>
+    @Test
+    public void testRule7() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("2 & 10");
+        Assert.assertEquals("expression matches", "(IntNumber:2)&(IntNumber:10)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 & 5");
+        Assert.assertEquals("expression matches", "(IntNumber:2)&(IntNumber:5)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 0, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Equality
+    // <rule8> ::= <rule9> | <rule9> == <rule9> | <rule9> != <rule9>
+    @Test
+    public void testRule8() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("1 == 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)==(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 == 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)==(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1 != 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)!=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 != 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)!=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Relational
+    // <rule9> ::= <rule10> | <rule10> < <rule10> | <rule10> <= <rule10> | <rule10> > <rule10> | <rule10> >= <rule10>
+    @Test
+    public void testRule9() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("1 < 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)<(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 < 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)<(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("3 < 2");
+        Assert.assertEquals("expression matches", "(IntNumber:3)<(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1 <= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)<=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 <= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)<=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("3 <= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:3)<=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1 > 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 > 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("3 > 2");
+        Assert.assertEquals("expression matches", "(IntNumber:3)>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1 >= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1)>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("2 >= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:2)>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("3 >= 2");
+        Assert.assertEquals("expression matches", "(IntNumber:3)>=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Shift
+    // <rule10> ::= <rule11> | <rule11> << <rule11> | <rule11> >> <rule11> | <rule11> >>> <rule11>
+    @Test
+    public void testRule10() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("10 << 2");
+        Assert.assertEquals("expression matches", "(IntNumber:10)<<(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 40, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", 10 << 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("-10 << 2");
+        Assert.assertEquals("expression matches", "(-(IntNumber:10))<<(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -40, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", -10 << 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1000 >> 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1000)>>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 250, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", 1000 >> 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("-1000 >> 2");
+        Assert.assertEquals("expression matches", "(-(IntNumber:1000))>>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -250, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", -1000 >> 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("1000 >>> 2");
+        Assert.assertEquals("expression matches", "(IntNumber:1000)>>>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 250, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", 1000 >>> 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("-1000 >>> 2");
+        Assert.assertEquals("expression matches", "(-(IntNumber:1000))>>>(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 4611686018427387654L, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("calculate is correct", -1000L >>> 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Additive
+    // <rule11> ::= <rule12> | <rule12> + <rule12> | <rule12> - <rule12>
+    @Test
+    public void testRule11() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("10 + 2");
+        Assert.assertEquals("expression matches", "(IntNumber:10)+(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("10 - 2");
+        Assert.assertEquals("expression matches", "(IntNumber:10)-(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 8, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Multiplicative
+    // <rule12> ::= <rule13> | <rule13> * <rule13> | <rule13> / <rule13> | <rule13> % <rule13>
+    @Test
+    public void testRule12() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        ExpressionNode exprNode = t.parseExpression("10 * 2");
+        Assert.assertEquals("expression matches", "(IntNumber:10)*(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 20, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("10 / 3");
+        Assert.assertEquals("expression matches", "(IntNumber:10)/(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 3, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("10 % 3");
+        Assert.assertEquals("expression matches", "(IntNumber:10)%(IntNumber:3)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct",1 , (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Rule13 in Java is cast object and object creation. Not relevant here.
+    
+    
+    // Unary pre-increment, unary pre-decrement, unary plus, unary minus, unary logical NOT, unary bitwise NOT
+    // <rule14> ::= <rule16> | ++ <rule16> | -- <rule16> | + <rule16> | - <rule16> | ! <rule16> | ~ <rule16>
+    @Test
+    public void testRule14() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        myVar._value = 10;
+        ExpressionNode exprNode = t.parseExpression("++myVar");
+        Assert.assertEquals("expression matches", "++(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 11, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 11, (long)myVar._value);
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("--myVar");
+        Assert.assertEquals("expression matches", "--(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 9, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 9, (long)myVar._value);
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("+myVar");
+        Assert.assertEquals("expression matches", "+(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("-myVar");
+        Assert.assertEquals("expression matches", "-(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -10, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("!1");
+        Assert.assertEquals("expression matches", "!(IntNumber:1)", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("!0");
+        Assert.assertEquals("expression matches", "!(IntNumber:0)", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("~myVar");
+        Assert.assertEquals("expression matches", "~(Identifier:myVar)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", -11, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Rule15 in Java is unary post-increment, unary post-decrement, ++ and --.
+    @Test
+    public void testRule15() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        myVar._value = 10;
+        ExpressionNode exprNode = t.parseExpression("myVar++");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)++", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 11, (long)myVar._value);
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("myVar--");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)--", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar is correct", 9, (long)myVar._value);
+        
+    }
+    
+    
+    // Parentheses
+    // <rule16> ::= <rule20> | ( <firstRule> )
+    @Test
+    public void testRule16() throws JmriException {
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        myVar._value = (long)10;
+        ExpressionNode exprNode = t.parseExpression("(myVar)");
+        Assert.assertEquals("expression matches", "Identifier:myVar", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 10, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("(2)");
+        Assert.assertEquals("expression matches", "IntNumber:2", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("(myVar = 2)");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        myVar._value = 10;
+        exprNode = t.parseExpression("(((myVar = 2)))");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+    }
+    
+    
+    // Identifiers and constants
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <rule20> [ <rule21> ]
+    //              | <rule20> { <rule21> }
+    //              | <rule20> . <rule20>
+    //              | <rule20> . <identifier> ( <rule21> )
+    
+    // <rule20> ::= <identifier>
+    //              | <identifier> ( <rule21> )
+    //              | <identifier> [ <rule21> ]
+    //              | <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier>
+    //              | <identifier> . <identifier> . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> . <identifier> { <rule21> }
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> ( <rule21> )
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> [ <rule21> ]
+    //              | <identifier> . <identifier> ( <rule21> ) . <identifier> { <rule21> }
+    //              | <integer number>
+    //              | <floating number>
+    //              | <string>
+    @Test
+    public void testRule20() throws JmriException {
+        
+        AtomicBoolean exceptionIsThrown = new AtomicBoolean();
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        variables.put("someString", new MyVariable("someString", "A simple string"));
+        variables.put("myTestField", new MyVariable("myTestField", new TestField()));
+        
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+        
+        MyVariable myVar = new MyVariable("myVar", "");
+        variables.put(myVar.getName(), myVar);
+        
+        MyVariable mySecondVar = new MyVariable("mySecondVar", "");
+        variables.put(mySecondVar.getName(), mySecondVar);
+        
+        myVar._value = 10;
+        ExpressionNode exprNode = t.parseExpression("myVar = 2");
+        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 2, (long)(Long)exprNode.calculate(symbolTable));
+        
+        exprNode = t.parseExpression("random()");
+        Assert.assertTrue("expression matches", "Function:random()".equals(exprNode.getDefinitionString()));
+        Object result = exprNode.calculate(symbolTable);
+        Assert.assertTrue("calculate is probably correct", (result instanceof Double) && (((Double)result) >= 0.0) && (((Double)result) <= 1.0));
+        exprNode = t.parseExpression("int(23.56)");
+        Assert.assertTrue("expression matches", "Function:int(FloatNumber:23.56)".equals(exprNode.getDefinitionString()));
+        Assert.assertTrue("calculate is correct", ((Integer)23).equals(exprNode.calculate(symbolTable)));
+        exprNode = t.parseExpression("sin(180,\"deg\")");
+        Assert.assertEquals("expression matches", "Function:sin(IntNumber:180,String:\"deg\")", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 0, (Double)exprNode.calculate(symbolTable), 1e-15);
+        exprNode = t.parseExpression("int(x*2+5)");
+        Assert.assertTrue("expression matches", "Function:int(((Identifier:x)*(IntNumber:2))+(IntNumber:5))".equals(exprNode.getDefinitionString()));
+        exprNode = t.parseExpression("int((x))");
+        Assert.assertTrue("expression matches", "Function:int(Identifier:x)".equals(exprNode.getDefinitionString()));
+        
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("abc(123)");
+        } catch (FunctionNotExistsException e) {
+//            System.err.format("Error message: %s%n", e.getMessage());
+            Assert.assertTrue("exception message matches", "The function \"abc\" does not exists".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("abc(123)");
+        } catch (FunctionNotExistsException e) {
+//            System.err.format("Error message: %s%n", e.getMessage());
+            Assert.assertTrue("exception message matches", "The function \"abc\" does not exists".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+        
+        exceptionIsThrown.set(false);
+        try {
+            exprNode = t.parseExpression("sin(1,2,3)");
+            exprNode.calculate(symbolTable);
+        } catch (WrongNumberOfParametersException e) {
+//            System.err.format("Error message: %s%n", e.getMessage());
+            Assert.assertTrue("exception message matches", "Function \"sin\" has wrong number of parameters".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+        
+        
+        
+        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+        fastClock.setRun(false);
+        fastClock.setTime(new Date(0,0,0,11,05));   // 11:05
+        
+        int minSinceMidnight = (11 * 60) + 5;
+        exprNode = t.parseExpression("fastClock()");
+        Assert.assertEquals("expression matches", "Function:fastClock()", exprNode.getDefinitionString());
+//        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
+        Assert.assertEquals("calculate is correct", minSinceMidnight, (int)exprNode.calculate(symbolTable));
+        
+        
+        
+        ExpressionNode expressionNode = t.parseExpression("\"A simple string\".toString()");
+        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:toString()", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "A simple string", expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("\"A simple string\".length()");
+        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:length()", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 15, (int)expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("\"A simple string\".substring(2,8)");
+        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:substring(IntNumber:2,IntNumber:8)", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "simple", expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("\"A simple string\".indexOf(\"i\",8)");
+        Assert.assertEquals("expression matches", "String:\"A simple string\"->Method:indexOf(String:\"i\",IntNumber:8)", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (int)expressionNode.calculate(symbolTable));
+        
+        expressionNode = t.parseExpression("someString.toString()");
+        Assert.assertEquals("expression matches", "Identifier:someString->Method:toString()", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "A simple string", expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("someString.length()");
+        Assert.assertEquals("expression matches", "Identifier:someString->Method:length()", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 15, (int)expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("someString.substring(2,8)");
+        Assert.assertEquals("expression matches", "Identifier:someString->Method:substring(IntNumber:2,IntNumber:8)", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "simple", expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("someString.indexOf(\"i\",8)");
+        Assert.assertEquals("expression matches", "Identifier:someString->Method:indexOf(String:\"i\",IntNumber:8)", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (int)expressionNode.calculate(symbolTable));
+        
+        
+        
+        TestField testField = (TestField) variables.get("myTestField").getValue(symbolTable);
+        
+        expressionNode = t.parseExpression("myTestField.myString");
+        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myString", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", "Hello", expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("myTestField.myInt");
+        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myInt", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 32, (int)expressionNode.calculate(symbolTable));
+        expressionNode = t.parseExpression("myTestField.myFloat");
+        Assert.assertEquals("expression matches", "Identifier:myTestField->InstanceVariable:myFloat", expressionNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 31.32, (float)expressionNode.calculate(symbolTable), 0.000001);
+        
+        
+        
+        ExpressionNodeInstanceVariable instanceVariable = new ExpressionNodeInstanceVariable("myString", variables);
+        Assert.assertEquals("Hello", testField.myString);
+        instanceVariable.assignValue(testField, symbolTable, "Something else");
+        Assert.assertEquals("Something else", testField.myString);
+        
+        instanceVariable = new ExpressionNodeInstanceVariable("myInt", variables);
+        Assert.assertEquals(32, testField.myInt);
+        instanceVariable.assignValue(testField, symbolTable, (long)23103);
+        Assert.assertEquals(23103, testField.myInt);
+        
+        instanceVariable = new ExpressionNodeInstanceVariable("myFloat", variables);
+        Assert.assertEquals(31.32, testField.myFloat, 0.000001);
+        instanceVariable.assignValue(testField, symbolTable, 112.12);
+        Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
         
         
         
@@ -574,7 +1134,6 @@ public class RecursiveDescentParserTest {
                 exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
         Assert.assertEquals("myVar is correct", 12, (long)(Long)myMap5.get("A fifth key"));
-        
     }
     
     
