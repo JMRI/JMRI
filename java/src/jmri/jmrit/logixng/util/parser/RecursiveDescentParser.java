@@ -202,10 +202,6 @@ public class RecursiveDescentParser {
             if ((newState._token != null)
                     && ((newState._token._tokenType == TokenType.TERNARY_QUESTION_MARK))) {
                 
-                if (! leftSide._exprNode.canBeAssigned()) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("LeftSideCannotBeAssigned"));
-                }
-                
                 newState = next(newState);
                 ExpressionNodeAndState middleSide = rule3.parse(newState);
                 

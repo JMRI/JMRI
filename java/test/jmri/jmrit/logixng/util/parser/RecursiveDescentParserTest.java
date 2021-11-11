@@ -29,7 +29,6 @@ public class RecursiveDescentParserTest {
         Assert.assertNotNull("not null", t);
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void testParseAndCalculate() throws Exception {
         
@@ -393,7 +392,6 @@ public class RecursiveDescentParserTest {
     
     
     // Rule2 is ternary. <rule3> | <rule3> ? <rule2> : <rule2>
-    @Ignore
     @Test
     public void testRule2() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
@@ -405,7 +403,7 @@ public class RecursiveDescentParserTest {
         
         myVar._value = 2;
         ExpressionNode exprNode = t.parseExpression("myVar < 4 ? \"Hello\" : \"World\"");
-        Assert.assertEquals("expression matches", "(Identifier:myVar)=(IntNumber:2)", exprNode.getDefinitionString());
+        Assert.assertEquals("expression matches", "((Identifier:myVar)<(IntNumber:4))?(String:\"Hello\"):(String:\"World\")", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", "Hello", exprNode.calculate(symbolTable));
         myVar._value = 10;
         Assert.assertEquals("calculate is correct", "World", exprNode.calculate(symbolTable));
@@ -823,6 +821,7 @@ public class RecursiveDescentParserTest {
     //              | <floating number>
     //              | <string>
     @Test
+    @SuppressWarnings("unchecked")
     public void testRule20() throws JmriException {
         
         AtomicBoolean exceptionIsThrown = new AtomicBoolean();
@@ -1083,7 +1082,6 @@ public class RecursiveDescentParserTest {
         exprNode = t.parseExpression("myVar{\"Hello\"}.myFunc(\"Hello\")");
         Assert.assertEquals("expression matches", "Identifier:myVar->{String:\"Hello\"}->Method:myFunc(String:\"Hello\")", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", "++Hello++", exprNode.calculate(symbolTable));
-        
         
         
         

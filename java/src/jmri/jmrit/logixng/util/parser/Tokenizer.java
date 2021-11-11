@@ -129,6 +129,8 @@ public class Tokenizer {
                 case ASSIGN_SHIFT_LEFT:
                 case ASSIGN_SHIFT_RIGHT:
                 case ASSIGN_UNSIGNED_SHIFT_RIGHT:
+                case TERNARY_QUESTION_MARK:
+                case TERNARY_COLON:
                 case LEFT_PARENTHESIS:
                 case RIGHT_PARENTHESIS:
                 case LEFT_SQUARE_BRACKET:
