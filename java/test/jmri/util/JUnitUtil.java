@@ -1502,22 +1502,25 @@ public class JUnitUtil {
             ThreadGroup g = t.getThreadGroup();
             String group = (g != null) ?  g.getName() : "<null group>";
 
-            if (! (threadNames.contains(name)
+            if (! (
+                    threadNames.contains(name)
                  || group.equals("system")
                  || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                  || name.startsWith("RMI TCP Accept")
                  || name.startsWith("AWT-EventQueue")
                  || name.startsWith("Aqua L&F")
+                 || name.startsWith("junit-jupiter-")  // JUnit
+                 || name.startsWith("Batik CleanerThread")  // XML
                  || name.startsWith("Image Fetcher ")
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
+                 || name.startsWith("Common-Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
-                 || name.startsWith("SocketListener(")
-                 || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
-                 || name.startsWith("SocketListener(")
-                 || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
-                )) {
+                 || name.contains("SocketListener")
+                 || group.contains("FailOnTimeoutGroup") // JUnit timeouts
+                 || name.startsWith("SwingWorker-pool-1-thread-")
+                ) ) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
@@ -1582,6 +1585,7 @@ public class JUnitUtil {
                             }
                             e.dispose();
                         }));
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     /* GraphicsEnvironment utility methods */
