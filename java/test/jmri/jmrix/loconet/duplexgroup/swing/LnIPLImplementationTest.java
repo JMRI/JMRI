@@ -330,10 +330,10 @@ public class LnIPLImplementationTest {
 
             Assert.assertTrue  ("IplIdentity device "+dev+" check is specific IPL host device ",
                     LnIPLImplementation.isIplSpecificIdentityReportMessage(m, mfg|0x80, dev));
-            
+
             Assert.assertTrue  ("IplIdentity device "+dev+" check is specific IPL host device ",
                     LnIPLImplementation.isIplSpecificIdentityReportMessage(m, mfg, dev|0x80));
-            
+
             Assert.assertEquals("IplIdentity device "+dev+" check is UR92 device", dev == 92,
                     LnIPLImplementation.isIplUr92IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DT402 device", dev == 42,
@@ -592,7 +592,7 @@ public class LnIPLImplementationTest {
                 case 28:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS240",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
-                   Assert.assertEquals("extracting slave device from DCS240 IPL report", 
+                   Assert.assertEquals("extracting slave device from DCS240 IPL report",
                            "Digitrax (unknown Slave Device)",
                            LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
                    break;
@@ -662,7 +662,7 @@ public class LnIPLImplementationTest {
                 case 4:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax UT4D",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
-                   Assert.assertEquals("extracting slave device from DCS240 IPL report", 
+                   Assert.assertEquals("extracting slave device from DCS240 IPL report",
                            "Digitrax RF24",
                            LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
                    break;
@@ -1062,7 +1062,7 @@ public class LnIPLImplementationTest {
                 LnIPLImplementation.isIplIdentityReportMessage(msg));
 
     }
-    
+
     @Test
     public void checkInterpretHostManufacturerDevice() {
         for (int dev = 0; dev < 128; ++dev) {
@@ -1587,7 +1587,7 @@ public class LnIPLImplementationTest {
         propChangeFlag = false;
         propChangeReportFlag = false;
         propChangeQueryFlag = false;
-        
+
         m = new LocoNetMessage(2);
         m.setElement(0, 0x81); m.setElement(1, 0);
         iplImplementation.message(m);
@@ -1653,6 +1653,8 @@ public class LnIPLImplementationTest {
     @AfterEach
     public void tearDown() {
         memo.dispose();
+        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
         JUnitUtil.tearDown();
     }
 }
