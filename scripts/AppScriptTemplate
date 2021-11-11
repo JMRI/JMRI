@@ -545,7 +545,7 @@ if [ "$OS" = "macosx" ] ; then
 fi
 
 # check java version
-"${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" apps.JavaVersionCheckWindow
+"${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp lib/JavaVersionCheckWindow.jar apps.JavaVersionCheckWindow
 EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ] ; then
     exit $EXIT_STATUS
