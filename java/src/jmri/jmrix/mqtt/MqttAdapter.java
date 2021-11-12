@@ -257,7 +257,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         return (mqttClient);
     }
 
-    private boolean tryToReconnect() {
+    private void tryToReconnect() {
         log.warn("Try to reconnect");
         try {
             if ( getOptionState(MQTT_USERNAME_OPTION) != null
@@ -272,12 +272,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             for (String t : mqttEventListeners.keySet()) {
                 mqttClient.subscribe(t);
             }
-            return true;
-            
         } catch (MqttException ex) {
             log.error("Unable to reconnect", ex);
             scheduleReconnectTimer();
-            return false;
         }
     }
 
@@ -285,9 +282,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
             @Override
             public void run() {
-                if (tryToReconnect()) {
-                    cancel();
-                }
+                tryToReconnect();
             }
         }, 100);
     }
