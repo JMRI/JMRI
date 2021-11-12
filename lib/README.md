@@ -37,6 +37,15 @@ which checks the dates of the control files to make sure they've benen updated w
 ##### JavaVersionCheckWindow.jar
 - Specific class files that have to be compiled with Java 8
   - This is used to launch the warning dialog when running on Java 8
+        % jdk8
+        % cd java/src
+        % javac apps/JavaVersionCheckWindow.java
+        % jar cf ../../lib/JavaVersionCheckWindow.jar apps/JavaVersionCheckWindow*.class
+        % jar tf ../../lib/JavaVersionCheckWindow.jar
+        META-INF/
+        META-INF/MANIFEST.MF
+        apps/JavaVersionCheckWindow.class
+
 
 ##### apiguardian-api-1.1.0.jar
 - version 1.1.0

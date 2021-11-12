@@ -42,6 +42,7 @@ public class JavaVersionCheckWindow {
     public static void main(String[] opts) {
         Compatibility result = checkJavaVersion();
         if (result == Compatibility.INCOMPATIBLE) {
+            System.err.println("JMRI cannot run on Java version "+System.getProperty("java.version"));
             JOptionPane.showMessageDialog(null, "JMRI cannot run on Java version "+System.getProperty("java.version"), "Alert", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
