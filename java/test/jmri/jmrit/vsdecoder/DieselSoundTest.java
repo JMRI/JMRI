@@ -28,6 +28,7 @@ public class DieselSoundTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

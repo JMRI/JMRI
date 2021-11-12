@@ -25,6 +25,7 @@ public class EngineSoundTest {
     @AfterEach
     public void tearDown() {
         // this created an audio manager, clean that up
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
