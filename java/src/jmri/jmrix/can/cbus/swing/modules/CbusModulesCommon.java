@@ -8,9 +8,6 @@ import javax.swing.border.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import static jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane._nvArray;
-import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusPaneProvider;
-
 /**
  * Returns configuration objects for a MERG CANACC8
  *
@@ -297,7 +294,6 @@ public class CbusModulesCommon {
             _title = title;
             _flagUpdateFn = update;
             
-            flags = _nvArray[Sprog3PlusPaneProvider.USER_FLAGS + _index];
             buttons = new JRadioButton[8];
             for (int i = 0; i < 8; i++) {
                 buttons[i] = new JRadioButton(flagStrings[i]);
