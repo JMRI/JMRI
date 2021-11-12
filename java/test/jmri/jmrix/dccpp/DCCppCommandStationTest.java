@@ -106,13 +106,13 @@ public class DCCppCommandStationTest {
 
     @Test
     public void testIsServoTurnoutCreationSupported() {
-        //added at 3.1.7
+        //added at 3.2.0
         DCCppCommandStation c = new DCCppCommandStation();
         DCCppReply r = DCCppReply.parseDCCppReply(
-                "iDCC-EX V-3.1.7 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+                "iDCC-EX V-3.2.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertTrue("v3.1.7+ supports the servo turnout creation", c.isServoTurnoutCreationSupported());
+        Assert.assertTrue("v3.2.0+ supports the servo turnout creation", c.isServoTurnoutCreationSupported());
 
         //verify < v3 does not support the new format
         c = new DCCppCommandStation();
@@ -120,14 +120,14 @@ public class DCCppCommandStationTest {
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertFalse("< v3.1.7 does not support the servo turnout creation", c.isServoTurnoutCreationSupported());
+        Assert.assertFalse("< v3.2.0 does not support the servo turnout creation", c.isServoTurnoutCreationSupported());
 
         c = new DCCppCommandStation();
         r = DCCppReply.parseDCCppReply(
-                "iDCC-EX V-3.1.6 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+                "iDCC-EX V-3.1.7 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertFalse("< v3.1.7 does not support the servo turnout creation", c.isServoTurnoutCreationSupported());
+        Assert.assertFalse("< v3.2.0 does not support the servo turnout creation", c.isServoTurnoutCreationSupported());
 
     }
 

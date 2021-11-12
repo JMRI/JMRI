@@ -52,10 +52,10 @@ public class LayoutTrackEditorTest {
 
         layoutTrackEditor.sensorList.add("Test");
         assertThat(layoutTrackEditor.sensorList).isNotEmpty();
-        
+
         layoutTrackEditor.showSensorMessage();
     }
-    
+
     @BeforeEach
     @OverridingMethodsMustInvokeSuper  // invoke first
     public void setUp() {
@@ -65,13 +65,14 @@ public class LayoutTrackEditorTest {
     @AfterEach
     @OverridingMethodsMustInvokeSuper  // invoke last
     public void tearDown()  {
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
     protected Turnout turnout0 = null;
     protected Turnout turnout1 = null;
-    
+
     /*
      * This is used to find a component by matching against its tooltip
      */
