@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.oblock;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 
 import java.util.*;
@@ -41,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman (C) 2010
  * @author Egbert Broerse (C) 2020
  */
-public class SignalTableModel extends AbstractTableModel {
+public class SignalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int NAME_COLUMN = 0;
     public static final int FROM_BLOCK_COLUMN = 1;
@@ -821,6 +822,7 @@ public class SignalTableModel extends AbstractTableModel {
         inEditMode = editing;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (property.equals("length") || property.equals("portalCount")

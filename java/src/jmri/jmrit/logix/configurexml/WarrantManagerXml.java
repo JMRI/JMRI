@@ -440,10 +440,10 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                     cmd = ThrottleSetting.getCommandTypeFromInt(Integer.parseInt(attr.getValue()));
                     ts.setCommand(cmd);
                 } catch (IllegalArgumentException iae) {
-                    log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
+                    log.error("{} for {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
                 }
             } else {
-                log.error("Command type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+                log.error("Command type is null for {} in warrant {}", ts.toString(), w.getDisplayName());
             }
             attr = elem.getAttribute("fKey");
             if (attr != null) {
@@ -464,7 +464,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                     log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
                 }
             } else {
-                log.error("Value type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+                log.error("Value type is null for {} in warrant {}", ts.toString(), w.getDisplayName());
             }
             attr = elem.getAttribute("speedMode");
             if (attr != null) {
@@ -486,7 +486,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         if (attr != null) {
             String errMsg = ts.setNamedBean(cmd, attr.getValue());
             if (errMsg != null) {
-                log.error("{} for throttleSetting {} in warrant {}", errMsg, ts.toString(), w.getDisplayName());
+                log.error("{} for {} in warrant {}", errMsg, ts.toString(), w.getDisplayName());
             }
         }
         return ts;
