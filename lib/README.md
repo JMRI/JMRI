@@ -44,7 +44,9 @@ which checks the dates of the control files to make sure they've benen updated w
         % jar tf ../../lib/JavaVersionCheckWindow.jar
         META-INF/
         META-INF/MANIFEST.MF
+        apps/JavaVersionCheckWindow$Compatibility.class
         apps/JavaVersionCheckWindow.class
+        % rm apps/*.class
 
 
 ##### apiguardian-api-1.1.0.jar
