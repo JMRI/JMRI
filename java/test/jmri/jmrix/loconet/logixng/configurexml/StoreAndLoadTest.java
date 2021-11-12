@@ -341,6 +341,11 @@ public class StoreAndLoadTest {
     @After
     public void tearDown() {
         // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+
+        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
+        JUnitUtil.removeMatchingThreads("LocoNetThrottledTransmitter");
+
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

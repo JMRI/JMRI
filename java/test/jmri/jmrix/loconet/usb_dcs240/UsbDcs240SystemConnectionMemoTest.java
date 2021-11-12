@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.usb_dcs240;
 
-import jmri.jmrix.SystemConnectionMemoTestBase;
+import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
@@ -11,12 +11,12 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class UsbDcs240SystemConnectionMemoTest extends SystemConnectionMemoTestBase<UsbDcs240SystemConnectionMemo> {
+public class UsbDcs240SystemConnectionMemoTest extends LnSystemConnectionMemoTestBase<UsbDcs240SystemConnectionMemo> {
 
     @Override
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         scm = new UsbDcs240SystemConnectionMemo();
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
         scm.setLnTrafficController(lnis);
@@ -28,7 +28,7 @@ public class UsbDcs240SystemConnectionMemoTest extends SystemConnectionMemoTestB
     @AfterEach
     public void tearDown() {
         scm.dispose();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SBDCS240SystemConnectionMemoTest.class);
