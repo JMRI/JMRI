@@ -599,7 +599,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void showMessageDialog(String msg) {
-        ThreadingUtil.runOnLayoutEventually(() -> {
+        ThreadingUtil.runOnGUIEventually(() -> {
             JOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
@@ -656,7 +656,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void setFrameStatusText(String m, Color c, boolean save) {
-        ThreadingUtil.runOnLayoutEventually(()-> _frame.setStatusText(m, c, true));
+        ThreadingUtil.runOnGUIEventually(()-> _frame.setStatusText(m, c, true));
     }
 
     private String _lastProperty;

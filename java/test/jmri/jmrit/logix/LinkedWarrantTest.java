@@ -261,6 +261,22 @@ public class LinkedWarrantTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
+
+    protected static Sensor moveFromBlockToBlock(OBlock fromBlock, OBlock toBlock) {
+        Sensor fromSensor = fromBlock.getSensor();
+        assertThat(fromSensor).withFailMessage("fromSensor not found").isNotNull();
+        Sensor toSensor = toBlock.getSensor();
+        assertThat(toSensor).withFailMessage("toSensor not found").isNotNull();
+
+        JUnitUtil.waitFor(300);
+        NXFrameTest.setAndConfirmSensorAction(toSensor, Sensor.ACTIVE, toBlock);
+
+        JUnitUtil.waitFor(200);
+        NXFrameTest.setAndConfirmSensorAction(fromSensor, Sensor.INACTIVE, fromBlock);
+        System.out.println(fromBlock.getDisplayName() + " INACTIVE");
+
+        return toSensor;
+    }
     // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
     public void testLinkedMidScript() throws Exception {

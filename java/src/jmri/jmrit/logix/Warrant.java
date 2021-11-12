@@ -463,7 +463,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     protected void fireRunStatus(String property, Object old, Object status) {
 //        jmri.util.ThreadingUtil.runOnLayout(() -> {   // Will hang GUI!
-        ThreadingUtil.runOnLayoutEventually(() -> { // OK but can be quite late in reporting speed changes
+        ThreadingUtil.runOnGUIEventually(() -> { // OK but can be quite late in reporting speed changes
             firePropertyChange(property, old, status);
         });
     }
@@ -708,7 +708,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
     }
 
-    private String makeWaitMessage(String blockName, int cmdIdx) {
+    protected String makeWaitMessage(String blockName, int cmdIdx) {
         String which;
         String where = null;
         if (_waitForSignal) {
@@ -748,7 +748,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @jmri.InvokeOnLayoutThread
     private void startTracker() {
-        ThreadingUtil.runOnLayoutEventually(() -> {
+        ThreadingUtil.runOnGUIEventually(() -> {
             new Tracker(getCurrentBlockOrder().getBlock(), _trainName,
                     null, InstanceManager.getDefault(TrackerTableAction.class));
         });

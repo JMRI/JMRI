@@ -1337,7 +1337,7 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void setStatus(String msg, Color c) {
-        ThreadingUtil.runOnLayoutEventually(()-> {
+        ThreadingUtil.runOnGUIEventually(()-> {
             _statusBox.setForeground(c);
             _statusBox.setText(msg);
         });

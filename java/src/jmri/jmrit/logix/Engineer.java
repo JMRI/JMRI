@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This generally operates on its own thread, but calls the warrant
  * thread via Warrant.fireRunStatus to show status. fireRunStatus uses
- * ThreadingUtil.runOnLayoutEventually to display on the layout thread.
+ * ThreadingUtil.runOnGUIEventually to display on the layout thread.
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2020
  */
@@ -312,7 +312,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             case NOOP:
                 break;
             case SET_SENSOR:
-                ThreadingUtil.runOnLayoutEventually(() ->
+                ThreadingUtil.runOnGUIEventually(() ->
                     setSensor(ts.getNamedBeanHandle(), cmdVal));
                 break;
             case FKEY:
@@ -404,7 +404,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     private static void setFrameStatusText(String m, Color c, boolean save) {
-        ThreadingUtil.runOnLayoutEventually(()-> WarrantTableFrame.getDefault().setStatusText(m, c, true));
+        ThreadingUtil.runOnGUIEventually(()-> WarrantTableFrame.getDefault().setStatusText(m, c, true));
     }
 
     /**
