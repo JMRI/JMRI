@@ -269,7 +269,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             log.warn("Succeeded to reconnect");
 
             mqttClient.setCallback(this);
-            Set<String> set = mqttEventListeners.keySet();
+            Set<String> set = new HashSet<>(mqttEventListeners.keySet());
             for (String t : set) {
                 mqttClient.subscribe(t);
             }
