@@ -979,6 +979,7 @@ class Steam1Sound extends EngineSound {
                 _sound.stop();
             } catch (InterruptedException ie) {
                 // kill thread
+                log.debug("thread interrupted");
                 return;
             }
         }
