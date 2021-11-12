@@ -1538,12 +1538,16 @@ public class JUnitUtil {
                         }
 
                         // for anonymous threads, show the traceback in hopes of finding what it is
-                        if (name.startsWith("Thread-")) {
-                            Exception ex = new Exception("traceback of numbered thread");
-                            ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
-                        } else {
-                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
+                        try {
+                            if (name.startsWith("Thread-")) {
+                                Exception ex = new Exception("traceback of numbered thread");
+                                ex.setStackTrace(Thread.getAllStackTraces().get(t));
+                                log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                            } else {
+                                log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
+                            }
+                        } catch (NullPointerException e) {
+                            log.warn("NullPointerException while processing \"{}\" stack trace, thread may be gone", name);
                         }
                         if (kill) {
                             System.err.println(topState+" "+t.getState());
