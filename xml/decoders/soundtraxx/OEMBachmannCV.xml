@@ -15,7 +15,7 @@
 <!-- version 1 - initial file (Marc N Fournier)                             -->
 		   
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
