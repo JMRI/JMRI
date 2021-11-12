@@ -95,6 +95,10 @@
                     Add protection against a concurrent-modification
                     error that can happen during very fast operations.
                 </li>
+                <li>
+                    If the connection is disconnected, JMRI tries to
+                    reconnect.
+                </li>
             </ul>
 
         <h4>MRC</h4>
