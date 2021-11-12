@@ -29,6 +29,9 @@ public class VSDecoderTest {
         // this created an an audio manager, clean that up
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+
+        JUnitUtil.removeMatchingThreads("Steam1Sound.S1LoopThread");
+
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
