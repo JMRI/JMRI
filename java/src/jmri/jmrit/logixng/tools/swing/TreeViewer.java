@@ -76,7 +76,7 @@ public class TreeViewer extends JmriJFrame {
 
     @Override
     public void dispose() {
-        _treePane.dispose();
+        // _treePane.dispose();
         super.dispose();
     }
 
