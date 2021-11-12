@@ -1473,7 +1473,9 @@ public class JUnitUtil {
         "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
         "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
         "Basic L&F File Loading Thread",
-        "dns.close in ZeroConfServiceManager#stopAll"
+        "dns.close in ZeroConfServiceManager#stopAll",
+        "Common-Cleaner",
+        "Batik CleanerThread"  // XML
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1510,17 +1512,17 @@ public class JUnitUtil {
                  || name.startsWith("AWT-EventQueue")
                  || name.startsWith("Aqua L&F")
                  || name.startsWith("junit-jupiter-")  // JUnit
-                 || name.startsWith("Batik CleanerThread")  // XML
                  || name.startsWith("Image Fetcher ")
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
-                 || name.startsWith("Common-Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
-                 || name.contains("SocketListener")
+                 || name.startsWith("SocketListener(")
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
-                 || name.startsWith("SwingWorker-pool-1-thread-")
-                ) ) {
+                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                         ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
+                    )
+                )) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
