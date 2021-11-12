@@ -257,27 +257,48 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         return (mqttClient);
     }
 
+    private boolean tryToReconnect() {
+        log.warn("Try to reconnect");
+        try {
+            if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+                mqttClient.connect(getMqttConnectionOptions());
+            } else {
+                mqttClient.connect();
+            }
+            log.warn("Succeeded to reconnect");
+
+            mqttClient.setCallback(this);
+            for (String t : mqttEventListeners.keySet()) {
+                mqttClient.subscribe(t);
+            }
+            return true;
+            
+        } catch (MqttException ex) {
+            log.error("Unable to reconnect", ex);
+            scheduleReconnectTimer();
+            return false;
+        }
+    }
+
+    private void scheduleReconnectTimer() {
+        jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                if (tryToReconnect()) {
+                    cancel();
+                }
+            }
+        }, 100);
+    }
+
     @Override
     @API(status=API.Status.INTERNAL)
     public void connectionLost(Throwable thrwbl) {
         log.warn("Lost MQTT broker connection...");
         if (this.allowConnectionRecovery) {
             log.info("...trying to reconnect");
-            try {
-                if ( getOptionState(MQTT_USERNAME_OPTION) != null
-                        && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
-                    mqttClient.connect(getMqttConnectionOptions());
-                } else {
-                    mqttClient.connect();
-                }
-
-                mqttClient.setCallback(this);
-                for (String t : mqttEventListeners.keySet()) {
-                    mqttClient.subscribe(t);
-                }
-            } catch (MqttException ex) {
-                log.error("Unable to reconnect", ex);
-            }
+            scheduleReconnectTimer();
             return;
         }
         log.error("Won't reconnect");
