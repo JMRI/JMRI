@@ -257,8 +257,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         return (mqttClient);
     }
 
-    private void tryToReconnect() {
-        log.warn("Try to reconnect");
+    private void tryToReconnect(boolean showLogMessages) {
+        if (showLogMessages) log.warn("Try to reconnect");
         try {
             if ( getOptionState(MQTT_USERNAME_OPTION) != null
                     && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
@@ -274,16 +274,16 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 mqttClient.subscribe(t);
             }
         } catch (MqttException ex) {
-            log.error("Unable to reconnect", ex);
-            scheduleReconnectTimer();
+            if (showLogMessages) log.error("Unable to reconnect", ex);
+            scheduleReconnectTimer(false);
         }
     }
 
-    private void scheduleReconnectTimer() {
+    private void scheduleReconnectTimer(boolean showLogMessages) {
         jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
             @Override
             public void run() {
-                tryToReconnect();
+                tryToReconnect(showLogMessages);
             }
         }, 500);
     }
@@ -293,8 +293,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public void connectionLost(Throwable thrwbl) {
         log.warn("Lost MQTT broker connection...");
         if (this.allowConnectionRecovery) {
-            log.info("...trying to reconnect");
-            scheduleReconnectTimer();
+            log.info("...trying to reconnect repeatedly");
+            scheduleReconnectTimer(true);
             return;
         }
         log.error("Won't reconnect");
