@@ -359,6 +359,8 @@ public class LinkedWarrantTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("Engineer(");
+
         _warrantMgr.dispose();
         _warrantMgr = null;
         _OBlockMgr.dispose();

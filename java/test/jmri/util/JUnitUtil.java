@@ -287,6 +287,49 @@ public class JUnitUtil {
     }
 
     /**
+     * Silently remove any AbstractTurnout threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearTurnoutThreads(){
+        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+    }
+
+    /**
+     * Silently remove any DefaultRoute threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearRouteThreads(){
+        removeMatchingThreads("setRoute"); // must stay consistent with DefaultRoute
+    }
+
+    /**
+     * Utility to remove any threads with a matching name
+     */
+    public static void removeMatchingThreads(String nameContains) {
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }
+        Thread[] list = new Thread[main.activeCount()+2];  // space on end
+        int max = main.enumerate(list);
+
+        for (int i = 0; i<max; i++) {
+            Thread t = list[i];
+            if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
+                // don't want to prevent gc
+                continue;
+            }
+            String name = t.getName();
+            if (name.contains(nameContains)) {
+                t.interrupt();
+                try {
+                    t.join(100); // give it a bit of time to end
+                } catch (InterruptedException e) {
+                    log.warn("join interrupted in removeMatchingThreads", e);
+                }
+            }
+        }
+    }
+
+    /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.
      */
@@ -903,55 +946,55 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m1, jmri.Manager.LOGIXNGS);
         }
         InstanceManager.setDefault(LogixNG_Manager.class, m1);
-        
+
         ConditionalNG_Manager m2 = new DefaultConditionalNGManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m2, jmri.Manager.LOGIXNG_CONDITIONALNGS);
         }
         InstanceManager.setDefault(ConditionalNG_Manager.class, m2);
-        
+
         AnalogActionManager m3 = new DefaultAnalogActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m3, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
         }
         InstanceManager.setDefault(AnalogActionManager.class, m3);
-        
+
         AnalogExpressionManager m4 = new DefaultAnalogExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m4, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
         }
         InstanceManager.setDefault(AnalogExpressionManager.class, m4);
-        
+
         DigitalActionManager m5 = new DefaultDigitalActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m5, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
         InstanceManager.setDefault(DigitalActionManager.class, m5);
-        
+
         DigitalBooleanActionManager m6 = new DefaultDigitalBooleanActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m6, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
         InstanceManager.setDefault(DigitalBooleanActionManager.class, m6);
-        
+
         DigitalExpressionManager m7 = new DefaultDigitalExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m7, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
         }
         InstanceManager.setDefault(DigitalExpressionManager.class, m7);
-        
+
         StringActionManager m8 = new DefaultStringActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m8, jmri.Manager.LOGIXNG_STRING_ACTIONS);
         }
         InstanceManager.setDefault(StringActionManager.class, m8);
-        
+
         StringExpressionManager m9 = new DefaultStringExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
-        
+
         if (activate) m1.activateAllLogixNGs(false, false);
     }
 
@@ -1459,22 +1502,25 @@ public class JUnitUtil {
             ThreadGroup g = t.getThreadGroup();
             String group = (g != null) ?  g.getName() : "<null group>";
 
-            if (! (threadNames.contains(name)
+            if (! (
+                    threadNames.contains(name)
                  || group.equals("system")
                  || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                  || name.startsWith("RMI TCP Accept")
                  || name.startsWith("AWT-EventQueue")
                  || name.startsWith("Aqua L&F")
+                 || name.startsWith("junit-jupiter-")  // JUnit
+                 || name.startsWith("Batik CleanerThread")  // XML
                  || name.startsWith("Image Fetcher ")
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
+                 || name.startsWith("Common-Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
-                 || name.startsWith("SocketListener(")
-                 || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
-                 || name.startsWith("SocketListener(")
-                 || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
-                )) {
+                 || name.contains("SocketListener")
+                 || group.contains("FailOnTimeoutGroup") // JUnit timeouts
+                 || name.startsWith("SwingWorker-pool-1-thread-")
+                ) ) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
@@ -1539,6 +1585,7 @@ public class JUnitUtil {
                             }
                             e.dispose();
                         }));
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     /* GraphicsEnvironment utility methods */

@@ -773,6 +773,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 log.debug("Setting route {}", this.getSystemName());
                 setRouteBusy(true);
                 SetRouteThread thread = new SetRouteThread(this);
+                thread.setName("Route "+getDisplayName()+" setRoute");
                 thread.start();
             } else {
                 log.debug("Not setting route {} because busy", this.getSystemName());

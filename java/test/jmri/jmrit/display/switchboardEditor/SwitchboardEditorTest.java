@@ -242,6 +242,8 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
             jfo.deleteViaFileMenuWithConfirmations();
             e = null;
         }
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
