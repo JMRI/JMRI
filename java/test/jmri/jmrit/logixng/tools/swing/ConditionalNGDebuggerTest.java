@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.*;
 
@@ -20,11 +21,12 @@ public class ConditionalNGDebuggerTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                .createLogixNG("A logixNG with an empty conditionlNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
-        ConditionalNGDebugger t = new ConditionalNGDebugger(conditionalNG);
-        Assert.assertNotNull("not null", t);
+        ThreadingUtil.runOnGUI(() -> {
+            jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                    .createLogixNG("A logixNG with an empty conditionlNG");
+            ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
+            new ConditionalNGDebugger(conditionalNG);
+        });
     }
 
     // The minimal setup for log4J
@@ -36,7 +38,7 @@ public class ConditionalNGDebuggerTest {
     @After
     public void tearDown() {
         // Java 11 integration temporary - clear messages to get JUnit 5 traceback
-        jmri.util.JUnitAppender.clearBacklog();
+        //jmri.util.JUnitAppender.clearBacklog();
 
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
