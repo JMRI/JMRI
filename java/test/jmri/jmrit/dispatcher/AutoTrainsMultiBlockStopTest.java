@@ -39,7 +39,7 @@ import java.nio.file.StandardCopyOption;
         private AutoActiveTrain aat = null;
 
         // Adjust this if timeouts on the server
-        private int waitInterval = 100;
+        private int waitInterval = 200;
 
         @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
         @Test

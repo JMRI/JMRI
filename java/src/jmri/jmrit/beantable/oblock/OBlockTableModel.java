@@ -44,7 +44,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static public final int COMMENTCOL = 2;
     static public final int STATECOL = 3;
     static public final int SENSORCOL = 4;
-    static public final int EDIT_COL = 5;   // Edit / Edit Paths button
+    static public final int EDIT_COL = 5;   // Paths button
     static public final int DELETE_COL = 6;
     static public final int LENGTHCOL = 7;
     static public final int UNITSCOL = 8;
@@ -645,11 +645,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case LENGTHCOL:
                 return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
-                return " "; // make each unique yet without a label
+                return Bundle.getMessage("UnitsCol");
             case EDIT_COL:
-                return "  ";
+                return Bundle.getMessage("MenuPaths");
             case DELETE_COL:
-                return "   ";
+                return Bundle.getMessage("ColumnDelete");
             case ERR_SENSORCOL:
                 return Bundle.getMessage("ErrorSensorCol");
             case REPORTERCOL:
@@ -723,16 +723,16 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case ERR_SENSORCOL:
             case REPORTERCOL:
             case WARRANTCOL:
-                return new JTextField(10).getPreferredSize().width;
+                return new JTextField(12).getPreferredSize().width;
             case CURVECOL:
             case REPORT_CURRENTCOL:
             case PERMISSIONCOL:
             case SPEEDCOL:
-                return new JTextField(8).getPreferredSize().width;
+                return new JTextField(10).getPreferredSize().width;
             case LENGTHCOL:
-                return new JTextField(5).getPreferredSize().width;
+                return new JTextField(6).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(4).getPreferredSize().width;
+                return new JTextField(5).getPreferredSize().width;
             case EDIT_COL:
                 return new JButton(Bundle.getMessage("ButtonEditPath")).getPreferredSize().width+4;
             case DELETE_COL:
@@ -865,6 +865,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static JComboBox<String> getSpeedEditorBox(int row) {
         // create dummy comboBox, override in extended classes for each bean
         JComboBox<String> editCombo = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+        // item to reset speed notch to default, i.e. continue at current speed requirement.
+        javax.swing.DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>)editCombo.getModel();
+        model.addElement("");
         editCombo.putClientProperty("JComponent.sizeVariant", "small");
         editCombo.putClientProperty("JComboBox.buttonType", "square");
         return editCombo;
@@ -888,13 +891,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         super.propertyChange(e);
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
+        if (property.equals("length") || property.equals("UserName") || property.equals("state")) {
+            _parent.updateOBlockTablesMenu();
+            fireTableDataChanged();
+        }
         _parent.getPortalXRefTableModel().propertyChange(e);
         _parent.getSignalTableModel().propertyChange(e);
         _parent.getPortalTableModel().propertyChange(e);
 
-        if (property.equals("length") || property.equals("UserName")) {
-            _parent.updateOBlockTablesMenu();
-        }
     }
 
     protected String getClassName() {

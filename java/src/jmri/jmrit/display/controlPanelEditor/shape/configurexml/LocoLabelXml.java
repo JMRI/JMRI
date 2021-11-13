@@ -15,7 +15,11 @@ import org.jdom2.Element;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
-@Deprecated     // Very unlikely to have been used for 2+ years or more. Usefulness doubtful.  
+@Deprecated     // Very unlikely to have been used for 2+ years or more. Usefulness doubtful. 
+// Quite true. LocoLabel only used with running warrant and after completion of run.
+// Was part of a notion, later rejected, to indicate train position of last warrant run.
+// If such a thing is desired later, Do it with LocoIcon.
+// Also LocoLabel ctor draws on the GUI making loading more problematic.  9/21/21 -pwc
 public class LocoLabelXml extends PositionableRectangleXml {
 
     public LocoLabelXml() {

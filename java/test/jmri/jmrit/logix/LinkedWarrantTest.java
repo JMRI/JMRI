@@ -38,10 +38,7 @@ public class LinkedWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
 
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-//        panel.setVisible(false);  // hide panel to prevent repaint.
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
         assertThat(sensor1).withFailMessage("Senor IS12 not found").isNotNull();
@@ -53,6 +50,10 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
         assertThat(warrant).withFailMessage("warrant").isNotNull();
 
+        // OBlock of route
+        String[] route = {"OB12", "OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11", "OB12"};
+        OBlock block = _OBlockMgr.getOBlock("OB12");
+
         // WarrantTable.runTrain() returns a string that is not null if the
         // warrant can't be started
         assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
@@ -62,12 +63,10 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Loopy 1 starts to move at 8th command");
 
-       // OBlock of route
-        String[] route = {"OB12", "OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11", "OB12"};
-        OBlock block = _OBlockMgr.getOBlock("OB12");
-
         // Run the train, then checks end location
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after first leg").isEqualTo(block.getSensor().getDisplayName());
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
+        // i.e. wait at least 600 * route.length for return
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -143,7 +142,8 @@ public class LinkedWarrantTest {
 
         // Run the train, then checks end location
         assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(block.getSensor().getDisplayName());
-
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
+        
         // "Loop&Fred" links to "WestToEast". Get start for "WestToEast" occupied quickly
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
 
@@ -211,7 +211,9 @@ public class LinkedWarrantTest {
 
         // Run the train, then checks end location
         assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(outEndSensorName);
-
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
+        // i.e. wait at least 600 * (route.length - 1) for return
+        
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -223,6 +225,7 @@ public class LinkedWarrantTest {
         }, "EastToWestLink starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after second leg").isEqualTo(backEndSensorName);
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -235,7 +238,8 @@ public class LinkedWarrantTest {
         }, "WestToEastLink starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after third leg").isEqualTo(outEndSensorName);
-
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
+ 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -247,6 +251,7 @@ public class LinkedWarrantTest {
         }, "EastToWestLink starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after fourth leg").isEqualTo(backEndSensorName);
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
 
             // passed test - cleanup.  Do it here so failure leaves traces.
             JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -256,6 +261,22 @@ public class LinkedWarrantTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
+
+    protected static Sensor moveFromBlockToBlock(OBlock fromBlock, OBlock toBlock) {
+        Sensor fromSensor = fromBlock.getSensor();
+        assertThat(fromSensor).withFailMessage("fromSensor not found").isNotNull();
+        Sensor toSensor = toBlock.getSensor();
+        assertThat(toSensor).withFailMessage("toSensor not found").isNotNull();
+
+        JUnitUtil.waitFor(300);
+        NXFrameTest.setAndConfirmSensorAction(toSensor, Sensor.ACTIVE, toBlock);
+
+        JUnitUtil.waitFor(200);
+        NXFrameTest.setAndConfirmSensorAction(fromSensor, Sensor.INACTIVE, fromBlock);
+        System.out.println(fromBlock.getDisplayName() + " INACTIVE");
+
+        return toSensor;
+    }
     // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
     public void testLinkedMidScript() throws Exception {
@@ -305,6 +326,8 @@ public class LinkedWarrantTest {
 
         // Run the train, then checks end location
         assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Tinker after first leg").isEqualTo(block.getSensor().getDisplayName());
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
+        // i.e. wait at least 600 * route.length for return
 
         Warrant ww = _warrantMgr.getWarrant("Evers");
 
@@ -317,6 +340,7 @@ public class LinkedWarrantTest {
         block = _OBlockMgr.getOBlock("OB1");
 
         assertThat(NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Evers after second leg").isEqualTo(block.getSensor().getDisplayName());
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
 
         Warrant www = _warrantMgr.getWarrant("Chance");
 
@@ -329,6 +353,7 @@ public class LinkedWarrantTest {
         block = _OBlockMgr.getOBlock("OB5");
 
         assertThat(NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName()).withFailMessage("Chance after third leg").isEqualTo(block.getSensor().getDisplayName());
+        // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -342,15 +367,20 @@ public class LinkedWarrantTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDebugPowerManager();
-        JUnitUtil.initOBlockManager();
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-        JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initConditionalManager();
+        JUnitUtil.initWarrantManager();
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
@@ -382,6 +412,8 @@ public class LinkedWarrantTest {
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
+        InstanceManager.getDefault(WarrantManager.class).dispose();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

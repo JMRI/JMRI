@@ -70,14 +70,18 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
         _speedPanel.notifyAddressThrottleFound(t);
         setSpeedSetting(0.0f);      // be sure loco is stopped.
         setButtonForward(t.getIsForward());
-        jmri.jmrit.roster.RosterEntry re = _warrantFrame._speedUtil.getRosterEntry();
-        String name;
-        if (re != null) {
-            name = re.getId();
+        String name = _warrantFrame.getTrainName();
+        if (name == null || name.isEmpty()) {
+            jmri.jmrit.roster.RosterEntry re = _warrantFrame._speedUtil.getRosterEntry();
+            if (re != null) {
+                name = re.getId();
+            } else {
+                name = t.getLocoAddress().toString();
+            }
         } else {
-            name = _warrantFrame.getTrainName();
+            name =name +" - " + t.getLocoAddress().toString();
         }
-        setTitle(name + " (" + t.getLocoAddress().toString() + ")");
+        setTitle(name);
     }
 
     private void initGUI() {
@@ -98,7 +102,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
         _controlPanel.setSize(_controlPanel.getPreferredSize());
 
         int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 11;   // = 192
-        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45        
+        int height = 9 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45        
         _functionPanel = new LearnFunctionPanel(this);
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
