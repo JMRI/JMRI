@@ -19,19 +19,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests that files have correct line endings. The list of file patterns tested
+ * Checks that files have correct line endings. The list of file patterns tested
  * should match the list fixed by the ant fixlineends target.
  * <p>
- * Do not include in the jmri package test suite.
+ * Do not include in the jmri package test suite. Cannot have name ending in *Test,
+ * because it'll get picked up.  That will result in it being run on Windows and failing
+ * big time.
  *
  * @author Randall Wood (C) 2017
  */
 @RunWith(Parameterized.class)
-public class FileLineEndingsTest {
+public class FileLineEndingsCheck {
 
     private final File file;
 
-    private final static Logger log = LoggerFactory.getLogger(FileLineEndingsTest.class);
+    private final static Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
 
     @Parameters(name = "{0}")
     public static Iterable<Object[]> data() {
@@ -111,7 +113,7 @@ public class FileLineEndingsTest {
         return files;
     }
 
-    public FileLineEndingsTest(File file) {
+    public FileLineEndingsCheck(File file) {
         this.file = file;
     }
 
