@@ -1,10 +1,10 @@
 package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.jmrix.can.cbus.swing.modules.base.Servo8BasePaneProvider;
 
@@ -33,7 +33,7 @@ public class CanservoioPaneProvider extends Servo8BasePaneProvider {
 
     /** {@inheritDoc} */
     @Override
-    public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
+    public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         _nVarEditFrame = new CanservoioEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }

@@ -71,6 +71,7 @@ public class SensorIconWindowTest {
         // close the panel target frame.
         EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
         to.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     @Test
@@ -129,6 +130,7 @@ public class SensorIconWindowTest {
         // close the panel editor frame
         EditorFrameOperator to = new EditorFrameOperator(panel);
         to.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     @BeforeEach

@@ -57,6 +57,7 @@ public class CbusNodeTest {
         Assert.assertFalse("default getNodeInSetupMode",t.getNodeInSetupMode() );
         Assert.assertEquals("default getNodeNumberName","256",t.getNodeStats().getNodeNumberName() );
         Assert.assertTrue("default getsendsWRACKonNVSET",t.getsendsWRACKonNVSET() );
+        Assert.assertFalse("default getsendsWRACKonNVSET",t.getnvWriteInLearnOnly() );
         Assert.assertTrue("default totalNodeBytes ",-1 == t.getNodeStats().totalNodeBytes() );
         Assert.assertTrue("default totalRemainingNodeBytes",-1 == t.getNodeStats().totalRemainingNodeBytes() );
         Assert.assertEquals("default toString ","256",t.toString() );
@@ -310,6 +311,7 @@ public class CbusNodeTest {
         Assert.assertEquals("Message sent is parameter 2 request", "[5f8] 73 30 39 02",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         Assert.assertTrue("default getsendsWRACKonNVSET ",t.getsendsWRACKonNVSET() );
+        Assert.assertFalse("default getsendsWRACKonNVSET ",t.getnvWriteInLearnOnly() );
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
