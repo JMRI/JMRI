@@ -761,6 +761,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student.dispose(); // releases throttle
             _student = null;
         }
+        int oldMode = _runMode;
+        _runMode = MODE_NONE;
         _curSignalAspect = null;
         if (_engineer != null) {
             _engineer.stopRun(abort, turnOffFunctions); // releases throttle
@@ -776,8 +778,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         deAllocate();
 
-        int oldMode = _runMode;
-        _runMode = MODE_NONE;
         if (turnOffFunctions && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
             _speedUtil.stopRun(true);   // write speed profile measurements
             if (_addTracker) {

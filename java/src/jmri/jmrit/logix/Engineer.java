@@ -902,6 +902,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
+    Thread _checker;
+    
     private void runWarrant(NamedBeanHandle<?> handle, CommandValue cmdVal) {
         NamedBean bean = handle.getBean();
         if (!(bean instanceof Warrant)) {
@@ -925,8 +927,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 log.debug("Loco address {} finishes warrant {} and starts warrant {}",
                         warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             }
-            Thread checker = new CheckForTermination(_warrant, warrant, num, _currentCommand.getTime());
-            checker.start();
+            _warrant.deAllocate();
+            // same address so this warrant (_warrant) must release the throttle before (warrant) can acquire it
+            _checker = new CheckForTermination(_warrant, warrant, num, _currentCommand.getTime());
+            _checker.start();
             if (log.isDebugEnabled()) log.debug("Exit runWarrant");
             return;
         } else {
@@ -952,7 +956,43 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         log.debug("Exit runWarrant - {}",msg);
     }
 
-    private static class CheckForTermination extends Thread {
+    private void checkerDone(Warrant oldWarrant, Warrant newWarrant) {
+        OBlock endBlock = oldWarrant.getLastOrder().getBlock();
+        if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
+            log.error(Bundle.getMessage("cannotLaunch",
+                    newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
+            return;
+        }
+
+        String msg = null;
+        java.awt.Color color;
+        msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
+        if (msg != null) {
+            msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+            color = java.awt.Color.red;
+        } else {
+            CommandValue cmdVal = _currentCommand.getValue();
+            int num = Math.round(cmdVal.getFloat());
+            if (oldWarrant.equals(newWarrant)) {
+                msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
+            } else {
+                msg = Bundle.getMessage("linkedLaunch",
+                        newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
+                        newWarrant.getfirstOrder().getBlock().getDisplayName(),
+                        endBlock.getDisplayName());
+            }
+            color = WarrantTableModel.myGreen;
+        }
+        String m = msg;
+        java.awt.Color c = color;
+        Engineer.setFrameStatusText(m, c, true);
+        try {
+            _checker.join();
+        } catch (InterruptedException ie) {
+        }
+    }
+
+    private class CheckForTermination extends Thread {
         Warrant oldWarrant;
         Warrant newWarrant;
         int num;
@@ -969,10 +1009,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
         @Override
         public void run() {
-            OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
-            String msg = null;
-            while (time <= timeLimit) {
+            while (time <= timeLimit && _throttle != null) {
                 if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
                     break;
                 }
@@ -983,7 +1021,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     time += 100;
                 } catch (InterruptedException ie) {
                     time = timeLimit;
-                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), ie);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
@@ -992,31 +1029,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 log.info("Waited {}ms for warrant \"{}\" to terminate. runMode={}",
                         time, oldWarrant.getDisplayName(), oldWarrant.getRunMode());
             }
-            if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
-                log.error(Bundle.getMessage("cannotLaunch",
-                        newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
-                return;
-            }
-
-            java.awt.Color color;
-            msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
-            if (msg != null) {
-                msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
-                color = java.awt.Color.red;
-            } else {
-                if (oldWarrant.equals(newWarrant)) {
-                    msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
-                } else {
-                    msg = Bundle.getMessage("linkedLaunch",
-                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
-                            newWarrant.getfirstOrder().getBlock().getDisplayName(),
-                            endBlock.getDisplayName());
-                }
-                color = WarrantTableModel.myGreen;
-            }
-            String m = msg;
-            java.awt.Color c = color;
-            Engineer.setFrameStatusText(m, c, true);
+            checkerDone(oldWarrant, newWarrant);
         }
     }
 
