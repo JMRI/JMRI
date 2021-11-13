@@ -132,14 +132,14 @@ public class OBlockTest {
         Assert.assertNull("path set", b.setPath("path1", w1));
         Assert.assertFalse("Allocated to w2", b.isAllocatedTo(w2));
         assertThat(b.isAllocatedTo(w1)).withFailMessage("Allocated to w1").isTrue();
-        Assert.assertNull("DeAllocate null", b.deAllocate(null));
+        Assert.assertFalse("DeAllocate null", b.deAllocate(null));
 
+        Assert.assertTrue("DeAllocate null", b.deAllocate(w1));
         b.setOutOfService(true);
         assertThat(b.allocate(w2)).withFailMessage("Allocate oos").isEqualTo(Bundle.getMessage("BlockOutOfService", b.getDisplayName()));
         assertThat(b.getState()).withFailMessage("state not allocated, dark").isEqualTo(OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE);
         
         b.setOutOfService(false);
-        Assert.assertNull("DeAllocate w1", b.deAllocate(w1));
         assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName()));
         
         jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
@@ -162,7 +162,7 @@ public class OBlockTest {
         assertThat(b.getState()).withFailMessage("state allocated & unknown").isEqualTo(OBlock.ALLOCATED|OBlock.UNKNOWN);
         s0.setState(Sensor.ACTIVE);
         assertThat(b.getState()).withFailMessage("state allocated & unknown").isEqualTo(OBlock.ALLOCATED|OBlock.OCCUPIED);
-        Assert.assertNull("DeAllocate w0", b.deAllocate(w0));
+        Assert.assertTrue("DeAllocate w0", b.deAllocate(w0));
         b.setOutOfService(true);
         s0.setState(Sensor.INACTIVE);
         assertThat(b.getState()).withFailMessage("state allocated & unknown").isEqualTo(OBlock.OUT_OF_SERVICE|OBlock.UNOCCUPIED);

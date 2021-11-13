@@ -665,13 +665,14 @@
         system be listed in the Speed Map Table. Rows can be added or deleted to conform to the
         Signal System aspects.</p>
 
-        <p>The value associated with a speed name can be interpreted in four different ways and
-        there are four radio buttons for you to choose the meaning of the value.</p>
+        <p>The value associated with a speed name can be interpreted in four different ways when
+        a signal aspect requires a speed change.
+        There are four radio buttons for you to choose the meaning of the value.</p>
 
         <ul>
           <li><strong>Percent Normal</strong> - the value is a percentage of the current throttle
-          setting as recorded or set by an NXWarrant. That is a percentage of the "Normal"
-          speed.</li>
+          setting as recorded or set by an NXWarrant in the command script. That is,
+          a percentage of the "Normal" scripted speed.</li>
 
           <li><strong>Percent Throttle</strong> - the value is a percentage of the full throttle
           setting.</li>
@@ -715,14 +716,14 @@
         programmed into your decoders.</p>
 
         <ul>
-          <li><strong>Ramp Step throttle Increment</strong> This value is a ratio of full throttle.
+          <li><strong>Ramp Step throttle Increment</strong> This value is a percentage of full throttle.
           Seven or eight speed steps of a 128 step throttle is an appropriate increment for a
-          locomotive with modest momentum. A value of 0.008 to 0.04 is recommended. (0.0079 would
+          locomotive with modest momentum. A value of 3.0% to 5.0% is recommended. (0.08% would
           be 1 step of a 128 step throttle)</li>
 
           <li><strong>Ramp Step time</strong> Depending how you have configured momentum on your
           locomotives, adjust this value so the speed change is completed within this period of
-          time. Typically corresponding to the above, 300 to 1000 milliseconds would be
+          time. Typically corresponding to the above, 1000 milliseconds would be
           appropriate.</li>
         </ul>
 
@@ -741,10 +742,11 @@
 
         <h3>Merging Speed Profiles</h3>
 
-        <p>In Release 4.9.2 Warrants compute a track speed when traversing a path with known length
-        and known throttle setting. These measurements are made for each address that is run under
+        <p><span class="since">since 4.19.2</span>Warrants can compute a track speed when 
+        traversing a path with known length and known throttle setting.
+        These measurements are made for each Roster Id that is run under
         a warrant and are kept for the entire layout session. When JMRI is quit, at shutdown, these
-        Session Speed Profiles can be merged into their Roster Speed Profiles. The following
+        Session Speed Profiles may be merged into their Roster Speed Profiles. The following
         choices are available at shutdown.</p>
 
         <ul>
@@ -760,6 +762,30 @@
           <li><strong>Merge All</strong> - Do not prompt and always merge all Session Speed
           Profiles into the Roster Speed Profiles.</li>
         </ul>
+
+        <h3>Tracing Warrant Activity</h3>
+
+        <p><span class="since">since 4.24.5</span>A record of the warrants that have been run can
+        be output to the console. This can be done in lieu of using the "Open Session Log" menu
+        item to write the record to file. Press this button to enable or disable the feature.</p>
+
+        <h3>Slow Speed Assistance</h3>
+
+        <p><span class="since">since 4.24.5</span>The ramping parameters and speed interpretation
+        apply to all locomotives when speed changes are required by signal aspects, obstacles 
+        ahead or a user "Halt" control command. You may have a balky engine in your fleet that 
+        may not perform well at low throttle settings. Should such a speed be specified before entering
+        a block, the engine might stall and never get there. "Slow Speed Assistance" can be 
+        given when a train is inordinately late in getting to the next block of the script. 
+        This done only when the train approaching the block has a speed less than a specified 
+        throttle setting. If the train has not reached the block within 10 seconds of its scheduled 
+        script time, its speed is increased by one "Ramp Step Throttle Increment". This is 
+        done at 10 second intervals until either the train reaches the block or has
+        attained the specified throttle speed. Upon entering the block the original script
+        speed is restored.</p>
+        <p>The default setting for triggering Slow Speed Assistance is 10% throttle.
+        Slow Speed Assistance is disabled by setting the trigger speed to 0%.</p>
+
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <!--#include virtual="/Footer.shtml" -->
