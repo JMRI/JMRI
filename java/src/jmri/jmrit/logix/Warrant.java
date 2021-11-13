@@ -754,7 +754,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         });
     }
 
-    synchronized public void stopWarrant(boolean abort, boolean turnOffFunctions) {
+    public void stopWarrant(boolean abort, boolean turnOffFunctions) {
         _delayStart = false;
         clearWaitFlags(true);
         if (_student != null) {
