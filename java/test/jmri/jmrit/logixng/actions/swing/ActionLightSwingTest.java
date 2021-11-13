@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -44,20 +45,29 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
             null != new ActionLightSwing().getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
     }
 
+    ConditionalNG conditionalNG = null;
+    ActionLight action = null;
+
     @Test
-    public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
+    public void testDialogUseExistingLight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         InstanceManager.getDefault(LightManager.class).provide("IL2");
 
-        jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                .createLogixNG("A logixNG with an empty conditionlNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+        ThreadingUtil.runOnGUI(() -> {
+            try {
+                jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                        .createLogixNG("A logixNG with an empty conditionlNG");
+                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
 
-        ActionLight action = new ActionLight("IQDA1", null);
-        MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        conditionalNG.getChild(0).connect(maleSocket);
+                action = new ActionLight("IQDA1", null);
+                MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                conditionalNG.getChild(0).connect(maleSocket);
+            } catch (SocketAlreadyConnectedException e) {
+                Assert.fail("SocketAlreadyConnectedException");
+            }
+        });
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
 
