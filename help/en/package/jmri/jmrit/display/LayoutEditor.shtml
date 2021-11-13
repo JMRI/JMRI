@@ -1357,14 +1357,14 @@
 
       <p>Turnout, level crossing, and track segment edit dialogs provide access to the Create/Edit
       Block dialog where information specific to a block may be entered or edited. The
-      <strong>Occupancy Sensor:</strong> field in the Create/Edit Block dialog shows the name of
+      <strong>Sensor:</strong> field in the <strong>Sensor</strong> tab shows the name of
       the occupancy sensor currently assigned to the block, if there is one. To enter or change the
-      occupancy sensor, enter the name (system name or user name) of a sensor in the Sensor Table
-      in the <strong>Occupancy Sensor:</strong> field. A sensor may be assigned as the occupancy
+      occupancy sensor, select the name (system name or user name) of a sensor in the Sensor Table
+      in the <strong>Sensor:</strong> field. A sensor may be assigned as the occupancy
       sensor of only one block; attempting to do otherwise will result in an error message.
       Normally, the state of an occupancy sensor is "Active" when a block is occupied, so "Active"
       for occupied sense is the automatic default. This can be changed by selecting "Inactive" in
-      the <strong>Occupied Sense:</strong> selection box.</p>
+      the <strong>Occupied Sense:</strong> selection box in the <strong>Layout Editor</strong> tab.</p>
 
       <p>Block track colors are used instead of the default track color if a section of track is in
       a block. The track items in a block are drawn with different track colors for occupied and

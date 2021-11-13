@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import static jmri.jmrix.can.cbus.CbusConstants.*;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 
 // import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class CbusNodeConstants {
         // defaults
         node.setsendsWRACKonNVSET(true);
         
-        if ( node.getNodeParamManager().getParameter(1) == 165 ) { // MERG MODULE
+        if ( node.getNodeParamManager().getParameter(1) == MANU_MERG ) { // MERG MODULE
             switch (node.getNodeParamManager().getParameter(3)) { // Module Type ID Number
                 case 29: // CANPAN
                     node.setsendsWRACKonNVSET(false);
@@ -70,6 +71,18 @@ public class CbusNodeConstants {
                 case 9: // CANCAB
                     node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     break;
+                case 50: // CANMIO-SVO
+                    node.setnvWriteInLearnOnly(true);
+                    break;
+                default:
+                    break;
+            }
+        } else if ( node.getNodeParamManager().getParameter(1) == SPROG_DCC ) {    // SPROG DCC module
+            switch (node.getNodeParamManager().getParameter(3)) {           // Module Type ID Number
+                case MTYP_CANSERVOIO: // CANPAN
+                    node.setnvWriteInLearnOnly(true);
+                    break;
+                    
                 default:
                     break;
             }
@@ -79,12 +92,12 @@ public class CbusNodeConstants {
     // reset a Dummy Node to its virgin condition
     public static void setDummyNodeParameters( CbusDummyNode thisNode, int manu, int type ){
         
-        if ( manu == 165 ) { // MERG MODULE
+        if ( manu == MANU_MERG ) { // MERG MODULE
             if ( type == 29 ) { // CANPAN
                 
                 int[] _params = new int[]{ 
                 20, /* 0 num parameters   */
-                165, /* 1 manufacturer ID   */
+                MANU_MERG, /* 1 manufacturer ID   */
                 89, /* 2 Minor code version   */
                 29, /* 3 Manufacturer module identifier   */
                 128, /* 4 Number of supported events   */
@@ -118,7 +131,7 @@ public class CbusNodeConstants {
                 // for now
                 int[] _params = new int[]{ 
                 20, /* 0 num parameters   */
-                165, /* 1 manufacturer ID   */
+                MANU_MERG, /* 1 manufacturer ID   */
                 89, /* 2 Minor code version   */
                 255, /* 3 Manufacturer module identifier   */
                 255, /* 4 Number of supported events   */
@@ -170,17 +183,17 @@ public class CbusNodeConstants {
             else {
             
                 // default MERG module in SLiM mode
-                thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+                thisNode.getNodeParamManager().setParameters( new int[]{ 8,MANU_MERG,0,0,0,0,0,0,0 } );
                 thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
             }
         }
         
-        else if ( manu == 44 ) { // SPROG DCC MODULE
+        else if ( manu == SPROG_DCC ) { // SPROG DCC MODULE
             if ( type == 1 ) { // Pi-SPROG 3
                 
                 int[] _params = new int[]{ 
                 20, /* 0 num parameters   */
-                44, /* 1 manufacturer ID   */
+                SPROG_DCC, /* 1 manufacturer ID   */
                 'f', /* 2 Minor code version   */
                 1, /* 3 Manufacturer module identifier   */
                 0, /* 4 Number of supported events   */
@@ -209,13 +222,13 @@ public class CbusNodeConstants {
             
             else {
                 // default SPROG DCC module in SLiM mode
-                thisNode.getNodeParamManager().setParameters( new int[]{ 8,44,0,0,0,0,0,0,0 } );
+                thisNode.getNodeParamManager().setParameters( new int[]{ 8,SPROG_DCC,0,0,0,0,0,0,0 } );
                 thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
             }
         }
         
         else {
-            thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+            thisNode.getNodeParamManager().setParameters( new int[]{ 8,MANU_MERG,0,0,0,0,0,0,0 } );
             thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
         }
         
@@ -252,10 +265,10 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createManMap() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(70, "ROCRAIL"); // NOI18N
-        result.put(80, "SPECTRUM"); // NOI18N
-        result.put(165, "MERG"); // NOI18N
-        result.put(44, "SPROG DCC"); // NOI18N
+        result.put(MANU_ROCRAIL, "ROCRAIL"); // NOI18N
+        result.put(MANU_SPECTRUM, "SPECTRUM"); // NOI18N
+        result.put(MANU_MERG, "MERG"); // NOI18N
+        result.put(SPROG_DCC, "SPROG DCC"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
@@ -300,23 +313,23 @@ public class CbusNodeConstants {
 
     /**
      * Return a string representation of a decoded Module Name for
-     * manufacturer 165 MERG.
+     * manufacturer MERG.
      * @param man int manufacturer
      * @param type module type int
      * @return decoded String module type name else empty string
      */
     public static String getModuleType(int man, int type) {
         String format="";
-        if (man == 165) {
+        if (man == MANU_MERG) {
             format = type165Map.get(type);
         }
-        else if (man == 70) {
+        else if (man == MANU_ROCRAIL) {
             format = type70Map.get(type);
         }
-        else if (man == 80) {
+        else if (man == MANU_SPECTRUM) {
             format = type80Map.get(type);
         }
-        else if (man == 44) {
+        else if (man == SPROG_DCC) {
             format = type44Map.get(type);
         }
         
@@ -337,7 +350,7 @@ public class CbusNodeConstants {
     private static final Map<Integer, String> type44Map = createType44Map();
     
     /*
-     * Populate hashmap with format strings for manufacturer 165 MERG
+     * Populate hashmap with format strings for manufacturer MERG
      */
     private static Map<Integer, String> createType165Map() {
         Map<Integer, String> result = new HashMap<>();
@@ -472,16 +485,16 @@ public class CbusNodeConstants {
      */
     public static String getModuleTypeExtra(int man, int type) {
         String format="";
-        if (man == 165) {
+        if (man == MANU_MERG) {
             format = extra165Map.get(type);
         }
-        else if (man == 70) {
+        else if (man == MANU_ROCRAIL) {
             format = extra70Map.get(type);
         }
-        else if (man == 80) {
+        else if (man == MANU_SPECTRUM) {
             format = extra80Map.get(type);
         }
-        else if (man == 44) {
+        else if (man == SPROG_DCC) {
             format = extra44Map.get(type);
         }
         return format;
@@ -630,13 +643,13 @@ public class CbusNodeConstants {
      */
     public static String getModuleSupportLink(int man, int type) {
         String format="";
-        if (man == 165) {
+        if (man == MANU_MERG) {
             format = link165Map.get(type);
         }
-        else if (man == 70) {
+        else if (man == MANU_ROCRAIL) {
             format = link70Map.get(type);
         }
-        else if (man == 44) {
+        else if (man == SPROG_DCC) {
             format = link44Map.get(type);
         }
         if ( format == null ){

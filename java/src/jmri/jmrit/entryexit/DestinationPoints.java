@@ -823,7 +823,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             return;
         }
 
+        boolean facing = true;
         for (LayoutBlock blk : routeDetails) {
+            if (facing) {
+                // skip facing Block
+                facing = false;
+                continue;
+            }
             if ((getEntryExitType() == EntryExitPairs.FULLINTERLOCK)) {
                 blk.setUseExtraColor(false);
             }
