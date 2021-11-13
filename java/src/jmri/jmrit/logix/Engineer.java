@@ -57,6 +57,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private boolean _atClear = false;
     private final SpeedUtil _speedUtil;
     private OBlock _synchBlock = null;
+    private Thread _checker = null;
+    
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -286,6 +288,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 if (_idxSkipToSpeedCommand <= _idxCurrentCommand) {
                     executeComand(_currentCommand, System.currentTimeMillis() - cmdStart);
                     _idxCurrentCommand++;
+                }
+                if (_checker != null) {
+                    break;
                 }
             }
         }
@@ -902,8 +907,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
-    Thread _checker;
-    
     private void runWarrant(NamedBeanHandle<?> handle, CommandValue cmdVal) {
         NamedBean bean = handle.getBean();
         if (!(bean instanceof Warrant)) {
@@ -987,8 +990,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         java.awt.Color c = color;
         Engineer.setFrameStatusText(m, c, true);
         try {
-            _checker.join();
+            _checker.join(500);
         } catch (InterruptedException ie) {
+        } finally {
+            _checker = null;
         }
     }
 
@@ -1002,7 +1007,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             oldWarrant = oldWar;
             newWarrant = newWar;
             num = n;
-            timeLimit = time + 15000L;    // max wait time to launch is command et + 15 seconds..
+            timeLimit = time + 20000L;    // max wait time to launch is command et + 20 seconds..
             if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {}, {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num, time);
          }
@@ -1014,15 +1019,15 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
                     break;
                 }
-                int priority = Thread.currentThread().getPriority();
+//                int priority = Thread.currentThread().getPriority();
                 try {
-                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+//                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
                     Thread.sleep(100);
                     time += 100;
                 } catch (InterruptedException ie) {
                     time = timeLimit;
                 } finally {
-                    Thread.currentThread().setPriority(priority);
+//                    Thread.currentThread().setPriority(priority);
                 }
             }
             if (time >= timeLimit || log.isDebugEnabled()) {
