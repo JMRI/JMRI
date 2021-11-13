@@ -26,13 +26,13 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Check Line Ends
-      run: |
-        # compile code and tests
-        ant checklineends
     - name: Build and Run
       run: |
         # compile code and tests
         mvn antrun:run -Danttarget=tests
         # run individual tests
         ./scripts/run_flagged_tests_separately
+    - name: Check Line Ends
+      run: |
+        # reuses previous compile and tests targets
+        ant checklineends
