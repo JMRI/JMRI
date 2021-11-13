@@ -169,9 +169,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         this.setPreferredSize(new Dimension(700, 450));
         
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainNodePane, tabbedPane);
-        split.setDividerLocation(100); // px from top of node table pane
+        split.setDividerLocation(preferences.getNodeTableSplit()); // px from top of node table pane
         split.setContinuousLayout(true);
         _pane1.add(split, BorderLayout.CENTER);
+        split.addPropertyChangeListener((PropertyChangeEvent changeEvent) -> {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
+                preferences.setNodeTableSplit(sourceSplitPane.getDividerLocation());
+            }
+        });
         
         add(_pane1);
         _pane1.setVisible(true);

@@ -225,10 +225,10 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
+            return Bundle.getMessage("atHalt", name).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
-        assertThat(Bundle.getMessage("Halted", block.getDisplayName(), "1")).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
+        assertThat(Bundle.getMessage("atHalt", block.getDisplayName())).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
@@ -386,27 +386,24 @@ public class NXFrameTest {
      * @return active end sensor
      * @throws Exception exception thrown
      */
-    protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
+    protected static Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
-            JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-
+            JUnitUtil.waitFor(300);
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
             boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
                 nextSensor = nextBlock.getSensor();
-                nextSensor.setState(Sensor.ACTIVE);
+//                nextSensor.setState(Sensor.ACTIVE);
                 NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
             } else {
                 nextSensor = null;
             }
+            JUnitUtil.waitFor(200);
             if (sensor != null) {
-                JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-                sensor.setState(Sensor.INACTIVE);
+//                sensor.setState(Sensor.INACTIVE);
                 NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             }
             if (!dark) {
@@ -414,8 +411,6 @@ public class NXFrameTest {
                 block = nextBlock;
             }
         }
-        JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
 

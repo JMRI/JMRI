@@ -397,6 +397,35 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _warrant;
     }
 
+    /*
+     * Does a deAllocation, but keeps the listener
+     */
+    protected boolean releaseWarrant(Warrant w) {
+        if (w != null && w.equals(_warrant)) {
+            if (_pathName != null) {
+                OPath path = getPathByName(_pathName);
+                if (path != null) {
+                    int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
+                    path.setTurnouts(0, false, lockState, false);
+                    Portal portal = path.getFromPortal();
+                    if (portal != null) {
+                        portal.setState(Portal.UNKNOWN);
+                    }
+                    portal = path.getToPortal();
+                    if (portal != null) {
+                        portal.setState(Portal.UNKNOWN);
+                    }
+                }
+                _pathName = null;
+            }
+            _ownsTOs = false;
+            _warrant = null;
+            setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
+            return true;
+        }
+        return false;
+    }
+
     public boolean isAllocatedTo(Warrant warrant) {
         if (warrant == null) {
             return false;
@@ -497,7 +526,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * OCCUPIED by a non-warranted train, but the allocation is permitted.
      *
      * @param warrant the Warrant
-     * @return name of block if block is already allocated to another warrant or
+     * @return message with if block is already allocated to another warrant or
      *         block is OUT_OF_SERVICE
      */
     public String allocate(Warrant warrant) {
@@ -569,27 +598,25 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Remove allocation state Remove listener regardless of ownership
+     * Remove allocation state // maybe restore this? Remove listener regardless of ownership
      *
      * @param warrant warrant that has reserved this block. null is allowed for
      *                Conditionals and CircuitBuilder to reset the block.
      *                Otherwise, null should not be used.
-     * @return error message, if any
+     * @return true if warrant deallocated.
      */
-    public String deAllocate(Warrant warrant) {
+    public boolean deAllocate(Warrant warrant) {
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
                 if (jmri.InstanceManager.getDefault(WarrantManager.class).getBySystemName(_warrant.getSystemName()) != null) {
-                    StringBuilder sb = new StringBuilder("Block \"");
+                    StringBuilder sb = new StringBuilder("Cannot deallocate Block \"");
                     sb.append(getDisplayName());
-                    sb.append("\" is owned by warrant \"");
+                    sb.append("\"! Owned by warrant \"");
                     sb.append(_warrant.getDisplayName());
-                    sb.append("\". Warrant \"");
-                    sb.append(warrant == null ? "null" : warrant.getDisplayName());
-                    sb.append("\"cannot deallocate!");
-                    log.error("{}",sb);
-                    return sb.toString();
+                    sb.append("\".");
+                    log.warn(sb.toString());
+                    return false;
                 }
             }
             try {
@@ -601,26 +628,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 log.debug("Warrant {} unregistered.", _warrant.getDisplayName(), ex);
                 }
         }
-        if (_pathName != null) {
-            OPath path = getPathByName(_pathName);
-            if (path != null) {
-                int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
-                path.setTurnouts(0, false, lockState, false);
-                Portal portal = path.getFromPortal();
-                if (portal != null) {
-                    portal.setState(Portal.UNKNOWN);
-                }
-                portal = path.getToPortal();
-                if (portal != null) {
-                    portal.setState(Portal.UNKNOWN);
-                }
-            }
+        if (warrant == null) {
+            return false;
         }
-        _warrant = null;
-        _pathName = null;
-        _ownsTOs = false;
-        setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-        return null;
+        return releaseWarrant(warrant);
     }
 
     public void setOutOfService(boolean set) {
@@ -834,9 +845,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return Bundle.getMessage(ALLOCATED_TO_WARRANT,
                     _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
+        String msg = null;
+        if (pathName == null || warrant == null) {
+            return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
+        }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
-        String msg = null;
         if (path == null) {
             msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }
