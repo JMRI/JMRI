@@ -601,7 +601,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 block.setNamedSensor(occupancyNamedSensor);
             }
         }
-        
+
         Sensor s = getOccupancySensor();
         if ( s == null) {
             return UNKNOWN;
@@ -917,8 +917,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     private final JComboBox<String> senseBox = new JComboBox<>();
 
-    private final JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
-
     // TODO I18N in Bundle.properties
     private int senseActiveIndex;
     private int senseInactiveIndex;
@@ -1051,7 +1049,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if (m != metric) {
             setBlockMetric(m);
         }
-        block.setPermissiveWorking(permissiveCheck.isSelected());
         if (neighbourDir != null) {
             for (int i = 0; i < neighbourDir.size(); i++) {
                 int neigh = neighbourDir.get(i).getSelectedIndex();
@@ -1270,7 +1267,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     if (m != metric) {
                         setBlockMetric(m);
                     }
-                    block.setPermissiveWorking(permissiveCheck.isSelected());
                     if (neighbourDir != null) {
                         for (int i = 0; i < neighbourDir.size(); i++) {
                             int neigh = neighbourDir.get(i).getSelectedIndex();
@@ -4263,7 +4259,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             length = len;
             init();
         }
-        
+
         final void init() {
             validCurrentRoute = checkIsRouteOnValidThroughPath(this);
             firePropertyChange("length", null, null);

@@ -29,6 +29,7 @@ public class VSDecoderPreferencesPaneTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
