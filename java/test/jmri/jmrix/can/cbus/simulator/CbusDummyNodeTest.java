@@ -55,6 +55,7 @@ public class CbusDummyNodeTest {
         Assert.assertTrue("start getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
         Assert.assertFalse("start getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
         Assert.assertTrue("start getsendsWRACKonNVSET", t.getsendsWRACKonNVSET());
+        Assert.assertFalse("start getsendsWRACKonNVSET", t.getnvWriteInLearnOnly());
         Assert.assertEquals(" getNodeType SLIM", "SLIM",t.getNodeStats().getNodeTypeName() );
         
         // set node to CANPAN from SLIM

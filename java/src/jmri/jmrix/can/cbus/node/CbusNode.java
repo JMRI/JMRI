@@ -16,6 +16,8 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private int _flags;
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
+    private boolean _nvWriteInLearnOnly;
+    private boolean _liveUpdate;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
     public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
     public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
@@ -24,6 +26,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     public static int BOOT_PROG_TIMEOUT_SLOW = 50;
     public static int BOOT_CONFIG_TIMEOUT_TIME = 50;
     private String _nodeNameFromName;
+    private String resyncName = null;
     
     /**
      * Create a new CbusNode
@@ -35,6 +38,8 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         super(connmemo,nodenumber);
         
         _sendsWRACKonNVSET = true;
+        _nvWriteInLearnOnly = false;
+        _liveUpdate = false;
         _flags = -1;
         _userComment = "";
         _nodeNameFromName = "";
@@ -111,6 +116,29 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      */
     public int getNodeFlags() {
         return _flags;
+    }
+    
+    /**
+     * Get name of node being resync'ed
+     * 
+     * @return String node name
+     */
+    public String getResyncName() {
+        return resyncName;
+    }
+    
+    /**
+     * Save module name when Resync is in progress
+     *
+     * Resync resets all node parameters, etc. To re0display the NV edit GUI
+     * before the resync completes we save a copy of the name of the node.
+     */
+    protected void saveForResync() {
+        if (!CbusNodeConstants.getModuleType(this.getNodeParamManager().getParameter(1),this.getNodeParamManager().getParameter(3)).isEmpty() ){
+            resyncName =  CbusNodeConstants.getModuleType(this.getNodeParamManager().getParameter(1),this.getNodeParamManager().getParameter(3));
+        } else {
+            resyncName = null;
+        }
     }
     
     /**
@@ -215,6 +243,51 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      */
     public boolean getsendsWRACKonNVSET() {
         return _sendsWRACKonNVSET;
+    }
+    
+    
+    /**
+     * CANSERVO8C and related modules only accept NV writes in learn mode.
+     * 
+     * This was used by the MERG FCU to update servo positions in "real time" in
+     * response to interaction with the GUI. Call this method to indicate that a
+     * node must be in learn mode to support NV writes.
+     * 
+     * @param nvWriteInLearn true if node requires to be in learn mode for NV writes
+     */
+    public void setnvWriteInLearnOnly( Boolean nvWriteInLearn ){
+        _nvWriteInLearnOnly = nvWriteInLearn;
+    }
+    
+    /**
+     * CANSERVO8C and related modules only accept NV writes in learn mode.
+     * 
+     * This was used by the MERG FCU to update servo positions in "real time" in
+     * response to interaction with the GUI. Call this method to query if a
+     * node must be in learn mode to support NV writes.
+     * 
+     * @return true if sends WRACK, else false
+     */
+    public boolean getnvWriteInLearnOnly() {
+        return _nvWriteInLearnOnly;
+    }
+    
+    /**
+     * Set flag to say node is in live update mode.
+     * 
+     * @param liveUpdate true if in live update mode
+     */
+    public void setliveUpdate(boolean liveUpdate) {
+        _liveUpdate = liveUpdate;
+    }
+    
+    /**
+     * Get live update mode
+     * 
+     * @return true in live update
+     */
+    public boolean getliveUpdate() {
+        return _liveUpdate;
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNode.class);

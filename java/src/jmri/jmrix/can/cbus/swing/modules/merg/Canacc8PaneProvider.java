@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.modules.merg;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
@@ -90,7 +89,7 @@ public class Canacc8PaneProvider extends CbusConfigPaneProvider {
 
     /** {@inheritDoc} */
     @Override
-    public JPanel getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
+    public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         _nVarEditFrame = new Canacc8EditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }

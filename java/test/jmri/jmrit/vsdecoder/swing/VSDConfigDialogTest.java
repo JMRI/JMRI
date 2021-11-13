@@ -37,6 +37,7 @@ public class VSDConfigDialogTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2016 All rights reserved -->
+<!---->
+<!--JMRI is free software; you can redistribute it and/or modify it under  -->
+<!--the terms of version 2 of the GNU General Public License as published  -->
+<!--by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!--of this license.                                                       -->
+<!---->
+<!--JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!--ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!--FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!--for more details.                                                      -->
+<!--version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+   <enumChoice>
+      <choice>EMD 1: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>EMD 1: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>EMD 1: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>EMD 1: fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>GE 2: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>GE 2: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>GE 2: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>GE 2: fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>ALCO 3: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>ALCO 3: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>ALCO 3: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>ALCO 3: fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Electronic 4: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Electronic 4: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Electronic 4: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Electronic 4: fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Brass: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Brass: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Brass: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Brass: fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Heavy Brass: slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Heavy Brass: medium-slow</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Heavy Brass: medium-fast</choice>
+   </enumChoice>
+   <enumChoice>
+      <choice>Heavy Brass: fast</choice>
+   </enumChoice>
+</enumVal>
