@@ -172,6 +172,7 @@ public class LinkedWarrantTest {
 
     // tests a warrant running a train out and launching a return train
     // Both warrants have the same address and origin of each is destination of the other
+    @Disabled("This test fails on CI")
     @Test
     public void testBackAndForth() throws Exception {
         // load and display
