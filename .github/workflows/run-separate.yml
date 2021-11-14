@@ -32,3 +32,7 @@ jobs:
         mvn antrun:run -Danttarget=tests
         # run individual tests
         ./scripts/run_flagged_tests_separately
+    - name: Check Line Ends
+      run: |
+        # reuses previous compile and tests targets
+        ant checklineends
