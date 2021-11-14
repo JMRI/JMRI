@@ -1329,7 +1329,7 @@
     <!-- check for bad line ends, e.g. not ready to go into Git -->
 
     <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
-        <property name="test.includes" value="jmri.util.FileLineEndingsTest" />
+        <property name="test.includes" value="jmri.util.FileLineEndingsCheck" />
         <antcall target="test-single" />
     </target>
 
