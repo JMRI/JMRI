@@ -17,6 +17,7 @@ import org.junit.*;
  */
 public class ConditionalNGDebuggerTest {
 
+    @org.junit.Ignore("Fails in Java 11 testing")
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

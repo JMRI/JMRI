@@ -42,7 +42,8 @@ public class PreviewDialogTest {
         jf.dispose();
     }
 
-    //@Test  Defeated for Java 11 testing
+    @org.junit.Ignore("Fails in Java 11 testing")
+    @Test
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         long time = System.currentTimeMillis();
