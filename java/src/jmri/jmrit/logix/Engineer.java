@@ -192,25 +192,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         _synchBlock = null;
                     }
                 }
-/*
-                synchronized (this) {
-                    _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                    try {
-                        if (log.isDebugEnabled()) {
-                            log.debug("{}: Wait for train to enter \"{}\".",
-                                    _warrant.getDisplayName(), _synchBlock.getDisplayName());
-                        }
-                        _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
-                        wait();
-                    } catch (InterruptedException ie) {
-                        log.error("At _waitForSync {}", ie);
-                        _warrant.debugInfo();
-                        Thread.currentThread().interrupt();
-                    }
-                    finally {
-                        _synchBlock = null;
-                    }
-                }*/
             }
             if (_abort) {
                 break;
