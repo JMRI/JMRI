@@ -1,5 +1,6 @@
 package jmri.jmrit.simpleprog;
 
+import java.awt.Container;
 import java.awt.GridLayout;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import jmri.jmrit.symbolicprog.SymbolicProgBundle;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
+ * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -54,36 +56,17 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         decButton.setSelected(true);
 
         // add the actions to the buttons
-        readButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                readPushed(e);
-            }
-        });
-        writeButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                writePushed(e);
-            }
-        });
-        decButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                decHexButtonChanged(e);
-            }
-        });
-        hexButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                decHexButtonChanged(e);
-            }
-        });
+        readButton.addActionListener(this::readPushed);
+        writeButton.addActionListener(this::writePushed);
+        decButton.addActionListener(this::decHexButtonChanged);
+        hexButton.addActionListener(this::decHexButtonChanged);
 
         resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
+        Container contentPane = super.getContentPane();
         // general GUI config
         setTitle(SymbolicProgBundle.getMessage("SIMPLE PROGRAMMER"));
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // install items in GUI
         javax.swing.JPanel tPane;  // temporary pane for layout
@@ -93,7 +76,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane.setLayout(new BoxLayout(tPane, BoxLayout.X_AXIS));
         tPane.add(readButton);
         tPane.add(writeButton);
-        getContentPane().add(tPane);
+        contentPane.add(tPane);
 
         tPane = new JPanel();
         tPane.setLayout(new GridLayout(2, 2));
@@ -101,9 +84,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane.add(addrField); // JSpinner
         tPane.add(new JLabel(SymbolicProgBundle.getMessage("VALUE:")));
         tPane.add(valField);
-        getContentPane().add(tPane);
+        contentPane.add(tPane);
 
-        getContentPane().add(new JSeparator());
+        contentPane.add(new JSeparator());
 
         tPane = new JPanel();
         tPane.setLayout(new BoxLayout(tPane, BoxLayout.X_AXIS));
@@ -122,11 +105,11 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane2.add(Box.createVerticalGlue());
         tPane.add(tPane2);
 
-        getContentPane().add(tPane);
+        contentPane.add(tPane);
 
-        getContentPane().add(new JSeparator());
+        contentPane.add(new JSeparator());
 
-        getContentPane().add(resultsField);
+        contentPane.add(resultsField);
 
         if (modePane.getProgrammer() != null) {
             readButton.setEnabled(modePane.getProgrammer().getCanRead());
@@ -137,7 +120,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.simpleprog.SimpleProgFrame", true);
 
-        pack();
+        super.pack();
     }
 
     // utility function to get value, handling radix
@@ -238,7 +221,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         try {
             if (decButton.isSelected()) // convert from hex to dec
             {
-                value = Integer.valueOf(valField.getText(), 16).intValue();
+                value = Integer.valueOf(valField.getText(), 16);
             } else // convert from dec to hex
             {
                 value = Integer.parseInt(valField.getText());

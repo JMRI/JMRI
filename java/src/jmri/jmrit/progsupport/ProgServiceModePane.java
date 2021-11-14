@@ -42,7 +42,8 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen      Copyright (C) 2001, 2014
+ * @author Daniel Bergqvist  Copyright (C) 2021
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -106,6 +107,8 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
 
         // general GUI config
         setLayout(new BoxLayout(this, direction));
+
+        setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramServiceMode")));
 
         // create the programmer display combo box
         java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
