@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -19,8 +20,7 @@ import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.jdom2.Element;
-import org.jdom2.Attribute;
+import org.jdom2.*;
 import org.w3c.dom.Document;
 
 /**
@@ -1377,8 +1377,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());
         } else {
             setSwitchSliderFunction(switchSliderFunction); // reset slider
-        }
-
+        } 
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());
