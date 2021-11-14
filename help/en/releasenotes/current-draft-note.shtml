@@ -95,6 +95,10 @@
                     Add protection against a concurrent-modification
                     error that can happen during very fast operations.
                 </li>
+                <li>
+                    If the connection is disconnected, JMRI tries to
+                    reconnect.
+                </li>
             </ul>
 
         <h4>MRC</h4>
@@ -529,6 +533,12 @@
         <a id="Tr" name="Tr"></a>
         <ul>
             <li></li>
+        </ul>
+
+   <h3>Transit</h3>
+        <a id="Transit" name="Transit"></a>
+        <ul>
+            <li>Transits can now have unlimited number of sections.</li>
         </ul>
 
    <h3>Warrants</h3>

@@ -510,7 +510,7 @@
                         <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
                         <!-- exclude the line endings tests from automatic execution -->
-                        <exclude>jmri.util.FileLineEndings</exclude>
+                        <exclude>jmri.util.FileLineEndingsCheck</exclude>
                         <!-- ignore since base classes for other tests -->
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
