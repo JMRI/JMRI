@@ -42,7 +42,7 @@ public class PreviewDialogTest {
         jf.dispose();
     }
 
-    @Disabled("Fails in Java 11 testing; out of memory")
+    @org.junit.Ignore("Fails in Java 11 testing")
     @Test
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

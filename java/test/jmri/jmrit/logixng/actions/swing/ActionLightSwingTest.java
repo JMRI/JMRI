@@ -48,7 +48,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
     ConditionalNG conditionalNG = null;
     ActionLight action = null;
 
-    @org.junit.jupiter.api.Disabled("Fails in Java 11 testing")
+    @org.junit.Ignore("Fails in Java 11 testing")
     @Test
     public void testDialogUseExistingLight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
