@@ -1509,7 +1509,6 @@ public class JUnitUtil {
 
         for (int i = 0; i<max; i++) {
             Thread t = list[i];
-            Thread.State topState = t.getState();
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
                 threadsSeen.remove(t);  // don't want to prevent gc
                 continue;

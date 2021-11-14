@@ -25,7 +25,6 @@ public class EditorFrameOperator extends JFrameOperator {
 
     private static final String hideThreadName = "EditorFrameOperator: Hide Dialog Close Thread";
     private static final String deleteThreadName = "EditorFrameOperator: Delete Dialog Close Thread";
-    private static final int joinDelayMillis = 100;
 
     public void closeFrameWithConfirmations(){
         // if OK to here, close window
