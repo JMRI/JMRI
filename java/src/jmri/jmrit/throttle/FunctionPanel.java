@@ -2,8 +2,6 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.*;
@@ -20,7 +18,6 @@ import jmri.util.FileUtil;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -391,7 +388,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             resetFnButton(functionButtons[i],i);
         }
         // update according to throttle and roster (if any)
-        updateFnButtons();        
+        updateFnButtons();
         repaint();
     }
 
@@ -531,5 +528,4 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
-
 }

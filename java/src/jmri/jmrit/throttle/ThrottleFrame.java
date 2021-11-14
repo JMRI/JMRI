@@ -272,10 +272,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 //     checkPosition();
         if (switchAfter) {
             setEditMode(false);
-        }
-        return;
+        }        
     }
-    
+
     /**
      * Place and initialize the GUI elements.
      * <ul>
