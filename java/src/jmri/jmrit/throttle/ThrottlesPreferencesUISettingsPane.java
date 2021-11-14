@@ -339,5 +339,4 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesUISettingsPane.class);
 }
