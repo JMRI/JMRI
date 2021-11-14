@@ -1473,7 +1473,9 @@ public class JUnitUtil {
         "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
         "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
         "Basic L&F File Loading Thread",
-        "dns.close in ZeroConfServiceManager#stopAll"
+        "dns.close in ZeroConfServiceManager#stopAll",
+        "Common-Cleaner",
+        "Batik CleanerThread"  // XML
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1510,22 +1512,24 @@ public class JUnitUtil {
                  || name.startsWith("AWT-EventQueue")
                  || name.startsWith("Aqua L&F")
                  || name.startsWith("junit-jupiter-")  // JUnit
-                 || name.startsWith("Batik CleanerThread")  // XML
                  || name.startsWith("Image Fetcher ")
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
-                 || name.startsWith("Common-Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
-                 || name.contains("SocketListener")
+                 || name.startsWith("SocketListener(")
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
-                 || name.startsWith("SwingWorker-pool-1-thread-")
-                ) ) {
+                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                         ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
+                    )
+                )) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
                             continue;
                         }
+
+                        // This thread we have to deal with.
                         boolean kill = true;
                         String action = "Interrupt";
                         if (!killRemnantThreads) {
@@ -1539,9 +1543,22 @@ public class JUnitUtil {
 
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            Exception ex = new Exception("traceback of numbered thread");
-                            ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                            StackTraceElement[] traces = Thread.getAllStackTraces().get(t);
+                            if (traces == null) continue;  // thread went away, maybe terminated in parallel
+                            if (traces.length >7 && traces[7].getClassName().contains("org.netbeans.jemmy") ) {
+                                // empirically. jemmy leaves anonymous threads
+                                log.warn("Jemmy remnant thread running {}.{} [{}.{}]",
+                                        traces[7].getClassName(),
+                                        traces[7].getMethodName(),
+                                       traces[7].getFileName(),
+                                       traces[7].getLineNumber()
+                                    );
+                            } else {
+                                // anonymous thread that should be displayed
+                                Exception ex = new Exception("traceback of numbered thread");
+                                ex.setStackTrace(traces);
+                                log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                            }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                         }

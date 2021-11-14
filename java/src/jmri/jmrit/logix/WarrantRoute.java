@@ -125,7 +125,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
     private JmriJFrame _spTable = null;
     private JmriJFrame _pickListFrame;
-    protected boolean _dirty = false;
 
 
     /**
@@ -335,10 +334,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                 rosterEntry.ensureFilenameExists();
                 WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
                 RosterSpeedProfile mergeProfile = _speedUtil.getMergeProfile();
-                RosterSpeedProfile sessionProfile = _speedUtil.getSessionProfile();
-                mgr.setSpeedProfiles(rosterId, mergeProfile, sessionProfile);
+                mgr.setMergeProfile(rosterId, mergeProfile);
                 mgr.getMergeProfiles().remove(id);
-                mgr.getSessionProfiles().remove(id);
                 _speedUtil.setRosterId(rosterId);
             }
         }
@@ -363,6 +360,21 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     JPanel makeViewPanel(String id) {
+        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        RosterEntry re = Roster.getDefault().getEntryForId(id);
+        RosterSpeedProfile rosterSpeedProfile;
+        if (re != null) {
+            rosterSpeedProfile = re.getSpeedProfile();
+        } else {
+            rosterSpeedProfile = null;
+        }
+        if ((speedProfile == null || speedProfile.getProfileSize() == 0) && 
+                (rosterSpeedProfile == null || rosterSpeedProfile.getProfileSize() == 0)) {
+            _viewProfile.setEnabled(false);
+            return null;
+        } else {
+            _viewProfile.setEnabled(true);
+        }
         JPanel viewPanel = new JPanel();
         viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
         viewPanel.add(Box.createGlue());
@@ -374,26 +386,16 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
 
-        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
-        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
-            RosterEntry re = Roster.getDefault().getEntryForId(id);
-            if (re != null) {
-                RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
-                if (rosterSpeedProfile != null ){
-                    spPanel.add(MergePrompt.makeSpeedProfilePanel("rosterSpeedProfile", rosterSpeedProfile,  false, null));
-                    spPanel.add(Box.createGlue());
-                }
-            }
-        } else {
-            return null;
+        if (rosterSpeedProfile != null ) {
+            Map<Integer, Boolean> anomilies = MergePrompt.validateSpeedProfile(rosterSpeedProfile);
+            spPanel.add(MergePrompt.makeSpeedProfilePanel("rosterSpeedProfile", rosterSpeedProfile,  false, anomilies));
+            spPanel.add(Box.createGlue());
         }
-
-        Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(speedProfile);
-        spPanel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, anomaly));
-        spPanel.add(Box.createGlue());
-
-        spPanel.add(MergePrompt.makeSpeedProfilePanel("sessionSpeedProfile", _speedUtil.getSessionProfile(), false, null));
-        spPanel.add(Box.createGlue());
+        if (speedProfile != null) {
+            Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(speedProfile);
+            spPanel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, anomaly));
+            spPanel.add(Box.createGlue());
+        }
 
         viewPanel.add(spPanel);
         return viewPanel;
@@ -440,7 +442,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     protected void setTrainName(String name) {
-        _dirty = (name != null && !name.equals(_trainNameBox.getText()));
         _trainNameBox.setText(name);
     }
 

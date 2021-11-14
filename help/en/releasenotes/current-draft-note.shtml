@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>More module GUI editors added. </li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -86,7 +86,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>Support for CBUS CANMIO-SVO live updates during servo position setting</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -94,6 +94,10 @@
                 <li>
                     Add protection against a concurrent-modification
                     error that can happen during very fast operations.
+                </li>
+                <li>
+                    If the connection is disconnected, JMRI tries to
+                    reconnect.
                 </li>
             </ul>
 
@@ -532,10 +536,45 @@
             <li></li>
         </ul>
 
+   <h3>Transit</h3>
+        <a id="Transit" name="Transit"></a>
+        <ul>
+            <li>Transits can now have unlimited number of sections.</li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Loss of control when train loses occupation detection 
+             (dirty track or pickup, unreliable sensor, etc) is fixed. 
+             Formerly trains could run uncontrolled at their current speed
+             setting. An emergency stop is made and speed is set to zero 
+             upon loss of detection.</li>
+            <li>Calculation of ramp times and distances is improved. However,
+              the need for good data of path lengths and train speed profiles
+              remains.</li>
+            <li>The occasional freeze of the Warrant List Table is fixed.</li>
+            <li>The address column of the Warrant List table is changed to show a
+             roster id instead of the DCC address.  Un-rostered addresses may still be 
+             entered and the warrants run with such engines. In this case, the column
+             entry is the address bracketed with $ signs.</li>
+            <li>Warrant activity can be "traced" on the console. An Enable/Disable 
+             button in Warrant Preferences activates this feature. Default is 
+             tracing disabled.</li>
+            <li>"Slow Speed Assistance" can be given when a train is inordinately
+             late in getting to the next block of the script. This done only when train  
+             approaching the block has a speed less than a configurable percentage 
+             of throttle. If the train 
+             has not reached the block within 10 seconds of its scheduled script time,
+             its speed is increased by one "Ramp Step Throttle Increment". This is 
+             done at 10 second intervals until either the train reaches the block or has
+             attained the configurable percentage throttle speed. 
+             Upon entering the block the original script speed is restored.
+             <br>This feature will allow balky engines with poor low speed characteristics
+             to reach their destinations without stalling. The default throttle 
+             percentage for triggering Slow Speed Assistance is 2.5% and
+             may be changed in Warrant Preferences. Slow Speed Assistance is disabled 
+             by setting this trigger speed to 0%.</li>
         </ul>
 
    <h3>Web Access</h3>
