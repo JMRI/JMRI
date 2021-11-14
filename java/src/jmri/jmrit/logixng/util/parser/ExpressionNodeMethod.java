@@ -22,6 +22,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
     }
     
     private boolean isAssignableFrom(Class<?> type, Object param) {
+        if (param == null) return true;
         if (type.isAssignableFrom(param.getClass())) return true;
         if ((type == Byte.TYPE) && (param instanceof Long)) return true;
         if ((type == Short.TYPE) && (param instanceof Long)) return true;
@@ -45,7 +46,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         Object[] newParams = new Object[params.length];
         for (int i=0; i < params.length; i++) {
             Object newParam;
-            if (paramTypes[i].isAssignableFrom(params[i].getClass())) newParam = params[i];
+            if ((params[i] == null) || (paramTypes[i].isAssignableFrom(params[i].getClass()))) newParam = params[i];
             else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Long)) newParam = (byte)(long)params[i];
             else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Long)) newParam = (short)(long)params[i];
             else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Long)) newParam = (int)(long)params[i];
