@@ -111,7 +111,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramServiceMode")));
 
         // create the programmer display combo box
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
+        java.util.List<GlobalProgrammerManager> v = new java.util.ArrayList<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
             Programmer progrmr = pm.getGlobalProgrammer();
             if (progrmr!=null) {
@@ -121,7 +121,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
             }
         }
 
-        add(progBox = new JComboBox<>(v));
+        add(progBox = new JComboBox<>(v.toArray(new GlobalProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             // no choice, so don't display, don't monitor for changes
@@ -129,12 +129,9 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         } else {
             log.debug("Set combobox box selection to InstanceManager global default: {}", InstanceManager.getDefault(jmri.GlobalProgrammerManager.class));
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-            progBox.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // new programmer selection
-                    programmerSelected();
-                }
+            progBox.addActionListener((java.awt.event.ActionEvent e) -> {
+                // new programmer selection
+                programmerSelected();
             });
         }
 

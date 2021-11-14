@@ -174,11 +174,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramOnMain")));
 
         // create the programmer display combo box
-        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<>();
+        java.util.List<AddressedProgrammerManager> v = new java.util.ArrayList<>();
         for (AddressedProgrammerManager pm : InstanceManager.getList(jmri.AddressedProgrammerManager.class)) {
             v.add(pm);
         }
-        add(progBox = new JComboBox<>(v));
+        add(progBox = new JComboBox<>(v.toArray(new AddressedProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             progBox.setVisible(false);
