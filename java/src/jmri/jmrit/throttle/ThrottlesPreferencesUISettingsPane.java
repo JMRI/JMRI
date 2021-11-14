@@ -3,10 +3,17 @@ package jmri.jmrit.throttle;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 
 import jmri.InstanceManager;
+
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A preferences panel to display and edit JMRI throttle preferences
@@ -15,7 +22,7 @@ import jmri.InstanceManager;
  * 
  */
 public class ThrottlesPreferencesUISettingsPane extends JPanel {
-
+    
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
     private JCheckBox cbUseLargeSpeedSlider;
@@ -30,6 +37,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
     private JCheckBox cbSaveThrottleOnLayoutSave;
     private JCheckBox cbSilentSteal;
     private JCheckBox cbSilentShare;
+    private JTextField tfDefaultThrottleLocation;
     private boolean isDirty = false;
 
     /**
@@ -58,6 +66,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbSaveThrottleOnLayoutSave = new JCheckBox();
         cbSilentSteal = new JCheckBox();
         cbSilentShare = new JCheckBox();
+        tfDefaultThrottleLocation = new JTextField();
 
         cbUseExThrottle.setText(Bundle.getMessage("UseExThrottle"));
         cbResizeWinImg.setText(Bundle.getMessage("ExThrottleForceResize"));
@@ -110,6 +119,11 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbSilentSteal.addActionListener(stealCheck);
         cbSilentShare.addActionListener(shareCheck);
 
+        ActionListener tal = (ActionEvent evt) -> {
+            checkDefaultThrottleFile();
+        };
+        tfDefaultThrottleLocation.addActionListener(tal);
+        
         setLayout(new GridBagLayout());
         
         GridBagConstraints constraints = new GridBagConstraints();
@@ -127,7 +141,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         constraints.weighty = 1;
         
         constraints.gridx = 0;
-        constraints.gridy = 0;                
+        constraints.gridy = 0;
         this.add(cbUseExThrottle, constraints);
 
         constraints.gridy++;
@@ -176,7 +190,13 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         
         constraints.gridy++;
         this.add(cbSilentShare,constraints );
-                        
+        
+        constraints.gridy++;
+        this.add(new JSeparator(),constraints );
+        
+        constraints.gridy++;
+        this.add(defaultThrottleLocation());
+                                
         if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             cbSilentSteal.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentStealOption());
             cbSilentShare.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentShareOption());
@@ -202,6 +222,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbHideSpeedStepSelector.setSelected(tp.isHidingSpeedStepSelector());
         cbSilentSteal.setSelected(tp.isSilentSteal());
         cbSilentShare.setSelected(tp.isSilentShare());
+        tfDefaultThrottleLocation.setText(tp.getDefaultThrottleFilePath());
         checkConsistancy();
         isDirty = false;
     }
@@ -221,6 +242,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         tp.setIgnoreThrottlePosition(cbIgnoreThrottlePosition.isSelected());        
         tp.setUseLargeSpeedSlider(cbUseLargeSpeedSlider.isSelected());
         tp.setHideSpeedStepSelector(cbHideSpeedStepSelector.isSelected());
+        tp.setDefaultThrottleFilePath(tfDefaultThrottleLocation.getText());
         return tp;
     }
 
@@ -255,9 +277,74 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
             cbSilentSteal.setSelected(false);
         }
     }
+    
+    private void checkDefaultThrottleFile() {
+        boolean isBad = false;
+        try {
+            LoadXmlThrottlesLayoutAction.ThrottlePrefs prefs = new LoadXmlThrottlesLayoutAction.ThrottlePrefs();
+            Element root = prefs.rootFromFile(new File (tfDefaultThrottleLocation.getText()));
+            // simply test for root element
+            
+            if (root == null || (root.getChildren("ThrottleFrame").size() != 1)) {
+                isBad = true;
+            }
+        } catch (IOException | JDOMException ex) {            
+            isBad = true;
+        } 
+        if (isBad) {
+            tfDefaultThrottleLocation.setText(null);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("DefaultThrottleFileNotValid"), Bundle.getMessage("DefaultThrottleFile"), JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private JPanel defaultThrottleLocation() {
+        JButton bScript = new JButton(Bundle.getMessage("ButtonSetDots"));
+        
+        final JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
+        fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
+        fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+        fileChooser.setDialogTitle(Bundle.getMessage("MessageSelectDefaultThrottleFile"));
+
+        bScript.addActionListener(new ThrottlesPreferencesUISettingsPane.OpenAction(fileChooser, tfDefaultThrottleLocation));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        JPanel p = new JPanel();
+        JLabel scripts = new JLabel(Bundle.getMessage("DefaultThrottleFile"));
+        p.add(scripts);
+        p.add(tfDefaultThrottleLocation);
+        p.add(bScript);
+        tfDefaultThrottleLocation.setColumns(30);        
+        return p;
+    }
 
     boolean isDirty() {
         return isDirty;        
     }
     
+    private class OpenAction extends AbstractAction {
+
+        JFileChooser chooser;
+        JTextField field;
+
+        OpenAction(JFileChooser chooser, JTextField field) {
+            this.chooser = chooser;
+            this.field = field;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {            
+            // get the file
+            int retVal = chooser.showOpenDialog(field);
+            if ( (retVal != JFileChooser.APPROVE_OPTION) || (chooser.getSelectedFile() == null) ) {
+                return; // cancelled
+            }
+            field.setText(chooser.getSelectedFile().toString());
+            checkDefaultThrottleFile();
+            /*validate();
+            if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                ((JFrame) getTopLevelAncestor()).pack();
+            }*/
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesUISettingsPane.class);
 }
