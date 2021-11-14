@@ -83,27 +83,7 @@ public class EditorFrameOperator extends JFrameOperator {
      * to clean up any threads that have been left hanging.
      */
     public static void clearEditorFrameOperatorThreads() {
-        ThreadGroup main = Thread.currentThread().getThreadGroup();
-        while (main.getParent() != null ) {main = main.getParent(); }
-        Thread[] list = new Thread[main.activeCount()+2];  // space on end
-        int max = main.enumerate(list);
-
-        for (int i = 0; i<max; i++) {
-            Thread t = list[i];
-            if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
-                continue;
-            }
-            String name = t.getName();
-            if (name.equals(hideThreadName) || name.equals(deleteThreadName)) {
-                try {
-                    // give it a chance to end
-                    t.join(joinDelayMillis);
-                    // then interrupt it to end it
-                    t.interrupt();
-                } catch (InterruptedException e) {
-                    // not an error, not recorded
-                }
-            }
-        }
+        jmri.util.JUnitUtil.removeMatchingThreads(hideThreadName);
+        jmri.util.JUnitUtil.removeMatchingThreads(deleteThreadName);
     }
 }
