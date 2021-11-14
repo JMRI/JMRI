@@ -393,7 +393,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     JLabel _sysNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
     JLabel _userNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
-    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";       // NOI18N
+    String systemNameAuto = this.getClassName() + ".AutoSystemName";       // NOI18N
     JButton create;
 
     // Edit E Variables
@@ -945,7 +945,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     @Override
     protected String getClassName() {
-        return AbstractLogixNGTableAction.class.getName();
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 // ------------ Methods for Conditional Browser Window ------------

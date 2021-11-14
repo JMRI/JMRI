@@ -171,11 +171,11 @@ public class ExpressionNodeArithmeticOperatorTest {
         ExpressionNode expr23 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "23", 0));
         
         Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(null)+(FloatNumber:12.34)",
+                "+(FloatNumber:12.34)",
                 new ExpressionNodeArithmeticOperator(TokenType.ADD, null, expr12_34)
                         .getDefinitionString());
         Assert.assertEquals("calculate gives the correct value",
-                "(null)-(FloatNumber:12)",
+                "-(FloatNumber:12)",
                 new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, null, expr12)
                         .getDefinitionString());
         

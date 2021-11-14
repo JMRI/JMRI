@@ -71,7 +71,7 @@ public class TreeEditor extends TreeViewer {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-    private final String _systemNameAuto = this.getClass().getName() + ".AutoSystemName";             // NOI18N
+    private final String _systemNameAuto = getClassName() + ".AutoSystemName";             // NOI18N
     private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
     private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
     private JButton _create;
@@ -170,6 +170,9 @@ public class TreeEditor extends TreeViewer {
         }
     }
 
+    private static String getClassName() {
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
+    }
 
     /**
      * Run the thread action on either the ConditionalNG thread or the
@@ -1833,11 +1836,11 @@ public class TreeEditor extends TreeViewer {
         }
 
         public int getDisplayDeleteMsg() {
-            return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse");
+            return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(getClassName(), "deleteInUse");
         }
 
         public void setDisplayDeleteMsg(int boo) {
-            InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse", boo);
+            InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo);
         }
 
         public void doDelete() {

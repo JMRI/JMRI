@@ -794,6 +794,16 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setMultipleChoiceOption(String strClass, String choice, int value) {
+
+        // LogixNG bug fix:
+        // The class 'strClass' must have a default constructor. Otherwise,
+        // an error is logged to the log. Early versions of LogixNG used
+        // AbstractLogixNGTableAction and ??? as strClass, which didn't work.
+        // Now, LogixNG uses the class jmri.jmrit.logixng.LogixNG_UserPreferences
+        // for this purpose.
+        if ("jmri.jmrit.beantable.AbstractLogixNGTableAction".equals(strClass)) return;
+        if ("jmri.jmrit.logixng.tools.swing.TreeEditor".equals(strClass)) return;
+
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }

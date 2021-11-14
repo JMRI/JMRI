@@ -267,7 +267,8 @@ public class ActionScript extends AbstractDigitalAction {
         bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
         bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
 
-//        bindings.put("params", params);    // Give the script access to the local variable 'params'
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variable 'symbolTable'
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (operation) {
