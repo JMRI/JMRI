@@ -171,8 +171,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
-                namedBeanReference._handle.getBean()
-                        .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                if (namedBeanReference._type.getPropertyName() != null) {
+                    namedBeanReference._handle.getBean()
+                            .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                } else {
+                    namedBeanReference._handle.getBean()
+                            .removePropertyChangeListener(this);
+                }
             }
         }
         _listenersAreRegistered = false;
