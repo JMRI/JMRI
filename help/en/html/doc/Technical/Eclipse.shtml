@@ -276,7 +276,7 @@ import org.junit.runner.notification.RunListener;
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("OperationTests")
 @SelectPackages({"jmri.jmrit.operations"})
-@ExcludeClassNamePatterns({"HeadLessTest","FileLineEndingsTest","ArchitectureTest"})
+@ExcludeClassNamePatterns({"HeadLessTest","FileLineEndingsCheck","ArchitectureTest"})
 public class JUnitOperationsTests {
 
     static public void main(String[] args) {
