@@ -535,6 +535,12 @@
             <li></li>
         </ul>
 
+   <h3>Transit</h3>
+        <a id="Transit" name="Transit"></a>
+        <ul>
+            <li>Transits can now have unlimited number of sections.</li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
