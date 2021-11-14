@@ -179,7 +179,15 @@ public class DefaultSymbolTable implements SymbolTable {
                         if (parts.length > 1) {
                             initialValueData = parts[0];
                             if (Character.isDigit(parts[1].charAt(0))) {
-                                data = Integer.parseInt(parts[1]);
+                                try {
+                                    data = Long.parseLong(parts[1]);
+                                } catch (NumberFormatException e) {
+                                    try {
+                                        data = Double.parseDouble(parts[1]);
+                                    } catch (NumberFormatException e2) {
+                                        throw new IllegalArgumentException("Data is not a number", e2);
+                                    }
+                                }
                             } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
                                 data = parts[1].substring(1,parts[1].length()-1);
                             } else {
@@ -197,7 +205,7 @@ public class DefaultSymbolTable implements SymbolTable {
                             }
                             for (int i=0; i < count; i++) array.add(data);
                         } catch (NumberFormatException e) {
-                            throw new IllegalArgumentException("Initial capacity is not an integer");
+                            throw new IllegalArgumentException("Initial capacity is not an integer", e);
                         }
                     }
                     break;
