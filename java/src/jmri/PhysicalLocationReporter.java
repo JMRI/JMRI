@@ -24,7 +24,21 @@ public interface PhysicalLocationReporter {
 
     static public enum Direction {
 
-        UNKNOWN, ENTER, EXIT
+        UNKNOWN(Bundle.getMessage("PhysicalLocationReporter_Direction_Unknown")),
+        ENTER(Bundle.getMessage("PhysicalLocationReporter_Direction_Enter")),
+        EXIT(Bundle.getMessage("PhysicalLocationReporter_Direction_Exit"));
+        
+        private final String _descr;
+        
+        private Direction(String descr) {
+            this._descr = descr;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public String toString() {
+            return _descr;
+        }
     }
 
     public LocoAddress getLocoAddress(String s);

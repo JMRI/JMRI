@@ -1,17 +1,31 @@
 package jmri;
 
+import jmri.util.PhysicalLocation;
+
 /**
  * Extended report.
  *
  * @author Daniel Bergqvist Copyright (C) 2021
  * @see jmri.Reporter
- * @since 4.25.4
+ * @since 4.25.6
  */
 public interface ExtendedReport extends Reportable {
 
+    public default boolean hasLocoAddress() {
+        return false;
+    }
 
+    public default LocoAddress getLocoAddress() {
+        throw new UnsupportedOperationException("Not supported");
+    }
 
+    public default boolean hasPhysicalLocation() {
+        return false;
+    }
 
+    public default PhysicalLocation getPhysicalLocation() {
+        throw new UnsupportedOperationException("Not supported");
+    }
 
 
 
