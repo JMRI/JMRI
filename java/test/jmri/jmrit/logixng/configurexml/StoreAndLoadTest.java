@@ -673,6 +673,54 @@ public class StoreAndLoadTest {
         Assert.assertTrue(ref.getListenOnAllProperties());
 
 
+        ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("Signal before");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("2");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionLocalVariable actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         maleSocket.setEnabled(false);
