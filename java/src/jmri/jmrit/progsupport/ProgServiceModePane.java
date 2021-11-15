@@ -135,6 +135,9 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
             });
         }
 
+        // Horizontal glue is needed since the panel is too narrow otherwise
+        add(javax.swing.Box.createHorizontalGlue());
+
         // and execute the setup for 1st time
         programmerSelected();
 
