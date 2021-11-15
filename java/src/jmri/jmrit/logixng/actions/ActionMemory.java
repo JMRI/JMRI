@@ -500,7 +500,7 @@ public class ActionMemory extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory && (_otherMemoryHandle != null)) {
-                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+                _otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
             }
             _listenersAreRegistered = false;
         }
