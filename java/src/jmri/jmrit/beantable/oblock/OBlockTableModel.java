@@ -359,7 +359,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return tempRow[col];
             case VALUE:
                 if (b != null) {
-                    return b.getValue();
+                    Object obj = b.getValue();
+                    if (obj != null) {
+                        return obj;
+                    } else if ((b.getState() & OBlock.OCCUPIED) != 0) {
+                        return Bundle.getMessage("BlockUnknown");
+                    } else {
+                        return null;
+                    }
                 }
                 return tempRow[col];
             case EDIT_COL:
