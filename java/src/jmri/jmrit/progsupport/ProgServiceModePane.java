@@ -108,8 +108,6 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramServiceMode")));
-
         // create the programmer display combo box
         java.util.List<GlobalProgrammerManager> v = new java.util.ArrayList<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
