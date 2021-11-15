@@ -18,7 +18,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <jmriversion>
     <major>4</major>
     <minor>25</minor>
-    <test>5</test>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -80,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="10:04 PM">
+    <memory value="2:24 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 09 22:04:28 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 15 02:24:36 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -11370,6 +11370,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>IL1</name>
           <type>Light</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11436,6 +11437,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>Some light</name>
           <type>Light</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11502,6 +11504,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>IM1</name>
           <type>Memory</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11568,6 +11571,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>Some memory</name>
           <type>Memory</type>
+          <all>yes</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11634,6 +11638,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>IS1</name>
           <type>Sensor</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11700,6 +11705,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>Some sensor</name>
           <type>Sensor</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11766,6 +11772,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>IT1</name>
           <type>Turnout</type>
+          <all>no</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -11832,6 +11839,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <Reference>
           <name>Some turnout</name>
           <type>Turnout</type>
+          <all>yes</all>
         </Reference>
       </References>
       <MaleSocket>
@@ -23591,9 +23599,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Nov 09 22:04:31 CET 2021</date>
+      <date>Mon Nov 15 02:24:39 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.5ish+daniel+2021-11-09T21:04:10Z+Ra97d136 on Tue Nov 09 22:04:31 CET 2021-->
+  <!--Written by JMRI version 4.25.6ish+daniel+2021-11-15T01:21:49Z+R255b9a0 on Mon Nov 15 02:24:39 CET 2021-->
 </layout-config>
