@@ -303,7 +303,15 @@ public class JUnitUtil {
     }
 
     /**
-     * Utility to remove any threads with a matching name
+     * Silently remove any blockboss/Simple Signal Logic threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearBlockBossLogicThreads(){
+        removeMatchingThreads("BlockBossLogic");
+    }
+
+    /**
+     * Utility to remove any threads with a matchiing name
      */
     public static void removeMatchingThreads(String nameContains) {
         ThreadGroup main = Thread.currentThread().getThreadGroup();
@@ -314,18 +322,25 @@ public class JUnitUtil {
         for (int i = 0; i<max; i++) {
             Thread t = list[i];
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
-                // don't want to prevent gc
                 continue;
             }
             String name = t.getName();
             if (name.contains(nameContains)) {
-                t.interrupt();
-                try {
-                    t.join(100); // give it a bit of time to end
-                } catch (InterruptedException e) {
-                    log.warn("join interrupted in removeMatchingThreads", e);
-                }
+                killThread(t);
             }
+        }
+    }
+
+    static void killThread(Thread t) {
+        t.interrupt();
+        try {
+            t.join(100); // give it a bit of time to end
+            if (t.getState() != Thread.State.TERMINATED) {
+                t.stop(); // yes, we know it's deprecated, but it's the only option for Jemmy threads
+                log.warn("   Thread {} did not terminate", t.getName());
+            }
+        } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
+            log.error("While interrupting thread {}:", t.getName(), e);
         }
     }
 
@@ -1494,7 +1509,6 @@ public class JUnitUtil {
 
         for (int i = 0; i<max; i++) {
             Thread t = list[i];
-            Thread.State topState = t.getState();
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
                 threadsSeen.remove(t);  // don't want to prevent gc
                 continue;
@@ -1563,16 +1577,7 @@ public class JUnitUtil {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                         }
                         if (kill) {
-                            System.err.println(topState+" "+t.getState());
-                            try {
-                                if (t.getState() != Thread.State.TERMINATED) {  // might have transitioned during above (logging slow)
-                                    t.interrupt();
-                                    t.join(2000);
-                                }
-                                if (t.getState() != Thread.State.TERMINATED) log.warn("   Thread {} did not terminate", name);
-                            } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
-                                log.error("While interrupting thread {}", name, e);
-                            }
+                            killThread(t);
                         } else {
                             threadsSeen.add(t);
                         }
