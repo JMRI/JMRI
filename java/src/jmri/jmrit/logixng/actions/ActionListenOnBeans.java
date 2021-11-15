@@ -156,7 +156,8 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
-                if (namedBeanReference._type.getPropertyName() != null) {
+                if (!namedBeanReference._listenOnAllProperties
+                        && (namedBeanReference._type.getPropertyName() != null)) {
                     namedBeanReference._handle.getBean()
                             .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
                 } else {
@@ -208,6 +209,10 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         private NamedBeanHandle<? extends NamedBean> _handle;
         private boolean _listenOnAllProperties = false;
 
+        public NamedBeanReference(NamedBeanReference ref) {
+            this(ref._name, ref._type, ref._listenOnAllProperties);
+        }
+
         public NamedBeanReference(String name, NamedBeanType type, boolean all) {
             _name = name;
             _type = type;
@@ -225,6 +230,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         public void setName(String name) {
             _name = name;
+            updateHandle();
         }
 
         public NamedBeanType getType() {
@@ -237,13 +243,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 type = NamedBeanType.Turnout;
             }
             _type = type;
+            updateHandle();
         }
 
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
         }
 
-        public void updateHandle() {
+        private void updateHandle() {
             if (!_name.isEmpty()) {
                 NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {

@@ -34,7 +34,11 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     
     
     public ListenOnBeansTableModel(Collection<NamedBeanReference> namedBeanReference) {
-        if (namedBeanReference != null) _namedBeanReference.addAll(namedBeanReference);
+        if (namedBeanReference != null) {
+            for (NamedBeanReference ref : namedBeanReference) {
+                _namedBeanReference.add(new NamedBeanReference(ref));
+            }
+        }
     }
     
     /** {@inheritDoc} */
