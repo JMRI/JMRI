@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?>
+
+<!-- an ANT build.xml file for JMRI TypeScript -->
+<!-- Bob Jacobsen, Copyright 2021 -->
+
+<!-- This file is part of JMRI.                                             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<project name="JMRI" default="typescript" basedir=".">
+  <!-- basedir="." means all paths are relative to this "web/ts" subdir -->
+  <!-- in the project. -->
+
+  <description>
+  Provides build services for JMRI TypeScript files
+  </description>
+
+  <!-- set global properties for this build -->
+  <property name="jstarget" value="../js"/>
+
+  <target name="typescript"
+        description="compile typescript">
+    <exec executable="tsc"
+          failonerror="true">
+      <arg value="--strict"/><arg value="true"/>
+    </exec>
+  </target>
+
+  <target name="clean"
+        description="remove generated .js files">
+    <echo message="web/ts clean not working yet"/>
+    <!-- rm .js from ../js to here iff a corresponding .ts exists here -->
+  </target>
+
+</project>
+
+
