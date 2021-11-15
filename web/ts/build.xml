@@ -45,8 +45,9 @@
 
   <target name="clean"
         description="remove generated .js files">
-    <echo message="web/js clean not working yet"/>
-    <!-- rm all ../js/*.js -->
+    <delete>
+        <fileset dir="${jstarget}/" includes="*.js"/>
+    </delete>
   </target>
 
 </project>
