@@ -1668,8 +1668,12 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>mvnrepository.com</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
         <!--
-        Repository hosting libraries not available through maven.org
+        Local "repository" hosting libraries not available through maven.org
         -->
         <repository>
             <id>lib</id>
