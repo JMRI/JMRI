@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import jmri.*;
+import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -13,10 +14,10 @@ import jmri.jmrit.logix.WarrantManager;
  * @author Daniel Bergqvist Copyright 2019
  */
 public enum NamedBeanType {
-    Block(Bundle.getMessage("BeanNameBlock"), Light.class, null, () -> {
+    Block(Bundle.getMessage("BeanNameBlock"), Block.class, null, () -> {
         return InstanceManager.getDefault(BlockManager.class);
     }),
-    EntryExit(Bundle.getMessage("BeanNameEntryExit"), Light.class, "active", () -> {
+    EntryExit(Bundle.getMessage("BeanNameEntryExit"), DestinationPoints.class, "active", () -> {
         return InstanceManager.getDefault(EntryExitPairs.class);
     }),
     Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", () -> {
