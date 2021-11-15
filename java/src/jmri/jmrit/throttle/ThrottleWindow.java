@@ -306,7 +306,7 @@ public class ThrottleWindow extends JmriJFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getCurrentThrottleFrame().loadThrottle(null);
+                getCurrentThrottleFrame().loadThrottle();
             }
         });
         fileMenuSave = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveThrottle"));
