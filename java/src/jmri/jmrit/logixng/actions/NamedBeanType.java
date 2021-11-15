@@ -1,6 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
 import jmri.*;
+import jmri.jmrit.entryexit.EntryExitPairs;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.WarrantManager;
 
 /**
  * Defines types of NamedBeans, for example Turnout and Light.
@@ -8,11 +13,23 @@ import jmri.*;
  * @author Daniel Bergqvist Copyright 2019
  */
 public enum NamedBeanType {
+    Block(Bundle.getMessage("BeanNameBlock"), Light.class, null, () -> {
+        return InstanceManager.getDefault(BlockManager.class);
+    }),
+    EntryExit(Bundle.getMessage("BeanNameEntryExit"), Light.class, "active", () -> {
+        return InstanceManager.getDefault(EntryExitPairs.class);
+    }),
     Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", () -> {
         return InstanceManager.getDefault(LightManager.class);
     }),
     Memory(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", () -> {
         return InstanceManager.getDefault(MemoryManager.class);
+    }),
+    OBlock(Bundle.getMessage("BeanNameOBlock"), OBlock.class, "state", () -> {
+        return InstanceManager.getDefault(OBlockManager.class);
+    }),
+    Reporter(Bundle.getMessage("BeanNameReporter"), Reporter.class, "value", () -> {
+        return InstanceManager.getDefault(ReporterManager.class);
     }),
     Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> {
         return InstanceManager.getDefault(SensorManager.class);
@@ -25,6 +42,9 @@ public enum NamedBeanType {
     }),
     Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> {
         return InstanceManager.getDefault(TurnoutManager.class);
+    }),
+    Warrant(Bundle.getMessage("BeanNameWarrant"), Warrant.class, "KnownState", () -> {
+        return InstanceManager.getDefault(WarrantManager.class);
     });
     
     private final String _name;
