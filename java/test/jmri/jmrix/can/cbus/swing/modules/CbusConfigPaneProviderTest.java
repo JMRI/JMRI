@@ -47,7 +47,7 @@ public class CbusConfigPaneProviderTest {
         }
         
         @Override
-        public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node) {
+        public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node) {
             return null;
         }
     }

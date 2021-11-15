@@ -437,16 +437,18 @@ if [ -z "$ARCH" ] ; then
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
                 #determine arm version & hard vs. soft float using readelf
-                ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
-                if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
-                    ARCH="armv5"
-                elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
-                    ARCH="armv6l"
-                elif [ "${ARCHVERSION:1:2}" = "v7" ] ; then
-                    ARCH="armv7l"
-                else
-                    ARCH="armv5"
-                fi
+				if type "readelf" >& /dev/null; then
+					ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
+					if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
+						ARCH="armv5"
+					elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
+						ARCH="armv6l"
+					elif [ "${ARCHVERSION:1:2}" = "v7" ] ; then
+						ARCH="armv7l"
+					else
+						ARCH="armv5"
+					fi
+				fi
             fi
 
             if [ "$ARCH" = "aarch64" -o "$ARCH" = "arm64" ] ; then
@@ -463,7 +465,6 @@ if [ -z "$ARCH" ] ; then
         fi
     done
 fi
-
 
 # build classpath dynamically
 CP=""

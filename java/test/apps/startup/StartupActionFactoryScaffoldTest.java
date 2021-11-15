@@ -8,7 +8,7 @@ import org.junit.Assert;
 
 /**
  * Test the StartupActionFactoryScaffold class
- * 
+ *
  * @author Daniel Bergqvist Copyright (C) 2020
  */
 public class StartupActionFactoryScaffoldTest {
@@ -22,6 +22,9 @@ public class StartupActionFactoryScaffoldTest {
             if ("java.lang.String".equals(c.getName())) found = true;
         }
         Assert.assertTrue("class is loaded", found);
+
+        // suppress deprecation warning that's expected
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("apps.startup.StartupActionFactoryScaffold is deprecated, please remove references to it");
     }
 
     @BeforeEach

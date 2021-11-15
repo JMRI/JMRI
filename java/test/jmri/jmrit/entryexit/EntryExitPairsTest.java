@@ -122,6 +122,11 @@ public class EntryExitPairsTest {
         tm = null;
         panels = null;
         tools = null;
+
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

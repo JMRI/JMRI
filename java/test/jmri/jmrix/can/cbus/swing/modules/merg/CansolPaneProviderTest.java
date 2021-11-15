@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.can.cbus.swing.modules.merg;
 
 import java.awt.GraphicsEnvironment;
@@ -18,8 +13,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
+ * Test simple functioning of CansolPaneProvider
  *
- * @author andrew
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CansolPaneProviderTest {
     

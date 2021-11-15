@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.modules;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPanel;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
@@ -11,6 +10,7 @@ import jmri.spi.JmriServiceProviderInterface;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Pane for configuring events in a CBUS module
@@ -64,7 +64,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @param node the node to be edited
      * @return the edit frame
      */
-    abstract public JPanel getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
+    abstract public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel editFrame, CbusNode node);
 
     /**
      * Return string representation of the node
@@ -75,7 +75,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
     final public String toString() {
         return getModuleType();
     }
-        
+    
     /**
      * Get a module provider from a module name
      * 
@@ -97,9 +97,15 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
         if (p != null) {
             return p;
-        } else {
-            return new UnknownPaneProvider();
+        } else if (node.getResyncName() != null) {
+            // Get the saved name during a resync
+            p = instanceMap.get(node.getResyncName());
+            if (p != null) {
+                return p;
+            }
         }
+        log.info("node gets unknown provider: {}", node);
+        return new UnknownPaneProvider();
     }
 
     /**
@@ -144,5 +150,5 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
 
     static volatile Map<String, CbusConfigPaneProvider> instanceMap = null;
 
-//    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
 }

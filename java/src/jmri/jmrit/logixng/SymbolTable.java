@@ -79,7 +79,7 @@ public interface SymbolTable {
      * Print the symbol table on a stream
      * @param stream the stream
      */
-    public void printSymbolTable(java.io.PrintStream stream);
+    public void printSymbolTable(java.io.PrintWriter stream);
     
     /**
      * Validates the name of a symbol
@@ -97,6 +97,13 @@ public interface SymbolTable {
         return true;
     }
     
+    /**
+     * Get the stack.
+     * This method is only used internally by DefaultSymbolTable.
+     * 
+     * @return the stack
+     */
+    public Stack getStack();
     
     
     /**
@@ -104,24 +111,32 @@ public interface SymbolTable {
      */
     public enum InitialValueType {
         
-        None(Bundle.getMessage("InitialValueType_None")),
-        Integer(Bundle.getMessage("InitialValueType_Integer")),
-        FloatingNumber(Bundle.getMessage("InitialValueType_FloatingNumber")),
-        String(Bundle.getMessage("InitialValueType_String")),
-        LocalVariable(Bundle.getMessage("InitialValueType_LocalVariable")),
-        Memory(Bundle.getMessage("InitialValueType_Memory")),
-        Reference(Bundle.getMessage("InitialValueType_Reference")),
-        Formula(Bundle.getMessage("InitialValueType_Formula"));
+        None(Bundle.getMessage("InitialValueType_None"), true),
+        Integer(Bundle.getMessage("InitialValueType_Integer"), true),
+        FloatingNumber(Bundle.getMessage("InitialValueType_FloatingNumber"), true),
+        String(Bundle.getMessage("InitialValueType_String"), true),
+        Array(Bundle.getMessage("InitialValueType_Array"), false),
+        Map(Bundle.getMessage("InitialValueType_Map"), false),
+        LocalVariable(Bundle.getMessage("InitialValueType_LocalVariable"), true),
+        Memory(Bundle.getMessage("InitialValueType_Memory"), true),
+        Reference(Bundle.getMessage("InitialValueType_Reference"), true),
+        Formula(Bundle.getMessage("InitialValueType_Formula"), true);
         
         private final String _descr;
+        private final boolean _isValidAsParameter;
         
-        private InitialValueType(String descr) {
+        private InitialValueType(String descr, boolean isValidAsParameter) {
             _descr = descr;
+            _isValidAsParameter = isValidAsParameter;
         }
         
         @Override
         public String toString() {
             return _descr;
+        }
+        
+        public boolean isValidAsParameter() {
+            return _isValidAsParameter;
         }
     }
     
@@ -189,5 +204,12 @@ public interface SymbolTable {
         
     }
     
+    
+    public static class SymbolNotFound extends IllegalArgumentException {
+        
+        public SymbolNotFound(String message) {
+            super(message);
+        }
+    }
     
 }

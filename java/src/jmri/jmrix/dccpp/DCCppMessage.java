@@ -263,6 +263,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.DIAG_CMD:
                 myRegex = DCCppConstants.DIAG_CMD_REGEX;                
                 break;
+            case DCCppConstants.CONTROL_CMD:
+                myRegex = DCCppConstants.CONTROL_CMD_REGEX;                
+                break;
             default:
                 myRegex = "";
         }
@@ -494,6 +497,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;               
             case DCCppConstants.DIAG_CMD:
                 text = "Diag Cmd: '" + toString() + "'";
+                break;               
+            case DCCppConstants.CONTROL_CMD:
+                text = "Control Cmd: '" + toString() + "'";
                 break;               
             case DCCppConstants.ESTOP_ALL_CMD:
                 text = "eStop All Locos Cmd: '" + toString() + "'";
@@ -1511,7 +1517,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_TRACK_CURRENT:
             case DCCppConstants.READ_CS_STATUS:
             case DCCppConstants.READ_MAXNUMSLOTS:
-//            case DCCppConstants.GET_FREE_MEMORY:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 retv = true;

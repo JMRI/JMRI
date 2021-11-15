@@ -311,7 +311,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
             checkSensorState = SensorState.valueOf(getNewState());
         }
 
-        SensorState currentSensorState = SensorState.get(sensor.getCommandedState());
+        SensorState currentSensorState = SensorState.get(sensor.getKnownState());
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentSensorState == checkSensorState;
         } else {

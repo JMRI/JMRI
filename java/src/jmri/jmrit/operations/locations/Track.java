@@ -1956,8 +1956,13 @@ public class Track extends PropertyChangeSupport {
         // okay
         if (!car.getScheduleItemId().equals(NONE)) {
             ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
-            if (si != null && checkScheduleItem(si, car).equals(OKAY)) {
-                return OKAY;
+            if (si != null) {
+                String status = checkScheduleItem(si, car);
+                if (status.equals(OKAY)) {
+                    return OKAY;
+                }
+                log.debug("Car ({}) with schedule id ({}) failed check, status: {}", car.toString(),
+                        car.getScheduleItemId(), status);
             }
         }
         // search schedule for a match
@@ -1989,19 +1994,22 @@ public class Track extends PropertyChangeSupport {
     }
 
     private String checkScheduleItem(ScheduleItem si, Car car) {
-        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+        // if car is already assigned to this schedule item allow it to be dropped off
+        // on the wrong day (car arrived late)
+        if (!car.getScheduleItemId().equals(si.getId()) &&
+                !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
                 !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
                         .equals(si.getSetoutTrainScheduleId())) {
-            TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+            TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
                     .getScheduleById(si.getSetoutTrainScheduleId());
-            if (sch != null) {
+            if (trainSch != null) {
                 return SCHEDULE +
                         " (" +
                         getScheduleName() +
                         ") " +
                         Bundle.getMessage("requestCarOnly") +
                         " (" +
-                        sch.getName() +
+                        trainSch.getName() +
                         ")";
             }
         }

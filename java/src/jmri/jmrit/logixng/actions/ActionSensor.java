@@ -307,7 +307,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == SensorState.Toggle) {
-                if (sensor.getCommandedState() == Sensor.INACTIVE) {
+                if (sensor.getKnownState() == Sensor.INACTIVE) {
                     sensor.setCommandedState(Sensor.ACTIVE);
                 } else {
                     sensor.setCommandedState(Sensor.INACTIVE);

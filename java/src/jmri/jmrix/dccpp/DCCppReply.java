@@ -1,6 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -215,7 +215,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 if(isNamedPowerReply()) {
                     text = "Power Status: ";
                     text += "Name:" + getPowerDistrictName();
-                    text += "Status:" + getPowerDistrictStatus();
+                    text += " Status:" + getPowerDistrictStatus();
                 } else {
                     text = "Power Status: ";
                     text += (getPowerBool() ? "ON" : "OFF");
@@ -266,11 +266,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Generate comment text for certain replies, used when objects are created from the message
+     * Generate properties list for certain replies
      *
-     * @return comment text
+     * @return list of all properties as a string
      **/
-    public String toComment(){
+    public String getPropertiesAsString(){
         StringBuilder text = new StringBuilder();
         StringBuilder comma = new StringBuilder();
         switch (getOpCodeChar()) {
@@ -296,8 +296,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      *
      * @return properties hashmap
      **/
-    public HashMap<String, Object> getProperties(){
-        HashMap<String, Object> properties = new HashMap<String, Object>();
+    public LinkedHashMap<String, Object> getProperties(){
+        LinkedHashMap<String, Object> properties = new LinkedHashMap<String, Object>();
         switch (getOpCodeChar()) {
             case DCCppConstants.TURNOUT_REPLY:
                 if (isTurnoutDefDCCReply()) {

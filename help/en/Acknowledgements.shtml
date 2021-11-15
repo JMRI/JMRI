@@ -723,7 +723,7 @@
         </li>
 
         <li>Pål <-paoSoft -->
-        who worked on the LocoNet refresh algorithm<li>
+        who worked on the LocoNet refresh algorithm</li>
 
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of
@@ -950,6 +950,8 @@
         who provided a fix for a problem with looping sounds and added support
         for the DCC++ hardware. <a id="V"></a>
         </li>
+
+        <li>Keith Usher, who provided a medium icon set</li>
 
         <li>Darryl Van Nort, who provided a definition for an MRC decoder</li>
 

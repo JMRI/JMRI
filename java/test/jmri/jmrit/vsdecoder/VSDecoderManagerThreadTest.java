@@ -26,6 +26,7 @@ public class VSDecoderManagerThreadTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.tearDown();
     }
 

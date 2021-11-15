@@ -756,7 +756,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        // dialog, make all Boxcar Caboose?
+        // dialog, make all Boxcar hazardous?
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));

@@ -9,6 +9,8 @@ import javax.swing.event.TableModelListener;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
+import jmri.jmrix.can.cbus.swing.modules.UnknownPaneProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +25,16 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     private JPanel infoPane;
     private CbusNodeNVTableDataModel nodeNVModel;
     private JButton saveNvButton;
+    private JButton liveUpdateNvButton;
     private JButton resetNvButton;
     private JPanel buttonPane;
     private CbusNodeNVEditTablePane genericNVTable;
     private CbusNodeNVEditGuiPane editNVGui;
+    private CbusConfigPaneProvider provider;
+    
+    private static final int GENERIC = 0;
+    private static final int EDIT = 1;
+    private static final int TEMPLATE = 2;
     
     /**
      * Create a new instance of CbusNodeEditNVarPane.
@@ -55,7 +63,10 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         infoPane.setLayout(new BorderLayout() );
         
         saveNvButton = new JButton(("Save"));
-        saveNvButton.setToolTipText(("Update Node"));
+        saveNvButton.setToolTipText(Bundle.getMessage("SaveNvButtonTt"));
+        
+        liveUpdateNvButton = new JButton(Bundle.getMessage("LiveUpdateNode"));
+        liveUpdateNvButton.setToolTipText(("LiveUpdateNodeTt"));
         
         resetNvButton = new JButton(Bundle.getMessage("Reset"));
         resetNvButton.setToolTipText(("Reset table New NV values"));
@@ -70,7 +81,13 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         };
         saveNvButton.addActionListener(save);
         
+        ActionListener liveUpdate = ae -> {
+            liveUpdateOption();
+        };
+        liveUpdateNvButton.addActionListener(liveUpdate);
+        
         buttonPane = new JPanel();
+        buttonPane.add(liveUpdateNvButton );
         buttonPane.add(saveNvButton );
         buttonPane.add(resetNvButton ); 
         
@@ -96,9 +113,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         tabbedPane.addTab(("Edit"), editNVGui);
         tabbedPane.addTab(("Template"), template);
         
-        tabbedPane.setEnabledAt(1,false);
-        tabbedPane.setEnabledAt(2,false);
-        tabbedPane.setSelectedIndex(0);
+        tabbedPane.setEnabledAt(EDIT,false);
+        tabbedPane.setEnabledAt(TEMPLATE,false);
+        tabbedPane.setSelectedIndex(GENERIC);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(tabbedPane, BorderLayout.CENTER);
@@ -108,16 +125,39 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     }
     
     /**
+     * Put the node into learn mode so that NV writes are performed immediately.
+     * e.g., for live update of servo position NVs.
+     */
+    protected void liveUpdateOption() {
+        nodeOfInterest.send.nodeEnterLearnEvMode(nodeOfInterest.getNodeNumber());
+        saveNvButton.setEnabled(true);
+        nodeOfInterest.setliveUpdate(true);
+    }
+    
+    /**
      * {@inheritDoc}
+     * 
+     * If node was in learn mode then there's nothing to save but we take it out
+     * of learn mode which will trigger the module to flush NVs to non-volatile 
+     * storage if necessary.
      */
     @Override
     protected void saveOption(){
-        getMainPane().showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
-    true,false,false, null ); // from, to, nvs, clear events, events, null uses mainpane frame
+        if (nodeOfInterest.getnvWriteInLearnOnly()) {
+            nodeOfInterest.send.nodeExitLearnEvMode(nodeOfInterest.getNodeNumber());
+            saveNvButton.setEnabled(false);
+            nodeOfInterest.setliveUpdate(false);
+        } else {
+            getMainPane().showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
+                    true,false,false, null ); // from, to, nvs, clear events, events, null uses mainpane frame
+        }
     }
     
     /**
      * Set the Node and update panes
+     * 
+     * Show the edit GUI if available.
+     * 
      * @param node the CbusNode of Interest, can be null
      */
     @Override
@@ -126,22 +166,30 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         
         nodeNVModel.setNode(nodeOfInterest);
         setSaveCancelButtonsActive ( false );
-        genericNVTable.setNode( nodeOfInterest );
-        
-        if (editNVGui != null) {
-            editNVGui.setNode(nodeOfInterest);
-            
-            tabbedPane.setEnabledAt(1,true);
-            tabbedPane.setSelectedIndex(1);
+        if (nodeOfInterest.getnvWriteInLearnOnly()) {
+            liveUpdateNvButton.setVisible(true);
+            liveUpdateNvButton.setEnabled(true);
+            saveNvButton.setEnabled(true);
         } else {
-            tabbedPane.setEnabledAt(1,false);
-            tabbedPane.setSelectedIndex(0);
+            liveUpdateNvButton.setVisible(false);
+            liveUpdateNvButton.setEnabled(false);
+        }
+        genericNVTable.setNode( nodeOfInterest );
+
+        provider = CbusConfigPaneProvider.getProviderByNode(nodeOfInterest);
+        editNVGui.setNode(nodeOfInterest, provider);
+
+        if (!(provider instanceof UnknownPaneProvider)) {
+            tabbedPane.setEnabledAt(EDIT, true);
+            tabbedPane.setSelectedIndex(EDIT);
+        } else {
+            tabbedPane.setEnabledAt(EDIT, false);
+            tabbedPane.setSelectedIndex(GENERIC);
         }
         
         validate();
         repaint();
         setVisible(true);
-        
     }
     
     /**
@@ -160,17 +208,22 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     @Override
     protected void cancelOption(){
         nodeNVModel.resetNewNvs();
-        if (editNVGui != null) {
-            editNVGui.setNode(nodeOfInterest);
-        }
+        editNVGui.setNode(nodeOfInterest);
     }
     
     /**
      * Set the Save / Reset NV button status
+     * 
+     * Save button is always enabled when in live update
+     * 
      * @param newstate true if buttons should be enabled, else false
      */
     public void setSaveCancelButtonsActive ( boolean newstate ) {
-        saveNvButton.setEnabled(newstate);
+        if (liveUpdateNvButton.isVisible()) {
+            saveNvButton.setEnabled(true);
+        } else {
+            saveNvButton.setEnabled(newstate);
+        }
         resetNvButton.setEnabled(newstate);
     }
 
@@ -182,9 +235,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     @Override
     public void tableChanged(TableModelEvent e) {
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
-        if (editNVGui != null) {
-            editNVGui.tableChanged(e);
-        }
+        editNVGui.tableChanged(e);
     }
     
     /**
@@ -199,7 +250,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     }
     
     /**
-     * Removes the  NV Model listener from the Node
+     * Removes the NV Model listener from the Node.
+     * 
+     * Also dispose of the edit gui cleanly to take node out of learn mode
      */
     @Override
     public void dispose(){
@@ -208,6 +261,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
             nodeNVModel.dispose();
         }
         
+        editNVGui.dispose();
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarPane.class);

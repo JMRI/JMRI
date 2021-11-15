@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.25.4-SNAPSHOT</version>
+    <version>4.25.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -510,7 +510,7 @@
                         <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
                         <!-- exclude the line endings tests from automatic execution -->
-                        <exclude>jmri.util.FileLineEndings</exclude>
+                        <exclude>jmri.util.FileLineEndingsCheck</exclude>
                         <!-- ignore since base classes for other tests -->
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
@@ -1436,13 +1436,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>
@@ -1522,9 +1522,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.purejavacomm</groupId>
+            <groupId>org.opensmarthouse</groupId>
             <artifactId>purejavacomm</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

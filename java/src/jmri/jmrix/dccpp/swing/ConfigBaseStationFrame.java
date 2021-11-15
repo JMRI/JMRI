@@ -38,9 +38,8 @@ import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.DCCppSensorManager;
+import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +78,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    private final DCCppTrafficController tc;
+    private final DCCppTrafficController _tc;
 
     private JTabbedPane tabbedPane;
     private JLabel versionLabel = new JLabel("");
@@ -105,6 +104,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
     private CurrentTab cTab;
 
+    private DCCppSystemConnectionMemo _memo;
+
     private static final int SENSOR_TAB_NUM     = 0;
     private static final int DCCTURNOUT_TAB_NUM = 1;
     private static final int SERVOTURNOUT_TAB_NUM=2;
@@ -116,11 +117,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
             + "In any case, there's no risk of exposure here.")
-    public ConfigBaseStationFrame(DCCppSensorManager sm,
-            DCCppTurnoutManager tm,
-            DCCppTrafficController t) {
+    public ConfigBaseStationFrame(DCCppSystemConnectionMemo memo) {
         super(false, false);
-        tc = t;
+        _memo = memo;
+        _tc = memo.getDCCppTrafficController();
         initGui();
     }
 
@@ -128,7 +128,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         // NOTE: Look at jmri.jmrit.vsdecoder.swing.ManageLocationsFrame
         // for how to add a tab for turnouts and other things.
-        this.setTitle(Bundle.getMessage("FieldManageBaseStationFrameTitle"));
+        this.setTitle(Bundle.getMessage("FieldManageBaseStationFrameTitle") + " (" + _memo.getSystemPrefix() + ")");
         this.buildMenu();
 
         //create Add, Save and Close buttons
@@ -370,18 +370,15 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         this.getJMenuBar().add(fileMenu);
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        this.getJMenuBar().add(editMenu);
 
         JMenu mSend = new JMenu(Bundle.getMessage("MenuSend"));
-
         JMenuItem iRequestDefs = new JMenuItem(Bundle.getMessage("RequestDefs"));       
         iRequestDefs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
             }
         });
         mSend.add(iRequestDefs);
@@ -390,7 +387,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         iRequestStates.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.READ_CS_STATUS)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.READ_CS_STATUS)), null); 
             }
         });
         mSend.add(iRequestStates);
@@ -399,7 +396,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         iSaveToEeprom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), null); 
             }
         });
         mSend.add(iSaveToEeprom);
@@ -408,11 +405,16 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         iEraseEeprom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.CLEAR_EEPROM_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.CLEAR_EEPROM_CMD)), null); 
             }
         });
         mSend.add(iEraseEeprom);
+
         this.getJMenuBar().add(mSend);
+
+        JMenu dccppMenu = new DCCppMenu(_memo);
+        dccppMenu.setText(Bundle.getMessage("MenuDCC++")); // always use generic text
+        this.getJMenuBar().add(dccppMenu);
     }
 
     // handle incoming object creation messages by adding them to the appropriate table
@@ -460,7 +462,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             outputModel.insertData(v, false);
             outputSorter.sort();
         } else if (r.isStatusReply()) { 
-            DCCppCommandStation cs = tc.getCommandStation(); 
+            DCCppCommandStation cs = _tc.getCommandStation(); 
             //enable or disable some tabs based on support by command station
             if (cs.isServoTurnoutCreationSupported()) {
                 tabbedPane.setEnabledAt(SERVOTURNOUT_TAB_NUM, true);
@@ -515,30 +517,30 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                if (null != cTab) {
                     switch (cTab) {
                         case SENSOR:
-                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
                             sensorModel.removeRow(sel);
                             log.debug("Delete sensor {}", idx);
                             break;
                         case DCCTURNOUT:
                             DCCppMessage m = new DCCppMessage("T " + Integer.toString(idx));
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             dccTurnoutModel.removeRow(sel);
                             break;
                         case SERVOTURNOUT:
                             m = new DCCppMessage("T " + Integer.toString(idx));
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             servoTurnoutModel.removeRow(sel);
                             break;
                         case VPINTURNOUT:
                             m = new DCCppMessage("T " + Integer.toString(idx));
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             vpinTurnoutModel.removeRow(sel);
                             break;
                         case OUTPUT:
-                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
                             outputModel.removeRow(sel);
                             break;
                         default:
@@ -653,25 +655,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdelete = (boolean) r.get(6);
                         int row = sensorModel.getRowData().indexOf(r);
                         if (isnew) {
-                            tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
                             sensorModel.setNewRow(row, false);
                         } else if (isdelete) {
-                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
                             sensorModel.getRowData().remove(r);
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
-                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
                             // WARNING: Conversions here are brittle. Be careful.
-                            tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
                             sensorModel.setNewRow(row, false);
                             sensorModel.setDirtyRow(row, false);
                         }
                     }
-                    tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), this); //request updated definitions list 
                     break;
                 case DCCTURNOUT:
                     for (int i = 0; i < dccTurnoutModel.getRowData().size(); i++) {
@@ -683,25 +685,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         int row = dccTurnoutModel.getRowData().indexOf(r);
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
                                     (int) r.get(1), (int) r.get(2)), this);
                             dccTurnoutModel.setNewRow(row, false);
                         } else if (isdelete) {
                             DCCppMessage m = new DCCppMessage("T " + Integer.toString((int) r.get(0)));
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             dccTurnoutModel.getRowData().remove(r);
                         } else if (isdirty) {
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
                             // Send a Delete, then an Add (for now).
                             // WARNING: Conversions here are brittle. Be careful.
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
                                     (int) r.get(1), (int) r.get(2)), this);
                             dccTurnoutModel.setNewRow(row, false);
                             dccTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case SERVOTURNOUT:
                     for (int i = 0; i < servoTurnoutModel.getRowData().size(); i++) {
@@ -716,24 +718,24 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             DCCppMessage m = new DCCppMessage("T "+(int)r.get(0)+" SERVO "+(int)r.get(1)+" "+
                                     +(int)r.get(2)+" "+(int)r.get(3)+" "+(int)r.get(4));
                             log.debug("Sending: {}", m);
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             servoTurnoutModel.setNewRow(row, false);
                         } else if (isdelete) {
                             DCCppMessage m = new DCCppMessage("T " + Integer.toString((int) r.get(0)));
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             servoTurnoutModel.getRowData().remove(r);
                         } else if (isdirty) {
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
                             // Send a Delete, then an Add (for now).
                             // WARNING: Conversions here are brittle. Be careful.
-                            tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
                                     (int) r.get(1), (int) r.get(2)), this);
                             servoTurnoutModel.setNewRow(row, false);
                             servoTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case VPINTURNOUT:
                     for (int i = 0; i < vpinTurnoutModel.getRowData().size(); i++) {
@@ -747,23 +749,23 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             // WARNING: Conversions here are brittle. Be careful.
                             DCCppMessage m = new DCCppMessage("T "+(int)r.get(0)+" VPIN "+(int)r.get(1));
                             log.debug("Sending: {}", m);
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             vpinTurnoutModel.setNewRow(row, false);
                         } else if (isdelete) {
                             DCCppMessage m = new DCCppMessage("T " + (int)r.get(0));
                             log.debug("Sending: {}", m);
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             vpinTurnoutModel.getRowData().remove(r);
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
                             DCCppMessage m = new DCCppMessage("T " + (int)r.get(0));
                             log.debug("Sending: {}", m);
-                            tc.sendDCCppMessage(m, this);
+                            _tc.sendDCCppMessage(m, this);
                             vpinTurnoutModel.setNewRow(row, false);
                             vpinTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
                     break;
                 case OUTPUT:
                     for (int i = 0; i < outputModel.getRowData().size(); i++) {
@@ -778,25 +780,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             int f = ((boolean) r.get(2) ? 1 : 0); // Invert
                             f += ((boolean) r.get(3) ? 2 : 0); // Restore
                             f += ((boolean) r.get(4) ? 4 : 0); // Force
-                            tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
                                     (int) r.get(1), f), this);
                             outputModel.setNewRow(row, false);
                         } else if (isdelete) {
-                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
                             outputModel.getRowData().remove(r);
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
-                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
+                            _tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
                             int f = ((boolean) r.get(2) ? 1 : 0); // Invert
                             f += ((boolean) r.get(3) ? 2 : 0); // Restore
                             f += ((boolean) r.get(4) ? 4 : 0); // Force
-                            tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
+                            _tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
                                     (int) r.get(1), f), this);
                             outputModel.setNewRow(row, false);
                             outputModel.setDirtyRow(row, false);
                         }
                     }
-                    tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this); //request updated definitions list 
                     break;
                 default:
                     break;
@@ -809,7 +811,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.YES_OPTION) {
-            tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
+            _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
             log.debug("Sending: <E> (Write To EEPROM)");
         }
     }
@@ -854,7 +856,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
-                tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
                 log.debug("Sending: <E> (Write To EEPROM)");
             }
 

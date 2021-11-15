@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules.merg;
 
-
-import jmri.jmrix.can.cbus.swing.modules.sprogdcc.*;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Locale;

@@ -3,6 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
+import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -13,7 +14,6 @@ import jmri.Manager;
 import jmri.util.JmriJFrame;
 
 
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -105,7 +105,12 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     @Override
     public void deleteBean(LogixNG logixNG) {
         logixNG.setEnabled(false);
-        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(logixNG);
+        try {
+            InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+        }
     }
 
     @Override
@@ -211,5 +216,17 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         });
         return panel5;
     }
+
+    @Override
+    protected void getListenerRefsIncludingChildren(LogixNG logixNG, java.util.List<String> list) {
+        logixNG.getListenerRefsIncludingChildren(list);
+    }
+
+    @Override
+    protected boolean hasChildren(LogixNG logixNG) {
+        return logixNG.getNumConditionalNGs() > 0;
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
 
 }

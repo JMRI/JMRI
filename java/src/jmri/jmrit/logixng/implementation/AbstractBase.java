@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -88,8 +86,7 @@ public abstract class AbstractBase
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 if ((connectedSocket.getParent() != null)
                         && (connectedSocket.getParent() != femaleSocket)) {
-                    errors.add(String.format(
-                            "The child %s already has the parent %s so it cannot be added to %s",
+                    errors.add(Bundle.getMessage("DuplicateParentMessage",
                             connectedSocket.getSystemName(),
                             connectedSocket.getParent().getSystemName(),
                             getSystemName()));
@@ -156,7 +153,7 @@ public abstract class AbstractBase
             PrintWriter writer,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         if (settings._printLineNumbers) {
             writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
         }
@@ -172,7 +169,7 @@ public abstract class AbstractBase
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
@@ -184,7 +181,7 @@ public abstract class AbstractBase
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
@@ -197,7 +194,7 @@ public abstract class AbstractBase
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         for (int i=0; i < getChildCount(); i++) {
@@ -254,6 +251,15 @@ public abstract class AbstractBase
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
             log.error(method + " must not be called when listeners are registered", e);
             throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).getListenerRefsIncludingChildren(list);
         }
     }
 

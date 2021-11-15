@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen
  * @author Mark Underwood (C) 2015
+ * @author mstevetodd (C) 2021
  */
 public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -405,48 +406,48 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
 
     @Test
-    public void testTurnoutDefComments() {
+    public void testTurnoutDefProperties() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 23 DCC 5 0 1");
-        Assert.assertEquals("Type:DCC,Address:5,Index:0,ID:23,DCC Address:17", l.toComment());
+        Assert.assertEquals("Type:DCC,ID:23,Address:5,Index:0,DCC Address:17", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 24 SERVO 100 410 205 2 1");
-        Assert.assertEquals("Type:SERVO,ThrownPos:410,Pin:100,ID:24,ClosedPos:205,Profile:2", l.toComment());
+        Assert.assertEquals("Type:SERVO,ID:24,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 1124 SERVO 100 410 205 2 0");
-        Assert.assertEquals("Type:SERVO,ThrownPos:410,Pin:100,ID:1124,ClosedPos:205,Profile:2", l.toComment());
+        Assert.assertEquals("Type:SERVO,ID:1124,Pin:100,ThrownPos:410,ClosedPos:205,Profile:2", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 50 1");
-        Assert.assertEquals("Type:VPIN,Pin:50,ID:12345", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:50", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0");
-        Assert.assertEquals("Type:VPIN,Pin:150,ID:12345", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 30000 LCN 0");
-        Assert.assertEquals("Type:LCN,ID:30000", l.toComment());
+        Assert.assertEquals("Type:LCN,ID:30000", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 30001 LCN 1");
-        Assert.assertEquals("Type:LCN,ID:30001", l.toComment());
+        Assert.assertEquals("Type:LCN,ID:30001", l.getPropertiesAsString());
         l = DCCppReply.parseDCCppReply("H 12345 VPIN 150 0 ignore unexpected values at the end");
-        Assert.assertEquals("Type:VPIN,Pin:150,ID:12345", l.toComment());
+        Assert.assertEquals("Type:VPIN,ID:12345,Pin:150", l.getPropertiesAsString());
     }
 
     @Test
     public void testOutputProperties() {
         DCCppReply r = DCCppReply.parseDCCppReply("Y 181 181 1 0");
-        HashMap<String, Object> p = r.getProperties();
+        LinkedHashMap<String, Object> p = r.getProperties();
         Assert.assertEquals(4, p.size());
         Assert.assertEquals("OUTPUT", p.get("Type"));
         Assert.assertEquals(181,   p.get("ID"));
         Assert.assertEquals(181,   p.get("Pin"));
         Assert.assertEquals(1,     p.get("IFlag"));
-        Assert.assertEquals("Type:OUTPUT,IFlag:1,Pin:181,ID:181", r.toComment());
+        Assert.assertEquals("Type:OUTPUT,ID:181,Pin:181,IFlag:1", r.getPropertiesAsString());
     }
 
 
     @Test
     public void testSensorProperties() {
         DCCppReply r = DCCppReply.parseDCCppReply("Q 111 222 0");
-        HashMap<String, Object> p = r.getProperties();
+        LinkedHashMap<String, Object> p = r.getProperties();
         Assert.assertEquals(4, p.size());
         Assert.assertEquals("SENSOR", p.get("Type"));
         Assert.assertEquals(111,   p.get("ID"));
         Assert.assertEquals(222,   p.get("Pin"));
         Assert.assertFalse((boolean) p.get("Pullup"));
-        Assert.assertEquals("Type:SENSOR,Pin:222,Pullup:false,ID:111", r.toComment());
+        Assert.assertEquals("Type:SENSOR,ID:111,Pin:222,Pullup:false", r.getPropertiesAsString());
         r = DCCppReply.parseDCCppReply("Q 111 222 1");
         p = r.getProperties();
         Assert.assertTrue((boolean) p.get("Pullup"));
@@ -455,7 +456,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testTurnoutProperties() {
         DCCppReply r = DCCppReply.parseDCCppReply("H 23 DCC 5 0 1");
-        HashMap<String, Object> p = r.getProperties();
+        LinkedHashMap<String, Object> p = r.getProperties();
         Assert.assertEquals(5, p.size());
         Assert.assertEquals(23,    p.get("ID"));
         Assert.assertEquals("DCC", p.get("Type"));

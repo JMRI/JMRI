@@ -1509,6 +1509,19 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.logixng.actions.DigitalFormula actionFormula =
+                new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFormula);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFormula = new jmri.jmrit.logixng.actions.DigitalFormula(digitalActionManager.getAutoSystemName(), null);
+        actionFormula.setComment("A comment");
+        actionFormula.setFormula("n + 1");
+        maleSocket = digitalActionManager.registerAction(actionFormula);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         DoAnalogAction doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
         maleSocket.setEnabled(false);
@@ -1925,7 +1938,7 @@ public class StoreAndLoadTest {
 
 
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
-        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
+        tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1934,7 +1947,7 @@ public class StoreAndLoadTest {
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableRowOrColumn.Row);
+        tableForEach.setRowOrColumn(TableRowOrColumn.Row);
         tableForEach.setRowOrColumnName("North yard");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -1945,9 +1958,15 @@ public class StoreAndLoadTest {
         tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setComment("A comment");
         tableForEach.setLocalVariableName("MyLocalVariable");
+        tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         tableForEach.setTable(csvTable);
-        tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
+        tableForEach.setTableReference("{MyTableRef}");
+        tableForEach.setTableLocalVariable("MyTableVar");
+        tableForEach.setTableFormula("MyTableFormula");
         tableForEach.setRowOrColumnName("Second turnout");
+        tableForEach.setRowOrColumnReference("{MyRowOrColumnRef}");
+        tableForEach.setRowOrColumnLocalVariable("MyRowOrColumnVar");
+        tableForEach.setRowOrColumnFormula("MyRowOrColumnFormula");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         maleSocket.getChild(0).connect(
@@ -2991,16 +3010,16 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
-        jmri.jmrit.logixng.expressions.DigitalFormula formula =
+        jmri.jmrit.logixng.expressions.DigitalFormula expressionFormula =
                 new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
-        formula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        formula.setComment("A comment");
-        formula.setFormula("n + 1");
-        maleSocket = digitalExpressionManager.registerExpression(formula);
+        expressionFormula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
+        expressionFormula.setComment("A comment");
+        expressionFormula.setFormula("n + 1");
+        maleSocket = digitalExpressionManager.registerExpression(expressionFormula);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -3528,8 +3547,7 @@ public class StoreAndLoadTest {
             results = cm.load(secondFile);
             log.debug(results ? "load was successful" : "store failed");
             if (results) {
-                if (! logixNG_Manager.resolveAllTrees(new ArrayList<>())) throw new RuntimeException();
-                if (! logixNG_Manager.setupAllLogixNGs(new ArrayList<>())) throw new RuntimeException();
+                logixNG_Manager.setupAllLogixNGs();
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
@@ -3638,6 +3656,8 @@ public class StoreAndLoadTest {
         "32",           // Integer
         "41.429",       // FloatingNumber
         "My string",    // String
+        "",             // Array
+        "",             // Map
         "index",        // LocalVariable
         "IM2",          // Memory
         "{IM3}",        // Reference

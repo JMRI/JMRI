@@ -7,11 +7,8 @@ import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
 import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane providing a Cbus event editing gui
@@ -25,37 +22,48 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel pane1;
     private JPanel editGui;
     private CbusNode _node;
-    private AbstractEditNVPane editGuiInstance;
+    private CbusConfigPaneProvider _provider;
 
     protected CbusNodeNVEditGuiPane(CbusNodeNVTableDataModel nVModel) {
         super();
-        super.initComponents();
         nodeNVModel = nVModel;
-        this.setLayout(new BorderLayout());
+        _node = null;
+        _provider = null;
     }
     
     /**
-     * Helper function
+     * Set the current node, keeping existing gui provider
      * 
      * @param node node to display
      */
     protected void setNode(CbusNode node) {
         _node = node;
         
-        if (pane1!=null){
+        if (pane1 != null) {
             this.removeAll();
             this.initComponents();
         }
         
-        CbusConfigPaneProvider provider = CbusConfigPaneProvider.getProviderByNode(_node);
-        editGui = provider.getEditNVFrame(nodeNVModel, _node);
-        editGuiInstance = provider.getEditNVFrameInstance();
+        editGui = _provider.getEditNVFrame(nodeNVModel, _node);
         showGui(editGui);
-
+        
         this.setVisible(!(_node == null));
     }
     
+    /**
+     * Set the current node and associated gui provider
+     * 
+     * @param node node to display
+     * @param provider edit gui provider for the node
+     */
+    protected void setNode(CbusNode node, CbusConfigPaneProvider provider) {
+        _provider = provider;
+        setNode(node);
+    }
+    
     protected void showGui(JPanel editGui){
+        
+        this.setLayout(new BorderLayout());
         
         pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -68,9 +76,23 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     protected void tableChanged(TableModelEvent e) {
-        if (editGuiInstance != null) {
-            editGuiInstance.tableChanged(e);
+        if (_provider != null) {
+            _provider.getEditNVFrameInstance().tableChanged(e);
         }
+    }
+    
+    /**
+     * May need to take node out of learn mode
+     */
+    @Override
+    public void dispose() {
+        if (_node != null) {
+            if (_node.getnvWriteInLearnOnly()) {
+                // Take node out of learn mode
+                _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
+            }
+        }
+        super.dispose();
     }
     
 //    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);

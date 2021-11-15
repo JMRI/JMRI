@@ -95,8 +95,6 @@ public class Station {
             sentValues.add(section.codeSendStart());
         } );
 
-        // TODO: check for locks on each section
-
         codeline.requestSendCode(this);
         log.debug("Station - end codeSendRequest");
 

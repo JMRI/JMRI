@@ -232,8 +232,6 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         // setup buttons
         addButtonAction(resetButton);
         addButtonAction(saveButton);
-
-        initMinimumSize();
     }
 
     // Save buttons

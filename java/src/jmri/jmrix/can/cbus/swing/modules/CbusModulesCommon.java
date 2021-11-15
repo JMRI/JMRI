@@ -8,9 +8,6 @@ import javax.swing.border.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import static jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane._nvArray;
-import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusPaneProvider;
-
 /**
  * Returns configuration objects for a MERG CANACC8
  *
@@ -156,6 +153,120 @@ public class CbusModulesCommon {
     }
 
     /**
+     * Slider with titled border
+     */
+    public static class TitledSlider extends JPanel implements ChangeListener {
+        
+        protected JSlider tSlide;
+        protected int _index;
+        protected String _title;
+        protected UpdateNV _update;
+        
+        /**
+         * Construct a new titledSpinner
+         * 
+         * @param title to be displayed
+         * @param index of the associated NV 
+         * @param update callback funtion to apply new value
+         */
+        public TitledSlider(String title, int index, UpdateNV update) {
+            super();
+            _title = title;
+            _index = index;
+            _update = update;
+            tSlide = new JSlider();
+        }
+
+        /**
+         * Initialise the spinner
+         * 
+         * @param init  Initial value
+         * @param min   Minimum value
+         * @param max   Maximum value
+         */
+        public void init(int min, int max, int init) {
+            GridLayout grid = new GridLayout(1, 1);
+            setLayout(grid);
+
+            Border border = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+            TitledBorder titled = BorderFactory.createTitledBorder(border, _title);
+            setBorder(titled);
+
+            tSlide.setMinimum(min);
+            tSlide.setMaximum(max);
+            tSlide.setValue(init);
+            tSlide.addChangeListener(this);
+
+            add(tSlide);
+        }
+        
+        /**
+         * Set slider value
+         * 
+         * @param v  value
+         */
+        public void setValue(int v) {
+            tSlide.setValue(v);
+        }
+        
+        /**
+         * Get slider value
+         * 
+         * @return slider value
+         */
+        public int getValue() {
+            return tSlide.getValue();
+        }
+        
+        /**
+         * Set the tool tip
+         * 
+         * @param tt tooltip text
+         */
+        public void setToolTip(String tt) {
+            tSlide.setToolTipText(tt);
+        }
+        
+        /**
+         * Call back with updated value
+         * 
+         * @param e the spinner change event
+         */
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSlider source = (JSlider)e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                _update.setNewVal(_index);
+            }
+        }
+
+        /**
+         ** The preferred width on the panel must consider the width of the text
+         ** used on the TitledBorder
+         * 
+         * from <a href=https://stackoverflow.com/questions/43425939/how-to-get-the-titledborders-title-to-display-properly-in-the-gui></a>
+         */
+        @Override
+        public Dimension getPreferredSize() {
+            
+            Dimension preferredSize = super.getPreferredSize();
+
+            Border border = getBorder();
+            int borderWidth = 0;
+
+            if (border instanceof TitledBorder) {
+                Insets insets = getInsets();
+                TitledBorder titledBorder = (TitledBorder)border;
+                borderWidth = titledBorder.getMinimumSize(this).width + insets.left + insets.right;
+            }
+
+            int preferredWidth = Math.max(preferredSize.width, borderWidth);
+
+            return new Dimension(preferredWidth, preferredSize.height);
+        }
+    }
+
+    /**
      * Class to display CBUS command station flag settings
      * 
      * Each flags object is a set of 8 bits that form an NV
@@ -183,7 +294,6 @@ public class CbusModulesCommon {
             _title = title;
             _flagUpdateFn = update;
             
-            flags = _nvArray[Sprog3PlusPaneProvider.USER_FLAGS + _index];
             buttons = new JRadioButton[8];
             for (int i = 0; i < 8; i++) {
                 buttons[i] = new JRadioButton(flagStrings[i]);

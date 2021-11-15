@@ -30,6 +30,7 @@ import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -507,10 +508,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public void updateIcon(NamedIcon s) {
-        _namedIcon = s;
-        super.setIcon(_namedIcon);
-        updateSize();
-        repaint();
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            _namedIcon = s;
+            super.setIcon(_namedIcon);
+            updateSize();
+            repaint();
+        });
     }
 
     /*

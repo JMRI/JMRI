@@ -15,17 +15,26 @@ import static org.junit.Assert.assertEquals;
  * @author Steve Young (C) 2021
  */
 public class IdTagTableDataModelTest extends AbstractBeanTableDataModelBase<IdTag>{
-    
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Override
     public int getModelColumnCount(){
         return 8;
     }
-    
+
+    /**
+     * Test in superclass doesn't make sense for this class under test,
+     * as it's sensitive to run order. Suppress it.
+     */
+    @Override
+    @Test
+    public void testGetRowCount(){
+    }
+
     @Test
     @Override
     public void testGetBaseColumnNames() {
@@ -34,7 +43,7 @@ public class IdTagTableDataModelTest extends AbstractBeanTableDataModelBase<IdTa
         assertEquals("Column2 - Bean value",Bundle.getMessage("ColumnIdTagID"), t.getColumnName(2));
         assertEquals("Column3 - User Comment",Bundle.getMessage("ColumnComment"), t.getColumnName(3));
         assertEquals("Column4 - Delete button","", t.getColumnName(4));
-        
+
     }
 
     @BeforeEach
@@ -55,5 +64,5 @@ public class IdTagTableDataModelTest extends AbstractBeanTableDataModelBase<IdTa
         InstanceManager.getDefault(IdTagManager.class).dispose(); // kills shutdown task
         JUnitUtil.tearDown();
     }
-    
+
 }
