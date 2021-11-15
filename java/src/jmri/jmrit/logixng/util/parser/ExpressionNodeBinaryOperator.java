@@ -7,13 +7,13 @@ import jmri.util.TypeConversionUtil;
 /**
  * A parsed expression
  */
-public class ExpressionNodeBooleanOperator implements ExpressionNode {
+public class ExpressionNodeBinaryOperator implements ExpressionNode {
 
     private final TokenType _tokenType;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
     
-    public ExpressionNodeBooleanOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
+    public ExpressionNodeBinaryOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
         _tokenType = tokenType;
         _leftSide = leftSide;
         _rightSide = rightSide;
@@ -24,21 +24,22 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         
         // Verify that the token is of the correct type
         switch (_tokenType) {
-            case BOOLEAN_OR:
-            case BOOLEAN_AND:
+            case BINARY_OR:
+            case BINARY_XOR:
+            case BINARY_AND:
                 if (_leftSide == null) {
-                    throw new IllegalArgumentException("leftSide must not be null for operators AND and OR");
+                    throw new IllegalArgumentException("leftSide must not be null for operators BINARY AND, BINARY OR and BINARY XOR");
                 }
                 break;
                 
-            case BOOLEAN_NOT:
+            case BINARY_NOT:
                 if (_leftSide != null) {
-                    throw new IllegalArgumentException("leftSide must be null for operator NOT");
+                    throw new IllegalArgumentException("leftSide must be null for operator BINARY NOT");
                 }
                 break;
                 
             default:
-                throw new IllegalArgumentException("Unsupported boolean operator: "+_tokenType.name());
+                throw new IllegalArgumentException("Unsupported binary operator: "+_tokenType.name());
         }
     }
     
@@ -46,12 +47,10 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         
         Object leftValue = null;
-        if (_tokenType != TokenType.BOOLEAN_NOT) {
+        if (_tokenType != TokenType.BINARY_NOT) {
             // Left value must be calculated _before_ right value is calculated.
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
-            // For example, if myArray is an array, the formula might be:
-            //   myArray.add("Hello") || myArray.add(" ") || myArray.add("World!")
             leftValue = _leftSide.calculate(symbolTable);
         }
         if (leftValue == null) leftValue = false;
@@ -59,39 +58,32 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         Object rightValue = _rightSide.calculate(symbolTable);
         if (rightValue == null) rightValue = false;
         
-        if (!(rightValue instanceof Boolean)) {
-            if (TypeConversionUtil.isIntegerNumber(rightValue)) {
-                // Convert to true or false
-                rightValue = ((Number)rightValue).longValue() != 0;
-            } else {
-                throw new CalculateException(Bundle.getMessage("ArithmeticNotBooleanOrIntegerNumberError", rightValue));
-            }
+        if (!TypeConversionUtil.isIntegerNumber(rightValue)) {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", rightValue));
         }
-        boolean right = (Boolean)rightValue;
+        long right = TypeConversionUtil.convertToLong(rightValue);
         
-        if (_tokenType == TokenType.BOOLEAN_NOT) {
-            return ! right;
+        if (_tokenType == TokenType.BINARY_NOT) {
+            return ~ right;
         }
         
-        if (!(leftValue instanceof Boolean)) {
-            if (TypeConversionUtil.isIntegerNumber(leftValue)) {
-                // Convert to true or false
-                leftValue = ((Number)leftValue).longValue() != 0;
-            } else {
-                throw new CalculateException(Bundle.getMessage("ArithmeticNotBooleanOrIntegerNumberError", leftValue));
-            }
+        if (!TypeConversionUtil.isIntegerNumber(leftValue)) {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", leftValue));
         }
-        boolean left = (Boolean)leftValue;
+        long left = TypeConversionUtil.convertToLong(leftValue);
         
         switch (_tokenType) {
-            case BOOLEAN_OR:
-                return left || right;
+            case BINARY_OR:
+                return left | right;
                 
-            case BOOLEAN_AND:
-                return left && right;
+            case BINARY_XOR:
+                return left ^ right;
+                
+            case BINARY_AND:
+                return left & right;
                 
             default:
-                throw new CalculateException("Unknown boolean operator: "+_tokenType.name());
+                throw new CalculateException("Unknown binary operator: "+_tokenType.name());
         }
     }
     
@@ -100,16 +92,20 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     public String getDefinitionString() {
         String operStr;
         switch (_tokenType) {
-            case BOOLEAN_OR:
-                operStr = "||";
+            case BINARY_OR:
+                operStr = "|";
                 break;
                 
-            case BOOLEAN_AND:
-                operStr = "&&";
+            case BINARY_XOR:
+                operStr = "^";
                 break;
                 
-            case BOOLEAN_NOT:
-                operStr = "!";
+            case BINARY_AND:
+                operStr = "&";
+                break;
+                
+            case BINARY_NOT:
+                operStr = "~";
                 break;
                 
             default:

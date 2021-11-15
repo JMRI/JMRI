@@ -15,20 +15,14 @@ import org.junit.Test;
  */
 public class TokenizerTest {
 
-    @Test
-    public void testCtor() {
-        Tokenizer t = new Tokenizer();
-        Assert.assertNotNull("not null", t);
-    }
-    
     private void checkFirstToken(
             List<Token> tokens,
             TokenType tokenType, String string) {
         
         Assert.assertTrue("list is not empty", tokens.size() > 0);
 //        System.out.format("Type: %s, String: '%s'%n", tokens.get(0).getTokenType(), tokens.get(0).getString());
-        Assert.assertTrue("token type matches", tokens.get(0).getTokenType() == tokenType);
-        Assert.assertTrue("string matches", string.equals(tokens.get(0).getString()));
+        Assert.assertEquals("token type matches", tokenType, tokens.get(0).getTokenType());
+        Assert.assertEquals("string matches", string, tokens.get(0).getString());
         
         tokens.remove(0);
     }
@@ -299,6 +293,252 @@ public class TokenizerTest {
         checkFirstToken(tokens, TokenType.DIVIDE, "/");
         checkFirstToken(tokens, TokenType.IDENTIFIER, "R12");
         Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("MyVar.MyField");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyField");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("MyVar.MyMethod()");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyMethod");
+        checkFirstToken(tokens, TokenType.LEFT_PARENTHESIS, "(");
+        checkFirstToken(tokens, TokenType.RIGHT_PARENTHESIS, ")");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("MyVar.MyMethod(myParam)");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyVar");
+        checkFirstToken(tokens, TokenType.DOT, ".");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "MyMethod");
+        checkFirstToken(tokens, TokenType.LEFT_PARENTHESIS, "(");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myParam");
+        checkFirstToken(tokens, TokenType.RIGHT_PARENTHESIS, ")");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        
+        
+        
+        
+        tokens = Tokenizer.getTokens("myVar = 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar += 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN_ADD, "+");         // The equal sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar -= 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN_SUBTRACKT, "-");   // The equal sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar *= 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN_MULTIPLY, "*");    // The equal sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar /= 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN_DIVIDE, "/");      // The equal sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar %= 12");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN_MODULO, "%");      // The equal sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar = myInt * myFloat");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
+        checkFirstToken(tokens, TokenType.MULTIPLY, "*");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("++myVar");
+        checkFirstToken(tokens, TokenType.INCREMENT, "+");          // The plus sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("--myVar");
+        checkFirstToken(tokens, TokenType.DECREMENT, "-");          // The minus sign is eaten by the parser and not included in the _string.
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar++");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.INCREMENT, "+");          // The plus sign is eaten by the parser and not included in the _string.
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar--");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.DECREMENT, "-");          // The minus sign is eaten by the parser and not included in the _string.
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myList[12] = 23");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "23");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myList[12] = myInt * myFloat");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
+        checkFirstToken(tokens, TokenType.MULTIPLY, "*");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myList[myIndex] = 23");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myIndex");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "23");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myList[myIndex] = myInt * myFloat");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myIndex");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
+        checkFirstToken(tokens, TokenType.MULTIPLY, "*");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myMap{myKey} = 23");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "23");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myMap{myKey} = myInt * myFloat");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
+        checkFirstToken(tokens, TokenType.MULTIPLY, "*");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myMap{\"SomeKey\"} = 23");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.STRING, "SomeKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "23");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myMap{\"SomeKey\"} = myInt * myFloat");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.STRING, "SomeKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myInt");
+        checkFirstToken(tokens, TokenType.MULTIPLY, "*");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myFloat");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("\"Hello\" + myList[12] + myList[myIndex] + myMap{myKey} + myMap{\"SomeKey\"}");
+        checkFirstToken(tokens, TokenType.STRING, "Hello");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myIndex");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.STRING, "SomeKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
+        
+        tokens = Tokenizer.getTokens("myVar = \"Hello\" + myList[12] + myList[myIndex] + myMap{myKey} + myMap{\"SomeKey\"}");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myVar");
+        checkFirstToken(tokens, TokenType.ASSIGN, "=");
+        checkFirstToken(tokens, TokenType.STRING, "Hello");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.INTEGER_NUMBER, "12");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myList");
+        checkFirstToken(tokens, TokenType.LEFT_SQUARE_BRACKET, "[");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myIndex");
+        checkFirstToken(tokens, TokenType.RIGHT_SQUARE_BRACKET, "]");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        checkFirstToken(tokens, TokenType.ADD, "+");
+        checkFirstToken(tokens, TokenType.IDENTIFIER, "myMap");
+        checkFirstToken(tokens, TokenType.LEFT_CURLY_BRACKET, "{");
+        checkFirstToken(tokens, TokenType.STRING, "SomeKey");
+        checkFirstToken(tokens, TokenType.RIGHT_CURLY_BRACKET, "}");
+        Assert.assertTrue("list is empty", tokens.isEmpty());
+        
         
     }
     

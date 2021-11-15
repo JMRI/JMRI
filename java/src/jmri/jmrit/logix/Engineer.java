@@ -37,7 +37,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private int _idxSkipToSpeedCommand;   // skip to this index to reset script when ramping
     private float _normalSpeed = 0;       // current commanded throttle setting from script (unmodified)
     // speed name of current motion. When train stopped, is the speed that will be restored when movement is permitted
-    private String _speedType = Warrant.Normal; // is never Stop or EStop   
+    private String _speedType = Warrant.Normal; // is never Stop or EStop
     private float _timeRatio = 1.0f;     // ratio to extend scripted time when speed is modified
     private boolean _abort = false;
     private boolean _halt = false;  // halt/resume from user's control
@@ -111,9 +111,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
 
             long cmdStart = System.currentTimeMillis();
-            if (log.isDebugEnabled()) 
+            if (log.isDebugEnabled())
                 log.debug("{}: Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}",
-                    _warrant.getDisplayName(), _idxCurrentCommand+1, _currentCommand.getBeanDisplayName(), 
+                    _warrant.getDisplayName(), _idxCurrentCommand+1, _currentCommand.getBeanDisplayName(),
                     _warrant.getCurrentBlockName(), cmdWaitTime, command.toString());
                     // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
             synchronized (this) {
@@ -168,7 +168,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                             if (speed < useSpeedHelp) {
                                 speed += throttleIncrement;
                                 bumpedSpeed = true;
-                            } else {  
+                            } else {
                                 waittime = 36000000;
                                  // no more speed increases. just wait 10 hours
                             }
@@ -203,9 +203,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 if (_waitForClear) {
                     try {
                         _atClear = true;
-                        if (log.isDebugEnabled()) 
+                        if (log.isDebugEnabled())
                             log.debug("{}: Waiting for clearance. _waitForClear= {} _halt= {} at block \"{}\" Cmd#{}.",
-                                _warrant.getDisplayName(), _waitForClear, _halt, 
+                                _warrant.getDisplayName(), _waitForClear, _halt,
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName(), _idxCurrentCommand+1);
                         wait();
                     } catch (InterruptedException ie) {
@@ -228,9 +228,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 if (_halt) {
                     try {
                         _atHalt = true;
-                        if (log.isDebugEnabled()) 
+                        if (log.isDebugEnabled())
                             log.debug("{}: Waiting to Resume. _halt= {}, _waitForClear= {}, Block \"{}\".",
-                                _warrant.getDisplayName(), _halt, _waitForClear, 
+                                _warrant.getDisplayName(), _halt, _waitForClear,
                                 _warrant.getBlockAt(cmdBlockIdx).getDisplayName());
                         wait();
                     } catch (InterruptedException ie) {
@@ -252,8 +252,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 while (_ramp != null && (!_ramp.ready || _ramp.holdRamp)) {
                     int idx = _idxCurrentCommand;
                     try {
-                        if (log.isDebugEnabled()) 
-                            log.debug("{}: Waiting for ramp to finish at Cmd #{}.", 
+                        if (log.isDebugEnabled())
+                            log.debug("{}: Waiting for ramp to finish at Cmd #{}.",
                                   _warrant.getDisplayName(), _idxCurrentCommand+1);
                         wait();
                     } catch (InterruptedException ie) {
@@ -383,8 +383,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() {} called.  isRamping()={}", 
-                    _warrant.getDisplayName(), block.getDisplayName(), 
+            log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() {} called.  isRamping()={}",
+                    _warrant.getDisplayName(), block.getDisplayName(),
                     (waitForSync ? "NOT":""), isRamping());
         }
     }
@@ -414,8 +414,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
         synchronized (this) {
             if (log.isDebugEnabled()) {
-                log.debug("{}: rampSpeedTo: type= {}, throttle from {} to {}.", 
-                    _warrant.getDisplayName(), endSpeedType, getSpeedSetting(), 
+                log.debug("{}: rampSpeedTo: type= {}, throttle from {} to {}.",
+                    _warrant.getDisplayName(), endSpeedType, getSpeedSetting(),
                     _speedUtil.modifySpeed(_normalSpeed, endSpeedType));
             }
             if (_ramp == null) {
@@ -512,7 +512,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         _throttle.setSpeedSetting(speed);
         // Late update to GUI is OK, this is just an informational status display
         _warrant.fireRunStatus("SpeedChange", null, null);
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("{}: _throttle.setSpeedSetting({}) called, ({}).",
                     _warrant.getDisplayName(), speed, _speedType);
     }
@@ -576,13 +576,13 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      * @param halt true if train should halt
      */
     public synchronized void setHalt(boolean halt) {
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("{}: setHalt({}): _atHalt= {}, _waitForClear= {}",
                   _warrant.getDisplayName(), halt, _atHalt, _waitForClear);
         if (!halt) {    // resume normal running
             _halt = false;
             if (!_atClear) {
-                if (log.isDebugEnabled()) 
+                if (log.isDebugEnabled())
                     log.debug("setHalt calls notify()");
                 notifyAll();   // free wait at _atHalt or _atClear
             }
@@ -599,7 +599,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
         return 0;
     }
-    
+
     /**
      * Command to stop or smoothly resume speed. Stop due to
      * signal or occupation stopping condition ahead.  Caller
@@ -608,13 +608,13 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      * @param wait true if train should stop
      */
     private synchronized void setWaitforClear(boolean wait) {
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("{}: setWaitforClear({}): _atClear= {}, throttle speed= {}, _halt= {}",
                    _warrant.getDisplayName(), wait, _atClear,  getSpeedSetting(), _halt);
         if (!wait) {    // resume normal running
             _waitForClear = false;
             if (!_atHalt) {
-                if (log.isDebugEnabled()) 
+                if (log.isDebugEnabled())
                     log.debug("setWaitforClear calls notify");
                 notifyAll();   // free wait at _atClear
             }
@@ -632,9 +632,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         info.append(", scriptSpeed= "); info.append(getScriptSpeed());
         info.append(". runstate= "); info.append(Warrant.RUN_STATE[getRunState()]);
         int cmdIdx = getCurrentCommandIndex();
-         
+
         if (cmdIdx < _commands.size()) {
-            info.append("\n\tCommand #"); info.append(cmdIdx + 1); 
+            info.append("\n\tCommand #"); info.append(cmdIdx + 1);
             info.append(": "); info.append(_commands.get(cmdIdx).toString());
         } else {
             info.append("\n\t\tAt last command.");
@@ -642,14 +642,14 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         // Note: command indexes biased from 0 to 1 to match Warrant's 1-based display of commands.
         info.append("\n\tEngineer flags: _waitForClear= "); info.append(_waitForClear);
         info.append(", _atclear= "); info.append(_atClear);
-        info.append(", _halt= "); info.append(_halt); 
+        info.append(", _halt= "); info.append(_halt);
         info.append(", _atHalt= "); info.append(_atHalt);
         if (_synchBlock != null) {
             info.append("\n\t\tWaiting for Sync at \"");info.append(_synchBlock.getDisplayName());
         }
-        info.append("\"\n\t\t_setRunOnET= "); info.append(_setRunOnET); 
+        info.append("\"\n\t\t_setRunOnET= "); info.append(_setRunOnET);
         info.append(", _runOnET= "); info.append(_runOnET);
-        info.append("\n\t\t_stopPending= "); info.append(_stopPending); 
+        info.append("\n\t\t_stopPending= "); info.append(_stopPending);
         info.append(", _abort= "); info.append(_abort);
         info.append("\n\t\t_speedType= \""); info.append(_speedType);
         info.append("\""); info.append("\n\tStack trace:");
@@ -699,12 +699,12 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             setSpeed(0.0f);
             setWaitforClear(true);
         }
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("{}: setStop({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speed, _normalSpeed);
     }
 
     public int getRunState() {
-        if (_stopPending) { // 
+        if (_stopPending) { //
             if (_halt) {
                 return Warrant.RAMP_HALT;
             }
@@ -1044,7 +1044,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             _warrant.fireRunStatus("RampDone", _halt, speedType);
         }
         if (log.isDebugEnabled()) {
-            log.debug("{}: ThrottleRamp {} for speedType \"{}\". Thread.State= {}}", _warrant.getDisplayName(), 
+            log.debug("{}: ThrottleRamp {} for speedType \"{}\". Thread.State= {}}", _warrant.getDisplayName(),
                     (stop?"stopped":"completed"), speedType, (_ramp != null?_ramp.getState():"_ramp is null!"));
         }
     }
@@ -1091,11 +1091,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         void setParameters(String endSpeedType, int endBlockIdx) {
             _endSpeedType = endSpeedType;
             _endBlockIdx = endBlockIdx;
-            _stopPending = endSpeedType.equals(Warrant.Stop);                    
+            _stopPending = endSpeedType.equals(Warrant.Stop);
         }
 
         boolean duplicate(String endSpeedType, int endBlockIdx) {
-            if (endBlockIdx != _endBlockIdx || 
+            if (endBlockIdx != _endBlockIdx ||
                     !endSpeedType.equals(_endSpeedType)) {
                 return false;
             }
@@ -1128,7 +1128,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             endBlkName = _warrant.getBlockAt(blockIdx+1).getDisplayName();
             for (int cmd = cmdIdx; cmd < _commands.size(); cmd++) {
                 ThrottleSetting ts = _commands.get(cmd);
-                if (ts.getBeanDisplayName().equals(endBlkName) && 
+                if (ts.getBeanDisplayName().equals(endBlkName) &&
                         ts.getValue().getType().equals(ValueType.VAL_NOOP)) {
                     limit = cmd;
                     break;
@@ -1173,10 +1173,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             // modified by _endSpeedType.
             // If _endBlockIdx < 0, for down ramps this should be a user initiated stop (Halt)
             // the endSpeed should be 0.
-            // For up ramps, the _endBlockIdx and endSpeed are unknown. The script may have 
+            // For up ramps, the _endBlockIdx and endSpeed are unknown. The script may have
             // speed changes scheduled during the time needed to up ramp. Note the code below
             // to negotiate and modify the RampData so that the end speed of the ramp makes a
-            // smooth transition to the speed of the script (modified by _endSpeedType) 
+            // smooth transition to the speed of the script (modified by _endSpeedType)
             // when the script resumes.
             // Non-speed commands are executed at their proper times during ramps.
             // Ramp calculations are based on the fact that the distance traveled during the
@@ -1223,7 +1223,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
                         float rampDist = 0;
                         float cmdDist = timeToSpeedCmd * scriptTrackSpeed;
-                        
+
                         while (!stop && iter.hasNext()) {
                             speed = iter.next().floatValue();
                             if (speed >= _speedUtil.modifySpeed(_normalSpeed, _endSpeedType)) {
@@ -1258,7 +1258,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                             }
 
                             rampDist += _speedUtil.getDistanceTraveled(speed, _speedType, timeIncrement);
-                       }                        
+                       }
 
                     } else {     // decreasing, ramp down to a modified speed
                         // Down ramp may advance the train beyond the point where the script is interrupted.
@@ -1274,7 +1274,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
                         float rampDist = 0;
                         float cmdDist = timeToSpeedCmd * scriptTrackSpeed;
- 
+
                         while (!stop && iter.hasPrevious()) {
                             speed = iter.previous().floatValue();
                             setSpeed(speed);
@@ -1284,9 +1284,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                     // loco overran end block.  Set end speed and leave ramp
                                     setSpeed(endSpeed);
                                     stop = true;
-                                } else if ( _warrant.getCurrentOrderIndex() < _endBlockIdx && 
+                                } else if ( _warrant.getCurrentOrderIndex() < _endBlockIdx &&
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
-                                    // At last speed change to set throttle was 0.0, but train has not 
+                                    // At last speed change to set throttle was 0.0, but train has not
                                     // reached the last block. Let loco creep to end block at current setting.
                                     if (log.isDebugEnabled())
                                         log.debug("Extending ramp to reach block {}. speed= {}",
@@ -1294,7 +1294,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                     int waittime = 0;
                                     while (_endBlockIdx > _warrant.getCurrentOrderIndex() && waittime <= 60*timeIncrement && getSpeedSetting() > 0) {
                                         // Until loco reaches end block, continue current speed.
-                                        if (waittime == 5*timeIncrement || waittime == 10*timeIncrement || 
+                                        if (waittime == 5*timeIncrement || waittime == 10*timeIncrement ||
                                                 waittime == 15*timeIncrement || waittime == 20*timeIncrement) {
                                             // maybe train stalled on previous speed step. Bump speed up a notch at 3s, another at 9
                                             setSpeed(getSpeedSetting() + throttleIncrement);
@@ -1310,7 +1310,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                         wait(timeIncrement);
                                     } catch (InterruptedException ie) {
                                         stop = true;
-                                    }   
+                                    }
                                 }
                             }
 
