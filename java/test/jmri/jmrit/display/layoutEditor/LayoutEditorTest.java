@@ -53,6 +53,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             jfo.closeFrameWithConfirmations();
             e = null;
         }
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

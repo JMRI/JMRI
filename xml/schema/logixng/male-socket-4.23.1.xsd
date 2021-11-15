@@ -72,6 +72,8 @@
                           <xs:enumeration value="Integer"/>
                           <xs:enumeration value="FloatingNumber"/>
                           <xs:enumeration value="String"/>
+                          <xs:enumeration value="Array"/>
+                          <xs:enumeration value="Map"/>
                           <xs:enumeration value="LocalVariable"/>
                           <xs:enumeration value="Memory"/>
                           <xs:enumeration value="Reference"/>

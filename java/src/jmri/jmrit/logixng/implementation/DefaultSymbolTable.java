@@ -169,6 +169,51 @@ public class DefaultSymbolTable implements SymbolTable {
                     initialValue = variable.getInitialValueData();
                     break;
                     
+                case Array:
+                    List<Object> array = new java.util.ArrayList<>();
+                    initialValue = array;
+                    String initialValueData = variable.getInitialValueData();
+                    if (!initialValueData.isEmpty()) {
+                        Object data = "";
+                        String[] parts = initialValueData.split(":", 2);
+                        if (parts.length > 1) {
+                            initialValueData = parts[0];
+                            if (Character.isDigit(parts[1].charAt(0))) {
+                                try {
+                                    data = Long.parseLong(parts[1]);
+                                } catch (NumberFormatException e) {
+                                    try {
+                                        data = Double.parseDouble(parts[1]);
+                                    } catch (NumberFormatException e2) {
+                                        throw new IllegalArgumentException("Data is not a number", e2);
+                                    }
+                                }
+                            } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
+                                data = parts[1].substring(1,parts[1].length()-1);
+                            } else {
+                                // Assume inital value is a local variable
+                                data = symbolTable.getValue(parts[1]).toString();
+                            }
+                        }
+                        try {
+                            int count;
+                            if (Character.isDigit(initialValueData.charAt(0))) {
+                                count = Integer.parseInt(initialValueData);
+                            } else {
+                                // Assume size is a local variable
+                                count = Integer.parseInt(symbolTable.getValue(initialValueData).toString());
+                            }
+                            for (int i=0; i < count; i++) array.add(data);
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("Initial capacity is not an integer", e);
+                        }
+                    }
+                    break;
+                    
+                case Map:
+                    initialValue = new java.util.HashMap<>();
+                    break;
+                    
                 case LocalVariable:
                     initialValue = symbolTable.getValue(variable.getInitialValueData());
 //                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
