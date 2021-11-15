@@ -33,12 +33,15 @@
           failonerror="true">
       <arg value="--strict"/><arg value="true"/>
     </exec>
+    <copy todir="${jstarget}/">
+        <fileset dir="." includes="*.js"/>
+    </copy>
   </target>
 
   <target name="clean"
         description="remove generated .js files">
-    <echo message="web/ts clean not working yet"/>
-    <!-- rm .js from ../js to here iff a corresponding .ts exists here -->
+    <echo message="web/js clean not working yet"/>
+    <!-- rm all ../js/*.js -->
   </target>
 
 </project>
