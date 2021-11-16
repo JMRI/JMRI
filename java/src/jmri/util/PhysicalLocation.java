@@ -26,7 +26,8 @@ import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Result of refactorisation to make package jmri not so dependent of jmri.util")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "NM_SAME_SIMPLE_NAME_AS_INTERFACE"},
+        justification = "Result of refactorisation to make package jmri not so dependent of jmri.util")
 
 /**
  * PhysicalLocation
