@@ -598,6 +598,9 @@ public class StoreAndLoadTest {
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Light:"+light2.getUserName());
+        actionListenOnBeans.setLocalVariableNamedBean("localVariableNamedBean");
+        actionListenOnBeans.setLocalVariableEvent("localVariableEvent");
+        actionListenOnBeans.setLocalVariableNewValue("localVariableNewValue");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light2.getUserName());
