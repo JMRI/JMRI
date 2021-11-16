@@ -8,9 +8,9 @@ import jmri.InstanceManager;
 import jmri.IdTag;
 import jmri.LocoAddress;
 import jmri.CollectingReporter;
+import jmri.PhysicalLocation;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractIdTagReporter;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -282,7 +282,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
       */
     @Override
     public PhysicalLocation getPhysicalLocation() {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     /**
@@ -291,7 +291,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     // Does not use the parameter S.
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
 

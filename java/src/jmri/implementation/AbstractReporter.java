@@ -67,26 +67,55 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
 
     @Override
     public boolean isExtendedReportsSupported() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;   // Disable extended reports for now
+//        throw new UnsupportedOperationException("The implementing class needs to implement this method");
     }
 
     @Override
     public ExtendedReport getLastExtendedReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return _lastExtendedReport;
     }
 
     @Override
     public ExtendedReport getCurrentExtendedReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return _currentExtendedReport;
     }
 
     @Override
-    public void setExtendedReport(Object r, ExtendedReport extendedReport) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setExtendedReport(Object report, ExtendedReport extendedReport) {
+        if (report != null) {
+            if ((extendedReport != report)
+                    && (extendedReport != ExtendedReport.NULL_REPORT)) {
+                throw new IllegalArgumentException(
+                        "extendedReport must be report or ExtendedReport.NULL_REPORT if report is not null");
+            }
+        } else {
+            if (extendedReport != null) {
+                throw new IllegalArgumentException("extendedReport must be null if report is null");
+            }
+        }
+        if (report == _currentReport) {
+            return;
+        }
+        Object old = _currentReport;
+        Object oldLast = _lastReport;
+        _currentReport = report;
+        _currentExtendedReport = extendedReport;
+        if (report != null) {
+            _lastReport = report;
+            _lastExtendedReport = extendedReport;
+            // notify
+            firePropertyChange("lastReport", oldLast, _lastReport);
+        }
+        // notify
+        firePropertyChange("currentReport", old, _currentReport);
     }
 
     // internal data members
     protected Object _lastReport = null;
     protected Object _currentReport = null;
+    
+    private ExtendedReport _lastExtendedReport = null;
+    private ExtendedReport _currentExtendedReport = null;
 
 }

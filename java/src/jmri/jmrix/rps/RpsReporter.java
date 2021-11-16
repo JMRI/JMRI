@@ -6,9 +6,9 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.PhysicalLocation;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractReporter;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,7 +164,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * @return PhysicalLocation.getBeanPhysicalLocation
      */
     public PhysicalLocation getPhysicalLocation() {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     /**
@@ -181,7 +181,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
             try {
                 int id = Integer.parseInt(s);
                 Vector3d v = Engine.instance().getTransmitter(id).getLastMeasurement().getVector();
-                return (new PhysicalLocation(new Vector3f(v)));
+                return (new jmri.util.PhysicalLocation(new Vector3f(v)));
             } catch (NumberFormatException e) {
                 return (null);
             } catch (NullPointerException e) {

@@ -1,9 +1,9 @@
 package jmri;
 
-import jmri.util.PhysicalLocation;
-
 /**
  * Extended report.
+ * <P>
+ * THIS CLASS IS CURRENTLY EXPERIMENTAL AND SUBJECT TO CHANGES.
  *
  * @author Daniel Bergqvist Copyright (C) 2021
  * @see jmri.Reporter
@@ -11,6 +11,9 @@ import jmri.util.PhysicalLocation;
  */
 public interface ExtendedReport extends Reportable {
 
+    public static final ExtendedReport NULL_REPORT = new NullReport();
+    
+    
     public default boolean hasLocoAddress() {
         return false;
     }
@@ -44,8 +47,10 @@ public interface ExtendedReport extends Reportable {
      * This class might also be used by third party software that uses JMRI as
      * a library.
      */
-    public static class NullReport implements ExtendedReport {
+    static class NullReport implements ExtendedReport {
         
+        // Private constructor to protect from being created outside of this class.
+        private NullReport() {}
     }
 
 }

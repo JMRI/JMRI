@@ -1,7 +1,5 @@
 package jmri;
 
-import jmri.util.PhysicalLocation;
-
 /**
  * Implements a common way that a Reporter that supports having a Physical Location
  * can report that location to querying objects.

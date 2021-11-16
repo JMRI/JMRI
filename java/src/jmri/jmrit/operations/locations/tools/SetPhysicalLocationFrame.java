@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.PhysicalLocation;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
 
 /**
@@ -166,7 +166,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     private void resetSpinners() {
         // Reset spinners to zero.
-        physicalLocation.setValue(new PhysicalLocation());
+        physicalLocation.setValue(new jmri.util.PhysicalLocation());
     }
 
     private void loadSpinners(Location l) {

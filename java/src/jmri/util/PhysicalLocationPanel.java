@@ -122,7 +122,7 @@ public class PhysicalLocationPanel extends JPanel {
      *
      * @param p (PhysicalLocation) : value to set
      */
-    public void setValue(PhysicalLocation p) {
+    public void setValue(jmri.PhysicalLocation p) {
         xs.setValue(p.getX());
         ys.setValue(p.getY());
         zs.setValue(p.getZ());
@@ -134,7 +134,7 @@ public class PhysicalLocationPanel extends JPanel {
      * @param s (String) : value to set
      */
     public void setValue(String s) {
-        PhysicalLocation p = PhysicalLocation.parse(s);
+        jmri.PhysicalLocation p = PhysicalLocation.parse(s);
         if (p != null) {
             this.setValue(p);
         }
@@ -145,7 +145,7 @@ public class PhysicalLocationPanel extends JPanel {
      *
      * @return PhysicalLocation : Current value of pane
      */
-    public PhysicalLocation getValue() {
+    public jmri.PhysicalLocation getValue() {
         Float x = (Float) ((SpinnerNumberModel) xs.getModel()).getNumber();
         Float y = (Float) ((SpinnerNumberModel) ys.getModel()).getNumber();
         Float z = (Float) ((SpinnerNumberModel) zs.getModel()).getNumber();

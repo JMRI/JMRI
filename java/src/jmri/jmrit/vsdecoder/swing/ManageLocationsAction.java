@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.PhysicalLocation;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -14,7 +15,6 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

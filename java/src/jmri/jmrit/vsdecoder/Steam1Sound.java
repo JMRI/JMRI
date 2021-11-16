@@ -190,7 +190,7 @@ class Steam1Sound extends EngineSound {
         }
     }
 
-    @Override
+//    @Override
     public void setPosition(PhysicalLocation p) {
         if (_loopThread != null) {
             _loopThread.setPosition(p);

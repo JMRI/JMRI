@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import jmri.Audio;
 import jmri.LocoAddress;
+import jmri.PhysicalLocation;
 import jmri.Throttle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -17,7 +18,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
-import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -390,7 +390,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Store the actual position relative to the user's Origin locally.
         config.setPhysicalLocation(p);
         if (create_xy_series) {   
-            log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
+            log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.getX()*10000)/10000, p.getY());
         }
         log.debug("( {} ). Set Position: {}", this.getAddress(), p);
 
@@ -489,7 +489,7 @@ public class VSDecoder implements PropertyChangeListener {
                 this.setPosition(getTrainPosition((Train) evt.getSource()));
             } else {
                 log.debug("Train has null position");
-                this.setPosition(new PhysicalLocation());
+                this.setPosition(new jmri.util.PhysicalLocation());
             }
         } else if (property.equals(Train.STATUS_CHANGED_PROPERTY)) {
             // Train Status change
@@ -503,7 +503,7 @@ public class VSDecoder implements PropertyChangeListener {
                     this.setPosition(getTrainPosition((Train) evt.getSource()));
                 } else {
                     log.debug("Train has null position");
-                    this.setPosition(new PhysicalLocation());
+                    this.setPosition(new jmri.util.PhysicalLocation());
                 }
             }
         }
@@ -717,7 +717,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Check for an optional sound start-position.
         n = e.getChildText("start-position");
         if (n != null) {
-            startPos = PhysicalLocation.parse(n);
+            startPos = jmri.util.PhysicalLocation.parse(n);
         } else {
             startPos = null;
         }

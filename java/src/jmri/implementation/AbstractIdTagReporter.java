@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.util.PhysicalLocation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2016, 2019
  * @since 4.15.3
  */
-public class AbstractIdTagReporter extends AbstractReporter
+public abstract class AbstractIdTagReporter extends AbstractReporter
         implements IdTagListener, PhysicalLocationReporter {
 
     public AbstractIdTagReporter(String systemName) {
@@ -46,7 +45,7 @@ public class AbstractIdTagReporter extends AbstractReporter
             id.setWhereLastSeen(this);
             log.debug("Seen here: {}",this.mSystemName);
         }
-        setReport(id);
+        setExtendedReport(id);
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
     }
     
@@ -150,7 +149,7 @@ public class AbstractIdTagReporter extends AbstractReporter
      */
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractIdTagReporter.class);

@@ -7,9 +7,9 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.PhysicalLocation;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractReporter;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,9 +71,9 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         result[1] = result[1].trim();
         if (!result[1].equals("0000")) {
             IdTag idTag = jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag(result[1]);
-            setReport(idTag);
+            setExtendedReport(idTag);
         } else {
-            setReport(null);
+            setExtendedReport(null);
         }
     }
 
@@ -132,7 +132,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      */
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosReporter.class);

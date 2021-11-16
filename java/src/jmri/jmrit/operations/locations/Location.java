@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.PhysicalLocation;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
@@ -28,7 +29,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.PhysicalLocation;
 
 /**
  * Represents a location on the layout
@@ -66,7 +66,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
     protected int _trainIconRangeY = RANGE_DEFAULT;
     protected Hashtable<String, Track> _trackHashTable = new Hashtable<>();
-    protected PhysicalLocation _physicalLocation = new PhysicalLocation();
+    protected PhysicalLocation _physicalLocation = new jmri.util.PhysicalLocation();
     protected List<String> _listTypes = new ArrayList<>();
     protected Division _division = null;
 
@@ -1429,7 +1429,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             _switchListComment = a.getValue();
         }
         if ((a = e.getAttribute(Xml.PHYSICAL_LOCATION)) != null) {
-            _physicalLocation = PhysicalLocation.parse(a.getValue());
+            _physicalLocation = jmri.util.PhysicalLocation.parse(a.getValue());
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {

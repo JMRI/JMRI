@@ -2,8 +2,8 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.PhysicalLocation;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.util.PhysicalLocation;
 
 /**
  * Data capsule ("Model"?) for passing configuration between the GUI and the

@@ -111,17 +111,34 @@ public interface Reporter extends NamedBean {
      * classes. But there are occasionally reasons to set it from inside the
      * program, e.g. debugging via entering values in the Reporter Table. Hence
      * provision of this method.
+     *
+     * @param extendedReport the extended report
+     */
+    public default void setExtendedReport(ExtendedReport extendedReport) {
+        setExtendedReport(extendedReport, extendedReport);
+    }
+
+    /**
+     * Set the extended report.
      * <p>
-     * If r is not null, extendedReport must not be null.
+     * A Reporter object will usually just "report"; its contents usually come
+     * from the layout, and hence are only set by lower-level implementation
+     * classes. But there are occasionally reasons to set it from inside the
+     * program, e.g. debugging via entering values in the Reporter Table. Hence
+     * provision of this method.
+     * <p>
+     * If r is not null, extendedReport must be either r or ExtendedReport.NULL_REPORT.
+     * <br>
+     * If r is null, extendedReport must be null.
      * <br>
      * If r is null and extendedReport is not null, the current report will be
      * set to extendedReport. Calling setExtendedReport(null, extendedReport)
      * is the same as calling setExtendedReport(extendedReport, extendedReport).
      *
-     * @param r the report
+     * @param report the report
      * @param extendedReport the extended report
      */
-    public void setExtendedReport(Object r, ExtendedReport extendedReport);
+    public void setExtendedReport(Object report, ExtendedReport extendedReport);
 
     /**
      * Provide an integer form of the last report.

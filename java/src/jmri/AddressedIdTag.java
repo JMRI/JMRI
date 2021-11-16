@@ -25,6 +25,7 @@ public interface AddressedIdTag extends IdTag {
      *
      * @return current loco address
      */
+    @Override
     default public LocoAddress getLocoAddress() {
         int tagNo = Integer.parseInt(getTagID());
         return new DccLocoAddress(tagNo, tagNo > 100 );

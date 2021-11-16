@@ -40,21 +40,11 @@ import org.slf4j.LoggerFactory;
  * the layout.
  *
  */
-public class PhysicalLocation extends Vector3f {
+public class PhysicalLocation extends Vector3f implements jmri.PhysicalLocation {
 
     private boolean _isTunnel;
 
     // Class methods
-    /**
-     * Origin : constant representation of (0, 0, 0)
-     */
-    public static final PhysicalLocation Origin = new PhysicalLocation(0.0f, 0.0f, 0.0f);
-
-    /**
-     * NBPropertyKey : Key name used when storing a PhysicalLocation as a
-     * NamedBean Property
-     */
-    public static final String NBPropertyKey = "physical_location";
 
     /**
      * translate()
@@ -66,7 +56,7 @@ public class PhysicalLocation extends Vector3f {
      * @param ref : PhysicalLocation to use as new reference point (origin)
      * @return PhysicalLocation
      */
-    public static PhysicalLocation translate(PhysicalLocation loc, PhysicalLocation ref) {
+    public static jmri.PhysicalLocation translate(jmri.PhysicalLocation loc, jmri.PhysicalLocation ref) {
         if (loc == null || ref == null) {
             return (loc);
         }
@@ -89,10 +79,10 @@ public class PhysicalLocation extends Vector3f {
      * @param b : NamedBean
      * @return PhysicalLocation
      */
-    public static PhysicalLocation getBeanPhysicalLocation(NamedBean b) {
-        String s = (String) b.getProperty(PhysicalLocation.NBPropertyKey);
+    public static jmri.PhysicalLocation getBeanPhysicalLocation(NamedBean b) {
+        String s = (String) b.getProperty(jmri.PhysicalLocation.NBPropertyKey);
         if ((s == null) || (s.isEmpty())) {
-            return (PhysicalLocation.Origin);
+            return (jmri.PhysicalLocation.Origin);
         } else {
             return (PhysicalLocation.parse(s));
         }
@@ -106,8 +96,8 @@ public class PhysicalLocation extends Vector3f {
      * @param p PhysicalLocation
      * @param b NamedBean
      */
-    public static void setBeanPhysicalLocation(PhysicalLocation p, NamedBean b) {
-        b.setProperty(PhysicalLocation.NBPropertyKey, p.toString());
+    public static void setBeanPhysicalLocation(jmri.PhysicalLocation p, NamedBean b) {
+        b.setProperty(jmri.PhysicalLocation.NBPropertyKey, p.toString());
     }
 
     /**
@@ -127,7 +117,7 @@ public class PhysicalLocation extends Vector3f {
      * @param pos : String "(X, Y, Z)"
      * @return PhysicalLocation
      */
-    static public PhysicalLocation parse(String pos) {
+    static public jmri.PhysicalLocation parse(String pos) {
         // position is stored as a tuple string "(x,y,z)"
         // Optional flags come immediately after the (x,y,z) in the form of "(flag)".
         // Flags are boolean. If they are present, they are true.
@@ -188,6 +178,12 @@ public class PhysicalLocation extends Vector3f {
         return (s);
     }
 
+    @Override
+    public Vector3f getVector3f() {
+        return this;
+    }
+
+    @Override
     public Vector3d toVector3d() {
         return (new Vector3d(this));
     }

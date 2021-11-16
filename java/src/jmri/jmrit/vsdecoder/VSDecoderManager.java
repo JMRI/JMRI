@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import jmri.Audio;
@@ -17,6 +16,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
+import jmri.PhysicalLocation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
@@ -24,7 +24,6 @@ import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.PhysicalLocation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GraphicsEnvironment;
@@ -1058,7 +1057,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 int dadr_block = locoInBlock[dadr_index][BLOCK]; // get block number for current decoder/loco
                 if (reporterlists.get(d.setup_index).contains(dadr_block)) {
                     int dadr_block_index = reporterlists.get(d.setup_index).indexOf(dadr_block);
-                    newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
+                    newPosition = new jmri.util.PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
                     // calculate current speed in meter/second; support topspeed forward or reverse
                     // JMRI speed is 0-1; currentspeed is speed after speedCurve(); multiply with topspeed (MPH); convert MPH to meter/second; regard layout scale
                     speed_ms = d.currentspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
@@ -1082,17 +1081,17 @@ public class VSDecoderManager implements PropertyChangeListener {
                             // Line
                             xPosi = distance * (-d.dirfn) * (float) Math.sqrt(1.0f / (1.0f +
                                 blockParameter[d.setup_index][dadr_block_index][SLOPE] * blockParameter[d.setup_index][dadr_block_index][SLOPE]));
-                            newPosition.x = d.lastPos.x - xPosi;
-                            newPosition.y = d.lastPos.y - xPosi * blockParameter[d.setup_index][dadr_block_index][SLOPE];
-                            newPosition.z = 0.0f;
+                            newPosition.setX(d.lastPos.getX() - xPosi);
+                            newPosition.setY(d.lastPos.getY() - xPosi * blockParameter[d.setup_index][dadr_block_index][SLOPE]);
+                            newPosition.setZ(0.0f);
                         } else {
                             // Curve
                             float anglePos = distance / blockParameter[d.setup_index][dadr_block_index][RADIUS] * (-d.dirfn); // distance / RADIUS * (-loco direction)
                             float rotate_xpos = blockParameter[d.setup_index][dadr_block_index][ROTATE_XPOS_I];
                             float rotate_ypos = blockParameter[d.setup_index][dadr_block_index][ROTATE_YPOS_I]; // rotation center point y
-                            newPosition.x =  rotate_xpos + (float) Math.cos(anglePos) * (d.lastPos.x - rotate_xpos) - (float) Math.sin(anglePos) * (d.lastPos.y - rotate_ypos);
-                            newPosition.y =  rotate_ypos + (float) Math.sin(anglePos) * (d.lastPos.x - rotate_xpos) + (float) Math.cos(anglePos) * (d.lastPos.y - rotate_ypos);
-                            newPosition.z = 0.0f;
+                            newPosition.setX(rotate_xpos + (float) Math.cos(anglePos) * (d.lastPos.getX() - rotate_xpos) - (float) Math.sin(anglePos) * (d.lastPos.getY() - rotate_ypos));
+                            newPosition.setY(rotate_ypos + (float) Math.sin(anglePos) * (d.lastPos.getX() - rotate_xpos) + (float) Math.cos(anglePos) * (d.lastPos.getY() - rotate_ypos));
+                            newPosition.setZ(0.0f);
                         }
                         log.debug("position to set: {}", newPosition);
                         d.setPosition(newPosition); // Sound set position

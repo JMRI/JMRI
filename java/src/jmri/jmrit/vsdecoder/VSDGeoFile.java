@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
 import jmri.Scale;
+import jmri.PhysicalLocation;
 import jmri.Reporter;
 import jmri.util.FileUtil;
-import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,7 +168,7 @@ public class VSDGeoFile extends XmlFile {
                         n = c1.getChildText("position");
                         // An element "position" is required and a XML schema and a XML schema is not yet in place
                         if (n != null) {
-                            PhysicalLocation pl = PhysicalLocation.parse(n);
+                            PhysicalLocation pl = jmri.util.PhysicalLocation.parse(n);
                             blockPositionlist[setup_index].add(pl);
                             // Establish relationship Reporter-PhysicalLocation (see window Manage VSD Locations)
                             PhysicalLocation.setBeanPhysicalLocation(pl, rep);
@@ -229,7 +229,7 @@ public class VSDGeoFile extends XmlFile {
                         n = c1.getChildText("end-position");
                         if (n != null) {
                             if (!is_end_position_set) {
-                                blockPositionlist[setup_index].add(PhysicalLocation.parse(n));
+                                blockPositionlist[setup_index].add(jmri.util.PhysicalLocation.parse(n));
                                 is_end_position_set = true;
                                 log.debug("end-position for location {} set to {}", j,
                                         blockPositionlist[setup_index].get(blockPositionlist[setup_index].size() - 1));
@@ -265,9 +265,9 @@ public class VSDGeoFile extends XmlFile {
                 int last_index = blockPositionlist[setup_index].size() - 1;
                 log.debug("first setup position: {}, last setup position: {}", blockPositionlist[setup_index].get(0),
                         blockPositionlist[setup_index].get(last_index));
-                if (blockPositionlist[setup_index].get(0).x == blockPositionlist[setup_index].get(last_index).x
-                        && blockPositionlist[setup_index].get(0).y == blockPositionlist[setup_index].get(last_index).y
-                        && blockPositionlist[setup_index].get(0).z == blockPositionlist[setup_index].get(last_index).z) {
+                if (blockPositionlist[setup_index].get(0).getX() == blockPositionlist[setup_index].get(last_index).getX()
+                        && blockPositionlist[setup_index].get(0).getY() == blockPositionlist[setup_index].get(last_index).getY()
+                        && blockPositionlist[setup_index].get(0).getZ() == blockPositionlist[setup_index].get(last_index).getZ()) {
                     circlelist.add(true);
                 } else {
                     circlelist.add(false);

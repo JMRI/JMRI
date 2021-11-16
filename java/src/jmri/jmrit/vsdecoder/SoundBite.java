@@ -2,9 +2,9 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.PhysicalLocation;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -293,7 +293,7 @@ class SoundBite extends VSDSound {
     @Override
     public void setPosition(PhysicalLocation v) {
         super.setPosition(v);
-        sound_src.setPosition(v);
+        sound_src.setPosition(v.getVector3f());
     }
 
     public void setURL(String filename) {

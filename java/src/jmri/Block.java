@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
-import jmri.util.PhysicalLocation;
+import jmri.PhysicalLocation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1223,7 +1223,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     @Override
     public PhysicalLocation getPhysicalLocation() {
         // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     /**
@@ -1238,7 +1238,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public PhysicalLocation getPhysicalLocation(String s) {
         // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
         // Intentionally ignore the String s
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
+        return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     @Override
