@@ -177,10 +177,16 @@ recompiled everything, you may want to do <code>ant clean</code> first)<br>
 
       <pre style="font-family: monospace;">
    ant tests
-   ./runtest.csh -T jmri.jmrit.powerpanel.PowerPanelTest
+   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
 </pre>The first line compiles all the test code, and the second runs a specific test or test
 suite.<br>
       (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+
+      If you're running on Mac, there's a <a href="StartUpScripts.shtml#parameters"><code>-t</code> option</a>
+      to put the menu on the main-screen menu bar, which makes JMRI apps look more like a
+      Mac application.  This will interfere with
+      <a href="#jemmy">Jemmy</a> based tests of the GUI.
+
       <p>There is also a PowerShell (Core) script available to help running tests with maven,</p>
 
       <pre style="font-family: monospace;">./java/runtests.ps1</pre>. Its main features are:
