@@ -1378,7 +1378,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             setSwitchSliderFunction(switchSliderFunction); // reset slider
         }
-
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());

@@ -204,18 +204,32 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
+    private void loadDefaultThrottle() {
+        String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
+        if (dtf == null || dtf.isEmpty()) {
+            return;            
+        }
+        log.debug("Loading default throttle file : "+dtf);
+        loadThrottle(dtf);
+    }    
+    
+    public void loadThrottle() {
+        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
+        fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
+        fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
+        java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
+        if (file == null) {
+            return ;
+        }
+        loadThrottle(file.getAbsolutePath());
+    }
+    
     public void loadThrottle(String sfile) {
         if (sfile == null) {
-            JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
-            fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
-            fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-            java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
-            if (file == null) {
-                return;
-            }
-            sfile = file.getAbsolutePath();
+            loadThrottle();
+            return;
         }
-
+        log.debug("Loading throttle file : "+sfile);
         boolean switchAfter = false;
         if (!isEditMode) {
             setEditMode(true);
@@ -250,8 +264,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             }
             // and finally load all preferences
             setXml(conf);
-        } catch (IOException | JDOMException ex) {
+        } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
+            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            loadDefaultThrottle(); // revert to loading default one
         }
 //     checkPosition();
         if (switchAfter) {
@@ -939,6 +955,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 && (addressPanel != null) && (addressPanel.getRosterEntry() != null)
                 && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
             loadThrottle(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+        } else {
+            if ((addressPanel != null) && (addressPanel.getRosterEntry() == null)) { // no known roster entry
+                loadDefaultThrottle();
+            }
         }
         setFrameTitle();
         throttleWindow.updateGUI();

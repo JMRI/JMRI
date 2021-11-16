@@ -61,6 +61,7 @@
             </xs:sequence>
             
             <xs:attribute name="includeCellsWithoutHeader" type="yesNoType" use="required"/>
+            <xs:attribute name="listenOnAllProperties" type="yesNoType"/>
 
 			<xs:attribute name="class" type="classType" use="required"/>
         

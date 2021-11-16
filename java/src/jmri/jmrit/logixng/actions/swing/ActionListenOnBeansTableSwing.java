@@ -25,6 +25,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
     private JComboBox<String> _rowOrColumnNameComboBox;
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
     private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
+    private JCheckBox _listenOnAllPropertiesCheckBox;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -102,6 +103,12 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         namedBeanTypePanel.add(_namedBeanTypeComboBox);
         panel.add(namedBeanTypePanel);
         
+        JPanel listenOnAllPropertiesPanel = new JPanel();
+        listenOnAllPropertiesPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_ListenOnAllPropertiesCheckBox")));
+        _listenOnAllPropertiesCheckBox = new JCheckBox();
+        listenOnAllPropertiesPanel.add(_listenOnAllPropertiesCheckBox);
+        panel.add(listenOnAllPropertiesPanel);
+        
         if (action != null) {
             if (action.getTable() != null) {
                 tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
@@ -109,6 +116,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
             _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
+            _listenOnAllPropertiesCheckBox.setSelected(action.getListenOnAllProperties());
         }
     }
     
@@ -153,6 +161,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             action.setNamedBeanType(_namedBeanTypeComboBox.getItemAt(_namedBeanTypeComboBox.getSelectedIndex()));
         }
         action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
+        action.setListenOnAllProperties(_listenOnAllPropertiesCheckBox.isSelected());
     }
     
     /** {@inheritDoc} */

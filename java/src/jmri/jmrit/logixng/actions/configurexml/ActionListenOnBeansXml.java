@@ -42,6 +42,7 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             Element elementParameter = new Element("Reference");
             elementParameter.addContent(new Element("name").addContent(ref.getName()));
             elementParameter.addContent(new Element("type").addContent(ref.getType().name()));
+            elementParameter.addContent(new Element("all").addContent(ref.getListenOnAllProperties() ? "yes" : "no"));  // NOI18N
             parameters.addContent(elementParameter);
         }
         element.addContent(parameters);
@@ -72,7 +73,13 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
             if (type == null) throw new IllegalArgumentException("Element 'type' does not exists");
             
-            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type));
+            String all = "no";  // NOI18N
+            if (e.getChild("all") != null) {  // NOI18N
+                all = e.getChild("all").getValue();  // NOI18N
+            }
+            boolean listenToAll = "yes".equals(all); // NOI18N
+            
+            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type, listenToAll));
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

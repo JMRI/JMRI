@@ -521,6 +521,7 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Added ControlPanel.getSpeedSlider() for scripting</li>
+            <li>Added default throttle file preference, will be loaded when a new throttle is acquired and no specific roster entry exist for the used address</li>
         </ul>
 
     <h3>Timetable</h3>
