@@ -21,6 +21,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
@@ -39,6 +40,14 @@ public class StoreAndLoadTest {
 
 //    private AudioManager audioManager;
 
+    private NamedBeanReference getNamedBeanReference(
+            Collection<NamedBeanReference> collection, String name) {
+        for (NamedBeanReference ref : collection) {
+            if (name.equals(ref.getName())) return ref;
+        }
+        return null;
+    }
+    
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -580,47 +589,135 @@ public class StoreAndLoadTest {
         actionListenOnBeans.addReference("Light:"+light1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        NamedBeanReference ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(light1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Light, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Light:"+light2.getUserName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(light2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Light, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName());
+        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName()+":no");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(memory1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Memory:"+memory2.getUserName());
+        actionListenOnBeans.addReference("Memory:"+memory2.getUserName()+":yes");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(memory2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
+        Assert.assertTrue(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Sensor:"+sensor1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(sensor1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Sensor:"+sensor2.getUserName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(sensor2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("Turnout:"+turnout1.getSystemName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout1.getSystemName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(turnout1.getSystemName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
+        Assert.assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName());
+        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName()+":yes");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout2.getUserName());
+        Assert.assertNotNull(ref);
+        Assert.assertEquals(turnout2.getUserName(), ref.getName());
+        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
+        Assert.assertTrue(ref.getListenOnAllProperties());
+
+
+        ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("Signal before");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setRowOrColumnName("2");
+        actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(false);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansTable.setComment("A comment");
+        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
+        actionListenOnBeansTable.setListenOnAllProperties(true);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 

@@ -478,7 +478,7 @@ public class ExpressionScript extends AbstractDigitalExpression
                         scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
                                 .eval(theScript, bindings);
                     } catch (RuntimeException | ScriptException e) {
-                        log.warn("cannot execute script during registerListeners", e);
+                        log.warn("cannot execute script during unregisterListeners", e);
                     }
                 });
             }

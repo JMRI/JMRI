@@ -17,10 +17,10 @@ public enum NamedBeanType {
     Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> {
         return InstanceManager.getDefault(SensorManager.class);
     }),
-    SignalHead(Bundle.getMessage("BeanNameSignalHead"), SignalHead.class, null, () -> {
+    SignalHead(Bundle.getMessage("BeanNameSignalHead"), SignalHead.class, "Appearance", () -> {
         return InstanceManager.getDefault(SignalHeadManager.class);
     }),
-    SignalMast(Bundle.getMessage("BeanNameSignalMast"), SignalMast.class, null, () -> {
+    SignalMast(Bundle.getMessage("BeanNameSignalMast"), SignalMast.class, "Aspect", () -> {
         return InstanceManager.getDefault(SignalMastManager.class);
     }),
     Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> {
