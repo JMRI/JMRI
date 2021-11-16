@@ -32,6 +32,7 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         memo.getTrafficController().terminateThreads();
         memo = null;
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 }
