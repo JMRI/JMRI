@@ -177,7 +177,7 @@ recompiled everything, you may want to do <code>ant clean</code> first)<br>
 
       <pre style="font-family: monospace;">
    ant tests
-   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
+   ./runtest.csh -T jmri.jmrit.powerpanel.PowerPanelTest
 </pre>The first line compiles all the test code, and the second runs a specific test or test
 suite.<br>
       (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
