@@ -353,9 +353,6 @@ public class JUnitUtil {
         // check that no LogixNG threads is still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
 
-        // check for hanging shutdown tasks
-        checkShutDownManager();
-
         // checking time?
         if (checkTestDuration) {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
@@ -408,6 +405,9 @@ public class JUnitUtil {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
+
+        // check for hanging shutdown tasks - after test for ERROR so it can complain
+        checkShutDownManager();
 
         // Optionally, handle any threads left running
         if (checkRemnantThreads || killRemnantThreads) {
