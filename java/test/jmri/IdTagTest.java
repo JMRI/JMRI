@@ -32,7 +32,7 @@ public class IdTagTest {
 
     }
 
-    class TestIdTag extends jmri.implementation.AbstractNamedBean implements IdTag,Reportable {
+    class TestIdTag extends jmri.implementation.AbstractNamedBean implements IdTag {
 
        public TestIdTag(String systemName){
            super(systemName);
