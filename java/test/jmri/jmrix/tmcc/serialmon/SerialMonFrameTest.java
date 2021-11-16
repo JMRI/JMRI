@@ -37,7 +37,7 @@ public class SerialMonFrameTest {
         f.pack();
         f.setVisible(true);
         Assert.assertTrue(f.isVisible());
-        
+
         SerialReply m = new SerialReply();
         m.setOpCode(0xFE);
         m.setElement(1, 0x21);
@@ -115,6 +115,7 @@ public class SerialMonFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

@@ -31,6 +31,7 @@ public class AudioTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
