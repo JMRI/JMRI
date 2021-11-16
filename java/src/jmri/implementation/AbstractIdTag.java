@@ -14,7 +14,7 @@ import jmri.managers.ProxyIdTagManager;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, Reportable  {
+public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
 
     protected Reporter whereLastSeen = null;
 
