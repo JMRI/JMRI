@@ -47,6 +47,10 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
         }
         element.addContent(parameters);
         
+        element.addContent(new Element("localVariableNamedBean").addContent(p.getLocalVariableNamedBean()));
+        element.addContent(new Element("localVariableEvent").addContent(p.getLocalVariableEvent()));
+        element.addContent(new Element("localVariableNewValue").addContent(p.getLocalVariableNewValue()));
+        
         return element;
     }
     
@@ -80,6 +84,21 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             boolean listenToAll = "yes".equals(all); // NOI18N
             
             h.addReference(new NamedBeanReference(elementName.getTextTrim(), type, listenToAll));
+        }
+        
+        Element variableName = shared.getChild("localVariableNamedBean");
+        if (variableName != null) {
+            h.setLocalVariableNamedBean(variableName.getTextTrim());
+        }
+        
+        variableName = shared.getChild("localVariableEvent");
+        if (variableName != null) {
+            h.setLocalVariableEvent(variableName.getTextTrim());
+        }
+        
+        variableName = shared.getChild("localVariableNewValue");
+        if (variableName != null) {
+            h.setLocalVariableNewValue(variableName.getTextTrim());
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

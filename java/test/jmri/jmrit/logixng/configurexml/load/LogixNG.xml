@@ -80,7 +80,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:03 PM">
+    <memory value="7:38 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -150,7 +150,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 15 14:03:34 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 16 07:38:45 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -11330,6 +11330,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionListenOnBeans class="jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml">
       <systemName>IQDA:AUTO:0038</systemName>
       <References />
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11397,6 +11400,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11464,6 +11470,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean>localVariableNamedBean</localVariableNamedBean>
+      <localVariableEvent>localVariableEvent</localVariableEvent>
+      <localVariableNewValue>localVariableNewValue</localVariableNewValue>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11531,6 +11540,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11598,6 +11610,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>yes</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11665,6 +11680,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11732,6 +11750,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11799,6 +11820,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>no</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -11866,6 +11890,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <all>yes</all>
         </Reference>
       </References>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -24005,9 +24032,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Nov 15 14:03:37 CET 2021</date>
+      <date>Tue Nov 16 07:38:50 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.6ish+daniel+2021-11-15T13:00:28Z+R1e2a775 on Mon Nov 15 14:03:37 CET 2021-->
+  <!--Written by JMRI version 4.25.6ish+daniel+2021-11-16T06:38:19Z+R337963c on Tue Nov 16 07:38:50 CET 2021-->
 </layout-config>
