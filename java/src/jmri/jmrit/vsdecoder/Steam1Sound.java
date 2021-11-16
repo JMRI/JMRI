@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
-import jmri.util.PhysicalLocation;
+import jmri.PhysicalLocation;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -190,7 +190,7 @@ class Steam1Sound extends EngineSound {
         }
     }
 
-//    @Override
+    @Override
     public void setPosition(PhysicalLocation p) {
         if (_loopThread != null) {
             _loopThread.setPosition(p);

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import jmri.util.PhysicalLocation;
+import jmri.PhysicalLocation;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +208,7 @@ class DieselSound extends EngineSound {
         }
     }
 
-//    @Override
+    @Override
     public void setPosition(PhysicalLocation p) {
         for (SoundBite ns : notch_sounds.values()) {
             ns.setPosition(p);

@@ -16,6 +16,7 @@ package jmri.util;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -24,6 +25,8 @@ import javax.vecmath.Vector3f;
 import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Result of refactorisation to make package jmri not so dependent of jmri.util")
 
 /**
  * PhysicalLocation
