@@ -14,7 +14,6 @@ import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
-import jmri.PhysicalLocation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
