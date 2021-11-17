@@ -54,6 +54,12 @@ public class VariableLightTest {
     @After
     public void tearDown() {
           jmri.util.JUnitUtil.tearDown();
+
+          // the light has registered a listener to the
+          // previous timebase, but we've stopped that.
+
+          // force a new default Timebase object
+          InstanceManager.reset(jmri.Timebase.class);
     }
 
 
