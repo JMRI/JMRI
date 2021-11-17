@@ -167,22 +167,27 @@
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/ts/operations.js">/ts/operations.js</a>
         </dd>
 
         <dt>Panel</dt>
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/ts/panel.js">/ts/panel.js</a>
         </dd>
 
         <dt>JSON Console</dt>
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/ts/json-console.js">/ts/json-console.js</a>
         </dd>
+
+        <p>Note: The source code for the above is found in the web/ts directory, which contains
+            the JavaScript and Typescript source code.  This is
+            <a href="../doc/Technical/Patterns.shtml#typescript">compiled to the web/js directory</a>
+            for actual execution.
 
         <dt>
           <a href="/web/power.html">Power Demonstration</a>

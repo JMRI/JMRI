@@ -74,6 +74,9 @@ public class RpsTrackingFrameTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
+    }
 
 }

@@ -25,6 +25,7 @@ public class SignalMastRepeaterJFrameTest extends jmri.util.JmriJFrameTest {
     @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
