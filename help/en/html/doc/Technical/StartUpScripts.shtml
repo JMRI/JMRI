@@ -139,7 +139,7 @@
       DecoderPro, PanelPro, etc. These are all identical except for application name and main Java
       class.</p>
 
-      <h3>Parameters</h3>
+      <h3 id="parameters">Parameters</h3>
 
       <p>The JMRI shell scripts take the following parameters:</p>
 
@@ -222,6 +222,19 @@
             </dd>
           </dl>
         </dd>
+
+        <dt><code>-T</code>
+        </dt>
+
+        <dt><code>-t</code>
+        </dt>
+
+        <dd>JMRI applications normally (-t case) configures itself to use the
+            main menu bar on Apple Mac systems.  This interferes with
+            Jemmy screen-based tests.  The -T option forces standard
+            (on window) Java menus which allows Jemmy tests to run properly.
+            -T is the default when running tests with
+            <code>./runtest.csh</code> or from <code>ant</code>.</dd>
 
         <dt><code>--help</code>
         </dt>

@@ -300,9 +300,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     - https://archive.eclipse.org/eclipse/downloads/drops4/R-4.19-202103031800/ (via selecting ecj-4.10.jar) March 3, 2021
 - used in ant warnings target
 
-##### jemmy-22-00c9f753cd0a.jar
-- Built from rev 22 repo after changeset 22:00c9f753cd0a; see http://hg.openjdk.java.net/code-tools/jemmy/v2/rev/00c9f753cd0a
-- See also http://hg.openjdk.java.net/code-tools/jemmy/v2/
+##### jemmy-2.3.1.1-RELEASE125.jar
+- Sept 13, 2021
+- From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
 ##### junit-4.12.jar
 - version 4.12

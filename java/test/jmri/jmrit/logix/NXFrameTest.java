@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -346,7 +345,6 @@ public class NXFrameTest {
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-//        new QueueTool().waitEmpty(10);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
@@ -354,7 +352,6 @@ public class NXFrameTest {
 
         warrant.controlRunTrain(Warrant.RESUME);
         JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-//        new QueueTool().waitEmpty(10);
 
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -387,32 +384,33 @@ public class NXFrameTest {
      * @throws Exception exception thrown
      */
     protected static Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
-        OBlock block = mgr.getOBlock(route[0]);
-        Sensor sensor = block.getSensor();
+        Sensor sensor = null;
         for (int i = 1; i < route.length; i++) {
-            JUnitUtil.waitFor(300);
-            OBlock nextBlock = mgr.getOBlock(route[i]);
-            Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
-            if (!dark) {
-                nextSensor = nextBlock.getSensor();
-//                nextSensor.setState(Sensor.ACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
-            } else {
-                nextSensor = null;
-            }
-            JUnitUtil.waitFor(200);
-            if (sensor != null) {
-//                sensor.setState(Sensor.INACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
-            }
-            if (!dark) {
-                sensor = nextSensor;
-                block = nextBlock;
-            }
+            sensor = moveToNextBlock(i, route, mgr);
         }
         return sensor;
     }
+
+    protected static Sensor moveToNextBlock(int idx, String[] route, OBlockManager mgr) {
+        assertThat(idx > 0 && idx < route.length).withFailMessage("Index "+ idx + " invalid ").isTrue();
+
+        OBlock fromBlock = mgr.getOBlock(route[idx - 1]);
+        Sensor fromSensor = fromBlock.getSensor();
+        assertThat(fromSensor).withFailMessage("fromSensor not found").isNotNull();
+
+        OBlock toBlock = mgr.getOBlock(route[idx]);
+        Sensor toSensor = toBlock.getSensor();
+        assertThat(toSensor).withFailMessage("toSensor not found").isNotNull();
+
+        JUnitUtil.waitFor(300);
+        NXFrameTest.setAndConfirmSensorAction(toSensor, Sensor.ACTIVE, toBlock);
+
+        JUnitUtil.waitFor(200);
+        NXFrameTest.setAndConfirmSensorAction(fromSensor, Sensor.INACTIVE, fromBlock);
+
+        return toSensor;
+    }
+
 
     protected static void setAndConfirmSensorAction(Sensor sensor, int state, OBlock block)  {
         if (state == Sensor.ACTIVE) {

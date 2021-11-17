@@ -511,7 +511,7 @@
         </li>
 
         <li>
-          <a href="#Routes">Routes</a>
+          <a href="#Routes">Train Routes</a>
           <ul>
             <li>
               <a href="#AddRoute">Add Route</a>
@@ -984,7 +984,7 @@
       "#CabooseFredHazardous">checkbox</a> in the <a href="#CarsEdit">Edit Car</a> window. Now
       change the optional train requirements radio button to "Caboose" or "FRED" in the <a href=
       "#TrainEdit">Edit Train</a> window. Place the caboose on a track at the first location in
-      your train's route. Be sure that the last location in your trains route has a track that will
+      your train's route. Be sure that the last location in your train's route has a track that will
       accept the caboose or the train will not build properly.</p>
 
       <p>If you keep building your first train and moving it, eventually all of your cars will end
@@ -2124,7 +2124,7 @@
       regards to routing a car with a <a href="#EditCarLoads">custom load</a> or final destination.
       If you're not using schedules, leave the "Router Detail Level" option set to "Normal". You
       can change this option from "Normal" to "Detailed" or "Very Detailed" when you want to
-      understand why a certain train or trains won't route a car. This set of radio buttons works
+      understand why a certain train or trains won't <a href="#CarRouting">route</a> a car. This set of radio buttons works
       differently than the "Detail Level" radio buttons in that it controls the amount of
       information created during the train build process. You will quickly find that the "Detailed"
       and "Very Detailed" modes can create many extra lines of text in the build report, and unless
@@ -2434,6 +2434,12 @@
      Loaded</a> for more details.
    </p>
 
+   <p>
+    A spur needs a <a href="#Schedules">schedule</a> to receive a car with a
+    <a href="#EditCarLoads">custom load</a>, unless the car is shipped from another spur that has a
+    schedule.
+   </p>
+
    <p>You can if you want, control which trains or routes can pick up or set out cars to your
       spurs. If you do restrict which trains or routes can pull cars from a track, you must also
       restrict the track's car types, loads, and roads to the same ones that your trains can
@@ -2445,15 +2451,15 @@
 
       <h4 id="RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</h4>
 
-      <p>If you wish to limit which trains or routes are allowed to service to your spur, change
+      <p>If you wish to limit which trains or train routes are allowed to service to your spur, change
       the "Select trains or routes for set outs" or "Select trains or routes for pick up" from
       "Any" to one of the four options in the edit spur window. The "Trains" option allows you
       build a list of trains can set out or pick up from the track. The "Routes" option allows you
-      to build a list of routes that can service the track. If you only want to prevent certain
+      to build a list of train routes that can service the track. If you only want to prevent certain
       trains or routes from serving the track select the "Exclude Trains" or "Exclude Routes"
       options.</p>
 
-      <p>If you restrict a track to certain trains or routes, the table in the <a href=
+      <p>If you restrict a track to certain trains or train routes, the table in the <a href=
       "#AddLocation">Edit Location</a> window for that track will have an additional column called
       "Restrictions". If you've built a list of trains or routes that can only set out cars to the
       track, you will see "SO" followed by the number of trains or routes that are allowed to place
@@ -2719,7 +2725,7 @@
       <p>We could have instead of sending the car with print to staging, decided to send the car to
       a spur servicing a paper industry. Just select the destination and the spur/industry that you
       want the car go to. Even if it takes several trains to get the car there, the program will
-      figure out the best route. Note that when the schedule specifies the ship to destination and
+      figure out the best <a href="#CarRouting">route</a>. Note that when the schedule specifies the ship to destination and
       spur, that the spur doesn't need a schedule to accept the car with the custom load
       "L(print)".</p>
 
@@ -2730,7 +2736,7 @@
       <p>Another interesting way to move cars is to ship a custom load, but not specify a
       destination. The program when it finds a car with a custom load, but no destination, will
       check every spur to see if there's a schedule demanding that car type with that specific
-      load. And if there is a spur that meets the requirements, the program will route the car to
+      load. And if there is a spur that meets the requirements, the program will <a href="#CarRouting">route</a> the car to
       that industry. But once a schedule sets up a car with a custom load without a ship to
       destination, that car can only move to yards, classification/interchanges, staging, and spurs
       with schedules. Spurs are only considered if the spur has a schedule demanding the car's type
@@ -2742,7 +2748,7 @@
       that is demanding that car type and custom load. Spurs without a schedule can not service a
       car with a custom load, unless the car is sent directly to that spur.</p>
 
-      <p>One more consideration is empty cars. The program doesn't route cars with the default
+      <p>One more consideration is empty cars. The program doesn't <a href="#CarRouting">route</a> cars with the default
       loads "E" or "L". So if your schedule is requesting an car with the empty default "E", it can
       take awhile before that car shows up. An alternative is to handle empty cars like cars with
       custom loads. You could create the custom load "E(mpty)" and use this load to signify an
@@ -2789,7 +2795,7 @@
       track.</p>
 
       <p>If you want more control on how your classification/interchange track will operate, you
-      can optionally specify which trains or routes can pick up or set out cars. If you restrict
+      can optionally specify which trains or train routes can pick up or set out cars. If you restrict
       which trains or routes can pull cars from a classification/interchange track, you must also
       restrict the track's car types, loads, and roads to the same ones that the train services,
       otherwise you can have cars stranded on the classification/interchange track.</p>
@@ -3051,7 +3057,7 @@
 
       <p>In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
       custom loads when spurs are full" and this option is used to restrict car movement. When this
-      option is selected, cars with custom loads are only routed to spurs with schedules demanding
+      option is selected, cars with custom loads are only <a href="#CarRouting">routed</a> to spurs with schedules demanding
       the car's custom load. When the program finds a car with a custom load but without a final
       destination, it will search all spurs for a schedule that is demanding that car's type and
       load, and if found will route the car there. If all spurs are full and the option "Hold cars
@@ -3222,7 +3228,7 @@
       "Track Destinations" allows you to select which destinations are valid for the track.
       <p>For C/I tracks there's an option to only accept cars with a final destination. This
       prevents cars without a final destination from using the track. This is useful where the C/I
-      allowed track destinations are two or more trains away requiring the cars to be routed. Cars
+      allowed track destinations are two or more trains away requiring the cars to be <a href="#CarRouting">routed</a>. Cars
       without a final destination could be stranded on the C/I track if there isn't a train that
       directly services at least one of the C/I destinations.</p>
 
@@ -3516,21 +3522,23 @@
       to none (blank space).</p>
 
       <h4 id="CarLoad">Load</h4>
-      You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. You
-      can also create your own <a href="#EditCarLoads">custom loads</a>, but there are
-      restrictions. Normally spurs with <a href="#Schedules">Schedules</a> are used to load or
-      unload cars with custom loads that you've created. You can also use <a href=
-      "#StagingAndCarLoads">staging tracks</a> to load or unload your car with custom loads. It is
-      also suggested that you use a format similar to L(commodity) to describe your loads so it
-      looks good on your Manifests and switch lists. For example a load of tools could be entered
-      as "L(Tools)" or just "Tools" if desired.
-      <p>Some operators don't want the default empty or "E" load for a car when the car's load
-      flips from the "L" load or when a car's custom load is removed. To set a custom empty load
-      for car, see <a href="#CarsSet">Set Car</a> and the <a href="#ReturnWhenEmpty">Return When
-      Empty</a> fields. You can tell the program which custom empty load you want each car to
-      have.</p>
+   You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. You can
+   also create your own
+   <a href="#EditCarLoads">custom loads</a>, but there are restrictions. Normally
+   <a href="#Sidings">spurs</a> with <a href="#Schedules">schedules</a> are used to load or unload
+   cars with custom loads that you've created. You can also use
+   <a href="#StagingAndCarLoads">staging tracks</a> to load or unload your car with a custom load. It
+   is also suggested that you use a format similar to L(commodity) to describe your loads so it
+   looks good on your Manifests and switch lists. For example a load of tools could be entered as
+   "L(Tools)" or just "Tools" if desired.
+   <p>
+    Some operators don't want the default empty or "E" load for a car when the car's load flips from
+    the "L" load or when a car's custom load is removed. To set a custom empty load for car, see <a
+     href="#CarsSet">Set Car</a> and the <a href="#ReturnWhenEmpty">Return When Empty</a> fields.
+    You can tell the program which custom empty load you want each car to have.
+   </p>
 
-      <h4 id="Kernel">Kernel (Group of Cars)</h4>
+   <h4 id="Kernel">Kernel (Group of Cars)</h4>
       A "Kernel" is a group of cars that move as a single unit. If you want this car to be part of
       a kernel press "Edit" across from "Kernel" and create a kernel name. Then select the kernel
       name from the menu box in the <a href="#CarsEdit">Edit Car</a> window. The first car you
@@ -3597,20 +3605,26 @@
       Cars window, and then press the "Edit" button across from Road in the "Car Edit" window.
       Enter the new road "UPS" in the text box, select "UP" in the menu box, and press "Replace".
       All cars with "UP" as their road name will now have "UPS" as their road name.
+      
       <h4 id="DeleteUnusedAttributes">Delete Unused Attribute Names</h4>
-      Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of
-      cars with this attribute name" and "Delete unused attribute names". The first will show a
-      count in front of the menu box. The count is the number of'cars that have this particular
-      attribute name. The delete option will prompt you to delete any attribute name that hasn't
-      been assigned to a car.
-      <h3 id="EditCarLoads">Edit Car Loads</h3>
-      To add a custom load or edit a car's load, press the Load "Edit" button in the <a href=
-      "#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will have
-      it's own set of custom loads.
-      <p><img src="images/EditCarLoads.png" alt="">
-      </p>
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars
+   with this attribute name" and "Delete unused attribute names". The first will show a count in
+   front of the menu box. The count is the number of'cars that have this particular attribute name.
+   The delete option will prompt you to delete any attribute name that hasn't been assigned to a
+   car.
 
-      <p>In addition to the Add, Delete, and Replace buttons and fields described above in the
+   <h3 id="EditCarLoads">Edit Car Loads</h3>
+   To add a custom load or edit a car's load, press the Load "Edit" button in the
+   <a href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
+   have it's own set of custom loads. Note that
+   <a href="#Sidings">spurs</a> normally require a <a href="#Schedules">schedule</a> to service cars
+   with custom loads. See car <a href="#CarLoad">Load</a> and <a href="#SchedulesAndLoads">Purposely
+    Moving Cars Using Schedules and Loads</a> for more information.
+   <p>
+    <img src="images/EditCarLoads.png" alt="">
+   </p>
+
+   <p>In addition to the Add, Delete, and Replace buttons and fields described above in the
       <a href="#EditCarAttributes">Car Edit Attributes</a> section, the edit car loads window
       allows you to set the load's type, priority, pick up and set out messages.</p>
 
@@ -3730,7 +3744,7 @@
       <h4 id="FinalDestination">Final Destination and Track</h4>
       The next field is the "Final Destination and Track" set of pull down boxes. You can select
       any destination, and optionally a track at that destination. The program will figure out the
-      best route to ship the car to this destination. The "route" can consist of several trains,
+      best <a href="#CarRouting">route</a> to ship the car to this destination. The "route" can consist of several trains,
       interchanges, and yards. When a car is delivered to a spur with a schedule, and the schedule
       has a shipping destination that requires more than one train, the program uses this set of
       fields to ship the car. If the track that the final destination specifies happens to be full,
@@ -4434,7 +4448,7 @@
       <p>When the "Send cars with custom loads to staging" is selected, the program will attempt to
       send a car with a custom load, but without a final destination, to staging when the program
       finds all of the spurs with schedules full. The program will also send a car to staging if it
-      finds the routes servicing the spurs with schedules have interim yard or C/I tracks that are
+      finds the <a href="#CarRouting">routes</a> servicing the spurs with schedules have interim yard or C/I tracks that are
       also full. This option tends to increase car movement to staging by ignoring the <a href=
       "#SpurOption">Hold cars with custom loads when spurs are full</a> feature for a spur where
       the program would normally hold a car at its current location when all spurs with schedules
@@ -5310,7 +5324,7 @@
       haven't been assigned a <a href="#LocationDivision">division</a>, or don't have a <a href=
       "#FinalDestination">final destination</a> or <a href="#EditCarLoads">custom load</a> are
       found destinations using the random method. Cars assigned to a division, or with a final
-      destination or a custom load are "routed". The term "random" is used to describe car movement
+      destination or a custom load are <a href="#CarRouting">routed</a>. The term "random" is used to describe car movement
       from session to session, as using this method causes cars to move but not in a deterministic
       way. Whereas cars that are "routed" are moved from session to session in a predictable way,
       closer to their final destination.</p>
@@ -5326,7 +5340,7 @@
       locos to tracks that have experienced the least use.</p>
 
       <p>The routing method also uses the car's move count to determine which cars to look at
-      first. A car needs to be routed when it has a <a href="#FinalDestination">final
+      first. A car needs to be <a href="#CarRouting">routed</a> when it has a <a href="#FinalDestination">final
       destination</a> (think ship to address). The program will try and route the car to its final
       destination using up to six trains. If the car has a custom load and no final destination,
       the program will search for a spur with a schedule that is demanding that car's load, and
@@ -5399,14 +5413,14 @@
       the "Tools" menu under Edit Train.</p>
 
       <p>When a car has a final destination which can be set by a <a href="#Schedules">schedule</a>
-      or manually using the <a href="#CarsSet">Set Car</a> window, the program will try and "route"
+      or manually using the <a href="#CarsSet">Set Car</a> window, the program will try and <a href="#CarRouting">route</a>
       the car to that destination. If the program can't find a train or series of trains that can
       deliver the car to the destination, it will try and move the car in an attempt to find a way
       to get the car to the destination.</p>
 
       <p>If a car has a <a href="#EditCarLoads">custom load</a> without a destination, the program
       will search for a spur with a schedule demanding that car type and load, the program will
-      then "route" the car to that destination. The program will use up to six trains to route a
+      then <a href="#CarRouting">route</a> the car to that destination. The program will use up to six trains to route a
       car to a destination. The program when determining how many cars an industry can serve
       considers the length of the spur serving the industry, and the length of the alternate track
       if one is specified. If the car is departing staging with a custom load, the "Percentage of

@@ -43,12 +43,17 @@
 
     <xs:simpleType name="LogixNG_NamedBeanType">
       <xs:restriction base="xs:token">
+         <xs:enumeration value="Block"/>
+         <xs:enumeration value="EntryExit"/>
          <xs:enumeration value="Light"/>
          <xs:enumeration value="Memory"/>
+         <xs:enumeration value="OBlock"/>
+         <xs:enumeration value="Reporter"/>
          <xs:enumeration value="Sensor"/>
          <xs:enumeration value="SignalHead"/>
          <xs:enumeration value="SignalMast"/>
          <xs:enumeration value="Turnout"/>
+         <xs:enumeration value="Warrant"/>
        </xs:restriction>
      </xs:simpleType>
 

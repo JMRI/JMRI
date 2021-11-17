@@ -63,6 +63,8 @@ Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS by name
                                  Multiple names are separated with commas (,)
   --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
+  -T                             Running Jemmy tests, set options appropriately
+  -t                             Not running Jemmy tests, use regular menu options
   --                             Do not process anything following as an option,
                                  even if it matches one of the above options
 EOM
@@ -118,6 +120,8 @@ function parse_args() {
             --settingsdir=*) ;;
             # ignore and do not pass a ProcessSerialNumber argument (from the open command on macOS)
             -psn_*) ;;
+            -T)  JEMMY="yes" ;;
+            -t)  JEMMY="" ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
@@ -205,6 +209,9 @@ ARGS=
 
 # set DEBUG to any non-empty string to see debugging output
 DEBUG=${DEBUG:-}
+
+# set JEMMY to any non-empty string to configure for Jemmy testing
+JEMMY=${JEMMY:-}
 
 # set default classpaths additions
 pre_classpath=""
@@ -511,8 +518,12 @@ fi
 if [ "$OS" = "macosx" ] ; then
     # since bash mangles the application name and icon in $OPTIONS,
     # these are not stored in $OPTIONS
-    OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
-    OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    OS_OPTIONS=""
+        # omit custom menu bar if running Jemmy tests
+        if [ "$JEMMY" = "" ] ; then
+        OS_OPTIONS="${OS_OPTIONS} -Dapple.laf.useScreenMenuBar=true"
+        OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    fi
     OS_OPTIONS="${OS_OPTIONS} -Dfile.encoding=UTF-8"
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"

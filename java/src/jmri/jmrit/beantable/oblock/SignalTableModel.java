@@ -798,11 +798,11 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
             case FROM_BLOCK_COLUMN:
             case PORTAL_COLUMN:
             case TO_BLOCK_COLUMN:
-                return new JTextField(11).getPreferredSize().width;
+                return new JTextField(12).getPreferredSize().width;
             case LENGTHCOL:
-                return new JTextField(5).getPreferredSize().width;
+                return new JTextField(6).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(4).getPreferredSize().width;
+                return new JTextField(5).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width; // NOI18N
             case EDIT_COL:

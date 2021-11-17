@@ -477,7 +477,8 @@
         <li>Brett Hoffman, who provided support for zero-config ("Bonjour"-like) networking and
         WiFi access to throttles.</li>
 
-        <li>Osvaldo Hojvat provided definitions for several <a href="http://www.ldhtrenes.com.ar">
+        <li>Osvaldo Hojvat <!-- ohojvat -->
+          provided definitions for several <a href="http://www.ldhtrenes.com.ar">
           LDH</a> decoders
         </li>
 

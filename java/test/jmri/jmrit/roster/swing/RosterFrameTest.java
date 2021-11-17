@@ -179,7 +179,7 @@ public class RosterFrameTest {
 
         operator.pushIdentifyButton();
 
-        // right now, nothing is ever selected, because multiple selection 
+        // right now, nothing is ever selected, because multiple selection
         // is not working.  See @Ignore above
         JUnitUtil.waitFor(() -> {
             return frame.getSelectedRosterEntries().length == 2;
@@ -285,6 +285,7 @@ public class RosterFrameTest {
         if (frame != null) {
             JUnitUtil.dispose(frame);
         }
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
