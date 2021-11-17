@@ -5,8 +5,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ public class ThrottlesPreferences {
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
+    private String _defaultThrottleFilePath = null;
     private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
@@ -116,6 +119,10 @@ public class ThrottlesPreferences {
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
+        if ((a = e.getAttribute("defaultThrottleFilePath")) != null) {
+            setDefaultThrottleFilePath(a.getValue());
+        }        
+        
         this.dirty = false;
     }
 
@@ -151,6 +158,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isSilentShare", "" + isSilentShare());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
         e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
+        e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(this._tpwkc.store());
         e.setContent(children);
@@ -174,6 +182,7 @@ public class ThrottlesPreferences {
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
         setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
+        setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
         
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -369,6 +378,14 @@ public class ThrottlesPreferences {
         return _hideSpeedStepSelector;
     }
     
+    public void setDefaultThrottleFilePath(String p) {
+        _defaultThrottleFilePath = p;
+        this.dirty = true;
+    }
+    
+    public String getDefaultThrottleFilePath() {
+        return _defaultThrottleFilePath;
+    }
     
     /**
      * @return the throttles keyboard controls preferences

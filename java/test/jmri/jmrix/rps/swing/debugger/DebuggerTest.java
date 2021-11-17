@@ -61,6 +61,7 @@ public class DebuggerTest {
 
     @AfterEach
     public void tearDown(){
+        jmri.util.JUnitUtil.clearShutDownManager();
         jmri.util.JUnitUtil.tearDown();
     }
 

@@ -22,8 +22,6 @@ import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.implementation.AccessoryOpsModeProgrammerFacade;
 import jmri.jmrix.loconet.LnProgrammerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JPanel to configure the ops programming (Adressed) mode.
@@ -31,7 +29,8 @@ import org.slf4j.LoggerFactory;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen      Copyright (C) 2001
+ * @author Daniel Bergqvist  Copyright (C) 2021
  */
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -172,26 +171,24 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
+        setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramOnMain")));
+
         // create the programmer display combo box
-        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<>();
+        java.util.List<AddressedProgrammerManager> v = new java.util.ArrayList<>();
         for (AddressedProgrammerManager pm : InstanceManager.getList(jmri.AddressedProgrammerManager.class)) {
             v.add(pm);
         }
-        add(progBox = new JComboBox<>(v));
+        add(progBox = new JComboBox<>(v.toArray(new AddressedProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             progBox.setVisible(false);
         }
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)); // set default
-        progBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected();
-            }
+        progBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected();
         });
 
-        add(new JLabel(Bundle.getMessage("TitleProgramOnMain")));
         add(new JLabel(" "));
         add(shortAddrButton);
         add(longAddrButton);
@@ -212,28 +209,19 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 //                programmerSelected(); // in case it has valid address now
 //            }
 //        });
-        shortAddrButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        shortAddrButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
-        longAddrButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        longAddrButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
-        offsetAddrCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        offsetAddrCheckBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
         shortAddrButton.setSelected(true);
@@ -499,7 +487,6 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class
-            .getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgOpsModePane.class.getName());
 
 }

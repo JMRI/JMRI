@@ -1,8 +1,7 @@
 package jmri.jmrit.progsupport;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JSeparator;
+import javax.swing.*;
+import java.awt.*;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -68,7 +67,10 @@ public class ProgModePane extends ProgModeSelector {
         if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
 
             mServicePane = new ProgServiceModePane(direction, group);
-            add(mServicePane);
+            JPanel temp = new JPanel();
+            temp.add(mServicePane);
+            temp.setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramServiceMode")));
+            add(temp);
             addSep = true;
         }
 
