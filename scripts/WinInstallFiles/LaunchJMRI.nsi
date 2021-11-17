@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.28.0
+; - Add -Dsun.java2d.uiScale=1 option
+; -------------------------------------------------------------------------
 ; - Version 0.1.27.0
 ; - Add support for 200 return code to shutdown the host machine
 ; - Add support for 210 return code to reboot the host machine
@@ -330,7 +333,7 @@ Section "Main"
     ; -- Gotta love the spaghetti...
     SetErrors
     Goto FoundJavaInstallPoint
-    
+
   DisableAltLauncher:
     DetailPrint "Switching off alternate launcher..."
     StrCpy $ALTLAUNCH ${FLAG_NO}
@@ -468,6 +471,7 @@ Section "Main"
   contOptions:
   StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
+  StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.uiScale=1"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -601,7 +605,7 @@ Section "Main"
 
   ; -- Check the return code is 200 - if so, shutdown
   StrCmp $7 200 Shutdown
-  
+
   ; -- Check the return code is 210 - if so, reboot
   StrCmp $7 210 Reboot PreExit
 
@@ -775,7 +779,7 @@ Function ProcessParameters
   ; -- $1 already contains complete option with '--cp:p=' prefix
   StrCpy $P_CLASSPATH $1 "" 7 ; strip first 7 chars
   Return
-  
+
   optsNoAlt:
   StrCpy $ALTLAUNCH ${FLAG_NO}
   Return
