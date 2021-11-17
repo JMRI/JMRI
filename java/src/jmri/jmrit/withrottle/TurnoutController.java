@@ -138,7 +138,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     /**
      * Send Info on turnouts to devices, not specific to any one turnout.
      * <p>
-     * Format: PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
+     * Format: PTT]\[turnoutText}|{turnoutKey]\[stateText}|{stateKey]\[stateText}|{stateKey...
      */
     public void sendTitles() {
         if (listeners == null) {
@@ -148,8 +148,10 @@ public class TurnoutController extends AbstractController implements PropertyCha
         StringBuilder labels = new StringBuilder("PTT");    //  Panel Turnout Titles
 
         labels.append("]\\[").append(Bundle.getMessage("MenuItemTurnoutTable")).append("}|{Turnout");
+        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{0");
         labels.append("]\\[").append(manager.getClosedText()).append("}|{2");
         labels.append("]\\[").append(manager.getThrownText()).append("}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("StateInconsistent")).append("}|{8");
 
         String message = labels.toString();
 
