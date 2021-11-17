@@ -70,7 +70,9 @@
         <li>Each category has its own JavaScript code file, e.g., <code>/web/js/Panel.js</code>,
         plus supporting "Servlets" to connect to JMRI, as documented in the <a href=
         "https://www.jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">Web Server
-        Javadoc</a>.
+        Javadoc</a>. (Note: The code is run from <code>/web/js/</code>, but the real
+        source code is stored in <code>/web/ts/</code> to allow the use of
+        <a href="../doc/Technical/Patterns.shtml#typescript">compiled TypeScript</a>)
         </li>
       </ul>
 

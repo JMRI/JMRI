@@ -147,7 +147,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
-        //and press create 
+        //and press create
         JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
@@ -166,21 +166,21 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     public String getEditFrameName(){
         return "Edit Sensor IS1";
     }
-    
+
     @Test
     public void testAddFailureCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         InstanceManager.setDefault(SensorManager.class, new CreateNewSensorAlwaysException());
-        
+
         a = new SensorTableAction();
         Assume.assumeTrue(a.includeAddButton());
-        
+
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         // find the "Add... " button and press it.
         JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
-        
+
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
@@ -188,16 +188,16 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         new JTextFieldOperator(hwAddressField).setText("1");
         Thread add1 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("ErrorBeanCreateFailed","Sensor" , "IS1"), Bundle.getMessage("ButtonOK"));  // NOI18N
-        
+
         //and press create
         JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
-        
+
         JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
-    
+
     private class CreateNewSensorAlwaysException extends InternalSensorManager {
 
         public CreateNewSensorAlwaysException() {
@@ -210,7 +210,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
             throw new IllegalArgumentException("createNewSensor Exception Text");
         }
-        
+
     }
 
     @Override
@@ -219,7 +219,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSensorManager();
-        helpTarget = "package.jmri.jmrit.beantable.SensorTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SensorTable";
         a = new SensorTableAction();
     }
 
@@ -228,6 +228,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     public void tearDown() {
         a.dispose();
         a = null;
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

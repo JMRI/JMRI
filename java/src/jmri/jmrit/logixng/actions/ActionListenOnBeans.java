@@ -17,6 +17,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
+    private String _localVariableNamedBean;
+    private String _localVariableEvent;
+    private String _localVariableNewValue;
+    private String _lastNamedBean;
+    private String _lastEvent;
+    private String _lastNewValue;
+
 
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -89,6 +96,42 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         _namedBeanReferences.clear();
     }
 
+    public void setLocalVariableNamedBean(String localVariableNamedBean) {
+        if ((localVariableNamedBean != null) && (!localVariableNamedBean.isEmpty())) {
+            this._localVariableNamedBean = localVariableNamedBean;
+        } else {
+            this._localVariableNamedBean = null;
+        }
+    }
+
+    public String getLocalVariableNamedBean() {
+        return _localVariableNamedBean;
+    }
+
+    public void setLocalVariableEvent(String localVariableEvent) {
+        if ((localVariableEvent != null) && (!localVariableEvent.isEmpty())) {
+            this._localVariableEvent = localVariableEvent;
+        } else {
+            this._localVariableEvent = null;
+        }
+    }
+
+    public String getLocalVariableEvent() {
+        return _localVariableEvent;
+    }
+
+    public void setLocalVariableNewValue(String localVariableNewValue) {
+        if ((localVariableNewValue != null) && (!localVariableNewValue.isEmpty())) {
+            this._localVariableNewValue = localVariableNewValue;
+        } else {
+            this._localVariableNewValue = null;
+        }
+    }
+
+    public String getLocalVariableNewValue() {
+        return _localVariableNewValue;
+    }
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
 /*
@@ -117,10 +160,25 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        // Do nothing.
-        // The purpose of this action is only to listen on property changes
-        // of the registered beans and execute the ConditionalNG when it
-        // happens.
+        // The main purpose of this action is only to listen on property
+        // changes of the registered beans and execute the ConditionalNG
+        // when it happens.
+        
+        synchronized(this) {
+            SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+            if (_localVariableNamedBean != null) {
+                symbolTable.setValue(_localVariableNamedBean, _lastNamedBean);
+            }
+            if (_localVariableEvent != null) {
+                symbolTable.setValue(_localVariableEvent, _lastEvent);
+            }
+            if (_localVariableNewValue != null) {
+                symbolTable.setValue(_localVariableNewValue, _lastNewValue);
+            }
+            _lastNamedBean = null;
+            _lastEvent = null;
+            _lastNewValue = null;
+        }
     }
 
     @Override
@@ -193,6 +251,11 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 //        System.out.format("Property: %s%n", evt.getPropertyName());
+        synchronized(this) {
+            _lastNamedBean = ((NamedBean)evt.getSource()).getDisplayName();
+            _lastEvent = evt.getPropertyName();
+            _lastNewValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+        }
         getConditionalNG().execute();
     }
 

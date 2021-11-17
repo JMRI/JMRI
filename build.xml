@@ -270,7 +270,7 @@
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
-        <pathelement location="${libdir}/jemmy-22-00c9f753cd0a.jar"/>
+        <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-4.3.1.jar"/>
@@ -789,7 +789,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -826,7 +826,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1373,6 +1373,10 @@
         " />
     </target>
 
+    <target name="typescript" description="build TypeScript files">
+        <ant dir="web/ts" />
+    </target>
+
     <!-- ============================================================================= -->
     <!-- Test execution targets                                                        -->
     <!-- ============================================================================= -->
@@ -1414,7 +1418,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1439,7 +1443,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1470,7 +1474,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1561,7 +1565,7 @@
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+                    <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1588,7 +1592,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1616,7 +1620,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1655,7 +1659,7 @@
 
                    <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+                    <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
