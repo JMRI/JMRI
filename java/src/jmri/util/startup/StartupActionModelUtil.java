@@ -123,7 +123,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
 
     /**
      * Add an action from the list of actions.
-     * 
+     *
      * @param strClass the action class
      * @param name the localized action name
      * @throws ClassNotFoundException if the action class cannot be found
@@ -147,7 +147,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
 
     /**
      * Remove an action from the list of actions.
-     * 
+     *
      * @param strClass the action class
      * @throws ClassNotFoundException if the action class cannot be found
      * @deprecated since 4.19.7 without direct replacement
@@ -172,22 +172,14 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         if (this.actions == null) {
             this.actions = new HashMap<>();
             this.overrides = new HashMap<>();
-            
-            // Search for and process implementations of the obsolete StartupActionFactory class
-            ServiceLoader<apps.startup.StartupActionFactory> asLoader = ServiceLoader.load(apps.startup.StartupActionFactory.class);
-            asLoader.forEach(factory -> {
-                addActions(factory);
-                jmri.util.LoggingUtil.deprecationWarning(log, factory.getClass().getName());
-            });
-            asLoader.reload(); // allow factories to be garbage collected
-            
+
             ServiceLoader<StartupActionFactory> jusLoader = ServiceLoader.load(StartupActionFactory.class);
             jusLoader.forEach(factory -> addActions(factory));
             jusLoader.reload(); // allow factories to be garbage collected
-            
+
             InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> addActions(memo.getActionFactory()));
             InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> memo.addPropertyChangeListener("actionFactory", actionFactoryListener));
-            
+
             firePropertyChange("length", 0, actions.size());
         }
     }
