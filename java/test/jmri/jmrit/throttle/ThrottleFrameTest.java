@@ -16,10 +16,8 @@ import org.junit.rules.TemporaryFolder;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@Ignore("Jemmy has trouble locating internal frame")
 public class ThrottleFrameTest {
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -56,7 +54,7 @@ public class ThrottleFrameTest {
                 to.getAddressValue());
         // don't release the throttle here.  When the frame is disposed,
         // the throttle will still be attached, which causes a different code
-        // path to be executed. 
+        // path to be executed.
     }
 
     @Test

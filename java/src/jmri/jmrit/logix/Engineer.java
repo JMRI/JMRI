@@ -57,6 +57,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private boolean _atClear = false;
     private final SpeedUtil _speedUtil;
     private OBlock _synchBlock = null;
+    private Thread _checker = null;
+    
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -190,25 +192,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         _synchBlock = null;
                     }
                 }
-/*
-                synchronized (this) {
-                    _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                    try {
-                        if (log.isDebugEnabled()) {
-                            log.debug("{}: Wait for train to enter \"{}\".",
-                                    _warrant.getDisplayName(), _synchBlock.getDisplayName());
-                        }
-                        _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
-                        wait();
-                    } catch (InterruptedException ie) {
-                        log.error("At _waitForSync {}", ie);
-                        _warrant.debugInfo();
-                        Thread.currentThread().interrupt();
-                    }
-                    finally {
-                        _synchBlock = null;
-                    }
-                }*/
             }
             if (_abort) {
                 break;
@@ -286,6 +269,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 if (_idxSkipToSpeedCommand <= _idxCurrentCommand) {
                     executeComand(_currentCommand, System.currentTimeMillis() - cmdStart);
                     _idxCurrentCommand++;
+                }
+                if (_checker != null) {
+                    break;
                 }
             }
         }
@@ -925,9 +911,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 log.debug("Loco address {} finishes warrant {} and starts warrant {}",
                         warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             }
-            Thread checker = new CheckForTermination(_warrant, warrant, num, _currentCommand.getTime());
-            checker.setName("Engineer("+_warrant.getDisplayName()+") CheckForTermination");
-            checker.start();
+            _warrant.deAllocate();
+            // same address so this warrant (_warrant) must release the throttle before (warrant) can acquire it
+            _checker = new CheckForTermination(_warrant, warrant, num, _currentCommand.getTime());
+            _checker.start();
             if (log.isDebugEnabled()) log.debug("Exit runWarrant");
             return;
         } else {
@@ -953,7 +940,45 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         log.debug("Exit runWarrant - {}",msg);
     }
 
-    private static class CheckForTermination extends Thread {
+    private void checkerDone(Warrant oldWarrant, Warrant newWarrant) {
+        OBlock endBlock = oldWarrant.getLastOrder().getBlock();
+        if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
+            log.error(Bundle.getMessage("cannotLaunch",
+                    newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
+            return;
+        }
+
+        String msg = null;
+        java.awt.Color color;
+        msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
+        if (msg != null) {
+            msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+            color = java.awt.Color.red;
+        } else {
+            CommandValue cmdVal = _currentCommand.getValue();
+            int num = Math.round(cmdVal.getFloat());
+            if (oldWarrant.equals(newWarrant)) {
+                msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
+            } else {
+                msg = Bundle.getMessage("linkedLaunch",
+                        newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
+                        newWarrant.getfirstOrder().getBlock().getDisplayName(),
+                        endBlock.getDisplayName());
+            }
+            color = WarrantTableModel.myGreen;
+        }
+        String m = msg;
+        java.awt.Color c = color;
+        Engineer.setFrameStatusText(m, c, true);
+        try {
+            _checker.join(500);
+        } catch (InterruptedException ie) {
+        } finally {
+            _checker = null;
+        }
+    }
+
+    private class CheckForTermination extends Thread {
         Warrant oldWarrant;
         Warrant newWarrant;
         int num;
@@ -963,61 +988,34 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             oldWarrant = oldWar;
             newWarrant = newWar;
             num = n;
-            timeLimit = time + 15000L;    // max wait time to launch is command et + 15 seconds..
+            timeLimit = time + 20000L;    // max wait time to launch is command et + 20 seconds..
             if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {}, {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num, time);
          }
 
         @Override
         public void run() {
-            OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
-            String msg = null;
-            while (time <= timeLimit) {
+            while (time <= timeLimit && _throttle != null) {
                 if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
                     break;
                 }
-                int priority = Thread.currentThread().getPriority();
+//                int priority = Thread.currentThread().getPriority();
                 try {
-                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+//                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
                     Thread.sleep(100);
                     time += 100;
                 } catch (InterruptedException ie) {
                     time = timeLimit;
-                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), ie);
                 } finally {
-                    Thread.currentThread().setPriority(priority);
+//                    Thread.currentThread().setPriority(priority);
                 }
             }
             if (time >= timeLimit || log.isDebugEnabled()) {
                 log.info("Waited {}ms for warrant \"{}\" to terminate. runMode={}",
                         time, oldWarrant.getDisplayName(), oldWarrant.getRunMode());
             }
-            if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
-                log.error(Bundle.getMessage("cannotLaunch",
-                        newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
-                return;
-            }
-
-            java.awt.Color color;
-            msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
-            if (msg != null) {
-                msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
-                color = java.awt.Color.red;
-            } else {
-                if (oldWarrant.equals(newWarrant)) {
-                    msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
-                } else {
-                    msg = Bundle.getMessage("linkedLaunch",
-                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
-                            newWarrant.getfirstOrder().getBlock().getDisplayName(),
-                            endBlock.getDisplayName());
-                }
-                color = WarrantTableModel.myGreen;
-            }
-            String m = msg;
-            java.awt.Color c = color;
-            Engineer.setFrameStatusText(m, c, true);
+            checkerDone(oldWarrant, newWarrant);
         }
     }
 

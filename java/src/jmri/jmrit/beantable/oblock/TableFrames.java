@@ -96,6 +96,7 @@ public class TableFrames implements InternalFrameListener {
     private JMenuItem openPortal;
     private JMenuItem openXRef;
     private JMenuItem openSignal;
+    private JMenuItem _setUnits;
 
     private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
     private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>();
@@ -312,6 +313,10 @@ public class TableFrames implements InternalFrameListener {
         if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
             importBlocksItem.setEnabled(false);
         }
+        _setUnits = new JMenuItem(Bundle.getMessage("changeUnits",
+                (_oBlockModel.isMetric() ? Bundle.getMessage("LengthInches") : Bundle.getMessage("LengthCentimeters"))));
+        _setUnits.addActionListener(event -> setUnits());
+        optionMenu.add(_setUnits);
         return optionMenu;
     }
 
@@ -488,6 +493,12 @@ public class TableFrames implements InternalFrameListener {
             _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
         log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
+    }
+
+    private void setUnits() {
+        _oBlockModel.changeUnits();
+        _setUnits.setText(Bundle.getMessage("changeUnits",
+                (_oBlockModel.isMetric() ? Bundle.getMessage("LengthInches") : Bundle.getMessage("LengthCentimeters"))));
     }
 
     // listen for _desktopframe closing
