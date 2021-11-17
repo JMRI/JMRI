@@ -570,6 +570,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Basic support for TypeScript has been added to the
+                webserver file system.</li>
         </ul>
 
