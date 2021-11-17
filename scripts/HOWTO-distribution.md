@@ -338,9 +338,8 @@ If you're developing any additional (post-4.25.6) changes that you want in the J
         ant alltest
 ```
 
-   <ul> <li style="list-style-type: none;">
-    and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.25.6" Github issue so that historical resource usage info is available.
-   </li> </ul>
+
+and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.25.6" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
