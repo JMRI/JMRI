@@ -137,7 +137,19 @@ public class HardcopyWriter extends Writer {
         width = pagesize.width - (int) ((leftmargin + rightmargin) * pagedpi);
         height = pagesize.height - (int) ((topmargin + bottommargin) * pagedpi);
 
+        System.out.format("Default font: %s%n", fontName);
+        String fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        for (int i = 0; i < fonts.length; i++) {
+            System.out.println(fonts[i]);
+        }
+//        fontName = "Courier New";
+//        fontName = "Verdana";
+        fontName = "DejaVu Sans Mono";
+//        fontName = "Times New Roman";
+//        fontsize *= 1.3;
+
         // get body font and font size
+        System.out.format("Font: %s%n", fontName);
         font = new Font(fontName, fontStyle, fontsize);
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
