@@ -106,11 +106,11 @@ public class RouteController extends AbstractController implements PropertyChang
         StringBuilder labels = new StringBuilder("PRT");    //  Panel Route Titles
 
         labels.append("]\\[").append(Bundle.getMessage("MenuItemRouteTable")).append("}|{Route"); // should Route be translated?
-        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{"); //define no feedback as Unknown
-        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{0");
         labels.append("]\\[").append(Bundle.getMessage("StateActive")).append("}|{2");
         labels.append("]\\[").append(Bundle.getMessage("StateInactive")).append("}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{0");
         labels.append("]\\[").append(Bundle.getMessage("StateInconsistent")).append("}|{8");
+        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{"); //define no feedback as Unknown
 
         String message = labels.toString();
 

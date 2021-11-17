@@ -148,9 +148,9 @@ public class TurnoutController extends AbstractController implements PropertyCha
         StringBuilder labels = new StringBuilder("PTT");    //  Panel Turnout Titles
 
         labels.append("]\\[").append(Bundle.getMessage("MenuItemTurnoutTable")).append("}|{Turnout");
-        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{0");
         labels.append("]\\[").append(manager.getClosedText()).append("}|{2");
         labels.append("]\\[").append(manager.getThrownText()).append("}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("StateUnknown")).append("}|{1");
         labels.append("]\\[").append(Bundle.getMessage("StateInconsistent")).append("}|{8");
 
         String message = labels.toString();
