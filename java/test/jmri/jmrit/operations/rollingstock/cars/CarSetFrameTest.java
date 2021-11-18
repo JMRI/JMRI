@@ -167,6 +167,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
 
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
@@ -229,6 +230,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         // remove this type from train
         train1.deleteTypeName(c3.getTypeName());
 
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -284,6 +286,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         train1.setRoadOption(Train.EXCLUDE_ROADS);
         train1.addRoadName(c3.getRoadName());
 
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -338,6 +341,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         // Exclude car's built date from train
         train1.setBuiltEndYear("1984");
 
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -393,6 +397,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         train1.setOwnerOption(Train.EXCLUDE_OWNERS);
         train1.addOwnerName(c3.getOwner());
 
+        JemmyUtil.waitFor(f);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);

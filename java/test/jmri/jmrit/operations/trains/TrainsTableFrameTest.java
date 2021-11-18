@@ -494,12 +494,13 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableFrame ttf = new TrainsTableFrame();
         ttf.setLocation(10, 20);
 
+        // All trains use route D, fix so they all build
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Test Route D");
         Assert.assertNotNull(route);
         Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("Test_Location 1");
         route.addLocation(location);
 
-        // confirm defaults
+        // confirm defaults and load train route
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
@@ -507,7 +508,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             train.setRoute(route);
         }
 
-        // must disable build failure messages or thread lock
+        // Shouldn't have a build failure, but just in case
         tmanager.setBuildMessagesEnabled(false);
 
         JemmyUtil.enterClickAndLeave(ttf.buildButton);
