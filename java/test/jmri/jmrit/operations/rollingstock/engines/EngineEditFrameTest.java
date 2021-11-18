@@ -428,12 +428,12 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // try to set engine to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        
         // get response message
         String status = engine.setLocation(loc2, testSpur);
         Assert.assertFalse(status.equals(Track.OKAY));
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
                 .format(Bundle.getMessage("rsOverride"), new Object[]{status}), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
@@ -576,6 +576,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
@@ -614,6 +615,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
@@ -655,6 +657,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         // now answer yes to add model
@@ -679,6 +682,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         JUnitUtil.dispose(f);
@@ -719,6 +723,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
 
         // now answer yes to add type
@@ -743,10 +748,9 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
-
         JUnitUtil.dispose(f);
-
     }
     
     @Test
@@ -783,6 +787,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(EngineLengths.class).containsName("1234"));
 
         // now answer yes to add type
@@ -807,8 +812,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(EngineLengths.class).containsName("1234"));
-
         JUnitUtil.dispose(f);
     }
     
@@ -846,6 +851,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         // now answer yes to add owner
@@ -870,8 +876,8 @@ public class EngineEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
-
         JUnitUtil.dispose(f);
     }
     
