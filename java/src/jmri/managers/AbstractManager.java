@@ -64,7 +64,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         silenceableProperties.add("beans");
         setRegisterSelf();
     }
-    
+
     final void setRegisterSelf(){
         registerSelf();
     }
@@ -73,7 +73,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // create and use a reference to an internal connection
         this(InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
     }
-    
+
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -243,7 +243,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // clear caches
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
-        
+
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
@@ -315,7 +315,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
         // stop listening for user name changes
         s.removePropertyChangeListener(this);
-        
+
         // remove bean from local storage
         String systemName = s.getSystemName();
         _beans.remove(s);
@@ -324,7 +324,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         if (userName != null) {
             _tuser.remove(userName);
         }
-        
+
         // notifications
         fireDataListenersRemoved(position, position, s);
         if (!silencedProperties.getOrDefault("beans", false)) {
@@ -384,7 +384,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { return _beans.size();}    
+    public int getObjectCount() { return _beans.size();}
 
     /** {@inheritDoc} */
     @Override
@@ -518,7 +518,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The implementation in {@link AbstractManager} should be final, but is not
      * for four managers that have arbitrary prefixes.
      */
@@ -561,7 +561,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     private final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     private boolean muted = false;
-    
+
     /** {@inheritDoc} */
     @Override
     @Deprecated
@@ -570,7 +570,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
             ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            listeners.forEach(listener -> listener.contentsChanged(e));          
+            listeners.forEach(listener -> listener.contentsChanged(e));
         }
         this.muted = m;
     }
@@ -613,7 +613,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         b.append(nextNumber);
         return b.toString();
     }
-    
+
     /**
      * Create a System Name from hardware address and system letter prefix.
      * AbstractManager performs no validation.
@@ -625,7 +625,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return prefix + typeLetter() + curAddress;
     }
-    
+
     /**
      * checks for numeric-only system names.
      * @param curAddress the System name ( excluding both prefix and type letter) to check.
@@ -640,25 +640,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         }
         return curAddress;
     }
-    
-    /**
-     * Get the Next valid hardware address.
-     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
-     * <p>
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @return the next valid system name, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
-     *                          or more than 10 next addresses in use.
-     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
-     */
-    @Nonnull
-    @Deprecated
-    public final String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNextValidAddress");
-        return getNextValidAddress(curAddress, prefix, false);
-    }
-    
+
     /**
      * Get the Next valid hardware address.
      * Used by the Turnout / Sensor / Reporter / Light Manager classes.
@@ -666,10 +648,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      * System-specific methods may want to override getIncrement() rather than this one.
      * @param curAddress the starting hardware address to get the next valid from.
      * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
+     * @param ignoreInitialExisting false to return the starting address if it
      *                          does not exist, else true to force an increment.
      * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
+     * @throws JmriException    if unable to get the current / next address,
      *                          or more than 10 next addresses in use.
      */
     @Nonnull
@@ -686,7 +668,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             bean = getBySystemName(testAddr);
             increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
             testAddr = testAddr.substring(getSystemNamePrefix().length());
-            
+
             // do not check for incrementability here as could be String only
             // getIncrement(testAddr, increment);
         }
@@ -706,7 +688,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         }
         throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,testAddr));
     }
-    
+
     /**
      * Increment a hardware address.
      * <p>
@@ -721,7 +703,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected String getIncrement(String curAddress, int increment) throws JmriException {
         return getIncrementFromExistingNumber(curAddress,increment);
     }
-    
+
     /**
      * Increment a hardware address with an existing number.
      * <p>
