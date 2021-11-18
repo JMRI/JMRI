@@ -26,7 +26,6 @@ public class ThrottlesPreferences {
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = false;
     private boolean _useLargeSpeedSlider = false;
-    private boolean _hideSpeedStepSelector = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -113,9 +112,6 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
             setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
         }
-        if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
-            setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
-        }
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
@@ -157,7 +153,6 @@ public class ThrottlesPreferences {
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
-        e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
         e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(this._tpwkc.store());
@@ -180,7 +175,6 @@ public class ThrottlesPreferences {
         setSilentSteal(tp.isSilentSteal());
         setSilentShare(tp.isSilentShare());
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
-        setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
         setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
         
@@ -367,17 +361,7 @@ public class ThrottlesPreferences {
     public boolean isUsingLargeSpeedSlider() {
         return _useLargeSpeedSlider;
     }
-    
-    
-    public void setHideSpeedStepSelector(boolean b) {
-        _hideSpeedStepSelector = b;
-        this.dirty = true;
-    }
-    
-    public boolean isHidingSpeedStepSelector() {
-        return _hideSpeedStepSelector;
-    }
-    
+            
     public void setDefaultThrottleFilePath(String p) {
         _defaultThrottleFilePath = p;
         this.dirty = true;

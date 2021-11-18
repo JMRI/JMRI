@@ -1186,8 +1186,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
-        hideSpeedStep = ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
-        speedStepBox.setVisible(! hideSpeedStep);
 
         setupButton(stopButton, preferences, "ButtonEStop");
         setupButton(idleButton, preferences, "ButtonIdle");
@@ -1331,10 +1329,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             try {
                 setHideSpeedStep ( hssAtt.getBooleanValue() );
             } catch (org.jdom2.DataConversionException ex) {
-                setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+                setHideSpeedStep ( false );
             }
         } else {
-            setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+            setHideSpeedStep ( false );
         }
         if ((prevShuntingFn == null) && (e.getAttribute("switchSliderOnFunction") != null)) {
             setSwitchSliderFunction(e.getAttribute("switchSliderOnFunction").getValue());

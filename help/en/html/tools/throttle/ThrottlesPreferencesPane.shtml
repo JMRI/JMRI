@@ -102,9 +102,6 @@
       If enabled, the speed slider will be drawn much larger and bolder. Will also automaticaly resize the control panel buttons as large as possible.<br>
       Makes everything more readable when standing far away from screen.
 
-      <h3>Hide speed step selector</h3>
-      If enabled, as a default, on a new throttle window, in the control panel, the speed step selector is not shown.
-
       <h3>Steal / Share Options</h3>
       <p>These are system dependent options, and are not be available for all hardware types. Some systems perform automatic steal or sharing, so no option is required.</p>
 
