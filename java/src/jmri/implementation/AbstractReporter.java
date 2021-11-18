@@ -67,7 +67,8 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
 
     @Override
     public boolean isExtendedReportsSupported() {
-        return false;   // Disable extended reports for now
+//        return false;   // Disable extended reports for now
+        return true;   // Assume yes for now
 //        throw new UnsupportedOperationException("The implementing class needs to implement this method");
     }
 
