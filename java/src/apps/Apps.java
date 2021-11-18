@@ -827,7 +827,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
-    @SuppressWarnings("deprecation") // JmriPlugin.start(...)
     static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
         // Create a WindowInterface object based on the passed-in Frame
@@ -839,9 +838,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         containedPane.createMenus(containedPane.menuBar, wi);
         // connect Help target now that globalHelpBroker has been instantiated
         containedPane.attachHelp();
-
-        // invoke plugin, if any
-        JmriPlugin.start(frame, containedPane.menuBar);
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
