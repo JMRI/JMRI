@@ -37,6 +37,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         Model.instance().addRegion(region);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isExtendedReportsSupported() {
         return true;
