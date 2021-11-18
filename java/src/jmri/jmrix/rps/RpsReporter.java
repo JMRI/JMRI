@@ -100,6 +100,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * Notify parameter listeners that a device has left the region covered by
      * this reporter.
      * @param id Number of region being left
+     * @param report The report
      */
     void notifyLeaving(Integer id, RpsReport report) {
         firePropertyChange("Leaving", null, id);
@@ -111,6 +112,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * Notify parameter listeners that a device has entered the region covered
      * by this reporter.
      * @param id Number of region being entered
+     * @param report The report
      */
     void notifyArriving(Integer id, RpsReport report) {
         firePropertyChange("Arriving", null, id);
