@@ -68,7 +68,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
 
     // Special methods to set the report from the ends of the track
     // these methods record the order of reports seen.
-
+/*
     @SuppressWarnings("unchecked")
     public void pushEast(Object o){
          if(o != null) {
@@ -96,5 +96,5 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
        setReport(collection.peekLast());
        return retval;
     }
-
+*/
 }

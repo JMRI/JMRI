@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
  **/
 
 public class TrackReporterTest extends jmri.implementation.AbstractRailComReporterTest {
-
+/*
    @Test
    public void testSingleEndedTrackEast(){
        // this track should work like a stack, add or remove from one end only.
@@ -54,7 +54,7 @@ public class TrackReporterTest extends jmri.implementation.AbstractRailComReport
        Assert.assertEquals("pull last entered","World",tr.pullEast());
        Assert.assertNull("last report",tr.getCurrentReport());
    }
-
+*/
    @Override
    @BeforeEach
    public void setUp() {
