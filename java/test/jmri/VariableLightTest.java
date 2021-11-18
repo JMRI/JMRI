@@ -46,6 +46,7 @@ public class VariableLightTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+
         clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
         clock.setTime(java.time.Instant.EPOCH);  // just a specific time
