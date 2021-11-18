@@ -1,10 +1,8 @@
 package jmri.util;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -17,9 +15,24 @@ public class EarlyInitializationPreferences {
 
     private static final String FILENAME = jmri.util.FileUtil
             .getExternalFilename("settings:JMRI_InitPreferences.ini");
+    
+    private static final EarlyInitializationPreferences instance =
+            new EarlyInitializationPreferences();
 
     private final Properties preferences = new Properties();
+    
+    // The preferences might have been changed after startup, but we want to
+    // keep a list of the preferences used at startup for the JMRI Context.
+    private final List<String> startupPrefs = new ArrayList<>();
 
+
+    private EarlyInitializationPreferences() {
+        // Private constructor to protect singleton pattern.
+    }
+
+    public static EarlyInitializationPreferences getInstance() {
+        return instance;
+    }
 
     /**
      * Load the preferences at startup and set them.
@@ -28,7 +41,16 @@ public class EarlyInitializationPreferences {
         load();
         for (String pref : preferences.stringPropertyNames()) {
             System.setProperty(pref, preferences.getProperty(pref));
+            startupPrefs.add(pref + ": " + preferences.getProperty(pref));
         }
+    }
+
+    /**
+     * Return the preferences set at startup.
+     * @return the preferences
+     */
+    public List<String> getStartupPreferences() {
+        return startupPrefs;
     }
 
     private void store() {
