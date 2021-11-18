@@ -1290,7 +1290,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         internalAdjust = true;
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
