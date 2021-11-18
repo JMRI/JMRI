@@ -140,6 +140,9 @@ public class DecoderPro extends Apps {
     // Main entry point
     public static void main(String args[]) {
 
+        // Set up system properties that needs to be loaded early
+        new jmri.util.EarlyInitializationPreferences().loadAndSetPreferences();
+
         // show splash screen early
         splash(true);
 
