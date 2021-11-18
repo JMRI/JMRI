@@ -14,7 +14,7 @@ import java.util.Properties;
 public class EarlyInitializationPreferences {
 
     private static final String FILENAME = jmri.util.FileUtil
-            .getExternalFilename("settings:JMRI_InitPreferences.ini");
+            .getExternalFilename("settings:JMRI_InitPreferences.properties");
     
     private static final EarlyInitializationPreferences instance =
             new EarlyInitializationPreferences();

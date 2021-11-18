@@ -575,8 +575,9 @@
             <li>Users that have HighDPI scaling set to something
                 different than 100% can now select whenether or not
                 to force Java to use 100% scaling. It's set in the
-                file <code>settings:JMRI_InitPreferences.ini</code>
-                with the setting <code>sun.java2d.uiScale</code>.
+                file <code>JMRI_InitPreferences.properties</code>
+                in the JMRI system preferences directory with the
+                setting <code>sun.java2d.uiScale</code>.
                 If this value is <code>1</code>, Java forces the
                 scaling of JMRI to 100%. If this value is
                 <code>0</code>, Java uses the same scaling as the
