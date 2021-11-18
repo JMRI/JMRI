@@ -498,6 +498,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
         @Override
+        @SuppressWarnings("deprecation")  // shouldYieldFocus()
         public boolean shouldYieldFocus(javax.swing.JComponent input) {
             if (input instanceof ValidatedTextField) {
 
