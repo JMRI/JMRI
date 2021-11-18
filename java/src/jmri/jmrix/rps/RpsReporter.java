@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
@@ -8,6 +9,7 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.PhysicalLocation;
 import jmri.PhysicalLocationReporter;
+import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  * RPS implementation of the Reporter interface.
  *
- * @author Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen      Copyright (C) 2008
+ * @author Daniel Bergqvist  Copyright (C) 2021
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -50,40 +53,58 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         }
 
         log.debug("starting {}", getSystemName());
+
+        PhysicalLocation physicalLocation =
+                jmri.util.PhysicalLocation.getBeanPhysicalLocation(this);
+        if (physicalLocation == jmri.PhysicalLocation.Origin) {
+            physicalLocation = new jmri.util.PhysicalLocation(r.getX(), r.getY(), r.getZ());
+        }
+
         if (region.isInside(p)) {
-            notifyInRegion(id);
+            RpsReport report =
+                    new RpsReport(
+                            id,
+                            PhysicalLocationReporter.Direction.ENTER,
+                            physicalLocation);
+            notifyInRegion(id, report);
         } else {
-            notifyOutOfRegion(id);
+            RpsReport report =
+                    new RpsReport(
+                            id,
+                            PhysicalLocationReporter.Direction.EXIT,
+                            physicalLocation);
+            notifyOutOfRegion(id, report);
         }
     }
 
-    void notifyInRegion(Integer id) {
+    void notifyInRegion(Integer id, RpsReport report) {
         // make sure region contains this Reading.getId();
         if (!contents.contains(id)) {
             contents.add(id);
-            notifyArriving(id);
+            notifyArriving(id, report);
         }
     }
 
-    void notifyOutOfRegion(Integer id) {
+    void notifyOutOfRegion(Integer id, RpsReport report) {
         // make sure region does not contain this Reading.getId();
         if (contents.contains(id)) {
             contents.remove(id);
-            notifyLeaving(id);
+            notifyLeaving(id, report);
         }
     }
 
     transient Region region;
-    ArrayList<Integer> contents = new ArrayList<Integer>();
+    List<Integer> contents = new ArrayList<>();
 
     /**
      * Notify parameter listeners that a device has left the region covered by
      * this reporter.
      * @param id Number of region being left
      */
-    void notifyLeaving(Integer id) {
+    void notifyLeaving(Integer id, RpsReport report) {
         firePropertyChange("Leaving", null, id);
-        setReport("");
+        firePropertyChange(Reporter.REPORT_PROPERTY, report, null);
+        setExtendedReport(null);
     }
 
     /**
@@ -91,13 +112,15 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * by this reporter.
      * @param id Number of region being entered
      */
-    void notifyArriving(Integer id) {
+    void notifyArriving(Integer id, RpsReport report) {
         firePropertyChange("Arriving", null, id);
-        setReport("" + id);
+        firePropertyChange(Reporter.REPORT_PROPERTY, null, report);
+        setExtendedReport(report);
     }
 
     /**
      * Numerical state is the number of transmitters in the region.
+     * @return number of transmitters
      */
     @Override
     public int getState() {
@@ -116,13 +139,13 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     // Methods to support PhysicalLocationReporter interface
 
-    /**
+    /* *
      * Parses out a (possibly old) RpsReporter-generated report string to
      * extract the address from the front.
      * Assumes the RpsReporter format is "NNNN".
      * @param rep loco string.
      * @return loco address, may be null.
-     */
+     * /
     public LocoAddress getLocoAddress(String rep) {
         // The report is a string, that is the ID of the locomotive (I think)
         log.debug("Parsed ID: {}", rep);
@@ -141,19 +164,19 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         }
     }
 
-    /**
+    /* *
      * Get the direction (ENTER/EXIT) of the report.
      * <p>
      * Because of the way Ecos Reporters work (or appear to), all reports are ENTER type.
      * @param rep reporter ID in string form.
      * @return direction is always a location entrance
-     */
+     * /
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // The RPS reporter only sends a report on entry.
         return (PhysicalLocationReporter.Direction.ENTER);
     }
 
-    /**
+    /* *
      * Get the PhysicalLocation of the Reporter.
      * <p>
      * Reports its own location, for now.
@@ -162,7 +185,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * transmitter, but right now that doesn't appear to be being stored
      * anywhere retrievable. NOT DONE YET
      * @return PhysicalLocation.getBeanPhysicalLocation
-     */
+     * /
     public PhysicalLocation getPhysicalLocation() {
         return (jmri.util.PhysicalLocation.getBeanPhysicalLocation(this));
     }
@@ -175,7 +198,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      *
      * @param s transmitter ID.
      * @return physical location.
-     */
+     * /
     public PhysicalLocation getPhysicalLocation(String s) {
         if (s.length() > 0) {
             try {
@@ -191,7 +214,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
             return (null);
         }
     }
-
+*/
     private final static Logger log = LoggerFactory.getLogger(RpsReporter.class);
 
 }

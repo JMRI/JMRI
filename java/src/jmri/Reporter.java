@@ -43,6 +43,11 @@ package jmri;
 public interface Reporter extends NamedBean {
 
     /**
+     * Property used by propertyChange() when a report is added or removed.
+     */
+    public static final String REPORT_PROPERTY = "Report";
+
+    /**
      * Query the last report. This will return a value even if there's no
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this
