@@ -253,6 +253,11 @@ and distribute JMRI.
     <code>web/js</code> directory, which is where our web pages are served from via the
     <a href="../../web/index.shtml">JMRI web server</a>.</p>
 
+    <p>To run the <code>ant typescript</code> target and compile the TypeScript files,
+    a TypeScript compiler needs to be installed on the computer. For more information
+    on TypeScript and how to install it, see the
+    <a href="https://www.typescriptlang.org/">TypeScript web page</a>.</p>
+
     <p>JavaScript code can also be used for scripting.  By default, these should be put
     into the <code>jython/</code> directory, though of course people can run scripts from
     any location they choose.
