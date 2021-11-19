@@ -895,6 +895,9 @@
         <li>Dima Stepanchuk, who provided a fix for the Packet Analyzer</li>
 
         <li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
+
+        <li>James Szinger, who helped with the Java 11 migration on Linux.
+
           <a id="T"></a>
         </li>
 

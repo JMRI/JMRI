@@ -489,7 +489,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore"));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
@@ -823,7 +823,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
@@ -1837,7 +1837,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
 
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
         // add zoom choices to menu
         JMenuItem zoomInItem = new JMenuItem(Bundle.getMessage("ZoomIn"));

@@ -570,7 +570,22 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Basic support for TypeScript has been added to the
-                webserver file system.</li>
+            <li>This is the first test release that requires Java 11.
+                As part of that, there were extensive changes to
+                the underlying infrastructure. See PR
+                <a href="https://github.com/JMRI/JMRI/pull/10278">#10278</a>
+                and following commits.
+            </li>
+        </ul>
+
+    <h3>Migration Issues</h3>
+        <a id="migration" name="migration"></a>
+        <ul>
+            <li>The following tests have been temporarily disabled to get basic CI running.
+                They work on Java 8, but consistently fail on Java 11.
+                    <ul>
+                    <li>
+                    </ul>
+            </li>
         </ul>
 
