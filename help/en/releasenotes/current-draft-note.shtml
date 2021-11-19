@@ -226,7 +226,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Added a new LDH SyM v60 decoder definition
+                    in Spanish and Portuguese</li>
             </ul>
 
         <h4>Lenz</h4>
