@@ -89,6 +89,7 @@ public class ReporterTest {
     @BeforeEach
     public void setUp(){
        jmri.util.JUnitUtil.setUp();
+
        r = new AbstractReporter("SYS", "usr") {
             @Override
             public int getState() {
@@ -99,6 +100,12 @@ public class ReporterTest {
             public void setState(int s) {
                 state = s;
             }
+
+            @Override
+            public boolean isExtendedReportsSupported() {
+                return false;
+            }
+
             int state = 0;
         };
     }
