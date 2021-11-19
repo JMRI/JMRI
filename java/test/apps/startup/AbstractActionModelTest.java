@@ -60,9 +60,6 @@ public class AbstractActionModelTest {
         Assert.assertFalse("Invalid class is invalid", instance.isValid());
         instance.setClassName(this.getClass().getName());
         Assert.assertTrue("Has class found in classpath", instance.isValid());
-
-        // suppress deprecation warning that's expected
-        jmri.util.JUnitAppender.assertWarnMessageStartsWith("apps.startup.StartupActionFactoryScaffold is deprecated, please remove references to it");
     }
 
     public class AbstractActionModelImpl extends AbstractActionModel {
