@@ -3,11 +3,11 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmri.ExtendedReport.StringReport;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -308,7 +308,7 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setExtendedReport(new StringReport("report"));
         // For each report, there are two PropertyChangeEvents -
         // "currentReport" and "lastReport"
         Assert.assertEquals("count of detected changes", 2, count);
@@ -327,11 +327,11 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setExtendedReport(new StringReport("report"));
         // Only detecting "currentReport" PropertyChangeEvent
         Assert.assertEquals("count of detected changes", 1, count);
 
-        rm.provideReporter("IR22").setReport(null);
+        rm.provideReporter("IR22").setExtendedReport(null);
         // Current report should change
         Assert.assertEquals("count of detected changes", 2, count);
     }
@@ -349,11 +349,11 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setExtendedReport(new StringReport("report"));
         // Only detecting "lastReport" PropertyChangeEvent
         Assert.assertEquals("count of detected changes", 1, count);
 
-        rm.provideReporter("IR22").setReport(null);
+        rm.provideReporter("IR22").setExtendedReport(null);
         // Last report should not change
         Assert.assertEquals("count of detected changes", 1, count);
     }
