@@ -455,7 +455,10 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
             setEditable(false);
             String text="";
             if (v[0]!=0) {
-                text +=  (KeyEvent.getKeyModifiersText(v[0]).isEmpty()?KeyEvent.getModifiersExText(v[0]):KeyEvent.getKeyModifiersText(v[0]).isEmpty()) +" + ";
+                text +=  ( KeyEvent.getKeyModifiersText(v[0]).isEmpty() ? 
+                                KeyEvent.getModifiersExText(v[0]) : 
+                                KeyEvent.getKeyModifiersText(v[0]) 
+                            ) + " + ";
             }
             if (v[1]!=0) {
                 text += KeyEvent.getKeyText(v[1]);
