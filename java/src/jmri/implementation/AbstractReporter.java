@@ -48,7 +48,8 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     @Override
     public final void setReport(Object r) {
         // If extended reports are supported, then the method setExtendedReport() must be used instead.
-        if (isExtendedReportsSupported()) throw new UnsupportedOperationException("Use setExtendedReport() instead");
+        if (isExtendedReportsSupported()) throw new UnsupportedOperationException("Use setExtendedReport() instead. Reporter: "+this.getClass().getName());
+//        if (isExtendedReportsSupported()) throw new UnsupportedOperationException("Use setExtendedReport() instead");
 
         if (r == _currentReport) {
             return;
