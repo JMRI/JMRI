@@ -7,7 +7,30 @@
         <a href="https://www.jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml">JMRI Tech Road Map</a> and
         <a href="https://www.jmri.org/help/en/html/doc/Technical/JVMCapabilities.shtml">JVM Capabilities</a> pages.
     </li>
-    <li>
+    <li>A number of classes and methods that have been deprecated for a long time
+        are removed in this release.  These include:
+        <ul>
+            <li>apps.JmriPlugin</li>
+            <li></li>
+            <li></li>apps/startup/StartupActionFactory
+            <li></li>Routes/Turnouts/Sensors: One form of getNextAddress
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </li>
     <li>
     </li>
