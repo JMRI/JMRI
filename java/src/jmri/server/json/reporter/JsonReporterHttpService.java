@@ -39,7 +39,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
             if (data.path(REPORT).isNull()) {
                 reporter.setReport(null);
             } else {
-                reporter.setReport(data.path(REPORT).asText());
+                reporter.setReport(new jmri.ExtendedReport.StringReport(data.path(REPORT).asText()));
             }
         }
         return doGet(reporter, name, type, request);
