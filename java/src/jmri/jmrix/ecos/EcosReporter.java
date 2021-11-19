@@ -28,6 +28,11 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         super(systemName, userName);  // can't use prefix here, as still in construction
     }
 
+    @Override
+    public boolean isExtendedReportsSupported() {
+        return true;
+    }
+
     /**
      * Provide an int value for use in scripts, etc. This will be the numeric
      * locomotive address last seen, unless the last message said the loco was
