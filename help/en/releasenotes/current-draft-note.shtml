@@ -516,7 +516,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Documentation update</li>
+            <li>Minor bug fixes : Modifier keys were not showing on the keyboard control preferences screen and preference apply was not done immediately for throttle list window</li>
+            <li>Removed the global preference "Hide speed step selector" as it is available per throttle. Less complexity.</li>
         </ul>
 
     <h3>Timetable</h3>
