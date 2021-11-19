@@ -28,11 +28,6 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
-    public boolean isExtendedReportsSupported() {
-        return false;
-    }
-
-    @Override
     public ObjectNode doPost(Reporter reporter, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(JSON.USERNAME).isTextual()) {
             reporter.setUserName(data.path(JSON.USERNAME).asText());
