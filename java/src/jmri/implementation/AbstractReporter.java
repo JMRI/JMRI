@@ -84,6 +84,10 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
 
     @Override
     public void setExtendedReport(Object report, ExtendedReport extendedReport) {
+        if (!isExtendedReportsSupported()) {
+            log.warn("This reporter does not support extended reports. Report: {}, Extended report: {}", report, extendedReport);
+        }
+
         if (report != null) {
             if ((extendedReport != report)
                     && (extendedReport != ExtendedReport.NULL_REPORT)) {
@@ -119,4 +123,6 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     private ExtendedReport _lastExtendedReport = null;
     private ExtendedReport _currentExtendedReport = null;
 
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractReporter.class);
 }
