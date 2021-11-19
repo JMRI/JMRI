@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.ExtendedReport;
 import jmri.Reporter;
 
 import org.junit.Assert;
@@ -27,7 +28,7 @@ abstract public class AbstractReporterTestBase {
     protected Reporter r = null; 
 
     // concrete classes should generate an appropriate report.
-    abstract protected Object generateObjectToReport();
+    abstract protected ExtendedReport generateObjectToReport();
 
     @Test
     public void testCtor() {
@@ -35,24 +36,31 @@ abstract public class AbstractReporterTestBase {
         Assert.assertNotNull("Created Reporter not null", r);
         // Check that CurrentReport and LastReport return a null object
         Assert.assertNull("CurrentReport at initialisation is 'null'", r.getCurrentReport());
+        Assert.assertNull("CurrentExtendedReport at initialisation is 'null'", r.getCurrentExtendedReport());
         Assert.assertNull("LastReport at initialisation is 'null'", r.getLastReport());
+        Assert.assertNull("LastExtendedReport at initialisation is 'null'", r.getLastExtendedReport());
     }
 
     @Test
     public void testReport() {
         // Report a String
-        r.setReport(generateObjectToReport());
+        r.setExtendedReport(generateObjectToReport());
         // Check that both CurrentReport and LastReport are not null
         Assert.assertNotNull("CurrentReport Object exists", r.getCurrentReport());
+        Assert.assertNotNull("CurrentExtendedReport Object exists", r.getCurrentExtendedReport());
         Assert.assertNotNull("LastReport Object exists", r.getLastReport());
+        Assert.assertNotNull("LastExtendedReport Object exists", r.getLastExtendedReport());
         // Check the value of both CurrentReport and LastReport
         Assert.assertEquals("CurrentReport equals LastReport",r.getLastReport(), r.getCurrentReport());
+        Assert.assertEquals("CurrentExtendedReport equals LastExtendedReport",r.getLastExtendedReport(), r.getCurrentExtendedReport());
 
         // Nothing to report now
-        r.setReport(null);
+        r.setExtendedReport(null);
         // Check that CurrentReport returns a null value, but LastReport returns the reported String
         Assert.assertNull("After null report, CurrentReport is null", r.getCurrentReport());
+        Assert.assertNull("After null report, CurrentExtendedReport is null", r.getCurrentExtendedReport());
         Assert.assertNotNull("After null report, LastReport String is not null",r.getLastReport());
+        Assert.assertNotNull("After null report, LastExtendedReport String is not null",r.getLastExtendedReport());
     }
 
     @Test
@@ -66,7 +74,7 @@ abstract public class AbstractReporterTestBase {
         lastReportSeen = false;
         r.addPropertyChangeListener(new TestReporterListener());
         // Report a String
-        r.setReport(generateObjectToReport());
+        r.setExtendedReport(generateObjectToReport());
         // Check that both CurrentReport and LastReport were seen
         Assert.assertTrue("CurrentReport seen", currentReportSeen);
         Assert.assertTrue("LastReport seen", lastReportSeen);
@@ -74,7 +82,7 @@ abstract public class AbstractReporterTestBase {
         // Nothing to report now
         currentReportSeen = false;
         lastReportSeen = false;
-        r.setReport(null);
+        r.setExtendedReport(null);
         // Check that CurrentReport was seen
         Assert.assertTrue("CurrentReport seen after null", currentReportSeen);
         // Check that LastReport was not seen (no change on null)
@@ -109,6 +117,21 @@ abstract public class AbstractReporterTestBase {
 
     @AfterEach
     abstract public void tearDown();
+
+
+    public static class StringReport implements ExtendedReport {
+
+        private final String report;
+
+        public StringReport(String r) {
+            this.report = r;
+        }
+
+        @Override
+        public String toString() {
+            return report;
+        }
+    }
 
 }
 

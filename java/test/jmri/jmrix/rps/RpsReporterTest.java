@@ -1,5 +1,7 @@
 package jmri.jmrix.rps;
 
+import jmri.ExtendedReport;
+import jmri.implementation.AbstractReporterTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -8,11 +10,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBase {
+public class RpsReporterTest extends AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport() {
-        return "3";
+    protected ExtendedReport generateObjectToReport() {
+        return new AbstractReporterTestBase.StringReport("3");
     }
 
     @BeforeEach

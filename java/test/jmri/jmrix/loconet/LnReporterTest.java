@@ -1,9 +1,7 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-import jmri.Reportable;
-import jmri.LocoAddress;
-import jmri.PhysicalLocationReporter;
+import jmri.*;
+import jmri.implementation.AbstractReporterTestBase;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
 
@@ -18,8 +16,8 @@ import org.junit.jupiter.api.*;
 public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport() {
-        return "3 enter";
+    protected ExtendedReport generateObjectToReport() {
+        return new AbstractReporterTestBase.StringReport("3 enter");
     }
 
     @Test
