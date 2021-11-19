@@ -157,24 +157,6 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     /**
-     * @return the fontFamily
-     * @deprecated since 4.19.6 without replacement
-     */
-    @Deprecated
-    public String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * @param fontFamily the fontFamily to set
-     * @deprecated since 4.19.6 without replacement
-     */
-    @Deprecated
-    public void setFontFamily(String fontFamily) {
-        // does nothing
-    }
-
-    /**
      * @return the wrapStyle
      */
     public int getWrapStyle() {
