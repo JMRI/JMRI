@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
+import jmri.ExtendedReport.StringReport;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
 import jmri.jmrit.catalog.NamedIcon;
@@ -59,7 +60,8 @@ public class ReporterIconTest extends PositionableTestBase {
             // create objects to test
             InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
             to.setReporter("IR1");
-            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1").setReport("data");
+            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1")
+                    .setExtendedReport(new StringReport("data"));
             NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
             to.setIcon(icon);
         }
