@@ -45,7 +45,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         f.initComponents(route);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveRouteButton);
         JemmyUtil.pressDialogButton(f, "Can not save Route!", Bundle.getMessage("ButtonOK"));
-        
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
     
@@ -57,7 +57,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         f.initComponents(null);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addRouteButton);
         JemmyUtil.pressDialogButton(f, "Can not add Route!", Bundle.getMessage("ButtonOK"));
-        
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
     
@@ -156,7 +156,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
-
         JUnitUtil.dispose(f);
     }
 

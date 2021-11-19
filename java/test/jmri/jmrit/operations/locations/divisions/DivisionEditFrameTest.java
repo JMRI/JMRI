@@ -109,6 +109,7 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         // new dialog window stating division already exists
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("add")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         Assert.assertEquals("Number of divisions", 1, dm.getNumberOfdivisions());
         // test name too long
         def.divisionNameTextField.setText("newDivisionNameABCDEFGHIJKLMNOPQ");
@@ -116,6 +117,7 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         // new dialog window stating division name too long
         JemmyUtil.pressDialogButton(def, MessageFormat.format(
                 Bundle.getMessage("CanNotDivision"), new Object[]{Bundle.getMessage("add")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(def);
         Assert.assertEquals("Number of divisions", 1, dm.getNumberOfdivisions());
         JUnitUtil.dispose(def);
     }
