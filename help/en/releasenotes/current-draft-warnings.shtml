@@ -27,5 +27,7 @@
             <li></li>
         </ul>
     </li>
-    <li>
+    <li>The PowerManager now only fires events with the id "power".  Before this
+        release, it also fired events with the id "Power". Check check that
+        your code is looking for the right form.
     </li>
