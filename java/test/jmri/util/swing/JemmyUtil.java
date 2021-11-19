@@ -60,7 +60,7 @@ public class JemmyUtil {
         t.start();
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return t.getState().equals(Thread.State.TERMINATED);
+            return t.getState().equals(Thread.State.WAITING);
         }, "wait for dialog window to appear");
     }
 
