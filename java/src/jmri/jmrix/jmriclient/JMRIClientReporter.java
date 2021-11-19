@@ -36,6 +36,11 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         requestUpdateFromLayout();
     }
 
+    @Override
+    public boolean isExtendedReportsSupported() {
+        return false;
+    }
+
     public int getNumber() {
         return _number;
     }
