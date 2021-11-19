@@ -30,6 +30,11 @@ public abstract class AbstractIdTagReporter extends AbstractReporter
         super(systemName, userName);
     }
 
+    @Override
+    public boolean isExtendedReportsSupported() {
+        return true;
+    }
+
     /**
      * {@inheritDoc}
      */
