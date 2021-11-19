@@ -17,32 +17,33 @@ import org.junit.Test;
 
 /**
  * Test StringExpressionManager
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class StringExpressionManagerTest extends AbstractManagerTestBase {
 
     private StringExpressionManager _m;
-    
+
     @Test
     public void testRegisterExpression() {
         MyExpression myExpression = new MyExpression(_m.getSystemNamePrefix()+"BadSystemName");
-        
+
         boolean hasThrown = false;
         try {
             _m.registerExpression(myExpression);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
+            JUnitAppender.assertWarnMessage("SystemName IQBadSystemName is not in the correct format");
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
-        
+
+
         // We need a male socket to test with, so we register the action and then unregister the socket
         StringExpressionBean action = new StringExpressionMemory("IQSE321", null);
         MaleStringExpressionSocket maleSocket = _m.registerExpression(action);
         _m.deregister(maleSocket);
-        
+
         hasThrown = false;
         try {
             _m.registerExpression(maleSocket);
@@ -52,30 +53,30 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         }
         Assert.assertTrue("Exception thrown", hasThrown);
     }
-    
+
     @Test
     public void testCreateFemaleSocket() {
         FemaleSocket socket;
         MyExpression myExpression = new MyExpression("IQSA1");
         FemaleSocketListener listener = new MyFemaleSocketListener();
-        
+
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
     }
-    
+
     @Test
     public void testGetBeanTypeHandled() {
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled());
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled(false));
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expressions", _m.getBeanTypeHandled(true));
     }
-    
+
     @Test
     public void testInstance() {
         Assert.assertNotNull("instance() is not null", DefaultStringExpressionManager.instance());
         JUnitAppender.assertWarnMessage("instance() called on wrong thread");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -86,7 +87,7 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _m = InstanceManager.getDefault(StringExpressionManager.class);
         _manager = _m;
     }
@@ -98,8 +99,8 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     private static class MyExpression extends AbstractBase implements StringExpressionBean {
 
         public MyExpression(String sys) throws BadSystemNameException {
@@ -200,10 +201,10 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
-    
+
+
     private static class MyFemaleSocketListener implements FemaleSocketListener {
         @Override
         public void connected(FemaleSocket socket) {
@@ -215,5 +216,5 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
             // Do nothing
         }
     }
-    
+
 }

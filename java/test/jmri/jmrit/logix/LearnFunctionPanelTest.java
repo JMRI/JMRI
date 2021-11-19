@@ -38,6 +38,7 @@ public class LearnFunctionPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }
