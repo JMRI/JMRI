@@ -8,7 +8,7 @@ import javax.swing.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Provides a standard "search bar" for addition to 
+ * Provides a standard "search bar" for addition to
  * other panels.  Actual search is via call-back.
  *
  * @author Bob Jacobsen
@@ -18,18 +18,18 @@ public class SearchBar extends javax.swing.JPanel {
     Runnable forward;
     Runnable backward;
     Runnable done;
-    
+
     JTextField textField = new JTextField();
     JButton rightButton = new JButton(">");
     JButton leftButton = new JButton("<");
     JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-    
+
     public SearchBar(Runnable forward, Runnable backward, Runnable done) {
         super();
         this.forward = forward;
         this.backward = backward;
         this.done = done;
-        
+
         // create GUI
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         add(textField);
@@ -37,11 +37,11 @@ public class SearchBar extends javax.swing.JPanel {
         add(leftButton);
         add(rightButton);
         add(doneButton);
-        
+
         leftButton.setToolTipText("Search backwards");
         rightButton.setToolTipText("Search forwards");
         doneButton.setToolTipText("Close search bar");
-        
+
         // add actions
         doneButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -55,7 +55,7 @@ public class SearchBar extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         leftButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,7 @@ public class SearchBar extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         rightButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,33 +94,34 @@ public class SearchBar extends javax.swing.JPanel {
                 rightButton.requestFocusInWindow();
             }
         });
-        
+
     }
 
     public String getSearchString() {
         return textField.getText();
     }
-    
+
     /**
-     * A service routine to connect the SearchBar to 
+     * A service routine to connect the SearchBar to
      * the usual modifier keys
      * @param frame JFrame containing this search bar; used to set key maps
      */
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     public void configureKeyModifiers(JFrame frame) {
         JRootPane rootPane = frame.getRootPane();
-        
+
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
             KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "openSearch");
-        
+
         rootPane.getActionMap().put("openSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-            
+
                 // don't retain last text?
                 textField.setText("");
-                
+
                 // alternate visible
                 SearchBar.this.setVisible(! SearchBar.this.isVisible());
-                
+
                 // if visible, move focus
                 if (SearchBar.this.isVisible()) {
                     SearchBar.this.textField.requestFocusInWindow();
@@ -130,10 +131,10 @@ public class SearchBar extends javax.swing.JPanel {
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
             KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()|java.awt.event.InputEvent.SHIFT_DOWN_MASK), "forwardSearch");
-        
+
         rootPane.getActionMap().put("forwardSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-            
+
                 // same as button
                 leftButton.doClick();
                 }
@@ -141,15 +142,15 @@ public class SearchBar extends javax.swing.JPanel {
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
             KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "backwardSearch");
-        
+
         rootPane.getActionMap().put("backwardSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-            
+
                 // same as button
                 rightButton.doClick();
                 }
         });
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SearchBar.class);
 }

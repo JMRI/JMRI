@@ -90,7 +90,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         reuseFrameSavedSized = saveSize;
         initFrame();
     }
-    
+
     final void initFrame() {
         addWindowListener(this);
         addComponentListener(this);
@@ -155,7 +155,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         this(saveSize, savePosition);
         setFrameTitle(name);
     }
-    
+
     final void setFrameTitle(String name) {
         setTitle(name);
         generateWindowRef();
@@ -479,7 +479,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * Add a standard help menu, including window specific help item.
-     * 
+     *
      * Final because it defines the content of a standard help menu, not to be messed with individually
      *
      * @param ref    JHelp reference for the desired window-specific help page
@@ -502,6 +502,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * Adds a "Close Window" key shortcut to close window on op-W.
      */
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
@@ -755,7 +756,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         List<T> result = new ArrayList<>();
         JmriJFrameManager m = getJmriJFrameManager();
         synchronized (m) {
-            m.stream().filter((f) -> (type.isInstance(f))).forEachOrdered((f) -> 
+            m.stream().filter((f) -> (type.isInstance(f))).forEachOrdered((f) ->
                 {
                     result.add((T)f);
                 });
@@ -933,7 +934,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The JmriJFrame implementation calls {@link #handleModified()}.
      */
     @Override
@@ -993,7 +994,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * When window is finally destroyed, remove it from the list of windows.
      * <p>
      * Subclasses that over-ride this method must invoke this implementation
@@ -1062,7 +1063,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return BeanUtil.getIntrospectedIndexedProperty(this, key, index);
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Subclasses should override this method with something more direct and faster
      */
     @Override
@@ -1074,7 +1075,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Subclasses should override this method with something more direct and faster
      */
     @Override
@@ -1172,5 +1173,5 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
-    
+
 }
