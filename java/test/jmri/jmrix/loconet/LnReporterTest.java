@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.*;
-import jmri.implementation.AbstractReporterTestBase;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
 
@@ -17,7 +16,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
 
     @Override
     protected ExtendedReport generateObjectToReport() {
-        return new AbstractReporterTestBase.StringReport("3 enter");
+        return new ExtendedReport.StringReport("3 enter");
     }
 
     @Test

@@ -107,4 +107,24 @@ public interface ExtendedReport extends Reportable {
         private NullReport() {}
     }
 
+
+
+    /**
+     * A report that is a String. This is not intended to be used by JMRI,
+     * unless necessary. But it might be used by scripts and by tests.
+     */
+    public static class StringReport implements ExtendedReport {
+
+        private final String report;
+
+        public StringReport(String r) {
+            this.report = r;
+        }
+
+        @Override
+        public String toString() {
+            return report;
+        }
+    }
+
 }

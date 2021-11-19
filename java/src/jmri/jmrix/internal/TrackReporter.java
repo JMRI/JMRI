@@ -2,8 +2,10 @@ package jmri.jmrix.internal;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
+
 import jmri.implementation.AbstractReporter;
 import jmri.CollectingReporter;
+import jmri.ExtendedReport;
 
 /**
  * Extension of the AbstractReporter class that implements CollectingReporter
@@ -14,38 +16,18 @@ import jmri.CollectingReporter;
  */
 public class TrackReporter extends AbstractReporter implements CollectingReporter {
 
-    private Deque collection = null;
+    private Deque<ExtendedReport> collection = null;
 
     public TrackReporter(String systemName) {
         super(systemName);
-        collection = new ArrayDeque<Object>();
+        collection = new ArrayDeque<>();
     }
 
     public TrackReporter(String systemName, String userName) {
         super(systemName, userName);
-        collection = new ArrayDeque<Object>();
+        collection = new ArrayDeque<>();
     }
 
-    /*.*
-     * Provide a general method for updating the report.
-     *./
-    @Override
-    public void setReport(Object r) {
-        if (r == _currentReport) {
-            return;
-        }
-        Object old = _currentReport;
-        Object oldLast = _lastReport;
-        _currentReport = r;
-        if (r != null) {
-            _lastReport = r;
-            // notify
-            firePropertyChange("lastReport", oldLast, _lastReport);
-        }
-        // notify
-        firePropertyChange("currentReport", old, _currentReport);
-    }
-*/
     @Override
     public int getState() {
        return state;
@@ -62,39 +44,37 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
      * @return the collection of elements associated with this reporter.
      */
     @Override
-    public java.util.Collection getCollection(){
+    public java.util.Collection<ExtendedReport> getCollection(){
        return(collection);
     }
 
     // Special methods to set the report from the ends of the track
     // these methods record the order of reports seen.
-/*
-    @SuppressWarnings("unchecked")
-    public void pushEast(Object o){
+
+    public void pushEast(ExtendedReport o){
          if(o != null) {
             collection.addFirst(o);
-            setReport(o);
+            setExtendedReport(o);
          }
     }
 
-    @SuppressWarnings("unchecked")
-    public void pushWest(Object o){
+    public void pushWest(ExtendedReport o){
          if(o != null) {
             collection.addLast(o);
-            setReport(o);
+            setExtendedReport(o);
          }
     }
 
-    public Object pullEast(){
-       Object retval = collection.removeFirst();
-       setReport(collection.peekFirst());
+    public ExtendedReport pullEast(){
+       ExtendedReport retval = collection.removeFirst();
+       setExtendedReport(collection.peekFirst());
        return retval;
     }
 
-    public Object pullWest(){
-       Object retval = collection.removeLast();
-       setReport(collection.peekLast());
+    public ExtendedReport pullWest(){
+       ExtendedReport retval = collection.removeLast();
+       setExtendedReport(collection.peekLast());
        return retval;
     }
-*/
+
 }

@@ -14,7 +14,7 @@ public class RpsReporterTest extends AbstractReporterTestBase {
 
     @Override
     protected ExtendedReport generateObjectToReport() {
-        return new AbstractReporterTestBase.StringReport("3");
+        return new ExtendedReport.StringReport("3");
     }
 
     @BeforeEach

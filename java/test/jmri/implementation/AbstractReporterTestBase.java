@@ -118,21 +118,6 @@ abstract public class AbstractReporterTestBase {
     @AfterEach
     abstract public void tearDown();
 
-
-    public static class StringReport implements ExtendedReport {
-
-        private final String report;
-
-        public StringReport(String r) {
-            this.report = r;
-        }
-
-        @Override
-        public String toString() {
-            return report;
-        }
-    }
-
 }
 
 
