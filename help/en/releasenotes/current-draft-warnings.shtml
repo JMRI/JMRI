@@ -24,7 +24,7 @@
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
+            <li>Throttle.getListeners() - use getPropertyChangeListeners</li>
         </ul>
     </li>
     <li>
