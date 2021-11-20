@@ -290,26 +290,6 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     protected abstract ResourceBundle getActionModelResourceBundle();
 
     /**
-     * Add actions to the action list.
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected final void addToActionList() {
-        // do nothing
-    }
-
-    /**
-     * Remove actions from the action list.
-     *
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    protected final void removeFromActionList() {
-        // do nothing
-    }
-
-    /**
      * Get if connection is dirty.
      * Checked fields are disabled, prefix, userName
      *
@@ -365,7 +345,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * Change from e.g. connection config dialog and scripts using {@link #setOutputInterval(int)}
      */
     private int _interval = getDefaultOutputInterval();
-    
+
     /**
      * Default interval 250ms.
      * {@inheritDoc}
