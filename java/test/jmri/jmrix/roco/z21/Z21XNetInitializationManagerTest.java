@@ -29,10 +29,9 @@ public class Z21XNetInitializationManagerTest {
     @Test
     public void testCtor() {
         Z21XNetInitializationManager m = new Z21XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
-            }
+//             {
+//                 LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
+//             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
         SoftAssertions softly = new SoftAssertions();
