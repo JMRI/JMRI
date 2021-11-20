@@ -67,19 +67,6 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         register();
     }
 
-    /**
-     * @return the Default RailCom Manager.
-     * @deprecated since 4.21.1.  retrieve from InstanceManager instead.
-     */
-    @Deprecated
-    public RailComManager getRailCommManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        return InstanceManager.getDefault(RailComManager.class);
-    }
-
-
     public Dcc4PcReporterManager getReporterManager() {
         if (getDisabled()) {
             return null;
@@ -94,40 +81,6 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         }
         return (Dcc4PcSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,
                 (Class c) -> new Dcc4PcSensorManager(getDcc4PcTrafficController(), this));
-    }
-
-    /**
-     * @return a programmer manager
-     * @deprecated since 4.21.1 use {@link InstanceManager#getDefault(Class)} instead
-     */
-    @Deprecated
-    public Dcc4PcProgrammerManager getProgrammerManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        return (Dcc4PcProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
-            DefaultProgrammerManager defaultProgrammer=get(GlobalProgrammerManager.class);
-            if (defaultProgrammer == null) {
-                if (progManager == null) {
-                    return null;
-                }
-                List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-                if (connList.isEmpty()) {
-                    return null;
-                }
-                for (SystemConnectionMemo systemConnectionMemo : connList) {
-                    if (systemConnectionMemo.getUserName().equals(progManager)) {
-                        defaultProgrammer = systemConnectionMemo.get(GlobalProgrammerManager.class);
-                        break;
-                    }
-                }
-            }
-            if(defaultProgrammer != null ) {
-                return new Dcc4PcProgrammerManager(defaultProgrammer);
-            } else {
-                return null;
-            }
-        });
     }
 
     @Override
