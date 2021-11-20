@@ -29,9 +29,8 @@ public class LI100XNetInitializationManagerTest {
     @Test
     public void testCtor() {
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50; // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -46,9 +45,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(-1);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -74,9 +72,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x00);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -100,9 +97,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x00);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -127,9 +123,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x01);
         Mockito.when(cs.isOpsModePossible()).thenReturn(false);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -152,9 +147,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x02);
         Mockito.when(cs.isOpsModePossible()).thenReturn(false);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -177,9 +171,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x04);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -204,9 +197,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x10);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
@@ -231,9 +223,8 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationType()).thenReturn(0x42);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+            {
+                LI100_INIT_TIMEOUT = 50; // shorten, because this will fail & delay test
             }
         };
         assertThat(m).withFailMessage("exists").isNotNull();
