@@ -241,7 +241,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("char send wait interrupted");
+                                log.warn("char send wait interrupted");
                             }
                         }
                         break;
