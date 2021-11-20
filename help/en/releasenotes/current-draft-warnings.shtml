@@ -23,7 +23,7 @@
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
+            <li>Various TrafficManagers.instance methods - use InstanceManager</li>
             <li>Throttle.getListeners() - use getPropertyChangeListeners</li>
         </ul>
     </li>
