@@ -103,6 +103,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
         assertThat(f.comboBox.getItemAt(25)).withFailMessage("replaced 72 with 73").isEqualTo("73");
 

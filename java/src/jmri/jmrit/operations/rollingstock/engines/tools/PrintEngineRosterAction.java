@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
@@ -239,11 +240,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
             pFontSize.add(fontSizeComboBox);
 
-            // load font sizes 5 through 14
-            for (int i = 5; i < 15; i++) {
-                fontSizeComboBox.addItem(i);
-            }
-
+            OperationsPanel.loadFontSizeComboBox(fontSizeComboBox);
             fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
             JPanel pButtons = new JPanel();

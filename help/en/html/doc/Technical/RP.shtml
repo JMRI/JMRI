@@ -169,16 +169,17 @@ normal operation.
         <li><strong>Don't forget to migrate the Jython sample scripts!</strong>
         </li>
 
-        <li>These changes can be included in either an update or minor release. As soon as possible
-        , you should PR them to either the <code>dev-update</code> or <code>dev-minor</code>
-        branch, depending on the <u>other</u> changes associated, so that people get notice of the
-        deprecations. Make sure that the PR includes someting for the release note about the
+        <li>These changes can then be included in the next test release.
+        As soon as possible, you should PR them so that people get notice of the
+        deprecations. Make sure that the PR includes something for the release note about the
         deprecations to draw people's attention.</li>
 
-        <li>Remove the deprecated methods and their tests. Make sure that the PR to do this
-        includes an update to the release note about the removal. This can then be merged to the
-        <code>dev-major</code> branch; whether it can be merged and released via the
-        <code>dev-minor</code> is still a subject of discussion.</li>
+        <li>Traditionally, we wait for four production releases (two years) before
+        removing major/public deprecated methods and their tests. Internal and implementation
+        methods can be removed earlier, perhaps after two production releases (one year).
+        When you do remove the deprecated code, make sure that the PR to do this
+        includes an update to the release note about the removal; if it's a significant
+        change, consider adding something to the warnings section.</li>
       </ul>
 
       <p>Note that a deprecated item is meant to still work. Deprecated should only mean that you
@@ -340,7 +341,7 @@ the log.
       "https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related
       article</a>. As Tony Hoare - one of the giants of computer science - wrote, "I call it my
       billion-dollar mistake. It was the invention of the null reference in 1965. I couldn't resist
-      the temptation to put in a null reference, simply because it was so easy to implement." 
+      the temptation to put in a null reference, simply because it was so easy to implement."
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

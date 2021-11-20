@@ -20,25 +20,36 @@
       "ThrottlesPreferencesPane.shtml">Throttles Preferences pane</a>.<br>
       When enabled, a Throttle pane can host a set of Throttles. These Throttles are browsable
       using the:
-      <h2>Previous Button</h2>
-      Move to previous Throttle for that Throttle Window.
-      <h2>Next Button</h2>
-      Move to next Throttle for that Throttle Window.
-      <h2>New Button</h2>
+      <h2>New Button (+)</h2>
       Add a new Throttle in that Throttle Window.<br>
       Once the number of Throttles in a Throttle Window is greater than one (1) the Next, Previous
       and Trash buttons are enabled.
-      <h2>Trash Button</h2>
+      <h2>Remove Button (-)</h2>
       Remove the current Throttle from that Throttle Window.<br>
       When the number of Throttles in a Throttle Window is equal to one, Next, Previous and Trash
       buttons are disabled.
-      <h2>Stop Button</h2>
-      Send a stop message to all throttles managed by JMRI.
+
+      <h2>Previous Runing Button</h2>
+      Move to previous Throttle with non null speed for that Throttle Window.
+      <h2>Previous Button (<)</h2>
+      Move to previous Throttle for that Throttle Window.
+      <h2>Next Button (>)</h2>
+      Move to next Throttle for that Throttle Window.
+      <h2>Next Runing Button </h2>
+      Move to next Throttle with non null speed for that Throttle Window.
+
+      <h2>Stop all Button (X)</h2>
+      Send an emergency stop message to all throttles managed by JMRI.
       <h2>Power Button</h2>
       Allows for layout power control if possible (red icon is Off, green is On, yellow is status
       Unknown).
+      <h2>Play Button</h2>
+      Allows to switch this throttle window view mode from editing to gaming mode, gaming mode
+      remove inner window decorations and makes them semi transparent. Combined with roster entries that have
+      nice locomotive image or a Jystrument with video feedback from an embedded camera, and some
+      function buttons with nices icons, you can get something really ncie and fun. 
       <h2>List Button</h2>
-      Show/Hide the <a href="ThrottlesListWindow.shtml">Throttles List</a>. 
+      Show/Hide the <a href="ThrottlesListWindow.shtml">Throttles List</a>.
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

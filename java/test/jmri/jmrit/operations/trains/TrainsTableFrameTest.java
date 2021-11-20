@@ -229,12 +229,14 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // a popup warning that the train doesn't have a route should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[] { train1.getName(), train1.getDescription() }), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tef);
 
         // try to move train 2, error not built
         JemmyUtil.clickOnCellThreadSafe(tbl, 2, Bundle.getMessage("Action"));
 
         // a popup warning that the train isn't built should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotPerformAction"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tef);
 
         // test action button "Move"
         tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Action"))); // move button
@@ -248,7 +250,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // a popup warning that Manifest hasn't been printed should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train0.getName() }), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(tef);
+        
         Assert.assertEquals("terminate train", "", train0.getCurrentLocationName());
         Assert.assertFalse("train build status", train0.isBuilt());
 
@@ -368,6 +371,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // a popup warning can't reset train should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotResetTrain"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(tef);
         Assert.assertTrue("train build status", train.isBuilt());
 
         // kill panels

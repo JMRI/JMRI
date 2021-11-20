@@ -109,7 +109,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), Bundle.getMessage("ButtonOK"));
         // dialog window should appear regarding railroad name
         JemmyUtil.pressDialogButton(f,Bundle.getMessage("ChangeJMRIRailroadName"), Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
         jfo.dispose();
         
         // reload
@@ -164,6 +164,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.maxLengthTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -177,6 +178,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.maxEngineSizeTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -190,6 +192,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.hptTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -203,6 +206,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.switchTimeTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -216,6 +220,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.travelTimeTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -229,6 +234,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         p.yearTextField.setText("Not a Number");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSave")).push();
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotAcceptNumber"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -247,6 +253,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("YouNeedToAdjustRoutes"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ModifyAllRoutes"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -263,6 +270,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Backup")).push();
         // dialog window will now appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("BackupDialog.this.title"), Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
@@ -279,6 +287,7 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Restore")).push();
         // dialog window will now appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("RestoreDialog.this.title"), Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.waitFor(f);
         jfo.dispose();
     }
     
