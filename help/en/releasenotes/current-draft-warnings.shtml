@@ -12,6 +12,11 @@
         <ul>
             <li>apps.JmriPlugin</li>
             <li></li>
+            <li>apps/startup/StartupActionFactory</li>
+            <li>Routes/Turnouts/Sensors: One form of getNextAddress</li>
+            <li></li>
+            <li></li>
+            <li></li>
             <li></li>
             <li></li>
             <li></li>
