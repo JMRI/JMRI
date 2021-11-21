@@ -108,9 +108,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         store(dpm, AddressedProgrammerManager.class);
     }
 
-    private String progManager;
-
+    @Deprecated(forRemoval=true) // part of deprecation clean up
     public void setDefaultProgrammer(String prog) {
-        progManager = prog;
     }
 }

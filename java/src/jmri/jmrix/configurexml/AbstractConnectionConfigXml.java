@@ -5,8 +5,6 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.PortAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base (and partial implementation) for classes persisting the status
@@ -211,6 +209,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
 
 }
