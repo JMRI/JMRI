@@ -786,19 +786,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     }
 
     /**
-     * Suppress sending {@link PropertyChangeEvent}s for the named property.
-     *
-     * @param propertyName the name of the property to mute
-     * @param muted        true if events are to be suppressed; false otherwise
-     * @deprecated since 4.21.1; use
-     * {@link #setPropertyChangesSilenced(String, boolean)} instead
-     */
-    @Deprecated
-    public default void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
-        setPropertyChangesSilenced(propertyName, muted);
-    }
-
-    /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
      * without introducing a Swing dependency into core JMRI.
      *

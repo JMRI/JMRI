@@ -35,6 +35,7 @@
             <li></li>
             <li>Manager.getSystemNameList - rework with getNamedBeanSet</li>
             <li>Manager.getNamedBeanList - rework with getNamedBeanSet</li>
+            <li>Manager.setPropertyChangesMuted - use setPropertyChangesSilenced</li>
             <li>Manager.getBeanBySystemName - use getBySystemName</li>
             <li>Manager.getBeanByUserName - use getByUserName</li>
             <li>FileChooserUtil</li>
