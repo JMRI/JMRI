@@ -59,9 +59,9 @@ public class JemmyUtil {
         });
         t.start();
         
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return t.getState().equals(Thread.State.TERMINATED);
-        }, "wait for dialog window to appear");
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return t.getState().equals(Thread.State.WAITING);
+//        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {
