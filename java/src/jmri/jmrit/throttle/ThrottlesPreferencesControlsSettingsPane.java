@@ -450,6 +450,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
     final private class ShortCutTextField extends JTextField {
         ShortCutsField shortCutsField;
 
+        @SuppressWarnings("deprecation") // KeyEvent.getKeyModifiersText
         ShortCutTextField(int[] v) {
             super();
             setEditable(false);
