@@ -1,9 +1,15 @@
 package jmri.util;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 /**
  * Allow the user to configure properties that needs to be setup very early
@@ -73,9 +79,31 @@ public class EarlyInitializationPreferences {
 
         } catch (IOException ex) {
 //            log.warn("Loading startup preferences from {} failed", FILENAME);
-            preferences.setProperty("sun.java2d.uiScale", "1");
-            store();
+            setupNewPreferences();
         }
+    }
+
+    private void setupNewPreferences() {
+        int uiScale = 1;
+
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        AffineTransform transform = gc.getDefaultTransform();
+
+        double scaleX = transform.getScaleX();
+        double scaleY = transform.getScaleY();
+        System.out.format("ScaleX: %1.2f%n", scaleX);
+        System.out.format("ScaleY: %1.2f%n", scaleY);
+
+        // Don't set uiScale to 1 if Windows has a scaling above 125%
+        if ((scaleX >= 1.3) || (scaleY >= 1.3)) uiScale = 0;
+
+        preferences.setProperty("sun.java2d.uiScale", Integer.toString(uiScale));
+        store();
+
+        // We must restart JMRI since we have read the scale. Java will
+        // not listen to sun.java2d.uiScale unless we set it _before_ awt
+        // and Swing is started.
+        InstanceManager.getDefault(ShutDownManager.class).restart();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EarlyInitializationPreferences.class);
