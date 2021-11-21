@@ -86,16 +86,20 @@ public class EarlyInitializationPreferences {
     private void setupNewPreferences() {
         int uiScale = 1;
 
-        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        AffineTransform transform = gc.getDefaultTransform();
+        try {
+            GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+            AffineTransform transform = gc.getDefaultTransform();
 
-        double scaleX = transform.getScaleX();
-        double scaleY = transform.getScaleY();
-        System.out.format("ScaleX: %1.2f%n", scaleX);
-        System.out.format("ScaleY: %1.2f%n", scaleY);
+            double scaleX = transform.getScaleX();
+            double scaleY = transform.getScaleY();
+            System.out.format("ScaleX: %1.2f%n", scaleX);
+            System.out.format("ScaleY: %1.2f%n", scaleY);
 
-        // Don't set uiScale to 1 if Windows has a scaling above 125%
-        if ((scaleX >= 1.3) || (scaleY >= 1.3)) uiScale = 0;
+            // Don't set uiScale to 1 if Windows has a scaling above 125%
+            if ((scaleX >= 1.3) || (scaleY >= 1.3)) uiScale = 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         preferences.setProperty("sun.java2d.uiScale", Integer.toString(uiScale));
         store();
