@@ -28,8 +28,8 @@
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
-            <li></li>
+            <li>Manager.getBeanBySystemName - use getBySystemName</li>
+            <li>Manager.getBeanByUserName - use getByUserName</li>
             <li>FileChooserUtil</li>
             <li>get/setFontFamily in SystemConsolePreferencesManager</li>
             <li></li>
