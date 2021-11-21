@@ -13,7 +13,10 @@
             <li>apps.JmriPlugin</li>
             <li></li>
             <li>apps/startup/StartupActionFactory</li>
-            <li>Routes/Turnouts/Sensors: One form of getNextAddress<>/li>
+            <li>Routes/Turnouts/Sensors: One form of getNextAddress</li>
+            <li></li>
+            <li></li>
+            <li></li>
             <li></li>
             <li></li>
             <li></li>
@@ -32,5 +35,7 @@
             <li></li>
         </ul>
     </li>
-    <li>
+    <li>The PowerManager now only fires events with the id "power".  Before this
+        release, it also fired events with the id "Power". Check that
+        your code is looking for the right form.
     </li>

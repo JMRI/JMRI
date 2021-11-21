@@ -228,8 +228,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 
     /**
      * Get the manager for the given system name.
-     * 
-     * @param systemName the given name 
+     *
+     * @param systemName the given name
      * @return the requested manager or null if there is no matching manager
      */
     @CheckForNull
@@ -295,13 +295,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
-    
+
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return createSystemName(curAddress, prefix, getNamedBeanClass());
     }
 
-    @SuppressWarnings("deprecation") // user warned by actual manager class
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
             log.debug("NextValidAddress requested for {}", curAddress);
@@ -309,11 +308,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
                 try {
                     switch (typeLetter) { // use #getDefaultManager() instead?
                         case 'T':
-                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, false);
                         case 'S':
-                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, false);
                         case 'R':
-                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, false);
                         default:
                             return null;
                     }
@@ -324,7 +323,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         return null;
     }
-    
+
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
             log.debug("NextValidAddress requested for {}", curAddress);
@@ -369,7 +368,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     protected Manager<E> createSystemManager(@Nonnull SystemConnectionMemo memo) {
         return null;
     }
-    
+
     /**
      * Get the Default Manager ToolTip.
      * {@inheritDoc}
@@ -378,7 +377,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     public String getEntryToolTip() {
         return getDefaultManager().getEntryToolTip();
     }
-    
+
     /**
      * Try to create a system manager.
      *
@@ -387,12 +386,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     private Manager<E> createSystemManager(@Nonnull String systemPrefix) {
         Manager<E> m = null;
-        
+
         ConnectionConfigManager manager = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (manager == null) return null;
-        
+
         ConnectionConfig connections[] = manager.getConnections();
-        
+
         for (ConnectionConfig connection : connections) {
             if (systemPrefix.equals(connection.getAdapter().getSystemPrefix())) {
                 m = createSystemManager(connection.getAdapter().getSystemConnectionMemo());
@@ -402,7 +401,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 //        if (m == null) throw new RuntimeException("Manager not created");
         return m;
     }
-    
+
     /**
      * {@inheritDoc}
      * <p>
@@ -530,7 +529,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             firePropertyChange(event);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      *
