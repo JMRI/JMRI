@@ -15,76 +15,99 @@
 
     <div id="mainContent">
       <h1>Throttles Preferences</h1>
+      <p>The Throttles Preferences pane is accessible from :
+        <ul>
+          <li>the JMRI preferences window</li>
+          <li>the throttle window preferences menu entry</li>
+          <li>the throttle and throttles list windows toolbars</li>
+        </ul>
+
+        It is composed of two tabs :
+        <ul>
+          <li>The General tab contains the JMRI throttles user interface preferences.</li>
+        <li>The Keyboard controls tab allows to review and set the various keyboard shortcuts
+        used by the JMRI throttles user interface. It is also there that the multiplier for mouse wheel + ctrl for speed is set.</li>
+        </ul>
+
+        When openned as a single preferences window (not JMRI global preferences), 3 buttons are availble at the bottom :
+        <ul>
+          <li>Cancel button will close the window and leave current Throttles settings as they are.</li>
+          <li>Apply button will apply the current set of preferences and the preferences window will stay open.</li>
+          <li>Save button will apply, save current Preferences, and close the Preferences Windows,
+          settings will be automatically loaded at next start of JMRI.</li>
+        </ul>
+        <h2>General Panel</h2>
       <img src="images/ThrottlesPreferencesPane.png" alt="Throttle Pref pane">
-      <p>The Throttles Preferences pane is accessible from the <a href=
-      "ToolsMenuThrottleEntry.shtml">Throttles submenus in Tools menu</a>.<br>
-      For best experience, the recommended settings are those illustrated above.</p>
-      It is recommended to close all Throttle panes before applying a new set of Preferences, and
-      then reopen them once new settings are applied or saved.
-      <ul>
-        <li>Cancel button will close the window and leave current Throttles settings as they
-        are.</li>
+      <br>
+      <span style="font-style: italic;">For best user experience, the recommended settings are those illustrated above.</p></span>
 
-        <li>Apply button will apply the current set of preferences and the preferences window will
-        stay open.</li>
-
-        <li>Save button will apply, save current Preferences, and close the Preferences Windows,
-        settings will be automatically loaded at next start of JMRI.</li>
-      </ul>
-
-      <h2>Use extended throttle</h2>
+      <h3>Use extended throttle</h3>
       This setting will enable/disable all extended throttles features.
-      <h2>Set Controls transparent</h2>
-      Will set background of throttle internal windows transparent, or semi transparent.<br>
-      <span style="font-style: italic;">This feature is known to work fine on OS X, but Linux and
-      Windows to be worked on, totally varies depending on curent Java interface look'n feel
-      (modifiable in JMRI main preferences)</span>
-      <h2>Use Roster image as background</h2>
+
+      <h3>Save throttles when saving throttle windows layout</h3>
+      When saving a throttle layout, all opened throttles layouts are also saved to their respective files.<br>
+      <span style="font-style: italic;">Warning this does not export to roster file the function name customization if any (see <a href="ThrottleWindowMenus.shtml">Export
+         current throttle customization to roster menu entry</a>)</span>
+
+      <h3>Use Roster image as background</h3>
       When a roster is selected, the image defined in its <a href="RostersMediaPane.shtml">Media
       Panel</a> will be loaded as a background for the throttle window.<br>
       When this option is enabled and the selected address is 0 or 3, a default image will be
       loaded.
-      <h2>Resize window to image size</h2>
-      When a background image is loaded for current throttle, will force the Throttle Window size
-      to the one of that image.
-      <h2>Search Roster info when address entered</h2>
+
+      <h3>Do not scale image</h3>
+      When a background image is loaded for current throttle, if enabled, will not scale it before display.
+
+      <h3>Search Roster info when address entered</h3>
       When an address is entered in <a href="BasicThrottleWindow.shtml">the Address Panel</a>, the
       JMRI Roster database will be searched for a matching roster entry (and will hence triggers
       options described above and bellow if they're enabled).
-      <h2>Automatic loading Throttle pane preferences when linked to Roster</h2>
+
+      <h3>Automatic loading Throttle pane preferences when linked to Roster</h3>
       When a Roster is selected, if a matching Throttle definition file exist, JMRI will
       automatically loads it.<br>
       These files are stored in &lt;JMRI Preference Folder&gt;/Throttle/XYZ.xml where XYZ in the
       Roster ID.<br>
       Using the <a href="ThrottleWindowMenus.shtml">Save</a> menu entry from the File menu in a
       Throttle Window will create or update these files.
-      <h2>Ignore Throttle frame position</h2>
+
+      <h3>Ignore Throttle frame position</h3>
       For old Throttle files that contain Throttle Window position in them, do as described.<br>
       <span style="font-style: italic;">Note: Throttle Windows position are now saved in the
       <span style="font-weight: bold;">Throttles Layout</span> backup files (not in the Throttles
       backup files anymore)</span>
-      <h2>Hide undefined Roster function buttons</h2>
+
+      <h3>Hide undefined Roster function buttons</h3>
       When a Roster is selected, the address panels buttons are initialized as defined in the
-      Functions panel in DecoderPro. If this option is enabled, buttons not defined (no text) in
+      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, buttons not defined (no text) in
       PanelPro will be automatically hidden in the <a href="BasicThrottleWindow.shtml">Function
       Panel</a>.<br>
+
       <span style="font-style: italic;">Note: you can reset Function Buttons visibility in a
       Throttle Window by going to <a href="ThrottleWindowMenus.shtml">View Menu and clicking "Show
       all function buttons"</a>.</span>
-      <h2>Enable Throttle toolbar</h2>
+
+      <h3>Enable Throttle toolbar</h3>
       This option enables a <a href="ThrottleToolBar.shtml">Toolbar that will show in all Throttle
       Windows</a>.
-      <h2>Steal / Share Options</h2>
-      <img alt="JMRI Throttle Preferences Silent Steal Share Options" src=
-      "images/throttles-preferences-steal-share-600x395.png" width="600" height="395">
-      <p>These are system dependent options, and are not be available for all hardware types.</p>
 
-      <p>Some systems perform automatic steal or sharing, so no option is required.</p>
+      <h3>Enable button icons when available</h3>
+      When a Roster is selected, the address panels buttons are initialized as defined in the
+      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, button icons,
+      if defined, are loaded and displayed instead of function text.
+      <span style="font-style: italic;">Function text still needs to be defined (see Hide undefined Roster function buttons above)</span><br>
+      This option will also enable icons instead of text on the directions, idle and stop buttons on the control panel of JMRI throttle windows.
+
+      <h3>Use large speed slider and control buttons</h3>
+      If enabled, the speed slider will be drawn much larger and bolder. Will also automaticaly resize the control panel buttons as large as possible.<br>
+      Makes everything more readable when standing far away from screen.
+
+      <h3>Steal / Share Options</h3>
+      <p>These are system dependent options, and are not be available for all hardware types. Some systems perform automatic steal or sharing, so no option is required.</p>
 
       <p>The Silent Steal and Silent Share options are independent of the Use Extended Throttle
-      setting.</p>
-
-      <p>If both Silent Steal and Silent Share are available, only 1 can be selected at a time.</p>
+      setting.<br>
+      If both Silent Steal and Silent Share are available, only 1 can be selected at a time.</p>
 
       <p>Automation scripts and the actual hardware may override these options at any point.
       Although these options are to serve as a guide, they are fully honoured in the main JMRI
@@ -94,9 +117,13 @@
       questions are processed as steal-only.</p>
 
       <p>See individual hardware documentation for more detail on how these options affect your
-      system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS® Throttles</a></p>
+      system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS® Throttles</a>( CBUS® is a registered trade mark of Dr Michael Bolton)</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <h3>Default throttle file :</h3>
+      This file selector allows to define a JMRI Throttle file (xml file created from save as menu in a throttle window) as a default to be loaded
+      each time a new throttle is obtained by a JMRI Throttle Window (unless a roster entry is available for that address).<br>
+      It allows to define a nicely crafted JMRI Throttle window for any address to be used, particularly, default function names, icons and lockable states.
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

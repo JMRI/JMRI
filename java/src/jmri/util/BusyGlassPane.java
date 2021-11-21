@@ -160,7 +160,7 @@ public class BusyGlassPane extends JComponent {
                         // and
                         // getModifierEx is 0x400 BUTTON1_DOWN_MASK
 
-                        e.getModifiersEx(),
+                        e.getModifiers(),
                         componentPoint.x,
                         componentPoint.y,
                         e.getClickCount(),

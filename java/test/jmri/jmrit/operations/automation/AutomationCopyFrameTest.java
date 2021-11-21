@@ -35,7 +35,7 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 

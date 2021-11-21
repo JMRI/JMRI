@@ -26,7 +26,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
     private JCheckBox cbUseLargeSpeedSlider;
-    private JCheckBox cbHideSpeedStepSelector;
     private JCheckBox cbResizeWinImg;
     private JCheckBox cbUseExThrottle;
     private JCheckBox cbUseRosterImage;
@@ -56,7 +55,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbUseToolBar = new JCheckBox();
         cbUseFunctionIcon = new JCheckBox();
         cbUseLargeSpeedSlider = new JCheckBox();
-        cbHideSpeedStepSelector = new JCheckBox();
         cbUseRosterImage = new JCheckBox();
         cbResizeWinImg = new JCheckBox();
         cbEnableRosterSearch = new JCheckBox();
@@ -73,7 +71,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbUseToolBar.setText(Bundle.getMessage("ExThrottleUseToolBar"));
         cbUseFunctionIcon.setText(Bundle.getMessage("ExThrottleUseFunctionIcons"));
         cbUseLargeSpeedSlider.setText(Bundle.getMessage("ExThrottleUseLargeSpeedSlider"));
-        cbHideSpeedStepSelector.setText(Bundle.getMessage("ExThrottleHideSpeedStepSelector"));
         cbUseRosterImage.setText(Bundle.getMessage("ExThrottleUseRosterImageBkg"));
         cbEnableRosterSearch.setText(Bundle.getMessage("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
@@ -91,7 +88,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbUseToolBar.addActionListener(dirtyAL);
         cbUseFunctionIcon.addActionListener(dirtyAL);
         cbUseLargeSpeedSlider.addActionListener(dirtyAL);
-        cbHideSpeedStepSelector.addActionListener(dirtyAL);
         cbUseRosterImage.addActionListener(dirtyAL);
         cbEnableRosterSearch.addActionListener(dirtyAL);
         cbEnableAutoLoad.addActionListener(dirtyAL);
@@ -180,9 +176,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         this.add(cbUseLargeSpeedSlider, constraints);
 
         constraints.gridy++;
-        this.add(cbHideSpeedStepSelector, constraints);
-
-        constraints.gridy++;
         constraints.insets = x0;
         this.add(new JSeparator(),constraints );
         constraints.gridy++;
@@ -219,7 +212,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbHideUndefinedButtons.setSelected(tp.isHidingUndefinedFuncButt());
         cbIgnoreThrottlePosition.setSelected(tp.isIgnoringThrottlePosition());
         cbUseLargeSpeedSlider.setSelected(tp.isUsingLargeSpeedSlider());
-        cbHideSpeedStepSelector.setSelected(tp.isHidingSpeedStepSelector());
         cbSilentSteal.setSelected(tp.isSilentSteal());
         cbSilentShare.setSelected(tp.isSilentShare());
         tfDefaultThrottleLocation.setText(tp.getDefaultThrottleFilePath());
@@ -241,7 +233,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         tp.setHideUndefinedFuncButt(cbHideUndefinedButtons.isSelected());
         tp.setIgnoreThrottlePosition(cbIgnoreThrottlePosition.isSelected());        
         tp.setUseLargeSpeedSlider(cbUseLargeSpeedSlider.isSelected());
-        tp.setHideSpeedStepSelector(cbHideSpeedStepSelector.isSelected());
         tp.setDefaultThrottleFilePath(tfDefaultThrottleLocation.getText());
         return tp;
     }
@@ -257,7 +248,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbHideUndefinedButtons.setEnabled(cbUseExThrottle.isSelected());
         cbIgnoreThrottlePosition.setEnabled(cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected());
         cbUseLargeSpeedSlider.setEnabled(cbUseExThrottle.isSelected());
-        cbHideSpeedStepSelector.setEnabled(cbUseExThrottle.isSelected());
         if (cbUseExThrottle.isSelected()) {
             if (cbUseToolBar.isSelected()) {
                 cbIgnoreThrottlePosition.setSelected(true);

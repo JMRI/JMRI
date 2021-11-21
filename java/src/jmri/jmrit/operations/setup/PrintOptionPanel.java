@@ -356,11 +356,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         updateLogoButtons();
 
-        // load font sizes 7 through 18
-        for (int i = 7; i < 19; i++) {
-            fontSizeComboBox.addItem(i);
-        }
-        fontSizeComboBox.setSelectedItem(Setup.getManifestFontSize());
+        loadFontSizeComboBox();
         loadFontComboBox();
 
         // setup buttons
@@ -696,6 +692,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
         pSwLocal.add(addSwitchListLocalComboboxButton);
         pSwLocal.add(deleteSwitchListLocalComboboxButton);
+    }
+
+    private void loadFontSizeComboBox() {
+        loadFontSizeComboBox(fontSizeComboBox);
+        fontSizeComboBox.setSelectedItem(Setup.getManifestFontSize());
     }
 
     private void loadFontComboBox() {

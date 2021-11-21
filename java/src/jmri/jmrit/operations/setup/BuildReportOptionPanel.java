@@ -109,10 +109,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
         setBuildReportRadioButton();
         setBuildReportRouterRadioButton();
 
-        // load font sizes 5 through 14
-        for (int i = 5; i < 15; i++) {
-            fontSizeComboBox.addItem(i);
-        }
+        loadFontSizeComboBox(fontSizeComboBox);
         fontSizeComboBox.setSelectedItem(Setup.getBuildReportFontSize());
 
         addButtonAction(saveButton);

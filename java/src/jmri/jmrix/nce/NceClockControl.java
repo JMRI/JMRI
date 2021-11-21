@@ -312,7 +312,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set the time, the date part is ignored.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
     @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
@@ -324,7 +324,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Get the current Nce time, does not have a date component.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
     @Override
     public Date getTime() {
         issueReadOnlyRequest(); // go get the current time value
@@ -352,7 +352,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set Nce clock and start clock.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
     @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
