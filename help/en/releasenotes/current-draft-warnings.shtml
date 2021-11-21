@@ -30,6 +30,9 @@
             <li></li>
             <li></li>
             <li></li>
+            <li>FileChooserUtil</li>
+            <li>get/setFontFamily in SystemConsolePreferencesManager</li>
+            <li></li>
         </ul>
     </li>
     <li>The PowerManager now only fires events with the id "power".  Before this
