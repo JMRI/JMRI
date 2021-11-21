@@ -202,7 +202,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("index 1", 1, lastEvent0);
 
         // add an item
-        Sensor s3 = l.newSensor("IS3", "Sensor 3");
+        l.newSensor("IS3", "Sensor 3");
 
         // property listener should have been immediately invoked
         Assert.assertEquals("propertyListenerCount", 3, propertyListenerCount);
@@ -217,7 +217,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
 
         // can add a manager and still get notifications
         l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("Z", "Zulu")));
-        Sensor s4 = l.provideSensor("ZS2");
+        l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
         Assert.assertEquals("propertyListenerCount", 5, propertyListenerCount);
