@@ -46,10 +46,6 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     @SuppressWarnings("deprecation") // apps.startup.StartupModelFactory
     public StartupActionsManager() {
         super();
-        for (apps.startup.StartupModelFactory factory : ServiceLoader.load(apps.startup.StartupModelFactory.class)) {
-            factory.initialize();
-            this.factories.put(factory.getModelClass(), factory);
-        }
         for (StartupModelFactory factory : ServiceLoader.load(StartupModelFactory.class)) {
             factory.initialize();
             this.factories.put(factory.getModelClass(), factory);
