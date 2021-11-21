@@ -1066,6 +1066,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
+    @SuppressWarnings("DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS")
     private void saveWindowDetails() {
         this.setChangeMade(false);
         if (this.allowSave) {
