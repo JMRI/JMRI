@@ -67,13 +67,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public java.util.List<Turnout> getNamedBeanList() {
-        return null;
-    }
-
-    @Override
     @CheckForNull
     public java.util.SortedSet<Turnout> getNamedBeanSet() {
         return null;

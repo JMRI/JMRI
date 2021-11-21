@@ -402,18 +402,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<E> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
-        if (cachedNamedBeanList == null) {
-            cachedNamedBeanList = new ArrayList<>(_beans);
-        }
-        return Collections.unmodifiableList(cachedNamedBeanList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
     public SortedSet<E> getNamedBeanSet() {
         return Collections.unmodifiableSortedSet(_beans);
     }
