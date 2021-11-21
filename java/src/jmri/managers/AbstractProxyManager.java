@@ -584,18 +584,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return mgrs.stream().map(m -> m.getObjectCount()).reduce(0, Integer::sum);
     }
 
-    /** {@inheritDoc} */
-    @Nonnull
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        List<E> list = null;// getNamedBeanList();
-        ArrayList<String> retval = new ArrayList<>(list.size());
-        list.forEach(e -> retval.add(e.getSystemName()));
-        return Collections.unmodifiableList(retval);
-    }
-
     private TreeSet<E> namedBeanSet = null;
     protected void recomputeNamedBeanSet() {
         if (namedBeanSet != null) { // only maintain if requested

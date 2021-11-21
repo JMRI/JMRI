@@ -59,13 +59,12 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
         set.forEach((b) -> {
             d.deregister(b);
         });
-        
+
         Assert.assertTrue(d.getNamedBeanSet().isEmpty());
 
         d.load();
-        Assert.assertTrue(d.getSystemNameList().size() >= 2);
         Assert.assertTrue(d.getNamedBeanSet().size() >= 2);
-        
+
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
     }
 
@@ -111,12 +110,12 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
             }
         }
     }
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override

@@ -92,7 +92,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
         // check for lengths
         Assert.assertEquals(0, l.getNamedBeanSet().size());
-        Assert.assertEquals(0, l.getSystemNameList().size());
         Assert.assertEquals(0, l.getObjectCount());
 
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");

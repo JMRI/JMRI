@@ -150,13 +150,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
 
-        List<String> sortedList = l.getSystemNameList();
-        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-
-        Assert.assertEquals("sorted list length", 2, sortedList.size());
-        Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
-        Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
 
         Assert.assertEquals("bean set length", 2, beanSet.size());
         Iterator<Sensor> iter = beanSet.iterator();
@@ -167,10 +161,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
 
-        Assert.assertEquals("sorted list length", 2, sortedList.size());
-        Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
-        Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
-
         Assert.assertEquals("bean set length", 4, beanSet.size());
         iter = beanSet.iterator();
         Assert.assertEquals("bean set 1st", s1, iter.next());
@@ -179,14 +169,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
         // update and test update
-        sortedList = l.getSystemNameList();
         beanSet = l.getNamedBeanSet();
-
-        Assert.assertEquals("sorted list length", 4, sortedList.size());
-        Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
-        Assert.assertEquals("sorted list 2nd", "IS2", sortedList.get(1));
-        Assert.assertEquals("sorted list 3rd", "IS3", sortedList.get(2));
-        Assert.assertEquals("sorted list 4th", "IS4", sortedList.get(3));
 
         Assert.assertEquals("bean set length", 4, beanSet.size());
         iter = beanSet.iterator();
@@ -202,14 +185,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     public void testUnmodifiable() {
         l.provideSensor("IS1");
         l.provideSensor("IS2");
-
-        List<String> nameList = l.getSystemNameList();
-        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
-
-        try {
-            nameList.add("Foo");
-            Assert.fail("Should have thrown");
-        } catch (UnsupportedOperationException e) { /* this is OK */}
 
         java.util.SortedSet<Sensor> set = l.getNamedBeanSet();
         Assert.assertThrows(UnsupportedOperationException.class, () -> set.add(null));

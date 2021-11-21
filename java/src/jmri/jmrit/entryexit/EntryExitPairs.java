@@ -277,15 +277,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         return getNamedBeanSet().size();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        return getEntryExitList();
-    }
-
     /**
      * Implemented to support the Conditional combo box name list
      * @since 4.9.3

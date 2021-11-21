@@ -389,19 +389,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        if (cachedSystemNameList == null) {
-            cachedSystemNameList = new ArrayList<>();
-            _beans.forEach(b -> cachedSystemNameList.add(b.getSystemName()));
-        }
-        return Collections.unmodifiableList(cachedSystemNameList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
     public SortedSet<E> getNamedBeanSet() {
         return Collections.unmodifiableSortedSet(_beans);
     }

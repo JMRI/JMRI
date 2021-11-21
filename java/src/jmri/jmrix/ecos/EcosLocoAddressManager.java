@@ -96,7 +96,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
 
     /**
      * EcosLocoAddresses have no system prefix, so return input unchanged.
-     * 
+     *
      * @param s the input to make a system name
      * @return the resultant system name
      */
@@ -104,15 +104,6 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return s;
-    }
-
-
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when Manager method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        return new ArrayList<String>();
     }
 
     public void clearLocoToRoster() {
