@@ -520,10 +520,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     @Nonnull
     public SortedSet<E> getNamedBeanSet();
 
-    // needed for deprecationWarning calls above, remove with them
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface; just needed for deprecation")
-    static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
-
     /**
      * Locate an existing instance based on a system name.
      *
