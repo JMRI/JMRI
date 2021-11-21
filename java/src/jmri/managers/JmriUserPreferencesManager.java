@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -1066,7 +1068,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
-    @SuppressWarnings("DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS")
+    @SuppressFBWarnings(value = "DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS",
+            justification = "needs to copy the items of the hashmap windowDetails")
     private void saveWindowDetails() {
         this.setChangeMade(false);
         if (this.allowSave) {
