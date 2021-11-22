@@ -1085,7 +1085,9 @@ public class JUnitUtil {
 
     /**
      * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.  Instead of using this,
+     * but removes its contents.
+     * <p>
+     * Instead of using this,
      * it's better to have your test code remove _and_ _check_
      * for specific items; this just suppresses output from the
      * {@link #checkShutDownManager()} check down as part of the
@@ -1093,29 +1095,19 @@ public class JUnitUtil {
      *
      * @see #checkShutDownManager()
      * @see #initShutDownManager()
-     * @deprecated 4.17.4 because tests should directly test and remove queued items;
-     *             we do not intend to remove this method soon but you should not use
-     *             it in new code.
      */
-    @Deprecated // 4.17.4 because tests should directly test and remove queued items;
-                // we do not intend to remove this method soon but you should not use
-                // it in new code.
     public static void clearShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
-        }
+
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
+
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
@@ -1136,14 +1128,7 @@ public class JUnitUtil {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
-        }
+
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
@@ -1171,28 +1156,6 @@ public class JUnitUtil {
             log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
 
-    }
-
-    /**
-     * Creates a new ShutDownManager.
-     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * Normally, this is not needed for tests, as
-     * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
-     * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
-     * @see #clearShutDownManager()
-     * @deprecated 4.17.5 should not be needed in new test code
-     */
-    @Deprecated // 4.17.5 should not be needed in new test code
-    public static void initShutDownManager() {
-        ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
-        List<ShutDownTask> tasks = manager.tasks();
-        while (!tasks.isEmpty()) {
-            manager.deregister(tasks.get(0));
-            tasks = manager.tasks(); // avoid ConcurrentModificationException
-        }
-        if (manager instanceof MockShutDownManager) {
-            ((MockShutDownManager) manager).resetShuttingDown();
-        }
     }
 
     public static void initStartupActionsManager() {

@@ -89,12 +89,12 @@ public class OperationsTestCase {
         JUnitUtil.deregisterEditorManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-            List<ShutDownTask> list = sm.tasks();
+            var list = sm.getCallables();
             while (list.size() > 0) {
-                ShutDownTask task = list.get(0);
+                var task = list.get(0);
                 sm.deregister(task);
                 if (checkShutDownTask) {
-                    Assert.fail("Shutdown task found: " + task.getName());
+                    Assert.fail("Shutdown task found: " + task);
                 }
             }
         }
