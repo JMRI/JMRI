@@ -6,7 +6,6 @@ import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
-import com.tngtech.archunit.library.freeze.FreezingArchRule;
 
 /**
  * Check the architecture of the JMRI library
@@ -57,7 +56,8 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
                                 .doNotHaveFullyQualifiedName("jmri.Version").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender").and()
-                               // generated code that we don't have enough control over
+                                .doNotHaveFullyQualifiedName("jmri.util.EarlyInitializationPreferences").and()
+                                // generated code that we don't have enough control over
                                 .resideOutsideOfPackage("jmri.jmris.simpleserver..").and()
                                 .resideOutsideOfPackage("jmri.jmris.srcp..").and()
                                 .resideOutsideOfPackage("jmri.jmrix.srcp..")

@@ -106,6 +106,7 @@ public class SearchBar extends javax.swing.JPanel {
      * the usual modifier keys
      * @param frame JFrame containing this search bar; used to set key maps
      */
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     public void configureKeyModifiers(JFrame frame) {
         JRootPane rootPane = frame.getRootPane();
 

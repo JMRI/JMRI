@@ -69,9 +69,9 @@
       throttle actions remain disabled.<br>
       <br>
       Note that there is an option in the <a href="ThrottlesPreferencesPane.shtml">Throttles
-      Preferences Pane</a> that will enable an automatic look back in the roster DB when an address
+      Preferences Pane</a> that will enable an automatic look back in the roster when an address
       is entered, and eventually trigger an automatic set up of the full throttle if any matching
-      Roster entry is found.<br>
+      Roster entry is found. This option is enabled as a default.<br>
       <br>
       After an address is selected, all other controls and options in the throttle window will be
       enabled:<br>
@@ -97,6 +97,9 @@
       locomotive on the track). You do this using the "Control Panel".<br>
 
       <ul>
+        <li>The speed step combobox allows to select the speed step setting that will apply to the speed slider UI,
+          note that this is automatically set to the decoder setting when a throttle is acquired</li>
+
         <li>The slider will control the throttle speed.</li>
 
         <li>The Forward and Reverse button its direction.</li>
@@ -118,17 +121,29 @@
       <img src="images/ControlPanelPreferences.png" alt="ControlPanelPreferences.png"><br>
       This pane if accessible by right clicking in the Control Panel pane and opening Properties
       menu entry<br>
+      <ul>
+        <li>The speed display selector allows to select between :
+        <ul>
+          <li>Speed slider from 0 to 100 (default).</li>
+          <li>Display only numerical value of speed step</li>
+          <li>Continuous Speed slider from -100 to +100 with automatic direction change when zero is crossed.</li>
+        </ul>
+        </li>
+        <li>The track slider in real time checkbox updated the speed indicator in real time</li>
+        <li>The hide speed selector checkbox allows to hide the speed step setting in the UI</li>
+        <li>The switch to continuous speed slider on function: allows to enter a function id (F4 for instance)
+        that when activated will automatically switch the speed slider display to continuous (and vice versa when deactivated)</li>
+      </ul>
       <br>
 
       <h2>The Function Panel</h2>
-      The Function Panel has 28 function buttons available for each throttle. Most decoders
-      currently don't handle 28 functions. The function panel displays the buttons in two groups,
-      press the "*" button in the lower left corner to see the second set of function buttons.<br>
+      The Function Panel will automaticaly add/remove buttons when a throttle is acquired depending
+      on the number of function this throttle can manage.<br>
       <br>
       Clicking on the function buttons correlate to pressing the same function button on a
       hand-held throttle. The F0 function is normally used for the lights.<br>
       <br>
-      This is the basic functionality of the Function Panel. All buttons function like an on/off
+      This is the basic functionality of the Function Panel. All buttons function act like an on/off
       toggle - click once to turn "on"; click again to turn "off".<br>
       <br>
 
@@ -147,12 +162,16 @@
 
         <li>Text - customizable button label text</li>
 
-        <li>Font Size - size of text displayed on button</li>
+        <li>Font Size - size of text displayed on button, if no icon</li>
+        <li>Image Size - size of icon displayed on button, if any</li>
 
         <li>Lockable - identifies whether the button acts as an "on/off" toggle switch; or as a
         momentary switch</li>
 
         <li>Visible - identifies whether the button is visible in the Function Panel window</li>
+
+        <li>Function off icon, drag'n sdrop any image</li>
+        <li>Function on icon, drag'n sdrop any image</li>
       </ul>
       By default, the Function Number is associated with the button number that you initially
       right-clicked on. For example, in the figures shown above, function number "3" (F3) is being
@@ -170,7 +189,7 @@
       imagination, however, there is going to be a point where the length of the text is not going
       to fit on the button. The Font Size field is available to also assist in getting the wanted
       text to fit on the button. A little experimentation will be required here to determine what
-      looks good for you - and what will fit.<br>
+      looks good for you - and what will fit.<br><br>
       The Lockable check box may be a little confusing at first. When enabled - as it is by default
       - it simply means that when the button is clicked on, it will "lock" itself in either an "on"
       state or an "off" state. In other words, the button will act as a toggle switch - click once
@@ -183,16 +202,28 @@
       disabled. Depending on the speed of the computer system and the DCC system, short and quick
       click and releases would provide a short blast of the horn or whistle. Holding down the
       button a little longer would produce a longer held blast of the whistle.<br>
+      The lockable state of each button is updated from the mathing roster entry if any, or from
+      the DCC throttle itself, as updated by the layout connector on a throttle acquisisiton event.<br><br>
       The Visible check box allows for the "removal" of unwanted buttons. By default, all function
       buttons are enabled as "visible" so that they can obviously be seen. But if there is only a
       single function being used - for example the "lights" (F0) - then this option does provide
       the ability to "hide" all of the other buttons.<br>
+      <br>
       <span style="font-weight: bold;">Warning!</span> Disabling the "Visible" check box should be
       one of the last steps performed during this customization process. The reason for this is
       that once the button is marked as "invisible" (by removing the check box), it is indeed
       invisible to the user and therefore can't be right-clicked on with the mouse in order to get
-      the "Edit Function Button" window back. To make all buttons visible select <a href=
-      "ThrottleWindowMenus.shtml">"View-&gt;Show All Function Buttons."</a><br>
+      the "Edit Function Button" window back. To make all buttons see <a href=
+      "ThrottleWindowMenus.shtml">throttle menu entry "View-&gt;Show All Function Buttons."</a><br>
+      <br>
+      Button function icons are customizable by drag'n drop or by right clicking, to remove curent image,
+      or use a shorcut to get to the JMRI icon ressources folder. Note that SVG files are supported,
+      being vectorial, they will be resized nicely.<br>
+      If necessary (no existing similar file), droped files are copied into your JMRI ressource folder.<br>
+      If you're editing an existing roster entry, it will be updated accordingly. (see <a href="ThrottleWindowMenus.shtml">throttle menu entry
+      "Edit-&gt;Export current throttles customization to roster"</a>). <br>
+
+      </optgroup>
 
       <h2>Jynstruments</h2>
       See <a href="../scripting/Jynstruments.shtml">there for more informations about
@@ -201,13 +232,12 @@
       The Throttle Window is Jynstrumentable, particularly with more advanced function
       controls.<br>
       <br>
-      At the moment <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample
-      Jynstruments are delivered</a>, one for Light, one for Horn and one for Whistle (function 0,
-      1 and 2). But this is only a sample, have a look at the code and customize at will for your
-      specific decoder needs.<br>
+      <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/"> A few sample
+      Jynstruments are delivered</a>, some for function control, others for camera image integratio
+      into a JMRI throttle window, roster image display etc...<br><br>
       <span style="font-style: italic;">Note that Throttle Window toolbar is Jynstrumentable too,
       so here we drop the Jynstruments on the window content</span><span style=
-      "font-style: italic;">itself, not on the toolbar.</span> 
+      "font-style: italic;">itself, not on the toolbar.</span>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

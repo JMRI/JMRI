@@ -14,27 +14,36 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Throttles List</h1>
+      <h1>Throttles List Window</h1>
 
       <p><img src="images/ThrottleListWindow.png" alt="">
       </p>
-      This list is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
-      toolbar.</a><br>
-      The Throttles List shows all currently opened Throttles in JMRI. If an <a href=
-      "RostersMediaPane.shtml">icon is available for the Rosters in the database</a>, it will be
-      automatically used.<br>
+      This window is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
+      toolbar.</a><br><br>
+      The Throttles List shows all currently opened Throttles in JMRI, with their respective direction and speed. <br>
+      If an <a href="RostersMediaPane.shtml">icon is available for that roster entry</a>, it will be used.<br>
+      If button icons are enabled in  <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>, speed and direction
+      will show graphicaly. <br>
+
       <br>
       Clicking on a line will bring the matching throttle up.<br>
 
-      <h2>New button</h2>
+      <h3>New button</h3>
       This button creates a new Throttle window (hence different from clicking the "New" button in
       <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br>
 
-      <h2>Power button</h2>
+      <h3>Stop button</h3>
+      Will emergency stop all JMRI managed throttles.<br>
       Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
 
-      <h2>Stop button</h2>
+      <h3>Power button</h3>
+      Manage layout power.<br>
       Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
+
+      <h3>Preferences button</h3>
+      Open the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences pane</a>.
+
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

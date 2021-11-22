@@ -17,32 +17,33 @@ import org.junit.Test;
 
 /**
  * Test StringActionManager
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class StringActionManagerTest extends AbstractManagerTestBase {
 
     private StringActionManager _m;
-    
+
     @Test
     public void testRegisterAction() {
         MyAction myAction = new MyAction(_m.getSystemNamePrefix()+"BadSystemName");
-        
+
         boolean hasThrown = false;
         try {
             _m.registerAction(myAction);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
+            JUnitAppender.assertWarnMessage("SystemName IQBadSystemName is not in the correct format");
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
-        
+
+
         // We need a male socket to test with, so we register the action and then unregister the socket
         StringActionBean action = new StringActionMemory("IQSA321", null);
         MaleStringActionSocket maleSocket = _m.registerAction(action);
         _m.deregister(maleSocket);
-        
+
         hasThrown = false;
         try {
             _m.registerAction(maleSocket);
@@ -52,20 +53,20 @@ public class StringActionManagerTest extends AbstractManagerTestBase {
         }
         Assert.assertTrue("Exception thrown", hasThrown);
     }
-    
+
     @Test
     public void testGetBeanTypeHandled() {
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", _m.getBeanTypeHandled());
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", _m.getBeanTypeHandled(false));
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "String actions", _m.getBeanTypeHandled(true));
     }
-    
+
     @Test
     public void testInstance() {
         Assert.assertNotNull("instance() is not null", DefaultStringActionManager.instance());
         JUnitAppender.assertWarnMessage("instance() called on wrong thread");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -76,7 +77,7 @@ public class StringActionManagerTest extends AbstractManagerTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _m = InstanceManager.getDefault(StringActionManager.class);
         _manager = _m;
     }
@@ -88,8 +89,8 @@ public class StringActionManagerTest extends AbstractManagerTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     private static class MyAction extends AbstractBase implements StringActionBean {
 
         public MyAction(String sys) throws BadSystemNameException {
@@ -180,7 +181,7 @@ public class StringActionManagerTest extends AbstractManagerTestBase {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
+
 }

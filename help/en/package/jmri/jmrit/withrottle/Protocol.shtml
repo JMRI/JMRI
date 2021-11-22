@@ -266,7 +266,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
       For example:</p>
 
       <pre class="code">
-PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8]\[Unknown}|{
+PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8
 </pre>
       <p>The second string contains an array of defined routes. For example:</p>
 

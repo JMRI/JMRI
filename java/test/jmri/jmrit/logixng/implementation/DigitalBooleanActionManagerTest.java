@@ -17,32 +17,33 @@ import org.junit.Test;
 
 /**
  * Test DigitalActionManager
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
 
     private DigitalBooleanActionManager _m;
-    
+
     @Test
     public void testRegisterAction() {
         MyAction myAction = new MyAction(_m.getSystemNamePrefix()+"BadSystemName");
-        
+
         boolean hasThrown = false;
         try {
             _m.registerAction(myAction);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
+            JUnitAppender.assertWarnMessage("SystemName IQBadSystemName is not in the correct format");
         }
         Assert.assertTrue("Exception thrown", hasThrown);
-        
-        
+
+
         // We need a male socket to test with, so we register the action and then unregister the socket
         DigitalBooleanActionBean action = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
         MaleDigitalBooleanActionSocket maleSocket = _m.registerAction(action);
         _m.deregister(maleSocket);
-        
+
         hasThrown = false;
         try {
             _m.registerAction(maleSocket);
@@ -52,20 +53,20 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         }
         Assert.assertTrue("Exception thrown", hasThrown);
     }
-    
+
     @Test
     public void testGetBeanTypeHandled() {
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital boolean action", _m.getBeanTypeHandled());
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital boolean action", _m.getBeanTypeHandled(false));
         Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital boolean actions", _m.getBeanTypeHandled(true));
     }
-    
+
     @Test
     public void testInstance() {
         Assert.assertNotNull("instance() is not null", DefaultDigitalBooleanActionManager.instance());
         JUnitAppender.assertWarnMessage("instance() called on wrong thread");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -76,7 +77,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _m = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         _manager = _m;
     }
@@ -88,8 +89,8 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     private static class MyAction extends AbstractBase implements DigitalBooleanActionBean {
 
         public MyAction(String sys) throws BadSystemNameException {
@@ -180,7 +181,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
+
 }

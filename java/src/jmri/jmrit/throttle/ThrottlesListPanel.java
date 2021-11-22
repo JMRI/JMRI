@@ -118,4 +118,8 @@ public class ThrottlesListPanel extends JPanel {
             WindowPreferences.setPreferences(this.getTopLevelAncestor(), window);
         }
     }
+
+    void applyPreferences() {
+        repaint();
+    }
 }

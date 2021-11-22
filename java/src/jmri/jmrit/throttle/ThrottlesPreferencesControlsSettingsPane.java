@@ -450,12 +450,16 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
     final private class ShortCutTextField extends JTextField {
         ShortCutsField shortCutsField;
 
+        @SuppressWarnings("deprecation") // KeyEvent.getKeyModifiersText
         ShortCutTextField(int[] v) {
             super();
             setEditable(false);
             String text="";
             if (v[0]!=0) {
-                text +=  KeyEvent.getModifiersExText(v[0])+" + ";
+                text +=  ( KeyEvent.getKeyModifiersText(v[0]).isEmpty() ?
+                                KeyEvent.getModifiersExText(v[0]) :
+                                KeyEvent.getKeyModifiersText(v[0])
+                            ) + " + ";
             }
             if (v[1]!=0) {
                 text += KeyEvent.getKeyText(v[1]);
@@ -469,6 +473,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
             shortCutsField = scf;
             addKeyListener(new KeyAdapter() {
                     @Override
+                    @SuppressWarnings("deprecation")  // getModifiers()
                     public void keyReleased(KeyEvent e){
                         int[] values = new int[2];
                         values[0] = e.getModifiersEx();
