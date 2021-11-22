@@ -229,7 +229,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         JmriColorChooser.addRecentColor(color);
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "UseExtraColor()"
+    // TODO: Java standard pattern for boolean getters is "UseExtraColor()"
     public boolean getUseExtraColor() {
         return useExtraColor;
     }
@@ -4114,7 +4114,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @param i index in route
      * @return true if route is valid
      */
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isRouteValid()"
+    // TODO: Java standard pattern for boolean getters is "isRouteValid()"
     public boolean getRouteValid(int i) {
         return routes.get(i).isRouteCurrentlyValid();
     }
