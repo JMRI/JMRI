@@ -284,10 +284,9 @@ public class DataSource extends jmri.util.JmriJFrame {
             = new javax.swing.JComboBox<String>(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Thread.stop
     @Override
     public void dispose() {
-        // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread != null) {
             readerThread.stop();
         }
@@ -312,7 +311,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
