@@ -145,7 +145,7 @@ public class JemmyUtil {
             count--;
             f.requestFocus();
         }
-        Assert.assertTrue("frame is active", f.isActive());
+        Assert.assertTrue("frame should be active", f.isActive());
     }
 
 }

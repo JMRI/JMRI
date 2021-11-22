@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 
 
@@ -80,7 +79,6 @@ public class Division extends PropertyChangeSupport implements Identifiable {
      *
      * @param e Consist XML element
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Division(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -92,7 +90,7 @@ public class Division extends PropertyChangeSupport implements Identifiable {
             _name = a.getValue();
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
     }
 
