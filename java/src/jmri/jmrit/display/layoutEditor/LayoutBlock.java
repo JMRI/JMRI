@@ -229,7 +229,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         JmriColorChooser.addRecentColor(color);
     }
 
-    // TODO: Java standard pattern for boolean getters is "UseExtraColor()"
+    // TODO: Java standard pattern for boolean getters is "useExtraColor()"
     public boolean getUseExtraColor() {
         return useExtraColor;
     }
