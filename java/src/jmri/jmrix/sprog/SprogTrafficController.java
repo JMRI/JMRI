@@ -25,7 +25,7 @@ import purejavacomm.SerialPortEventListener;
  * Rewritten during 4.11.x series. Create a high priority thread for the tc to
  * move everything off the swing thread. Use a blocking queue to handle
  * asynchronous messages from multiple sources.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2018
  */
@@ -42,7 +42,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private boolean replyAvailable = false;
     // Make this public so it can be overridden by a script for debug
     public int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
-    
+
     /**
      * Create a new SprogTrafficController instance.
      *
@@ -105,7 +105,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     public void setTimeout(int t) {
         timeout = t;
     }
-    
+
     public SprogState getSprogState() {
         return sprogState;
     }
@@ -232,25 +232,25 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     static private class MessageTuple {
         private final SprogMessage message;
         private final SprogListener listener;
-        
+
         public MessageTuple(SprogMessage m, SprogListener l) {
             message = m;
             listener = l;
         }
-        
+
         // Copy constructor
         public MessageTuple(MessageTuple mt) {
             message = mt.message;
             listener = mt.listener;
         }
     }
-    
+
     // The queue to hold messages being sent
     BlockingQueue<MessageTuple> sendQueue = new LinkedBlockingQueue<MessageTuple>();
-        
+
     /**
      * Enqueue a preformatted message to be sent to the actual interface
-     * 
+     *
      * @param m The message to be forwarded
      */
     public void sendSprogMessage(SprogMessage m) {
@@ -280,7 +280,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Block until a message is available from the queue, send it to the interface
-     * and then block until reply is received or a timeout occurs. This will be 
+     * and then block until reply is received or a timeout occurs. This will be
      * a very long timeout to allow for page mode programming operations in SPROG
      * programmer mode.
      */
@@ -323,7 +323,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Forward a preformatted message to the interface.
-     * 
+     *
      * @param m The message to be forwarded
      */
     public void sendToInterface(SprogMessage m) {
@@ -346,7 +346,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Make connection to existing PortController object.
-     * 
+     *
      * @param p The port controller
      */
     public void connectPort(AbstractPortController p) {
@@ -360,7 +360,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Get the port controller, as a SerialDriverAdapter.
-     * 
+     *
      * @return the port controller
      */
     protected SerialDriverAdapter getController(){
@@ -371,7 +371,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * Break connection to existing SprogPortController object.
      * <p>
      * Once broken, attempts to send via "message" member will fail.
-     * 
+     *
      * @param p the connection to break
      */
     public void disconnectPort(AbstractPortController p) {
@@ -381,18 +381,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             log.warn("disconnectPort: disconnect called from non-connected SprogPortController");
         }
         controller = null;
-    }
-
-    /**
-     * Static function returning the SprogTrafficController instance to use.
-     *
-     * @return The registered SprogTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SprogTrafficController instance() {
-        return null;
     }
 
     static volatile protected SprogTrafficController self = null;

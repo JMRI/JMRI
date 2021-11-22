@@ -186,29 +186,10 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     InputStream serialStream = null;
 
     /**
-     * @return instance.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
-            mInstance = m;
-        }
-        return mInstance;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile SerialDriverAdapter mInstance = null;
-
-    /**
      * set up all of the other objects to operate with an Dcc4Pc command station
      * connected to this port
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void configure() {
         // connect to the traffic controller

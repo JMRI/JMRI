@@ -14,11 +14,12 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 @Deprecated
 public class LI100XNetInitializationManager extends XNetInitializationManager {
 
+    static int LI100_INIT_TIMEOUT = 30000;
 
     public LI100XNetInitializationManager(XNetSystemConnectionMemo memo){
         memo(memo);
         setDefaults();
-        setTimeout(getInitTimeout());
+        setTimeout(LI100_INIT_TIMEOUT);
         versionCheck();
         programmer(LI100XNetProgrammer.class);
         init();

@@ -25,6 +25,8 @@
             <li></li>
             <li></li>
             <li></li>
+            <li>Various TrafficManagers.instance methods - use InstanceManager</li>
+            <li>Throttle.getListeners() - use getPropertyChangeListeners</li>
             <li></li>
             <li></li>
             <li></li>
@@ -38,4 +40,9 @@
     <li>The PowerManager now only fires events with the id "power".  Before this
         release, it also fired events with the id "Power". Check that
         your code is looking for the right form.
+    </li>
+    <li>
+        DCC4pc now has multi-system capability
+    </li>
+    <li>
     </li>

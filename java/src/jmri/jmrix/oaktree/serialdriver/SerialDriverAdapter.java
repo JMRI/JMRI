@@ -200,11 +200,6 @@ public class SerialDriverAdapter extends SerialPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
