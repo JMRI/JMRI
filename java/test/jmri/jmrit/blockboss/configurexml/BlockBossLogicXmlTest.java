@@ -31,13 +31,7 @@ public class BlockBossLogicXmlTest {
     }
 
     int count() {
-        int ret = 0;
-
-        for (BlockBossLogic b : InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll()) {
-            ret++;
-        }
-
-        return ret;
+        return InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll().size();
     }
 
     @Test
