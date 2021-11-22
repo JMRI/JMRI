@@ -1094,7 +1094,6 @@ public class JUnitUtil {
      * default end-of-test code.
      *
      * @see #checkShutDownManager()
-     * @see #initShutDownManager()
      */
     public static void clearShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
@@ -1122,7 +1121,6 @@ public class JUnitUtil {
      * CI will flag these and tests will be improved.
      *
      * @see #clearShutDownManager()
-     * @see #initShutDownManager()
      */
     static void checkShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
