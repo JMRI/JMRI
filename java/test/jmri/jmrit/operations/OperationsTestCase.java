@@ -93,6 +93,7 @@ public class OperationsTestCase {
             while (list.size() > 0) {
                 var task = list.get(0);
                 sm.deregister(task);
+                list = sm.getCallables();
                 if (checkShutDownTask) {
                     Assert.fail("Shutdown task found: " + task);
                 }
