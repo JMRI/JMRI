@@ -116,8 +116,8 @@ public class EarlyInitializationPreferences {
 
                     double scaleX = transform.getScaleX();
                     double scaleY = transform.getScaleY();
-                    System.out.format("ScaleX: %1.2f%n", scaleX);
-                    System.out.format("ScaleY: %1.2f%n", scaleY);
+                    System.err.format("ScaleX: %1.2f%n", scaleX);
+                    System.err.format("ScaleY: %1.2f%n", scaleY);
 
                     // Don't set uiScale to 1 if Windows has a scaling above 125%
                     if ((scaleX >= 1.3) || (scaleY >= 1.3)) uiScale = 0;
