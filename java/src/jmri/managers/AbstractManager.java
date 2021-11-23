@@ -520,7 +520,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         if (e != null) listeners.remove(e);
     }
 
-    @SuppressWarnings("deprecation")
     private final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     private boolean muted = false;
@@ -528,7 +527,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
