@@ -319,8 +319,8 @@ public class TrackSegment extends LayoutTrack {
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
-    @SuppressWarnings("deprecation")
-    // NOTE: findObjectByTypeAndName is @Deprecated;
+    @SuppressWarnings("deprecation") // findObjectByTypeAndName
+    // NOTE: findObjectByTypeAndName is deprecated;
     // we're using it here for backwards compatibility until it can be removed
     @Override
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed before using return value")

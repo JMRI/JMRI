@@ -1090,9 +1090,9 @@ public class ActiveTrain implements PropertyChangeProvider {
         restartPoint = true;
         if (getDelayedRestart() == TIMEDDELAY) {
             Date now = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
-            @SuppressWarnings("deprecation")
+            @SuppressWarnings("deprecation") // Date.getHours
             int nowHours = now.getHours();
-            @SuppressWarnings("deprecation")
+            @SuppressWarnings("deprecation") // Date.getMinutes
             int nowMinutes = now.getMinutes();
             int hours = getRestartDelay() / 60;
             int minutes = getRestartDelay() % 60;

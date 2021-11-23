@@ -30,15 +30,11 @@ public class ProfileProperties implements AuxiliaryProperties {
     }
 
     @Override
-    @SuppressFBWarnings(value = "deprecation", justification = "Avoids errors passing partly constructed object.")
-    @SuppressWarnings("deprecation") // silence deprecation notice in IDEs
     public String get(String key, boolean shared) {
         return JmriPreferencesProvider.getPreferences(path, null, shared).node(Profile.PROFILE).get(key, null);
     }
 
     @Override
-    @SuppressFBWarnings(value = "deprecation", justification = "Avoids errors passing partly constructed object.")
-    @SuppressWarnings("deprecation")
     public Iterable<String> listKeys(boolean shared) {
         try {
             String[] keys = JmriPreferencesProvider.getPreferences(path, null, shared).node(Profile.PROFILE).keys();
@@ -50,8 +46,6 @@ public class ProfileProperties implements AuxiliaryProperties {
     }
 
     @Override
-    @SuppressFBWarnings(value = "deprecation", justification = "Avoids errors passing partly constructed object.")
-    @SuppressWarnings("deprecation")
     public void put(String key, String value, boolean shared) {
         JmriPreferencesProvider.getPreferences(path, null, shared).node(Profile.PROFILE).put(key, value);
     }

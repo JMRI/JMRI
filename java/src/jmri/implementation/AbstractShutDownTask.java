@@ -85,5 +85,5 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
         doRun = flag;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractShutDownTask.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractShutDownTask.class);
 }

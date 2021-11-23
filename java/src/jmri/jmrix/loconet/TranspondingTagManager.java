@@ -17,12 +17,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // ConflictingSystemConnectionMemo
     public TranspondingTagManager() {
         super(new jmri.jmrix.ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
         storeInstance();
     }
-    
+
     final void storeInstance(){
         InstanceManager.store(this, TranspondingTagManager.class);
     }
@@ -35,7 +35,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
         }
         return new TranspondingTag(systemName, userName);
     }
-    
+
     @Override
     @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {

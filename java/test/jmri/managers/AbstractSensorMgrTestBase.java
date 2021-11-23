@@ -78,27 +78,25 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     public void testDelete() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
-        
+
         // two-pass delete, details not really tested
-        
+
         try {
             l.deleteBean(t, "CanDelete");
         } catch (java.beans.PropertyVetoException e) {}
         try {
             l.deleteBean(t, "DoDelete");
         } catch (java.beans.PropertyVetoException e) {}
-        
+
         // check for bean
         Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
         // check for lengths
-        Assert.assertEquals(0, l.getNamedBeanList().size());
         Assert.assertEquals(0, l.getNamedBeanSet().size());
-        Assert.assertEquals(0, l.getSystemNameList().size());
         Assert.assertEquals(0, l.getObjectCount());
-        
+
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
-        
+
     }
 
     @Test
@@ -163,10 +161,10 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     public void testUpperLower() {  // this is part of testing of (default) normalization
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
-        
+
         int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
         String lowerName = name.substring(0, prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
-        
+
         Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
@@ -191,36 +189,36 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     @Override
     public void testAutoSystemNames() {
     }
-    
+
     @Test
     public void TestGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
-    
+
     @Test
     public void testGetNextValidAddress() throws JmriException {
-        
+
         if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
             return;
         }
-        
+
         Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-    
-        Assert.assertNotEquals("requesting ignore existing does not return same", 
+
+        Assert.assertNotEquals("requesting ignore existing does not return same",
                 l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
                 l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-        
+
         Sensor t =  l.provide(getASystemNameWithNoPrefix());
         Assert.assertNotNull("exists", t);
-        
+
         String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
         Sensor nextValid =  l.provide(nextValidAddr);
         Assert.assertNotNull("exists", nextValid);
         Assert.assertNotEquals(nextValid, t);
-        
+
     }
-    
+
     @Test
     public void testIncorrectGetNextValidAddress() {
         if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
@@ -232,7 +230,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
                 }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
         Assert.assertTrue("Exception contained incorrect address", contains);
     }
-    
+
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers

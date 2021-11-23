@@ -312,7 +312,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set the time, the date part is ignored.
      */
-    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
@@ -324,7 +324,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Get the current Nce time, does not have a date component.
      */
-    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public Date getTime() {
         issueReadOnlyRequest(); // go get the current time value
@@ -352,7 +352,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set Nce clock and start clock.
      */
-    @SuppressWarnings("deprecation") // getHours, getMinutes, getSeconds
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
@@ -407,7 +407,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     private void readClockPacket(NceReply r) {
         //NceReply priorClockReadPacket = lastClockReadPacket;
         //int priorNceRatio = nceLastRatio;
@@ -512,7 +512,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings({"deprecation", "unused"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
@@ -537,7 +537,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (nceTime);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings({"deprecation", "unused"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();

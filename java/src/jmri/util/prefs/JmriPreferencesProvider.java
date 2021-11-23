@@ -133,6 +133,12 @@ public final class JmriPreferencesProvider {
     /**
      * Get the {@link java.util.prefs.Preferences} for the specified package in
      * the specified profile.
+     * <P>
+     * Use of
+     *  {@link #getPreferences(Profile, Class, boolean)} or
+     *  {@link #getPreferences(Profile, Package, boolean)} is
+     *   preferred and recommended unless reading preferences for a
+     *   non-existent package or class.
      *
      * @param project The profile. This is most often the profile returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
@@ -145,14 +151,8 @@ public final class JmriPreferencesProvider {
      *                of host. If false, the preferences only apply to this
      *                computer. Ignored if the value of project is null.
      * @return The shared or private Preferences node for the package.
-     * @deprecated Not for removal. Use of
-     *             {@link #getPreferences(Profile, Class, boolean)} or
-     *             {@link #getPreferences(Profile, Package, boolean)} is
-     *             preferred and recommended unless reading preferences for a
-     *             non-existent package or class.
      */
     @Nonnull
-    @Deprecated
     public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final String pkg,
             final boolean shared) {
         if (project != null) {
@@ -165,6 +165,11 @@ public final class JmriPreferencesProvider {
     /**
      * Get the {@link java.util.prefs.Preferences} for the specified class in
      * the specified path.
+     * <P>
+     * Use of
+     *   {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
+     *    is preferred and recommended unless being used to during the
+     *    construction of a Profile object.
      *
      * @param path   The path to a profile. This is most often the result of
      *               {@link jmri.profile.Profile#getPath()} for a given Profile.
@@ -177,12 +182,7 @@ public final class JmriPreferencesProvider {
      *               computer. Ignored if the value of path is null.
      * @return The shared or private Preferences node for the package containing
      *         clazz for project.
-     * @deprecated Not for removal. Use of
-     *             {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
-     *             is preferred and recommended unless being used to during the
-     *             construction of a Profile object.
      */
-    @Deprecated
     public static Preferences getPreferences(@CheckForNull final File path, @CheckForNull final Class<?> clazz,
             final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);

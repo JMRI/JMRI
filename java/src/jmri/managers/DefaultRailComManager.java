@@ -22,12 +22,12 @@ import org.slf4j.LoggerFactory;
 public class DefaultRailComManager extends DefaultIdTagManager
         implements RailComManager {
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // ConflictingSystemConnectionMemo
     public DefaultRailComManager() {
         super(new jmri.jmrix.ConflictingSystemConnectionMemo("R", "RailCom")); // NOI18N
         setInstances();
     }
-    
+
     final void setInstances() {
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);

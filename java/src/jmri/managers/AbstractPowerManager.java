@@ -94,7 +94,6 @@ abstract public class AbstractPowerManager<M extends SystemConnectionMemo> exten
      * @param old the old power state
      * @param current the new power state
      */
-    @SuppressWarnings("deprecation")
     protected final void firePowerPropertyChange(int old, int current) {
         firePropertyChange(POWER, old, current);
     }
