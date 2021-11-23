@@ -6,27 +6,34 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Activate residence time</label>
     <label xml:lang="de">Aktivieren der Aufenthaltszeit</label>
+    <label xml:lang="cs">Aktivovat dobu pobytu</label>
     <tooltip>PROVISIONAL from SW version 38.00</tooltip>
     <tooltip xml:lang="de">PROVISORISCH ab SW-Version 38.00</tooltip>
+    <tooltip xml:lang="cs">PROVIZORN9 od SW verze 38.00</tooltip>
   </variable>
   <variable CV="135" item="CV136Bit9" default="0" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Supplement to CV#136</label>
     <label xml:lang="de">Ergänzung zu CV#136</label>
+    <label xml:lang="cs">Dodatek k CV136</label>
     <tooltip>Bit 6 of the CV 135 is the "9th Bit" for the speed feedback in CV 136</tooltip>
     <tooltip xml:lang="de">Bit 6 der CV 135 ist das "9. Bit“ für die Geschwindigkeits-Rückmeldung in CV 136</tooltip>
+    <tooltip xml:lang="cs">Bit 6 v CV135 je "9. Bit" pro zpětnou vazbu rychlosti v CV136</tooltip>
   </variable>
   <variable CV="144" item="CV-Prog Locked" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>complete CV-Prog Locked (SERV and OP)</label>
     <label xml:lang="de">Komplette Sperre CV-Prog (SERV und OP)</label>
+    <label xml:lang="cs">Kompletní programování CV zamčeno (Servisní a Provozní)</label>
     <tooltip>In intensive analog operation, the UPDATE LOCK should be engaged to avoid disturbances and poorer handling!</tooltip>
     <tooltip xml:lang="de">Bei intensivem Analogbetrieb sollte die UPDATESPERRE eingelegt werden, um Störungen und schlechteres Fahrverhalten zu vermeiden!</tooltip>
+    <tooltip xml:lang="cs">Při intenzivním analogovém provozu by měl být aktivován Zámek úprav, aby nedocházelo k rušení a horší manipulaci.!</tooltip>
   </variable>
   <variable CV="834" item="Turbocharger acceleration" default="0">
     <decVal/>
     <label>reduces acceleration dependency of the turboloader</label>
     <label xml:lang="de">Turbolader: Beschleunigungsabhängigkeit</label>
+    <label xml:lang="cs">snižuje závislot zrychlení na Turboladeru</label>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F13" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -37,6 +44,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F13</label>
       <tooltip>Check to enable function F13 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F13 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F13 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F14" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -47,6 +55,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F14</label>
       <tooltip>Check to enable function F14 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F14 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F14 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F15" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -57,6 +66,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F15</label>
       <tooltip>Check to enable function F15 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F15 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F15 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F16" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -67,6 +77,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F16</label>
       <tooltip>Check to enable function F16 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F16 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F16 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F17" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -77,6 +88,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F17</label>
       <tooltip>Check to enable function F17 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F17 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F17 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F18" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -87,6 +99,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F18</label>
       <tooltip>Check to enable function F18 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F18 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F18 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F19" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -97,6 +110,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F19</label>
       <tooltip>Check to enable function F19 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F19 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F19 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F20" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -107,6 +121,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F20</label>
       <tooltip>Check to enable function F20 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F20 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F20 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F21" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -117,6 +132,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F21</label>
       <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F21 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F21 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F22" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -127,6 +143,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F22</label>
       <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F22 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F22 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F23" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -137,6 +154,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F23</label>
       <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F23 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F23 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F24" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -147,6 +165,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F24</label>
       <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F24 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F24 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F25" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -157,6 +176,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F25</label>
       <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F25 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F25 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F26" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -167,6 +187,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F26</label>
       <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F26 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F26 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F27" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -177,6 +198,7 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F27</label>
       <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F27 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F27 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
   <variable CV="841" item="Analog Mode Function Status - F28" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -187,5 +209,6 @@
       <label xml:lang="de">Funktion ein im Analogbetrieb - F28</label>
       <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F28 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F28 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
 </variables>
