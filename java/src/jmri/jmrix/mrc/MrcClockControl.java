@@ -206,7 +206,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * set the time, the date part is ignored
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") //Date.getHours, Date.getMinutes
     @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
@@ -218,7 +218,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * returns the current Mrc time, does not have a date component
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") //Date.getTime
     @Override
     public Date getTime() {
         Date now = internalClock.getTime();
@@ -244,7 +244,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * set Mrc clock and start clock
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getMinutes
     @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
@@ -265,7 +265,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             return;
         }
         int newRate = (int) rate;
-        
+
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (newRate != getRate()) {
             setRate(rate);
@@ -303,7 +303,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getTime
     private void readClockPacket(MrcMessage r) {
         lastClockReadPacket = r;
         mrcLastHour = r.getElement(2) & 0x1F;

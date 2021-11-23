@@ -2413,7 +2413,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     boolean openDispatcherOnLoad = false;
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
+    // TODO: Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
     public boolean getOpenDispatcherOnLoad() {
         return openDispatcherOnLoad;
     }
@@ -7216,27 +7216,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return layoutName;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getShowHelpBar() {
         return showHelpBar;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDrawGrid() {
         return drawGrid;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getSnapOnAdd() {
         return snapToGridOnAdd;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getSnapOnMove() {
         return snapToGridOnMove;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getAntialiasingOn() {
         return antialiasingOn;
     }
@@ -7245,27 +7245,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return drawLayoutTracksLabel;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getHighlightSelectedBlock() {
         return highlightSelectedBlockFlag;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTurnoutCircles() {
         return turnoutCirclesWithoutEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTooltipsNotEdit() {
         return tooltipsWithoutEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTooltipsInEdit() {
         return tooltipsInEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getAutoBlockAssignment() {
         return autoAssignBlocks;
     }
@@ -7735,7 +7735,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
     }

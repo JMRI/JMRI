@@ -354,7 +354,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     // use deprecated stop method to stop thread,
     // which will be sitting waiting for input
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Thread.stop
     void stopThread(Thread t) {
         t.stop();
     }
@@ -655,7 +655,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Get output data length from 1st message
-     * 
+     *
      * @param buffer Message from which length is to be extracted
      * @return length of the buffer
      */

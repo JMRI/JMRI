@@ -550,7 +550,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */
-    @SuppressWarnings({"deprecation", "fallthrough"})
+    @SuppressWarnings({"deprecation", "fallthrough"}) // Date.setHours, setMinutes, setSeconds
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     // it's unfortunate that this is such a huge method, because these annotations
     // have to apply to more than 500 lines of code - jake
@@ -649,14 +649,14 @@ public class DefaultConditional extends AbstractNamedBean
                         java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
                         while (iter.hasNext()) {
                             String sname = iter.next().getSystemName();
-                            
+
                             Conditional c = cmg.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel turnout timers for "  // NOI18N
                                         + action.getDeviceName());
                                 continue; // no more processing of this one
                             }
-                            
+
                             c.cancelTurnoutTimer(devName);
                             actionCount++;
                         }
@@ -794,7 +794,7 @@ public class DefaultConditional extends AbstractNamedBean
                                         + action.getDeviceName());
                                 continue; // no more processing of this one
                             }
-                            
+
                             c.cancelSensorTimer(devName);
                             actionCount++;
                         }
@@ -994,7 +994,7 @@ public class DefaultConditional extends AbstractNamedBean
                             // add the text to the output frame
                             ScriptOutput.writeScript(getActionString(action));
                             // and execute
-                            
+
                             javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
                             if (se!=null) {
                                 try {
