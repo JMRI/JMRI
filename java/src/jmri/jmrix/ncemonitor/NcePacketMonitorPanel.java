@@ -484,7 +484,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     // use deprecated stop method to stop thread,
     // which will be sitting waiting for input
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // THread.stop
     void stopThread(Thread t) {
         t.stop();
     }
@@ -516,7 +516,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
