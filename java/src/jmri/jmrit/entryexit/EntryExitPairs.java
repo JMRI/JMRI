@@ -277,35 +277,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         return getNamedBeanSet().size();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        return getEntryExitList();
-    }
-
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a list of Destination Point beans
-     */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<DestinationPoints> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
-        List<DestinationPoints> beanList = new ArrayList<>();
-        for (Source e : nxpair.values()) {
-            List<String> uidList = e.getDestinationUniqueId();
-            for (String uid : uidList) {
-                beanList.add(e.getByUniqueId(uid));
-            }
-        }
-        return beanList;
-    }
-
     /**
      * Implemented to support the Conditional combo box name list
      * @since 4.9.3

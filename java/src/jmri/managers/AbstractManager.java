@@ -49,10 +49,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected final Map<String, Boolean> silencedProperties = new HashMap<>();
     protected final Set<String> silenceableProperties = new HashSet<>();
 
-    // caches
-    private ArrayList<String> cachedSystemNameList = null;
-    private ArrayList<E> cachedNamedBeanList = null;
-
     // Auto names. The atomic integer is always created even if not used, to
     // simplify concurrency.
     AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
@@ -240,10 +236,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             }
         }
 
-        // clear caches
-        cachedSystemNameList = null;
-        cachedNamedBeanList = null;
-
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
@@ -308,10 +300,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @OverridingMethodsMustInvokeSuper
     public void deregister(@Nonnull E s) {
         int position = getPosition(s);
-
-        // clear caches
-        cachedSystemNameList = null;
-        cachedNamedBeanList = null;
 
         // stop listening for user name changes
         s.removePropertyChangeListener(this);
@@ -385,31 +373,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Override
     @CheckReturnValue
     public int getObjectCount() { return _beans.size();}
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        if (cachedSystemNameList == null) {
-            cachedSystemNameList = new ArrayList<>();
-            _beans.forEach(b -> cachedSystemNameList.add(b.getSystemName()));
-        }
-        return Collections.unmodifiableList(cachedSystemNameList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<E> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
-        if (cachedNamedBeanList == null) {
-            cachedNamedBeanList = new ArrayList<>(_beans);
-        }
-        return Collections.unmodifiableList(cachedNamedBeanList);
-    }
 
     /** {@inheritDoc} */
     @Override
@@ -576,7 +539,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
@@ -584,7 +546,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
