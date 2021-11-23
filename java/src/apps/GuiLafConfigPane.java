@@ -73,6 +73,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox graphicStateDisplay;
     public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
+    public JCheckBox force100percentScaling;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -88,6 +89,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doTabbedOblockEditor(p = new JPanel());
         add(p);
         doEditorUseOldLocSize(p = new JPanel());
+        add(p);
+        doForce100percentScaling(p = new JPanel());
         add(p);
         doMaxComboRows(p = new JPanel());
         add(p);
@@ -133,6 +136,20 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setEditorUseOldLocSize(editorUseOldLocSizeDisplay.isSelected());
         });
         panel.add(editorUseOldLocSizeDisplay);
+    }
+
+    void doForce100percentScaling(JPanel panel) {
+        jmri.util.EarlyInitializationPreferences eip =
+                jmri.util.EarlyInitializationPreferences.getInstance();
+
+        eip.getStartupPreferences();
+        panel.setLayout(new FlowLayout());
+        force100percentScaling = new JCheckBox(ConfigBundle.getMessage("GUIForce100percentScaling"));
+        force100percentScaling.setSelected(eip.getGUIForce100percentScaling());
+        force100percentScaling.addItemListener((ItemEvent e) -> {
+            eip.setGUIForce100percentScaling(force100percentScaling.isSelected());
+        });
+        panel.add(force100percentScaling);
     }
 
     void doLAF(JPanel panel) {
