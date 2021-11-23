@@ -9,7 +9,7 @@
     <label xml:lang="cs">Aktivovat dobu pobytu</label>
     <tooltip>PROVISIONAL from SW version 38.00</tooltip>
     <tooltip xml:lang="de">PROVISORISCH ab SW-Version 38.00</tooltip>
-    <tooltip xml:lang="cs">PROVIZORN9 od SW verze 38.00</tooltip>
+    <tooltip xml:lang="cs">PROVIZORNÍ od SW verze 38.00</tooltip>
   </variable>
   <variable CV="135" item="CV136Bit9" default="0" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
