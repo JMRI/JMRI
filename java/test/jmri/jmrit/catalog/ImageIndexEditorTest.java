@@ -43,11 +43,11 @@ public class ImageIndexEditorTest {
         new JFrameOperator(indexEditor).dispose();
         //verify there is a shutdown task in the shutdown manager
         ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
-        List<ShutDownTask> tasks = sdm.tasks().stream().collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
+        var tasks = sdm.getCallables().stream().collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
         List<SwingShutDownTask> swingTasks = tasks.stream().filter(t -> t instanceof SwingShutDownTask).map(t-> { return (SwingShutDownTask) t;}).collect(Collectors.toList());
         assertThat(swingTasks).isNotEmpty();
         // remove all the tasks from the shutdown manager
-        tasks.forEach(sdm::deregister);
+        JUnitUtil.clearShutDownManager();
     }
 
     @BeforeEach
