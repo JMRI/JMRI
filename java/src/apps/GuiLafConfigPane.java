@@ -142,7 +142,6 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         jmri.util.EarlyInitializationPreferences eip =
                 jmri.util.EarlyInitializationPreferences.getInstance();
 
-        eip.getStartupPreferences();
         panel.setLayout(new FlowLayout());
         force100percentScaling = new JCheckBox(ConfigBundle.getMessage("GUIForce100percentScaling"));
         force100percentScaling.setSelected(eip.getGUIForce100percentScaling());
