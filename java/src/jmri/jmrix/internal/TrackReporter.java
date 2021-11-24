@@ -4,7 +4,6 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 import jmri.implementation.AbstractReporter;
-import jmri.CollectingReporter;
 
 /**
  * Extension of the AbstractReporter class that implements CollectingReporter
@@ -16,7 +15,7 @@ import jmri.CollectingReporter;
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class TrackReporter extends AbstractReporter implements CollectingReporter {
+public class TrackReporter extends AbstractReporter {
 
     private Deque<Object> collection = null;
 
@@ -45,15 +44,6 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
        state = s;
     }
     int state = 0;
-
-    //CollectingReporter Interface Method(s)
-    /**
-     * @return the collection of elements associated with this reporter.
-     */
-    @Override
-    public java.util.Collection<Object> getCollection(){
-       return(collection);
-    }
 
     // Special methods to set the report from the ends of the track
     // these methods record the order of reports seen.
