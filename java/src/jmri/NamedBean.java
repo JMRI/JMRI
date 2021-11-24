@@ -132,7 +132,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * <p>Note that this is a firm contract:  toString() in
      * all implementing classes must return the system name
      * followed by optional additional information.
-     * Using code can assume that the result of toString() will always be 
+     * Using code can assume that the result of toString() will always be
      * or start with the system name followed by some kind of separator character.
      *
      * @return the system-specific name
@@ -186,42 +186,6 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
             default:
                 return userName != null ? userName : systemName;
         }
-    }
-
-    /**
-     * Get a fully formatted display that includes the SystemName and, if set,
-     * the UserName.
-     * <p>
-     * This is the same as calling {@link #getDisplayName(DisplayOptions)} with
-     * the parameter {@link DisplayOptions#USERNAME_SYSTEMNAME}.
-     *
-     * @return {@code UserName (SystemName)} or {@code SystemName} if the
-     *         UserName is null, empty, or matches the SystemName
-     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
-     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public default String getFullyFormattedDisplayName() {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
-    }
-
-    /**
-     * Returns a fully formatted display that includes the SystemName and
-     * UserName if set. This uses the format {@value #DISPLAY_NAME_FORMAT}
-     *
-     * @param userNameFirst ignored; retained for compatibility until removed
-     * @return {@code UserName (SystemName)} or {@code SystemName} if the
-     *         UserName is null, empty, or matches the SystemName
-     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
-     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public default String getFullyFormattedDisplayName(boolean userNameFirst) {
-        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
 
     /**
