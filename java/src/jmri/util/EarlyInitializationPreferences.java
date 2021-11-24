@@ -82,11 +82,13 @@ public class EarlyInitializationPreferences {
         return startupPrefs;
     }
 
-    private void store() {
+    private boolean store() {
         try (OutputStream output = new FileOutputStream(FILENAME)) {
             preferences.store(output, null);
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
+            return false;
         }
     }
 
@@ -129,9 +131,7 @@ public class EarlyInitializationPreferences {
             preferences.setProperty("sun.java2d.uiScale", Integer.toString(uiScale));
         }
 
-        store();
-
-        if (restartIsNeeded) {
+        if (store() && restartIsNeeded) {
             InstanceManager.getDefault(ShutDownManager.class).restart();
         }
     }
