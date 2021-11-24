@@ -518,7 +518,7 @@ public class MenuScroller
      * @see MenuScroller#dispose()
      */
     @Override
-    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
+    @SuppressWarnings("deprecation") // Object.finalize
     public void finalize() throws Throwable {
         dispose();
     }
