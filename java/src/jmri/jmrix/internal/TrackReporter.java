@@ -1,14 +1,13 @@
 package jmri.jmrix.internal;
 
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.*;
 
 import jmri.implementation.AbstractReporter;
 
 /**
- * Extension of the AbstractReporter class that implements CollectingReporter
- * and represents the contents of a track.  This is an internal construct that
- * does not correspond to a physical reporter.
+ * Extension of the AbstractReporter class that represents the contents of a
+ * track.  This is an internal construct that does not correspond to a physical
+ * reporter.
  * <P>
  * This reporter is not used by JMRI itself but by scripts. So it's not
  * refactored to use ExtendedReport.
@@ -17,7 +16,7 @@ import jmri.implementation.AbstractReporter;
  */
 public class TrackReporter extends AbstractReporter {
 
-    private Deque<Object> collection = null;
+    private final Deque<Object> collection;
 
     public TrackReporter(String systemName) {
         super(systemName);
@@ -72,6 +71,14 @@ public class TrackReporter extends AbstractReporter {
        Object retval = collection.removeLast();
        setReport(collection.peekLast());
        return retval;
+    }
+
+    /**
+     * Return an unmodifiable collection of the contents of the track.
+     * @return the contents of the track
+     */
+    public Collection<Object> getTrackContent() {
+        return Collections.unmodifiableCollection(collection);
     }
 
 }
