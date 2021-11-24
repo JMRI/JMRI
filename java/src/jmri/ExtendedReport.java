@@ -89,6 +89,46 @@ public interface ExtendedReport extends Reportable {
         throw new UnsupportedOperationException("Not supported");
     }
 
+    /**
+     * If this report an IdTag?
+     * @return true if the report is an IdTag, false otherwise.
+     */
+    public default boolean isIdTag() {
+        return (this instanceof IdTag);
+    }
+
+    /**
+     * Get the IdTag.
+     * @return the IdTag
+     * @throws UnsupportedOperationException if isIdTag() returns false
+     */
+    public default IdTag getIdTag() {
+        if (!(this instanceof IdTag)) {
+            throw new UnsupportedOperationException("Report is not an IdTag report");
+        }
+        return (IdTag) this;
+    }
+
+    /**
+     * If this report an IdTag?
+     * @return true if the report is an IdTag, false otherwise.
+     */
+    public default boolean isRailCom() {
+        return (this instanceof RailCom);
+    }
+
+    /**
+     * Get the RailCom.
+     * @return the RailCom
+     * @throws UnsupportedOperationException if isRailCom() returns false
+     */
+    public default RailCom getRailCom() {
+        if (!(this instanceof RailCom)) {
+            throw new UnsupportedOperationException("Report is not a RailCom report");
+        }
+        return (RailCom) this;
+    }
+
 
 
     /**
