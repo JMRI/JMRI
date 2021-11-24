@@ -108,8 +108,8 @@
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-              <label xml:lang="cs">ID 1 Dekodéru: </label>
-</variable>
+        <label xml:lang="cs">ID 1 Dekodéru: </label>
+      </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
