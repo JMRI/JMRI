@@ -114,34 +114,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         _tuser.clear();
     }
 
-    /**
-     * Get a NamedBean by its system name.
-     *
-     * @param systemName the system name
-     * @return the result of {@link #getBySystemName(java.lang.String)}
-     *         with systemName
-     * @deprecated since 4.15.6; use
-     * {@link #getBySystemName(java.lang.String)} instead
-     */
-    @Deprecated
-    protected E getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /**
-     * Get a NamedBean by its user name.
-     *
-     * @param userName the user name
-     * @return the result of {@link #getByUserName(java.lang.String)} call,
-     *         with userName
-     * @deprecated since 4.15.6; use
-     * {@link #getByUserName(java.lang.String)} instead
-     */
-    @Deprecated
-    protected E getInstanceByUserName(String userName) {
-        return getByUserName(userName);
-    }
-
     /** {@inheritDoc} */
     @CheckForNull
     @Override
