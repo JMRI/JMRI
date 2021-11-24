@@ -323,14 +323,6 @@ public abstract class AppsBase {
     }
 
     /**
-     * @deprecated for removal since 4.17.2 without replacement
-     */
-    @Deprecated
-    protected void installShutDownManager() {
-        // nothing to do
-    }
-
-    /**
      * Final actions before releasing control of the application to the user,
      * invoked explicitly after object has been constructed in main().
      */
