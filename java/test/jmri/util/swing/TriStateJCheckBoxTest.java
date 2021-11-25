@@ -1,10 +1,18 @@
 package jmri.util.swing;
 
-import jmri.util.JUnitUtil;
+import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import javax.swing.JCheckBox;
+
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Unit Tests for TriStateJCheckBox.
@@ -79,7 +87,7 @@ public class TriStateJCheckBoxTest {
     @Test
     public void testSetSelected() {
         
-        TriStateJCheckBox t = new TriStateJCheckBox();
+        TriStateJCheckBox t = new TriStateJCheckBox("");
 
         t.setSelected(true);
         Assert.assertEquals("selected", true, t.isSelected());
@@ -88,6 +96,89 @@ public class TriStateJCheckBoxTest {
         t.setSelected(false);
         Assert.assertEquals("not selected", false, t.isSelected());
         Assert.assertEquals("unchecked", TriStateJCheckBox.State.UNCHECKED, t.getState());
+        
+    }
+    
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @Test
+    public void testClickable() {
+
+        TriStateJCheckBox t = new TriStateJCheckBox("TriState");
+        
+        JmriJFrame f = new JmriJFrame();
+        f.add(t);
+        f.setTitle(t.getName()); // "TriState"
+        
+        f.pack();
+        f.setVisible(true);
+        
+        // Find new window by name
+        JFrameOperator jfo = new JFrameOperator( t.getName() );
+        
+        // Find hardware address field
+        JLabelOperator jlo = new JLabelOperator(jfo,t.getName());
+        
+        
+        JCheckBox jcb = (JCheckBox) jlo.getLabelFor();
+        Assert.assertNotNull("tsjcb", jcb);
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(jcb);
+        
+        Assert.assertTrue("visible", jcbo.isShowing());
+        Assert.assertFalse("Not Selected", jcbo.isSelected());
+        
+        jcbo.doClick();
+        Assert.assertTrue("Selected", jcbo.isSelected());
+        
+        jcbo.doClick();
+        Assert.assertFalse("Back to not Selected", jcbo.isSelected());
+        
+        t.setState( new boolean[]{true, true});
+        Assert.assertTrue("Selected from setState", jcbo.isSelected());
+        
+        t.setState( new boolean[]{true, false});
+        Assert.assertFalse("Partial Not Selected from setState", jcbo.isSelected());
+        
+        jcbo.doClick();
+        Assert.assertFalse("Still not Selected following click from partial", jcbo.isSelected());
+        
+        t.setState( new boolean[]{true, true});
+        Assert.assertTrue("Selected from setState", jcbo.isSelected());
+        
+        t.setState( new boolean[]{false, false});
+        Assert.assertFalse("Not Selected from setState", jcbo.isSelected());
+        
+        
+        jlo.clickMouse();
+        Assert.assertTrue("Selected from click Label", jcbo.isSelected());
+        
+        jlo.clickMouse();
+        Assert.assertFalse("Not Selected from click Label", jcbo.isSelected());
+        
+        jlo.enterMouse();
+        Assert.assertTrue(jcbo.isEnabled());
+        
+        jlo.exitMouse();
+        Assert.assertTrue(jcbo.isEnabled());
+        
+        t.setEnabled(false);
+        jcbo.doClick();
+        Assert.assertFalse("Still not Selected following click as not Enabled", jcbo.isSelected());
+        
+        
+        t.setState( new boolean[]{true, true});
+        Assert.assertTrue("disabled Selected from setState ", jcbo.isSelected());
+        
+        t.setState( new boolean[]{true, false});
+        Assert.assertFalse("disabled Partial Not Selected from setState", jcbo.isSelected());
+        
+        t.setSelected( true);
+        Assert.assertTrue("disabled Selected from setSelected ", jcbo.isSelected());
+        
+        jlo.clickMouse();
+        Assert.assertTrue("still Selected from setSelected ", jcbo.isSelected());
+        
+        // Ask to close window
+        jfo.requestClose();
         
     }
     
