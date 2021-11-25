@@ -63,6 +63,8 @@ public class ImportEntryExitTest {
 
     @Test
     public void testActionEntryExit() throws InterruptedException, JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED
 /*
@@ -120,6 +122,8 @@ public class ImportEntryExitTest {
 
     @Test
     public void testExpressionEntryExit() throws InterruptedException, JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         Sensor sensor211 = InstanceManager.getDefault(SensorManager.class).getByUserName("NX Active");
         Assert.assertNotNull(sensor211);
         sensor211.setState(Sensor.INACTIVE);
