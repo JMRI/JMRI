@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -1088,7 +1090,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void editStation() {
         Station station = _dataMgr.getStation(_curNodeId);
         _editStationName.setText(station.getStationName());
-        _editDistance.setText(Double.toString(station.getDistance()));
+        _editDistance.setText(NumberFormat.getNumberInstance().format(station.getDistance()));
         _editDoubleTrack.setSelected(station.getDoubleTrack());
         _editSidings.setValue(station.getSidings());
         _editStaging.setValue(station.getStaging());
@@ -1366,8 +1368,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         String newName = _editStationName.getText().trim();
         double newDistance;
         try {
-            newDistance = Double.parseDouble(_editDistance.getText());
-        } catch (NumberFormatException ex) {
+            newDistance = NumberFormat.getNumberInstance().parse(_editDistance.getText()).floatValue();
+        } catch (NumberFormatException | ParseException ex) {
             log.warn("'{}' is not a valid number for {}", _editDistance.getText(), "station distance");  // NOI18N
             JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("NumberFormatError", _editDistance.getText(), "station distance"),  // NOI18N

@@ -135,6 +135,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.LENGTH);
+        JemmyUtil.waitFor(f);
         // confirm that the right number of default lengths were loaded
         Assert.assertEquals(12, f.comboBox.getItemCount());
         // now add a new length in inches
@@ -161,7 +162,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -187,7 +188,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -222,7 +223,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Length") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
 
@@ -240,7 +241,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Length") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
@@ -274,6 +275,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
         Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
 
@@ -287,7 +289,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Type") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -372,7 +374,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         // enter a road name that has a reserved character
         f.addTextBox.setText("A.B");
         // should cause error dialog to appear
@@ -381,7 +383,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 

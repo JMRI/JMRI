@@ -293,6 +293,15 @@ public class OperationsPanel extends JPanel {
         return pTextColorPanel;
     }
 
+    public static void loadFontSizeComboBox(JComboBox<Integer> box) {
+        // load font sizes 7 through 18
+        for (int i = 7; i < 19; i++) {
+            box.addItem(i);
+        }
+        Dimension size = box.getPreferredSize();
+        size = new Dimension(size.width + 10, size.height);
+        box.setPreferredSize(size);
+    }
 
     private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

@@ -26,6 +26,8 @@
     <decVal max="102"/>
     <label>Extended Consist Address</label>
     <label xml:lang="de">Erweiterte Verbundadresse</label>
+    <label xml:lang="cs">Rozšířená adresa soupravy</label>
     <tooltip xml:lang="de">Der Wert aus CV20 * 100 wird zum Wert aus CV19 dazu addiert = Lange Verbundadresse.</tooltip>
+    <tooltip xml:lang="cs">Hodnota z CV20 × 100 se přičte k hodnotě z CV19 = dlouhá adresa soupravy.</tooltip>
   </variable>
 </variables>
