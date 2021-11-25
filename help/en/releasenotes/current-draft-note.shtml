@@ -585,5 +585,9 @@
                 scaling of JMRI to 100%. If this value is
                 <code>0</code>, Java uses the same scaling as the
                 system.</li>
+            <li>The setting for HighDPI scaling can be changed in
+                <i>Edit -> Preferences -> Display</i>. The checkbox
+                has the text <i>Force 100% scaling when the OS uses
+                higher scaling</i>.</li>
         </ul>
 
