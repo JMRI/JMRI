@@ -189,7 +189,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
      * set up all of the other objects to operate with an Dcc4Pc command station
      * connected to this port
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Dcc4PcSystemConnectionMemo#setDefaultProgrammer
     @Override
     public void configure() {
         // connect to the traffic controller
