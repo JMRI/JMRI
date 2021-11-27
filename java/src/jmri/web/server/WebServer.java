@@ -144,25 +144,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      * @param path the JMRI portable path
      * @return The servable URI or null
      * @see jmri.util.FileUtil#getPortableFilename(java.io.File)
-     * @deprecated since 4.19.4; use {@link #portablePathToURI(String)} instead
-     */
-    @Deprecated
-    public static String URIforPortablePath(String path) {
-        return portablePathToURI(path);
-    }
-
-    /**
-     * Get the public URI for a portable path. This method returns public URIs
-     * for only some portable paths, and does not check that the portable path
-     * is actually sane. Note that this refuses to return portable paths that
-     * are outside of {@link jmri.util.FileUtil#PREFERENCES},
-     * {@link jmri.util.FileUtil#PROFILE},
-     * {@link jmri.util.FileUtil#SETTINGS}, or
-     * {@link jmri.util.FileUtil#PROGRAM}.
-     *
-     * @param path the JMRI portable path
-     * @return The servable URI or null
-     * @see jmri.util.FileUtil#getPortableFilename(java.io.File)
      */
     public static String portablePathToURI(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
