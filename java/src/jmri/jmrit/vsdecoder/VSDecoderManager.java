@@ -97,8 +97,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     private JmriJFrame managerFrame = null;
 
-    private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
-
     private int vsdecoderID = 0;
     private int locorow = -1; // Will be increased before first use
 
