@@ -429,11 +429,13 @@ public class JUnitUtil {
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use Jemmy's wait routine.
+     * <p>
+     * The various waitFor(..) methods are much preferred to using this.
+     * They're faster and more reliable.  This is retained only for
+     * cases where there's nothing accessible to wait for.
      *
      * @param self currently ignored
-     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
@@ -443,12 +445,14 @@ public class JUnitUtil {
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use Jemmy's wait routine.
+     * <p>
+     * The various waitFor(..) methods are much preferred to using this.
+     * They're faster and more reliable.  This is retained only for
+     * cases where there's nothing accessible to wait for.
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
-     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
