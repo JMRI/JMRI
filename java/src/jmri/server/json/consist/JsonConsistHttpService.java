@@ -223,41 +223,6 @@ public class JsonConsistHttpService extends JsonHttpService {
         }
     }
 
-    /**
-     * Get the JSON representation of a consist. The JSON representation is an
-     * object with the following data attributes:
-     * <ul>
-     * <li>address - integer address</li>
-     * <li>isLongAddress - boolean true if address is long, false if short</li>
-     * <li>type - integer, see {@link jmri.Consist#getConsistType() }</li>
-     * <li>id - string with consist Id</li>
-     * <li>sizeLimit - the maximum number of locomotives the consist can
-     * contain</li>
-     * <li>engines - array listing every locomotive in the consist. Each entry
-     * in the array contains the following attributes:
-     * <ul>
-     * <li>address - integer address</li>
-     * <li>isLongAddress - boolean true if address is long, false if short</li>
-     * <li>forward - boolean true if the locomotive running is forward in the
-     * consists</li>
-     * <li>position - integer locomotive's position in the consist</li>
-     * </ul>
-     * </ul>
-     *
-     * @param locale  The locale to throw exceptions in.
-     * @param address The address of the consist to get.
-     * @param id      message id set by client
-     * @return The JSON representation of the consist.
-     * @throws JsonException This exception has code 404 if the consist does not
-     *                       exist.
-     * @deprecated since 4.19.2; use
-     *             {@link #getConsist(LocoAddress, JsonRequest)} instead
-     */
-    @Deprecated
-    public JsonNode getConsist(Locale locale, LocoAddress address, int id) throws JsonException {
-        return getConsist(address, new JsonRequest(locale, JSON.V5, JSON.GET, id));
-    }
-
     @Override
     public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
