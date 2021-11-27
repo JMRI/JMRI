@@ -156,7 +156,7 @@ public class LinkedWarrantTest {
         Warrant ww = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  ww.getRunningMessage();
-            return m.endsWith("Cmd #8.");
+            return m.endsWith("Cmd #9.");
         }, "Train Fred starts to move at 8th command");
 
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
@@ -254,7 +254,7 @@ public class LinkedWarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  backWarrant.getRunningMessage();
-            return m.endsWith("Cmd #8.");
+            return m.endsWith("Cmd #8.") || m.endsWith("Cmd #9.");
         }, "EastToWestLink starts to move at 8th command");
 
         assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after fourth leg").isEqualTo(backEndSensorName);
@@ -355,7 +355,7 @@ public class LinkedWarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  www.getRunningMessage();
-            return m.endsWith("Cmd #8.");
+            return m.endsWith("Cmd #8.") || m.endsWith("Cmd #9.") || m.endsWith("Cmd #10."); // in case runs fast
         }, "Chance starts to move at 8th command");
 
         String[] route3 = {"OB6", "OB3", "OB4", "OB5"};

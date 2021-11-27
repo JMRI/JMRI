@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -1066,6 +1068,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
+    @SuppressFBWarnings(value = "DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS",
+            justification = "needs to copy the items of the hashmap windowDetails")
     private void saveWindowDetails() {
         this.setChangeMade(false);
         if (this.allowSave) {
@@ -1073,7 +1077,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
                 // Copy the entries before iterate over them since
                 // ConcurrentModificationException may happen otherwise
-                for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
+                Set<Entry<String, WindowLocations>> entries = new HashSet<>(windowDetails.entrySet());
+                for (Entry<String, WindowLocations> entry : entries) {
                     Element window = new Element("window");
                     window.setAttribute(CLASS, entry.getKey());
                     if (entry.getValue().getSaveLocation()) {

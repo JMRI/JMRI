@@ -163,6 +163,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // pressing "Save" when car has destination and train will cause dialog box to appear
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
@@ -226,6 +227,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // remove this type from train
         train1.deleteTypeName(c3.getTypeName());
 
@@ -280,6 +282,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's road name from train
         train1.setRoadOption(Train.EXCLUDE_ROADS);
         train1.addRoadName(c3.getRoadName());
@@ -335,9 +338,9 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's built date from train
         train1.setBuiltEndYear("1984");
-
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -389,10 +392,10 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's owner name from train
         train1.setOwnerOption(Train.EXCLUDE_OWNERS);
         train1.addOwnerName(c3.getOwner());
-
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -500,6 +503,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Set car's destination outside of train's route
         Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
         Track track = westford.getTracksList().get(0);

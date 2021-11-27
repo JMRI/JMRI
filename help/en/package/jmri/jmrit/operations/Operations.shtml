@@ -2614,23 +2614,28 @@
 
       <h4>Schedule Example</h4>
 
-      <p>In the schedule shown above, the schedule is requesting two SP boxcars in a row with any
-      load, then a tank car with with a load of "Oil". Reading the entire schedule line for the two
-      SP boxcars, it also states that there isn't a random delivery for the cars, the cars can be
-      delivered any day of the week, the load received can be anything, and the load shipped can be
-      the default empty "E" or default load "L". There isn't a destination for the cars, so the
-      program can send them anywhere that is willing to accept the boxcars with their new load. And
-      finally the cars can be picked up at any time.</p>
+   <p>In the schedule shown above, the schedule is operating in sequential mode and is
+    requesting two SP boxcars in a row with any load, then a tank car with with a load of "Oil".</p>
+  
+   <p>Reading the entire schedule line for the two SP boxcars, it also states that there isn't a
+    random delivery for the cars, the cars can be delivered any day of the week. The load received
+    selection is blank meaning any load is accepted, including the default "E" and "L" loads, and
+    all boxcar custom loads. The load shipped is also blank, therefore the ship load for the boxcars
+    can only be the default empty "E" or default load "L". There isn't a destination for the cars,
+    so the program can send them anywhere that is willing to accept the boxcars with their new load.
+    And finally the cars can be picked up at any time.
+   <p>
+    The next line in the schedule is requesting a tank car with a custom load of "Oil". Reading the
+    entire schedule line for the tank car, there isn't an random value, the car is only delivered on
+    Mondays, the tank car's road name doesn't matter, only tank cars with "Oil" are allowed, and the
+    new load will be the default empty or "E" since the car arrived with a <a href="#EditCarLoads">custom
+     load</a>. And finally the car is to be sent to "Susanville", but only on Fridays.
+   </p>
 
-      <p>The next line in the schedule is requesting a tank car with a load of "Oil". Reading the
-      entire schedule line for the tank car, there isn't an random value, the car is only delivered
-      on Mondays, the tank car's road name doesn't matter, the new load will be the default empty
-      or "E" since the car arrived with a <a href="#EditCarLoads">custom load</a>, and and the car
-      is to be sent to "Susanville", but only on Fridays. After the tank car is delivered the
-      schedule starts from the beginning, again requesting two SP boxcars followed by a tank car
-      with oil.</p>
+   <p>After the tank car is delivered the schedule starts from the beginning, again requesting
+    two SP boxcars followed by a tank car with oil.</p>
 
-      <p>The schedule controls when and what cars will be delivered and the car order. It makes the
+   <p>The schedule controls when and what cars will be delivered and the car order. It makes the
       spur more restrictive, only cars demanded by the schedule will be delivered to the spur.
       Looking at the schedule you will see a pointer in the table under the heading "Current", the
       pointer shows the next car type that the program wants to place at the spur in sequential
@@ -2647,7 +2652,7 @@
 
       <p>You can optionally use your <a href="#StagingAndCarLoads">staging tracks</a> to empty cars
       with a custom load, and you can also optionally have the program place custom loads into cars
-      using staging tracks. If you want to specify staging as the car's destination, you can't
+      departing staging tracks. If you want to specify staging as the car's destination, you can't
       select a track, the program will determine which is the appropriate track in staging to use.
       To prevent overloading a spur with cars with custom loads from staging, the program will
       normally limit the number of cars "en route" to a track with a schedule to the available

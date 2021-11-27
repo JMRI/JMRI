@@ -16,6 +16,7 @@
           <column>
             <label>
               <text>Acceleration / Deceleration</text>
+              <text xml:lang="cs">Zrychlení / Zpomalení</text>
             </label>
 
             <display item="Accel"/>   <!-- CV3 -->
@@ -25,6 +26,7 @@
             <label> <text>    </text> </label>
             <label>
               <text>Trim adjusts acceleration for consists or temporary changes</text>
+              <text xml:lang="cs">Úprava oříznutí zrychlení pro soupravy nebo dočasné změny</text>
             </label>
 
             <display item="Acceleration Trim"/>     <!-- CV23 -->
@@ -36,10 +38,14 @@
             <label> <text>    </text> </label>
             <label>
               <text>Function Key to apply braking (key changes deceleration)</text>
+              <text xml:lang="cs">Funkční klávesa pro aplikaci brzdy (tlačítko změní zpomalení)</text>
             </label>
 
             <display item="Brake key"/>   <!-- CV309 -->
-            <display item="Brake time" label="Brake Key Deceleration Rate"/>   <!-- CV349 -->
+            <display item="Brake time" >   <!-- CV349 -->
+                <label>Brake Key Deceleration Rate</label>
+                <label xml:lang="cs">Doba brždění</label>
+            </display>
             <label> <text>    </text> </label>
           </column>
           <column>
@@ -52,6 +58,7 @@
           <column>   <!-- column for exponential and adaptive accel settings -->
             <label>
               <text>Exponential Acceleration and Deceleration</text>
+              <text xml:lang="cs">Exponenciální Zrychlení a Zpomalení</text>
             </label>
               <label>
                 <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
@@ -82,6 +89,7 @@
               </label>
               <label>
                <text>Adaptive Acceleration/Deceleration</text>
+               <text xml:lang="cs">Adaptivní Zrychlení/Zpomalení</text>
               </label>              
               <label>
                 <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep</text>
@@ -143,6 +151,7 @@
         </label>
        <label>
           <text>Motor Control Settings</text>
+          <text xml:lang="cs">Nastavení řízení motoru</text>
        </label>
        <label>
           <text>     </text>
@@ -278,6 +287,7 @@
             </label>
             <label>
               <text>Zimo "Seldom Used" Motor Controls</text>
+              <text xml:lang="cs">Řízení motoru Zimo "Zřídka kdy použito"</text>
             </label>
             <display item="EMF Droop Config"/>  <!-- CV10 -->
             <display item="EMF Feedback Cutout"/>  <!-- CV113 -->
@@ -287,9 +297,11 @@
             </label>
             <label>
               <text>Zimo Experimental Motor Controls</text>
+              <text xml:lang="cs">Řízení motoru Zimo Experimentální</text>
             </label>
             <label>
               <text>See Zimo Manuals, may be removed in future decoders</text>
+              <text xml:lang="cs">Viz Zimo Příručka, může být z budoucích dekodérů vyjmuto</text>
             </label>
             <display item="Total PWM Period"/>   <!--  EMF Extended Sample Time  CV147 -->
             <display item="EMF Control Reference"/>  <!-- Differential value    CV148 -->

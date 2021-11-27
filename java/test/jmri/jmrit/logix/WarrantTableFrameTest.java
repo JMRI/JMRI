@@ -33,6 +33,7 @@ public class WarrantTableFrameTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

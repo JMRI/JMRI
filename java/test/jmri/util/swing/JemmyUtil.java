@@ -59,9 +59,9 @@ public class JemmyUtil {
         });
         t.start();
         
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return t.getState().equals(Thread.State.TERMINATED);
-        }, "wait for dialog window to appear");
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return t.getState().equals(Thread.State.WAITING);
+//        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {
@@ -145,7 +145,7 @@ public class JemmyUtil {
             count--;
             f.requestFocus();
         }
-        Assert.assertTrue("frame is active", f.isActive());
+        Assert.assertTrue("frame should be active", f.isActive());
     }
 
 }
