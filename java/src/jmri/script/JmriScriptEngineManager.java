@@ -273,50 +273,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     /**
-     * Evaluate a script using the given ScriptEngine.
-     *
-     * @param reader The script.
-     * @param engine The script engine.
-     * @return The results of evaluating the script.
-     * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader)} instead
-     */
-    @Deprecated
-    public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
-        return engine.eval(reader);
-    }
-
-    /**
-     * Evaluate a script using the given ScriptEngine and Bindings.
-     *
-     * @param reader   The script.
-     * @param engine   The script engine.
-     * @param bindings Bindings passed to the script.
-     * @return The results of evaluating the script.
-     * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, Bindings)} instead
-     */
-    @Deprecated
-    public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
-        return engine.eval(reader, bindings);
-    }
-
-    /**
-     * Evaluate a script using the given ScriptEngine and Bindings.
-     *
-     * @param reader  The script.
-     * @param engine  The script engine.
-     * @param context Context for the script.
-     * @return The results of evaluating the script.
-     * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, ScriptContext)} instead
-     */
-    @Deprecated
-    public Object eval(Reader reader, ScriptEngine engine, ScriptContext context) throws ScriptException {
-        return engine.eval(reader, context);
-    }
-
-    /**
      * Evaluate a script contained in a file. Uses the extension of the file to
      * determine which ScriptEngine to use.
      *
@@ -543,7 +499,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
     /**
      * Create a new PythonInterpreter with the default bindings.
-     * 
+     *
      * @return a new interpreter
      */
     public PythonInterpreter newPythonInterpreter() {
@@ -555,7 +511,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
     /**
      * Initialize the Python ScriptEngine state including Python global state.
-     * 
+     *
      * @return true if the Python interpreter will be used outside a
      *         ScriptEngine; false otherwise
      */
@@ -597,7 +553,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     /**
      * Initialize the Python ScriptEngine and interpreter, including running any
      * code in {@value #JYTHON_DEFAULTS}, if present.
-     * 
+     *
      * @param execJython true if also initializing an independent interpreter;
      *                   false otherwise
      */
@@ -634,7 +590,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
     /**
      * Helper to handle logging and exceptions.
-     * 
+     *
      * @param key       the item for which a ScriptEngine or ScriptEngineFactory
      *                  was not found
      * @param type      the type of key (name, mime type, extension)
