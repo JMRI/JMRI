@@ -40,8 +40,6 @@ public class WebServerPreferencesInstanceInitializer extends AbstractInstanceIni
             }
             if (!webServerPrefsFile.exists()) {
                 return new WebServerPreferences();
-            } else {
-                return new WebServerPreferences(webServerPrefsFile.getAbsolutePath());
             }
         }
         return super.getDefault(type);
