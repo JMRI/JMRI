@@ -187,7 +187,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     /**
      * Delete the requested bean. This is the simplest method to delete a bean,
      * and is likely to become the default implementation of
-     * {@link #doDelete(NamedBean, String, String, JsonNode, Locale, int)} in an
+     * {@link #doDelete} in an
      * upcoming release of JMRI.
      *
      * @param bean   the bean to delete

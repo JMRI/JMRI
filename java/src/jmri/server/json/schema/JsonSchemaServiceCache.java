@@ -70,8 +70,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * Get all types of JSON messages.
      *
      * @param version the JSON protocol version
-     * @return the union of the results from {@link #getClientTypes()} and
-     *         {@link #getServerTypes()}
+     * @return the union of the results from {@link #getClientTypes} and
+     *         {@link #getServerTypes}
      */
     @Nonnull
     public synchronized Set<String> getTypes(String version) {
