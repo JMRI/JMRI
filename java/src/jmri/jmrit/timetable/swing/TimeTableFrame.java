@@ -663,7 +663,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         c.gridy = 0;
         c.gridx = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
-        JLabel rowLabel = new JLabel("This page is intentionally blank");  // NOI18N
+        JLabel rowLabel = new JLabel(Bundle.getMessage("LabelBlank"));  // NOI18N
         _gridPanel.add(rowLabel, c);
     }
 
