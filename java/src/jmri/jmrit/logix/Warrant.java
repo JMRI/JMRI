@@ -2821,7 +2821,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (trackSpeed > 0) {
             deltaTime = remDist / trackSpeed;
         } else {
-            deltaTime = 100;    // actually Float.MAX_VALUE;
+            // actually infinity (Float.MAX_VALUE) Must be a low value in case there are no speed changes
+            deltaTime = 100;
         }
         for (int i = cmdIdx; i <= endIdx; i++) {
             ThrottleSetting ts = _commands.get(i);
