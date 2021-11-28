@@ -998,9 +998,10 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         Warrant newWarrant;
         long timeLimit;
 
-        CheckForTermination(Warrant oldWar, Warrant newWar, int num, long timeLimit) {
+        CheckForTermination(Warrant oldWar, Warrant newWar, int num, long limit) {
             oldWarrant = oldWar;
             newWarrant = newWar;
+            timeLimit = limit;
             if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {}, {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num, timeLimit);
          }
