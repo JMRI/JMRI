@@ -33,10 +33,10 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
-    @SuppressWarnings("unused")
-    private DataOutputStream outpipe = null; // feed pin
-    @SuppressWarnings("unused")
-    private DataInputStream inpipe = null; // feed pout
+
+    //private DataOutputStream outpipe = null; // feed pin
+
+    //private DataInputStream inpipe = null; // feed pout
 
     public SimulatorAdapter() {
         super(new SpecificSystemConnectionMemo());
@@ -47,9 +47,9 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
         try {
             PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
-            inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
+            //inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
-            outpipe = new DataOutputStream(tempPipeO);
+            //outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: {}", e.toString());
