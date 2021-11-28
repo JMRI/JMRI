@@ -9,8 +9,6 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.Stack;
-import jmri.jmrit.logixng.implementation.DefaultStack;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
@@ -86,8 +84,9 @@ public class ExecuteDelayed
     /**
      * Get a new timer task.
      */
-    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG) throws JmriException {
-        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable) throws JmriException {
+
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
         
         return new ProtectedTimerTask() {
             @Override
@@ -97,7 +96,7 @@ public class ExecuteDelayed
                         _timerTask = null;
                         long currentTimerTime = System.currentTimeMillis() - _timerStart;
                         if (currentTimerTime < _timerDelay) {
-                            scheduleTimer(conditionalNG, _timerDelay - currentTimerTime);
+                            scheduleTimer(conditionalNG, symbolTable, _timerDelay - currentTimerTime);
                         } else {
                             _internalSocket.conditionalNG = conditionalNG;
                             _internalSocket.newSymbolTable = newSymbolTable;
@@ -111,9 +110,9 @@ public class ExecuteDelayed
         };
     }
     
-    private void scheduleTimer(ConditionalNG conditionalNG, long delay) throws JmriException {
+    private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long delay) throws JmriException {
         if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask(conditionalNG);
+        _timerTask = getNewTimerTask(conditionalNG, symbolTable);
         TimerUtil.schedule(_timerTask, delay);
     }
     
@@ -154,7 +153,8 @@ public class ExecuteDelayed
             }
             _timerDelay = getNewDelay() * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
-            scheduleTimer(getConditionalNG(), _delay * _unit.getMultiply());
+            ConditionalNG conditonalNG = getConditionalNG();
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _delay * _unit.getMultiply());
         }
     }
     
