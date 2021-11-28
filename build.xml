@@ -648,12 +648,14 @@
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
     <!-- Deprecated, use the java-compile macro instead -->
-    <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
+<!--
+    <target name="-java-compile-internal"> <!~~ Internal target for compiling Java source from a specified directory ~~>
         <java-compile
                 javac.source="${java.source.directory}"
                 javac.target="${target}"
             />
     </target>
+ -->
 
     <macrodef name="java-compile">
         <attribute name="javac.source"/>

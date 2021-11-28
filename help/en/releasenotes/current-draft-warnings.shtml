@@ -14,8 +14,8 @@
             <li></li>
             <li>apps/startup/StartupActionFactory</li>
             <li>Routes/Turnouts/Sensors: One form of getNextAddress</li>
-            <li></li>
-            <li></li>ShutDownTask, AbstractShutDownTask - use call & run methods now
+            <li>Handling of preferences from before JMRI 4.0; upgrade through JMRI 4.20 instead</li>
+            <li>ShutDownTask, AbstractShutDownTask - use call & run methods now</li>
             <li></li>
             <li></li>
             <li></li>
