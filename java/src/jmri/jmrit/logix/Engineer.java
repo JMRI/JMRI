@@ -922,7 +922,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 log.debug("Loco address {} finishes warrant {} and starts warrant {}",
                         warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             }
-            long time =  20000L;    // max wait time to launch is any commands et after this + 20 seconds..
+            long time =  30000L;    // max wait time to launch is any commands et after this + 20 seconds..
             for (int i = _idxCurrentCommand+1; i < _commands.size(); i++) {
                 time += _commands.get(i).getTime();
             }
