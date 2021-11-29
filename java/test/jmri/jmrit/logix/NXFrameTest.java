@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
