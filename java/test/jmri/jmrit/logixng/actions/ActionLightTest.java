@@ -41,7 +41,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionLight.LightState.get(Light.UNKNOWN);
+            ActionLight.LightState.get(100);
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));

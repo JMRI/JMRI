@@ -472,7 +472,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.On);
         actionLight.setAddressing(NamedBeanAddressing.LocalVariable);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -488,7 +488,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.Toggle);
         actionLight.setAddressing(NamedBeanAddressing.Formula);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -504,7 +504,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setBeanState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.Intensity);
         actionLight.setAddressing(NamedBeanAddressing.Reference);
         actionLight.setFormula("\"IT\"+index");
         actionLight.setLocalVariable("index");
@@ -515,6 +515,27 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Interval);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Unknown);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setLight(light1);
+        actionLight.setBeanState(ActionLight.LightState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
