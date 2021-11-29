@@ -41,7 +41,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionSensor.SensorState.get(Sensor.UNKNOWN);
+            ActionSensor.SensorState.get(100);
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid sensor state".equals(ex.getMessage()));

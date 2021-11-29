@@ -1072,7 +1072,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Active);
         actionSensor.setAddressing(NamedBeanAddressing.LocalVariable);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -1087,7 +1087,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
         actionSensor.setAddressing(NamedBeanAddressing.Formula);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -1102,7 +1102,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Unknown);
         actionSensor.setAddressing(NamedBeanAddressing.Reference);
         actionSensor.setFormula("\"IT\"+index");
         actionSensor.setLocalVariable("index");
@@ -1112,6 +1112,13 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
+        actionSensor.setSensor(sensor1);
+        actionSensor.setBeanState(ActionSensor.SensorState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionSensor);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -1426,7 +1433,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1441,7 +1448,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         actionTurnout.setAddressing(NamedBeanAddressing.Formula);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1456,7 +1463,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Unknown);
         actionTurnout.setAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -1466,6 +1473,13 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
