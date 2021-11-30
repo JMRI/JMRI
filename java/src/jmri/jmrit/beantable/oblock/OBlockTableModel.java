@@ -396,6 +396,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (!_tabbed && (super.getRowCount() == row)) { // editing tempRow
             switch (col) {
                 case SYSNAMECOL:
+                    if (!_manager.isValidSystemNameFormat((String) value)) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNameOBlock"),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                     OBlock block = _manager.createNewOBlock((String) value, tempRow[USERNAMECOL]);
                     if (block == null) { // an OBlock with the same systemName or userName already exists
                         block = _manager.getOBlock(tempRow[USERNAMECOL]);
@@ -534,8 +539,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 block.setComment((String) value);
                 fireTableRowsUpdated(row, row);
                 return;
-            case STATECOL:
-                return;     //  STATECOL is not editable
             case SENSORCOL:
                 if (!block.setSensor((String) value)) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
@@ -614,27 +617,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case PERMISSIONCOL:
                 block.setPermissiveWorking((Boolean) value); // compare to REPORT_CURRENTCOL
-                fireTableRowsUpdated(row, row);
-                return;
-            case WARRANTCOL:
-                Warrant warrant = block .getWarrant();
-                jmri.jmrit.logix.WarrantManager mgr = InstanceManager
-                            .getDefault(jmri.jmrit.logix.WarrantManager.class);
-                Warrant newWarrant = mgr.getWarrant((String)value);
-                if (warrant != null && !warrant.equals(newWarrant)) {
-                    block.deAllocate(warrant);
-                    if (newWarrant != null) {
-                        String msg = block.allocate(newWarrant);
-                        if (msg != null) {
-                            JOptionPane.showMessageDialog(null, msg,
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
-                        }                    
-                    }
-                }
-                fireTableRowsUpdated(row, row);
-                return;
-            case VALUE:
-                block.setValue(value);
                 fireTableRowsUpdated(row, row);
                 return;
             case SPEEDCOL:
@@ -780,10 +762,22 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (super.getRowCount() == row) {
-            return true; // the new entry/bottom row is editable in all cells
+        switch (col) {
+            case SYSNAMECOL:
+                if (super.getRowCount() == row) {
+                    return true; // the new entry/bottom row is editable in all cells
+                } else {
+                    return false;
+                }
+            case STATECOL:
+            case WARRANTCOL:
+            case VALUE:
+                return false;
+            default:
+                // fall through
+                break;
         }
-        return (col != SYSNAMECOL && col != STATECOL);
+        return true;
     }
 
     //*********************** combo box cell editors *********************************/

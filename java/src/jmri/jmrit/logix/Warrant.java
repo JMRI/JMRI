@@ -2792,7 +2792,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         BlockSpeedInfo blkSpeedInfo = _speedUtil.getBlockSpeedInfo(_idxCurrentOrder);
 
         int cmdIdx = blkSpeedInfo.getFirstIndex();
-        int endIdx = blkSpeedInfo.getLastIndex();
+        int endIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
         float scriptSpeed;  // script throttle setting
         float modSetting;   // modified setting
         float trackSpeed;   // mm/sec track speed at modSetting
