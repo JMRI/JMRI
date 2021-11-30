@@ -1,22 +1,20 @@
 package jmri.jmrix.internal;
 
-import java.util.*;
-
+import java.util.Deque;
+import java.util.ArrayDeque;
 import jmri.implementation.AbstractReporter;
+import jmri.CollectingReporter;
 
 /**
- * Extension of the AbstractReporter class that represents the contents of a
- * track.  This is an internal construct that does not correspond to a physical
- * reporter.
- * <P>
- * This reporter is not used by JMRI itself but by scripts. So it's not
- * refactored to use ExtendedReport.
+ * Extension of the AbstractReporter class that implements CollectingReporter
+ * and represents the contents of a track.  This is an internal construct that
+ * does not correspond to a physical reporter.
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class TrackReporter extends AbstractReporter {
+public class TrackReporter extends AbstractReporter implements CollectingReporter {
 
-    private final Deque<Object> collection;
+    private Deque<Object> collection = null;
 
     public TrackReporter(String systemName) {
         super(systemName);
@@ -43,6 +41,15 @@ public class TrackReporter extends AbstractReporter {
        state = s;
     }
     int state = 0;
+
+    //CollectingReporter Interface Method(s)
+    /**
+     * @return the collection of elements associated with this reporter.
+     */
+    @Override
+    public java.util.Collection getCollection(){
+       return(collection);
+    }
 
     // Special methods to set the report from the ends of the track
     // these methods record the order of reports seen.
@@ -71,14 +78,6 @@ public class TrackReporter extends AbstractReporter {
        Object retval = collection.removeLast();
        setReport(collection.peekLast());
        return retval;
-    }
-
-    /**
-     * Return an unmodifiable collection of the contents of the track.
-     * @return the contents of the track
-     */
-    public Collection<Object> getTrackContent() {
-        return Collections.unmodifiableCollection(collection);
     }
 
 }
