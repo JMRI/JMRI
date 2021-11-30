@@ -398,6 +398,7 @@
           <li>The LogixNG actions Light, Sensor and Turnout can
 		      now set the states Unknown and Inconsistent.</li>
           <li>The LogixNG action <i>Show dialog</i> has been added.</li>
+          <li>The LogixNG action <i>Timeout</i> has been added.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
