@@ -97,6 +97,20 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
             right = 1;
         }
         
+        if ((left instanceof Double) && (right != null) && (!(right instanceof Double))) {
+            right = ((Number)left).doubleValue();
+        }
+        if ((right instanceof Double) && (left != null) && (!(left instanceof Double))) {
+            left = ((Number)left).doubleValue();
+        }
+        
+        if ((left instanceof Long) && (right != null) && (!(right instanceof Long))) {
+            right = ((Number)right).longValue();
+        }
+        if ((right instanceof Long) && (left != null) && (!(left instanceof Long))) {
+            left = ((Number)left).longValue();
+        }
+        
         if (left instanceof Number) {
             switch (_tokenType) {
                 case EQUAL:

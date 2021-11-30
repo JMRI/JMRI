@@ -176,7 +176,9 @@ public interface SymbolTable {
                 String initialValueData) {
             
             _name = name;
-            _initalValueType = initalValueType;
+            if (initalValueType != null) {
+                _initalValueType = initalValueType;
+            }
             _initialValueData = initialValueData;
         }
         

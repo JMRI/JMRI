@@ -2006,6 +2006,67 @@ public class StoreAndLoadTest {
         sequence.getChild(6).connect(maleSocket);
 
 
+        ShowDialog showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
+        showDialog.setLocalVariable("myVar");
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("Some text");
+        showDialog.setFormatType(ShowDialog.FormatType.OnlyText);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        LogLocalVariables logLocalVariablesTemp = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        MaleSocket maleSocketLogLocalVariables = digitalActionManager.registerAction(logLocalVariablesTemp);
+        showDialog.getChild(0).connect(maleSocketLogLocalVariables);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Cancel);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.Yes);
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("");
+        showDialog.setFormatType(ShowDialog.FormatType.CommaSeparatedList);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Memory, "IM1"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("MyVar has the value %s");
+        showDialog.setFormatType(ShowDialog.FormatType.StringFormat);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Reference, "{MyVar}"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
+        showDialog.setComment("A comment");
+        showDialog.getEnabledButtons().add(ShowDialog.Button.No);
+        showDialog.setModal(true);
+        showDialog.setMultiLine(true);
+        showDialog.setFormat("str(10): %s, 25: %d, IM1: %s, MyVar: %s");
+        showDialog.setFormatType(ShowDialog.FormatType.StringFormat);
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Formula, "str(10)"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Formula, "25"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.Memory, "IM1"));
+        showDialog.getDataList().add(new ShowDialog.Data(ShowDialog.DataType.LocalVariable, "MyVar"));
+        maleSocket = digitalActionManager.registerAction(showDialog);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ShutdownComputer shutdownComputer =
                 new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
