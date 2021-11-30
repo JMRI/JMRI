@@ -585,25 +585,48 @@
                 scaling of JMRI to 100%. If this value is
                 <code>0</code>, Java uses the same scaling as the
                 system.</li>
+            <li>The setting for HighDPI scaling can be changed in
+                <i>Edit -> Preferences -> Display</i>. The checkbox
+                has the text <i>Force 100% scaling when the OS uses
+                higher scaling</i>.</li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
             <li>This is the first test release that requires Java 11.
                 As part of that, there were extensive changes to
                 the underlying infrastructure. See PR
                 <a href="https://github.com/JMRI/JMRI/pull/10278">#10278</a>
-                and following commits.
+                and following PRs with the
+                <a href="https://github.com/JMRI/JMRI/issues?q=label%3A%22Java+11%22">Java 11 label</a>.
             </li>
         </ul>
 
     <h3>Migration Issues</h3>
         <a id="migration" name="migration"></a>
+        See also the warnings section of the release note.
         <ul>
-            <li>The following tests have been temporarily disabled to get basic CI running.
-                They work on Java 8, but consistently fail on Java 11.
-                    <ul>
-                    <li>
-                    </ul>
-            </li>
             <li>The PowerManager now fires events with the id "power".  Before this
                 release, it also fired events with the id "Power". Check check that
                 your code is looking for the right form.
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
         </ul>
 

@@ -40,8 +40,8 @@ public class Train {
     private final int _trainId;
     private final int _scheduleId;
     private int _typeId = 0;
-    private String _trainName = "NT";  // NOI18N
-    private String _trainDesc = "New Train";  // NOI18N
+    private String _trainName = Bundle.getMessage("NewTrainName");  // NOI18N
+    private String _trainDesc = Bundle.getMessage("NewTrainDesc");  // NOI18N
     private int _defaultSpeed = 1;
     private int _startTime = 0;
     private int _throttle = 0;

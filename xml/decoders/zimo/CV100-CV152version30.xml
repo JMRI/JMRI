@@ -1410,8 +1410,10 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Jingle Sound CV Write</label>
     <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
+    <label xml:lang="cs">Zvuk znělky při zápisu CV</label>
     <tooltip>The writing of values is confirmed by a jingle.</tooltip>
     <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
+    <tooltip xml:lang="cs">Zápis hodnot do CV je potvrzen znělkou.</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Read Locked" mask="XXVXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1419,8 +1421,10 @@
     <!--label xml:lang="it">Blocco programmazione in modo Servizio</label-->
     <!--label xml:lang="cs">Zámek programování v servisním režimu</label-->
     <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
+    <label xml:lang="cs">Čtení v Servisním režimu programování Zamčeno</label>
     <tooltip>Read CV's in "Service mode" locked</tooltip>
     <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
+    <tooltip xml:lang="cs">Čtení CV v Servisním režimu je zamčeno</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1430,15 +1434,17 @@
     <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
     <tooltip>Programming lock only in "Service mode"</tooltip>
     <tooltip xml:lang="de">Programmiersperre nur im „Service mode“</tooltip>
+    <tooltip xml:lang="cs">Programování v Servisním režimu je zamčeno</tooltip>
   </variable>
   <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Software Update Locked</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
-    <label xml:lang="cs">Zámek softwarových aktualizací</label>
+    <label xml:lang="cs">Softwarové aktualizace zamčeny</label>
     <label xml:lang="de">Updatesperre</label>
     <tooltip>Lock the software update</tooltip>
     <tooltip xml:lang="de">Sperre des Software-Updates</tooltip>
+    <tooltip xml:lang="cs">Zámek softwarových aktualizací</tooltip>
   </variable>
   <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>

@@ -94,8 +94,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
-    @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
+    //private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
      * Nested class to open specific windows when proper tree element is picked.

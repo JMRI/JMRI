@@ -1,9 +1,15 @@
 package jmri.util;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 /**
  * Allow the user to configure properties that needs to be setup very early
@@ -15,12 +21,12 @@ public class EarlyInitializationPreferences {
 
     private static final String FILENAME = jmri.util.FileUtil
             .getExternalFilename("settings:JMRI_InitPreferences.properties");
-    
-    private static final EarlyInitializationPreferences instance =
+
+    private static final EarlyInitializationPreferences INSTANCE =
             new EarlyInitializationPreferences();
 
     private final Properties preferences = new Properties();
-    
+
     // The preferences might have been changed after startup, but we want to
     // keep a list of the preferences used at startup for the JMRI Context.
     private final List<String> startupPrefs = new ArrayList<>();
@@ -31,7 +37,30 @@ public class EarlyInitializationPreferences {
     }
 
     public static EarlyInitializationPreferences getInstance() {
-        return instance;
+        return INSTANCE;
+    }
+
+    public String getPreference(String pref) {
+        return preferences.getProperty(pref);
+    }
+
+    public void setPreference(String pref, String value) {
+        preferences.setProperty(pref, value);
+        store();
+    }
+
+    public boolean getGUIForce100percentScaling() {
+        String value = getPreference("sun.java2d.uiScale");
+        if (value == null) return false;
+        try {
+            return Integer.parseInt(value) == 1;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public void setGUIForce100percentScaling(boolean value) {
+        setPreference("sun.java2d.uiScale", value ? "1" : "0");
     }
 
     /**
@@ -53,28 +82,57 @@ public class EarlyInitializationPreferences {
         return startupPrefs;
     }
 
-    private void store() {
+    private boolean store() {
         try (OutputStream output = new FileOutputStream(FILENAME)) {
-
-//            log.warn("Store startup preferences to {}", FILENAME);
             preferences.store(output, null);
-
+            return true;
         } catch (IOException ex) {
-//            log.warn("Storing startup preferences to {} failed", FILENAME, ex);
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
+            return false;
         }
     }
 
     private void load() {
         try (InputStream input = new FileInputStream(FILENAME)) {
-
-//            log.warn("Load startup preferences from {}", FILENAME);
             preferences.load(input);
-
         } catch (IOException ex) {
-//            log.warn("Loading startup preferences from {} failed", FILENAME);
-            preferences.setProperty("sun.java2d.uiScale", "1");
-            store();
+            setupNewPreferences();
+        }
+    }
+
+    private void setupNewPreferences() {
+        boolean restartIsNeeded = false;
+
+        if (SystemType.isWindows()) {
+            int uiScale = 1;
+
+            if (!GraphicsEnvironment.isHeadless()) {
+                try {
+                    // We must restart JMRI since we read the scale. Java
+                    // will not listen to sun.java2d.uiScale unless we set
+                    // it _before_ awt and Swing is started.
+                    restartIsNeeded = true;
+
+                    GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+                    AffineTransform transform = gc.getDefaultTransform();
+
+                    double scaleX = transform.getScaleX();
+                    double scaleY = transform.getScaleY();
+                    System.err.format("ScaleX: %1.2f%n", scaleX);
+                    System.err.format("ScaleY: %1.2f%n", scaleY);
+
+                    // Don't set uiScale to 1 if Windows has a scaling above 125%
+                    if ((scaleX >= 1.3) || (scaleY >= 1.3)) uiScale = 0;
+                } catch (NullPointerException e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+
+            preferences.setProperty("sun.java2d.uiScale", Integer.toString(uiScale));
+        }
+
+        if (store() && restartIsNeeded) {
+            InstanceManager.getDefault(ShutDownManager.class).restart();
         }
     }
 

@@ -282,6 +282,7 @@ public class RosterSpeedProfile {
                 if (Math.abs(speed/1000.0f - throttleSetting) <= speedIncrement) {
                     return entry;
                 }
+                key = entry.getKey();
             }
         }
         return null;

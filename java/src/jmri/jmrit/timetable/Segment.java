@@ -31,7 +31,7 @@ public class Segment {
 
     private final int _segmentId;
     private final int _layoutId;
-    private String _segmentName = "New Segment";  // NOI18N
+    private String _segmentName = Bundle.getMessage("NewSegmentName");  // NOI18N
 
     public int getSegmentId() {
         return _segmentId;

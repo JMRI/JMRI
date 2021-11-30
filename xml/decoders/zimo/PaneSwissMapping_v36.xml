@@ -30,30 +30,33 @@
         <label>
           <text>The F-Key operates the selected Function Outputs</text>
          <text xml:lang="it">Tasto F opera l'uscita selezionata</text>
-         <text xml:lang="cs">F-klávesa obsluhuje vybraný výstup</text>
+         <text xml:lang="cs">F-tlačítko obsluhuje vybraný výstup</text>
          <text xml:lang="de">F-Taste löst Funktion aus.</text>
         </label>
         <label>
           <text>The Function Outputs selected are operated when the Group is active.  Optionally, a Dimming Group can be applied to each output selected.</text>
+          <text xml:lang="cs">Vybrané funkční výstupy fungují když je aktivní Skupina. Volitelně lze na každý vybraný vástup použít Skupinu stmívání.</text>
         </label>
 		
         <label>
           <text>Any other group controlled by the M-key is modified (usually turned off) when this group defined in this row is active. </text>
-          <text xml:lang="cs">M-klávesa vypíná 'normální' přiřazení funkcí.</text>
+          <text xml:lang="cs">M-tlačítko vypíná 'normální' přiřazení funkcí.</text>
           <text xml:lang="de">M-Taste schaltet das 'normale' Funktionsmapping aus.</text>
         </label>
 
         <label>
           <text>        If the M+F options is selected, the group is only active when both the M-Key and F-Key are "on"</text>
-          <text xml:lang="cs">        Pokud je volba M-klávesa + F-klávesa vybraná, tak určený výstup je obsluhován oběma M-klávesou a F-klávesou.</text>
+          <text xml:lang="cs">        Pokud je volba M-tlačítko + F-tlačítko vybraná, tak určený výstup je obsluhován oběma M-klávesou a F-klávesou.</text>
           <text xml:lang="de">        Wenn eine M- und F-Taste definiert ist wird die entsprechende Funktion nur ausgelöst, wenn beide Tasten geschaltet werden</text>
         </label>
 
         <label>
           <text>The threshold for speed dependent main-beam is set below the mapping table.</text>
+          <text xml:lang="cs">Práh pro hlavní paprsek závislý na rychlosti se nestavuje pod mapovací tabulkou.</text>
         </label>
         <label>
           <text>The levels within each Dimming Group is set at the bottom of the page.</text>
+          <text xml:lang="cs">Úroveň v každé čísti Skupiny stmívání se nastavuje v dolní části stránky.</text>
         </label>
         <group>
             <qualifier>
@@ -63,10 +66,11 @@
             </qualifier>        
              <label>
               <text>        When a M-Key is selected, "M-Key Outputs" sets the Outputs controlled by the M-Key to "off", "on forwards", etc.  if this group is active.</text>
+              <text xml:lang="cs">        Když je vybráno M-tlačítko, "M-Tlačítko Výstupy" nastavuje Výstupy řízené M-Tlačítko na "vypnuto", "na dopředu", atd. pokud je tato skupina aktivní.</text>
       </label>
       <label>
                <text>        With the HiBeam option, the F-key overrides prior dimming settings (CV60, or other settings) for the selected outputs and allows use of Speed Dependant Headlights</text>
-               <text xml:lang="cs">        S volbou dálkové světlo, F-klávesa vypne stmívání (CV60) pro určený výstup a umožňí použití světla závislá na rychlosti.</text>
+               <text xml:lang="cs">        S volbou dálkové světlo, F-tlačítko vypne stmívání (CV60) pro určený výstup a umožňí použití světla závislá na rychlosti.</text>
                <text xml:lang="de">        Mit der Fernlichtfunktion schaltet die F-Taste die Dimmung (CV60) für den entsprechenden Ausgang ab und erlaubt so die geschwindigkeitsabhängige Fernlichtfunktion.</text>
              </label>
         </group>
@@ -92,11 +96,12 @@
         <column>  <!-- F-keys -->
             <label>
               <text> Function Key </text>
+              <text xml:lang="cs"> Funkční tlačítko </text>
             </label>
             <label>
               <text>                      F-Key</text>
               <text xml:lang="it">                      Tasto F</text>
-              <text xml:lang="cs">                      F klávesa</text>
+              <text xml:lang="cs">                      F tlačítko</text>
               <text xml:lang="de">                      F-Taste</text>
             </label>
             <display item="Swiss Mapping Group 1 F-key">
@@ -119,13 +124,14 @@
             <row>  <!-- sub-title of column -->
             <label>
               <text> Modified Key </text>
+              <text xml:lang="cs"> Modifikační tlačítko </text>
             </label>
             </row>
             <row>
               <label>
                 <text>  M-Key       M-Key Outputs                               </text>
                 <text xml:lang="it">    Tasto M</text>
-                <text xml:lang="cs">    M klávesa</text>
+                <text xml:lang="cs">M-tlačítko    M-tlačítko výstupy                          </text>
                 <text xml:lang="de">    M-Taste</text>
               </label>
             </row>
@@ -158,11 +164,15 @@
                       <label>
                         <text> (M-Key options not applicable)    </text>
                         <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                        <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                       </label>
                   </row>
                 </group>
                 <!--checkboxes for bit 7 -->
-                <display item="Swiss Mapping Group 1 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+                <display item="Swiss Mapping Group 1 M-key Hibeam" format="checkbox">
+                    <label> HiBeam</label>
+                    <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
 
              </row>
          </column>
@@ -212,11 +222,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                        <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 2 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 2 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -265,11 +279,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 3 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 3 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -316,11 +334,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 4 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 4 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -363,11 +385,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 5 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 5 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -411,11 +437,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 6 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 6 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -458,11 +488,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 7 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 7 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -505,11 +539,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 8 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 8 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -552,11 +590,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 9 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 9 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -599,11 +641,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 10 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 10 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -648,11 +694,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 11 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 11 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -695,11 +745,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 12 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 12 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -742,11 +796,15 @@
                   <label>
                     <text> (M-Key options not applicable)    </text>
                     <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                    <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                   </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 13 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 13 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -791,11 +849,15 @@
                 <label>
                   <text> (M-Key options not applicable)    </text>
                   <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                 </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 14 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 14 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -835,11 +897,15 @@
                 <label>
                   <text> (M-Key options not applicable)    </text>
                   <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                 </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 15 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 15 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -880,11 +946,15 @@
                 <label>
                   <text> (M-Key options not applicable)    </text>
                   <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                 </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 16 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 16 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -925,11 +995,15 @@
                 <label>
                   <text> (M-Key options not applicable)    </text>
                   <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  <text xml:lang="cs"> (M-tlačítko volby nejsou použitelné)    </text>
                 </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 17 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+            <display item="Swiss Mapping Group 17 M-key Hibeam" format="checkbox">                    
+                <label> HiBeam</label>                    
+                <label xml:lang="cs"> Dálkové světlo</label>                
+            </display>
          </row>
         </column>
       </row>
@@ -951,6 +1025,7 @@
     <row>
       <label>
         <text>Function Outputs</text>
+        <text xml:lang="cs">Funkční výstupy</text>
       </label>
     </row>
     <row>
@@ -1453,12 +1528,14 @@
     <row>
       <label>
         <text>Dimming Groups</text>
+        <text xml:lang="cs">Skupiny stmívání</text>
       </label>
     </row>
     <row>
       <column>
         <label>
           <text>  A1 F Dim</text>
+          <text xml:lang="cs">  A1 P Stmívání</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Fw DG" label="">
           <label></label>
@@ -1470,6 +1547,7 @@
       <column>
         <label>
           <text>  A2 F Dim</text>
+          <text xml:lang="cs">  A2 P Stmívání</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Fw DG" label="">
           <label></label>
@@ -1481,6 +1559,7 @@
       <column>
         <label>
           <text>  A1 R Dim</text>
+          <text xml:lang="cs">  A1 Z Stmívání</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Rw DG" label="">
           <label></label>
@@ -1492,6 +1571,7 @@
       <column>
         <label>
           <text>  A2 R Dim</text>
+          <text xml:lang="cs">  A2 Z Stmívání</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Rw DG" label="">
           <label></label>
@@ -2046,6 +2126,7 @@
         <label>
           <text> Dimming Groups </text>
           <text xml:lang="de">Dimmwert-Gruppen</text>
+          <text xml:lang="cs">Skupiny stmívání</text>
         </label>
     </column>
     </row>
@@ -2070,6 +2151,7 @@
      <column>
     <display item="Swiss Dimming 1 brightness">
       <label>  Brightness </label>
+      <label xml:lang="cs">  Jas </label>
     </display>
     </column>
   </row>
@@ -2091,6 +2173,7 @@
      <column>
     <display item="Swiss Dimming 2 brightness">
       <label>  Brightness </label>
+      <label xml:lang="cs">  Jas </label>
     </display>
      </column>
      </row>
@@ -2112,6 +2195,7 @@
      <column>
     <display item="Swiss Dimming 3 brightness">
     <label>  Brightness </label>
+      <label xml:lang="cs">  Jas </label>
     </display>
      </column>
      </row>
@@ -2133,6 +2217,7 @@
      <column>
     <display item="Swiss Dimming 4 brightness">
       <label>  Brightness </label>
+      <label xml:lang="cs">  Jas </label>
     </display>
      </column>
      </row>
@@ -2154,6 +2239,7 @@
      <column>
     <display item="Swiss Dimming 5 brightness">
       <label>  Brightness </label>
+      <label xml:lang="cs">  Jas </label>
     </display>
    </column>
   </row>
