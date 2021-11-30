@@ -4,20 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
-import java.util.Date;
+
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.Reporter;
+import jmri.managers.DefaultRailComManager;
+import jmri.managers.ProxyIdTagManager;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,11 +40,15 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
      */
     public IdTagTableAction(String actionName) {
         super(actionName);
+        init();
+    }
+    
+    final void init(){
         tagManager.addPropertyChangeListener(this);
     }
     
     @Nonnull
-    protected IdTagManager tagManager = InstanceManager.getDefault(jmri.IdTagManager.class);
+    protected IdTagManager tagManager = InstanceManager.getDefault(IdTagManager.class);
 
     /**
      * {@inheritDoc}
@@ -69,178 +72,11 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of IdTag objects
+     * of IdTag objects.
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel<IdTag>() {
-
-            public static final int WHERECOL = NUMCOLUMN;
-            public static final int WHENCOL = WHERECOL + 1;
-            public static final int CLEARCOL = WHENCOL + 1;
-
-            @Override
-            public String getValue(String name) {
-                IdTag tag = tagManager.getBySystemName(name);
-                if (tag == null) {
-                    return "?";
-                }
-                return tag.getTagID();
-            }
-
-            @Override
-            public Manager<IdTag> getManager() {
-                return tagManager;
-            }
-
-            @Override
-            public IdTag getBySystemName(String name) {
-                return tagManager.getBySystemName(name);
-            }
-
-            @Override
-            public IdTag getByUserName(String name) {
-                return tagManager.getByUserName(name);
-            }
-
-            @Override
-            public void clickOn(IdTag t) {
-                // don't do anything on click; not used in this class, because
-                // we override setValueAt
-            }
-
-            @Override
-            public void setValueAt(Object value, int row, int col) {
-                if (col == CLEARCOL) {
-                    IdTag t = getBySystemName(sysNameList.get(row));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for {}", t.getSystemName());
-                    }
-                    t.setWhereLastSeen(null);
-                    fireTableRowsUpdated(row, row);
-                } else {
-                    super.setValueAt(value, row, col);
-                }
-            }
-
-            @Override
-            public int getColumnCount() {
-                return CLEARCOL + 1;
-            }
-
-            @Override
-            public String getColumnName(int col) {
-                switch (col) {
-                    case VALUECOL:
-                        return Bundle.getMessage("ColumnIdTagID");
-                    case WHERECOL:
-                        return Bundle.getMessage("ColumnIdWhere");
-                    case WHENCOL:
-                        return Bundle.getMessage("ColumnIdWhen");
-                    case CLEARCOL:
-                        return "";
-                    default:
-                        return super.getColumnName(col);
-                }
-            }
-
-            @Override
-            public Class<?> getColumnClass(int col) {
-                switch (col) {
-                    case VALUECOL:
-                    case WHERECOL:
-                    case WHENCOL:
-                        return String.class;
-                    case CLEARCOL:
-                        return JButton.class;
-                    default:
-                        return super.getColumnClass(col);
-                }
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case VALUECOL:
-                    case WHERECOL:
-                    case WHENCOL:
-                        return false;
-                    case CLEARCOL:
-                        return true;
-                    default:
-                        return super.isCellEditable(row, col);
-                }
-            }
-
-            @Override
-            public Object getValueAt(int row, int col) {
-                IdTag t;
-                switch (col) {
-                    case WHERECOL:
-                        Reporter r;
-                        t = getBySystemName(sysNameList.get(row));
-                        if ( t !=null ){
-                            r = t.getWhereLastSeen();
-                            if (r!=null){
-                                return r.getDisplayName();                            
-                            }
-                        }
-                        return null;
-                    case WHENCOL:
-                        Date d;
-                        t = getBySystemName(sysNameList.get(row));
-                        return (t != null) ? (((d = t.getWhenLastSeen()) != null)
-                                ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
-                    case CLEARCOL:
-                        return Bundle.getMessage("ButtonClear");
-                    default:
-                        return super.getValueAt(row, col);
-                }
-            }
-
-            @Override
-            public int getPreferredWidth(int col) {
-                switch (col) {
-                    case SYSNAMECOL:
-                    case WHERECOL:
-                    case WHENCOL:
-                        return new JTextField(12).getPreferredSize().width;
-                    case VALUECOL:
-                        return new JTextField(10).getPreferredSize().width;
-                    case CLEARCOL:
-                        return new JButton(Bundle.getMessage("ButtonClear")).getPreferredSize().width + 4;
-                    default:
-                        return super.getPreferredWidth(col);
-                }
-            }
-
-            @Override
-            public void configValueColumn(JTable table) {
-                // value column isn't button, so config is null
-            }
-
-            @Override
-            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                return true;
-                // return (e.getPropertyName().indexOf("alue")>=0);
-            }
-
-            @Override
-            public JButton configureButton() {
-                log.error("configureButton should not have been called");
-                return null;
-            }
-
-            @Override
-            protected String getMasterClassName() {
-                return getClassName();
-            }
-
-            @Override
-            protected String getBeanType() {
-                return "ID Tag";
-            }
-        };
+        m = new IdTagTableDataModel(tagManager);
     }
 
     @Override
@@ -272,6 +108,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             ActionListener cancelListener = (ActionEvent ev) -> {
                 cancelPressed(ev);
             };
+            addFrame.setEscapeKeyClosesWindow(true);
             addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener));
         }
         addFrame.pack();
@@ -286,7 +123,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        if (user.equals("")) {
+        if (user.isEmpty()) {
             user = null;
         }
         String sName = sysName.getText();
@@ -294,14 +131,15 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             tagManager.newIdTag(sName, user);
         } catch (IllegalArgumentException ex) {
             // user input no good
-            handleCreateException(sName);
+            handleCreateException(sName, ex);
         }
     }
     //private boolean noWarn = false;
 
-    void handleCreateException(String sysName) {
+    void handleCreateException(String sysName, IllegalArgumentException ex) {
         JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorIdTagAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorIdTagAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck")
+                + "\n" + ex.getLocalizedMessage() ,
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
     }
@@ -312,7 +150,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<IdTag> f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
@@ -329,9 +167,9 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
     @Override
     public void addToPanel(AbstractTableTabAction<IdTag> f) {
         String connectionName = tagManager.getMemo().getUserName();
-        if (tagManager instanceof jmri.managers.ProxyIdTagManager) {
+        if (tagManager instanceof ProxyIdTagManager) {
             connectionName = "All";
-        } else if (connectionName == null && (tagManager instanceof jmri.managers.DefaultRailComManager)) {
+        } else if (connectionName == null && (tagManager instanceof DefaultRailComManager)) {
             connectionName = "RailCom"; // NOI18N (proper name).
         }
         f.addToBottomBox(isStateStored, connectionName);
@@ -363,6 +201,13 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
     protected String getClassName() {
         return IdTagTableAction.class.getName();
     }
+    
+    @Override
+    public void dispose(){
+        tagManager.removePropertyChangeListener(this);
+        super.dispose();
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class);
 
 }

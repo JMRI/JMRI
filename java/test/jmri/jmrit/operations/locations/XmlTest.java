@@ -4,10 +4,13 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -106,6 +109,11 @@ public class XmlTest extends OperationsTestCase {
         t2.setReservationFactor(33);
         t2.setScheduleMode(Track.MATCH);
         t2.setScheduleCount(2);
+        
+        // test divisions
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division division = dm.newDivision("testDivisionName");
+        division.setComment("divisionComment");
 
         locationList = manager.getLocationsByIdList();
         Assert.assertEquals("New Location by Id 1", "Test Location 2", locationList.get(0).getName());
@@ -120,7 +128,6 @@ public class XmlTest extends OperationsTestCase {
                 .getName());
 
         manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
-        manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 1").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
         manager.getLocationByName("Test Location 1").addTypeName("Baggage");
@@ -130,7 +137,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 1").addTypeName("Engine");
         manager.getLocationByName("Test Location 1").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-        manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 2").setSwitchListEnabled(false);
         manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
         manager.getLocationByName("Test Location 2").addTypeName("Baggage");
@@ -141,7 +147,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 2").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").addTypeName("Track 2 Type");
         manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-        manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
         manager.getLocationByName("Test Location 3").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST + Location.WEST + Location.NORTH);
         manager.getLocationByName("Test Location 3").addTypeName("Baggage");
@@ -207,6 +212,8 @@ public class XmlTest extends OperationsTestCase {
         manager.dispose();
         // delete all schedules
         InstanceManager.getDefault(ScheduleManager.class).dispose();
+        // delete divisions
+        dm.dispose();
 
         ct.addName("Boxcar");
         ct.addName("boxCar");
@@ -218,6 +225,7 @@ public class XmlTest extends OperationsTestCase {
         manager = InstanceManager.getDefault(LocationManager.class);
         locationListByName = manager.getLocationsByNameList();
         Assert.assertEquals("Starting Number of Locations", 0, locationListByName.size());
+        Assert.assertEquals("Starting Number of Divisions", 0, dm.getNumberOfdivisions());
 
         // Need to force a re-read of the xml file.
         InstanceManager.getDefault(LocationManagerXml.class).readFile(
@@ -227,13 +235,13 @@ public class XmlTest extends OperationsTestCase {
         // check locations
         locationListByName = manager.getLocationsByNameList();
         Assert.assertEquals("Starting Number of Locations", 3, locationListByName.size());
+        Assert.assertEquals("Starting Number of Divisions", 1, dm.getNumberOfdivisions());
 
         for (int i = 0; i < locationListByName.size(); i++) {
             Location loc = locationListByName.get(i);
 
             if (i == 0) {
                 Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());
-                Assert.assertEquals("Location 1 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
                 Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
                 Assert.assertEquals("Location 1 switchList", true, loc.isSwitchListEnabled());
@@ -251,7 +259,7 @@ public class XmlTest extends OperationsTestCase {
             }
             if (i == 1) {
                 Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
-                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
+//                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
                 Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
                 Assert.assertEquals("Location 2 switchList", false, loc.isSwitchListEnabled());
@@ -295,7 +303,7 @@ public class XmlTest extends OperationsTestCase {
             }
             if (i == 2) {
                 Assert.assertEquals("New Location by Name List 3", "Test Location 3", loc.getName());
-                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
+//                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
                 Assert.assertEquals("Location 3 direction", Location.EAST + Location.WEST + Location.NORTH, loc
                         .getTrainDirections());
                 Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());
@@ -363,6 +371,10 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Item 3 count", 123, si3.getCount());
         Assert.assertEquals("Item 3 destination", "", si3.getDestinationName());
         Assert.assertEquals("Item 3 track", "", si3.getDestinationTrackName());
+        
+        // confirm division
+        Assert.assertEquals("Divsion Name", "testDivisionName", dm.getDivisionsByIdList().get(0).getName());
+        Assert.assertEquals("Divsion Comment", "divisionComment", dm.getDivisionsByIdList().get(0).getComment());
 
         // delete all locations
         manager.dispose();

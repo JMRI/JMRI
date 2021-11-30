@@ -1,117 +1,90 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Dispatcher - Allocate Extra Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher Allocate Extra">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI Dispatcher: Allocate Extra</h1>
 
       <h2>Introduction</h2>
 
-      <p>The <strong>Allocate Extra Section</strong> pane allows "Extra Sections"
-      to be allocated to any Dispatcher Active Train.
-      "Extra Sections" are
-      <a href="../beantable/SectionTable.shtml">Sections</a>
-      that are not in the sequence of Sections defined in
-      the Transit being followed by the Active Train. The need to
-      allocate "extra Sections" can arise if the engineer of an
-      Active Train needs to do more than simply run around the
-      layout. For example, extra Sections could be needed for
-      setting out or picking up cars, especially if a run around is
-      needed.</p>
+      <p>The <strong>Allocate Extra Section</strong> pane allows "Extra Sections" to be allocated
+      to any Dispatcher Active Train. "Extra Sections" are <a href=
+      "../beantable/SectionTable.shtml">Sections</a> that are not in the sequence of Sections
+      defined in the Transit being followed by the Active Train. The need to allocate "extra
+      Sections" can arise if the engineer of an Active Train needs to do more than simply run
+      around the layout. For example, extra Sections could be needed for setting out or picking up
+      cars, especially if a run around is needed.</p>
 
-      <p>Extra Sections are allocated manually via the Dispatcher
-      panel, using this window to select the Active Train and the
-      Section to be allocated. Once allocated, extra Sections will
-      show in the <strong>Allocated Sections</strong> table in the
-      <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> window.
-      <br>The
-      <strong>Release</strong> button in the Allocated Section Table should
-      be used to release the extra Sections when they are no longer
-      required. The <strong>Auto Release</strong> option does not release
-      extra Sections; extra Sections must be released manually.</p>
+      <p>Extra Sections are allocated manually via the Dispatcher panel, using this window to
+      select the Active Train and the Section to be allocated. Once allocated, extra Sections will
+      show in the <strong>Allocated Sections</strong> table in the <strong><a href=
+      "Dispatcher.shtml">Dispatcher</a></strong> window.<br>
+      The <strong>Release</strong> button in the Allocated Section Table should be used to release
+      the extra Sections when they are no longer required. The <strong>Auto Release</strong> option
+      does not release extra Sections; extra Sections must be released manually.</p>
 
-      <p>Note: Turnout checking and turnout setting are turned off
-      during Allocate Extra. Turnouts should be set as needed by
-      the dispatcher or by the engineer.</p>
+      <p>Note: Turnout checking and turnout setting are turned off during Allocate Extra. Turnouts
+      should be set as needed by the dispatcher or by the engineer.</p>
 
       <h2>Using the Allocate Extra Window</h2>
 
-      <p>To allocate and extra Section to an Active Train, use the
-      following procedure:</p>
+      <p>To allocate and extra Section to an Active Train, use the following procedure:</p>
 
       <ol>
         <li>
-          <p>Click the <strong>Allocate Extra...</strong> button in the
-          <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> window.
-          This brings up the window shown below.</p><img src=
-          "images/AllocateExtraWindow.png" width="433" height="135" alt="Allocate extra section">
+          <p>Click the <strong>Allocate Extra...</strong> button in the <strong><a href=
+          "Dispatcher.shtml">Dispatcher</a></strong> window. This brings up the window shown
+          below.</p>
+          <img src="images/AllocateExtraWindow.png" width="433" height="135" alt=
+          "Allocate extra section">
         </li>
 
         <li>
-          <p>Select an Active Train in the <strong>Active Train:</strong>
-          selection box. When an Active Train is selected, the
-          <strong>Section to Allocate:</strong> selection box will change to
-          display Sections that are appropriate to that Active
-          Train. Active Train names are displayed in either short
-          form (shown above) or long form depending on the option
-          set in <strong><a href="Options.shtml">Dispatcher
-          Options</a></strong>.</p>
+          <p>Select an Active Train in the <strong>Active Train:</strong> selection box. When an
+          Active Train is selected, the <strong>Section to Allocate:</strong> selection box will
+          change to display Sections that are appropriate to that Active Train. Active Train names
+          are displayed in either short form (shown above) or long form depending on the option set
+          in <strong><a href="Options.shtml">Dispatcher Options</a></strong>.</p>
         </li>
 
         <li>
-          <p>Select a Section to allocate in the <strong>Section to
-          Allocate:</strong> selection box. To be listed in this select
-          box, a Section must be FREE (not allocated to any Active
-          Train), and must be connected to a Section that is
-          currently allocated to the Active Train selected in the
-          <strong>Active Train:</strong> selection box.</p>
+          <p>Select a Section to allocate in the <strong>Section to Allocate:</strong> selection
+          box. To be listed in this select box, a Section must be FREE (not allocated to any Active
+          Train), and must be connected to a Section that is currently allocated to the Active
+          Train selected in the <strong>Active Train:</strong> selection box.</p>
         </li>
 
         <li>
-          <p>Click the <strong>Allocate</strong> button to allocate the
-          selected Section to the selected Active Train. The
-          Section is allocated immediately, and this window
+          <p>Click the <strong>Allocate</strong> button to allocate the selected Section to the
+          selected Active Train. The Section is allocated immediately, and this window
           disappears.</p>
         </li>
 
         <li>
-          <p>Or click the <strong>Cancel</strong> button to exit without
-          allocating an extra Section.</p>
+          <p>Or click the <strong>Cancel</strong> button to exit without allocating an extra
+          Section.</p>
         </li>
       </ol>
 
-      <p>Note: If this window accidentally should be left open,
-      allocating a Section in another manner will automatically
-      cancel the operation in this window, and this pane will
+      <p>Note: If this window accidentally should be left open, allocating a Section in another
+      manner will automatically cancel the operation in this window, and this pane will
       disappear.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

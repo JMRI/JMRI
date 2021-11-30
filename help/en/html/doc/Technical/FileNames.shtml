@@ -1,11 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Portable File Access</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code portable file location">
@@ -14,99 +10,83 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-  <h1>JMRI Code: Portable File Access</h1>
-      <p>JMRI uses files for icons,
-      images, panel files, scripts, and lots of other things.
-      References to those are routinely used by various code, and
-      stored in XML files. Some of the files are distributed with
-      JMRI, and some are created outside the JMRI distribution
-      directory by the local user.</p>
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-      <p>In addition, JMRI is a cross-platform application, and we
-      want to be able to move JMRI XML files from one computer to
-      another, even of a different type, and have them still
-      work.</p>
+    <div id="mainContent">
+      <h1>JMRI Code: Portable File Access</h1>
 
-      <p>To do this, we've created a system of pseudo-URLs for
-      accessing file locations. Filenames are used internally and
-      stored in XML files with prefixes that identify where the
-      file is to be found in a system independent manner.</p>
+      <p>JMRI uses files for icons, images, panel files, scripts, and lots of other things.
+      References to those are routinely used by various code, and stored in XML files. Some of the
+      files are distributed with JMRI, and some are created outside the JMRI distribution directory
+      by the local user.</p>
+
+      <p>In addition, JMRI is a cross-platform application, and we want to be able to move JMRI XML
+      files from one computer to another, even of a different type, and have them still work.</p>
+
+      <p>To do this, we've created a system of pseudo-URLs for accessing file locations. Filenames
+      are used internally and stored in XML files with prefixes that identify where the file is to
+      be found in a system independent manner.</p>
 
       <dl>
         <dt>program:</dt>
-        <dd>Treats the path as a relative path below the JMRI installation directory.
-          In JMRI 2.13.1 and earlier, this was the <code>resources:</code> prefix.</dd>
+
+        <dd>Treats the path as a relative path below the JMRI installation directory. In JMRI
+        2.13.1 and earlier, this was the <code>resources:</code> prefix.</dd>
 
         <dt>preference:</dt>
-        <dd>Treats the path as a relative path below the user files (or preferences)
-          directory. In JMRI 2.13.1 and earlier, thie was the <code>file:</code> prefix.</dd>
-          
+
+        <dd>Treats the path as a relative path below the user files (or preferences) directory. In
+        JMRI 2.13.1 and earlier, thie was the <code>file:</code> prefix.</dd>
+
         <dt>profile:</dt>
+
         <dd>Treats the path as a relative path below the configuration profile directory.</dd>
-          
+
         <dt>settings:</dt>
-        <dd>Treats the path as a relative path below the settings directory (the directory
-          where per-computer preferences are stored).</dd>
-        
+
+        <dd>Treats the path as a relative path below the settings directory (the directory where
+        per-computer preferences are stored).</dd>
+
         <dt>home:</dt>
+
         <dd>Treats the path as a relative path below the user's home directory.</dd>
       </dl>
-      
-      Otherwise, treat the name as a relative path below the
-      program directory to provide backward compatibility. In any
-      case, absolute pathnames will work, but won't be
-      cross-platform compatible.
-
+      Otherwise, treat the name as a relative path below the program directory to provide backward
+      compatibility. In any case, absolute pathnames will work, but won't be cross-platform
+      compatible.
       <h2>Implementation</h2>
-      The <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
+      The <a href="https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
       class provides translation routines to make this automatic:
-
       <dl>
-        <dd>static public String getExternalFilename(String
-        pName)</dd>
+        <dd>static public String getExternalFilename(String pName)</dd>
 
-        <dt>Convert an internal name (with prefixes as above) into
-        an absolute pathname for use on the local computer. There's
-        no guarantee that the file or any enclosing directory is
-        actually present, but the pathname will be syntactically
-        valid on the present computer.</dt>
+        <dt>Convert an internal name (with prefixes as above) into an absolute pathname for use on
+        the local computer. There's no guarantee that the file or any enclosing directory is
+        actually present, but the pathname will be syntactically valid on the present
+        computer.</dt>
 
-        <dd>static public String getPortableFilename(File
-        file)</dd>
+        <dd>static public String getPortableFilename(File file)</dd>
 
-        <dd>static public String getPortableFilename(String
-        filename)</dd>
+        <dd>static public String getPortableFilename(String filename)</dd>
 
-        <dt>Convert a File or filename string into a string name
-        with the appropriate prefix.</dt>
+        <dt>Convert a File or filename string into a string name with the appropriate prefix.</dt>
       </dl>
-      <p>You should call getExternalFilename() before passing the
-      filename to any Java common, and getPortableFilename()
-      whenever you get a file or filename from a Java class. It's
-      OK to call either one multiple times, as they'll just pass
-      through in that case. In particular, call
+
+      <p>You should call getExternalFilename() before passing the filename to any Java common, and
+      getPortableFilename() whenever you get a file or filename from a Java class. It's OK to call
+      either one multiple times, as they'll just pass through in that case. In particular, call
       getPortableFilename() before storing to an XML file.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

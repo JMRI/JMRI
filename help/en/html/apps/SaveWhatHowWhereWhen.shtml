@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Redirected Page</title>
+  <meta http-equiv="PRAGMA" content="NO-CACHE">
+  <!-- CHANGE FOLLOWING LINE TO POINT TO NEW LOCATION -->
+  <meta http-equiv="Refresh" content="5; URL=/help/en/html/apps/DataManagement.shtml">
+</head>
+<body>
+  This page has been moved to another location (<a href=
+  "/help/en/html/apps/DataManagement.shtml">/help/en/html/apps/DataManagement.shtml</a>) as part of
+  updating our web site.<br>
+  Please update your bookmarks.<br>
+  If you got to this page from another JMRI page, please let us know so we can fix it.<br>
+  You should be redirected to the new page within 5 seconds.
+</body>
+</html>

@@ -33,7 +33,7 @@ public class WarrantTableFrameTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

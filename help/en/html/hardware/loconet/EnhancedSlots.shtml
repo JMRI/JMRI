@@ -1,250 +1,291 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Enhanced LocoNet&reg; Slots</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Enhanced LocoNet® Slots</title>
   <meta name="author" content="B. Milhaupt">
-  <meta name="keywords" content=
-  "Digitrax LocoNet Slot">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="Digitrax LocoNet Slot"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>Hardware Support: Enhanced LocoNet&reg; Slots</h1>
+    <div id="mainContent">
+      <h1>Hardware Support: Enhanced LocoNet® Slots</h1>
 
       <h2>Contents</h2>
 
       <ul>
-        <li><a href="#Introduction">Introduction</a></li>
-        <li><a href="#QandA">Enhanced slots described via Questions and 
-              Answers</a>
-        <ul>
-        <li><a href="#generalideas">What is a LocoNet "Slot"?"</a></li>
-        <li><a href="#WhatsInIt">What's in a slot?</a></li>
-        <li><a href="#whyImportant">Why are slots important?</a></li>
-        <li><a href="#whyDifferent">Why is there a difference between 
-                "traditional" and "enhanced" LocoNet slots?</a></li>
-        <li><a href="#ExpandEnhanceEtc">Why do you use the term "Enhanced" slots 
-                when Digitrax uses the term "Expanded" slots?</a></li>
-        <li><a href="#PrimaryDiff">What are the primary differences between 
-                "Traditional" and "Enhanced" LocoNet slots?</a></li>
-        <li><a href="#whatCmdStnsTrad">What command stations implement 
-                "traditional" slots?</a></li>
-        <li><a href="#whatCmdStnsEnh">What command stations implement 
-                "enhanced" slots?</a></li>
-        <li><a href="#whatThrotTrad">What throttles can make use of "traditional" 
-                slots?</a></li>
-        <li><a href="#whatThrotEnh">What throttles can make use of "enhanced" 
-                slots?</a></li>
-        </ul></li>
-        <li><a href="#whyNot">JMRI does not directly support "enhanced" slots.  
-                Why not?</a></li>
-        <li><a href="#someSupport">There really is some JMRI support for 
-                "enhanced" slots.  Why is that?</a></li>
-        <li><a href="#whatItWillTake">What will it take for JMRI to fully 
-                support "enhanced" slots?</a></li>
+        <li>
+          <a href="#Introduction">Introduction</a>
+        </li>
 
+        <li>
+          <a href="#QandA">Enhanced slots described via Questions and Answers</a>
+          <ul>
+            <li>
+              <a href="#generalideas">What is a LocoNet "Slot"?"</a>
+            </li>
 
+            <li>
+              <a href="#WhatsInIt">What's in a slot?</a>
+            </li>
+
+            <li>
+              <a href="#whyImportant">Why are slots important?</a>
+            </li>
+
+            <li>
+              <a href="#whyDifferent">Why is there a difference between "traditional" and
+              "enhanced" LocoNet slots?</a>
+            </li>
+
+            <li>
+              <a href="#ExpandEnhanceEtc">Why do you use the term "Enhanced" slots when Digitrax
+              uses the term "Expanded" slots?</a>
+            </li>
+
+            <li>
+              <a href="#PrimaryDiff">What are the primary differences between "Traditional" and
+              "Enhanced" LocoNet slots?</a>
+            </li>
+
+            <li>
+              <a href="#whatCmdStnsTrad">What command stations implement "traditional" slots?</a>
+            </li>
+
+            <li>
+              <a href="#whatCmdStnsEnh">What command stations implement "enhanced" slots?</a>
+            </li>
+
+            <li>
+              <a href="#whatThrotTrad">What throttles can make use of "traditional" slots?</a>
+            </li>
+
+            <li>
+              <a href="#whatThrotEnh">What throttles can make use of "enhanced" slots?</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="#whyNot">JMRI does not directly support "enhanced" slots. Why not?</a>
+        </li>
+
+        <li>
+          <a href="#someSupport">There really is some JMRI support for "enhanced" slots. Why is
+          that?</a>
+        </li>
+
+        <li>
+          <a href="#whatItWillTake">What will it take for JMRI to fully support "enhanced"
+          slots?</a>
+        </li>
       </ul>
-      
-      <h2><a name="Introduction" id="Introduction">Introduction</a></h2>
-      <p>This help page is presented as a set of "questions and answers".  It is
-      hoped that this presentation will answer the basic questions related
-      to LocoNet "Enhanced" slots.</p>
-      <h2><a name="QandA" id="QandA">Enhanced slots described via Questions and 
-              Answers</a></h2>
 
-      <h3><a name="generalideas" id=
-      "generalideas">What is a LocoNet "Slot"?</a></h3>
+      <h2 id="Introduction">Introduction</h2>
 
-      <p>LocoNet implements the "slot" as the basic mechanism for:
+      <p>This help page is presented as a set of "questions and answers". It is hoped that this
+      presentation will answer the basic questions related to LocoNet "Enhanced" slots.</p>
+
+      <h2 id="QandA">Enhanced slots described via Questions and Answers</h2>
+
+      <h3 id="generalideas">What is a LocoNet "Slot"?</h3>
+
+      <p>LocoNet implements the "slot" as the basic mechanism for:</p>
+
       <ul>
-          <li>managing locomotives and the information used when sending a DCC 
-              signal to that locomotive;</li>
-          <li>managing how locomotives may be grouped together into a consist;</li>
-          <li>other system-specific uses.</li>
+        <li>managing locomotives and the information used when sending a DCC signal to that
+        locomotive;</li>
+
+        <li>managing how locomotives may be grouped together into a consist;</li>
+
+        <li>other system-specific uses.</li>
       </ul>
-      
-      <p>This discussion focuses on the first two of these items, and ignores the
-      last item.</p>
 
-      <h2><a name="WhatsInIt" id="WhatsInIt">What's in a slot?</a></h2>
-      <p>Locomotive control and locomotive consisting slots are those slots which may
-      contain valid locomotive information.  Valid locomotive information includes 
-      the slot's status, a DCC mobile decoder address, the decoder's current 
-      speed and direction, some stored information on which functions are active, 
-      the type of DCC packet to be sent to the DCC mobile decoder, the "Throttle 
-      ID" reported by the last throttle to acquire the slot, and position in a 
-      consist (if consisted).</p>
+      <p>This discussion focuses on the first two of these items, and ignores the last item.</p>
 
-      <h2><a name="whyImportant" id="whyImportant">Why are slots important?</a></h2>
-      <p>When a LocoNet throttle acquires a locomotive address, it effectively asks
-      the command station for a slot number with which to control a locomotive 
-      address.  Once acquired, the throttle uses that <strong>slot number</strong>
-      reported by the command station.</p>
-    
-      <h2><a name="whyDifferent" id="whyDifferent">Why is there a difference 
-      between "traditional" and "enhanced" LocoNet slots?</a></h2>
-      <p>Some guess that limited available memory in the microcontroller devices 
-      used in early Digitrax command stations forced a limit of the available 
-      number of slots and amount of information in each slot.</p>
-      <p>Some guess that LocoNet designers worried about available data throughput
-      on LocoNet if locomotive control messages required more bytes.</p>
-      <p>While both of these arguments are logical, only the architects of LocoNet 
-      can really know.  But it is known that the "traditional" slot architecture 
-      placed a practical limit of up to 120 addressable locos (whether separately 
-      controlled or consisted using "basic" consisting).  The "enhanced" slot 
-      architecture has extended that capability to be greater than 120 in cases
+      <h2 id="WhatsInIt">What's in a slot?</h2>
+
+      <p>Locomotive control and locomotive consisting slots are those slots which may contain valid
+      locomotive information. Valid locomotive information includes the slot's status, a DCC mobile
+      decoder address, the decoder's current speed and direction, some stored information on which
+      functions are active, the type of DCC packet to be sent to the DCC mobile decoder, the
+      "Throttle ID" reported by the last throttle to acquire the slot, and position in a consist
+      (if consisted).</p>
+
+      <h2 id="whyImportant">Why are slots important?</h2>
+
+      <p>When a LocoNet throttle acquires a locomotive address, it effectively asks the command
+      station for a slot number with which to control a locomotive address. Once acquired, the
+      throttle uses that <strong>slot number</strong> reported by the command station.</p>
+
+      <h2 id="whyDifferent">Why is there a difference between "traditional" and "enhanced" LocoNet
+      slots?</h2>
+
+      <p>Some guess that limited available memory in the microcontroller devices used in early
+      Digitrax command stations forced a limit of the available number of slots and amount of
+      information in each slot.</p>
+
+      <p>Some guess that LocoNet designers worried about available data throughput on LocoNet if
+      locomotive control messages required more bytes.</p>
+
+      <p>While both of these arguments are logical, only the architects of LocoNet can really know.
+      But it is known that the "traditional" slot architecture placed a practical limit of up to
+      120 addressable locos (whether separately controlled or consisted using "basic" consisting).
+      The "enhanced" slot architecture has extended that capability to be greater than 120 in cases
       where the command station supports more than 120 locomotive-control slots.</p>
-      
-      <h2><a name="ExpandEnhanceEtc" id="ExpandEnhanceEtc">Why do you use the term
-      "Enhanced" slots when Digitrax uses the term "Expanded" slots?</a></h2>
-      <p>Upon its introduction, the primary DCS240 selling point seen by users 
-      on the Digitrax-Users "Yahoo" list (now the Digitrax-Users "groups.io" list) 
-      was the ability to use up to 400 throttles and control up to 400 locomotives.
-      This association was well-established before the release of the DCS210 and
-      DCS52 command stations.</p>
-      <p>Why is this significant?  Because neither the DCS210 nor the DCS52 could
-      control more locomotives than a "standard-slot-only" command station, nor 
-      could they support any more throttles than such a command station.  But both
-      command stations use and understand the LocoNet messages which makes it 
-      possible for the DCS240 to support as many as 400 throttles and as many as 
-      400 uniquely controllable locos.</p>
-      <p>This emphasized that the so-called "expanded" slot is more than simply 
-      a mechanism which allows a LocoNet-based system to use more than 120 throttles, 
-      and allow the system to control more than 120 unique locomotives.  Instead,
-      it is an "ecosystem" which allows different LocoNet messaging for loco control,
-      different throttle "steal" behavior, different command station memory of 
-      function states, etc.</p>
-      <p>So, for the purposes of this discussion, an "enhanced" slot is one which 
-      uses newer LocoNet messaging to implement the additional features listed 
-      in the previous paragraph, regardless of the slot number value.  So-called 
-      "enhanced" slot LocoNet messaging may use slot numbering in the "traditional" 
-      slot numbering range, as is done by the DCS210 and DCS52 command stations, 
-      or by the DCS240 if it is configured to limit its slots to a maximum of 120.  
-      That same "enhanced" slot LocoNet messaging may use slot numbers in the 
-      "expanded" slot numbering range to control those locomotives which are held
-      in a DCS240 in a slot number which is above the "traditional" slot numbering
-      range.</p>
-      <h2><a name="PrimaryDiff" id="PrimaryDiff">What are the primary differences 
-      between "Traditional" and "Enhanced" 
-      LocoNet slots?</a></h2>
-      There are four primary differences between "traditional" and "enhanced" 
-      LocoNet slots:
+
+      <h2 id="ExpandEnhanceEtc">Why do you use the term "Enhanced" slots when Digitrax uses the
+      term "Expanded" slots?</h2>
+
+      <p>Upon its introduction, the primary DCS240 selling point seen by users on the
+      Digitrax-Users "Yahoo" list (now the Digitrax-Users "groups.io" list) was the ability to use
+      up to 400 throttles and control up to 400 locomotives. This association was well-established
+      before the release of the DCS210 and DCS52 command stations.</p>
+
+      <p>Why is this significant? Because neither the DCS210 nor the DCS52 could control more
+      locomotives than a "standard-slot-only" command station, nor could they support any more
+      throttles than such a command station. But both command stations use and understand the
+      LocoNet messages which makes it possible for the DCS240 to support as many as 400 throttles
+      and as many as 400 uniquely controllable locos.</p>
+
+      <p>This emphasized that the so-called "expanded" slot is more than simply a mechanism which
+      allows a LocoNet-based system to use more than 120 throttles, and allow the system to control
+      more than 120 unique locomotives. Instead, it is an "ecosystem" which allows different
+      LocoNet messaging for loco control, different throttle "steal" behavior, different command
+      station memory of function states, etc.</p>
+
+      <p>So, for the purposes of this discussion, an "enhanced" slot is one which uses newer
+      LocoNet messaging to implement the additional features listed in the previous paragraph,
+      regardless of the slot number value. So-called "enhanced" slot LocoNet messaging may use slot
+      numbering in the "traditional" slot numbering range, as is done by the DCS210 and DCS52
+      command stations, or by the DCS240 if it is configured to limit its slots to a maximum of
+      120. That same "enhanced" slot LocoNet messaging may use slot numbers in the "expanded" slot
+      numbering range to control those locomotives which are held in a DCS240 in a slot number
+      which is above the "traditional" slot numbering range.</p>
+
+      <h2 id="PrimaryDiff">What are the primary differences between "Traditional" and "Enhanced"
+      LocoNet slots?</h2>
+      There are four primary differences between "traditional" and "enhanced" LocoNet slots:
       <table border="2">
-          <tr><td align="center"><strong>Traditional slots:</strong></td>
-              <td align="center"><strong>Enhanced slots:</strong></td></tr>
-          <tr><td>use locomotive control slot numbers between 1 and 120 (or less, 
-                  depending on command station), using a 4-byte message;</td>
-              <td>use locomotive control slot numbers between 1 and 400 (or less, 
-                  depending on command station), using 6-byte messages;</td>
-          </tr>
-          <tr><td>remember only F0 thru F8</td>
-              <td>remember F0 thru F28</td>
-          </tr>
-          <tr><td>can be "shared" between multiple throttles;</td>
-              <td>can be "stolen" by another throttle and the first enhanced-slot 
-                  throttle no longer has control of the slot ("StealZap");</td>
-          </tr>
-          <tr><td>can be controlled by "traditional-slot" throttles or by 
-                  "enhanced-slot-capable" throttles;</td>
-              <td>can be controlled only by "enhanced-slot-capable" throttles;</td>
-          </tr>
-          <tr><td>can be managed by all Digitrax command stations.</td>
-              <td>can only be managed by newer Digitrax command station models.</td>
-          </tr>
+        <tr>
+          <td style="text-align: center"><strong>Traditional slots:</strong>
+          </td>
+          <td style="text-align: center"><strong>Enhanced slots:</strong>
+          </td>
+        </tr>
+
+        <tr>
+          <td>use locomotive control slot numbers between 1 and 120 (or less, depending on command
+          station), using a 4-byte message;</td>
+          <td>use locomotive control slot numbers between 1 and 400 (or less, depending on command
+          station), using 6-byte messages;</td>
+        </tr>
+
+        <tr>
+          <td>remember only F0 thru F8</td>
+          <td>remember F0 thru F28</td>
+        </tr>
+
+        <tr>
+          <td>can be "shared" between multiple throttles;</td>
+          <td>can be "stolen" by another throttle and the first enhanced-slot throttle no longer
+          has control of the slot ("StealZap");</td>
+        </tr>
+
+        <tr>
+          <td>can be controlled by "traditional-slot" throttles or by "enhanced-slot-capable"
+          throttles;</td>
+          <td>can be controlled only by "enhanced-slot-capable" throttles;</td>
+        </tr>
+
+        <tr>
+          <td>can be managed by all Digitrax command stations.</td>
+          <td>can only be managed by newer Digitrax command station models.</td>
+        </tr>
       </table>
-      
-      <h2><a name="whatCmdStnsTrad" id="whatCmdStnsTrad">What command stations 
-      implement "traditional" slots?</a></h2>
+
+      <h2 id="whatCmdStnsTrad">What command stations implement "traditional" slots?</h2>
+
       <p>All LocoNet-compatible command stations implement traditional slots.</p>
-          
-      <h2><a name="whatCmdStnsEnh" id="whatCmdStnsEnh">What command stations 
-      implement "enhanced" slots?</a></h2>
-      <p>It is believed that a "LocoNet 2.0" specification defines the "enhanced" 
-      slot functionality.  As of this writing, the Digitrax DCS52, DCS210, and 
-      DCS240 command stations implement "enhanced" slot functionality.</p>
 
-      <h2><a name="whatThrotTrad" id="whatThrotTrad">What throttles can make use 
-      of "traditional" slots?</a></h2>
-      <p>It is believed that all LocoNet-compatible throttles can make use of 
-          traditional slots to control locomotives and/or consists.</p>
+      <h2 id="whatCmdStnsEnh">What command stations implement "enhanced" slots?</h2>
 
-      <h2><a name="whatThrotEnh" id="whatThrotEnh">What throttles can make use 
-      of "enhanced" slots?</a></h2>
-      <p>As of this writing, the Digitrax DT402-series and DT500-series throttles 
-      can make use of "enhanced" slots.  It is believed that the throttle must 
-      be configured to allow it to request and use "enhanced" slots - if not 
-      configured to use "enhanced" slots, or if the command station does not 
-      support "enhanced" slots, the throttle will make use of "traditional" 
+      <p>It is believed that a "LocoNet 2.0" specification defines the "enhanced" slot
+      functionality. As of this writing, the Digitrax DCS52, DCS210, and DCS240 command stations
+      implement "enhanced" slot functionality.</p>
+
+      <h2 id="whatThrotTrad">What throttles can make use of "traditional" slots?</h2>
+
+      <p>It is believed that all LocoNet-compatible throttles can make use of traditional slots to
+      control locomotives and/or consists.</p>
+
+      <h2 id="whatThrotEnh">What throttles can make use of "enhanced" slots?</h2>
+
+      <p>As of this writing, the Digitrax DT402-series and DT500-series throttles can make use of
+      "enhanced" slots. It is believed that the throttle must be configured to allow it to request
+      and use "enhanced" slots - if not configured to use "enhanced" slots, or if the command
+      station does not support "enhanced" slots, the throttle will make use of "traditional"
       slots.</p>
-      <p>It is believed that those WiFi throttles managed by the Digitrax LNWI 
-      device can make use of "enhanced" slots, assuming that the command station
-      supports "enhanced" slots.</p>
 
-      <h2><a name="whyNot" id="whyNot">JMRI does not directly support "enhanced" 
-      slots.  Why not?</a></h2>
-      <p>It's hard to support "enhanced" slots for a variety of reasons.
-      Primarily, "enhanced" slots add a large number of "boundary conditions" that
-      are difficult to manage.  And different Digitrax command stations seem to 
-      behave differently when "enhanced" slots are used and certain "boundary 
-      conditions" are exercised.  Until these boundary conditions are fully 
-      understood, it has been deemed inappropriate to provide enhanced slot 
-      support in JMRI.  This means that JMRI will not, at this time, control 
-      locomotives or consists using "enhanced" slot LocoNet messaging.</p>
-      
-      <h2><a name="someSupport" id="someSupport">There really is some JMRI 
-      support for "enhanced" slots.  Why is that?</a></h2>
-      <p>A few JMRI developers have reverse-engineered the apparent behavior of some
-      aspects of "enhanced" slot functionality.  As of this writing, that has been
-      limited primarily to the "LocoNet Monitor" feature.  It has been thought that any 
-      improper behavior of the "LocoNet Monitor" functionality at "boundary 
-      conditions" would only give an incorrect display in the LocoNet Monitor 
-      window but cannot cause JMRI to misbehave.</p>
-      <p>As of this writing, other places where JMRI makes use of "enhanced" 
-      slots is limited to usage where configuration and operations are done via 
-      "enhanced" slot messaging.  Any improper behavior due to "boundary condition" 
-      cases for these implementations is thought to not affect the ability of JMRI 
-      to control trains.</p>
+      <p>It is believed that those WiFi throttles managed by the Digitrax LNWI device can make use
+      of "enhanced" slots, assuming that the command station supports "enhanced" slots.</p>
 
-      <h2><a name="whatItWillTake" id="whatItWillTake">What will it take for 
-      JMRI to fully support "enhanced" slots?</a></h2>
-      <p>There are a few things at play here.  At a minimum, JMRI will require:</p>
+      <h2 id="whyNot">JMRI does not directly support "enhanced" slots. Why not?</h2>
+
+      <p>It's hard to support "enhanced" slots for a variety of reasons. Primarily, "enhanced"
+      slots add a large number of "boundary conditions" that are difficult to manage. And different
+      Digitrax command stations seem to behave differently when "enhanced" slots are used and
+      certain "boundary conditions" are exercised. Until these boundary conditions are fully
+      understood, it has been deemed inappropriate to provide enhanced slot support in JMRI. This
+      means that JMRI will not, at this time, control locomotives or consists using "enhanced" slot
+      LocoNet messaging.</p>
+
+      <h2 id="someSupport">There really is some JMRI support for "enhanced" slots. Why is
+      that?</h2>
+
+      <p>A few JMRI developers have reverse-engineered the apparent behavior of some aspects of
+      "enhanced" slot functionality. As of this writing, that has been limited primarily to the
+      "LocoNet Monitor" feature. It has been thought that any improper behavior of the "LocoNet
+      Monitor" functionality at "boundary conditions" would only give an incorrect display in the
+      LocoNet Monitor window but cannot cause JMRI to misbehave.</p>
+
+      <p>As of this writing, other places where JMRI makes use of "enhanced" slots is limited to
+      usage where configuration and operations are done via "enhanced" slot messaging. Any improper
+      behavior due to "boundary condition" cases for these implementations is thought to not affect
+      the ability of JMRI to control trains.</p>
+
+      <h2 id="whatItWillTake">What will it take for JMRI to fully support "enhanced" slots?</h2>
+
+      <p>There are a few things at play here. At a minimum, JMRI will require:</p>
+
       <ul>
-          <li>greater understanding by JMRI developers of the behavior of command 
-          stations and throttles, for various boundary conditions, across different 
-          command station and throttle implementations;</li>
-          <li>an understanding of proper JMRI behavior when both enhanced and 
-          traditional slots are used;</li>
-          <li>an understanding of how slots "transition" between traditional and
-          enhanced;</li>
-          <li>some "refactoring" of JMRI's LocoNet code base, to allow for easy 
-          management of the "enhanced" slot type;</li>
-          <li>a mechanism to provide the user some level of control of enhanced
-          slot usage (when enhanced slots are available);</li>
-          <li>a re-work of the LocoNet "Monitor Slots" tool to handle the 
-          potentially huge number of enhanced slots.</li>
-      </ul>
+        <li>greater understanding by JMRI developers of the behavior of command stations and
+        throttles, for various boundary conditions, across different command station and throttle
+        implementations;</li>
 
+        <li>an understanding of proper JMRI behavior when both enhanced and traditional slots are
+        used;</li>
+
+        <li>an understanding of how slots "transition" between traditional and enhanced;</li>
+
+        <li>some "refactoring" of JMRI's LocoNet code base, to allow for easy management of the
+        "enhanced" slot type;</li>
+
+        <li>a mechanism to provide the user some level of control of enhanced slot usage (when
+        enhanced slots are available);</li>
+
+        <li>a re-work of the LocoNet "Monitor Slots" tool to handle the potentially huge number of
+        enhanced slots.</li>
+      </ul>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

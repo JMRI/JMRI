@@ -1,115 +1,150 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Logix</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Logix Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Logix Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding/Editing Logix</h1>
 
       <h2>Create a New Logix</h2>
-      <p>To create a new Logix, click on the <strong>Add...</strong> button.
-      The <strong>Add Logix</strong> window will be displayed.</p>
+
+      <p>To create a new Logix, click on the <strong>Add...</strong> button. The <strong>Add
+      Logix</strong> window will be displayed.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/AddLogix.png">
-      <img src="images/AddLogix.png"
-      alt="Add Logix Window" height="165" width="644">
-      </a>
+        <a href="images/AddLogix.png"><img src="images/AddLogix.png" alt="Add Logix Window" height=
+        "165" width="644"></a>
       </div>
 
-      <p>The system name is required. The system name for a Logix always must
-      begin with the two letters <strong>IX</strong>, usually followed by a
-      number selected by the user. For example, valid Logix system names
-      include: IX1, IX34, and IX100. As a convenience to the
-      user, if the entered system name does not begin with IX, the program
-      will add IX in front of what is entered. For example, to enter a system
-      name of IX32, simply enter 32 in the system name field, and the program
-      will do the rest.</p>
+      <p>The system name is required. The system name for a Logix always must begin with the two
+      letters <strong>IX</strong>, usually followed by a number selected by the user. For example,
+      valid Logix system names include: IX1, IX34, and IX100. As a convenience to the user, if the
+      entered system name does not begin with IX, the program will add IX in front of what is
+      entered. For example, to enter a system name of IX32, simply enter 32 in the system name
+      field, and the program will do the rest.</p>
 
-      <p>The user name is optional but recommended.  A user name may be any
-      useful text, provided the new user name was not previously assigned to
-      another Logix. Once a Logix is created, its system name cannot be
-      changed. Its user name may be changed in either the Logix Table or the
-      Edit Logix window. The user name is usually used to identify the
-      particular Logix, for example, "Signal 5 Control".</p>
-      
-      <p>After clicking <strong>Create new</strong>, the Logix will be
-      created and the <strong>Edit Logix</strong> window will appear.
+      <p>The user name is optional but recommended. A user name may be any useful text, provided
+      the new user name was not previously assigned to another Logix. Once a Logix is created, its
+      system name cannot be changed. Its user name may be changed in either the Logix Table or the
+      Edit Logix window. The user name is usually used to identify the particular Logix, for
+      example, "Signal 5 Control".</p>
+
+      <p>After clicking <strong>Create new</strong>, the Logix will be created and the <strong>Edit
+      Logix</strong> window will appear.</p>
 
       <h2>Edit an existing Logix</h2>
-      <p>Click on the <strong>Select</strong> menu on the right side 
-      of the desired Logix.  The resulting menu has a number of options.</p>
-      <div style="margin-left: 2em">
-      <a href="images/LogixSelectMenu.png">
-      <img src="images/LogixSelectMenu.png"
-      alt="Logix Select Menu" height="103" width="149">
-      </a>
-      </div>
-      <p>Select <strong>Edit</strong> to open the <strong>Edit Logix</strong>
-      window for the appropriate Conditional Editor based on the
-      <strong>Options</strong> menu editor selection.</p>
 
-      <p>For editor details, see the
-      <a href="../conditional/ConditionalListEditor.shtml">
-      Conditional List Editor</a> page or the
-      <a href="../conditional/ConditionalTreeEditor.shtml">
-      Conditional Tree Editor</a> page.</p>
+      <p>Click on the <strong>Select</strong> menu on the right side of the desired Logix. The
+      resulting menu has a number of options.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/LogixSelectMenu.png"><img src="images/LogixSelectMenu.png" alt=
+        "Logix Select Menu" height="103" width="149"></a>
+      </div>
+
+      <p>Select <strong>Edit</strong> to open the <strong>Edit Logix</strong> window for the
+      appropriate Conditional Editor based on the <strong>Options</strong> menu editor
+      selection.</p>
+
+      <p>For editor details, see the <a href=
+      "../conditional/ConditionalListEditor.shtml">Conditional List Editor</a> page or the <a href=
+      "../conditional/ConditionalTreeEditor.shtml">Conditional Tree Editor</a> page.</p>
 
       <h2>Browse</h2>
-      <p>Selecting the <strong>Browse</strong> item from the drop down
-      menu on the Logix Table will open a window with a list showing
-      the details for each conditional. It is an effective way to
-      review the entire contents of a Logix. Click on the close button
-      to close the window.<span class="since">since 4.7.3</span>
+
+      <p>Selecting the <strong>Browse</strong> item from the drop down menu on the Logix Table will
+      open a window with a list showing the details for each conditional. It is an effective way to
+      review the entire contents of a Logix. Click on the close button to close the
+      window.<span class="since">since 4.7.3</span></p>
+
       <div style="margin-left: 2em">
-      <a href="images/ConditionalBrowser.png">
-      <img src="images/ConditionalBrowser.png"
-      alt="Logix Browser Window" height="296" width="562">
-      </a>
+        <a href="images/ConditionalBrowser.png"><img src="images/ConditionalBrowser.png" alt=
+        "Logix Browser Window" height="296" width="562"></a>
       </div>
 
       <h2>Copy</h2>
-      <p>Select <strong>Copy</strong> to duplicate an existing Logix.
-      The <strong>Copy Logix</strong> window will be displayed.</p>
+
+      <p>Select <strong>Copy</strong> to duplicate an existing Logix. The <strong>Copy
+      Logix</strong> window will be displayed.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/CopyLogix.png">
-      <img src="images/CopyLogix.png"
-      alt="Add Logix Window" height="165" width="644">
-      </a>
+        <a href="images/CopyLogix.png"><img src="images/CopyLogix.png" alt="Add Logix Window"
+        height="165" width="644"></a>
       </div>
-      <p>Enter the system and user names and click on <strong>Copy</strong>. An Input box
-      will be displayed for each conditional in the orignal Logix.</p>
+
+      <p>Enter the system and user names and click on <strong>Copy</strong>. An Input box will be
+      displayed for each conditional in the orignal Logix.</p>
+
       <div style="margin-left: 2em">
-      <a href="images/CopyConditional.png">
-      <img src="images/CopyConditional.png"
-      alt="Add Logix Window" height="179" width="541">
-      </a>
+        <a href="images/CopyConditional.png"><img src="images/CopyConditional.png" alt=
+        "Add Logix Window" height="179" width="541"></a>
       </div>
-      <p>Change the name if desired and click on <strong>OK</strong>.  If this conditional
-      is not needed, click on <strong>Cancel</strong>.</p>
+
+      <p>Change the name if desired and click on <strong>OK</strong>. If this conditional is not
+      needed, click on <strong>Cancel</strong>.</p>
 
       <h2>Delete</h2>
-      <p>Select <strong>Delete</strong> to delete the selected Logix and all of its
-      conditionals.  A confirmation dialog will be displayed.
 
-      <p>For more information, consult the <a href=
-      "../../../../html/tools/Logix.shtml">main Logix
-      documentation</a>.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Select <strong>Delete</strong> to delete the selected Logix and all of its conditionals. A
+      confirmation dialog will be displayed.</p>
+
+      <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">main Logix
+      documentation</a>.</p>
+
+      <h2>Logix Documentation Pages Logically Listed</h2>
+
+      <p>Logix documentation is divided into eight different help pages. While these are referenced
+      via links in various places, not all are easy to find (perhaps three links down). They are
+      additionally listed here for convenience.</p>
+
+      <ul>
+        <li>
+          <a href="../../../../html/tools/Logix.shtml">Main Logix description and explanation</a>
+        </li>
+
+        <li>
+          <a href="../../../../html/tools/Logix.shtml#notes">FAQ</a>
+        </li>
+
+        <li>
+          <a href="LogixTable.shtml">Description of Logix Table contents and usage</a>
+        </li>
+
+        <li>
+          <a href="LogixAddEdit.shtml">Logix Table add and edit action description</a> [this page]
+        </li>
+
+        <li>
+          <a href="../conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals
+          state variables and actions</a>
+        </li>
+
+        <li>
+          <a href="../conditional/ConditionalListEditor.shtml">Logix conditionals list editor
+          instructions</a>
+        </li>
+
+        <li>
+          <a href="../conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor
+          instructions</a>
+        </li>
+
+        <li>
+          <a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a>
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

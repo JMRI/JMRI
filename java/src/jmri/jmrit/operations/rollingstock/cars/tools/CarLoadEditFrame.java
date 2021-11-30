@@ -355,6 +355,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
         if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
             carLoads.updateComboBox(_type, loadComboBox);
+            loadComboBox.setSelectedItem(addTextBox.getText().trim());
         }
     }
 

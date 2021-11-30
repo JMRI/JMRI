@@ -57,7 +57,7 @@
         <label xml:lang="ca">VMitjana</label>
         <tooltip xml:lang="de">Festlegung der Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
     </variable>
-    <variable CV="7" readOnly="yes" item="Decoder Version">
+    <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
         <label xml:lang="cs">Verze dekodéru: </label>

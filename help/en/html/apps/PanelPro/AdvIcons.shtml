@@ -1,177 +1,126 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Advanced Icons in PanelPro</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Advanced Icons in PanelPro</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Icons in (Control) Panel Editor</h1>
 
-        <h3>Select an Icon to use</h3>
-        <p>To select the icon, click the "Change
-        Icon..." button to pop an icon editor panel.<br>
-        <a href="../../../package/jmri/jmrit/display/images/PanelEditor.png"><img src=
-        "../../../package/jmri/jmrit/display/images/PanelEditor.png" alt=
-        "Screen shot of panel editor" width="299" height="392"
-        hspace="0" vspace="0" align="right"></a>
-        <br>
-        The current icon is shown at the top. To change it, use the
-        tree in the bottom of the window to select a new one, then
-        click on the icon at the top of the icon editor panel to
-        load the selected icon. This is a general mechanism: Any
-        icon on an icon editor window can be replaced by selecting
-        the desired new one and clicking on the icon to be
-        replaced.</p>
+      <h3>Select an Icon to use</h3>
 
-        <h3>Available Icons</h3>
-        <p>The JMRI library contains lots of user
-        contributed icons for representing CTC panels, LEDs, etc. You
-        can browse through them with the tree in the bottom of the
-        editor frame. Perhaps the best way to see what each looks
-        like is to select it in the tree, then click on the icon next
-        to the "Add icon" button. That will load it.</p>
+      <p>To select the icon, click the "Change Icon..." button to pop an icon editor panel.<br>
+      <a href="../../../package/jmri/jmrit/display/images/PanelEditor.png"><img src=
+      "../../../package/jmri/jmrit/display/images/PanelEditor.png" alt=
+      "Screen shot of panel editor" width="299" height="392" class="floatRight"></a><br>
+      The current icon is shown at the top. To change it, use the tree in the bottom of the window
+      to select a new one, then click on the icon at the top of the icon editor panel to load the
+      selected icon. This is a general mechanism: Any icon on an icon editor window can be replaced
+      by selecting the desired new one and clicking on the icon to be replaced.</p>
 
-        <p>You can also create your own icons and use them by
-        selecting from the "file" section.</p>
+      <h3>Available Icons</h3>
 
-        <p>For little bits of track, e.g. to connect turnouts, you
-        might want</p>
-        <pre>
+      <p>The JMRI library contains lots of user contributed icons for representing CTC panels,
+      LEDs, etc. You can browse through them with the tree in the bottom of the editor frame.
+      Perhaps the best way to see what each looks like is to select it in the tree, then click on
+      the icon next to the "Add icon" button. That will load it.</p>
+
+      <p>You can also create your own icons and use them by selecting from the "file" section.</p>
+
+      <p>For little bits of track, e.g. to connect turnouts, you might want</p>
+
+      <pre>
  resources -&gt; icons -&gt; small schematics -&gt;tracksegments
 </pre>then block.gif, etc.
+      <p>We do need to do a better job of organizing the available icons!</p>
 
-        <p>We do need to do a better job of organizing the available
-        icons!</p>
+      <h3>Manipulating Icons</h3>
+      To move an icon around on the panel, you "meta-drag" it. On a Mac, that's "hold the cmd key
+      and drag with the cursor"; on windows, it might be the Windows or control key. Or it might be
+      a right-drag. Sorry, I don't have a Windows machine here to figure it out.
+      <p>There's also a pop-up menu (ctrl-click on a Mac) that will provide various ways to
+      manipulate the icon. It will let you rotate the icon so that it points in whatever direction
+      you want. Text labels can have their font, size and color changed. You can also remove icons
+      from the panel with the popup menu.</p>
 
-        <h3>Manipulating Icons</h3>To move an icon around on the
-        panel, you "meta-drag" it. On a Mac, that's "hold the cmd key
-        and drag with the cursor"; on windows, it might be the
-        Windows or control key. Or it might be a right-drag. Sorry, I
-        don't have a Windows machine here to figure it out.
+      <h3 id="memoryicon">Memory Icons</h3>
+      Memory objects are meant for scripting control; the first implementation is a MemoryIcon that
+      lets you put a multi-state icon on the screen.
+      <p>MemoryIcon objects work two ways: If a series of icons is defined in the file, the memory
+      contents will be translated via this table (this was the original behavior). If there aren't
+      any icons defined, the memory contents is displayed directly, as a string if it's a String
+      and as a NamedIcon if it's a NamedIcon.</p>
 
-        <p>There's also a pop-up menu (ctrl-click on a Mac) that will
-        provide various ways to manipulate the icon. It will let you
-        rotate the icon so that it points in whatever direction you
-        want. Text labels can have their font, size and color
-        changed. You can also remove icons from the panel with the
-        popup menu.</p>
+      <p>See xml/samples/MemoryIconExample.xml for info on how to set this up.</p>
 
-      <a name="memoryicon" id="memoryicon"></a>
-      <h3>Memory Icons</h3>Memory objects are meant for scripting
-      control; the first implementation is a MemoryIcon that lets
-      you put a multi-state icon on the screen.
+      <h3 id="reportericon">Reporter Icons</h3>
+      <a href="../../tools/images/AddReportertoPanel.png"><img src=
+      "../../tools/images/AddReportertoPanel.png" height="146" width="166" class="floatRight" alt=
+      "reporter panel"></a> The first implementation of Reporter is Digitrax transponding. By
+      adding the appropriate elements to your Panel files, you can show decoder ID information on
+      your Panels. <!-- information below was copied from tools/Reporters.shtml 01/2016 -->
 
-      <p>MemoryIcon objects work two ways: If a series of icons is
-      defined in the file, the memory contents will be translated
-      via this table (this was the original behavior). If there
-      aren't any icons defined, the memory contents is displayed
-      directly, as a string if it's a String and as a NamedIcon if
-      it's a NamedIcon.</p>
-
-      <p>See xml/samples/MemoryIconExample.xml for info on how to
-      set this up. <a name="reportericon" id=
-      "reportericon"></a></p>
-
-      <h3>Reporter Icons</h3><a href=
-      "../../tools/images/AddReportertoPanel.png"><img src=
-      "../../tools/images/AddReportertoPanel.png" height="146"
-      width="166" align="right"></a> The first implementation of
-      Reporter is Digitrax transponding. By adding the appropriate
-      elements to your Panel files, you can show decoder ID
-      information on your Panels. 
-      <!-- information below was copied from tools/Reporters.shtml 01/2016 -->
-
-      <p>A Reporter's value can be displayed on a Panel via an
-      icon. To do this:</p>
+      <p>A Reporter's value can be displayed on a Panel via an icon. To do this:</p>
 
       <ul>
-        <li>On the Panel Editor window for your Panel, find the
-        "Add Reporter" button.</li>
+        <li>On the Panel Editor window for your Panel, find the "Add Reporter" button.</li>
 
-        <li>In the text box next to that button, type the user name
-        or System Name of the desired Reporter.</li>
+        <li>In the text box next to that button, type the user name or System Name of the desired
+        Reporter.</li>
 
-        <li>Click the "Add to Panel" button. The Reporter icon will
-        be placed on your Panel. If it's not visible, that might be
-        because the value is currently blank; use the Reporter
-        Table to change the value to something that will be
-        visible.</li>
+        <li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel. If
+        it's not visible, that might be because the value is currently blank; use the Reporter
+        Table to change the value to something that will be visible.</li>
 
-        <li>You can drag the icon to where you want it in the usual
-        way.</li>
+        <li>You can drag the icon to where you want it in the usual way.</li>
 
-        <li>The pop-up menu on the icon will let you change the
-        formatting.</li>
+        <li>The pop-up menu on the icon will let you change the formatting.</li>
       </ul>
 
-      <p>See xml/samples/ReporterIconExample.xml for info on how to
-      set this code up by hand.</p>
+      <p>See xml/samples/ReporterIconExample.xml for info on how to set this code up by hand.</p>
 
       <ul>
-        <li>First check that JMRI is seeing the LocoNet messages
-        OK. From the tools menu, open the "Reporter Table". Run a
-        locomotive across your transponding sections, and you
-        should see the arrival and departure status show up on one
-        of the lines in the table.</li>
+        <li>First check that JMRI is seeing the LocoNet messages OK. From the tools menu, open the
+        "Reporter Table". Run a locomotive across your transponding sections, and you should see
+        the arrival and departure status show up on one of the lines in the table.</li>
 
-        <li>Next, you need to add the "ReporterIcon" that displays
-        this directly to the panel file.
+        <li>Next, you need to add the "ReporterIcon" that displays this directly to the panel file.
+          <p>Look in the "xml/samples" directory within JMRI for a file called
+          "ReporterIconExample.xml".</p>
 
-          <p>Look in the "xml/samples" directory within JMRI for a
-          file called "ReporterIconExample.xml".</p>
-
-          <p>(It's also available <a href=
-          "https://jmri.org/xml/samples/ReporterIconExample.xml">on
-          the web</a> but many browsers will try to interpret it
-          instead of showing you the text; your browser's "View
-          Source" option might help with that)</p>
+          <p>(It's also available <a href="https://jmri.org/xml/samples/ReporterIconExample.xml">on
+          the web</a> but many browsers will try to interpret it instead of showing you the text;
+          your browser's "View Source" option might help with that)</p>
 
           <p>You'll see this line:</p>
 
           <p>&lt;reportericon reporter="LR12" x="10" y="10"
           class="jmri.jmrit.display.configurexml.ReporterIconXml"/&gt;</p>
 
-          <p>The "x" and "y" define where you want it on your
-          panel. The "LR12" is the name of the reporter object,
-          e.g. the name of the one you saw changing when you were
-          looking at the table.</p>
+          <p>The "x" and "y" define where you want it on your panel. The "LR12" is the name of the
+          reporter object, e.g. the name of the one you saw changing when you were looking at the
+          table.</p>
         </li>
 
-        <li>Open your panel file with your favorite editor (WordPad
-        if you've got nothing you like better), and insert a line
-        like that above right _after_ the line that starts with
+        <li>Open your panel file with your favorite editor (WordPad if you've got nothing you like
+        better), and insert a line like that above right _after_ the line that starts with
+          <p>&lt;paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml"</p>
 
-          <p>&lt;paneleditor
-          class="jmri.jmrit.display.configurexml.PanelEditorXml"</p>
-
-          <p>(The "paneleditor" line starts a new panel. If you
-          have more than one panel in the file, you'll have to look
-          for the panel title to see where to insert the new
-          line)</p>
+          <p>(The "paneleditor" line starts a new panel. If you have more than one panel in the
+          file, you'll have to look for the panel title to see where to insert the new line)</p>
         </li>
-      </ul>It's actually not as hard as it sounds. 
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      </ul>
+      It's actually not as hard as it sounds. <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

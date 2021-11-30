@@ -53,7 +53,7 @@ public class LightTableWindowTest {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).typeText("1");
         JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 
@@ -94,6 +94,7 @@ public class LightTableWindowTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

@@ -28,7 +28,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 public class ConvertDialogTest {
 
     @Test
-    public void testCTorConvert() {
+    public void testCTorConvert() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("ConvertDialogTest");
         OBlock ob1 = InstanceManager.getDefault(OBlockManager.class).createNewOBlock("OB1", "a");
@@ -70,6 +70,7 @@ public class ConvertDialogTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

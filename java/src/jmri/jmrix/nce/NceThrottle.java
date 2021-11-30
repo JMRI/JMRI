@@ -1,11 +1,12 @@
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
@@ -37,7 +38,9 @@ public class NceThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized (this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -62,7 +65,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup1() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -76,13 +81,9 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(3) ? 0x04 : 0)
                     | (getFunction(4) ? 0x08 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG1, (byte) data);
             tc.sendNceMessage(m, null);
-
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
+            
         } else {
             byte[] result = jmri.NmraPacket.function0Through4Packet(address
                     .getNumber(), address.isLongAddress(), getF0(), getF1(),
@@ -99,7 +100,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup2() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -112,13 +115,9 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(6) ? 0x02 : 0)
                     | (getFunction(5) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG2, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG2, (byte) data);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function5Through8Packet(address
                     .getNumber(), address.isLongAddress(), getF5(), getF6(),
@@ -135,7 +134,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup3() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -148,13 +149,9 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(10) ? 0x02 : 0)
                     | (getFunction(9) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG3, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG3, (byte) data);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2
-            // commands work properly
         } else {
             byte[] result = jmri.NmraPacket.function9Through12Packet(address
                     .getNumber(), address.isLongAddress(), getF9(), getF10(),
@@ -172,7 +169,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup4() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -189,9 +188,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(14) ? 0x02 : 0)
                     | (getFunction(13) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG4, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG4, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
@@ -212,7 +209,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup5() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -229,9 +228,7 @@ public class NceThrottle extends AbstractThrottle {
                     | (getFunction(22) ? 0x02 : 0)
                     | (getFunction(21) ? 0x01 : 0);
 
-            byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                    NceBinaryCommand.LOCO_CMD_FG5, (byte) data);
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG5, (byte) data);
             tc.sendNceMessage(m, null);
 
         } else {
@@ -253,11 +250,12 @@ public class NceThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
-        if (log.isDebugEnabled()) {
-            log.debug("setSpeedSetting= {}", speed);
+        float oldSpeed;
+        synchronized (this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
         }
+        log.debug("setSpeedSetting= {}", speed);
 
         // The NCE USB doesn't support the NMRA packet format
         if (sendA2command) {
@@ -274,26 +272,25 @@ public class NceThrottle extends AbstractThrottle {
             if (value < 0) {
 
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_ESTOP
-                                : NceBinaryCommand.LOCO_CMD_REV_ESTOP),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_ESTOP
+                                : NceMessage.LOCO_CMD_REV_ESTOP),
                         (byte) 0);
 
             } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_128SPEED
-                                : NceBinaryCommand.LOCO_CMD_REV_128SPEED),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_128SPEED
+                                : NceMessage.LOCO_CMD_REV_128SPEED),
                         (byte) value);
             } else {
                 // 28 speed step mode
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-                        (isForward ? NceBinaryCommand.LOCO_CMD_FWD_28SPEED
-                                : NceBinaryCommand.LOCO_CMD_REV_28SPEED),
+                        (isForward ? NceMessage.LOCO_CMD_FWD_28SPEED
+                                : NceMessage.LOCO_CMD_REV_28SPEED),
                         (byte) value);
             }
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
             tc.sendNceMessage(m, null);
 
-            // This code can be eliminated once we confirm that the NCE 0xA2 commands work properly
         } else {
             byte[] bl;
             int value;
@@ -348,7 +345,9 @@ public class NceThrottle extends AbstractThrottle {
             tc.sendNceMessage(m, null);
 
         }
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized (this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
@@ -356,13 +355,15 @@ public class NceThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized (this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

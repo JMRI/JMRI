@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Documentation</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="keywords" content="logixng model railroad JMRI LogixNG PanelPro">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <div id="container">
+    <!--#include virtual="/Header" -->
+
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+
+      <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>Unit testing of LogixNG</h1>
+
+        <h2>Goals for unit testing of LogixNG</h2>
+
+        <p>There are two main goals with the code that is testing LogixNG.</p>
+
+        <ul>
+          <li>The entire code must be tested completely, including every branch. This means that on
+          the coverage report, both "Missed Instructions" and "Missed Branches" should be zero for
+          every class in LogixNG. This goal is impossible to reach entirely, but whenether
+          possible, this goal must be acheived.</li>
+
+          <li>The tests must be as close as possible to "real world" testing. The testing
+          infrastructure must test the code as realistically as possible.</li>
+        </ul>
+        <!--#include virtual="/Footer" -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

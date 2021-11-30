@@ -309,19 +309,16 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
             if ((getText() == null) || (getText().length() == 0)) {
                 // handle 0-length current value; 0-length is allowed
-                if (allow0Length == true) {
+                if (allow0Length) {
                     if ((lastQueryValue == null) || (lastQueryValue.length() == 0)) {
                         setBackground(COLOR_BG_UNEDITED);
-                        return;
                     } else {
                         setBackground(COLOR_BG_EDITED);
-                        return;
                     }
-                } else {
-                    // 0-length current value; 0-length is not allowed
-                    // (validator should prevent from getting to this case)
-                    return;
                 }
+                // 0-length current value; 0-length is not allowed
+                // (validator should prevent from getting to this case)
+                return;
             }
 
             if ((lastQueryValue == null) || (lastQueryValue.length() == 0)) {
@@ -337,7 +334,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 // match between last queried value and current field value
                 thisone.setBackground(COLOR_BG_UNEDITED);
             }
-        } else {
+        //} else {
             // don't change background color of disabled field
         }
     }
@@ -361,15 +358,15 @@ public class ValidatedTextField extends javax.swing.JTextField {
         } else {
             switch (fieldType) {
                 case TEXT:
-                    if ((value.length() < 1) && (allow0Length == false)) {
+                    if ((value.length() < 1) && (!allow0Length)) {
                         return false;
                     } else {
-                        return ((allow0Length == true) && (value.length() == 0))
+                        return ((allow0Length) && (value.length() == 0))
                                 || (value.matches(validateRegExpr));
                     }
                 case INTEGRALNUMERIC:
                     try {
-                        if ((allow0Length == true) && (value.length() == 0)) {
+                        if ((allow0Length) && (value.length() == 0)) {
                             return true;
                         } else if (value.length() == 0) {
                             return false;
@@ -383,7 +380,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 case INTEGRALNUMERICPLUSSTRING:
                     Integer findLocation = -1;
                     Integer location;
-                    if ((allow0Length == true) && (value.length() == 0)) {
+                    if ((allow0Length) && (value.length() == 0)) {
                         return true;
                     } else if (value.length() == 0) {
                         return false;
@@ -410,7 +407,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
                     }
 
                     try {
-                        Integer address = Integer.parseInt(value.substring(0, findLocation));
+                        int address = Integer.parseInt(value.substring(0, findLocation));
                         return (address >= minAllowedValue
                                 && address <= maxAllowedValue
                                 && value.length() >= 2
@@ -501,6 +498,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
         @Override
+        @SuppressWarnings("deprecation")  // shouldYieldFocus()
         public boolean shouldYieldFocus(javax.swing.JComponent input) {
             if (input instanceof ValidatedTextField) {
 
@@ -532,7 +530,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
         @Override
         public boolean verify(javax.swing.JComponent input) {
             if (input instanceof ValidatedTextField) {
-                return ((ValidatedTextField) input).isValid();
+                return input.isValid();
             } else {
                 return false;
             }

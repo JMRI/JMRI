@@ -26,6 +26,6 @@ public class IpocsLightManagerTest {
     IpocsPortController portController = mock(IpocsPortController.class);
     when(memo.getPortController()).thenReturn(portController);
     IpocsLightManager manager = new IpocsLightManager(memo);
-    manager.createNewLight("AA33", "Li91");
+    assertNotNull(manager.createNewLight("AL33", "Li91"));
   }
 }

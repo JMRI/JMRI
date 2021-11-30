@@ -1,193 +1,173 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Sensors Documentation</title>
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "sensor model railroad JMRI decoderpro panelpro">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="sensor model railroad JMRI decoderpro panelpro">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <div id="container">
     <!--#include virtual="/Header.shtml" -->
+
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
-      <div id="mainContent">
 
-      <h1>JMRI: Sensors Documentation</h1>
+      <div id="mainContent">
+        <h1>JMRI: Sensors Documentation</h1>
 
         <h2>What are Sensors?</h2>
 
-        <p>A Sensor is JMRI's way of representing an input from the
-        layout.</p>
+        <p>A Sensor is JMRI's way of representing an input from the layout.</p>
 
-        <p>JMRI uses a Sensor to represent the status of a block occupancy detector, or a pushbutton on the fascia,
-        or just about anything else you can attach to an input on your DCC or C/MRI system. Sensors are created and
-        managed in the <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table.</a></p>
+        <p>JMRI uses a Sensor to represent the status of a block occupancy detector, or a
+        pushbutton on the fascia, or just about anything else you can attach to an input on your
+        DCC or C/MRI system. Sensors are created and managed in the <a href=
+        "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table.</a></p>
 
         <h3>Controlling a Sensor</h3>
 
-        <p>Generally, you don't control the state of a Sensor
-        object; JMRI, working with the hardware on your layout,
-        does.</p>
+        <p>Generally, you don't control the state of a Sensor object; JMRI, working with the
+        hardware on your layout, does.</p>
 
-        <p>But there are some occasions where you might like to
-        locally change the state of a Sensor: To debug some logic
-        that uses the Sensor as an input, etc. It can be very
-        convenient to temporarily change how a Sensor is set
-        without having to run out to the layout and push a button
-        or put a locomotive in a block.</p>
+        <p>But there are some occasions where you might like to locally change the state of a
+        Sensor: To debug some logic that uses the Sensor as an input, etc. It can be very
+        convenient to temporarily change how a Sensor is set without having to run out to the
+        layout and push a button or put a locomotive in a block.</p>
 
-        <p>Therefore, JMRI lets you change a Sensor via the Sensor
-        Table (see below), or by clicking on a sensor icon on a
-        panel (See the <a href=
-        "../apps/PanelPro/index.shtml">PanelPro pages</a> for
-        more on Panels).</p>
+        <p>Therefore, JMRI lets you change a Sensor via the Sensor Table (see below), or by
+        clicking on a sensor icon on a panel (See the <a href=
+        "../apps/PanelPro/index.shtml">PanelPro pages</a> for more on Panels).</p>
 
-        <p>The change takes effect immediately, unless <a href="#Debounce"> a debounce timer</a> is configured,
-        but only lasts until the next time you change it in the program, or the next time the input hardware on
-        the layout changes the value.</p>
+        <p>The change takes effect immediately, unless <a href="#Debounce">a debounce timer</a> is
+        configured, but only lasts until the next time you change it in the program, or the next
+        time the input hardware on the layout changes the value.</p>
 
         <h2>The Sensor Table</h2>
-        
-        Sensors can be viewed and configured using the <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">
-        Sensor Table</a>. The following columns are displayed by default (additional columns may be displayed by 
-        right-clicking in the column header and checking by their names, or checking the boxes at the bottom of the
+        Sensors can be viewed and configured using the <a href=
+        "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>. The following
+        columns are displayed by default (additional columns may be displayed by right-clicking in
+        the column header and checking by their names, or checking the boxes at the bottom of the
         window):
-
         <ul>
           <li>System Name</li>
 
           <li>User Name (optional)</li>
 
-          <li>State (either Active, Inactive, Inconsistent or - at
-          first - Unknown</li>
+          <li>State (either Active, Inactive, Inconsistent or - at first - Unknown</li>
 
           <li>Comment (optional, double click to edit)</li>
 
           <li>Inverted (checkbox)</li>
         </ul>
-       
-        <p>The Sensor State column can be displayed either as text or as icons.  This can be set as a global preferences 
-        via a display setting in the main <strong>Preferences</strong> menu under <strong>Display.</strong> 
+
+        <p>The Sensor State column can be displayed either as text or as icons. This can be set as
+        a global preferences via a display setting in the main <strong>Preferences</strong> menu
+        under <strong>Display.</strong></p>
 
         <h3>Saving Sensors to disk</h3>
 
-        <p>Sensors are kept in your <i>layout configuration</i>, along with Turnouts, Lights, Signal Heads, control panel
-        setup etc. To store this information on disk, allowing you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> the next time you run JMRI, use one of the <strong>Store </strong> options in the <strong>File</strong> menu (both options will save sensors)
-        or select <strong>Store Panel...</strong> in the <strong>Panel</strong> menu.  [See <a href="../apps/StoringYourWork.shtml">here</a> for more information on storing your work between JMRI sessions.]
-        </p>
+        <p>Sensors are kept in your <em>layout configuration</em>, along with Turnouts, Lights,
+        Signal Heads, control panel setup etc. To store this information on disk, allowing you to
+        <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> the next time
+        you run JMRI, see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your
+        Work</a>.</p>
 
-        <a name="add" id="add"></a>
-        <h3>Adding a New Sensor</h3>
+        <h3 id="add">Adding a New Sensor</h3>
 
         <p>To create a new Sensor, follow this procedure:</p>
 
         <ol>
-          <li>
-            Click <strong>Tools&rArr;Tables&rArr;Sensors</strong> to display the <a href=
-            "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane. Next, click the 
-            <a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><strong>Add...</strong></a>
-            button at the bottom of the pane to bring up the "Add/Edit Sensor" window.
+          <li>Click <strong>Tools ⇒ Tables ⇒ Sensors</strong> to display the <a href=
+          "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane. Next, click
+          the <a href=
+          "../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><strong>Add...</strong></a>
+          button at the bottom of the pane to bring up the "Add/Edit Sensor" window.
           </li>
 
-          <li>
-            From the <strong>System</strong> drop down list select the
-            system to which the Sensor is connected. In the
-            <strong>Hardware Address</strong> field enter the <a href=
-            "../doc/Technical/Names.shtml#systeminfo">hardware
-            address of the input connection</a> being
-            referenced.<br>
-            The format of the Hardware Address can often be made in
-            the format of "board:channel" or "Cab Address:Pin"; you
-            will need to confirm the specifics of each system's
-            <a href=
-            "../doc/Technical/Names.shtml#systeminfo">Naming
-            Rules</a>.
+          <li>From the <strong>System</strong> drop down list select the system to which the Sensor
+          is connected. In the <strong>Hardware Address</strong> field enter the <a href=
+          "../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a>
+          being referenced.<br>
+            The format of the Hardware Address can often be made in the format of "board:channel"
+            or "Cab Address:Pin"; you will need to confirm the specifics of each system's <a href=
+            "../doc/Technical/Names.shtml#systeminfo">Naming Rules</a>.
           </li>
 
-          <li>
-            Optionally, enter a User Name for the Sensor. Any string not used by other Sensors will be accepted, but it is
-            useful to enter a name that describes the intended use or location of the Sensor.
-          </li>
+          <li>Optionally, enter a User Name for the Sensor. Any string not used by other Sensors
+          will be accepted, but it is useful to enter a name that describes the intended use or
+          location of the Sensor.</li>
 
-          <li>
-            You can add a number of Sensors at once by clicking on the <strong>Add a Range</strong> checkbox and 
-            then entering the <strong>Number to Add.</strong> JMRI will increment the hardware number for each additional
-            sensor.  If a hardware address already exists in the Sensors range that is being added, then JMRI will skip
-            that address. If you have entered a User Name, then a number will be appended for each additional sensor to
-            ensure that the User Name is unique.
-          </li>
+          <li>You can add a number of Sensors at once by clicking on the <strong>Add a
+          Range</strong> checkbox and then entering the <strong>Number to Add.</strong> JMRI will
+          increment the hardware number for each additional sensor. If a hardware address already
+          exists in the Sensors range that is being added, then JMRI will skip that address. If you
+          have entered a User Name, then a number will be appended for each additional sensor to
+          ensure that the User Name is unique.</li>
 
-          <li>
-            Click the <strong>OK</strong> button at the bottom of the
-            pane. If everything is fine, a message stating "New
-            Sensor added..." will be displayed in the notes area.
-            If there is trouble with anything, an error or warning
-            message will be displayed in the notes area; you should
-            then correct the error and click <strong>OK</strong> again.
-          </li>
+          <li>Click the <strong>OK</strong> button at the bottom of the pane. If everything is
+          fine, a message stating "New Sensor added..." will be displayed in the notes area. If
+          there is trouble with anything, an error or warning message will be displayed in the
+          notes area; you should then correct the error and click <strong>OK</strong> again.</li>
 
-          <li>
-            You will then see the current status of the sensor (or sensors) in the main Sensor Table panel.
-          </li>
+          <li>You will then see the current status of the sensor (or sensors) in the main Sensor
+          Table panel.</li>
         </ol>
-        
-        <p>For additional information about working with the Sensor Table,
-        <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">click here.</a>
+
+        <p>For additional information about working with the Sensor Table, <a href=
+        "../../package/jmri/jmrit/beantable/SensorTable.shtml">click here.</a></p>
 
         <h3>Sensor Table Controls</h3>
 
-        <p>Below the table are check boxes to display additional columns with sensor control information.</p>
+        <p>Below the table are check boxes to display additional columns with sensor control
+        information.</p>
 
-        <p>The <strong>Defaults</strong> pulldown menu on the window menu bar allows you to set two system-wide
-        settings:</p>
+        <p>The <strong>Defaults</strong> pulldown menu on the window menu bar allows you to set two
+        system-wide settings:</p>
 
         <ul>
-          <li><a href="#Debounce">Global Debounce Delay</a>: to set debounce time on a system-wide basis (unless overridden). See also below.</li>
+          <li>
+            <a href="#Debounce">Global Debounce Delay</a>: to set debounce time on a system-wide
+            basis (unless overridden). See also below.
+          </li>
 
-          <li>Initial Sensor State (for Internal Sensors only): lets you choose what state Internal Sensors (system name beginning with
-       "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI, 
-       although you can use a <a href="scripting/index.shtml">script</a> to set them.</li>
+          <li>Initial Sensor State (for Internal Sensors only): lets you choose what state Internal
+          Sensors (system name beginning with "IS") will display after JMRI startup. [Note that the
+          initial state of other sensors cannot be set directly by JMRI, although you can use a
+          <a href="scripting/index.shtml">script</a> to set them.
+          </li>
         </ul>
-        
-        <h2><a name="Debounce" id="Debounce"></a>Sensor Debounce Delay</h2>
 
-        <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
-        triggering other events in the system.<br>
-        Such false triggers could be due to a dirty piece of track
-        or electrical interference.</p>
+        <h2 id="Debounce">Sensor Debounce Delay</h2>
 
-        <p>You can assign a delay in milliseconds before any sensor change is registered with the rest
-        of the system. If after that period the state has not changed compared to the original state, the Sensor state 
-        will be passed onto the rest of the system.<br>
-        However if the Sensor's state is different after the delay
-        has passed, then the system will restart the process,
-        this time after the timer has finished it will check to see
-        if the sensor state is in the same state as it was before
-        it restarted the process. If not the process is re-started
-        again until the state is the same before and after the
-        delay has passed.</p>
+        <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the
+        system and triggering other events in the system.<br>
+        Such false triggers could be due to a dirty piece of track or electrical interference.</p>
+
+        <p>You can assign a delay in milliseconds before any sensor change is registered with the
+        rest of the system. If after that period the state has not changed compared to the original
+        state, the Sensor state will be passed onto the rest of the system.<br>
+        However if the Sensor's state is different after the delay has passed, then the system will
+        restart the process, this time after the timer has finished it will check to see if the
+        sensor state is in the same state as it was before it restarted the process. If not the
+        process is re-started again until the state is the same before and after the delay has
+        passed.</p>
 
         <h2>Sensor Groups</h2>
-        
-        <p>A Sensor Group is a group of sensors of which at most one can be active at a time.  When one member of the group
-        becomes active, all others are set to inactive.</p>
-        
-        <p>Sensor Groups are configured via the <a href="../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">
-        Sensor Group Tool</a>.</p>
-            
+
+        <p>A Sensor Group is a group of sensors of which at most one can be active at a time. When
+        one member of the group becomes active, all others are set to inactive.</p>
+
+        <p>Sensor Groups are configured via the <a href=
+        "../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor Group Tool</a>.</p>
         <!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

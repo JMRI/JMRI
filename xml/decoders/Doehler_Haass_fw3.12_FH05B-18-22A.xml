@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <!--  Removed Firmware pane (outdated since fw 3.06 and
+        introduction of CVs260-265: fw info now on "DH Info" page)
+        -->
+  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+  <!--  Creation (new firmware 3.12.050).
+        Based on Doehler_Haass_fw3.10-11_FH05B-18-22A.xml
+        -->
+  <decoder>
+    <family name="Function Decoders (2020)" mfg="Doehler und Haass">
+      <model model="FH05B (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 3|SUSI ZCLK</label>
+          <label xml:lang="ca">AUX 3| SUSI ZCLK</label>
+        </output>
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 4|SUSI ZDAT</label>
+          <label xml:lang="ca">AUX 4\SUSI ZDAT</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="13.7" width="7.8" height="1.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="FH18A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="20mA">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="20mA">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 5|SUSI ZCLK</label>
+          <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
+        </output>
+        <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 6|SUSI ZDAT</label>
+          <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
+        </output>
+        <output name="9" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="10" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de Maniobres</label>
+        </output>
+        <size length="10.7" width="9.7" height="3.2" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="FH22A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1A">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1A">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 5|SUSI ZCLK</label>
+          <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
+        </output>
+        <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 6|SUSI ZDAT</label>
+          <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
+        </output>
+        <output name="9" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="10" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa Maniobres</label>
+        </output>
+        <size length="16.1" width="15.8" height="3.3" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common D&H variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1 - Standard variables with defaults for most decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+      <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/> -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
+<!-- relevant für FH ??? Start-->
+     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
+      <!-- New CV65 from Fw 3.08 and above -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.08.xml"/>
+<!-- relevant für FH ??? Ende-->
+       <!-- SECTION 3    - Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+      <!-- SECTION 4    - Basic Railcom feedback  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+      <!-- SECTION 5    - Extra Railcom feedback options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
+      <!-- SECTION 6    - Extra general options as of fw3.03 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
+<!-- relevant für FH ??? Start-->
+      <!--              - Extra general options as of fw3.10 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+<!-- relevant für FH ??? Ende-->
+      <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
+      <!-- SECTION 8    - Motorola format as of fw3.04 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola_fw3.06.xml"/>
+      <!-- SECTION 9    - Extra SUSI options as of fw3.05 -->
+      <!-- RK i:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.05.xml"/-->
+      <!-- SECTION 10    - New Manufacturer ID and Version as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv260-265_fw3.06.xml"/>
+      <!-- SECTION 11    - New effects as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06.xml"/>
+<!-- relevant für FH ??? Start-->
+      <!--               - New effects as of fw3.10 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv156-157_fw3.10.xml"/>
+<!-- relevant für FH ??? Ende-->
+      <!-- SECTION 12    - disable effects as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv125-133_fw3.06.xml"/>
+      <!-- SECTION 13    - shunt options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv138-143.xml"/>
+      <!-- SECTION 14    - acceleration options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv124_fw3.06.xml"/>
+      <!-- SECTION 15    - initialmapping options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv153_fw3.06.xml"/>
+      <!-- SECTION 16    - deceleration options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv154-155_fw3.06.xml"/>
+      <!-- SECTION 17    - advanced function options as of fw3.06 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_adv_function_fw3.06.xml"/-->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
+    </variables>
+    <resets>
+     <factReset label="Reset All CVs" CV="8" default="8">
+      <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+      <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
+      <label xml:lang="ca">Reset a valors de fàbrica</label>
+     </factReset>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_fw3.06.xml"/>
+  <!-- xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/ -->
+<!-- relevant für FH ??? Start-->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
+<!-- relevant für FH ??? Ende-->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
+  <!-- Pane(s) valid for some decoders only  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
+</decoder-config>

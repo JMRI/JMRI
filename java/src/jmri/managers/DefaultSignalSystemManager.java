@@ -7,6 +7,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import jmri.NamedBean;
 import jmri.SignalSystem;
 import jmri.SignalSystemManager;
@@ -14,6 +18,7 @@ import jmri.implementation.DefaultSignalSystem;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
+
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -56,35 +61,30 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return 'F';
     }
 
+    /** 
+     * {@inheritDoc} 
+     * @param name to search, by UserName then SystemName.
+     */
+    @CheckForNull
     @Override
     public SignalSystem getSystem(String name) {
         SignalSystem t = getByUserName(name);
-        if (t != null) {
-            return t;
-        }
-
-        return getBySystemName(name);
+        return ( t!=null ? t : getBySystemName(name));
     }
 
-    @Override
-    public SignalSystem getBySystemName(String key) {
-        return _tsys.get(key);
-    }
-
-    @Override
-    public SignalSystem getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    void load() {
+    final void load() {
         List<String> list = getListOfNames();
         for (int i = 0; i < list.size(); i++) {
-            SignalSystem s = makeBean(list.get(i));
-            register(s);
+            try {
+                SignalSystem s = makeBean(list.get(i));
+                register(s);
+            }
+            catch (IllegalArgumentException ex){} // error already logged
         }
     }
 
-    List<String> getListOfNames() {
+    @Nonnull
+    protected List<String> getListOfNames() {
         List<String> retval = new ArrayList<>();
         // first locate the signal system directory
         // and get names of systems
@@ -145,7 +145,8 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return retval;
     }
 
-    SignalSystem makeBean(String name) {
+    @Nonnull
+    protected SignalSystem makeBean(String name) throws IllegalArgumentException {
 
         //First check to see if the bean is in the default system directory
         URL path = FileUtil.findURL("xml/signals/" + name + "/aspects.xml", FileUtil.Location.INSTALLED);
@@ -176,8 +177,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
             }
         }
-
-        return null;
+        throw new IllegalArgumentException("Unable to parse aspect file "+path);
     }
 
     void loadBean(DefaultSignalSystem s, Element root) {
@@ -224,7 +224,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                     // constructed from Strings, similar to the value code below.
                     if (! (
                         e.getChild("key").getAttributeValue("class") == null
-                        || e.getChild("key").getAttributeValue("class").equals("")
+                        || e.getChild("key").getAttributeValue("class").isEmpty()
                         || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
                         )) {
                         

@@ -1,9 +1,11 @@
 <!-- SidebarAppLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/apps/PanelPro pages -->
 
-<dt><h3>PanelPro&trade;</h3></dt>
+<dt class="dtheader">PanelPro&trade;</dt>
 <dd>
 <ul>
+    <li><a href="GettingStarted.shtml">Getting Started</a></li>
+    <li><a href="../LoadStoreWork.shtml">Loading and Storing</a></li>
     <li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a></li>

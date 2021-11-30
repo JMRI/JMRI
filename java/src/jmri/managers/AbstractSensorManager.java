@@ -80,7 +80,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return _tsys.get(key);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Create a New Sensor.
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
@@ -90,13 +93,17 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Sensor s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+        if (userName != null) {
+            s = getByUserName(userName);
+            if (s != null) {
+                if (getBySystemName(systemName) != s) {
+                    log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+                }
+                return s;
             }
-            return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        s = getBySystemName(systemName);
+        if (s != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
@@ -129,15 +136,21 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Internal method to invoke the factory and create a new Sensor based on the system
-     * name and optional user name, after all the logic for returning an existing Sensor
+     * Internal method to invoke the factory and create a new Sensor.
+     * 
+     * Called after all the logic for returning an existing Sensor
      * has been invoked.
-     *
+     * An existing SystemName is not found, existing UserName not found.
+     * 
+     * Implementing classes should base Sensor on the system name, then add user name.
+     * 
      * @param systemName the system name to use for the new Sensor
      * @param userName   the optional user name to use for the new Sensor
-     * @return the new Sensor or null if unsuccessful
+     * @return the new Sensor
+     * @throws IllegalArgumentException if unsuccessful with reason for fail.
      */
-    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
+    @Nonnull
+    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * {@inheritDoc}

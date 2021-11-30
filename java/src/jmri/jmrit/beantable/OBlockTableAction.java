@@ -321,7 +321,10 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             ActionListener okListener = this::createObPressed;
             ActionListener cancelListener = this::cancelObPressed;
 
-            addOBlockFrame.add(new AddNewBeanPanel(startAddress, userName, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBar));
+            AddNewBeanPanel anbp = new AddNewBeanPanel(startAddress, userName, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBar);
+            addOBlockFrame.add(anbp);
+            addOBlockFrame.getRootPane().setDefaultButton(anbp.ok);
+            addOBlockFrame.setEscapeKeyClosesWindow(true);
             startAddress.setToolTipText(Bundle.getMessage("SysNameToolTip", "OB")); // override tooltip with bean specific letter
         }
         startAddress.setBackground(Color.white);

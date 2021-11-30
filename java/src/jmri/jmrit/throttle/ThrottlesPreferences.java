@@ -5,18 +5,27 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A class to store JMRI throttles preferences
+ * 
+ * @author Lionel Jeanson - 2009-2021
+ * 
+ */
 public class ThrottlesPreferences {
 
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = false;
+    private boolean _useLargeSpeedSlider = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -26,6 +35,8 @@ public class ThrottlesPreferences {
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
+    private String _defaultThrottleFilePath = null;
+    private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
     private Dimension _winDim = new Dimension(800, 600);
@@ -98,6 +109,16 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isSilentShare")) != null) {
             setSilentShare(a.getValue().compareTo("true") == 0);
         }
+        if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
+            setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
+        }
+        if (e.getChild("throttlesControls") != null) {
+            this._tpwkc.load(e.getChild("throttlesControls"));
+        }
+        if ((a = e.getAttribute("defaultThrottleFilePath")) != null) {
+            setDefaultThrottleFilePath(a.getValue());
+        }        
+        
         this.dirty = false;
     }
 
@@ -115,7 +136,7 @@ public class ThrottlesPreferences {
     static class ThrottlesPrefsXml extends XmlFile {
     }
 
-    private org.jdom2.Element store() {
+    public Element store() {
         org.jdom2.Element e = new org.jdom2.Element("throttlesPreferences");
         e.setAttribute("isUsingExThrottle", "" + isUsingExThrottle());
         e.setAttribute("isUsingToolBar", "" + isUsingToolBar());
@@ -131,6 +152,11 @@ public class ThrottlesPreferences {
         e.setAttribute("isIgnoringThrottlePosition", "" + isIgnoringThrottlePosition());
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
+        e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
+        e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
+        java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
+        children.add(this._tpwkc.store());
+        e.setContent(children);
         return e;
     }
 
@@ -138,7 +164,7 @@ public class ThrottlesPreferences {
         setWindowDimension(tp.getWindowDimension());
         setUseExThrottle(tp.isUsingExThrottle());
         setUsingToolBar(tp.isUsingToolBar());
-        setUsingFunctionIcon(tp._useFunctionIcon);
+        setUsingFunctionIcon(tp.isUsingFunctionIcon());
         setResizeWindow(tp.isResizingWindow());
         setSaveThrottleOnLayoutSave(tp.isSavingThrottleOnLayoutSave());
         setUseRosterImage(tp.isUsingRosterImage());
@@ -148,7 +174,10 @@ public class ThrottlesPreferences {
         setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
         setSilentSteal(tp.isSilentSteal());
         setSilentShare(tp.isSilentShare());
-
+        setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
+        setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
+        setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
+        
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
                 PropertyChangeListener l = listeners.get(i);
@@ -156,21 +185,6 @@ public class ThrottlesPreferences {
                 l.propertyChange(e);
             }
         }
-    }
-
-    public boolean compareTo(ThrottlesPreferences tp) {
-        return (getWindowDimension() != tp.getWindowDimension()
-                || isUsingExThrottle() != tp.isUsingExThrottle()
-                || isUsingToolBar() != tp.isUsingToolBar()
-                || isUsingFunctionIcon() != tp.isUsingFunctionIcon()
-                || isResizingWindow() != tp.isResizingWindow()
-                || isSavingThrottleOnLayoutSave() != tp.isSavingThrottleOnLayoutSave()
-                || isUsingRosterImage() != tp.isUsingRosterImage()
-                || isEnablingRosterSearch() != tp.isEnablingRosterSearch()
-                || isAutoLoading() != tp.isAutoLoading()
-                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt()
-                || isSilentSteal() != tp.isSilentSteal()
-                || isSilentShare() != tp.isSilentShare());
     }
 
     public void save() {
@@ -257,16 +271,6 @@ public class ThrottlesPreferences {
         this.dirty = true;
     }
 
-    /**
-     * Retrun true if throttle icons should be shown; this returns
-     * isUsingExThrottle() &quot;&quot; isUsingFunctionIcon()
-     * 
-     * @return true if throttle icons should be used.
-     */
-    public boolean isUsingIcons() {
-        return (isUsingExThrottle() && isUsingFunctionIcon());
-    }
-
     public boolean isResizingWindow() {
         return _resizeWinImg;
     }
@@ -347,7 +351,41 @@ public class ThrottlesPreferences {
         _isSilentShare = b;
         this.dirty = true;
     }
+
     
+    public void setUseLargeSpeedSlider(boolean b) {
+        _useLargeSpeedSlider = b;
+        this.dirty = true;
+    }
+    
+    public boolean isUsingLargeSpeedSlider() {
+        return _useLargeSpeedSlider;
+    }
+            
+    public void setDefaultThrottleFilePath(String p) {
+        _defaultThrottleFilePath = p;
+        this.dirty = true;
+    }
+    
+    public String getDefaultThrottleFilePath() {
+        return _defaultThrottleFilePath;
+    }
+    
+    /**
+     * @return the throttles keyboard controls preferences
+     */
+    public ThrottlesPreferencesWindowKeyboardControls getThrottlesKeyboardControls() {
+        return _tpwkc;
+    }
+    
+    /**
+     * Set the throttles keyboard controls preferences
+     * @param tpwkc the new keyboard preferences
+     */
+    public void setThrottlesKeyboardControls(ThrottlesPreferencesWindowKeyboardControls tpwkc) {
+        _tpwkc = tpwkc;
+    }
+         
     /**
      * Add an AddressListener. 
      * AddressListeners are notified when the user
@@ -357,7 +395,7 @@ public class ThrottlesPreferences {
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if (listeners == null) {
-            listeners = new ArrayList<PropertyChangeListener>(2);
+            listeners = new ArrayList<>(2);
         }
         if (!listeners.contains(l)) {
             listeners.add(l);
@@ -372,9 +410,7 @@ public class ThrottlesPreferences {
         if (listeners == null) {
             return;
         }
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);

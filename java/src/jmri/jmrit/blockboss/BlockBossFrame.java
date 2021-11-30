@@ -168,6 +168,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     private final JLabel statusBar;
     private final JTextField commentField;
     private final JButton cancel;
+    private final JButton delete;
+    private final JButton apply;
 
     // ToolTip strings
     private final String buttonSingleTooltip = Bundle.getMessage("In_direction_of_traffic");
@@ -416,12 +418,21 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
         // add OK button at bottom
+
+        delete = new JButton(Bundle.getMessage("ButtonDelete"));
+        buttons.add(delete);
+        delete.addActionListener(e -> deletePressed());
+        delete.setEnabled(false);
+
         cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         buttons.add(cancel);
         cancel.addActionListener(e -> cancelPressed());
-        JButton apply = new JButton(Bundle.getMessage("ButtonApply"));
+
+        apply = new JButton(Bundle.getMessage("ButtonApply"));
         apply.setToolTipText(Bundle.getMessage("ApplyToolTip"));
         buttons.add(apply);
+        apply.setEnabled(false);
+
         apply.addActionListener(e -> applyPressed());
         getContentPane().add(buttons);
 
@@ -836,27 +847,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     private void applyPressed() {
         SignalHead head = sh; // temp used here for SignalHead being operated on
 
-        // check signal head exists
+        // check signal head selected
         if (head == null) {
-            if (outSignalHeadComboBox.getSelectedItem() == null) {
-                setTitle(Bundle.getMessage(SIMPLE_SIGNAL_LOGIC));
-                statusBar.setText(Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getSelectedItemDisplayName()));
-                return;
-            } else {
-                head = outSignalHeadComboBox.getSelectedItem();
-                if (head == null) {
-                    // getting selected signal head failed for some reason
-                    log.error("Could not create the Simple Signal Logic for {} because SignalHead could not be found", outSignalHeadComboBox.getSelectedItemDisplayName());
-                    statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
-                    return;
-                }
-                statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalHeadComboBox.getSelectedItemDisplayName()));
-            }
+            head = outSignalHeadComboBox.getSelectedItem();
+            statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalHeadComboBox.getSelectedItemDisplayName()));
         } else {
             statusBar.setText(Bundle.getMessage("StatusSslUpdated", outSignalHeadComboBox.getSelectedItemDisplayName()));
         }
 
-        // it does
         try {
             BlockBossLogic b = BlockBossLogic.getStoppedObject(head);
             b.setApproachSensor1(approachSensor1ComboBox.getSelectedItemDisplayName());
@@ -873,9 +871,12 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 return;
             }
             cancel.setText(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Cancel
-        } catch (Exception e) {
-            log.error("An error occurred creating the Simple Signal Logic for{}", e);
+        } catch (IllegalArgumentException e) {
             statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ApplyErrorDialog"),
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -884,6 +885,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         this.setVisible(false);
         statusBar.setText("");
         super.dispose();
+    }
+
+    private void deletePressed() {
+        BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalHeadComboBox.getSelectedItemDisplayName());
+        blockBossLogicProvider.remove(b);
+        statusBar.setText(Bundle.getMessage("StatusSslDeleted", outSignalHeadComboBox.getSelectedItemDisplayName()));
+        outSignalHeadComboBox.setSelectedIndex(-1);
+        clearFields();
     }
 
     private void loadSingle(BlockBossLogic b) {
@@ -981,11 +990,47 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.start();
     }
 
+    private void clearFields() {
+        approachSensor1ComboBox.setSelectedIndex(-1);
+
+        sSensorComboBox1.setSelectedIndex(-1);
+        sSensorComboBox2.setSelectedIndex(-1);
+        sSensorComboBox3.setSelectedIndex(-1);
+        sSensorComboBox4.setSelectedIndex(-1);
+        sSensorComboBox5.setSelectedIndex(-1);
+
+        tmProtectTurnoutComboBox.setSelectedIndex(-1);
+
+        sNextSignalComboBox1.setSelectedIndex(-1);
+        sNextSignalComboBox1Alt.setSelectedIndex(-1);
+
+        fNextSignalComboBox2.setSelectedIndex(-1);
+        fNextSignalComboBox2Alt.setSelectedIndex(-1);
+
+        fNextSensorComboBox1.setSelectedIndex(-1);
+        fNextSensorComboBox1Alt.setSelectedIndex(-1);
+        fNextSensorComboBox2.setSelectedIndex(-1);
+        fNextSensorComboBox2Alt.setSelectedIndex(-1);
+
+        sLimitBox.setSelected(false);
+        sRestrictingBox.setSelected(false);
+        tdLimitBox.setSelected(false);
+        tdRestrictingBox.setSelected(false);
+        sFlashBox.setSelected(false);
+        sDistantBox.setSelected(false);
+
+        commentField.setText("");
+
+        buttonClicked();
+    }
+
     private void activate() {
         // check signal head exists
         if (sh == null && outSignalHeadComboBox.getSelectedItem() == null) {
             // head not exist, just title the window and leave
             setTitle(Bundle.getMessage(SIMPLE_SIGNAL_LOGIC));
+            apply.setEnabled(false);
+            delete.setEnabled(false);
             return;
         }
 
@@ -996,6 +1041,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         } else {
             b = blockBossLogicProvider.provide(outSignalHeadComboBox.getSelectedItem());
         }
+        apply.setEnabled(true);
+        delete.setEnabled(true);
 
         setTitle(Bundle.getMessage("SignalLogicForX", outSignalHeadComboBox.getSelectedItemDisplayName()));
 
@@ -1112,13 +1159,13 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
      *                       blank
      */
     private static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+        log.debug("SSL setupComboBox called");
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(false);
         inComboBox.setValidatingInput(inValidateMode);
         inComboBox.setSelectedItem(null);
-        log.debug("SSL setupComboBox called");
-        inComboBox.setMaximumRowCount(15); // no context sensitive calculation
         inComboBox.setAllowNull(inFirstBlank);
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
         inComboBox.setSelectedIndex(-1);
     }
 

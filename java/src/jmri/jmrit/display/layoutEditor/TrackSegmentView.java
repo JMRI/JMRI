@@ -1502,7 +1502,7 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * split track segment into two track segments with an anchor between
+     * split a track segment into two track segments with an anchor point in between.
      */
     public void splitTrackSegment() {
         // create a new anchor
@@ -1521,7 +1521,6 @@ public class TrackSegmentView extends LayoutTrackView {
                 trackSegment.isMainline(), layoutEditor);
         TrackSegmentView ntsv = new TrackSegmentView(newTrackSegment,
                 layoutEditor);
-        log.error("temporary: splitTrackSegment created track without view, didn't include isDashed() ");
         // add it to known tracks
         layoutEditor.addLayoutTrack(newTrackSegment, ntsv);
         layoutEditor.setDirty();
@@ -1535,6 +1534,7 @@ public class TrackSegmentView extends LayoutTrackView {
         this.setAngle(this.getAngle() / 2.0);
         // newTrackSegment.setBezier(this.isBezier());
         ntsv.setFlip(this.isFlip());
+        ntsv.setDashed(this.isDashed());
 
         // copy over decorations
         Map<String, String> d = new HashMap<>();

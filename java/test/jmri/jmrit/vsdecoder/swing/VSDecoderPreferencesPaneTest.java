@@ -17,7 +17,7 @@ public class VSDecoderPreferencesPaneTest {
     public void testCtor() {
         VSDecoderPreferencesPane frame = new VSDecoderPreferencesPane();
         Assert.assertNotNull("exists", frame );
-    
+
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
@@ -28,7 +28,9 @@ public class VSDecoderPreferencesPaneTest {
     }
 
     @AfterEach
-    public void tearDown() {        
+    public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

@@ -31,6 +31,9 @@ public class StartupActionModelUtilTest {
         StartupActionModelUtil t = new StartupActionModelUtil();
         Arrays.stream(t.getClasses())
                 .forEach(clazz -> assertThat(t.getActionName(clazz)).isNotBlank());
+
+        // suppress deprecation warning that's expected
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("apps.startup.StartupActionFactoryScaffold is deprecated, please remove references to it");
     }
 
     /**
@@ -57,6 +60,9 @@ public class StartupActionModelUtilTest {
         rb.keySet().stream().filter(key -> !key.isEmpty()).forEach(key -> {
             assertThat(t.getActionName(key) != null || t.getOverride(key) != null).as(key).isTrue();
         });
+
+        // suppress deprecation warning that's expected
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("apps.startup.StartupActionFactoryScaffold is deprecated, please remove references to it");
     }
 
     @BeforeEach

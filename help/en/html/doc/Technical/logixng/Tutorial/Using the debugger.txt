@@ -1,0 +1,97 @@
+Using the debugger
+
+
+All the managers (StringActionManager, DigitalExpressionManager, ...) should have the possibility to add an extra MaleSocket around the MaleSocket on registerAction, registerExpression.
+
+That way, a tool like the debugger, could add a new MaleSocket around the MaleSocket, to add extra features like step-by-step debugging.
+
+Important!! If a ConditionalNG is step-by-step debugging, no other ConditionalNG can be executed while this.
+
+Step-by-step debugging will not work for fast changes, but if the user simulates the layout, that can be handled.
+
+
+
+
+Using the step-by-step debugger:
+
+* Activate the debugger in the preferences _before_ loading the panel. If the panel is auto loaded during start, activate the debugger and restart JMRI.
+
+* If the layout has fast changes or is large or difficult to oversee, it's recommended to simulate external items. It's recommended in this case to run
+  the layout in a simulator.
+
+* It's possible to override an action or expression. It's useful if you need to debug on the real layout but for example needs to keep a track open.
+
+
+
+
+Info for JMRI developers:
+
+How does the step-by-step debugger works?
+
+Each action and expression are embedded in a MaleSocket. When the step-by-step debugger is activated in the preferences, an extra MaleSocket is added
+around the MaleSocket. This extra male socket handles the stepping for the debugger.
+
+
+
+
+Step into
+
+Step over
+getParent() -> If getParent().getParent().getParent()...getParent() == "StepOver".debugMaleSocket så kör utan att step into.
+
+
+
+MaleSocket LogixNG_Manager.encapsulateMaleSocket(Class<? extends Base> clazz, MaleSocket maleSocket);
+
+
+
+
+public interface MaleSocketFactory {
+
+    /**
+     * Encapsulate a male socket onto another male socket.
+     * @param clazz the type of the male socket to be encapsulated
+     * @param maleSocket the male socket to be encapsulated
+    public MaleSocket encapsulateMaleSocket(Class<? extends Base> clazz, MaleSocket maleSocket);
+
+}
+
+
+switch (clazz) {
+    case DigitalAction.class:
+        break;
+}
+
+
+
+
+
+One problem with the debugger is that when you step thru a ConditionalNG step by step, every other ConditionalNG is on
+hold. This can be handled by moving this conditionalng to the debug thread. By default, LogixNG uses one thread, the
+LogixNG thread. But it also have a secondary thread, the debug thread. You can select which conditionalngs that should
+be executed on the debug thread.
+
+When you open the debugger, you have the option to debug all condtionalngs or to debug only the conditionalngs on the
+debug thread. If you choose the later option, to only debug the conditionalngs on the debug thread, all the other
+conditionalngs will execute as normal. But the drawback is that if a conditionalng on the LogixNG thread is dependent
+on a conditionalng on the debug thread, you might get a different result than if both the conditionalngs are executed
+on the same thread.
+
+The reason for this is that if two conditionalngs uses the same thread, the second conditionalng will wait to be
+executed until the first conditionalng has finished execution. But if they are using different threads, they may be
+executed in parallel.
+
+
+
+
+
+Note for JMRI developers:
+
+The debugger is an example of the modularity of LogixNG. The debugger share the same editor with the ConditionalNG
+editor, the Module editor and the clipboard editor. And it manages to step thru the ConditionalNG and Module by adding
+an extra MaleSocket on top of the ordinary male socket that embed the actions and expressions. The point here is that
+it's easy to add new tools that do interesting stuff without the tool needs deep understanding of the things the tool
+works on. For example, the debugger knows nothing about the actions and expressions it debugs.
+
+
+

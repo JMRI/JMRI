@@ -1,67 +1,53 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Turnouts</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20170107">
   <meta name="keywords" content="JMRI help Turnout Add Edit">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding/Editing Turnouts</h1>
 
-      <p>When adding a Turnout, from the "System connection:"
-      drop down list select the hardware connection this
-      Turnout is attached to.</p><img src="images/AddTurnout.png">
-
-      <p>Enter a valid Hardware Address for the Turnout (look at
-      the <a href="../../../../html/doc/Technical/Names.shtml#entrysummary">Tooltip</a>
-      for accepted input options per system).
-      If desired, enter a User Name which can be anything you
-      wish to describe the Turnout.</p>
+      <p>When adding a Turnout, from the "System connection:" drop down list select the hardware
+      connection this Turnout is attached to.</p>
+      <img src="images/AddTurnout.png" alt="add turnout dialog">
+      <p>Enter a valid Hardware Address for the Turnout (look at the <a href=
+      "../../../../html/doc/Technical/Names.shtml#entrysummary">Tooltip</a> for accepted input
+      options per system). If desired, enter a User Name which can be anything you wish to describe
+      the Turnout.</p>
 
       <p>One of the newer options for the System, <a href=
-      "../../../../html/hardware/can/cbus/index.shtml">MERG</a>,
-      let's the user optionally use 2 CBUS event values for each
-      Turnout added (either discovered automatically or entered
-      manually as <code>-x;+y</code>).</p><img src=
-      "images/AddTurnoutMERG.png">
-
+      "../../../../html/hardware/can/cbus/index.shtml">MERG</a>, let's the user optionally use 2
+      CBUS event values for each Turnout added (either discovered automatically or entered manually
+      as <code>-x;+y</code>).</p>
+      <img src="images/AddTurnoutMERG.png" alt="MERG address example">
       <h2>Creating a number of Turnouts</h2>
 
-      <p>It is also possible to create a number of Turnouts in one
-      go.<br>
-      Where supported, the "Add a sequential range" check box will be
-      enabled.</p><img src="images/AddTurnoutNumber.png">
-
-      <p>When checking the "Add a sequential range" box, this will
-      enable the "Number of items" spinner. Click the small arrows
-      up or down to set the number of Turnouts you wish to add.
+      <p>It is also possible to create a number of Turnouts in one go.<br>
+      Where supported, the "Add a sequential range" check box will be enabled.</p>
+      <img src="images/AddTurnoutNumber.png" alt="add sequential range">
+      <p>When checking the "Add a sequential range" box, this will enable the "Number of items"
+      spinner. Click the small arrows up or down to set the number of Turnouts you wish to add.
       This will create that number of sequential Turnouts.</p>
-      <p>If a User Name has been entered, a
-      number will be added to the end of the names of all but the first
-      one to keep each Turnout User Name unique.<br>
-      See <a href=
-      "../../../../html/doc/Technical/Names.shtml">Names</a> under
-        general help for more information.</p>
 
-      <p>Back to the <a href="TurnoutTable.shtml">Turnout Table
-      help page</a>.</p>
+      <p>If a User Name has been entered, a number will be added to the end of the names of all but
+      the first one to keep each Turnout User Name unique.<br>
+      See <a href="../../../../html/doc/Technical/Names.shtml">Names</a> under general help for
+      more information.</p>
 
+      <p>Back to the <a href="TurnoutTable.shtml">Turnout Table help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

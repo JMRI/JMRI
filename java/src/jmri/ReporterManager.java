@@ -54,7 +54,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      *                                  can't be parsed.
      */
     @Nonnull
-    public Reporter provideReporter(@Nonnull String name);
+    public Reporter provideReporter(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -104,7 +104,9 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     public Reporter getByDisplayName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return an instance with the specified system and user names.
+     * <p>
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Reporter object representing a given physical Reporter and
      * therefore only one with a specific system or user name.
@@ -133,7 +135,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      *                                  be parsed.
      */
     @Nonnull
-    public Reporter newReporter(@Nonnull String systemName, String userName);
+    public Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * Determine if it is possible to add a range of reporters in numerical
@@ -167,7 +169,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param prefix system prefix, just system name, not type letter.
      * @param ignoreInitialExisting false to return the starting address if it 
      *                          does not exist, else true to force an increment.
-     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
      * @throws JmriException    if unable to get the current / next address, 
      *                          or more than 10 next addresses in use.
      */

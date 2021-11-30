@@ -42,17 +42,9 @@ public class SerialAddressTwoSystemTest {
         c10 = new SerialNode(10, SerialNode.SMINI, stcs1);
         c18 = new SerialNode(18, SerialNode.SMINI, stcs1);
         // create and register the 1st manager objects
-        jmri.TurnoutManager l1 = new SerialTurnoutManager(memo1) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.TurnoutManager l1 = new SerialTurnoutManager(memo1);
         jmri.InstanceManager.setTurnoutManager(l1);
-        jmri.LightManager lgt1 = new SerialLightManager(memo1) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.LightManager lgt1 = new SerialLightManager(memo1);
         jmri.InstanceManager.setLightManager(lgt1);
         jmri.SensorManager s1 = new SerialSensorManager(memo1);
         jmri.InstanceManager.setSensorManager(s1);
@@ -71,11 +63,7 @@ public class SerialAddressTwoSystemTest {
             }
         };
         jmri.InstanceManager.setTurnoutManager(l2);
-        jmri.LightManager lgt2 = new SerialLightManager(memo2) {
-            @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
-        };
+        jmri.LightManager lgt2 = new SerialLightManager(memo2);
         jmri.InstanceManager.setLightManager(lgt2);
         jmri.SensorManager s2 = new SerialSensorManager(memo2);
         jmri.InstanceManager.setSensorManager(s2);

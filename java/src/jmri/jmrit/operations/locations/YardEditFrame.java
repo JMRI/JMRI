@@ -15,7 +15,7 @@ import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 public class YardEditFrame extends TrackEditFrame {
 
     public YardEditFrame() {
-        super();
+        super(Bundle.getMessage("AddYard"));
     }
 
     @Override

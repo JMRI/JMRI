@@ -59,9 +59,11 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        XpaMessage m = new XpaMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        XpaMessage m = new XpaMessage(input.length());
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
         memo.getXpaTrafficController().sendXpaMessage(m, this);

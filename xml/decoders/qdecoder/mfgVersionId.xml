@@ -33,12 +33,13 @@
     </revision>
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
-  <variable CV="7" readOnly="yes" item="Decoder Version" default="8">
+  <variable CV="7" item="Decoder Version" readOnly="yes" default="8">
     <decVal/>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label>Manufacturer Version No: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
   </variable>
   <variable CV="8" readOnly="yes" item="Manufacturer" default="55">
     <decVal/>
@@ -46,5 +47,6 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
+        <label xml:lang="cs">ID výrobce: </label>
   </variable>
 </variables>

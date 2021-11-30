@@ -1,102 +1,83 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Main Window</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Debug Menu</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
-      <div align="right">
-        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a>
+        </p>
       </div>
+
       <hr>
 
       <h4>Manage VSD Locations</h4>
 
-      <p><span id="product-desc">The <strong>Manage VSD
-      Locations</strong> window provides a consolidated location to
-      manage and set the apparent physical location of sounds for
-      trains using Virtual Sound Decoder</span>.</p>The
-      <strong>Manage VSD Locations</strong> window has four tabs:
-      Reporters, Blocks, Operations Locations, and Listeners. Each
-      tab shows a list of objects, each with a check-box to
-      enable/disable use (for VSD purposes, not for other JMRI
-      purposes), and entry cells for X, Y, and Z location
-      coordinates.
+      <p><span id="product-desc">The <strong>Manage VSD Locations</strong> window provides a
+      consolidated location to manage and set the apparent physical location of sounds for trains
+      using Virtual Sound Decoder</span>.</p>
+      The <strong>Manage VSD Locations</strong> window has four tabs: Reporters, Blocks, Operations
+      Locations, and Listeners. Each tab shows a list of objects, each with a check-box to
+      enable/disable use (for VSD purposes, not for other JMRI purposes), and entry cells for X, Y,
+      and Z location coordinates.
+      <h5>Reporters</h5>
+      <img src="images/VSD_Locations01.png" alt="Manage Reporter Locations" width="550" height=
+      "356">
+      <p>The Reporters tab shows a list of all currently defined Reporters. This is intended for
+      use with Digitrax Transponding or other similar locomotive tracking hardware systems.</p>
 
-      <h5>Reporters</h5><img src="images/VSD_Locations01.png" alt=
-      "Manage Reporter Locations" width="550" height="356">
+      <h5>Blocks</h5>
+      <img src="images/VSD_Locations02.png" alt="Manage Block Locations" width="550" height="232">
+      <p>The Blocks tab shows a list of all currently defined Blocks. This is intended for use with
+      Digitrax Transponding or other similar locomotive tracking hardware systems. Using occupancy
+      sensors it's possible to track exactly one loco.</p>
 
-      <p>The Reporters tab shows a list of all currently defined
-      Reporters. This is intended for use with Digitrax
-      Transponding or other similar locomotive tracking hardware
-      systems.</p>
+      <h5>Operations Locations</h5>
+      <img src="images/VSD_Locations03.png" alt="Manage Operations Locations" width="550" height=
+      "232">
+      <p>The Operations Locations tab shows a list of all Locations defined within the JMRI
+      Operations system.</p>
 
+      <h5>Listeners</h5>
+      <img src="images/VSD_Locations04.png" alt="Manage Listener Location" width="550" height=
+      "232">
+      <p>The Listeners tab shows the location of the Listener in the VSD sound system. The Listener
+      position has two additional measurements: the Bearing (angle clockwise from the Y axis) and
+      Azimuth (angle up or down from the X/Y plane) which together describe which way the Listener
+      is facing.</p>
 
-      <h5>Blocks</h5><img src="images/VSD_Locations02.png" alt=
-      "Manage Block Locations" width="550" height="232">
+      <h4 id="VSDLocations">Location Following</h4>
 
-      <p>The Blocks tab shows a list of all currently defined
-      Blocks. This is intended for use with Digitrax
-      Transponding or other similar locomotive tracking hardware
-      systems. Using occupancy sensors it's possible to track
-      exactly one loco.</p>
-
-
-      <h5>Operations Locations</h5><img src=
-      "images/VSD_Locations03.png" alt=
-      "Manage Operations Locations" width="550" height="232">
-
-      <p>The Operations Locations tab shows a list of all Locations
-      defined within the JMRI Operations system.</p>
-
-      <h5>Listeners</h5><img src="images/VSD_Locations04.png" alt=
-      "Manage Listener Location" width="550" height="232">
-
-      <p>The Listeners tab shows the location of the Listener in
-      the VSD sound system. The Listener position has two
-      additional measurements: the Bearing (angle clockwise from
-      the Y axis) and Azimuth (angle up or down from the X/Y plane)
-      which together describe which way the Listener is
-      facing.</p>
-
-      <a name="VSDLocations" id="VSDLocations"></a>
-
-      <h4>Location Following</h4>
-
-      <p>With input from locomotive tracking hardware, Virtual
-      Sound Decoder is able to move the apparent source of the
-      locomotive sound to follow the locomotive's position on the
+      <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
+      apparent source of the locomotive sound to follow the locomotive's position on the
       layout.</p>
 
-      <h5>Location Following Setup</h5>To enable location following
-      you will need a hardware method of tracking the locomotive's
-      position on the layout. VSD currently supports the following
-      tracking systems:
-
+      <h5>Location Following Setup</h5>
+      To enable location following you will need a hardware method of tracking the locomotive's
+      position on the layout. VSD currently supports the following tracking systems:
       <ul>
         <li>Digitrax Transponding (tested)</li>
 
@@ -109,129 +90,103 @@
         <li>RPS (not tested)</li>
 
         <li>RailCom / DCC4PC (not tested)</li>
-      </ul>If you have one of the systems noted as "not tested",
-      and would like to help with testing and debug of this
-      feature, please contact me on the <a href=
-      "https://groups.io/g/jmriusers">
-      JMRI users Groups.io group</a>. More systems will be added 
-      in the future. To enable VSD Location Following, 
-      follow these steps:
-
+      </ul>
+      If you have one of the systems noted as "not tested", and would like to help with testing and
+      debug of this feature, please contact me on the <a href="https://groups.io/g/jmriusers">JMRI
+      users Groups.io group</a>. More systems will be added in the future. To enable VSD Location
+      Following, follow these steps:
       <ol>
-        <li>Follow the directions appropriate to your hardware
-        system for setting up
+        <li>Follow the directions appropriate to your hardware system for setting up 
         <!-- link below should point to the HELP page for Reporters -->
-        <!-- klk32003: it is the HELP page (part 2) for Reporters -->
-         <a href="../../html/tools/Reporters.shtml">Reporters</a> or
-         <a href="../../html/tools/Sensors.shtml">Sensors</a>.</li>
+           <!-- klk32003: it is the HELP page (part 2) for Reporters -->
+           <a href="../../html/tools/Reporters.shtml">Reporters</a> or <a href=
+          "../../html/tools/Sensors.shtml">Sensors</a>.
+        </li>
 
-        <li>Select Debug-&gt;Virtual Sound Decoder-&gt;Manage VSD
-        Locations</li>
+        <li>Select Debug-&gt;Virtual Sound Decoder-&gt;Manage VSD Locations</li>
 
-        <li>In the dialog, set X / Y / Z coordinates for each
-        Reporter (or other Objects) you wish to use for VSD location following.
-        Uncheck the "Use Location" box for Objects you do not
+        <li>In the dialog, set X / Y / Z coordinates for each Reporter (or other Objects) you wish
+        to use for VSD location following. Uncheck the "Use Location" box for Objects you do not
         wish to use for VSD tracking.</li>
 
         <li>Click "Save" to store the new values.</li>
 
-        <li>Save your configuration either in a config file or as
-        part of a Panel</li>
+        <li>Save your configuration either in a config file or as part of a Panel</li>
       </ol>
 
-      <p><em>Note:</em> Reporters and Blocks are not added to the Manage
-      VSD Locations "live". If you add new Reporters or Blocks, you must
-      close and re-open the Manage VSD Locations window to make the new
-      Reporters or Blocks appear.</p>
+      <p><em>Note:</em> Reporters and Blocks are not added to the Manage VSD Locations "live". If
+      you add new Reporters or Blocks, you must close and re-open the Manage VSD Locations window
+      to make the new Reporters or Blocks appear.</p>
 
       <h5>Coordinate System</h5>
 
-      <p>The VSD Locations system uses a standard "right handed"
-      <a href=
-      "http://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian
-      coordinate system</a>, where a location is defined by a
-      combination of distances along an X, Y, and Z axis. The
-      Origin, or center of the coordinates can be in any convenient
-      location, such as the center of the room, a corner of the
-      room, or a corner of the layout.</p>
+      <p>The VSD Locations system uses a standard "right handed" <a href=
+      "http://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a>,
+      where a location is defined by a combination of distances along an X, Y, and Z axis. The
+      Origin, or center of the coordinates can be in any convenient location, such as the center of
+      the room, a corner of the room, or a corner of the layout.</p>
 
-      <p>The X / Y / Z location values can be in any unit you
-      choose, including an arbitrary relative scheme, as long as
-      you are consistent. By default, positive X is to the space's
-      right, positive Y is "forward", and positive Z is "up".
-      Negative values are left, behind, and down, respectively.
-      Alternately you may prefer to think of +X as "East", +Y as
-      "North", and +Z as "up".</p>
+      <p>The X / Y / Z location values can be in any unit you choose, including an arbitrary
+      relative scheme, as long as you are consistent. By default, positive X is to the space's
+      right, positive Y is "forward", and positive Z is "up". Negative values are left, behind, and
+      down, respectively. Alternately you may prefer to think of +X as "East", +Y as "North", and
+      +Z as "up".</p>
 
-      <p><em>Note:</em> The coordinate system can be rotated in any
-      way that makes sense to the user. If it suits the railroad's
-      arrangement better, +Y could be "East", +X "South", and +Z
-      "Up". It is not recommended that the Z axis direction be
-      changed however, unless your operators are accustomed to
-      hanging from the ceiling.</p>
+      <p><em>Note:</em> The coordinate system can be rotated in any way that makes sense to the
+      user. If it suits the railroad's arrangement better, +Y could be "East", +X "South", and +Z
+      "Up". It is not recommended that the Z axis direction be changed however, unless your
+      operators are accustomed to hanging from the ceiling.</p>
 
-      <p>A convenient system for a typical rectangular room-sized
-      layout would be to place the origin at the near corner to the
-      guest's left as the guest stands in the entry door, or the
-      "bottom left" corner of the layout's track plan map, and with
-      Z=0 at the layout's lowest nominal track elevation for the
-      "live" part of the layout. This system ensures that all
+      <p>A convenient system for a typical rectangular room-sized layout would be to place the
+      origin at the near corner to the guest's left as the guest stands in the entry door, or the
+      "bottom left" corner of the layout's track plan map, and with Z=0 at the layout's lowest
+      nominal track elevation for the "live" part of the layout. This system ensures that all
       locations used will have positive X / Y / Z values.</p>
 
       <h5>Listener Location</h5>
 
-      <p>If you do not specifically set the Listener location and
-      orientation, the Listener by default will be at (0, 0, 0) and
-      facing straight ahead along the +Y axis (bearing 0.0 degrees
-      / azimuth 0.0 degrees). To set a different Listener location
-      and/or orientation, go to the Listeners tab and set the X / Y
-      / Z coordinates of the Listener's location. The coordinates
-      and units must be the same as those used for the
-      Reporters or other Objects.</p>
+      <p>If you do not specifically set the Listener location and orientation, the Listener by
+      default will be at (0, 0, 0) and facing straight ahead along the +Y axis (bearing 0.0 degrees
+      / azimuth 0.0 degrees). To set a different Listener location and/or orientation, go to the
+      Listeners tab and set the X / Y / Z coordinates of the Listener's location. The coordinates
+      and units must be the same as those used for the Reporters or other Objects.</p>
 
-      <p>The Bearing and Azimuth values set the orientation of the
-      Listener, or the direction the Listener is facing. Bearing is
-      measured clockwise from the +Y axis. Azimuth is measured up
-      (or down if negative) from the X/Y plane. Both measurements
-      are in units of degrees of angle. For example, a Listener
-      standing at the Origin (0, 0, 0) and facing "West" and
-      halfway "up" would have a Bearing of 270 and an Azimuth of
-      +45.</p>
+      <p>The Bearing and Azimuth values set the orientation of the Listener, or the direction the
+      Listener is facing. Bearing is measured clockwise from the +Y axis. Azimuth is measured up
+      (or down if negative) from the X/Y plane. Both measurements are in units of degrees of angle.
+      For example, a Listener standing at the Origin (0, 0, 0) and facing "West" and halfway "up"
+      would have a Bearing of 270 and an Azimuth of +45.</p>
 
       <h5>Using Locations</h5>
 
-      <p>When you have followed the above setup steps, launch the
-      VSDecoder Manager window, create a VSDecoder and run the
-      locomotive. As your locomotive moves around the layout, the
-      sound will follow the locomotive's reported position.</p>
+      <p>When you have followed the above setup steps, launch the VSDecoder Manager window, create
+      a VSDecoder and run the locomotive. As your locomotive moves around the layout, the sound
+      will follow the locomotive's reported position.</p>
 
-      <p><em>Note:</em> The sound will appear to "jump" from
-      location to location as the locomotive's reported location
-      changes. This effect will be smaller with additional and more
+      <p><em>Note:</em> The sound will appear to "jump" from location to location as the
+      locomotive's reported location changes. This effect will be smaller with additional and more
       closely spaced reporters or blocks.</p>
 
       <h5>Location Following using Occupancy Sensors and JMRI Blocks</h5>
 
-      <p>If you have installed occupancy sensors, you can use
-      JMRI Blocks to enable a location following.</p>
+      <p>If you have installed occupancy sensors, you can use JMRI Blocks to enable a location
+      following.</p>
 
-      <p>A convenient way to do the setup is creating a Panel with
-      the JMRI Layout Editor. A Layout Editor guidance can be found
-      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">
-      here</a>.</p>
+      <p>A convenient way to do the setup is creating a Panel with the JMRI Layout Editor. A Layout
+      Editor guidance can be found <a href=
+      "https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.</p>
 
-      <p>Your Panel should have all the Blocks and attached Sensors you need.
-      Test and store the Panel.<br>
+      <p>Your Panel should have all the Blocks and attached Sensors you need. Test and store the
+      Panel.<br>
       Then launch the VSDecoder Manager window and create a VSDecoder.<br>
-      To start the location following enter the number of the VSDecoder locomotive address into 
-      the Value field of your starting block (Tools-&gt;Tables-&gt;Block). This sets the new sound position.
-      Now run your locomotive.</p>
+      To start the location following enter the number of the VSDecoder locomotive address into the
+      Value field of your starting block (Tools-&gt;Tables-&gt;Block). This sets the new sound
+      position. Now run your locomotive.</p>
 
       <h5>Location Following using JMRI Operations</h5>
 
-      <p>If you do not have a hardware tracking system, you can use
-      the JMRI Operations feature to enable a rudimentary form of
-      location following.</p>
+      <p>If you do not have a hardware tracking system, you can use the JMRI Operations feature to
+      enable a rudimentary form of location following.</p>
 
       <p>To set the Operations locations:</p>
 
@@ -242,44 +197,38 @@
 
         <li>Launch the Manage VSD Locations window</li>
 
-        <li>Set the locations of the defined Operations
-        Locations.</li>
+        <li>Set the locations of the defined Operations Locations.</li>
       </ol>
 
-      <p>To use Operations for location following, assign the
-      specific locomotive to the train, then select the train in
-      the locomotive's VSDecoder Options pane. When you
-      <em>MOVE</em> the train in Operations, the sound will move to
-      the next location on the Route.</p>
+      <p>To use Operations for location following, assign the specific locomotive to the train,
+      then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
+      train in Operations, the sound will move to the next location on the Route.</p>
 
-      <p>For more information on Operations, see the JMRI&reg;
-      Operations User's Guide</p>
+      <p>For more information on Operations, see the JMRI® Operations User's Guide</p>
 
-      <a name="advanced_location_following" id=
-      "advanced_location_following"></a>
+      <h4 id="advanced_location_following">Advanced Location Following</h4>
 
-      <h4>Advanced Location Following</h4>
+      <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
+      apparent source of the locomotive sound to follow the locomotive's position on the
+      layout.</p>
 
-      <p>With input from locomotive tracking hardware, Virtual Sound Decoder
-      is able to move the apparent source of the locomotive sound to follow
-      the locomotive's position on the layout.</p>
-
-      <p>By adding some geometric layout data, the sound will follow the
-      locomotives continuously (without a "jump").</p>
+      <p>By adding some geometric layout data, the sound will follow the locomotives continuously
+      (without a "jump").</p>
 
       <p><em>Note:</em> JMRI Test Release 4.13.2 or newer required.</p>
 
       <h5>Advanced Location Following Setup</h5>
 
-      <p>A file named VSDGeoData.xml is required, which provides two general
-      attributes and some specific attributes for each location.</p>
+      <p>A file named VSDGeoData.xml is required, which provides two general attributes and some
+      specific attributes for each location.</p>
+
       <p>Here is an example of a VSDGeoData.xml with one location (geodataset):</p>
 
       <pre>
         &lt;?xml version="1.0" encoding="UTF-8"?&gt;
         &lt;vsdecoder-geodata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-           &lt;layout-scale>N&lt;/layout-scale&gt;
-           &lt;check-time>2000&lt;/check-time&gt;
+           &lt;layout-scale&gt;N&lt;/layout-scale&gt;
+           &lt;check-time&gt;2000&lt;/check-time&gt;
            &lt;setup&gt;
               &lt;geodataset&gt;
                  &lt;reporter-systemname&gt;LR1&lt;/reporter-systemname&gt;
@@ -292,30 +241,36 @@
            &lt;/setup&gt;
         &lt;/vsdecoder-geodata&gt;
       </pre>
-
-      <p>The route in this example is defined as a straight line parallel to the X axis, with a length of three meters.</p>
+      <p>The route in this example is defined as a straight line parallel to the X axis, with a
+      length of three meters.</p>
 
       <p>The general attributes are:</p>
+
       <ul>
         <li>layout scale (default: N)</li>
-        <li>check time (interval for calculating a new locomotive position; minimum: 500, maximum: 5000, default: 2000 milliseconds).</li>
+
+        <li>check time (interval for calculating a new locomotive position; minimum: 500, maximum:
+        5000, default: 2000 milliseconds).</li>
       </ul>
 
       <p>The attributes for each location are:</p>
 
       <ul>
         <li>system name of the Reporter</li>
+
         <li>position (starting point) of the location</li>
+
         <li>length of the location in meters</li>
-        <li>type of the location (only two types are supported: line or curve)
-         <br>
-         if the location is from type line, a slope value must be provided and the radius must be 0.0<br>
-         if the location is from type curve, a radius value and the circle center
-         point (rotate-xpos value, rotate-ypos value) must be provided</li>
-        <li>end-position (endpoint) of the location (last location only)
-         <br>
-         if the locomotive is running in a circle, the starting point of the first location and the
-         endpoint must be identical</li>
+
+        <li>type of the location (only two types are supported: line or curve)<br>
+        if the location is from type line, a slope value must be provided and the radius must be
+        0.0<br>
+        if the location is from type curve, a radius value and the circle center point (rotate-xpos
+        value, rotate-ypos value) must be provided</li>
+
+        <li>end-position (endpoint) of the location (last location only)<br>
+        if the locomotive is running in a circle, the starting point of the first location and the
+        endpoint must be identical</li>
       </ul>
 
       <p>Example for curve attributes:</p>
@@ -327,66 +282,82 @@
         &lt;rotate-ypos&gt;0.83&lt;/rotate-ypos&gt;
         ...
       </pre>
-
-      <p>The location (geodataset) sequence defined in VSDGeoData.xml describes a route on a layout.
-      The described route should go away from the left to the right in forward direction, or in case of a
-      circle, in clock-wise forward direction.</p>
+      <p>The location (geodataset) sequence defined in VSDGeoData.xml describes a route on a
+      layout. The described route should go away from the left to the right in forward direction,
+      or in case of a circle, in clock-wise forward direction.</p>
 
       <p>The Advanced Location Following allows up to four locomotives. Normally only one
-      locomotive can be detected in a tracking section. If you want to run more than one locomotive, you may create
-      a JMRI Route (again, up to four for VSD purposes) and add the Route to a Train. Please 
-      choose the predetermined Route names VSDRoute1 (default), VSDRoute2, VSDRoute3 or VSDRoute4.
-      On the "Virtual Sound Decoder Manager" window you'll find an "Option" button on each
-      VSDecoder. There you can select a JMRI Train and accordingly a Route.
-      Please note that you need a setup section in your VSDGeoData.xml for each Route you want to use.
-      </p>
+      locomotive can be detected in a tracking section. If you want to run more than one
+      locomotive, you may create a JMRI Route (again, up to four for VSD purposes) and add the
+      Route to a Train. Please choose the predetermined Route names VSDRoute1 (default), VSDRoute2,
+      VSDRoute3 or VSDRoute4. On the "Virtual Sound Decoder Manager" window you'll find an "Option"
+      button on each VSDecoder. There you can select a JMRI Train and accordingly a Route. Please
+      note that you need a setup section in your VSDGeoData.xml for each Route you want to use.</p>
 
-      <p>How to run a test with the <b>JMRI LocoNet Simulator</b> (without a connection to your layout):</p>
+      <p>How to run a test with the <strong>JMRI LocoNet Simulator</strong> (without a connection
+      to your layout):</p>
+
       <ol>
-        <li>Make sure a Reporter named "LR1" is available after PanelPro has started (follow the directions
-          appropriate to your hardware system for <a href="../../html/tools/Reporters.shtml">setting up
-          Reporters</a>)</li>
-        <li>Create a XML file named VSDGeoData.xml (take the example mentioned above)
-         and store the file to the "Users Files Location" (JMRI\&lt;Railroad Name&gt;)<br>
-         <strong><em>Note:</em> Please make sure that there are no leading spaces in the first line of the file!</strong>
-        </li> 
-        <li>Download the VSD file Class64.vsd from <a href="https://github.com/JMRI/vsdecoder">the web</a></li>
+        <li>Make sure a Reporter named "LR1" is available after PanelPro has started (follow the
+        directions appropriate to your hardware system for <a href=
+        "../../html/tools/Reporters.shtml">setting up Reporters</a>)
+        </li>
+
+        <li>Create a XML file named VSDGeoData.xml (take the example mentioned above) and store the
+        file to the "Users Files Location" (JMRI\&lt;Railroad Name&gt;)<br>
+        <strong><em>Note:</em> Please make sure that there are no leading spaces in the first line
+        of the file!</strong></li>
+
+        <li>Download the VSD file Class64.vsd from <a href="https://github.com/JMRI/vsdecoder">the
+        web</a>
+        </li>
+
         <li>Make sure your computer's audio system is working</li>
+
         <li>Launch PanelPro</li>
-        <li>Open a JMRI throttle: Tools-&gt;Throttle-&gt;New Throttle-&gt;Address:
-         3-&gt;Set</li>
-        <li>Add a VSDecoder: Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder
-          Manager-&gt;Add Decoder-&gt;Manual-&gt;Address: 3-&gt;Set-&gt;Load
-          VSD File-&gt;File name: Class64.vsd-&gt;Select a Profile: Class64-&gt;OK-&gt;Start Engine</li>
-        <li>Simulate an incoming Reporter: LocoNet-&gt;Send LocoNet Packet-&gt;Packet:
-         d0 20 00 7d 03 00-&gt;Send-&gt;close the window</li>
+
+        <li>Open a JMRI throttle: Tools-&gt;Throttle-&gt;New Throttle-&gt;Address: 3-&gt;Set</li>
+
+        <li>Add a VSDecoder: Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager-&gt;Add
+        Decoder-&gt;Manual-&gt;Address: 3-&gt;Set-&gt;Load VSD File-&gt;File name:
+        Class64.vsd-&gt;Select a Profile: Class64-&gt;OK-&gt;Start Engine</li>
+
+        <li>Simulate an incoming Reporter: LocoNet-&gt;Send LocoNet Packet-&gt;Packet: d0 20 00 7d
+        03 00-&gt;Send-&gt;close the window</li>
+
         <li>Run the locomotive and hear the sound wandering from the left to the right</li>
       </ol>
 
-      <p><em>Note:</em> If you choose a Diesel VSD file you might want to add a <strong>top-speed</strong>
-      element in the config.xml. Please see the config.xml of a Steam VSD file for the syntax and
-      the right place.</p>
+      <p><em>Note:</em> If you choose a Diesel VSD file you might want to add a
+      <strong>top-speed</strong> element in the config.xml. Please see the config.xml of a Steam
+      VSD file for the syntax and the right place.</p>
 
-      <p>During the setting up and test process I recommend to open a JMRI system
-      console, which might provide helpful information: Help &gt; System Console.</p>
+      <p>During the setting up and test process I recommend to open a JMRI system console, which
+      might provide helpful information: Help &gt; System Console.</p>
 
       <p>You might also enrich the logging information, by adding the line</p>
-       <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>
-      <p>to the file <strong>default.lcf</strong> as the last line. This file is located in your "Settings Location" (JMRI).</p>
 
-      <p>Once you have a working setup, you can activate an option in your
-      VSD configuration file to print the calculated position points describing the
-      route of your locomotive. Please see the "Create XY coordinates output in
-      console for a VSDecoder" option
-      <a href="VSD_File_and_Config.shtml#xy">for details</a>.</p>
+      <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>
+      <p>to the file <strong>default.lcf</strong> as the last line. This file is located in your
+      "Settings Location" (JMRI).</p>
 
-      <p>For questions, please contact me on the
-      <a href="https://groups.io/g/jmriusers">JMRI users Groups.io group</a>.</p>
+      <p>Once you have a working setup, you can activate an option in your VSD configuration file
+      to print the calculated position points describing the route of your locomotive. Please see
+      the "Create XY coordinates output in console for a VSDecoder" option <a href=
+      "VSD_File_and_Config.shtml#xy">for details</a>.</p>
 
-      <div align="right">
-        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>For questions, please contact me on the <a href="https://groups.io/g/jmriusers">JMRI users
+      Groups.io group</a>.</p>
+
+      <div class="dp-right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

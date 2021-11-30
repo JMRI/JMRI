@@ -1,14 +1,14 @@
 <!-- SidebarHardwareLocalPart.shtml for can -->
 
-          <dt><h3 style="padding-left: 1em;"><a href="index.shtml">Controller Area Networks (CAN)</a></h3></dt>
+          <dt><a href="index.shtml">Controller Area Networks (CAN)</a></dt>
 		  <dd>
 		     <ul>
                     <li><a href="../openlcb/index.shtml">OpenLCB</a>
 					<li><a href="scripting.shtml">CAN Scripting</a>
-				    <li><a href="cbus/index.shtml">CBUS&trade;</a>
+				    <li><a href="cbus/index.shtml">CBUS&reg;</a>
 				    <li><a href="cbus/Names.shtml">CBUS Naming</a>
-				    <li><a href="cbus/Details.shtml">CBUS Connection Details</a>
+				    <li><a href="../merg/Details.shtml">CBUS Connection Details</a>
 			 </ul>
-		  </dd> 
-          
+		  </dd>
+
 <!-- /SidebarHardwareLocalPart.shtml -->

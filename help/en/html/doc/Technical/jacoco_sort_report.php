@@ -25,7 +25,7 @@ ini_set("display_errors", 1);
 // In many cases it is advisable to use libxml_use_internal_errors(true); before $dom->loadHTML($content);
 libxml_use_internal_errors(true);
 
-$url = 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
+$url = 'https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
 
 // Is the script run from the command line?
 if (isset($argc) && ($argc > 0)) {
@@ -193,7 +193,7 @@ function parse_page_prim($page, $url, $package, $isClassList)
 		foreach ($elements as $element) {
 			if ($element->hasAttribute('href')) {
 				$href = $element->getAttribute('href');
-				$element->setAttribute('href', 'http://jmri.tagadab.com'.$href);
+				$element->setAttribute('href', 'https://builds.jmri.org'.$href);
 			}
 		}
 
@@ -206,7 +206,7 @@ function parse_page_prim($page, $url, $package, $isClassList)
 		foreach ($elements as $element) {
 			if ($element->hasAttribute('src')) {
 				$src = $element->getAttribute('src');
-				$element->setAttribute('src', 'http://jmri.tagadab.com'.$src);
+				$element->setAttribute('src', 'https://builds.jmri.org'.$src);
 			}
 		}
 
@@ -238,7 +238,7 @@ function parse_page_prim($page, $url, $package, $isClassList)
 
 					if ($isClassList) {		// Class list
 						$href = $element->getAttribute('href');
-						$element->setAttribute('href', 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/'.$package.'/'.$href);
+						$element->setAttribute('href', 'https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/'.$package.'/'.$href);
 					} else {				// Package list
 						$href = $element->nodeValue;
 						$element->setAttribute('href', 'jacoco_sort_report.php?package='.$href);

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -11,7 +13,10 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownTask;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.ThreadingUtil;
@@ -29,8 +34,8 @@ import org.slf4j.LoggerFactory;
 public class WarrantManager extends AbstractManager<Warrant>
         implements jmri.InstanceManagerAutoDefault {
     
-    private HashMap<String, RosterSpeedProfile> _mergeProfiles;
-    private HashMap<String, RosterSpeedProfile> _sessionProfiles;
+    private HashMap<String, RosterSpeedProfile> _mergeProfiles = new HashMap<>();
+    ShutDownTask _shutDownTask = null;
     private boolean _suppressWarnings = false;
 
     public WarrantManager() {
@@ -345,46 +350,66 @@ public class WarrantManager extends AbstractManager<Warrant>
     public Class<Warrant> getNamedBeanClass() {
         return Warrant.class;
     }
-    
-    protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
-        if (_mergeProfiles == null) {
-            _mergeProfiles = new HashMap<>();
-            _sessionProfiles = new HashMap<>();
+
+    protected void setMergeProfile(String id, RosterSpeedProfile merge) {
+        if (_shutDownTask == null) {
             if (!WarrantPreferences.getDefault().getShutdown().equals((WarrantPreferences.Shutdown.NO_MERGE))) {
-                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+                _shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
             }
         }
         if (id != null) {
             _mergeProfiles.put(id, merge);
-            _sessionProfiles.put(id, session);
         }
     }
-    
+
+    /**
+     * Return a copy of the RosterSpeedProfile for Roster entry
+     * @param id Roster entry
+     * @return RosterSpeedProfile
+     */
+    @Nonnull
     protected RosterSpeedProfile getMergeProfile(String id) {
-        if (_mergeProfiles == null) {
-            return null;
+        RosterSpeedProfile mergeProfile = _mergeProfiles.get(id);
+        if (mergeProfile != null && mergeProfile.getProfileSize() > 0 ) {
+            return makeProfileCopy(mergeProfile, id);
         }
-        return _mergeProfiles.get(id);
+        return makeProfileCopy(null, id);
     }
-    protected RosterSpeedProfile getSessionProfile(String id) {
-        if (_sessionProfiles == null) {
-            return null;
+
+    protected RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, String id) {
+        RosterSpeedProfile profile = new RosterSpeedProfile(null);
+        if (mergeProfile == null) {
+            if (id != null && !id.isEmpty()) {
+                RosterEntry rosterEntry = Roster.getDefault().getEntryForId(id);
+                if (rosterEntry != null) {
+                    RosterSpeedProfile rosterProfile = rosterEntry.getSpeedProfile();
+                    if (rosterProfile != null) { // make copy of Roster SpeedProfile tree
+                        TreeMap<Integer, SpeedStep> rosterTree = rosterProfile.getProfileSpeeds();
+                        for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
+                            profile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
+                        }
+                    }
+                }
+            }
+            return profile;
         }
-        return _sessionProfiles.get(id);
+        // make copy of mergeProfile
+        TreeMap<Integer, SpeedStep> rosterTree = mergeProfile.getProfileSpeeds();
+        for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
+            profile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
+        }
+        return profile;
     }
-    
+
     protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
         return _mergeProfiles;
-    }
-    protected HashMap<String, RosterSpeedProfile> getSessionProfiles() {
-        return _sessionProfiles;
     }
 
     @Override
     public void dispose(){
         for(Warrant w:_beans){
-            w.stopWarrant(true);
+            w.stopWarrant(true, true);
         }
         super.dispose();
     }

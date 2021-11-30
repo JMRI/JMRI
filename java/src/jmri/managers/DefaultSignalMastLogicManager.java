@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.implementation.DefaultSignalMastLogic;
 import jmri.implementation.SignalSpeedMap;
@@ -28,10 +30,13 @@ public class DefaultSignalMastLogicManager
     public DefaultSignalMastLogicManager(InternalSystemConnectionMemo memo) {
         super(memo);
         registerSelf();
+        addListeners();
+    }
+    
+    final void addListeners(){
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        //_speedMap = InstanceManager.getDefault(SignalSpeedMap.class);
+        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
     }
 
     /**
@@ -61,9 +66,13 @@ public class DefaultSignalMastLogicManager
         return null;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Provide / create New SML.
+     * {@inheritDoc} 
+     */
+    @Nonnull
     @Override
-    public SignalMastLogic newSignalMastLogic(SignalMast source) {
+    public SignalMastLogic newSignalMastLogic(SignalMast source) throws IllegalArgumentException {
         for (SignalMastLogic signalMastLogic : _beans) {
             if (signalMastLogic.getSourceMast() == source) {
                 return signalMastLogic;
@@ -119,6 +128,7 @@ public class DefaultSignalMastLogicManager
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public List<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
         List<SignalMastLogic> list = new ArrayList<>();
@@ -131,6 +141,7 @@ public class DefaultSignalMastLogicManager
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public List<SignalMastLogic> getSignalMastLogicList() {
         return new ArrayList<>(_beans);
@@ -138,18 +149,16 @@ public class DefaultSignalMastLogicManager
 
     /** {@inheritDoc} */
     @Override
-    public boolean isSignalMastUsed(SignalMast mast) {
-        if (getSignalMastLogic(mast) != null) {
+    public boolean isSignalMastUsed(@Nonnull SignalMast mast) {
+        SignalMastLogic sml = getSignalMastLogic(mast);
+        if (sml != null) {
             /* Although we might have it registered as a source, it may not have
              any valid destination, so therefore it can be returned as not in use. */
-            if (!getSignalMastLogic(mast).getDestinationList().isEmpty()) {
+            if (!sml.getDestinationList().isEmpty()) {
                 return true;
             }
         }
-        if (!getLogicsByDestination(mast).isEmpty()) {
-            return true;
-        }
-        return false;
+        return !getLogicsByDestination(mast).isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -184,7 +193,10 @@ public class DefaultSignalMastLogicManager
                 source.removeDestination(mast);
             }
         }
-        removeSignalMastLogic(getSignalMastLogic(mast));
+        SignalMastLogic sml = getSignalMastLogic(mast);
+        if ( sml != null ) {
+            removeSignalMastLogic(sml);
+        }
     }
 
     /**
@@ -395,14 +407,21 @@ public class DefaultSignalMastLogicManager
                 }
                 for (SignalMast destMast : sml.getDestinationList()) {
                     if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty()) {
-                        Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
-                        if (sec == null) {
-                            //A Section already exists, lets grab it and check that it is one used with the SML, if so carry on using that.
-                            sec = sm.getSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
+                        String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
+                        Section sec = sm.getSection(secUserName);
+                        if (sec != null) {
+                            //A Section already exists, lets check that it is one used with the SML, if so carry on using that.
                             if (sec.getSectionType() != Section.SIGNALMASTLOGIC) {
                                 break;
                             }
                         } else {
+                            try {
+                                sec = sm.createNewSection(secUserName);
+                            } catch(IllegalArgumentException ex){
+                                log.warn("Unable to create section for {} {}",secUserName,ex.getMessage());
+                                continue;
+                            }
+                            // new mast
                             sec.setSectionType(Section.SIGNALMASTLOGIC);
                             try {
                                 //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
@@ -451,6 +470,37 @@ public class DefaultSignalMastLogicManager
     @Override
     public Class<SignalMastLogic> getNamedBeanClass() {
         return SignalMastLogic.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int setupSignalMastsDirectionSensors() {
+        int errorCount = 0;
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            errorCount += sml.setupDirectionSensors();
+        }
+        return errorCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSignalMastsDirectionSensors() {
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            sml.removeDirectionSensors();
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void dispose(){
+        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

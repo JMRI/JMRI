@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend the PaneProgFrame to handle service mode operations.
+ * Extend the PaneProgFrame to handle service (Global) mode operations.
  * <p>
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *

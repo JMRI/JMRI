@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-//import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -49,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
- */
+ **/
 public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
@@ -77,7 +74,7 @@ public class WarrantTableAction extends AbstractAction {
     @Override
     @InvokeOnGuiThread
     public void actionPerformed(ActionEvent e) {
-        WarrantTableFrame.getDefault();
+        WarrantTableFrame.getDefault().setVisible(true);
     }
 
     /**
@@ -87,9 +84,11 @@ public class WarrantTableAction extends AbstractAction {
      */
     public JMenu makeWarrantMenu(boolean edit) {
         if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
-            _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
-            updateWarrantMenu();
-            return _warrantMenu;
+            synchronized (this) {
+                _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
+                updateWarrantMenu();
+                return _warrantMenu;
+            }
         }
         return null;
     }
@@ -100,9 +99,7 @@ public class WarrantTableAction extends AbstractAction {
         _warrantMenu.add(getDefault());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
         _warrantMenu.add(editWarrantMenu);
-        ActionListener editWarrantAction = (ActionEvent e) -> {
-            openWarrantFrame(e.getActionCommand());
-        };
+        ActionListener editWarrantAction = (ActionEvent e) -> openWarrantFrame(e.getActionCommand());
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         if (manager.getObjectCount() == 0) { // when there are no Warrants, enter the word "None" to the submenu
             JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
@@ -154,9 +151,7 @@ public class WarrantTableAction extends AbstractAction {
             });
         } else {
             mi = new JMenuItem(Bundle.getMessage("flushLog"));
-            mi.addActionListener((ActionEvent e) -> {
-                OpSessionLog.flush();
-            });
+            mi.addActionListener((ActionEvent e) -> OpSessionLog.flush());
             _warrantMenu.add(mi);
             mi = new JMenuItem(Bundle.getMessage("stopLog"));
             mi.addActionListener((ActionEvent e) -> {
@@ -186,43 +181,45 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     @InvokeOnGuiThread
-    protected NXFrame makeNXFrame() {
+    protected void makeNXFrame() {
+        closeWarrantFrame();
         if (_nxFrame == null) {
             _nxFrame = new NXFrame();
         }
         _nxFrame.setState(java.awt.Frame.NORMAL);
         _nxFrame.setVisible(true);
         _nxFrame.toFront();
-        return _nxFrame;
     }
 
-    protected void closeWarrantFrame() {
+    @InvokeOnGuiThread
+    protected boolean closeWarrantFrame() {
         if (_openFrame != null) {
+            if (!_openFrame.askClose()) {
+                return false;
+            }
             _openFrame.close();
-            _openFrame.dispose();
             _openFrame = null;
         }
+        return true;
     }
 
     protected void makeWarrantFrame(Warrant startW, Warrant endW) {
-        if (_openFrame != null && _openFrame.isRunning()) {
+        if (!closeWarrantFrame()) {
             return;
         }
-        closeWarrantFrame();
+        closeNXFrame();
         _openFrame = new WarrantFrame(startW, endW);
         _openFrame.setState(java.awt.Frame.NORMAL);
-        _openFrame.setVisible(true);
         _openFrame.toFront();            
     }
 
     protected void editWarrantFrame(Warrant w) {
-        if (_openFrame != null && _openFrame.isRunning()) {
+        if (!closeWarrantFrame()) {
             return;
         }
-        closeWarrantFrame();
+        closeNXFrame();
         _openFrame = new WarrantFrame(w);
         _openFrame.setState(java.awt.Frame.NORMAL);
-        _openFrame.setVisible(true);
         _openFrame.toFront();            
     }
 
@@ -279,7 +276,7 @@ public class WarrantTableAction extends AbstractAction {
         if (log.isDebugEnabled()) {
             log.debug("checkPathPortals for {}", b.getDisplayName());
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         List<Path> pathList = b.getPaths();
         if (pathList.isEmpty()) {
             if (b.getPortals().isEmpty()) {
@@ -294,27 +291,23 @@ public class WarrantTableAction extends AbstractAction {
         List<Portal> portalList = b.getPortals();
         // make list of names of all portals.  Then remove those we check, leaving the orphans
         ArrayList<String> portalNameList = new ArrayList<>();
-        for (int i = 0; i < portalList.size(); i++) {
-            Portal portal = portalList.get(i);
+        for (Portal portal : portalList) {
             if (portal.getFromPaths().isEmpty()) {
-                sb.append(Bundle.getMessage("BlockPortalNoPath", portal.getName(),
-                        portal.getFromBlockName()));
+                sb.append(Bundle.getMessage("BlockPortalNoPath", portal.getName(), portal.getFromBlockName()));
                 sb.append("\n");
                 _hasErrors = true;
                 return sb.toString();
             }
             if (portal.getToPaths().isEmpty()) {
-                sb.append(Bundle.getMessage("BlockPortalNoPath", portal.getName(),
-                        portal.getToBlockName()));
+                sb.append(Bundle.getMessage("BlockPortalNoPath", portal.getName(), portal.getToBlockName()));
                 sb.append("\n");
                 _hasErrors = true;
                 return sb.toString();
             }
             portalNameList.add(portal.getName());
         }
-        Iterator<Path> iter = pathList.iterator();
-        while (iter.hasNext()) {
-            OPath path = (OPath) iter.next();
+        for (Path value : pathList) {
+            OPath path = (OPath) value;
             OBlock block = (OBlock) path.getBlock();
             if (block == null || !block.equals(b)) {
                 sb.append(Bundle.getMessage("PathWithBadBlock", path.getName(), b.getDisplayName()));
@@ -340,8 +333,7 @@ public class WarrantTableAction extends AbstractAction {
                 hasPortal = true;
                 portalNameList.remove(toPortal.getName());
                 if (fromPortal != null && fromPortal.equals(toPortal)) {
-                    sb.append(Bundle.getMessage("PathWithDuplicatePortal",
-                            path.getName(), b.getDisplayName()));
+                    sb.append(Bundle.getMessage("PathWithDuplicatePortal", path.getName(), b.getDisplayName()));
                     sb.append("\n");
                 }
             }
@@ -350,8 +342,7 @@ public class WarrantTableAction extends AbstractAction {
                 sb.append("\n");
                 _hasErrors = true;
             } else if (!hasPortal) {
-                sb.append(Bundle.getMessage("PathNeedsPortal",
-                        path.getName(), b.getDisplayName()));
+                sb.append(Bundle.getMessage("PathNeedsPortal", path.getName(), b.getDisplayName()));
                 sb.append("\n");
                 _hasErrors = true;
             }
@@ -371,15 +362,13 @@ public class WarrantTableAction extends AbstractAction {
                 }
             }
             if (!validPath) {
-                sb.append(Bundle.getMessage("PathNotConnectedToPortal",
-                        path.getName(), b.getDisplayName()));
+                sb.append(Bundle.getMessage("PathNotConnectedToPortal", path.getName(), b.getDisplayName()));
                 sb.append("\n");
                 _hasErrors = true;
             }
         }
-        for (int i = 0; i < portalNameList.size(); i++) {
-            sb.append(Bundle.getMessage("BlockPortalNoPath",
-                    portalNameList.get(i), b.getDisplayName()));
+        for (String s : portalNameList) {
+            sb.append(Bundle.getMessage("BlockPortalNoPath", s, b.getDisplayName()));
             sb.append("\n");
             _hasErrors = true;
         }
@@ -401,10 +390,6 @@ public class WarrantTableAction extends AbstractAction {
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
         class myListener extends java.awt.event.WindowAdapter implements ActionListener {
 
-            /*  java.awt.Window _w;
-             myListener(java.awt.Window w) {
-                 _w = w;
-             }  */
             @Override
             public void actionPerformed(ActionEvent e) {
                 _errorDialog.dispose();
@@ -438,16 +423,14 @@ public class WarrantTableAction extends AbstractAction {
         boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         List<Path> pathList = block.getPaths();
-        Iterator<Path> iter = pathList.iterator();
-        while (iter.hasNext()) {
-            OPath path = (OPath) iter.next();
+        for (Path value : pathList) {
+            OPath path = (OPath) value;
             for (OBlock b : manager.getNamedBeanSet()) {
                 if (block.getSystemName().equals(b.getSystemName())) {
                     continue;
                 }
-                Iterator<Path> it = b.getPaths().iterator();
-                while (it.hasNext()) {
-                    boolean shared = sharedTO(path, (OPath) it.next());
+                for (Path item : b.getPaths()) {
+                    boolean shared = sharedTO(path, (OPath) item);
                     if (shared) {
                         hasShared = true;
                         break;
@@ -468,9 +451,7 @@ public class WarrantTableAction extends AbstractAction {
             BeanSetting mySet = iter.next();
             NamedBean myTO = mySet.getBean();
             int myState = mySet.getSetting();
-            Iterator<BeanSetting> it = tos.iterator();
-            while (it.hasNext()) {
-                BeanSetting set = it.next();
+            for (BeanSetting set : tos) {
                 NamedBean to = set.getBean();
                 if (myTO.equals(to)) {
                     // turnouts are equal.  check if settings are compatible.
@@ -487,4 +468,5 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);
+
 }

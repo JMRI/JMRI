@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
@@ -30,7 +30,7 @@ public class ShowTrackMovesActionTest extends OperationsTestCase {
         
         // default
         Assert.assertFalse("confirm default", Setup.isShowTrackMovesEnabled());
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         Assert.assertTrue("confirm change", Setup.isShowTrackMovesEnabled());
     }
 

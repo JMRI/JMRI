@@ -278,6 +278,7 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+      <xs:element name="useAddressOffSet" type="yesNoType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="packetsendcount" type="xs:int" minOccurs="0" maxOccurs="1"/>
       <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>

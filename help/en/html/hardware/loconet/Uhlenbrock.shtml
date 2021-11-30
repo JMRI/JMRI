@@ -1,171 +1,150 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
-  <meta name="keywords" content=
-  "Uhlenbrock Intellibox java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Uhlenbrock Intellibox</h1>
 
-      <p>JMRI can communicate with an Uhlenbrock Intellibox via the
-      Intellibox built-in serial port, the Intellibox II/Basic USB port
-      and the LocoNet&trade; protocol.<br>
+      <p>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial
+      port, the Intellibox II/Basic USB port and the LocoNet™ protocol.<br>
       This page provides details on the possibilities.</p>
 
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <h3>Command Station</h3>
+      <h3>Command Stations</h3>
 
       <ul>
         <li>Intellibox</li>
+
         <li>Intellibox IR</li>
 
         <li>Intellibox Basic</li>
+
         <li>Intellibox II</li>
+
         <li>IB-Com</li>
 
-        <li>Fleischmann Twin Center (software version 1.1 or
-        later)</li>
+        <li>Fleischmann Twin Center (software version 1.1 or later)</li>
       </ul>
 
-      <a name="limitations" id="limitations"></a>
-      <h2>Limitations</h2>
+      <h3>Uhlenbrock stationary decoder definitions (LNCV protocol)</h3>
 
       <ul>
-        <li>Full support of Intellibox-II has been added to JMRI in
-        version 3.11.1 and up. It is not available in previous
-        versions 3.10 and below.</li>
+        <li>Power4, Power8 (boosters)</li>
+
+        <li>Switch Module (art. 63410)</li>
+
+        <li>IntelliLight 28x00 modules</li>
+
+        <li>Track-Control, including the Direct Message Protocol (art. 69220 Turnout and 69230
+        Signal Module)</li>
       </ul>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+      <h2 id="limitations">Limitations</h2>
 
-      <h3 id="serial">Direct serial connection</h3><a href=
-      "images/UhlenbrockConfig-I.png"><img src=
-      "images/UhlenbrockConfig-I.png" align="right" width="180"
-      height="115" alt="IB-I config pane"></a> This section is
-      applicable to the "Intellibox-I" group, which includes
+      <ul>
+        <li><span class="since">Since <a href="https://jmri.org/releasenotes/jmri3.11.1.shtml"
+        target="_blank">JMRI 3.11.1</a></span>Full support of Intellibox-II has been added to JMRI
+        in version 3.11.1 and up. It is not available in previous versions 3.10 and below.</li>
+      </ul>
 
+      <h2 id="connecting">Connecting</h2>
+
+      <h3 id="serial">Direct serial connection</h3>
+      <a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" class=
+      "floatRight" width="180" height="115" alt="IB-I config pane"></a> This section is applicable
+      to the "Intellibox-I" group, which includes
       <ul>
         <li>Intellibox ref. 65000</li>
 
         <li>Intellibox IR ref. 65050</li>
 
-        <li>Fleischmann Twin Center (software version 1.1 or
-        later)</li>
-      </ul>which have an RS232 serial port for connection.
-
-      <p>Configure the options of your Intellibox-I command station
-      to be:</p>
+        <li>Fleischmann Twin Center (software version 1.1 or later)</li>
+      </ul>
+      which have an RS232 serial port for connection.
+      <p>Configure the options of your Intellibox-I command station to be:</p>
 
       <ul>
-        <li>SO 2 value 4 (Select LocoNet protocol in the
-        interface)</li>
+        <li>SO 2 value 4 (Select LocoNet protocol in the interface)</li>
 
         <li>SO 5 value 1 (Use 1 stop bit on the serial port)</li>
 
-        <li>SO 6 value 255 (CTS never set false due to pressing a
-        stop button)</li>
+        <li>SO 6 value 255 (CTS never set false due to pressing a stop button)</li>
 
         <li>Baudrate 19200</li>
       </ul>
 
-      <p>Then start the JMRI program and configure it by opening
-      the Preferences menu and:</p>
+      <p>Then start the JMRI program and configure it by opening the Preferences menu and:</p>
 
       <ul>
-        <li>Select "Uhlenbrock" as the System Manufacturer on the
-        Connections tab</li>
+        <li>Select "Uhlenbrock" as the System Manufacturer on the Connections tab</li>
 
-        <li>Select "LocoNet Intellibox-I (Serial)" as the System
-        Connection protocol<br>
-        <strong>The direct Serial protocol for Intellibox-I was
-        named "LocoNet Intellibox Serial Port" up to JMRI version
-        3.10.</strong></li>
+        <li>Select "LocoNet Intellibox-I (Serial)" as the System Connection protocol<br>
+        <strong>The direct Serial protocol for Intellibox-I was named "LocoNet Intellibox Serial
+        Port" up to JMRI version 3.10.</strong></li>
 
-        <li>Select the appropriate serial port on your
-        computer</li>
+        <li>Select the appropriate serial port on your computer</li>
 
         <li>Select 19200 baud</li>
 
         <li>Select hardware handshaking</li>
       </ul>
+
       <p>Save and restart.</p>
 
-      <p>Note that the hardware handshaking in the Intellibox
-      serial port is not entirely reliable, and messages can be
-      lost if you have a lot of traffic. For running a complicated
-      layout, we recommend you consider a LocoBuffer-USB, PR3 or
-      other interface that will let you connect JMRI to the LocoNet
-      port of the Intellibox instead of the serial port. See the
-      <a href="#loconet">LocoNet connection section</a> below.</p>
+      <p>Note that the hardware handshaking in the Intellibox serial port is not entirely reliable,
+      and messages can be lost if you have a lot of traffic. For running a complicated layout, we
+      recommend you consider a LocoBuffer-USB, PR3 or other interface that will let you connect
+      JMRI to the LocoNet port of the Intellibox instead of the serial port. See the <a href=
+      "#loconet">LocoNet connection section</a> below.</p>
 
-      <h3 id="usb">Direct USB connection</h3><a href=
-      "images/UhlenbrockConfig-II.png"><img src=
-      "images/UhlenbrockConfig-II.png" align="right" width="180"
-      height="115" alt="IB-II config pane"></a> This section is
-      applicable to the "Intellibox-II", which includes
-
+      <h3 id="usb">Direct USB connection</h3>
+      <a href="images/UhlenbrockConfig-II.png"><img src="images/UhlenbrockConfig-II.png" class=
+      "floatRight" width="180" height="115" alt="IB-II config pane"></a> This section is applicable
+      to the "Intellibox-II", which includes
       <ul>
         <li>Intellibox II ref. 65100</li>
 
         <li>IB-Com ref. 65070/65071</li>
 
         <li>Intellibox Basic ref. 65060</li>
-      </ul>which have a USB port for direct connection.
-
-      <p>Start the JMRI program and configure it by opening the
-      Preferences menu and:</p>
+      </ul>
+      which have a USB port for direct connection.
+      <p>Start the JMRI program and configure it by opening the Preferences menu and:</p>
 
       <ul>
-        <li>Select "Uhlenbrock" as the System Manufacturer on the
-        Connections tab</li>
+        <li>Select "Uhlenbrock" as the System Manufacturer on the Connections tab</li>
 
-        <li>Select "LocoNet Intellibox-II/IB-Com (USB)" as the
-        System Connection</li>
-      </ul>Save and restart.
-
+        <li>Select "LocoNet Intellibox-II/IB-Com (USB)" as the System Connection</li>
+      </ul>
+      Save and restart.
       <h3 id="loconet">LocoNet connection</h3>
 
-      <p>You can connect an Intellibox Command Station to a
-      LocoNet, using any of the available <a href=
-      "Digitrax.shtml">LocoNet connection methods</a>.</p>
+      <p>You can connect an Intellibox Command Station to a LocoNet, using any of the available
+      <a href="Digitrax.shtml">LocoNet connection methods</a>.</p>
 
       <p>Intellibox command stations are divided into two groups:</p>
 
       <p>"Intellibox-I (Serial)":</p>
+
       <ul>
         <li>Intellibox ref. 65000</li>
 
         <li>Intellibox IR ref. 65050</li>
 
-        <li>Fleischmann Twin Center (software version 1.1 or
-        later)</li>
+        <li>Fleischmann Twin Center (software version 1.1 or later)</li>
       </ul>
 
       <p>"Intellibox-II (USB)":</p>
@@ -181,33 +160,64 @@
       <p>Start the JMRI program and configure it to:</p>
 
       <ul>
-        <li>Select "Uhlenbrock" as the System Manufacturer for your
-        connection.</li>
+        <li>Select "Uhlenbrock" as the System Manufacturer for your connection.</li>
 
-        <li>Select the appropriate System Connection for your
-        hardware, either Intellibox-I or -II.</li>
+        <li>Select the appropriate System Connection for your hardware, either Intellibox-I or -II
+        or the 63120Adapter.</li>
 
         <li>Select the serial port used for this connection.</li>
 
-        <li>The single corresponding Command Station (group) choice will be selected
-        automatically.</li>
+        <li>For either Intellibox connection, the single corresponding Command Station (group)
+        choice will be selected automatically.</li>
+
+        <li><span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml"
+        target="_blank">JMRI 4.21.4</a></span> The Uhlenbrock USB Adapter part #63120 will only
+        work with a Windows OS, as it requires special Uhlenbrock supplied drivers to be installed.
+        Follow the manufacturers instruction for that install. Basic connectivity was tested over
+        LocoNet to a Digitrax Zephyr. The Slot Monitor, Power Control are working correctly an
+        Programming looks to be working.<br>
+        In the JMRI Connection Preferences, verify the (default) settings. The options as stored in
+        the adapter should only be configured from a LocoNet throttle, for example the Daisy.<br>
+        Since JMRI can only communicate via the connection, it could lose contact during
+        configuration.</li>
 
         <li>If desired, adjust the system prefix and connection user name.<br>
-        Note that an existing panel contains a certain prefix and changing this
-        option here will lead to an error upon loading such a panel.</li>
-
+        Note that an existing panel contains a certain system connection prefix and changing this
+        option here to a different value will lead to an error upon loading such a panel.</li>
       </ul>
+
       <p>Save and restart.</p>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI Uhlenbrock Tools</h2>
+      <h2 id="tools">JMRI Uhlenbrock Tools</h2>
 
-      <p>The Intellibox Command Stations can't be configured over their
-      LocoNet connection. Please use the keyboard and consult the manual.</p>
+      <h3>LNCV Programmer</h3>
+      <span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target=
+      "_blank">JMRI 4.21.4</a></span> <a href=
+      "images/LncvProgrammer/LncvProgrammerPane.png"><img src=
+      "images/LncvProgrammer/LncvProgrammerPane.png" class="floatRight" width="293" height="187"
+      alt="LNCV Programming Tool can't find a matching definition"></a>
+      <p>The <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Lncv
+      Programming tool</a> is located in the LocoNet menu. It allows to discover stationary LNCV
+      devices and read and write individual LNCVs.<br>
+      Enter the first 4 digits of the device as the Article Number before starting a Programming
+      Session, or the modules will not respond. Once a session is running, use the responses
+      collected in the LNCV Monitor table to navigate to your Roster to access the full
+      functionality of each device. When a matching definition is found in the JMRI Decoder Index,
+      a [Create Entry] button will show. If your device responded to a general call but is not yet
+      supported, the button will read [No Match] (and it won't do much). Once you have a Roster
+      Entry, the button will read [Program] and will directly open the entry tabs.<br>
+      Check the 'Direct Mode' checkbox to access a row of state buttons to set LEDs etc. on
+      Track-Control items.</p>
+
+      <p>The Intellibox Command Stations can't be configured over their LocoNet connection.<br>
+      Please use the keyboard and consult the manual.</p>
 
       <hr class="hide">
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

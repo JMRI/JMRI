@@ -234,8 +234,8 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
             <name>Indexed CV access</name>
-            <parameter name="PI">32</parameter>
-            <parameter name="SI">31</parameter>
+            <parameter name="PI">31</parameter>
+            <parameter name="SI">32</parameter>
             <parameter name="cvFirst">false</parameter>
         </capability>
     </programming>
@@ -264,7 +264,7 @@
         <label xml:lang="de">Bremszeit (1-255)</label>
         <tooltip>&lt;html&gt;For this CV, the value in a SoundCar decoder should match the value&lt;br&gt;in a SoundTraxx Digital Sound Decoder equipped locomotive when in a consist.&lt;br&gt;</tooltip>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="85" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;85 = OEM SoundCar&lt;/html&gt;">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="85" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;85 = OEM SoundCar&lt;/html&gt;">
         <decVal/>
         <label>Manufacturer Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -784,7 +784,7 @@
 	  <!-- begin exchangeable function groups -->
       <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
@@ -1166,7 +1166,7 @@
       </variables>
       <variables>
         <qualifier>
-          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <variableref>Function Map Option 1</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
@@ -2423,62 +2423,62 @@
       <!-- Consist function enable F13 to F28 (CV 245-246) -->
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVconsistF13-28.xml"/>
       <!-- Flex-Map Function Mapping -->
-      <variable CV="1.259" item="Extended Function Map FX3 Effect" default="13" minOut="3">
+      <variable CV="16.1.259" item="Extended Function Map FX3 Effect" default="13" minOut="3">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Interior Lights (FX5)</label>
       </variable>
-      <variable CV="1.274" item="Extended Function Map Mute" default="8">
+      <variable CV="16.1.274" item="Extended Function Map Mute" default="8">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Mute</label>
       </variable>
-      <variable CV="1.275" item="Extended Function Map Independent/Train Brake" default="9">
+      <variable CV="16.1.275" item="Extended Function Map Independent/Train Brake" default="9">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Brakes</label>
       </variable>
-      <variable CV="1.299" item="Extended Function Map Dynamic Brake" default="16">
+      <variable CV="16.1.299" item="Extended Function Map Dynamic Brake" default="16">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Generator</label>
       </variable>
-      <variable CV="1.301" item="Extended Function Map Straight-to-Eight" default="17" exclude="24B410DD0">
+      <variable CV="16.1.301" item="Extended Function Map Straight-to-Eight" default="17" exclude="24B410DD0">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Announcement A</label>
       </variable>
-      <variable CV="1.301" item="Extended Function Map Straight-to-Eight" default="255" include="24B410DD0">
+      <variable CV="16.1.301" item="Extended Function Map Straight-to-Eight" default="255" include="24B410DD0">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Announcement A</label>
       </variable>
-      <variable CV="1.302" item="Extended Function Map General Service" default="18" exclude="24B410DD0">
+      <variable CV="16.1.302" item="Extended Function Map General Service" default="18" exclude="24B410DD0">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Announcement B</label>
       </variable>
-      <variable CV="1.302" item="Extended Function Map General Service" default="255" include="24B410DD0">
+      <variable CV="16.1.302" item="Extended Function Map General Service" default="255" include="24B410DD0">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Announcement B</label>
       </variable>
-      <variable CV="1.305" item="Extended Function Map Coupler" default="10">
+      <variable CV="16.1.305" item="Extended Function Map Coupler" default="10">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Couple</label>
       </variable>
-      <variable CV="1.306" item="Extended Function Map Coupler Release" default="12">
+      <variable CV="16.1.306" item="Extended Function Map Coupler Release" default="12">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Uncouple</label>
       </variable>
-      <variable CV="1.310" item="Extended Function Map Coach Doors" default="14">
+      <variable CV="16.1.310" item="Extended Function Map Coach Doors" default="14">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>Coach Door</label>
       </variable>
-      <variable CV="1.311" item="Extended Function Map All Aboard/Coach Doors" default="15">
+      <variable CV="16.1.311" item="Extended Function Map All Aboard/Coach Doors" default="15">
           <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
           <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
           <label>All Aboard!</label>

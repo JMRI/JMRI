@@ -39,25 +39,28 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int LENGTH_COLUMN = 4;
     private static final int LOAD_COLUMN = 5;
     private static final int RWE_LOAD_COLUMN = 6;
-    private static final int COLOR_COLUMN = 7;
-    private static final int KERNEL_COLUMN = 8;
-    private static final int LOCATION_COLUMN = 9;
-    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 10;
-    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 11;
-    private static final int DESTINATION_COLUMN = 12;
-    private static final int FINAL_DESTINATION_COLUMN = 13;
-    private static final int RWE_COLUMN = 14;
-    private static final int TRAIN_COLUMN = 15;
-    private static final int MOVES_COLUMN = 16;
-    private static final int BUILT_COLUMN = 17;
-    private static final int OWNER_COLUMN = 18;
-    private static final int VALUE_COLUMN = 19;
-    private static final int RFID_COLUMN = 20;
-    private static final int WAIT_COLUMN = 21;
-    private static final int PICKUP_COLUMN = 22;
-    private static final int LAST_COLUMN = 23;
-    private static final int SET_COLUMN = 24;
-    private static final int EDIT_COLUMN = 25;
+    private static final int RWL_LOAD_COLUMN = 7;
+    private static final int COLOR_COLUMN = 8;
+    private static final int KERNEL_COLUMN = 9;
+    private static final int LOCATION_COLUMN = 10;
+    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 11;
+    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 12;
+    private static final int DESTINATION_COLUMN = 13;
+    private static final int FINAL_DESTINATION_COLUMN = 14;
+    private static final int RWE_DESTINATION_COLUMN = 15;
+    private static final int RWL_DESTINATION_COLUMN = 16;
+    private static final int DIVISION_COLUMN = 17;
+    private static final int TRAIN_COLUMN = 18;
+    private static final int MOVES_COLUMN = 19;
+    private static final int BUILT_COLUMN = 20;
+    private static final int OWNER_COLUMN = 21;
+    private static final int VALUE_COLUMN = 22;
+    private static final int RFID_COLUMN = 23;
+    private static final int WAIT_COLUMN = 24;
+    private static final int PICKUP_COLUMN = 25;
+    private static final int LAST_COLUMN = 26;
+    private static final int SET_COLUMN = 27;
+    private static final int EDIT_COLUMN = 28;
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -75,11 +78,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBY_OWNER = 11;
     public final int SORTBY_RFID = 12;
     public final int SORTBY_RWE = 13; // return when empty
-    public final int SORTBY_FINALDESTINATION = 14;
-    public final int SORTBY_VALUE = 15;
-    public final int SORTBY_WAIT = 16;
-    public final int SORTBY_PICKUP = 17;
-    public final int SORTBY_LAST = 18;
+    public final int SORTBY_RWL = 14; // return when loaded
+    public final int SORTBY_DIVISION = 15;
+    public final int SORTBY_FINALDESTINATION = 16;
+    public final int SORTBY_VALUE = 17;
+    public final int SORTBY_WAIT = 18;
+    public final int SORTBY_PICKUP = 19;
+    public final int SORTBY_LAST = 20; // also used by PrintCarRosterAction
 
     private int _sort = SORTBY_NUMBER;
 
@@ -100,9 +105,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     /**
-     * Not all columns in the Cars table are shown. This was done to limit the
-     * width of the table. Only one column from the following groups is shown at
-     * any one time.
+     * Not all columns in the Cars table are shown. This was done to limit the width
+     * of the table. Only one column from the following groups is shown at any one
+     * time.
      * <p>
      * Load, Color, and RWE Load are grouped together.
      * <p>
@@ -118,19 +123,29 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _sort = sort;
         updateList();
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        if (sort == SORTBY_COLOR || sort == SORTBY_LOAD || sort == SORTBY_RWE) {
+        if (sort == SORTBY_COLOR || sort == SORTBY_LOAD || sort == SORTBY_RWE || sort == SORTBY_RWL) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), sort == SORTBY_LOAD);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), sort == SORTBY_COLOR);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
-        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE) {
+        if (sort == SORTBY_DESTINATION ||
+                sort == SORTBY_FINALDESTINATION ||
+                sort == SORTBY_RWE ||
+                sort == SORTBY_RWL ||
+                sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBY_RWE);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), sort == SORTBY_RWL);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), sort == SORTBY_DIVISION);
             // show load column if color column isn't visible.
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN),
-                    sort != SORTBY_RWE && !tcm.isColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN)));
+                    sort != SORTBY_RWE &&
+                            sort != SORTBY_RWL &&
+                            !tcm.isColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN)));
         } else if (sort == SORTBY_MOVES ||
                 sort == SORTBY_BUILT ||
                 sort == SORTBY_OWNER ||
@@ -175,12 +190,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Location");
             case SORTBY_DESTINATION:
                 return Bundle.getMessage("Destination");
+            case SORTBY_DIVISION:
+                return Bundle.getMessage("HomeDivision");
             case SORTBY_TRAIN:
                 return Bundle.getMessage("Train");
             case SORTBY_FINALDESTINATION:
                 return Bundle.getMessage("FinalDestination");
             case SORTBY_RWE:
                 return Bundle.getMessage("ReturnWhenEmpty");
+            case SORTBY_RWL:
+                return Bundle.getMessage("ReturnWhenLoaded");
             case SORTBY_MOVES:
                 return Bundle.getMessage("Moves");
             case SORTBY_BUILT:
@@ -204,7 +223,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN),
+                !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
     }
 
     public void resetCheckboxes() {
@@ -218,6 +238,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     /**
      * Search for car by road number
+     * 
      * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
@@ -283,8 +304,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return getCarList(_sort);
     }
 
-    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-            justification = "default case is sort by number") // NOI18N
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification = "default case is sort by number") // NOI18N
     public List<Car> getCarList(int sort) {
         List<Car> list;
         switch (sort) {
@@ -320,6 +340,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 break;
             case SORTBY_RWE:
                 list = carManager.getByRweList();
+                break;
+            case SORTBY_RWL:
+                list = carManager.getByRwlList();
+                break;
+            case SORTBY_DIVISION:
+                list = carManager.getByDivisionList();
                 break;
             case SORTBY_MOVES:
                 list = carManager.getByMovesList();
@@ -384,9 +410,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     // Cars frame table column widths, starts with Select column and ends with Edit
-    private final int[] tableColumnWidths =
-            {60, 60, 60, 65, 35, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 65, 50, 50, 50, 50, 100,
-                    50, 100, 100, 65, 70};
+    private final int[] tableColumnWidths = { 60, 60, 60, 65, 35, 75, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 190,
+            190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 65, 70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -412,8 +437,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), false);
@@ -424,7 +452,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
-        
+
         // turn on defaults
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
@@ -470,10 +498,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Destination");
             case FINAL_DESTINATION_COLUMN:
                 return Bundle.getMessage("FinalDestination");
-            case RWE_COLUMN:
+            case RWE_DESTINATION_COLUMN:
                 return Bundle.getMessage("RWELocation");
             case RWE_LOAD_COLUMN:
                 return Bundle.getMessage("RWELoad");
+            case RWL_DESTINATION_COLUMN:
+                return Bundle.getMessage("RWLLocation");
+            case RWL_LOAD_COLUMN:
+                return Bundle.getMessage("RWLLoad");
+            case DIVISION_COLUMN:
+                return Bundle.getMessage("HomeDivision");
             case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
             case MOVES_COLUMN:
@@ -553,6 +587,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LOAD_COLUMN:
                 if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                     return car.getLoadName() + " " + Bundle.getMessage("(P)");
+                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
                 } else {
                     return car.getLoadName();
                 }
@@ -601,10 +637,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 return s;
             }
-            case RWE_COLUMN:
+            case RWE_DESTINATION_COLUMN:
                 return car.getReturnWhenEmptyDestName();
             case RWE_LOAD_COLUMN:
                 return car.getReturnWhenEmptyLoadName();
+            case RWL_DESTINATION_COLUMN:
+                return car.getReturnWhenLoadedDestName();
+            case RWL_LOAD_COLUMN:
+                return car.getReturnWhenLoadedLoadName();
+            case DIVISION_COLUMN:
+                return car.getDivisionName();
             case TRAIN_COLUMN: {
                 // if train was manually set by user add an asterisk
                 if (car.getTrain() != null && car.getRouteLocation() == null) {
@@ -678,12 +720,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     log.error("move count must be a number");
                 }
                 break;
-            case BUILT_COLUMN:
-                car.setBuilt(value.toString());
-                break;
-            case OWNER_COLUMN:
-                car.setOwner(value.toString());
-                break;
             case VALUE_COLUMN:
                 car.setValue(value.toString());
                 break;
@@ -696,9 +732,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 } catch (NumberFormatException e) {
                     log.error("wait count must be a number");
                 }
-                break;
-            case LAST_COLUMN:
-                // do nothing
                 break;
             default:
                 break;
@@ -731,8 +764,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateList();

@@ -1,83 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Sharing DecoderPro Rosters across a
-  Network</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: DecoderPro - Sharing DecoderPro Rosters across a Network</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>Sharing DecoderPro Rosters across a
-      Network</h2><strong>Note:</strong>
-
-      <p><strong>The information on this page is somewhat dated in
-      terms of file locations, Preferences settings and a
-      recommended solution. For more up-to-date information see
-      <a href="../../setup/Dropbox.shtml">Using
-      DropBox</a>.</strong></p>A common question:
-
+      <h2>Sharing DecoderPro Rosters across a Network</h2>
+      <strong>Note:</strong>
+      <p><strong>The information on this page is somewhat dated in terms of file locations,
+      Preferences settings and a recommended solution. For more up-to-date information see <a href=
+      "../../setup/Dropbox.shtml">Using DropBox</a>.</strong>
+      </p>
+      A common question:
       <blockquote>
-        I have a computer at both my workbench, where I program my
-        engines, and one at my layout location. They are not
-        portable, but all the PC's at my house are networked
-        together (Windows XP clients and a Windows 2000 Server). I
-        would like to store the roster and all else that is needed
-        on the Windows 2000 server and be able to run copies of
-        DecoderPro on at lease two of the Windows XP PC's. Is that
-        possible?
-      </blockquote>Yes!
-
-      <p>Configure the Windows machines so there's a shared
-      directory, and then you can set the JMRI "advanced
-      preferences" to put the roster information inside that.</p>
+        I have a computer at both my workbench, where I program my engines, and one at my layout
+        location. They are not portable, but all the PC's at my house are networked together
+        (Windows XP clients and a Windows 2000 Server). I would like to store the roster and all
+        else that is needed on the Windows 2000 server and be able to run copies of DecoderPro on
+        at lease two of the Windows XP PC's. Is that possible?
+      </blockquote>
+      Yes!
+      <p>Configure the Windows machines so there's a shared directory, and then you can set the
+      JMRI "advanced preferences" to put the roster information inside that.</p>
 
       <ol>
         <li>Set up a shared directory.</li>
 
-        <li>Select which roster you want to start with (since there
-        might be separate ones on different machines already). On
-        that machine, find the "roster.xml" file and "roster"
+        <li>Select which roster you want to start with (since there might be separate ones on
+        different machines already). On that machine, find the "roster.xml" file and "roster"
         directory in the preferences directory.
+          <p>For more information, please see the DecoderPro pages on the <a href=
+          "RosterFile.shtml">roster files</a> and <a href="Files.shtml#location">file
+          locations</a>.</p>
 
-          <p>For more information, please see the DecoderPro pages
-          on the <a href="RosterFile.shtml">roster files</a> and
-          <a href="Files.shtml#location">file locations</a>.</p>
-
-          <p>Copy, _do not move_, the roster.xml file and roster
-          folder to the shared folder. You must copy the _entire_
-          contents of the roster directory!</p>
+          <p>Copy, _do not move_, the roster.xml file and roster folder to the shared folder. You
+          must copy the _entire_ contents of the roster directory!</p>
         </li>
 
-        <li>On each machine that is to use the shared roster, start
-        DecoderPro, select Preferences from the Edit menu, and
-        click "Show Advanced Preferences". The window will get
-        bigger. Press "Set" under "Roster:" and follow
-        directions.</li>
-      </ol><!--#include virtual="/Footer.shtml" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+        <li>On each machine that is to use the shared roster, start DecoderPro, select Preferences
+        from the Edit menu, and click "Show Advanced Preferences". The window will get bigger.
+        Press "Set" under "Roster:" and follow directions.</li>
+      </ol>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- closes #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

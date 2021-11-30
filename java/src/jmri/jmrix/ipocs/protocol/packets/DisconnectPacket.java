@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqDisconnect;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class DisconnectPacket extends Packet {
   public final static byte IDENT = 3;
-  private RqDisconnect reason;
+  private RqDisconnect reason = null;
 
   @Override
   public byte getId() {

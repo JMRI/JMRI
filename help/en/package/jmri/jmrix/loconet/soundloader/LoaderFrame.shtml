@@ -1,135 +1,101 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Sound Loader</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help loconet sound loader">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Sound Loader</h1>Digitrax sound decoders are loaded with
-      "sound projects", stored in "Sound Project" (.spj) files.
-      Those contain a number of "sound fragments" in .wav format,
-      plus some additional control information.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Sound Loader</h1>
+      Digitrax sound decoders are loaded with "sound projects", stored in "Sound Project" (.spj)
+      files. Those contain a number of "sound fragments" in .wav format, plus some additional
+      control information.
+      <p>The Decoder Sound Downloader tool lets you load a new .spj file into a Digitrax sound
+      decoder via a Digitrax PR2 or PR3 interface. If you're using a PR3, it needs to be put into
+      "Programmer mode" before trying to download, see the main <a href=
+      "../../../../../html/hardware/loconet/PR3.shtml">PR3 page</a>.</p>
 
-      <p>The Decoder Sound Downloader tool lets you load a new .spj
-      file into a Digitrax sound decoder via a Digitrax PR2 or PR3
-      interface. If you're using a PR3, it needs to be put into
-      "Programmer mode" before trying to download, see the main
-      <a href="../../../../../html/hardware/loconet/PR3.shtml">PR3
-      page</a>.</p>
+      <p>Digitrax provides sample sound project files at their Sound Depot <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web
+      site. You can also find links to documentation and additional tools there.</p>
 
-      <p>Digitrax provides sample sound project files at their
-      Sound Depot <a href=
-      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
-      web site. You can also find links to documentation and
-      additional tools there.</p>
-
-      <p>JMRI also provides tools for <a href=
-      "EditorFrame.shtml">editing sound project files</a> to
-      include new sounds and even to <a href=
-      "../sdfeditor/EditorFrame.shtml">change the sound
+      <p>JMRI also provides tools for <a href="EditorFrame.shtml">editing sound project files</a>
+      to include new sounds and even to <a href="../sdfeditor/EditorFrame.shtml">change the sound
       logic</a>.</p>
 
-      <h2>Using the downloader</h2>When you first select the
-      Download Sounds tool, it opens a window with most of the
-      controls disabled:<br>
-      <a href="LoaderPane.gif"><img src="LoaderPane.gif" width=
-      "236" height="118" alt="Initial Editor Image"></a><br>
+      <h2>Using the downloader</h2>
+      When you first select the Download Sounds tool, it opens a window with most of the controls
+      disabled:<br>
+      <a href="LoaderPane.gif"><img src="LoaderPane.gif" width="236" height="118" alt=
+      "Initial Editor Image"></a><br>
       (Click on any image on this page to see a larger version)
-
-      <p>The status line at the bottom will walk you through the
-      steps needed.</p>
+      <p>The status line at the bottom will walk you through the steps needed.</p>
 
       <ol>
-        <li>First, click "Select" and pick the .spj file you want
-        to download.</li>
+        <li>First, click "Select" and pick the .spj file you want to download.</li>
 
-        <li>Next, click "Read" to read the file (this is a separate
-        step so you can just click "Read" multiple times if you're
-        editing and saving new versions of the file).
+        <li>Next, click "Read" to read the file (this is a separate step so you can just click
+        "Read" multiple times if you're editing and saving new versions of the file).
+          <p>If everything is OK, the file will be read into the program and verified, a version
+          string from the file will be displayed, and the "Download" button will be enabled.</p>
 
-          <p>If everything is OK, the file will be read into the
-          program and verified, a version string from the file will
-          be displayed, and the "Download" button will be
-          enabled.</p>
-
-          <p><a href="LoaderPaneReady.gif"><img src=
-          "LoaderPaneReady.gif" width="236" height="118" alt=
-          "Initial Editor Image"></a><br></p>
+          <p><a href="LoaderPaneReady.gif"><img src="LoaderPaneReady.gif" width="236" height="118"
+          alt="Initial Editor Image"></a><br>
+          </p>
         </li>
 
-        <li>Click "Download" to start the download process. It will
-        take a little while. The progress is described in the
-        status line:
-
+        <li>Click "Download" to start the download process. It will take a little while. The
+        progress is described in the status line:
           <dl>
             <dt>"Starting download; erase flash"</dt>
 
-            <dd>The first step is to erase the decoders memory so
-            it can take new data. This will take up to about 30
-            secondx, depending on the specific decoder.</dd>
+            <dd>The first step is to erase the decoders memory so it can take new data. This will
+            take up to about 30 secondx, depending on the specific decoder.</dd>
 
             <dt>"Sending initialization message"</dt>
 
-            <dd>Set up the decoder to accept data after being
-            erased. This should only take a fraction of a
-            second.</dd>
+            <dd>Set up the decoder to accept data after being erased. This should only take a
+            fraction of a second.</dd>
 
             <dt>"Send SDF data"</dt>
 
-            <dd>Load the Sound Definition data into the decoder,
-            which should only take a few seconds</dd>
+            <dd>Load the Sound Definition data into the decoder, which should only take a few
+            seconds</dd>
 
             <dt>"Send WAV data"</dt>
 
-            <dd>The sound data is being downloaded. As each block
-            is sent you'll get an update: "Send WAV data block 1",
-            then 2, then 3, etc.</dd>
+            <dd>The sound data is being downloaded. As each block is sent you'll get an update:
+            "Send WAV data block 1", then 2, then 3, etc.</dd>
 
             <dt>"Done"</dt>
 
             <dd>The downloadload completed OK.</dd>
-          </dl>If something goes wrong, the final status will be
-          "Download aborted". The most common reason is that the
-          PR2 couldn't handle the data that was being send, which
-          is listed as "PR2 not ready". If this happens repeatedly,
-          make sure that the serial port and cable that the PR2 is
-          using as the control leads properly connected. An
-          intermitted cable can cause problems here.
+          </dl>
+          If something goes wrong, the final status will be "Download aborted". The most common
+          reason is that the PR2 couldn't handle the data that was being send, which is listed as
+          "PR2 not ready". If this happens repeatedly, make sure that the serial port and cable
+          that the PR2 is using as the control leads properly connected. An intermitted cable can
+          cause problems here.
         </li>
       </ol>
 
-      <p>If you have more decoders to load with the same file, you
-      can just connect them each in turn to the PR2/PR3 and click
-      "Download", there's no need to reload the file each time.</p>
+      <p>If you have more decoders to load with the same file, you can just connect them each in
+      turn to the PR2/PR3 and click "Download", there's no need to reload the file each time.</p>
 
       <p>Also, you can use a JMRI <a href=
-      "../../../../../html/tools/throttle/ThrottleMain.shtml">Throttle</a>
-      to try out your new sounds via the PR2. JMRI takes care of
-      converting the PR2/PR3 from a programmer/loader into a low
-      power command station to run the locomotive.</p>
+      "../../../../../html/tools/throttle/ThrottleMain.shtml">Throttle</a> to try out your new
+      sounds via the PR2. JMRI takes care of converting the PR2/PR3 from a programmer/loader into a
+      low power command station to run the locomotive.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class EngineerTest {
         assertThat(t).withFailMessage("exists").isNotNull();
         t.stopRun(true, true);
         JUnitAppender.assertErrorMessageStartsWith("Throttle Manager unavailable or cannot provide throttle. 5(S)");
-        warrant.stopWarrant(true);
+        warrant.stopWarrant(true, true);
     }
 
     @BeforeEach
@@ -34,7 +34,6 @@ public class EngineerTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

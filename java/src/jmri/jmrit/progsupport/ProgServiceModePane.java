@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a JPanel to configure the service mode programmer.
+ * Provide a JPanel to configure the service mode (Global) programmer.
  * <p>
  * The using code should get a configured programmer with getProgrammer. Since
  * there's only one service mode programmer, maybe this isn't critical, but it's
@@ -42,7 +42,8 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen      Copyright (C) 2001, 2014
+ * @author Daniel Bergqvist  Copyright (C) 2021
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -108,7 +109,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         setLayout(new BoxLayout(this, direction));
 
         // create the programmer display combo box
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
+        java.util.List<GlobalProgrammerManager> v = new java.util.ArrayList<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
             Programmer progrmr = pm.getGlobalProgrammer();
             if (progrmr!=null) {
@@ -118,7 +119,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
             }
         }
 
-        add(progBox = new JComboBox<>(v));
+        add(progBox = new JComboBox<>(v.toArray(new GlobalProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             // no choice, so don't display, don't monitor for changes
@@ -126,14 +127,14 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         } else {
             log.debug("Set combobox box selection to InstanceManager global default: {}", InstanceManager.getDefault(jmri.GlobalProgrammerManager.class));
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-            progBox.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // new programmer selection
-                    programmerSelected();
-                }
+            progBox.addActionListener((java.awt.event.ActionEvent e) -> {
+                // new programmer selection
+                programmerSelected();
             });
         }
+
+        // Horizontal glue is needed since the panel is too narrow otherwise
+        add(javax.swing.Box.createHorizontalGlue());
 
         // and execute the setup for 1st time
         programmerSelected();

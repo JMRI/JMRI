@@ -6,11 +6,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -32,13 +35,15 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
-import jmri.jmrit.roster.swing.speedprofile.SpeedProfileTable;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +70,31 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     enum Location {
         ORIGIN, DEST, VIA, AVOID
     }
+    enum Display {
+        MPH("mph"), KPH("kph"), MMPS("mmps"), INPS("inps"), IN("in"), CM("cm");
+        String _bundleKey;
+        Display(String bundleName) {
+            _bundleKey = bundleName;
+        }
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+    static class DisplayButton extends JButton {
+        Display pref;
+        DisplayButton(Display p) {
+            super();
+            setDisplayPref(p);
+        }
+        void setDisplayPref(Display p) {
+            pref = p;
+            setText(p.toString());
+        }
+        Display getDisplyPref() {
+            return pref;
+        }
+    }
     protected RouteLocation _origin = new RouteLocation(Location.ORIGIN);
     protected RouteLocation _destination = new RouteLocation(Location.DEST);
     protected RouteLocation _via = new RouteLocation(Location.VIA);
@@ -72,6 +102,9 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     protected RouteLocation _focusedField;
 
     protected SpeedUtil _speedUtil;
+    protected Display _displayPref; // speed units preference
+    protected Display _units;       // distance units preference
+    protected float _scale = 87.1f;
 
     static int STRUT_SIZE = 10;
     private int _depth = 20;
@@ -87,12 +120,11 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private JButton _stopButton;
 
     private final JComboBox<String> _rosterBox = new JComboBox<>();
-    private final JTextField _dccNumBox = new JTextField();
+    private final AddressTextField _dccNumBox = new AddressTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
     private JmriJFrame _spTable = null;
     private JmriJFrame _pickListFrame;
-    protected boolean _dirty = false;
 
 
     /**
@@ -104,16 +136,49 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _searchDepth.setText(Integer.toString(_depth));
         _routeModel = new RouteTableModel();
         _speedUtil = new SpeedUtil();
-        getRoster();
+
+        int interpretation = SignalSpeedMap.SPEED_KMPH;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp != null) {
+            interpretation = WarrantPreferences.getDefault().getInterpretation();
+            _scale = wp.getLayoutScale();
+        }
+        if (interpretation == SignalSpeedMap.SPEED_MPH) {
+            _displayPref = Display.MPH;
+            _units = Display.IN;
+        } else if (interpretation == SignalSpeedMap.SPEED_KMPH) {
+            _displayPref = Display.KPH;
+            _units = Display.CM;
+        } else {
+            _displayPref = Display.INPS;
+            _units = Display.IN;
+        }
+        setupRoster();
     }
 
     protected abstract void selectedRoute(ArrayList<BlockOrder> orders);
+    protected abstract void maxThrottleEventAction();
 
     @Override
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
     
     protected void setSpeedUtil(SpeedUtil sp) {
         _speedUtil = sp;
+    }
+
+    static class AddressTextField extends JTextField implements FocusListener {
+        public AddressTextField() {
+            super();
+            addFocusListener(this);
+        }
+        @Override
+        public void focusGained(FocusEvent e) {
+            
+        }
+        @Override
+        public void focusLost(FocusEvent e) {
+            fireActionPerformed();
+        }
     }
 
     /* ************************* Panel for Route search depth **********************/
@@ -190,7 +255,10 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     /* ************************* Train ID info: Loco Address, etc **********************/
     /**
      * Make panel containing TextFields for Train name and address and ComboBox
-     * for Roster entries
+     * for Roster entries. called from:
+     * WarrantFrame.makeBorderedTrainPanel() at init of WarrantFrame
+     * NXFrame.makeAutoRunPanel() at init of NXFrame
+     * 
      *
      * @param comp optional panel to add
      * @return panel
@@ -206,28 +274,27 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
         panel.add(Box.createVerticalStrut(2));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
+        _dccNumBox.addActionListener((ActionEvent e) -> {
+            checkAddress();
+        });
+
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
         p.add(_viewProfile);
+        _viewProfile.addActionListener((ActionEvent e) -> {
+            showProfile();
+        });
         panel.add(p);
         if (comp != null) {
             panel.add(comp);
         }
         trainPanel.add(panel);
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        _dccNumBox.addActionListener((ActionEvent e) -> {
-            _speedUtil.setDccAddress(_dccNumBox.getText());
-            if (_speedUtil.getRosterEntry() == null) {
-                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-            } else {
-                setTrainInfo(_trainNameBox.getText());
-            }
-        });
+        
         return trainPanel;
     }
 
-    private void getRoster() {
+    private void setupRoster() {
         List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
         _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _rosterBox.addItem(" ");
@@ -238,74 +305,111 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         }
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener((ActionEvent e) -> {
-            String selection = (String) _rosterBox.getSelectedItem();
-            if (selection != null && !Bundle.getMessage("noSuchAddress").equals(selection)
-                    && selection.trim().length() != 0) {
-                _speedUtil.setDccAddress(selection);
-                setTrainInfo(_trainNameBox.getText());
-            }
-        });
-
-        _viewProfile.addActionListener((ActionEvent e) -> {
-            showProfile();
+            checkAddress();
         });
     }
 
     private void showProfile() {
-        if (_spTable != null) {
-            _spTable.dispose();
-        }
-        _spTable = makeSessionProfileTable();
-        if (_spTable != null) {
-            _spTable.setVisible(true);
+        closeProfileTable();
+
+        String id = _speedUtil.getRosterId();
+        if (id == null || id.isEmpty()) {
             return;
-        } else {
-            RosterEntry re = _speedUtil.getRosterEntry();
-            if (re != null) {
-                RosterSpeedProfile speedProfile = re.getSpeedProfile();
-                if (speedProfile != null && (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds())) {
-                    _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
-                    _spTable.setVisible(true);
-                    return;
-                }
+        }
+        if (Roster.getDefault().getEntryForId(id) == null) {
+            DccLocoAddress dccAddr = _speedUtil.getDccAddress();
+            String rosterId = JOptionPane.showInputDialog(this,
+                    Bundle.getMessage("makeRosterEntry", _speedUtil.getAddress()),
+                    Bundle.getMessage("QuestionTitle"),
+                    JOptionPane.QUESTION_MESSAGE);
+            if (log.isDebugEnabled()) {
+                log.debug("Create roster entry {}", rosterId);
+            }
+            if (rosterId != null && !rosterId.isEmpty()) {
+                RosterEntry rosterEntry = new RosterEntry();
+                Roster.getDefault().addEntry(rosterEntry);
+                rosterEntry.setId(rosterId);
+                rosterEntry.setDccAddress(String.valueOf(dccAddr.getNumber()));
+                rosterEntry.setProtocol(dccAddr.getProtocol());
+                rosterEntry.ensureFilenameExists();
+                WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
+                RosterSpeedProfile mergeProfile = _speedUtil.getMergeProfile();
+                mgr.setMergeProfile(rosterId, mergeProfile);
+                mgr.getMergeProfiles().remove(id);
+                _speedUtil.setRosterId(rosterId);
             }
         }
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
-    }
-    
-    private JmriJFrame makeSessionProfileTable() {
-        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
-        if (!speedProfile.hasForwardSpeeds() && !speedProfile.hasReverseSpeeds()) {
-            return null;
+
+        JPanel viewPanel = makeViewPanel(id);
+        if (viewPanel == null) {
+            if (id.charAt(0) != '$' || id.charAt(id.length()-1) != '$') {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            } 
+            return;
         }
-        JmriJFrame frame = new JmriJFrame(false, true);
+        _spTable = new JmriJFrame(false, true);
         JPanel framePanel = new JPanel();
         framePanel.setLayout(new BoxLayout(framePanel, BoxLayout.PAGE_AXIS));
         framePanel.add(Box.createGlue());
-        framePanel.add(new JLabel(Bundle.getMessage("viewTitle", _speedUtil.getRosterId())));
-        framePanel.add(MergePrompt.makeEditInfoPanel(_speedUtil.getRosterId()));
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        panel.add(Box.createGlue());
 
-        Map<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
-        if (an != null && an.size() > 0) {
-            framePanel.add(MergePrompt.makeAnomalyPanel());
-        }
-        panel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, an));
-        panel.add(Box.createGlue());
-
-        speedProfile = _speedUtil.getSessionProfile();
-        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
-            panel.add(MergePrompt.makeSpeedProfilePanel("sessionSpeedProfile", speedProfile, false, null));
-            panel.add(Box.createGlue());
-        }
-        framePanel.add(panel);
-        frame.getContentPane().add(framePanel);
-        frame.pack();
-        return frame;
+        framePanel.add(viewPanel);
+        _spTable.getContentPane().add(framePanel);
+        _spTable.pack();
+        _spTable.setVisible(true);
     }
 
+    JPanel makeViewPanel(String id) {
+        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        RosterEntry re = Roster.getDefault().getEntryForId(id);
+        RosterSpeedProfile rosterSpeedProfile;
+        if (re != null) {
+            rosterSpeedProfile = re.getSpeedProfile();
+        } else {
+            rosterSpeedProfile = null;
+        }
+        if ((speedProfile == null || speedProfile.getProfileSize() == 0) && 
+                (rosterSpeedProfile == null || rosterSpeedProfile.getProfileSize() == 0)) {
+            _viewProfile.setEnabled(false);
+            return null;
+        } else {
+            _viewProfile.setEnabled(true);
+        }
+        JPanel viewPanel = new JPanel();
+        viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
+        viewPanel.add(Box.createGlue());
+        JPanel panel = new JPanel();
+        panel.add(MergePrompt.makeEditInfoPanel(id));
+        viewPanel.add(panel);
+
+        JPanel spPanel = new JPanel();
+        spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
+        spPanel.add(Box.createGlue());
+
+        if (rosterSpeedProfile != null ) {
+            Map<Integer, Boolean> anomilies = MergePrompt.validateSpeedProfile(rosterSpeedProfile);
+            spPanel.add(MergePrompt.makeSpeedProfilePanel("rosterSpeedProfile", rosterSpeedProfile,  false, anomilies));
+            spPanel.add(Box.createGlue());
+        }
+        if (speedProfile != null) {
+            Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(speedProfile);
+            spPanel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, anomaly));
+            spPanel.add(Box.createGlue());
+        }
+
+        viewPanel.add(spPanel);
+        return viewPanel;
+    }
+
+
+    protected void closeProfileTable() {
+        if (_spTable != null) {
+            _spTable.dispose();
+            _spTable = null;
+        }            
+    }
+
+    // called by WarrantFrame.setup()
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: {}", name);
@@ -314,19 +418,23 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _dccNumBox.setText(_speedUtil.getAddress());
         setRosterBox();
         if (name == null) {
-            if (_speedUtil.getRosterEntry()!=null) {
-                setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
+            RosterEntry re = _speedUtil.getRosterEntry();
+            if (re != null) {
+                setTrainName(re.getRoadNumber());
+                setRosterBox();
             } else {
                 setTrainName(_speedUtil.getAddress()); 
             }
         }
-        _dirty = true;
         return null;
     }
     
     private void setRosterBox() {
         String id = _speedUtil.getRosterId();
-        if (id != null) {
+        if (id != null && id.equals(_rosterBox.getSelectedItem())) {
+            return;
+        }
+        if (id != null && id.charAt(0) != '$' && id.charAt(id.length()-1) !='$') {
             _rosterBox.setSelectedItem(id);
         } else {
             _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
@@ -344,11 +452,65 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         }
         return trainName;
     }
-    
-    protected void setAddress() {
-        _speedUtil.setDccAddress(_dccNumBox.getText());
-        _dirty = true;
-        setRosterBox();
+
+    private void checkAddress() {
+        String msg = setAddress();
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * Called to make final consistency check on loco address before running warrant
+     * @return error message
+     */
+    protected String setAddress() {
+        String msg = null;
+        String suAddr = _speedUtil.getAddress();
+        String addrText = _dccNumBox.getText();
+        String suId = _speedUtil.getRosterId();
+        boolean textChange = false;
+        if ( !addrText.equals(suAddr) || suId == null) {
+            textChange = true;
+            if (!_speedUtil.setAddress(_dccNumBox.getText())) {
+                msg = Bundle.getMessage("BadDccAddress", _dccNumBox.getText());
+            } else {   // else address OK.
+                suAddr = _speedUtil.getAddress();
+                _dccNumBox.setText(suAddr);  // add protocol string
+                suId = _speedUtil.getRosterId();
+                maxThrottleEventAction();
+                if (suId != null && !(suId.charAt(0) == '$' && suId.charAt(suId.length()-1) =='$')) {
+                    _rosterBox.setSelectedItem(suId);
+                } else {
+                    _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+                    return null;
+                }
+            }
+        }
+
+        String id = (String)_rosterBox.getSelectedItem();
+        RosterEntry re = Roster.getDefault().getEntryForId(id);
+        boolean isRoster = (re != null);
+        suId = _speedUtil.getRosterId();
+        if (suId != null && suId.charAt(0) == '$' && suId.charAt(suId.length()-1) =='$') {
+            isRoster = true;
+        }
+        if (!textChange && !isRoster) {
+            _dccNumBox.setText(null);
+            return null;
+        }
+        if (re != null) {
+           if (!re.getDccLocoAddress().equals(_speedUtil.getDccAddress())) {
+               _speedUtil.setRosterId(id);
+           }
+           _dccNumBox.setText(re.getDccLocoAddress().toString());
+           maxThrottleEventAction();
+           msg = null;
+        } else if (msg == null) {
+            _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+        }
+        return msg;
     }
 
     protected String getAddress() {
@@ -362,7 +524,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         return null;
     }
 
-    private void calculate() {
+    protected void calculate() {
         String msg = findRoute();
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
@@ -1062,7 +1224,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         for (TreeNode node : nodes) {
             _orders.add((BlockOrder) ((DefaultMutableTreeNode) node).getUserObject());
         }
-//        _dirty = true;
         _routeModel.fireTableDataChanged();
         if (log.isDebugEnabled()) {
             log.debug("showRoute: Route has {} orders.", _orders.size());
@@ -1079,7 +1240,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         }
         JScrollPane tablePane = new JScrollPane(routeTable);
         Dimension dim = routeTable.getPreferredSize();
-        dim.height = routeTable.getRowHeight() * 8;
+        dim.height = routeTable.getRowHeight() * 11;
         tablePane.getViewport().setPreferredSize(dim);
 
         JPanel routePanel = new JPanel();
@@ -1140,10 +1301,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             _pickRouteDialog.dispose();
             _pickRouteDialog = null;
         }
-        if (_spTable != null) {
-            _spTable.dispose();
-            _spTable = null;
-        }
+        closeProfileTable();
+
         if (_pickListFrame != null) {
             _pickListFrame.dispose();
             _pickListFrame = null;
@@ -1339,30 +1498,28 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
      *
      * @param vertical Label orientation true = above, false = left
      * @param comp     Component to put into JPanel
-     * @param label    Bundle keyword for label message
+     * @param text    Bundle keyword for label message
      * @param tooltip  Bundle keyword for tooltip message
      * @return Panel containing Component
      */
-    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent comp, String label, String tooltip) {
+    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent comp, String text, String tooltip) {
         JPanel panel = new JPanel();
-        JLabel l = new JLabel(Bundle.getMessage(label));
+        JLabel label = new JLabel(Bundle.getMessage(text));
         if (vertical) {
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             comp.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
         } else {
             panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
-        panel.add(l);
+        panel.add(label);
         if (!vertical) {
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
-        comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
-        comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
         panel.add(comp);
         if (vertical) {
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -1376,7 +1533,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             String tipText = Bundle.getMessage(tooltip);
             panel.setToolTipText(tipText);
             comp.setToolTipText(tipText);
-            l.setToolTipText(tipText);
+            label.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
@@ -1384,29 +1541,30 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     /**
+     * Make a horizontal panel for the input of data
      * Puts label message to the Left, 2nd component (button) to the right
      *
-     * @param comp     Component to put into JPanel
+     * @param comp     Component for input of data 
      * @param button   2nd Component for panel, usually a button
      * @param label    Bundle keyword for label message
      * @param tooltip  Bundle keyword for tooltip message
-     * @return Panel containing Component
+     * @return Panel containing Components
      */
-    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, String label, String tooltip) {
+    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, JLabel label, String tooltip) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage(label));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(l);
+        panel.add(label);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(Box.createHorizontalGlue());
 
+        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
         panel.add(comp);
         if (comp instanceof JTextField || comp instanceof JComboBox) {
             comp.setBackground(Color.white);
         }
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         button.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
         panel.add(button);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -1414,12 +1572,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         if (tooltip != null) {
             String tipText = Bundle.getMessage(tooltip);
             panel.setToolTipText(tipText);
-            button.setToolTipText(tipText);
             comp.setToolTipText(tipText);
-            l.setToolTipText(tipText);
+            button.setToolTipText(tipText);
+            label.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
-        panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
+        panel.setMinimumSize(new Dimension(50, comp.getPreferredSize().height));
         return panel;        
     }
     /**

@@ -1,85 +1,68 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Open Scripting Architecture</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Open Scripting Architecture</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Open Scripting Architecture</h1>
 
-      <p>On macOS, you can use the Open Scripting Architecture
-      (OSA) with JMRI to send instructions to OS X or other
-      applications.</p>
+      <p>On macOS, you can use the Open Scripting Architecture (OSA) with JMRI to send instructions
+      to OS X or other applications.</p>
 
-      <p>You can embed or call OSA scripts within JMRI scripts,
-      invoking them to have your Mac perform functions outside
-      JMRI. An example of this is in the <a href=
-      "https://jmri.org/jython/AppleScript.py">AppleScript.py</a>
-      sample script distributed with JMRI. It executes a simple
-      AppleScript:</p>
+      <p>You can embed or call OSA scripts within JMRI scripts, invoking them to have your Mac
+      perform functions outside JMRI. An example of this is in the <a href=
+      "https://jmri.org/jython/AppleScript.py">AppleScript.py</a> sample script distributed with
+      JMRI. It executes a simple AppleScript:</p>
+
       <pre style="font-family: monospace;">
   tell application "Finder"
     make new folder at desktop
   end tell
                 
 </pre>
-      
-      <p>The sample script shows how to do this, and can easily
-      form the basis for running your own OSA scripts from within
-      JMRI.</p>
+      <p>The sample script shows how to do this, and can easily form the basis for running your own
+      OSA scripts from within JMRI.</p>
 
-      <p>JMRI 4.5.2 or newer can directly call AppleScript without
-      embedding it in another script by adding 
-      <a href="https://jmri.github.io/applescript">JMRI AppleScript Support</a>
-      to your JMRI installation. Note that this may not work in future
-      versions of macOS or Java.</p>
+      <p>JMRI 4.5.2 or newer can directly call AppleScript without embedding it in another script
+      by adding <a href="https://jmri.github.io/applescript">JMRI AppleScript Support</a> to your
+      JMRI installation. Note that this may not work in future versions of macOS or Java.</p>
 
       <h2>AppleScript Information</h2>
 
       <p>For more information on AppleScript, please see:</p>
 
       <ul>
-        <li><a href=
-        "http://help.apple.com/applescript/mac/10.9/">AppleScript
-        Help</a> at <a href="http://www.apple.com/">Apple</a>.</li>
+        <li>
+          <a href="http://help.apple.com/applescript/mac/10.9/">AppleScript Help</a> at <a href=
+          "http://www.apple.com/">Apple</a>.
+        </li>
 
-        <li>The <a href=
-        "http://en.wikipedia.org/wiki/AppleScript">Wikipedia
-        AppleScript article</a> has some interesting background
-        info.</li>
+        <li>The <a href="http://en.wikipedia.org/wiki/AppleScript">Wikipedia AppleScript
+        article</a> has some interesting background info.
+        </li>
 
-        <li><a href=
-        "http://developer.apple.com/applescript">AppleScript
-        Overview</a> at <a href=
-        "http://developer.apple.com/">Apple</a>.</li>
+        <li>
+          <a href="http://developer.apple.com/applescript">AppleScript Overview</a> at <a href=
+          "http://developer.apple.com/">Apple</a>.
+        </li>
       </ul>
 
-      <p>A <a href=
-      "http://www.google.com/search?q=applescript">Google
-      search</a> will turn up lots of interesting resources.</p>
+      <p>A <a href="http://www.google.com/search?q=applescript">Google search</a> will turn up lots
+      of interesting resources.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

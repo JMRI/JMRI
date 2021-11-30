@@ -1,55 +1,36 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI: XML I/O Servlet - no longer supported</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: XML I/O Servlet - no longer supported</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
-      <h1>JMRI: XML I/O Servlet - no longer
-      supported</h1><strong>The XML I/O protocol was removed from JMRI in the 3.11 development
+      <h1>JMRI: XML I/O Servlet - no longer supported</h1>
+      <strong>The XML I/O protocol was removed from JMRI in the 3.11 development
       cycle.</strong><br>
-      Affected applications should be ported to using the <a href=
-      "JsonServlet.shtml">JSON protocol</a>.<br>
+      Affected applications should be ported to using the <a href="JsonServlet.shtml">JSON
+      protocol</a>.<br>
       This page is only for reference of older versions.
-
-      <p>The JMRI XML I/O Servlet provides bidirectional web access
-      to JMRI services.</p>
+      <p>The JMRI XML I/O Servlet provides bidirectional web access to JMRI services.</p>
 
       <p>The servlet lives in the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
-      jmri.web.servlet.xmlio</a> package, and provides web access
-      to the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
-      JMRI XML I/O package</a>. By default, the JMRI Web Server
-      will send any URL that starts with <code>/xmlio</code> to
-      this servlet. It will list all known elements of a specified
-      type, accept changes to the value/state of elements, and
-      respond with current value/state of elements. If sent a list
-      of elements with current values, it will "monitor" for
-      changes to any of those elements, returning the new
-      values.</p>Element types fully supported:
-
+      "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">jmri.web.servlet.xmlio</a>
+      package, and provides web access to the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">JMRI XML I/O package</a>.
+      By default, the JMRI Web Server will send any URL that starts with <code>/xmlio</code> to
+      this servlet. It will list all known elements of a specified type, accept changes to the
+      value/state of elements, and respond with current value/state of elements. If sent a list of
+      elements with current values, it will "monitor" for changes to any of those elements,
+      returning the new values.</p>
+      Element types fully supported:
       <ul>
         <li>power</li>
 
@@ -64,8 +45,8 @@
         <li>memory</li>
 
         <li>route</li>
-      </ul>Element types list-only:
-
+      </ul>
+      Element types list-only:
       <ul>
         <li>roster</li>
 
@@ -76,76 +57,76 @@
         <li>metadata</li>
 
         <li>railroad</li>
-      </ul>Throttle is a unique case, with a slightly different
-      syntax, supporting read and change, but not list or
-      monitoring:
-
+      </ul>
+      Throttle is a unique case, with a slightly different syntax, supporting read and change, but
+      not list or monitoring:
       <ul>
         <li>throttle</li>
-      </ul>There are several sample pages that (used to) show how
-      this can be used:
-
+      </ul>
+      There are several sample pages that (used to) show how this can be used:
       <dl>
-        <dt><a href=
-        "http://localhost:12080/web/request.html">web/request.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/request.html">web/request.html</a>
+        </dt>
 
-        <dd>Makes a single XML request for all available sensors,
-        and shows their status in a table.</dd>
+        <dd>Makes a single XML request for all available sensors, and shows their status in a
+        table.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/monitor.html">web/monitor.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
+        </dt>
 
-        <dd>Uses delayed requests to monitor the status of all
-        sensors, updating a table when any change.</dd>
+        <dd>Uses delayed requests to monitor the status of all sensors, updating a table when any
+        change.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/throttle.html">web/throttle.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
+        </dt>
 
-        <dd>Sends a speed command to a DCC locomotive on the layout
-        when a button is pressed.</dd>
+        <dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a>
+        </dt>
 
         <dd>Example of a control panel on a web page.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/turnoutMonitor.html">web/turnoutMonitor.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/turnoutMonitor.html">web/turnoutMonitor.html</a>
+        </dt>
 
-        <dd>More complex turnout table, with buttons to throw and
-        close turnouts.</dd>
+        <dd>More complex turnout table, with buttons to throw and close turnouts.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a>
+        </dt>
 
-        <dd>Useful for sending various commands to xmlio server and
-        viewing the responses.</dd>
+        <dd>Useful for sending various commands to xmlio server and viewing the responses.</dd>
 
-        <dt><a href=
-        "http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a></dt>
+        <dt>
+          <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a>
+        </dt>
 
-        <dd>This tool uses the xmlio server for retrieving data
-        from JMRI, sending changes and monitoring for changes to
-        elements.</dd>
+        <dd>This tool uses the xmlio server for retrieving data from JMRI, sending changes and
+        monitoring for changes to elements.</dd>
       </dl>
 
-      <p>Please note that the XML I/O servlet was only supported
-      with the <a href="index.shtml">JMRI Web Server</a>, and may
-      not work with other servlet containers.</p>
+      <p>Please note that the XML I/O servlet was only supported with the <a href=
+      "index.shtml">JMRI Web Server</a>, and may not work with other servlet containers.</p>
 
       <h2>Request Format</h2>
 
-      <p>The XML schema is defined in the <a href=
-      "https://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema
-      document</a>.</p>
+      <p>The XML schema is defined in the <a href="https://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd
+      schema document</a>.</p>
 
-      <p>There is also an attribute-based syntax available (see
-      status examples below). The xmlio server responds with the
-      same syntax used in the request.</p>
+      <p>There is also an attribute-based syntax available (see status examples below). The xmlio
+      server responds with the same syntax used in the request.</p>
 
       <p>Below are some example requests and responses.</p>
 
-      <h3>Get the status of individual objects</h3>Request:
+      <h3>Get the status of individual objects</h3>
+      Request:
+
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -162,6 +143,7 @@
   &lt;/item&gt;
 &lt;/xmlio&gt;
 </pre>Reply:
+
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -180,13 +162,13 @@
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre>The "value" element is inserted in the request, and then it's
-returned as the reply. You can just turn the reply around and use
-it as another request. If "value" elements are present for all
-items, the response will only be returned when one or more of the
-included item's state has changed to something different.
+</pre>The "value" element is inserted in the request, and then it's returned as the reply. You can
+just turn the reply around and use it as another request. If "value" elements are present for all
+items, the response will only be returned when one or more of the included item's state has changed
+to something different.
+      <h3>Get all objects of a type</h3>
+      Request:
 
-      <h3>Get all objects of a type</h3>Request:
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;list&gt;
@@ -194,6 +176,7 @@ included item's state has changed to something different.
   &lt;/list&gt;
 &lt;/xmlio&gt;
 </pre>Reply:
+
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -212,10 +195,10 @@ included item's state has changed to something different.
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre>The response can be turned around and used as the next
-request.
+</pre>The response can be turned around and used as the next request.
+      <h3>Set the status of an object</h3>
+      Request:
 
-      <h3>Set the status of an object</h3>Request:
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -225,6 +208,7 @@ request.
   &lt;/item&gt;
 &lt;/xmlio&gt;
 </pre>Reply:
+
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -233,27 +217,26 @@ request.
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre>The "set" element in the request results in the state being
-set to the given value, and then it's returned in the reply as a
-value element with the proper value at that point.
+</pre>The "set" element in the request results in the state being set to the given value, and then
+it's returned in the reply as a value element with the proper value at that point.
+      <p>All writes are done before the values are collected for any reads, but there is no
+      guarantee that the consequences of the writes have propagated completely.</p>
 
-      <p>All writes are done before the values are collected for
-      any reads, but there is no guarantee that the consequences of
-      the writes have propagated completely.</p>
+      <h3>Set the status of an object (attribute-based syntax)</h3>
+      Request:
 
-      <h3>Set the status of an object (attribute-based
-      syntax)</h3>Request:
       <pre style="font-family: monospace;">
 &lt;turnout name="IT12" set="2" /&gt;
 </pre>Reply:
+
       <pre style="font-family: monospace;">
 &lt;turnout name="IT12" value="2" /&gt;
 </pre>
+      <h3>Control a Throttle</h3>
+      A &lt;throttle&gt; element can be used to control a DCC Throttle via the default
+      ThrottleManager. The first use allocates the throttle, and all later ones set any attributes
+      present:
 
-      <h3>Control a Throttle</h3>A &lt;throttle&gt; element can be
-      used to control a DCC Throttle via the default
-      ThrottleManager. The first use allocates the throttle, and
-      all later ones set any attributes present:
       <pre style="font-family: monospace;">
 &lt;xmlio&gt;
     &lt;throttle&gt;
@@ -264,23 +247,24 @@ value element with the proper value at that point.
     &lt;/throttle&gt;
 &lt;/xmlio&gt;
 </pre>A throttle element is returned unchanged.
-
       <h2>Related Documentation</h2>
 
       <ul>
-        <li>C.F. K. H. Wolf, K. Froitzheim, M. Weber, Department of
-        Distributed Systems, University of Ulm, "Interactive Video
-        and Remote Control via the World Wide Web", in "<i>Lecture
-        Notes in Computer Science</i>", Springer, Berlin,
-        1996.</li>
+        <li>C.F. K. H. Wolf, K. Froitzheim, M. Weber, Department of Distributed Systems, University
+        of Ulm, "Interactive Video and Remote Control via the World Wide Web", in "<em>Lecture
+        Notes in Computer Science</em>", Springer, Berlin, 1996.</li>
 
-        <li>Previously in Volume 7, Number 5 of "<i>M&auml;rklin
-        Digital Newsletter</i>", Dr. T. Catherall Ed,
-        September/October 1995 (<a href=
+        <li>Previously in Volume 7, Number 5 of "<em>Märklin Digital Newsletter</em>", Dr. T.
+        Catherall Ed, September/October 1995 (<a href=
         "http://rr.informatik.tu-freiberg.de/index.php?con=home&amp;sel=&amp;lang=eng&amp;js=1&amp;">project
-        web site no longer online</a>).</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        web site no longer online</a>).
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

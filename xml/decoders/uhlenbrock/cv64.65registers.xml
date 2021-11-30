@@ -32,20 +32,24 @@
       <revremark>Initial version as separate file from cv65.66registers.xml</revremark>
     </revision>
   </revhistory>
-  <variable label="Page Register" CV="64" default="0" readOnly="yes">
+  <variable item="Page Register" CV="64" default="0" readOnly="yes">
     <decVal/>
     <label>Page Register</label>
     <label xml:lang="it">Registro Pagine</label>
+    <label xml:lang="cs">Stránkový Registr</label>
     <tooltip>For CV programming with a Motorola digital controller, used in DCC page mode</tooltip>
     <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale (DCC page mode)</tooltip>
     <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola in modalità DCC a Pagina</tooltip>
+    <tooltip xml:lang="cs">Pro programování CV s digitálním řadičem Motorola, který používá DCC stránkový režim</tooltip>
   </variable>
-  <variable label="Offset Register" CV="65" default="0" readOnly="yes">
+  <variable item="Offset Register" CV="65" default="0" readOnly="yes">
     <decVal/>
     <label>Offset Register</label>
     <label xml:lang="it">Registro Indice</label>
+    <label xml:lang="cs">Ofsetový Registr</label>
     <tooltip>For CV programming with a Motorola digital controller</tooltip>	
     <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale</tooltip>
     <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola</tooltip>
+    <tooltip xml:lang="cs">Pro programování CV s digitálním řadičem Motorola</tooltip>
   </variable>
 </variables>

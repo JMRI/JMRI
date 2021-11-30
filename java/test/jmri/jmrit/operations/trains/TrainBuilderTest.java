@@ -2,6 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,6 +17,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -125,8 +130,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         depart = lmanager.newLocation("depart");
         train.reset();
         new TrainBuilder().build(train);
-        Assert.assertFalse("Train should not build, location recreated, but not part of route", train
-                .isBuilt());
+        Assert.assertFalse("Train should not build, location recreated, but not part of route", train.isBuilt());
 
         route.deleteLocation(rl);
         route.addLocation(depart);
@@ -173,7 +177,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, two location route", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -227,7 +231,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Requested moves", rld.getCarMoves() <= 10);
         Assert.assertEquals("Requested moves", 0, rlm.getCarMoves());
         Assert.assertEquals("Requested moves", 0, rlt.getCarMoves());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -254,7 +258,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location acton = route.getDepartsRouteLocation().getLocation();
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
 
-        // place two cars at start of route, changes where checks are made in TrainBuilder
+        // place two cars at start of route, changes where checks are made in
+        // TrainBuilder
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 0);
 
@@ -278,7 +283,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, build doesn't require cars", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -300,7 +305,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         emanager.deregister(emanager.getByRoadAndNumber("E", "3"));
         emanager.deregister(emanager.getByRoadAndNumber("E", "4"));
 
-        // Auto Engines calculates the number of engines based on requested moves in the route
+        // Auto Engines calculates the number of engines based on requested moves in the
+        // route
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build, no engines", train.isBuilt());
@@ -318,7 +324,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -342,7 +348,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setBunit(true);
         e4.setBunit(true);
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e4.setConsist(consist);
         e3.setConsist(consist);
 
@@ -389,7 +395,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -414,7 +420,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build, only single engines", train.isBuilt());
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -425,7 +431,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 should be assigned to train", train, e1.getTrain());
         Assert.assertEquals("e2 should be assigned to train", train, e2.getTrain());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -449,7 +455,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e3 = emanager.getByRoadAndNumber("E", "3");
         Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -467,7 +473,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, four engines available", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -475,45 +481,65 @@ public class TrainBuilderTest extends OperationsTestCase {
     public void testBuildConsistFromSingleLocos() {
         // this has nothing to do with this test other than test coverage
         Setup.setComment("Test consists from Single Locos");
+        Setup.setHorsePowerPerTon(3);
 
         Train train = tmanager.newTrain("TestBuildConsistFromSingleLocos");
 
         // Create a three location route
         Route route = rmanager.newRoute("Route-depart-middle-terminate");
 
-        Location depart = lmanager.newLocation("depart");
+        Location depart = lmanager.newLocation("Boston");
         route.addLocation(depart);
         Track departureTrack = depart.addTrack("departure track", Track.YARD);
-        departureTrack.setLength(300);
+        departureTrack.setLength(600);
 
         Location middle = lmanager.newLocation("middle");
-        route.addLocation(middle);
+        RouteLocation middleRl = route.addLocation(middle);
+        middleRl.setGrade(1.5);
         Track middleTrack = middle.addTrack("Track in the middle", Track.YARD);
         middleTrack.setLength(300);
 
         Location terminate = lmanager.newLocation("terminate");
         route.addLocation(terminate);
         Track terminateTrack = terminate.addTrack("terminal track", Track.YARD);
-        terminateTrack.setLength(300);
+        terminateTrack.setLength(600);
 
         train.setRoute(route);
         train.setNumberEngines("2");
 
         Engine e1 = emanager.newRS("E", "1");
+        e1.setMoves(0);
         e1.setModel("GP40");
         e1.setLocation(depart, departureTrack);
+        e1.setLength("50");
+        e1.setHp("800");
 
         Engine e2 = emanager.newRS("E", "2");
+        e2.setMoves(10);
         e2.setModel("GP40");
         e2.setLocation(depart, departureTrack);
 
         Engine e3 = emanager.newRS("E", "3");
+        e3.setMoves(20);
         e3.setModel("GP40");
         e3.setLocation(depart, departureTrack);
 
         Engine e4 = emanager.newRS("E", "4");
+        e4.setMoves(30);
         e4.setModel("GP40");
         e4.setLocation(depart, departureTrack);
+
+        Assert.assertEquals("Model GP40 length", "50", e4.getLength());
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", departureTrack, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", departureTrack, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", departureTrack, 2);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("UP", "4", "Boxcar", "40", "DAB", "1958", departureTrack, 3);
+
+        c1.setWeightTons("150");
+        c2.setWeightTons("150");
+        c3.setWeightTons("150");
+        c4.setWeightTons("150");
 
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build", train.isBuilt());
@@ -521,17 +547,33 @@ public class TrainBuilderTest extends OperationsTestCase {
         // allow consist to be built out of single locos
         train.setBuildConsistEnabled(true);
 
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build", train.isBuilt());
 
+        // confirm engines assigned to train
+        Assert.assertEquals("e1 assigned", train, e1.getTrain());
+        Assert.assertEquals("e2 assigned", train, e2.getTrain());
+        // this engine added due to HPT requirements
+        Assert.assertEquals("e3 assigned", train, e3.getTrain());
+        Assert.assertEquals("e4 assigned", null, e4.getTrain());
+
         train.setNumberEngines("5");
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build, only 4 locos", train.isBuilt());
 
         train.setNumberEngines("4");
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build", train.isBuilt());
-        
+
+        // make termination track too short for 4 engines
+        train.reset();
+        terminateTrack.setLength(100);
+        new TrainBuilder().build(train);
+        Assert.assertFalse("Train should fail, track too short", train.isBuilt());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -554,7 +596,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e3 = emanager.getByRoadAndNumber("E", "3");
         Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
-        Consist consist = emanager.newConsist("c");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("c");
         e1.setConsist(consist);
         e2.setConsist(consist);
         e3.setConsist(consist);
@@ -563,15 +605,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setMaxNumberEngines(3); // limit the maximum to three engines
         train.reset();
         new TrainBuilder().build(train);
-        Assert.assertFalse("Train should not build, needs four engines, three is the maximum allowed", train
-                .isBuilt());
+        Assert.assertFalse("Train should not build, needs four engines, three is the maximum allowed", train.isBuilt());
 
         // remove one engine from consist, train should build
         consist.delete(e4);
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build, three engines available", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -596,14 +637,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build", train.isBuilt());
 
-        // delete track at location "C"        
+        // delete track at location "C"
         C.deleteTrack(track);
         Assert.assertEquals("confirm no tracks at C", 0, C.getLength());
 
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build", train.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -626,7 +667,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
         Engine e2 = emanager.getByRoadAndNumber("E", "2");
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -645,7 +686,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // assign lead engine to train 2
         train1.reset();
         e1.setTrain(train2);
-        // should fail 
+        // should fail
         new TrainBuilder().build(train1);
         Assert.assertFalse("train status", train1.isBuilt());
 
@@ -693,7 +734,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertTrue("train should build", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -725,7 +766,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
         Engine e2 = emanager.getByRoadAndNumber("E", "2");
 
-        Consist consist = emanager.newConsist("Two engines");
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist("Two engines");
         e1.setConsist(consist);
         e2.setConsist(consist);
 
@@ -751,10 +792,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // build failed after engines were assigned to train 1
         Assert.assertEquals("Engine assignment ignores train length restrictions", train1, e1.getTrain());
         Assert.assertEquals("Engine assignment ignores train length restrictions", train1, e2.getTrain());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e1
-                .getDestinationName());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e2
-                .getDestinationName());
+        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e1.getDestinationName());
+        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e2.getDestinationName());
 
         Assert.assertEquals("Check CP30 engine length", "56", e1.getLength());
         Assert.assertEquals("Check CP 20 length", "32", c2.getLength());
@@ -763,7 +802,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train length test, just enough length for engines and car with FRED", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -772,6 +811,7 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testCarDestinationsA() {
+
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
@@ -784,7 +824,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location chelmsford = route.getRouteLocationBySequenceNumber(3).getLocation();
 
-        // Set up two cabooses and six box cars, two with FRED       
+        // Set up two cabooses and six box cars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", carTypes[1], "40", actonYard1, 12);
@@ -865,6 +905,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // require a caboose, should fail, both cabooses have destination Chelmsford
         train1.setRequirements(Train.CABOOSE);
+        train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertFalse("train status", train1.isBuilt());
 
@@ -914,7 +955,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("2 Destination  c9", "Chelmsford", c9.getDestinationName());
         Assert.assertEquals("2 Destination  c10", "Chelmsford", c10.getDestinationName());
 
-        // now try requesting car with FRED, should fail both cars with FRED have destination Chelmsford
+        // now try requesting car with FRED, should fail both cars with FRED have
+        // destination Chelmsford
         train1.setRequirements(Train.FRED);
 
         train1.reset();
@@ -936,6 +978,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Set car with FRED destination to be the terminal
         Assert.assertEquals("set caboose destination", Track.OKAY, c4.setDestination(acton, actonYard2));
+        train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
@@ -964,13 +1007,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("2 Destination  c8", "Boston", c8.getDestinationName());
         Assert.assertEquals("2 Destination  c9", "Chelmsford", c9.getDestinationName());
         Assert.assertEquals("2 Destination  c10", "Chelmsford", c10.getDestinationName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test that a car with a destination not served by the train isn't added to
-     * the train.
+     * Test that a car with a destination not served by the train isn't added to the
+     * train.
      */
     @Test
     public void testCarDestinationsB() {
@@ -998,7 +1041,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destination
         Assert.assertEquals("c1 not assigned to train", null, c1.getTrain());
         Assert.assertEquals("c1 destination", texasYard, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1043,13 +1086,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destination
         Assert.assertEquals("c1 not assigned to train", train1, c1.getTrain());
         Assert.assertEquals("c1 destination", chelmsford, c1.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test that car with destination is pulled at the right location in a
-     * train's route
+     * Test that car with destination is pulled at the right location in a train's
+     * route
      */
     @Test
     public void testCarDestinationsD() {
@@ -1090,7 +1133,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm that car is picked up at the 1st visit to Boston
         Assert.assertEquals("car pull RouteLocation", rlBoston1, c3.getRouteLocation());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1129,10 +1172,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car train assignment", train1, c1.getTrain());
         Assert.assertEquals("car destination", chelmsford, c1.getDestination());
 
-        // code currently eliminates the car's destination  TODO is this correct?
+        // code currently eliminates the car's destination TODO is this correct?
         Assert.assertEquals("car train assignment", null, c2.getTrain());
         Assert.assertEquals("car destination", null, c2.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1166,9 +1209,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm car destination
         Assert.assertEquals("car train assignment", null, c1.getTrain());
-        // code currently eliminates the car's destination  TODO is this correct?
+        // code currently eliminates the car's destination TODO is this correct?
         Assert.assertEquals("car destination", null, c1.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1206,7 +1249,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car train assignment", train1, c1.getTrain());
         Assert.assertEquals("car destination", chelmsford, c1.getDestination());
         Assert.assertEquals("car destination", chelmsfordSpur2, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1260,7 +1303,340 @@ public class TrainBuilderTest extends OperationsTestCase {
         // no room for c3 at spur1 or alternate yard 2, next option was spur 2
         Assert.assertEquals("car train assignment", train1, c3.getTrain());
         Assert.assertEquals("car destination", chelmsfordSpur2, c3.getDestinationTrack());
-        
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with destination, train skips destination
+     */
+    @Test
+    public void testCarDestinationsJ() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+
+        train1.addTrainSkipsLocation(rlBoston.getId());
+
+        // place car at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+
+        // give the car a destination that's the terminal
+        Assert.assertEquals("set car destination", Track.OKAY, c1.setDestination(rlBoston.getLocation(), null));
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car train assignment", null, c1.getTrain());
+        // code currently eliminates the car's destination TODO is this correct?
+        Assert.assertEquals("car destination", null, c1.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with Return When Loaded (RWL) destination and load
+     */
+    @Test
+    public void testCarRWL() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        Location boston = rlBoston.getLocation();
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        Location chelmsford = rlChelmsford.getLocation();
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination, both have the "E", both going to a spur
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", chelmsfordSpur1, c1.getDestinationTrack());
+
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", bostonSpur1, c2.getDestinationTrack());
+
+        train1.terminate();
+
+        // confirm that car's new destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Car 1 RWL Load", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination track", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Car 2 RWL Load", c2.getLoadName());
+
+        // confirm that RWL destinations and loads haven't changed
+        Assert.assertEquals("car 1 RWL destination", acton, c1.getReturnWhenLoadedDestination());
+        Assert.assertEquals("car 1 RWL destination track", null, c1.getReturnWhenLoadedDestTrack());
+        Assert.assertEquals("car 1 RWL load", "Car 1 RWL Load", c1.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("car 2 RWL destination", acton, c2.getReturnWhenLoadedDestination());
+        Assert.assertEquals("car 2 RWL destination track", actonSpur1, c2.getReturnWhenLoadedDestTrack());
+        Assert.assertEquals("car 2 RWL load", "Car 2 RWL Load", c2.getReturnWhenLoadedLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with RWL destination into staging using swap loads
+     */
+    @Test
+    public void testCarRWLStagingSwapLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+
+        // Set staging to swap loads
+        westfordStaging1.setLoadSwapEnabled(true);
+
+        route.addLocation(westford);
+
+        // send cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 11);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+        c3.setReturnWhenLoadedDestination(acton);
+        c3.setReturnWhenLoadedDestTrack(actonSpur1);
+
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+        c3.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+
+        // give c3 the "L" default load name so it won't use the RWL feature in staging
+        c3.setLoadName("L");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car 3 train assignment", train1, c3.getTrain());
+        Assert.assertEquals("car 3 track assignment", westfordStaging1, c3.getDestinationTrack());
+
+        train1.terminate();
+
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Car 1 RWL Load", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Car 2 RWL Load", c2.getLoadName());
+        // c3 had the "L" load, so no RWL
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestination());
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("car 3 load", "E", c3.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with RWL destination into staging using remove custom loads
+     */
+    @Test
+    public void testCarRWLStagingCustomLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+
+        // Set staging to remove custom loads
+        westfordStaging1.setRemoveCustomLoadsEnabled(true);
+
+        route.addLocation(westford);
+
+        // send both cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+
+        // give c1 a custom load type empty
+        cld.addName("Boxcar", "Empty");
+        cld.setLoadType("Boxcar", "Empty", CarLoad.LOAD_TYPE_EMPTY);
+        c1.setLoadName("Empty");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());
+
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+
+        train1.terminate();
+
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 RWL destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 RWL destination", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 RWL load", "Car 1 RWL Load", c1.getLoadName());
+        // c2 didn't have a custom empty type load going into staging
+        Assert.assertEquals("car 2 RWL destination", null, c2.getFinalDestination());
+        Assert.assertEquals("car 2 RWL destination", null, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 RWL load", "E", c2.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with Return When Empty (RWE) destination into staging using custom
+     * loads
+     */
+    @Test
+    public void testCarRWEStagingCustomLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+
+        // Set staging to remove custom loads
+        westfordStaging1.setRemoveCustomLoadsEnabled(true);
+
+        route.addLocation(westford);
+
+        // send cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 11);
+
+        // give the cars a RWE destination
+        c1.setReturnWhenEmptyDestination(acton);
+        c2.setReturnWhenEmptyDestination(acton);
+        c2.setReturnWhenEmptyDestTrack(actonSpur1);
+        c3.setReturnWhenEmptyDestination(acton);
+        c3.setReturnWhenEmptyDestTrack(actonSpur1);
+
+        // give the cars RWE loads
+        cld.addName("Boxcar", "Empty");
+        cld.setLoadType("Boxcar", "Empty", CarLoad.LOAD_TYPE_EMPTY);
+        c1.setReturnWhenEmptyLoadName("Empty");
+        c2.setReturnWhenEmptyLoadName("Empty");
+        c3.setReturnWhenEmptyLoadName("Empty");
+
+        // give c3 the RWE load name so it won't use the RWE feature in staging
+        c1.setLoadName("car 1 load"); // default is load type load
+        c2.setLoadName("car 2 load"); // default is load type load
+        c3.setLoadName("Empty");
+
+        // confirm that none of the cars have a return when loaded load
+        Assert.assertEquals("c1 RWL load", "L", c1.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("c2 RWL load", "L", c2.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("c3 RWL load", "L", c3.getReturnWhenLoadedLoadName());
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car 3 train assignment", train1, c3.getTrain());
+        Assert.assertEquals("car 3 track assignment", westfordStaging1, c3.getDestinationTrack());
+
+        train1.terminate();
+
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Empty", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination track", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Empty", c2.getLoadName());
+        // c3 had the "Empty" load, so no RWE
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestination());
+        Assert.assertEquals("car 3 destination track", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("car 3 load", "E", c3.getLoadName());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1280,8 +1656,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location chelmsford = route.getTerminatesRouteLocation().getLocation();
         Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
-        //        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
-        //        Track chelmsfordYard2 = chelmsford.getTrackByName("Chelmsford Yard 2", null);
+        // Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
+        // Track chelmsfordYard2 = chelmsford.getTrackByName("Chelmsford Yard 2", null);
 
         // place cars at start of route
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonYard1, 0);
@@ -1337,7 +1713,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car destination", chelmsfordSpur1, c3.getDestinationTrack());
         Assert.assertEquals("car destination", chelmsfordSpur1, c2.getDestinationTrack());
         Assert.assertEquals("car destination", bostonSpur1, c5.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1356,7 +1732,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create staging
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
         westfordStaging1.setLength(1000);
         Track westfordStaging2 = westford.addTrack("Staging 2", Track.STAGING);
@@ -1368,7 +1743,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // place car at start of route
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
 
-        // give the car a destination that's the terminal, but the wrong track in staging
+        // give the car a destination that's the terminal, but the wrong track in
+        // staging
         Assert.assertEquals("set car destination", Track.OKAY, c1.setDestination(westford, westfordStaging2));
 
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -1377,15 +1753,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destination
         Assert.assertEquals("c1 assigned to train", train1, c1.getTrain());
         Assert.assertEquals("c1 destination", westfordStaging1, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test spurs with schedules, this test uses the car's default load of
-     * empty. Cars are not routed to the spurs but found by the location by
-     * location search. Spurs with schedule are given a higher priority over
-     * tracks that don't have schedules.
+     * Test spurs with schedules, this test uses the car's default load of empty.
+     * Cars are not routed to the spurs but found by the location by location
+     * search. Spurs with schedule are given a higher priority over tracks that
+     * don't have schedules.
      */
     @Test
     public void testSpursWithSchedules() {
@@ -1403,7 +1779,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD); // alternate
         bostonSpur1.setAlternateTrack(bostonYard2); // shouldn't be used in this test
 
-        // note that the alternate track Boston yard 2 will not be used for cars with default loads, and the spur has a schedule
+        // note that the alternate track Boston yard 2 will not be used for cars with
+        // default loads, and the spur has a schedule
 
         Location chelmsford = route.getRouteLocationBySequenceNumber(3).getLocation();
         Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
@@ -1420,7 +1797,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item4.setShipLoadName("Metal");
         bostonSpur1.setSchedule(sch1);
 
-        // Set up two cabooses and six box cars, two with FRED       
+        // Set up two cabooses and six box cars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
@@ -1455,7 +1832,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
 
         Assert.assertEquals("Car destination", null, c10.getDestinationTrack()); // max of 7 pulls from Acton
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1482,7 +1859,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // provide an alternate track for the spur
         bostonSpur2.setAlternateTrack(bostonYard2);
 
-        // increase test code coverage by adding a schedule in sequential mode to the spur
+        // increase test code coverage by adding a schedule in sequential mode to the
+        // spur
         Schedule sch = smanager.newSchedule("Test schedule sequential");
         bostonSpur2.setSchedule(sch);
         bostonSpur2.setScheduleMode(Track.SEQUENTIAL);
@@ -1517,7 +1895,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, c3.getTrain());
         Assert.assertEquals("Destination", null, c3.getDestination());
         Assert.assertEquals("Final destination", bostonSpur2, c3.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1540,7 +1918,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location boston = rlBoston1.getLocation();
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
 
-        // increase test code coverage by adding a schedule in sequential mode to the spur
+        // increase test code coverage by adding a schedule in sequential mode to the
+        // spur
         Schedule sch = smanager.newSchedule("Test schedule sequential");
         bostonSpur2.setSchedule(sch);
         bostonSpur2.setScheduleMode(Track.SEQUENTIAL);
@@ -1568,7 +1947,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Confirm c3 destination has been removed
         Assert.assertEquals("Train assignment", null, c3.getTrain());
         Assert.assertEquals("Destination", null, c3.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1637,7 +2016,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car pulled", rlBoston1, c4.getRouteLocation());
         Assert.assertEquals("car pulled", rlBoston1, c5.getRouteLocation());
         Assert.assertEquals("car pulled", rlBoston1, c6.getRouteLocation());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1664,8 +2043,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD); // delete this track
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD); // alternate
-        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this track
-        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // delete this track
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this
+                                                                                                     // track
+        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // delete this
+                                                                                                     // track
 
         // only use one spur and yard track
         boston.deleteTrack(bostonSpur1);
@@ -1673,7 +2054,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         boston.deleteTrack(bostonInterchange1);
         boston.deleteTrack(bostonInterchange2);
 
-        // limit the length of the spur to one boxcar 
+        // limit the length of the spur to one boxcar
         bostonSpur2.setLength(50);
 
         // provide an alternate track for the spur
@@ -1688,7 +2069,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
         chelmsford.deleteTrack(chelmsfordSpur2);
 
-        // Set up two cabooses and 8 boxcars, two with FRED       
+        // Set up two cabooses and 8 boxcars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
@@ -1749,7 +2130,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", chelmsfordSpur1, c6.getDestinationTrack()); // alternate
         Assert.assertEquals("Car destination", chelmsfordSpur1, c8.getDestinationTrack()); // alternate
-        Assert.assertEquals("Car destination", chelmsfordSpur1, c10.getDestinationTrack()); // alternate       
+        Assert.assertEquals("Car destination", chelmsfordSpur1, c10.getDestinationTrack()); // alternate
 
         Assert.assertEquals("Car destination", bostonYard2, c7.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, c9.getDestinationTrack());
@@ -1781,7 +2162,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", chelmsfordSpur1, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack()); // alternate
         Assert.assertEquals("Car destination", bostonYard2, c8.getDestinationTrack()); // alternate
-        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate       
+        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate
 
         Assert.assertEquals("Car destination", chelmsfordSpur1, c7.getDestinationTrack());
         Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
@@ -1815,7 +2196,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, c6.getDestinationTrack()); // alternate
         Assert.assertEquals("Car destination", bostonYard2, c8.getDestinationTrack()); // alternate
-        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate       
+        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate
 
         Assert.assertEquals("Car destination", chelmsfordSpur1, c7.getDestinationTrack());
         Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
@@ -1825,15 +2206,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car final destination", bostonSpur2, c8.getFinalDestinationTrack());
         Assert.assertEquals("Car final destination", bostonSpur2, c10.getFinalDestinationTrack());
 
-        // confirm where in the route cars are set out, should be the first stop Boston for alternate yard
+        // confirm where in the route cars are set out, should be the first stop Boston
+        // for alternate yard
         Assert.assertEquals("Car route destination", rlBoston1, c6.getRouteDestination()); // North bound
         Assert.assertEquals("Car route destination", rlBoston1, c8.getRouteDestination());
         Assert.assertEquals("Car route destination", rlBoston1, c10.getRouteDestination());
 
         Assert.assertEquals("Car route destination", rlBoston2, c5.getRouteDestination()); // South bound
 
-        // TODO this order should be a problem, program "fixed" issue by dropping cars to alternate north bound
-        // Alternate tack yard2 shouldn't be serviced by the train due to train direction
+        // TODO this order should be a problem, program "fixed" issue by dropping cars
+        // to alternate north bound
+        // Alternate tack yard2 shouldn't be serviced by the train due to train
+        // direction
         // The reverse works correctly, see above.
         bostonYard2.setTrainDirections(Track.SOUTH);
         bostonSpur2.setTrainDirections(Track.NORTH);
@@ -1850,7 +2234,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", chelmsfordSpur1, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack()); // alternate
         Assert.assertEquals("Car destination", bostonYard2, c8.getDestinationTrack()); // alternate
-        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate       
+        Assert.assertEquals("Car destination", bostonYard2, c10.getDestinationTrack()); // alternate
 
         Assert.assertEquals("Car destination", chelmsfordSpur1, c7.getDestinationTrack());
         Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
@@ -1863,7 +2247,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car route destination", rlBoston1, c6.getRouteDestination()); // North bound
         Assert.assertEquals("Car route destination", rlBoston1, c8.getRouteDestination());
         Assert.assertEquals("Car route destination", rlBoston1, c10.getRouteDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -1891,7 +2275,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD); // delete this track
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD); // delete this track
-        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this track
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this
+                                                                                                     // track
         Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // alternate
 
         // only use one spur and interchange track
@@ -1900,7 +2285,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         boston.deleteTrack(bostonYard2);
         boston.deleteTrack(bostonInterchange1);
 
-        // limit the length of the spur to one boxcar 
+        // limit the length of the spur to one boxcar
         bostonSpur2.setLength(50);
 
         // provide an alternate track for the spur
@@ -1918,7 +2303,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
         chelmsford.deleteTrack(chelmsfordSpur2);
 
-        // Set up two cabooses and 8 boxcars, two with FRED       
+        // Set up two cabooses and 8 boxcars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
@@ -1938,6 +2323,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // define the train
         Train train1 = tmanager.newTrain("TestAlternateTrack1");
         train1.setRoute(route);
+        
+        // improve test coverage
+        Setup.setPrintTruncateManifestEnabled(true);
+        acton.setSwitchListEnabled(true);
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -1995,7 +2384,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         si.setReceiveLoadName("Bolts");
         bostonSpur2.setSchedule(schedule);
 
-        // program will try to send all 4 cars to spur, but only one can fit, alternate interchange can not service train
+        // program will try to send all 4 cars to spur, but only one can fit, alternate
+        // interchange can not service train
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -2049,13 +2439,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", null, c8.getDestinationTrack()); // load = "Bolts"
 
         Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test alternate track aggressive mode. Checks to see if cars are
-     * redirected from alternate track to spur.
+     * Test alternate track aggressive mode. Checks to see if cars are redirected
+     * from alternate track to spur.
      */
     @Test
     public void testAlternateTrackAggressiveMode() {
@@ -2084,8 +2474,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD); // delete this track
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD); // alternate
-        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this track
-        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // delete this track
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete this
+                                                                                                     // track
+        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // delete this
+                                                                                                     // track
 
         // only use one spur and yard track
         boston.deleteTrack(bostonSpur1);
@@ -2093,7 +2485,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         boston.deleteTrack(bostonInterchange1);
         boston.deleteTrack(bostonInterchange2);
 
-        // limit the length of the spur to four boxcars 
+        // limit the length of the spur to four boxcars
         bostonSpur2.setLength(200);
 
         // provide an alternate track for the spur
@@ -2127,7 +2519,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c12 = JUnitOperationsUtil.createAndPlaceCar("CP", "120", "Boxcar", "40", bostonYard2, 21);
 
         // increase code coverage by using kernels
-        Kernel k1 = cmanager.newKernel("2 cars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("2 cars");
         c3.setKernel(k1);
         c4.setKernel(k1);
 
@@ -2164,7 +2556,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // check that cars in yard have a final destination Boston spur 2
         Assert.assertEquals("Car destination", bostonSpur2, c5.getFinalDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c6.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2210,7 +2602,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertTrue("required car is available", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2252,7 +2644,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("next train!", train1.isBuilt());
         Assert.assertEquals("car train assignment", train1, c2.getTrain());
         Assert.assertEquals("car destination", "Acton", c2.getDestinationName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2276,7 +2668,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location chelmsford = route.getRouteLocationBySequenceNumber(3).getLocation();
         Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
 
-        // Set up two cabooses and six box cars, two with FRED       
+        // Set up two cabooses and six box cars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
@@ -2372,7 +2764,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", chelmsfordSpur1, c8.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur1, c9.getDestinationTrack());
         Assert.assertEquals("Car destination", null, c10.getDestinationTrack()); // limit of 7 pulls out of Acton
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2395,13 +2787,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
         Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
 
-        // Set up 4 cars, two in a kernel      
+        // Set up 4 cars, two in a kernel
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", carTypes[1], "40", actonYard1, 12);
         Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "60", carTypes[1], "40", actonYard2, 15);
         Car c7 = JUnitOperationsUtil.createAndPlaceCar("CP", "70", carTypes[1], "50", actonYard2, 16);
         Car c8 = JUnitOperationsUtil.createAndPlaceCar("CP", "80", carTypes[1], "60", actonYard2, 17);
 
-        Kernel k1 = cmanager.newKernel("group of 3 cars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("group of 3 cars");
         c8.setKernel(k1); // lead car
         c7.setKernel(k1); // on track Yard 2
         c3.setKernel(k1); // on track Yard 1
@@ -2417,15 +2809,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
         // TODO test kernels with cabooses and cars with FRED
     }
 
     /**
-     * Tests car already assigned to a train and has been assigned a route
-     * location pickup and drop
+     * Tests car already assigned to a train and has been assigned a route location
+     * pickup and drop
      */
     @Test
     public void testTrainReset() {
@@ -2447,7 +2839,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         RouteLocation rlBoston1 = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
 
-        // Set up two cabooses and six box cars, two with FRED       
+        // Set up two cabooses and six box cars, two with FRED
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", carTypes[1], "40", actonYard1, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", carTypes[1], "40", actonYard1, 13);
@@ -2486,7 +2878,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("route assignment", null, c3.getRouteDestination());
         Assert.assertEquals("route assignment", null, c4.getRouteDestination());
         Assert.assertEquals("route assignment", null, c5.getRouteDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2504,7 +2896,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("TestTrainDirection1");
         train1.setRoute(route);
 
-        // train departs north bound and reverse at Chelmsford and then travels south bound
+        // train departs north bound and reverse at Chelmsford and then travels south
+        // bound
         RouteLocation rlActon = route.getDepartsRouteLocation();
         Location acton = rlActon.getLocation();
         Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
@@ -2519,7 +2912,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         acton.deleteTrack(actonInterchange1);
         acton.deleteTrack(actonInterchange2);
 
-        // Set up two cabooses and six box cars, two with FRED, half the cars on yard 1, the others on yard 2      
+        // Set up two cabooses and six box cars, two with FRED, half the cars on yard 1,
+        // the others on yard 2
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard2, 21);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", carTypes[1], "40", actonYard1, 12);
@@ -2541,7 +2935,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // there are 10 cars, 2 cabooses, 2 with FRED, so 8 cars could be pulled, but limit set to 7
+        // there are 10 cars, 2 cabooses, 2 with FRED, so 8 cars could be pulled, but
+        // limit set to 7
         Assert.assertEquals("number of cars assigned to train", 7, train1.getNumberCarsWorked());
 
         // confirm train assignment
@@ -2562,7 +2957,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertFalse("train status", train1.isBuilt());
 
-        // don't request caboose, should build, but all cars are at departure, so no cars assigned
+        // don't request caboose, should build, but all cars are at departure, so no
+        // cars assigned
         train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
         train1.reset();
         new TrainBuilder().build(train1);
@@ -2570,7 +2966,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("number of cars assigned to train", 0, train1.getNumberCarsWorked());
 
-        // allow north bound trains to pull from location, train is south bound when arriving, so no set outs
+        // allow north bound trains to pull from location, train is south bound when
+        // arriving, so no set outs
         acton.setTrainDirections(Location.EAST + Location.WEST + Location.NORTH);
 
         train1.reset();
@@ -2580,7 +2977,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // there are 10 cars, 2 cabooses, 2 with FRED, so 6 cars should be pulled
         Assert.assertEquals("number of cars assigned to train", 6, train1.getNumberCarsWorked());
 
-        // request caboose and car with FRED, should try to get both, but terminate location won't accept
+        // request caboose and car with FRED, should try to get both, but terminate
+        // location won't accept
         // due to train direction south bound
         train1.setRequirements(Train.CABOOSE + Train.FRED);
         new TrainBuilder().build(train1);
@@ -2603,7 +3001,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // there are 10 cars, 2 cabooses, 2 with FRED, half the cars on yard 1, so 5 cars pulled
+        // there are 10 cars, 2 cabooses, 2 with FRED, half the cars on yard 1, so 5
+        // cars pulled
         Assert.assertEquals("number of cars assigned to train", 5, train1.getNumberCarsWorked());
 
         // confirm train assignment
@@ -2629,7 +3028,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertFalse("train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -2653,7 +3052,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Only train 1 should build
         Assert.assertTrue("Train 1 After 1st Build without engines", train1.isBuilt());
         Assert.assertFalse("Train 2 After 1st Build exclude Boxcar", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2692,35 +3091,27 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Train 2 After Build include Boxcar", train2.isBuilt());
 
         // check train 1
-        Assert.assertEquals("Car c1 After Build without engines should be assigned to Train 1", train1, c1
-                .getTrain());
-        Assert.assertEquals("Car c3 After Build without engines should be assigned to Train 1", train1, c3
-                .getTrain());
-        Assert.assertEquals("Car c4 After Build without engines should be assigned to Train 1", train1, c4
-                .getTrain());
-        Assert.assertEquals("Car c8 After Build without engines should be assigned to Train 1", train1, c8
-                .getTrain());
+        Assert.assertEquals("Car c1 After Build without engines should be assigned to Train 1", train1, c1.getTrain());
+        Assert.assertEquals("Car c3 After Build without engines should be assigned to Train 1", train1, c3.getTrain());
+        Assert.assertEquals("Car c4 After Build without engines should be assigned to Train 1", train1, c4.getTrain());
+        Assert.assertEquals("Car c8 After Build without engines should be assigned to Train 1", train1, c8.getTrain());
 
         // car destinations correct?
-        Assert.assertEquals("Car c1 After Build without engines destination", "South End Staging", c1
-                .getDestinationName());
-        Assert.assertEquals("Car c3 After Build without engines destination", "North Industries", c3
-                .getDestinationName());
-        Assert.assertEquals("Car c4 After Build without engines destination", "South End Staging", c4
-                .getDestinationName());
-        Assert.assertEquals("Car c8 After Build without engines destination", "South End Staging", c8
-                .getDestinationName());
+        Assert.assertEquals("Car c1 After Build without engines destination", "South End Staging",
+                c1.getDestinationName());
+        Assert.assertEquals("Car c3 After Build without engines destination", "North Industries",
+                c3.getDestinationName());
+        Assert.assertEquals("Car c4 After Build without engines destination", "South End Staging",
+                c4.getDestinationName());
+        Assert.assertEquals("Car c8 After Build without engines destination", "South End Staging",
+                c8.getDestinationName());
 
         // car destination track correct?
-        Assert.assertEquals("Car c1 After without engines Build track", "South End 1", c1
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c3 After without engines Build track", "NI Yard", c3
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c4 After without engines Build track", "South End 1", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c8 After without engines Build track", "South End 1", c8
-                .getDestinationTrackName());
-        
+        Assert.assertEquals("Car c1 After without engines Build track", "South End 1", c1.getDestinationTrackName());
+        Assert.assertEquals("Car c3 After without engines Build track", "NI Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("Car c4 After without engines Build track", "South End 1", c4.getDestinationTrackName());
+        Assert.assertEquals("Car c8 After without engines Build track", "South End 1", c8.getDestinationTrackName());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2768,7 +3159,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setRoadOption(Train.ALL_ROADS);
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 allow all roads", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2809,7 +3200,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train 2 After Build require road PC", true, train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2837,7 +3228,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2865,7 +3256,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -2941,10 +3332,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Check train 1
         Assert.assertEquals("Train 1 After Build Departs Name", "North End Staging", train1.getTrainDepartsName());
-        Assert.assertEquals("Train 1 After Build Terminates Name", "South End Staging", train1
-                .getTrainTerminatesName());
-        Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1
-                .getNextLocationName());
+        Assert.assertEquals("Train 1 After Build Terminates Name", "South End Staging",
+                train1.getTrainTerminatesName());
+        Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After Build Built Status", true, train1.isBuilt());
 
         // Are the proper engines and cars assigned to train 1?
@@ -3019,14 +3409,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train travel time", 111, Setup.getTravelTime());
 
         Assert.assertEquals("Train 1 expected North End", "07:56", train1.getExpectedArrivalTime(rl2));
-        // one car dropped and one is picked up at North End, so travel time + two car moves
+        // one car dropped and one is picked up at North End, so travel time + two car
+        // moves
         Assert.assertEquals("Train 1 expected North Industries", "09:58", train1.getExpectedArrivalTime(rl3));
 
         // Reset the train!
         Assert.assertEquals("Train 1 Reset should be true", true, train1.reset());
         Assert.assertEquals("Train 1 After Reset Departs Name", "North End Staging", train1.getTrainDepartsName());
-        Assert.assertEquals("Train 1 After Reset Terminates Name", "South End Staging", train1
-                .getTrainTerminatesName());
+        Assert.assertEquals("Train 1 After Reset Terminates Name", "South End Staging",
+                train1.getTrainTerminatesName());
         Assert.assertEquals("Train 1 After Reset Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After Reset Built Status", false, train1.isBuilt());
 
@@ -3067,7 +3458,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train 1 staging track too short", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3113,7 +3504,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.addTypeName(Bundle.getMessage("Caboose"));
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build with engines include Caboose", true, train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3156,9 +3547,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 status", train1.isBuilt());
-        
-        JUnitOperationsUtil.checkOperationsShutDownTask();
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3199,9 +3589,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train 2 After Build 2 requires FRED", true, train2.isBuilt());
-        
-        JUnitOperationsUtil.checkOperationsShutDownTask();
 
+        // require car road PC with FRED, should fail
+        train2.setCabooseRoad("PC");
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+
+        train2.setCabooseRoad("CP");
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3248,7 +3646,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 build, caboose destination is terminal", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3274,19 +3672,19 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After build with car to nowhere", false, train1.isBuilt());
 
-        // Build the train again confirm will build if car's destination is serviced by train
+        // Build the train again confirm will build if car's destination is serviced by
+        // train
         train1.reset();
         c4.setDestination(l2, null); // send car to NI
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
-        
-        JUnitOperationsUtil.checkOperationsShutDownTask();
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
-     * Test car departing staging with a car that has a final destination that
-     * won't service the car.
+     * Test car departing staging with a car that has a final destination that won't
+     * service the car.
      * 
      */
     @Test
@@ -3319,14 +3717,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // track doesn't accept Boxcar, so final destination should be removed
         Assert.assertEquals("car final destination", null, c4.getFinalDestination());
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
-        
-        JUnitOperationsUtil.checkOperationsShutDownTask();
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test car departing staging that has a final destination that is also
-     * staging.
+     * Test car departing staging that has a final destination that is also staging.
      */
     @Test
     public void testStagingtoStagingCarWithFinalDestinationB() {
@@ -3361,7 +3757,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create a problem, don't allow Boxcar into staging or NI
         l3staging1.deleteTypeName("Boxcar");
-        Setup.setTrainIntoStagingCheckEnabled(false); // allow train to carry "Boxcar"
+        Setup.setStagingTrainCheckEnabled(false); // allow train to carry "Boxcar"
         locationNorthIndustries.deleteTypeName("Boxcar");
 
         train1.reset();
@@ -3379,7 +3775,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car final destination track", l3staging1, c3.getFinalDestinationTrack());
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3426,7 +3822,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         l3.addTypeName(Bundle.getMessage("Caboose"));
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 build, Caboose is allowed", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3485,7 +3881,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 After 4th Build with rs built before 1985", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3531,7 +3927,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After 2nd Build type Diesel serviced", true, train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3589,7 +3985,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After 5th Build all owners", true, train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3680,7 +4076,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car C10099 in staging should be assigned to train", train1, c1.getTrain());
         Assert.assertEquals("car C20099 in staging should be assigned to train", train1, c2.getTrain());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3743,7 +4139,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // build failed due to the two boxcars attempting to depart with load "E"
         Assert.assertEquals("train assignment", null, c3.getTrain());
         Assert.assertEquals("train assignment", null, c4.getTrain());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3829,7 +4225,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // don't allow any car to carry "Books" in train
         train2.addLoadName("Books");
 
-        // should build, train doesn't allow Books on any car, staging doesn't allow Books carried by Boxcar or Flat
+        // should build, train doesn't allow Books on any car, staging doesn't allow
+        // Books carried by Boxcar or Flat
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train status", train2.isBuilt());
@@ -3838,7 +4235,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.setLoadOption(Train.INCLUDE_LOADS);
         train2.addLoadName("E"); // cars in departure staging have "E" loads
 
-        // train can carry "E", and any car with Books or Grain (only Boxcar can carry Grain)
+        // train can carry "E", and any car with Books or Grain (only Boxcar can carry
+        // Grain)
         // staging doesn't allow Boxcar or Flat with "Books"
         // build should fail
         train2.reset();
@@ -3869,7 +4267,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertFalse(new TrainBuilder().build(train2));
         Assert.assertFalse("Train status", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3905,7 +4303,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(l1, l1s2));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
 
-        // Try again, but now set staging track service direction NORTH, train departs to the south
+        // Try again, but now set staging track service direction NORTH, train departs
+        // to the south
         l1s1.setTrainDirections(Location.NORTH);
         l1s2.setTrainDirections(Location.NORTH);
         train1.reset();
@@ -3917,7 +4316,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 After 2nd Build staging set to South", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3952,7 +4351,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // train 2 can depart on either track
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train status", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -3987,14 +4386,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // train 2 can terminate to either track
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train status", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
-     * Test that build will take cars out of staging than don't exceed the
-     * maximum departure train length.
+     * Test that build will take cars out of staging than don't exceed the maximum
+     * departure train length.
      */
     @Test
     public void testStagingtoStagingTrainDepartureTrainLength() {
@@ -4031,17 +4430,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car has been assigned to train", train2, c5.getTrain());
         Assert.assertEquals("car has been assigned to train", train2, c6.getTrain());
 
-        // only track left is staging 1, total length of cars is too long, build should fail
+        // only track left is staging 1, total length of cars is too long, build should
+        // fail
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
-     * Test that an engine assigned to a train in staging can only depart on
-     * that train.
+     * Test that an engine assigned to a train in staging can only depart on that
+     * train.
      */
     @Test
     public void testStagingtoStagingEngineAssignedToTrain() {
@@ -4075,17 +4475,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train status", train2.isBuilt());
 
-        // there's an engine assigned to train 2 on staging track 2, train 1 build should fail
+        // there's an engine assigned to train 2 on staging track 2, train 1 build
+        // should fail
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
-     * Test that a car assigned to a train in staging can only depart on that
-     * train.
+     * Test that a car assigned to a train in staging can only depart on that train.
      */
     @Test
     public void testStagingtoStagingCarAssignedToTrain() {
@@ -4106,17 +4506,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train status", train2.isBuilt());
 
-        // there's a car assigned to train 2 on staging track 2, train 1 build should fail
+        // there's a car assigned to train 2 on staging track 2, train 1 build should
+        // fail
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /*
-     * Test route car move counts out of staging, move and terminate trains.
-     * Confirm cars go to correct locations and tracks.
+     * Test route car move counts out of staging, move and terminate trains. Confirm
+     * cars go to correct locations and tracks.
      */
     @Test
     public void testStagingtoStagingRouteMoves() {
@@ -4174,10 +4575,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Move the train #1
         train1.move();
-        Assert.assertEquals("Train 1 After 1st Move Current Name", "North Industries", train1
-                .getCurrentLocationName());
-        Assert.assertEquals("Train 1 After 1st Move Next Location Name", "South End Staging", train1
-                .getNextLocationName());
+        Assert.assertEquals("Train 1 After 1st Move Current Name", "North Industries", train1.getCurrentLocationName());
+        Assert.assertEquals("Train 1 After 1st Move Next Location Name", "South End Staging",
+                train1.getNextLocationName());
 
         // Is the train in route?
         Assert.assertEquals("Train 1 in route after 1st", true, train1.isTrainEnRoute());
@@ -4215,8 +4615,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Move the train #2
         train1.move();
-        Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End Staging", train1
-                .getCurrentLocationName());
+        Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End Staging",
+                train1.getCurrentLocationName());
         Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "", train1.getNextLocationName());
         // Is the train in route?
         Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainEnRoute());
@@ -4321,10 +4721,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainEnRoute());
 
         // Are the engines and cars released from train 1?
-        Assert.assertEquals("Engine e1 After Terminate should NOT be assigned to Train 1", null, e1
-                .getTrain());
-        Assert.assertEquals("Engine e2 After Terminate should NOT be assigned to Train 1", null, e2
-                .getTrain());
+        Assert.assertEquals("Engine e1 After Terminate should NOT be assigned to Train 1", null, e1.getTrain());
+        Assert.assertEquals("Engine e2 After Terminate should NOT be assigned to Train 1", null, e2.getTrain());
         Assert.assertEquals("Car c1 After Terminate should NOT be assigned to Train 1", null, c1.getTrain());
         Assert.assertEquals("Car c4 After Terminate should NOT be assigned to Train 1", null, c4.getTrain());
 
@@ -4356,13 +4754,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Terminated Pickup count for North End, track North End 1", 0, l1s1.getPickupRS());
         Assert.assertEquals("Terminated Pickup count for North End, track North End 2", 0, l1s2.getPickupRS());
         Assert.assertEquals("Terminated Drop count for North Industries, track NI Yard", 0, l2s1.getDropRS());
-        Assert.assertEquals("Terminated Pickup count for North Industries, track NI Yard", 0, l2s1
-                .getDropRS());
+        Assert.assertEquals("Terminated Pickup count for North Industries, track NI Yard", 0, l2s1.getDropRS());
         Assert.assertEquals("Terminated Drop count for South End, track South End 1", 0, l3s1.getDropRS());
         Assert.assertEquals("Terminated Drop count for South End, track South End 2", 0, l3s2.getDropRS());
         Assert.assertEquals("Terminated Pickup count for South End, track South End 1", 0, l3s1.getPickupRS());
         Assert.assertEquals("Terminated Pickup count for South End, track South End 2", 0, l3s2.getPickupRS());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4415,7 +4812,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train 2 After Build require 1 engine, single engine on staging track", true,
                 train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4459,7 +4856,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train 2 After Build require 2 engine", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4507,7 +4904,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train 2 After Build engine in service", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4573,8 +4970,8 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     /*
-     * Test train departing staging adjust terminal staging track lengths.
-     * Confirm car loads after arriving into staging.
+     * Test train departing staging adjust terminal staging track lengths. Confirm
+     * car loads after arriving into staging.
      */
     @Test
     public void testStagingtoStagingTrackLength() {
@@ -4619,7 +5016,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c9.setLength("200");
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
-        // c9 and c7 have less moves than c3, but there's not enough room for c9 at destination
+        // c9 and c7 have less moves than c3, but there's not enough room for c9 at
+        // destination
         Assert.assertEquals("Car c3 After Build 3 should be assigned to Train 2", train2, c3.getTrain());
         Assert.assertEquals("Car c7 After Build 3 should be assigned to Train 2", train2, c7.getTrain());
         Assert.assertEquals("Car c9 After Build 3 should NOT be assigned to Train 2", null, c9.getTrain());
@@ -4636,11 +5034,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Check expected arrival times
         Assert.assertEquals("Train 2 expected departure time", "22:45", train2.getExpectedArrivalTime(rl1));
         Assert.assertEquals("Train 2 expected North End", "1:00:36", train2.getExpectedArrivalTime(rl2));
-        // one car dropped and one is picked up at North End, so travel time + two car moves
-        Assert.assertEquals("Train 2 expected North Industries", "1:02:49", train2
-                .getExpectedArrivalTime(rl3));
+        // one car dropped and one is picked up at North End, so travel time + two car
+        // moves
+        Assert.assertEquals("Train 2 expected North Industries", "1:02:49", train2.getExpectedArrivalTime(rl3));
 
-        // the build first resets which removes cars from the train, c3 load should NOT swap
+        // the build first resets which removes cars from the train, c3 load should NOT
+        // swap
         Assert.assertEquals("Car c3 load After Build 4", "E", c3.getLoadName());
         // c9 has less moves than c3 and c7, and now there's enough room for c9
         Assert.assertEquals("Car c3 After Build 4 should be assigned to Train 2", train2, c3.getTrain());
@@ -4682,7 +5081,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car c7 load after Terminate Train 2", "E", c7.getLoadName());
         Assert.assertEquals("Car c8 load after Terminate Train 2", "L", c8.getLoadName());
         Assert.assertEquals("Car c9 load after Terminate Train 2", "E", c9.getLoadName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4705,7 +5104,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // in staging 1, length 40
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // in staging 1, length 40
 
-        Kernel k2 = cmanager.newKernel("Two cars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("Two cars");
         c3.setKernel(k2);
         c4.setKernel(k2);
 
@@ -4732,7 +5131,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car assigned to train", train1, c2.getTrain());
         Assert.assertEquals("car assigned to train", null, c3.getTrain());
         Assert.assertEquals("car assigned to train", null, c4.getTrain());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4807,7 +5206,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse("Train 2 built", train2.isBuilt());
         l3s3.setLength(200); // restore
 
-        // Car X10001 is a location North Industries, NI Yard, send boxcar X10001 to staging
+        // Car X10001 is a location North Industries, NI Yard, send boxcar X10001 to
+        // staging
         Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l2, l2s1));
         Assert.assertEquals("set destination", Track.OKAY, c3.setDestination(l3, null));
         train2.reset();
@@ -4840,12 +5240,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car X10001 NOT assigned to train 2", null, c3.getTrain());
 
         // turn off staging check
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train 2 will now build ignoring BOXCAR", train2.isBuilt());
         Assert.assertNull("Car X10001 NOT assigned to train 2", c3.getTrain());
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
 
         train2.deleteTypeName("BOXCAR");
         c3.setTypeName("Boxcar");
@@ -4895,7 +5295,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         Assert.assertFalse(new TrainBuilder().build(train2));
         Assert.assertFalse("Train 2 will Not build, staging track will not accept road BM", train2.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -4929,7 +5329,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("Test turn to staging");
         train1.setRoute(route);
 
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingAllowReturnEnabled(false);
         // train should build, there's enough room at yard for 2 cars departing staging
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 status", train1.isBuilt());
@@ -4938,7 +5338,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c3 destination track", yard, c3.getDestinationTrack());
         Assert.assertEquals("c4 destination track", yard, c4.getDestinationTrack());
 
-        // there are three cars already on the yard track, total length 200' 
+        // there are three cars already on the yard track, total length 200'
         yard.setLength(210);
 
         train1.reset();
@@ -4957,7 +5357,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // there's also a global setting allowing trains to return to staging
         train1.setAllowReturnToStagingEnabled(false);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -4966,14 +5366,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // no room for cars at yard, both returned to staging
         Assert.assertEquals("c3 destination track", northEnd3, c3.getDestinationTrack());
         Assert.assertEquals("c4 destination track", northEnd3, c4.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
-     * test cars returning to staging when train is a turn. Generate custom
-     * loads
+     * test cars returning to staging when train is a turn. Generate custom loads
      */
     @Test
     public void testStagingtoStagingCustomLoadsG() {
@@ -5033,7 +5432,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // there's also a global setting allowing trains to return to staging
         train1.setAllowReturnToStagingEnabled(false);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -5047,7 +5446,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotEquals("car load is not", "E", c4.getLoadName());
 
         // now test that returning to staging isn't acceptable
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingAllowReturnEnabled(false);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -5059,14 +5458,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // check load
         Assert.assertEquals("car load", "E", c3.getLoadName());
         Assert.assertEquals("car load", "E", c4.getLoadName());
-        
-        JUnitOperationsUtil.checkOperationsShutDownTask();
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * test cars returning to staging when train is a turn. Build mode
-     * aggressive, which allows the train to return to the same depart track.
+     * test cars returning to staging when train is a turn. Build mode aggressive,
+     * which allows the train to return to the same depart track.
      */
     @Test
     public void testStagingtoStagingTrainTurnB() {
@@ -5085,7 +5483,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c9 = cmanager.getByRoadAndNumber("CP", "99");
 
         // for better code coverage, we need a kernel out of staging
-        Kernel k2 = cmanager.newKernel("TwoCars");
+        Kernel k2 = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
         c3.setKernel(k2);
         c4.setKernel(k2);
 
@@ -5143,7 +5541,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("destination track", northEndStaging1, c7.getDestinationTrack());
         Assert.assertEquals("destination track", northEndStaging1, c8.getDestinationTrack());
         Assert.assertEquals("destination track", northEndStaging1, c9.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -5266,7 +5664,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging3 = northEndStaging.addTrack("North End Staging 3", Track.STAGING);
         northEndStaging3.setLength(300);
 
-        // place cars on south end staging       
+        // place cars on south end staging
         Car c10 = JUnitOperationsUtil.createAndPlaceCar("A", "10", "Boxcar", "40", southEndStaging1, 0);
         Car c11 = JUnitOperationsUtil.createAndPlaceCar("A", "11", "Boxcar", "40", southEndStaging2, 1);
 
@@ -5302,7 +5700,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("destination track", northEndStaging3, c9.getDestinationTrack());
         Assert.assertEquals("destination track", northEndStaging3, c10.getDestinationTrack());
         Assert.assertEquals("destination track", null, c11.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -5333,7 +5731,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
 
-        // cause a build failure by not allowing any set outs at North Industries, causes a train length issue
+        // cause a build failure by not allowing any set outs at North Industries,
+        // causes a train length issue
         rlNI.setDropAllowed(false);
 
         train1.reset();
@@ -5346,10 +5745,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     /**
      * Tests option to use normal build if failure
      */
@@ -5376,16 +5775,16 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
 
-        // Normally would cause a build failure by not allowing any set outs at North Industries, causes a train length issue
+        // Normally would cause a build failure by not allowing any set outs at North
+        // Industries, causes a train length issue
         rlNI.setDropAllowed(false);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-
 
     /**
      * Tests staging in the middle of a route
@@ -5406,7 +5805,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("2nd location in train's route", "North Industries", lNI.getName());
 
         // make it staging
-        lNI.setLocationOps(Location.STAGING);
+        lNI.changeTrackType(Track.STAGING);
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
@@ -5431,33 +5830,37 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("confirm destination", null, c7.getDestination());
         Assert.assertEquals("confirm destination", null, c8.getDestination());
         Assert.assertEquals("confirm destination", null, c9.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
      * Tests the creation of the CSV manifest file
+     * 
+     * @throws IOException close BufferedReader
      */
     @Test
-    public void testCreateCsvManifest() {
+    public void testCreateCsvManifest() throws IOException {
 
         Setup.setGenerateCsvManifestEnabled(true);
 
-        // note any changes to operations data could change the number of lines in the csv file
+        // note any changes to operations data could change the number of lines in the
+        // csv file
         JUnitOperationsUtil.initOperationsData();
 
         Train train1 = tmanager.getTrainById("1");
 
         Assert.assertTrue(new TrainBuilder().build(train1));
 
-        File csvManifestFile =
-                InstanceManager.getDefault(TrainManagerXml.class).getTrainCsvManifestFile(train1.getName());
+        File csvManifestFile = InstanceManager.getDefault(TrainManagerXml.class)
+                .getTrainCsvManifestFile(train1.getName());
         Assert.assertTrue(csvManifestFile.exists());
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(csvManifestFile);
         Assert.assertEquals("confirm number of lines in csv manifest", 39, in.lines().count());
-        
+        in.close();
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -5466,13 +5869,16 @@ public class TrainBuilderTest extends OperationsTestCase {
      * Tests DISPLAY_CAR_LIMIT_20 which controls how many cars in staging are
      * displayed in the build report.
      * 
+     * @throws IOException close BufferedReader
+     * 
      */
     @Test
-    public void testDisplayLimit20() {
+    public void testDisplayLimit20() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 20, TrainBuilder.DISPLAY_CAR_LIMIT_20);
 
-        // note any changes to operations data could change the number of lines in the build report
+        // note any changes to operations data could change the number of lines in the
+        // build report
         JUnitOperationsUtil.initOperationsData();
 
         // place 30 cars in staging
@@ -5485,7 +5891,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         }
 
         Train train1 = tmanager.getTrainById("1");
-        // need to increase train length and number of moves out of staging for staging track selection
+        // need to increase train length and number of moves out of staging for staging
+        // track selection
         Route route = train1.getRoute();
         RouteLocation rlNorthEnd = route.getDepartsRouteLocation();
         rlNorthEnd.setMaxCarMoves(50);
@@ -5495,29 +5902,30 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
 
         // confirm by checking number of lines in the build report
-        File buildReport =
-                InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
         Assert.assertTrue(buildReport.exists());
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 461, in.lines().count());
-        
+        Assert.assertEquals("confirm number of lines in build report", 528, in.lines().count());
+        in.close();
 
-
-        //TODO search and confirm limit message in build report
+        // TODO search and confirm limit message in build report
     }
 
     /**
      * Tests DISPLAY_CAR_LIMIT_50 which controls how many cars are displayed per
      * location in the build report.
+     * 
+     * @throws IOException BufferReader close
      */
     @Test
-    public void testDisplayLimit50() {
+    public void testDisplayLimit50() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 50, TrainBuilder.DISPLAY_CAR_LIMIT_50);
 
-        // note any changes to operations data could change the number of lines in the build report
+        // note any changes to operations data could change the number of lines in the
+        // build report
         JUnitOperationsUtil.initOperationsData();
 
         // place 75 cars in NI yard 2
@@ -5533,81 +5941,91 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
 
         // confirm by checking number of lines in the build report
-        File buildReport =
-                InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
         Assert.assertTrue(buildReport.exists());
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 252, in.lines().count());
-        
+        Assert.assertEquals("confirm number of lines in build report", 262, in.lines().count());
+        in.close();
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
-
-        //TODO search and confirm limit message in build report
+        // TODO search and confirm limit message in build report
     }
 
     /**
-     * Tests DISPLAY_CAR_LIMIT_100. Used to control how many cars are displayed
-     * in the build report. DISPLAY_CAR_LIMIT_100 is used in two places, at the
-     * start of the build report when listing the cars and removing the ones
-     * that the train won't serve. And at the completion of finding destinations
-     * for cars, lists how many cars were ignored due to move counts being used
-     * up.
+     * Tests DISPLAY_CAR_LIMIT_100. Used to control how many cars are displayed in
+     * the build report. DISPLAY_CAR_LIMIT_100 is used in two places, at the start
+     * of the build report when listing the cars and removing the ones that the
+     * train won't serve. And at the completion of finding destinations for cars,
+     * lists how many cars were ignored due to move counts being used up.
+     * 
+     * @throws IOException close BufferedReader
      */
     @Test
-    public void testDisplayLimit100() {
+    public void testDisplayLimit100() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 100, TrainBuilder.DISPLAY_CAR_LIMIT_100);
 
-        // note any changes to operations data could change the number of lines in the build report
-        JUnitOperationsUtil.initOperationsData();
+        // note any changes to operations data could change the number of lines in the
+        // build report
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
 
-        // place 125 Boxcar in NI yard 2
-        Location locationNI = lmanager.getLocationById("20");
-        Track NIyard2 = locationNI.addTrack("NI Yard 2", Track.YARD);
-        NIyard2.setLength(125 * 50);
-
-        for (int i = 0; i < 125; i++) {
-            JUnitOperationsUtil.createAndPlaceCar("BB", Integer.toString(i), "Boxcar", "40", NIyard2, 0);
-        }
-
-        // place 125 "BOXCAR" in NI yard 3, "BOXCAR" isn't serviced by train
-        Track NIyard3 = locationNI.addTrack("NI Yard 3", Track.YARD);
-        NIyard3.setLength(125 * 50);
-        locationNI.addTypeName("BOXCAR");
-        NIyard3.addTypeName("BOXCAR");
+        // place 125 Boxcar in Acton yard 1
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actionYard1 = acton.getTrackByName("Acton Yard 1", null);
+        actionYard1.setLength(125 * 50);
 
         for (int i = 0; i < 125; i++) {
-            JUnitOperationsUtil.createAndPlaceCar("BC", Integer.toString(i), "BOXCAR", "40", NIyard3, 0);
+            JUnitOperationsUtil.createAndPlaceCar("BB", Integer.toString(i), "Boxcar", "40", actionYard1, i);
         }
 
-        Train train1 = tmanager.getTrainById("1");
-        Assert.assertTrue(new TrainBuilder().build(train1));
+        // place 125 "BOXCAR" in Acton yard 3, "BOXCAR" isn't serviced by train
+        Track actonYard3 = acton.addTrack("Acton Yard 3", Track.YARD);
+        actonYard3.setLength(125 * 50);
+        acton.addTypeName("BOXCAR");
+        actonYard3.addTypeName("BOXCAR");
+
+        for (int i = 0; i < 125; i++) {
+            JUnitOperationsUtil.createAndPlaceCar("BC", Integer.toString(i), "BOXCAR", "40", actonYard3, i);
+        }
+
+        // place 125 Boxcar in Boston yard 1
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        bostonYard1.setLength(125 * 50);
+
+        for (int i = 0; i < 125; i++) {
+            JUnitOperationsUtil.createAndPlaceCar("BD", Integer.toString(i), "Boxcar", "40", bostonYard1, i);
+        }
+
+        Train train = tmanager.newTrain("Test_100_Limit");
+        train.setRoute(route);
+        Assert.assertTrue(new TrainBuilder().build(train));
 
         // confirm by checking number of lines in the build report
-        File buildReport =
-                InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train.getName());
         Assert.assertTrue(buildReport.exists());
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 377, in.lines().count());
-        
+        Assert.assertEquals("confirm number of lines in build report", 635, in.lines().count());
+        in.close();
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
-
-        //TODO search and confirm limit message in build report
+        // TODO search and confirm limit message in build report
     }
 
     /**
-     * Test prompt from staging, doesn't actually cause the user prompt to
-     * appear, that would be part of the GUI tests.
+     * Test prompt from staging, doesn't actually cause the user prompt to appear,
+     * that would be part of the GUI tests.
      */
     @Test
     public void testStagingPromptFrom() {
 
-        Setup.setPromptFromStagingEnabled(true);
+        Setup.setStagingPromptFromEnabled(true);
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -5620,7 +6038,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setNumberEngines("2");
         Assert.assertFalse(new TrainBuilder().build(train1));
 
-        // place two engines on departure track        
+        // place two engines on departure track
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
         Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
 
@@ -5641,7 +6059,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -5653,7 +6071,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testStagingPromptTo() {
 
-        Setup.setPromptToStagingEnabled(true);
+        Setup.setStagingPromptToEnabled(true);
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -5783,15 +6201,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         e1 = emanager.newRS("CP", "5501");
         e1.setModel("GP30");
         e1.setMoves(5);
-        // Test that default engine type is an acceptable type at all locations and tracks
+        // Test that default engine type is an acceptable type at all locations and
+        // tracks
         Assert.assertEquals("Test Engine CP1801 SetLocation 1s1", "okay", e1.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Test Engine CP1801 SetLocation 2s1", "okay", e1.setLocation(loc2, loc2trk1));
         Assert.assertEquals("Test Engine CP1801 SetLocation 2s2", "okay", e1.setLocation(loc2, loc2trk2));
         Assert.assertEquals("Test Engine CP1801 SetLocation 2s3", "okay", e1.setLocation(loc2, loc2trk3));
         Assert.assertEquals("Test Engine CP1801 SetLocation 2s4", "okay", e1.setLocation(loc2, loc2trk4));
         Assert.assertEquals("Test Engine CP1801 SetLocation 3s1", "okay", e1.setLocation(loc3, loc3trk1));
-        Assert.assertEquals("Test Engine CP1801 SetLocation 2s4 for real", "okay", e1.setLocation(loc2,
-                loc2trke1));
+        Assert.assertEquals("Test Engine CP1801 SetLocation 2s4 for real", "okay", e1.setLocation(loc2, loc2trke1));
 
         Engine e2;
         e2 = emanager.newRS("CP", "5888");
@@ -5806,28 +6224,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         b1.setLoadName("L");
         b1.setMoves(5);
         // Test that first carTypes[1] is an acceptable type at all locations and tracks
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 1s1", "okay", b1.setLocation(loc1,
-                loc1trk1));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s1", "okay", b1.setLocation(loc2,
-                loc2trk1));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s2", "okay", b1.setLocation(loc2,
-                loc2trk2));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s3", "okay", b1.setLocation(loc2,
-                loc2trk3));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s4", "okay", b1.setLocation(loc2,
-                loc2trk4));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 3s1", "okay", b1.setLocation(loc3,
-                loc3trk1));
-        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s4 for real", "okay", b1.setLocation(
-                loc2, loc2trk4));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 1s1", "okay", b1.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s1", "okay", b1.setLocation(loc2, loc2trk1));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s2", "okay", b1.setLocation(loc2, loc2trk2));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s3", "okay", b1.setLocation(loc2, loc2trk3));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s4", "okay", b1.setLocation(loc2, loc2trk4));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 3s1", "okay", b1.setLocation(loc3, loc3trk1));
+        Assert.assertEquals("Bob Test Test Car CP81234567 SetLocation 2s4 for real", "okay",
+                b1.setLocation(loc2, loc2trk4));
 
         Car b2;
         b2 = cmanager.newRS("CP", "81234568");
         b2.setTypeName(carTypes[1]);
         b2.setLength("40");
         b2.setMoves(5);
-        Assert.assertEquals("Bob Test Test Car CP81234568 SetLocation 2s4", "okay", b2.setLocation(loc2,
-                loc2trk4));
+        Assert.assertEquals("Bob Test Test Car CP81234568 SetLocation 2s4", "okay", b2.setLocation(loc2, loc2trk4));
 
         Car b3;
         b3 = cmanager.newRS("CP", "81234569");
@@ -5835,8 +6246,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         b3.setLength("40");
         b3.setLoadName("Flour");
         b3.setMoves(5);
-        Assert.assertEquals("Bob Test Test Car CP81234569 SetLocation 2s4", "okay", b3.setLocation(loc2,
-                loc2trk4));
+        Assert.assertEquals("Bob Test Test Car CP81234569 SetLocation 2s4", "okay", b3.setLocation(loc2, loc2trk4));
 
         Car b4;
         b4 = cmanager.newRS("CP", "81234566");
@@ -5844,39 +6254,34 @@ public class TrainBuilderTest extends OperationsTestCase {
         b4.setLength("40");
         b4.setLoadName("Bags");
         b4.setMoves(5);
-        Assert.assertEquals("Bob Test Test Car CP81234566 SetLocation 2s4", "okay", b4.setLocation(loc2,
-                loc2trk4));
+        Assert.assertEquals("Bob Test Test Car CP81234566 SetLocation 2s4", "okay", b4.setLocation(loc2, loc2trk4));
 
         Car b5;
         b5 = cmanager.newRS("CP", "71234567");
         b5.setTypeName(carTypes[1]);
         b5.setLength("40");
         // b5.setLoad("E");
-        Assert.assertEquals("Bob Test Test Car CP71234567 SetLocation 2s4", "okay", b5.setLocation(loc2,
-                loc2trk3));
+        Assert.assertEquals("Bob Test Test Car CP71234567 SetLocation 2s4", "okay", b5.setLocation(loc2, loc2trk3));
 
         Car b6;
         b6 = cmanager.newRS("CP", "71234568");
         b6.setTypeName(carTypes[1]);
         b6.setLength("40");
         // b6.setLoad("E");
-        Assert.assertEquals("Bob Test Test Car CP71234568 SetLocation 2s4", "okay", b6.setLocation(loc2,
-                loc2trk3));
+        Assert.assertEquals("Bob Test Test Car CP71234568 SetLocation 2s4", "okay", b6.setLocation(loc2, loc2trk3));
 
         Car b7;
         b7 = cmanager.newRS("CP", "71234569");
         b7.setTypeName(carTypes[1]);
         b7.setLength("40");
         // b7.setLoad("E");
-        Assert.assertEquals("Bob Test Test Car CP71234569 SetLocation 2s4", "okay", b7.setLocation(loc2,
-                loc2trk3));
+        Assert.assertEquals("Bob Test Test Car CP71234569 SetLocation 2s4", "okay", b7.setLocation(loc2, loc2trk3));
 
         Car b8;
         b8 = cmanager.newRS("CP", "71234566");
         b8.setTypeName(carTypes[1]);
         b8.setLength("40");
-        Assert.assertEquals("Bob Test Test Car CP71234566 SetLocation 2s4", "okay", b8.setLocation(loc2,
-                loc2trk3));
+        Assert.assertEquals("Bob Test Test Car CP71234566 SetLocation 2s4", "okay", b8.setLocation(loc2, loc2trk3));
 
         // Create cars used
         Car c1;
@@ -5886,20 +6291,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setCaboose(true);
         c1.setMoves(5);
         // Test that first Caboose is an acceptable type at all locations and tracks
-        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 1s1", "okay", c1.setLocation(loc1,
-                loc1trk1));
-        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 3s1", "okay", c1.setLocation(loc3,
-                loc3trk1));
-        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 2s5 for real", "okay", c1
-                .setLocation(loc2, loc2trkc1));
+        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 1s1", "okay", c1.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 3s1", "okay", c1.setLocation(loc3, loc3trk1));
+        Assert.assertEquals("Bob Test Test Caboose CP12345678 SetLocation 2s5 for real", "okay",
+                c1.setLocation(loc2, loc2trkc1));
 
         Car c2;
         c2 = cmanager.newRS("CP", "12345679");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setCaboose(true);
-        Assert.assertEquals("Bob Test Test Caboose CP12345679 SetLocation 2s5 for real", "okay", c2
-                .setLocation(loc2, loc2trkc2));
+        Assert.assertEquals("Bob Test Test Caboose CP12345679 SetLocation 2s5 for real", "okay",
+                c2.setLocation(loc2, loc2trkc2));
 
         // Create routes used
         Route rte1;
@@ -5959,8 +6362,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     /**
      * Test the generation of custom loads out staging. Case where no tracks
-     * available, and only destination is staging requesting cars with custom
-     * loads.
+     * available, and only destination is staging requesting cars with custom loads.
      */
     @Test
     public void testStagingtoStagingCustomLoadsA() {
@@ -6009,7 +6411,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
 
         // now allow restrictive staging tracks
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
 
@@ -6058,7 +6460,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -6148,15 +6550,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car destination track", yardNI, c5.getDestinationTrack());
         Assert.assertEquals("car destination track", yardNI, c6.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /**
      * Test the generation of custom loads out staging. Case where no tracks
-     * available, and only destination is staging. Train restrictions which
-     * loads can be carried
+     * available, and only destination is staging. Train restrictions which loads
+     * can be carried
      */
     @Test
     public void testStagingtoStagingCustomLoadsC() {
@@ -6220,15 +6622,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should fail
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
     /*
-     * Test the loading of custom load into cars departing staging and
-     * terminating into staging. Note that the generation of custom loads is
-     * random.
+     * Test the loading of custom load into cars departing staging and terminating
+     * into staging. Note that the generation of custom loads is random.
      */
     @Test
     public void testStagingtoStagingCustomLoadsD() {
@@ -6242,7 +6643,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create locations used
         Location loc1;
         loc1 = lmanager.newLocation("Westend");
-        loc1.setLocationOps(Location.STAGING);
         loc1.setTrainDirections(Location.WEST + Location.EAST);
 
         Location loc2;
@@ -6251,7 +6651,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location loc3;
         loc3 = lmanager.newLocation("Eastend");
-        loc3.setLocationOps(Location.STAGING);
         loc3.setTrainDirections(Location.WEST + Location.EAST);
 
         Track loc1trk1;
@@ -6367,7 +6766,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotEquals("Generated custom load", "E", c4.getLoadName()); // Boxcar with random custom load
         Assert.assertNotEquals("Generated custom load", "E", c7.getLoadName()); // Boxcar with random custom load
         Assert.assertNotEquals("Generated custom load", "E", c8.getLoadName()); // Boxcar with random custom load
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -6425,7 +6824,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // caboose should be able to depart with load "E"
         Assert.assertEquals("car's load", "E", c1.getLoadName());
         Assert.assertEquals("car's load", "E", c2.getLoadName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
@@ -6482,7 +6881,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c10 = JUnitOperationsUtil.createAndPlaceCar("ABC", "10", "Flat", "40", northEndStaging1, 30);
         Car c11 = JUnitOperationsUtil.createAndPlaceCar("CBA", "11", "Flat", "40", northEndStaging1, 30);
 
-        // remove one of the cabooses from staging, route only allows for 5 cars to depart staging
+        // remove one of the cabooses from staging, route only allows for 5 cars to
+        // depart staging
         c1.setLocation(null, null);
 
         // allow staging to generate custom loads for cars
@@ -6490,9 +6890,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
 
         // now allow restrictive staging tracks
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
 
-        // train2 doesn't require caboose, so it will be handled like the other cars in staging
+        // train2 doesn't require caboose, so it will be handled like the other cars in
+        // staging
         Assert.assertTrue(new TrainBuilder().build(train2));
 
         // all cars should go to staging
@@ -6762,13 +7163,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 built", Train.CODE_BUILT, train1.getStatusCode());
 
         Assert.assertEquals("Train 1 After Build Departs Name", "Westford", train1.getTrainDepartsName());
-        Assert.assertEquals("Train 1 After Build Terminates Name", "Westford", train1
-                .getTrainTerminatesName());
+        Assert.assertEquals("Train 1 After Build Terminates Name", "Westford", train1.getTrainTerminatesName());
         Assert.assertEquals("Train 1 After Build Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After Build Built Status", true, train1.isBuilt());
 
         // are the right cars assigned to the train?
-        // the default moves is 7, therefore only 7 cars should be moved based on their move counts
+        // the default moves is 7, therefore only 7 cars should be moved based on their
+        // move counts
         Assert.assertEquals("Car c1 After Build should be assigned to Train 1", train1, c1.getTrain());
         Assert.assertEquals("Car c2 After Build should be assigned to Train 1", train1, c2.getTrain());
         Assert.assertEquals("Car c3 After Build should be assigned to Train 1", train1, c3.getTrain());
@@ -6780,20 +7181,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car c9 After Build should NOT be assigned to Train 1", null, c9.getTrain());
 
         // now check to see if cars are going to be delivered to the right places?
-        Assert.assertEquals("Car c1 After Build destination", "Westford Interchange 5", c1
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c2 After Build destination", "Westford Spur 4", c2
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c3 After Build destination", "Westford Interchange 7", c3
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c4 After Build destination", "Westford Spur 3", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c5 After Build destination", "Westford Interchange 5", c5
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c6 After Build destination", "Westford Interchange 7", c6
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c8 After Build destination", "Westford Interchange 6", c8
-                .getDestinationTrackName());
+        Assert.assertEquals("Car c1 After Build destination", "Westford Interchange 5", c1.getDestinationTrackName());
+        Assert.assertEquals("Car c2 After Build destination", "Westford Spur 4", c2.getDestinationTrackName());
+        Assert.assertEquals("Car c3 After Build destination", "Westford Interchange 7", c3.getDestinationTrackName());
+        Assert.assertEquals("Car c4 After Build destination", "Westford Spur 3", c4.getDestinationTrackName());
+        Assert.assertEquals("Car c5 After Build destination", "Westford Interchange 5", c5.getDestinationTrackName());
+        Assert.assertEquals("Car c6 After Build destination", "Westford Interchange 7", c6.getDestinationTrackName());
+        Assert.assertEquals("Car c8 After Build destination", "Westford Interchange 6", c8.getDestinationTrackName());
 
         // are the pickup and drop counts correct?
         Assert.assertEquals("Drop count for Westford", 7, westford.getDropRS());
@@ -6812,12 +7206,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Pickup count for Westford track Westford Yard 2", 3, westfordYard2.getPickupRS());
         Assert.assertEquals("Pickup count for Westford track Westford Spur 3", 0, westfordSpur1.getPickupRS());
         Assert.assertEquals("Pickup count for Westford track Westford Spur 4", 0, westfordSpur2.getPickupRS());
-        Assert.assertEquals("Pickup count for Westford track Westford Interchange 5", 0, westfordInterchange1
-                .getPickupRS());
-        Assert.assertEquals("Pickup count for Westford track Westford Interchange 6", 0, westfordInterchange2
-                .getPickupRS());
-        Assert.assertEquals("Pickup count for Westford track Westford Interchange 7", 0, westfordInterchange3
-                .getPickupRS());
+        Assert.assertEquals("Pickup count for Westford track Westford Interchange 5", 0,
+                westfordInterchange1.getPickupRS());
+        Assert.assertEquals("Pickup count for Westford track Westford Interchange 6", 0,
+                westfordInterchange2.getPickupRS());
+        Assert.assertEquals("Pickup count for Westford track Westford Interchange 7", 0,
+                westfordInterchange3.getPickupRS());
 
         train1.move();
         // Train should not be in route since there's only one location
@@ -6851,27 +7245,23 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Move 1 Drop count for Westford track Westford Yard 2", 0, westfordYard2.getDropRS());
         Assert.assertEquals("Move 1 Drop count for Westford track Westford Spur 3", 0, westfordSpur1.getDropRS());
         Assert.assertEquals("Move 1 Drop count for Westford track Westford Spur 4", 0, westfordSpur2.getDropRS());
-        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 5", 0, westfordInterchange1
-                .getDropRS());
-        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 6", 0, westfordInterchange2
-                .getDropRS());
-        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 7", 0, westfordInterchange3
-                .getDropRS());
+        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 5", 0,
+                westfordInterchange1.getDropRS());
+        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 6", 0,
+                westfordInterchange2.getDropRS());
+        Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 7", 0,
+                westfordInterchange3.getDropRS());
         Assert.assertEquals("Move 1 Pickup count for Westford", 0, westford.getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 1", 0, westfordYard1
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 2", 0, westfordYard2
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Spur 3", 0, westfordSpur1
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Spur 4", 0, westfordSpur2
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 5", 0, westfordInterchange1
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 6", 0, westfordInterchange2
-                .getPickupRS());
-        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 7", 0, westfordInterchange3
-                .getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 1", 0, westfordYard1.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 2", 0, westfordYard2.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Spur 3", 0, westfordSpur1.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Spur 4", 0, westfordSpur2.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 5", 0,
+                westfordInterchange1.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 6", 0,
+                westfordInterchange2.getPickupRS());
+        Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 7", 0,
+                westfordInterchange3.getPickupRS());
 
         // Verify that an extra move will not change train status.
         train1.move();
@@ -6882,7 +7272,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         rl1.setMaxCarMoves(10); // try and use all 9/10 of the cars
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
-        // c1, c3, c5, c6, c8 are at interchange tracks and should not be assigned to train1
+        // c1, c3, c5, c6, c8 are at interchange tracks and should not be assigned to
+        // train1
         Assert.assertEquals("Car c1 After Build 2 should NOT be assigned to Train 1", null, c1.getTrain());
         Assert.assertEquals("Car c2 After Build 2 should be assigned to Train 1", train1, c2.getTrain());
         Assert.assertEquals("Car c3 After Build 2 should NOT be assigned to Train 1", null, c3.getTrain());
@@ -6894,14 +7285,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car c9 After Build 2 should be assigned to Train 1", train1, c9.getTrain());
 
         // now check to see if cars are going to be delivered to the right places?
-        Assert.assertEquals("Car c2 After Build 2 destination", "Westford Yard 1", c2
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c4 After Build 2 destination", "Westford Yard 1", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c7 After Build 2 destination", "Westford Interchange 6", c7
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c9 After Build 2 destination", "Westford Yard 2", c9
-                .getDestinationTrackName());
+        Assert.assertEquals("Car c2 After Build 2 destination", "Westford Yard 1", c2.getDestinationTrackName());
+        Assert.assertEquals("Car c4 After Build 2 destination", "Westford Yard 1", c4.getDestinationTrackName());
+        Assert.assertEquals("Car c7 After Build 2 destination", "Westford Interchange 6", c7.getDestinationTrackName());
+        Assert.assertEquals("Car c9 After Build 2 destination", "Westford Yard 2", c9.getDestinationTrackName());
         // move and terminate
         train1.move();
         Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, getTrainStatus(train1));
@@ -6946,22 +7333,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car c9 After Build 3 should NOT be assigned to Train 1", null, c9.getTrain());
 
         // now check to see if cars are going to be delivered to the right places?
-        Assert.assertEquals("Car c1 After Build 3 destination", "Westford Yard 1", c1
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c2 After Build 3 destination", "Westford Spur 3", c2
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c3 After Build 3 destination", "Westford Yard 1", c3
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c4 After Build 3 destination", "Westford Interchange 7", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c5 After Build 3 destination", "Westford Yard 2", c5
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c6 After Build 3 destination", "Westford Yard 2", c6
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c7 After Build 3 destination", "Westford Yard 2", c7
-                .getDestinationTrackName());
-        Assert.assertEquals("Car c8 After Build 3 destination", "Westford Yard 1", c8
-                .getDestinationTrackName());
+        Assert.assertEquals("Car c1 After Build 3 destination", "Westford Yard 1", c1.getDestinationTrackName());
+        Assert.assertEquals("Car c2 After Build 3 destination", "Westford Spur 3", c2.getDestinationTrackName());
+        Assert.assertEquals("Car c3 After Build 3 destination", "Westford Yard 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Car c4 After Build 3 destination", "Westford Interchange 7", c4.getDestinationTrackName());
+        Assert.assertEquals("Car c5 After Build 3 destination", "Westford Yard 2", c5.getDestinationTrackName());
+        Assert.assertEquals("Car c6 After Build 3 destination", "Westford Yard 2", c6.getDestinationTrackName());
+        Assert.assertEquals("Car c7 After Build 3 destination", "Westford Yard 2", c7.getDestinationTrackName());
+        Assert.assertEquals("Car c8 After Build 3 destination", "Westford Yard 1", c8.getDestinationTrackName());
         // move and terminate
         train1.move();
         Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, getTrainStatus(train1));
@@ -7016,7 +7395,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
-        // should not pick up cars at Westford Spur 3, Westford Spur 4, Westford Interchange 5
+        // should not pick up cars at Westford Spur 3, Westford Spur 4, Westford
+        // Interchange 5
         // and Westford Interchange 7
         Assert.assertEquals("Car c1 After Build 4 should be assigned to Train 1", train1, c1.getTrain());
         Assert.assertEquals("Car c2 After Build 4 should NOT be assigned to Train 1", null, c2.getTrain());
@@ -7081,10 +7461,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
 
         Assert.assertTrue("local testing spur to spur", train1.isBuilt());
-        Assert.assertEquals("car UP 4 at interchange, destination Westford Spur 3", westfordSpur1, c4
-                .getDestinationTrack());
-        Assert.assertEquals("car CP 2 at spur, destination Westford Yard 1", westfordYard1, c2
-                .getDestinationTrack());
+        Assert.assertEquals("car UP 4 at interchange, destination Westford Spur 3", westfordSpur1,
+                c4.getDestinationTrack());
+        Assert.assertEquals("car CP 2 at spur, destination Westford Yard 1", westfordYard1, c2.getDestinationTrack());
 
         // bias track selection to interchanges
         westfordSpur1.setMoves(12);
@@ -7095,10 +7474,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
 
         Assert.assertTrue("local testing spur to spur", train1.isBuilt());
-        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Yard 2", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("car CP 2 at spur, destination", "Westford Interchange 5", c2
-                .getDestinationTrackName());
+        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Yard 2", c4.getDestinationTrackName());
+        Assert.assertEquals("car CP 2 at spur, destination", "Westford Interchange 5", c2.getDestinationTrackName());
 
         // set CP 2 destination, currently at Westford, Westford Spur 3
         train1.reset(); // release CP2 from train so we can set the car's destination
@@ -7108,10 +7485,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
 
         Assert.assertTrue("local testing spur to spur", train1.isBuilt());
-        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Spur 3", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("car CP 2 at spur, destination", "Westford Interchange 6", c2
-                .getDestinationTrackName());
+        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Spur 3", c4.getDestinationTrackName());
+        Assert.assertEquals("car CP 2 at spur, destination", "Westford Interchange 6", c2.getDestinationTrackName());
 
         // CP 2 is at Westford Spur 3, set destination to be the same
         train1.reset();
@@ -7119,15 +7494,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train1));
 
         Assert.assertTrue("local testing spur to spur", train1.isBuilt());
-        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Spur 3", c4
-                .getDestinationTrackName());
-        Assert.assertEquals("car CP 2 at spur, destination", "Westford Spur 3", c2
-                .getDestinationTrackName());
+        Assert.assertEquals("car UP 4 at interchange, destination", "Westford Spur 3", c4.getDestinationTrackName());
+        Assert.assertEquals("car CP 2 at spur, destination", "Westford Spur 3", c2.getDestinationTrackName());
 
         train1.move();
         Assert.assertEquals("Train 1 terminated", Train.TERMINATED, getTrainStatus(train1));
         Assert.assertEquals("Train 1 terminated", Train.CODE_TERMINATED, train1.getStatusCode());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -7216,7 +7589,96 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car's train c4", train1, c4.getTrain());
         Assert.assertEquals("car's train c5", train1, c5.getTrain());
         Assert.assertEquals("car's train c6", null, c6.getTrain());
-        
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    @Test
+    public void testTurnFinalDestination() {
+
+        // confirm defaults
+
+        Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
+        Track westfordSpur1 = westford.getTrackByName("Westford Spur 1", null);
+        Track westfordYard1 = westford.getTrackByName("Westford Yard 1", null);
+        Track westfordYard2 = westford.getTrackByName("Westford Yard 2", null);
+        Track westfordInterchange1 = westford.getTrackByName("Westford Interchange 1", null);
+        Track westfordInterchange2 = westford.getTrackByName("Westford Interchange 2", null);
+
+        // place cars on track
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", westfordSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", westfordSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", westfordYard1, 20);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("A", "4", "Boxcar", "40", westfordYard1, 30);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", westfordInterchange1, 40);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", westfordInterchange1, 50);
+
+        // set car destinations
+        c2.setDestination(westford, westfordYard2);
+        c6.setDestination(westford, westfordSpur1);
+
+        c1.setFinalDestination(westford);
+        c1.setFinalDestinationTrack(westfordInterchange1);
+        c3.setFinalDestination(westford);
+        c3.setFinalDestinationTrack(westfordYard2);
+        c4.setFinalDestination(westford);
+        c4.setFinalDestinationTrack(westfordInterchange1);
+        c5.setFinalDestination(westford);
+        c5.setFinalDestinationTrack(westfordInterchange2);
+
+        // create train
+        Train train1 = tmanager.newTrain("TestTurnFinalDestination");
+
+        Location needham = JUnitOperationsUtil.createOneNormalLocation("Needham");
+        Route route = rmanager.newRoute("Route Wesford");
+        route.addLocation(westford);
+        train1.setRoute(route);
+
+        train1.setAllowThroughCarsEnabled(false);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm cars are assigned to train
+        Assert.assertEquals("car's train", train1, c1.getTrain());
+        Assert.assertEquals("car's train", train1, c2.getTrain());
+        Assert.assertEquals("car's train", train1, c3.getTrain());
+        Assert.assertEquals("car's train", train1, c4.getTrain());
+        Assert.assertEquals("car's train", train1, c5.getTrain());
+        Assert.assertEquals("car's train", train1, c6.getTrain());
+
+        Assert.assertEquals("car's destination", westfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c2.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c3.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange1, c4.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange2, c5.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordSpur1, c6.getDestinationTrack());
+
+        train1.reset();
+        route.addLocation(needham);
+        route.addLocation(westford);
+
+        c2.setDestination(westford, westfordYard2);
+        c6.setDestination(westford, westfordSpur1);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm cars are assigned to train
+        Assert.assertEquals("car's train", train1, c1.getTrain());
+        Assert.assertEquals("car's train", train1, c2.getTrain());
+        Assert.assertEquals("car's train", train1, c3.getTrain());
+        Assert.assertEquals("car's train", train1, c4.getTrain());
+        Assert.assertEquals("car's train", train1, c5.getTrain());
+        Assert.assertEquals("car's train", train1, c6.getTrain());
+
+        Assert.assertEquals("car's destination", westfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c2.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c3.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange1, c4.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange2, c5.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordSpur1, c6.getDestinationTrack());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -7228,6 +7690,12 @@ public class TrainBuilderTest extends OperationsTestCase {
     // Westford has 2 yards, 2 spurs, 3 interchange tracks.
     @Test
     public void testLocalBuildOptions() {
+
+        // confirm defaults
+        Assert.assertFalse("Disabled local interchange moves", Setup.isLocalInterchangeMovesEnabled());
+        Assert.assertFalse("Disabled local spur moves", Setup.isLocalSpurMovesEnabled());
+        Assert.assertFalse("Disabled local yard moves", Setup.isLocalYardMovesEnabled());
+
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
@@ -7359,10 +7827,146 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Interchange track 3 has the least number of moves
         Assert.assertEquals("confirm c1 destination", westfordInterchange7, c1.getDestinationTrack());
         Assert.assertEquals("confirm destination", westfordInterchange7, c2.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
+    @Test
+    public void testLocalBuildOptionsCarWithFred() {
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+
+        // Create locations used
+        Location westford = lmanager.newLocation("Westford-1");
+
+        Track westfordYard1;
+        westfordYard1 = westford.addTrack("Westford Yard 1", Track.YARD);
+        westfordYard1.setTrainDirections(Track.WEST + Track.EAST);
+        westfordYard1.setLength(500);
+
+        Track westfordYard2;
+        westfordYard2 = westford.addTrack("Westford Yard 2", Track.YARD);
+        westfordYard2.setTrainDirections(Track.WEST + Track.EAST);
+        westfordYard2.setLength(500);
+
+        Track westfordSpur3;
+        westfordSpur3 = westford.addTrack("Westford Spur 3", Track.SPUR);
+        westfordSpur3.setTrainDirections(0); // Only local moves allowed
+        westfordSpur3.setLength(300);
+
+        Track westfordSpur4;
+        westfordSpur4 = westford.addTrack("Westford Spur 4", Track.SPUR);
+        westfordSpur4.setTrainDirections(0); // Only local moves allowed
+        westfordSpur4.setLength(300);
+
+        Track westfordInterchange5;
+        westfordInterchange5 = westford.addTrack("Westford Interchange 5", Track.INTERCHANGE);
+        westfordInterchange5.setTrainDirections(0); // Only local moves allowed
+        westfordInterchange5.setLength(300);
+
+        Track westfordInterchange6;
+        westfordInterchange6 = westford.addTrack("Westford Interchange 6", Track.INTERCHANGE);
+        westfordInterchange6.setTrainDirections(Track.WEST + Track.EAST);
+        westfordInterchange6.setLength(300);
+
+        Track westfordInterchange7;
+        westfordInterchange7 = westford.addTrack("Westford Interchange 7", Track.INTERCHANGE);
+        westfordInterchange7.setTrainDirections(0); // Only local moves allowed
+        westfordInterchange7.setLength(300);
+
+        // now bias track selection by moves
+        westfordYard1.setMoves(3);
+        westfordYard2.setMoves(6);
+        westfordSpur3.setMoves(10);
+        westfordSpur4.setMoves(15);
+        westfordInterchange5.setMoves(20);
+        westfordInterchange6.setMoves(21);
+        westfordInterchange7.setMoves(22);
+
+        // Create route with only one location
+        Route rte1 = rmanager.newRoute("Local Route");
+        rte1.addLocation(westford);
+
+        // Create train
+        Train train1 = tmanager.newTrain("Test Local Defaults");
+        train1.setRoute(rte1);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "1", carTypes[1], "90", westfordYard1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "2", carTypes[2], "90", westfordYard1, 0);
+        c2.setFred(true);
+
+        // allow yard to yard moves
+        Setup.setLocalYardMovesEnabled(true);
+
+        // Build train
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+
+        // Yard track 2 has the least number of moves
+        Assert.assertEquals("confirm destination", westfordYard2, c1.getDestinationTrack());
+        // local should not move car with FRED unless required
+        Assert.assertEquals("confirm destination", null, c2.getDestinationTrack());
+
+        train1.reset();
+        train1.setRequirements(Train.FRED);
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+
+        Assert.assertEquals("confirm destination", westfordYard2, c1.getDestinationTrack());
+        // a caboose can return to the same track it departed on
+        Assert.assertEquals("confirm destination", westfordYard1, c2.getDestinationTrack());
+
+        // allow spur to spur moves
+        Setup.setLocalYardMovesEnabled(false);
+        Setup.setLocalSpurMovesEnabled(true);
+
+        train1.reset();
+
+        // place c1 on spur
+        Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(westford, westfordSpur3));
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+
+        // Yard track 1 has the least number of moves
+        Assert.assertEquals("confirm c1 destination", westfordYard1, c1.getDestinationTrack());
+        // Car with FRED can return to the same track it departed on
+        Assert.assertEquals("confirm destination", westfordYard1, c2.getDestinationTrack());
+
+        // bias track counts so the spur has the least number of moves
+        westfordYard1.setMoves(30);
+        westfordYard2.setMoves(40);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+
+        // Spur track 2 has the least number of moves
+        Assert.assertEquals("confirm c1 destination", westfordSpur4, c1.getDestinationTrack());
+        Assert.assertEquals("confirm destination", westfordSpur3, c2.getDestinationTrack());
+
+        // now test interchange to interchange local move
+        Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(westford, westfordInterchange5));
+
+        // bias track moves so interchange has the least number of moves
+        westfordInterchange7.setMoves(0);
+
+        // allow interchange to interchange moves
+        Setup.setLocalSpurMovesEnabled(false);
+        Setup.setLocalInterchangeMovesEnabled(true);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+
+        // Interchange track 3 has the least number of moves
+        Assert.assertEquals("confirm c1 destination", westfordInterchange7, c1.getDestinationTrack());
+        Assert.assertEquals("confirm destination", westfordInterchange7, c2.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     /**
      * Test a local switcher that departs and returns to staging
      * 
@@ -7374,10 +7978,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Create staging and track
         Location westford_staging = lmanager.newLocation("Westford-1");
-        westford_staging.setLocationOps(Location.STAGING);
         Track staging = westford_staging.addTrack("Westford staging", Track.STAGING);
         staging.setLength(500);
-        
+
         // Create location and spur
         Location westford_spur = lmanager.newLocation("Westford-2");
         Track spur = westford_spur.addTrack("Westford Yard 2", Track.SPUR);
@@ -7397,21 +8000,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "2", carTypes[2], "90", staging, 0);
         c2.setCaboose(true);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "3", carTypes[1], "90", spur, 0);
- 
+
         // Build train, will fail only 1 track in staging
         Assert.assertFalse(train1.build());
-        
+
         Setup.setBuildAggressive(true);
         Assert.assertFalse(train1.build());
-        
+
         Setup.setStagingTrackImmediatelyAvail(true);
         Assert.assertTrue(train1.build());
         Assert.assertTrue("Train 1 built", train1.isBuilt());
-        
-        Assert.assertEquals("confirm destination", spur, c1.getDestinationTrack());      
+
+        Assert.assertEquals("confirm destination", spur, c1.getDestinationTrack());
         Assert.assertEquals("confirm destination", staging, c2.getDestinationTrack());
         Assert.assertEquals("confirm destination", staging, c3.getDestinationTrack());
-        
+
         train1.reset();
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -7434,50 +8037,50 @@ public class TrainBuilderTest extends OperationsTestCase {
         // request a loaded car and load it with Tin
         sch1Item3.setReceiveLoadName("L");
         sch1Item3.setShipLoadName("Tin");
-        InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Tin"); // Allows c13 which is part of a kernel to get a new load
-
+        InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Tin"); // Allows c13 which is part of a kernel
+                                                                                // to get a new load
         Schedule sch2 = smanager.newSchedule("Schedule 2");
         ScheduleItem sch2Item1 = sch2.addItem(carTypes[4]);
         sch2Item1.setCount(2);
         sch2.addItem(carTypes[1]);
 
         // Create locations used
-        Location loc1;
-        loc1 = lmanager.newLocation("Westford");
+        Location westford;
+        westford = lmanager.newLocation("Westford");
 
-        Location loc2;
-        loc2 = lmanager.newLocation("Chelmsford");
+        Location chelmsford;
+        chelmsford = lmanager.newLocation("Chelmsford");
 
-        Location loc3;
-        loc3 = lmanager.newLocation("Bedford");
+        Location bedford;
+        bedford = lmanager.newLocation("Bedford");
 
         Track loc1trk1;
-        loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
+        loc1trk1 = westford.addTrack("Westford Yard 1", Track.YARD);
         loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk1.setLength(900);
 
         Track loc1trk2;
-        loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
+        loc1trk2 = westford.addTrack("Westford Yard 2", Track.YARD);
         loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk2.setLength(500);
         loc1trk2.deleteTypeName(carTypes[4]);
 
         Track loc1trk3;
-        loc1trk3 = loc1.addTrack("Westford Express 3", Track.SPUR);
+        loc1trk3 = westford.addTrack("Westford Express 3", Track.SPUR);
         loc1trk3.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk3.setLength(300);
         loc1trk3.deleteTypeName(carTypes[3]);
         loc1trk3.deleteTypeName(carTypes[4]);
 
         Track loc1trk4;
-        loc1trk4 = loc1.addTrack("Westford Express 4", Track.SPUR);
+        loc1trk4 = westford.addTrack("Westford Express 4", Track.SPUR);
         loc1trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk4.setLength(300);
         loc1trk4.deleteTypeName(carTypes[3]);
         loc1trk4.deleteTypeName(carTypes[4]);
 
         Track loc2trk1;
-        loc2trk1 = loc2.addTrack("Chelmsford Freight 1", Track.SPUR);
+        loc2trk1 = chelmsford.addTrack("Chelmsford Freight 1", Track.SPUR);
         loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk1.setLength(900);
         loc2trk1.deleteTypeName(carTypes[4]);
@@ -7487,7 +8090,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1).getId());
 
         Track loc2trk2;
-        loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SPUR);
+        loc2trk2 = chelmsford.addTrack("Chelmsford Freight 2", Track.SPUR);
         loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk2.setLength(900);
         loc2trk2.deleteTypeName(carTypes[4]);
@@ -7497,21 +8100,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2).getId());
 
         Track loc2trk3;
-        loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
+        loc2trk3 = chelmsford.addTrack("Chelmsford Yard 3", Track.YARD);
         loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk3.setLength(900);
         loc2trk3.deleteTypeName(carTypes[3]);
         loc2trk3.deleteTypeName(carTypes[4]);
 
         Track loc2trk4;
-        loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
+        loc2trk4 = chelmsford.addTrack("Chelmsford Freight 4", Track.SPUR);
         loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk4.setLength(900);
         loc2trk4.setSchedule(sch2);
         loc2trk4.setScheduleMode(Track.SEQUENTIAL);
 
         Track loc3trk1;
-        loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);
+        loc3trk1 = bedford.addTrack("Bedford Yard 1", Track.STAGING);
         loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc3trk1.setLength(900);
         loc3trk1.setRemoveCustomLoadsEnabled(true);
@@ -7519,13 +8122,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 2 location
         Route rte1;
         rte1 = rmanager.newRoute("Two Location Route");
-        RouteLocation rl1 = rte1.addLocation(loc1);
+        RouteLocation rl1 = rte1.addLocation(westford);
         rl1.setTrainDirection(RouteLocation.EAST);
         rl1.setMaxCarMoves(12);
         rl1.setTrainIconX(25); // set the train icon coordinates
         rl1.setTrainIconY(75);
 
-        RouteLocation rl2 = rte1.addLocation(loc2);
+        RouteLocation rl2 = rte1.addLocation(chelmsford);
         rl2.setTrainDirection(RouteLocation.EAST);
         rl2.setMaxCarMoves(12);
         rl2.setTrainIconX(75); // set the train icon coordinates
@@ -7555,7 +8158,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setLength("70");
         c3.setMoves(0);
         c3.setLoadName("L");
-        c3.setDestination(loc2, null); // force this car to Chelmsford
+        c3.setDestination(chelmsford, null); // force this car to Chelmsford
         cmanager.register(c3);
 
         Car c4 = new Car(roadNames[2], "S4");
@@ -7565,7 +8168,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cmanager.register(c4);
 
         // place two cars in a kernel
-        Kernel k1 = cmanager.newKernel("TwoCars");
+        Kernel k1 = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
 
         Car c5 = new Car(roadNames[1], "S5");
         c5.setTypeName(carTypes[3]);
@@ -7631,21 +8234,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         cmanager.register(c13);
 
         // place the cars in the yards
-        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(westford, loc1trk1));
 
-        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(westford, loc1trk2));
 
-        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(westford, loc1trk2));
 
         train1.reset();
 
@@ -7707,12 +8310,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 2 location
         Route rte2;
         rte2 = rmanager.newRoute("Chelmsford to Staging");
-        RouteLocation r2rl1 = rte2.addLocation(loc2);
+        RouteLocation r2rl1 = rte2.addLocation(chelmsford);
         r2rl1.setTrainDirection(RouteLocation.EAST);
         r2rl1.setMaxCarMoves(12);
         r2rl1.setTrainIconX(125); // set the train icon coordinates
         r2rl1.setTrainIconY(75);
-        RouteLocation r2rl3 = rte2.addLocation(loc3);
+        RouteLocation r2rl3 = rte2.addLocation(bedford);
         r2rl3.setTrainDirection(RouteLocation.EAST);
         r2rl3.setMaxCarMoves(12);
         r2rl3.setTrainIconX(175); // set the train icon coordinates
@@ -7759,15 +8362,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 3 locations
         Route rte3;
         rte3 = rmanager.newRoute("Staging to Chelmsford");
-        RouteLocation r3rl1 = rte3.addLocation(loc3);
+        RouteLocation r3rl1 = rte3.addLocation(bedford);
         r3rl1.setTrainDirection(RouteLocation.EAST);
         r3rl1.setMaxCarMoves(11); // there are 11 cars departing staging
         r3rl1.setTrainIconX(25); // set the train icon coordinates
         r3rl1.setTrainIconY(100);
-        RouteLocation r3rl2 = rte3.addLocation(loc2);
+        RouteLocation r3rl2 = rte3.addLocation(chelmsford);
         r3rl2.setTrainDirection(RouteLocation.EAST);
         r3rl2.setMaxCarMoves(12);
-        RouteLocation r3rl3 = rte3.addLocation(loc1);
+        RouteLocation r3rl3 = rte3.addLocation(westford);
         r3rl3.setTrainDirection(RouteLocation.EAST);
         r3rl3.setMaxCarMoves(12);
         r3rl3.setTrainIconX(75); // set the train icon coordinates
@@ -7780,8 +8383,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item2.setReceiveLoadName("Metal 2");
         sch1Item3.setReceiveLoadName("Metal 3");
 
-        InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Metal 3"); // Allows c13 which is part of a kernel to get a new load
-
+        InstanceManager.getDefault(CarLoads.class).addName(carTypes[2], "Metal 2");
+        InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Metal 3"); // Allows c13 which is part of a
+                                                                                    // kernel to get a new load
         train1.setRoute(rte3);
         train1.setName("BCW");
         train1.reset();
@@ -7847,45 +8451,45 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm no locations
         Assert.assertEquals("number of locations", 0, lmanager.getNumberOfLocations());
         // Create locations used
-        Location loc1;
-        loc1 = lmanager.newLocation("Westford");
-        Assert.assertEquals("Default directions", DIRECTION_ALL, loc1.getTrainDirections());
+        Location westford;
+        westford = lmanager.newLocation("Westford");
+        Assert.assertEquals("Default directions", DIRECTION_ALL, westford.getTrainDirections());
 
-        Location loc2;
-        loc2 = lmanager.newLocation("Chelmsford");
-        Assert.assertEquals("Default directions", DIRECTION_ALL, loc2.getTrainDirections());
+        Location chelmsford;
+        chelmsford = lmanager.newLocation("Chelmsford");
+        Assert.assertEquals("Default directions", DIRECTION_ALL, chelmsford.getTrainDirections());
 
-        Location loc3;
-        loc3 = lmanager.newLocation("Bedford");
-        Assert.assertEquals("Default directions", DIRECTION_ALL, loc3.getTrainDirections());
+        Location bedford;
+        bedford = lmanager.newLocation("Bedford");
+        Assert.assertEquals("Default directions", DIRECTION_ALL, bedford.getTrainDirections());
 
         Track loc1trk1;
-        loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
+        loc1trk1 = westford.addTrack("Westford Yard 1", Track.YARD);
         loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk1.setLength(900);
 
         Track loc1trk2;
-        loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
+        loc1trk2 = westford.addTrack("Westford Yard 2", Track.YARD);
         loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk2.setLength(500);
         loc1trk2.deleteTypeName(carTypes[3]);
         loc1trk2.deleteTypeName(carTypes[6]);
 
         Track loc2trk1;
-        loc2trk1 = loc2.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
+        loc2trk1 = chelmsford.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
         loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk1.setLength(900);
         loc2trk1.deleteTypeName(carTypes[3]);
         loc2trk1.deleteTypeName(carTypes[6]);
 
         Track loc2trk2;
-        loc2trk2 = loc2.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
+        loc2trk2 = chelmsford.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
         loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk2.setLength(900);
         loc2trk2.deleteTypeName(carTypes[6]);
 
         Track loc2trk3;
-        loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
+        loc2trk3 = chelmsford.addTrack("Chelmsford Yard 3", Track.YARD);
         loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk3.setLength(900);
         loc2trk3.deleteTypeName(carTypes[4]);
@@ -7893,7 +8497,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk3.deleteTypeName(carTypes[6]);
 
         Track loc2trk4;
-        loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
+        loc2trk4 = chelmsford.addTrack("Chelmsford Freight 4", Track.SPUR);
         loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk4.setLength(900);
         loc2trk4.deleteTypeName(carTypes[4]);
@@ -7903,24 +8507,24 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk4.setMoves(20);
 
         Track loc3trk1;
-        loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.YARD);
+        loc3trk1 = bedford.addTrack("Bedford Yard 1", Track.YARD);
         loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc3trk1.setLength(900);
 
         // Create route with 3 location
         Route rte1;
         rte1 = rmanager.newRoute("Route 1 East");
-        RouteLocation r1l1 = rte1.addLocation(loc1);
+        RouteLocation r1l1 = rte1.addLocation(westford);
         r1l1.setTrainDirection(RouteLocation.EAST);
         r1l1.setMaxCarMoves(4);
         r1l1.setTrainIconX(125); // set the train icon coordinates
         r1l1.setTrainIconY(100);
-        RouteLocation r1l2 = rte1.addLocation(loc2);
+        RouteLocation r1l2 = rte1.addLocation(chelmsford);
         r1l2.setTrainDirection(RouteLocation.EAST);
         r1l2.setMaxCarMoves(3);
         r1l2.setTrainIconX(25); // set the train icon coordinates
         r1l2.setTrainIconY(125);
-        RouteLocation r1l3 = rte1.addLocation(loc3);
+        RouteLocation r1l3 = rte1.addLocation(bedford);
         r1l3.setTrainDirection(RouteLocation.EAST);
         r1l3.setMaxCarMoves(3);
         r1l3.setTrainIconX(75); // set the train icon coordinates
@@ -7929,17 +8533,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 3 location
         Route rte2;
         rte2 = rmanager.newRoute("Route 2 East");
-        RouteLocation r2l1 = rte2.addLocation(loc1);
+        RouteLocation r2l1 = rte2.addLocation(westford);
         r2l1.setTrainDirection(RouteLocation.EAST);
         r2l1.setMaxCarMoves(2);
         r2l1.setTrainIconX(125); // set the train icon coordinates
         r2l1.setTrainIconY(125);
-        RouteLocation r2l2 = rte2.addLocation(loc2);
+        RouteLocation r2l2 = rte2.addLocation(chelmsford);
         r2l2.setTrainDirection(RouteLocation.EAST);
         r2l2.setMaxCarMoves(6);
         r2l2.setTrainIconX(175); // set the train icon coordinates
         r2l2.setTrainIconY(125);
-        RouteLocation r2l3 = rte2.addLocation(loc3);
+        RouteLocation r2l3 = rte2.addLocation(bedford);
         r2l3.setTrainDirection(RouteLocation.EAST);
         r2l3.setMaxCarMoves(6);
         r2l3.setTrainIconX(25); // set the train icon coordinates
@@ -8058,21 +8662,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         cmanager.register(c13);
 
         // place the cars in the yards
-        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(westford, loc1trk1));
 
-        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(westford, loc1trk2));
 
-        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(westford, loc1trk1));
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -8145,8 +8749,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c8 train", train2, c8.getTrain());
 
         // move and terminate
-        Assert.assertEquals("Check train 1 departure location name", "Westford", train1
-                .getCurrentLocationName());
+        Assert.assertEquals("Check train 1 departure location name", "Westford", train1.getCurrentLocationName());
         Assert.assertEquals("Check train 1 departure location", r1l1, train1.getCurrentRouteLocation());
         train1.move(); // #1
         Assert.assertEquals("Check train 1 location name", "Chelmsford", train1.getCurrentLocationName());
@@ -8158,8 +8761,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Check train 1 location name", "", train1.getCurrentLocationName());
         Assert.assertEquals("Check train 1 location", null, train1.getCurrentRouteLocation());
 
-        Assert.assertEquals("Check train 2 departure location name", "Westford", train2
-                .getCurrentLocationName());
+        Assert.assertEquals("Check train 2 departure location name", "Westford", train2.getCurrentLocationName());
         Assert.assertEquals("Check train 2 departure location", r1l1, train2.getCurrentRouteLocation());
         train2.move(); // #1
         Assert.assertEquals("Check train 2 location name", "Chelmsford", train2.getCurrentLocationName());
@@ -8285,7 +8887,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // In train 2 cars, c3 E and c4 E car weight 20/3 + 50/3 = 23
         Assert.assertEquals("Depart Westford tonnage", 23, r1l1.getTrainWeight());
-        // In train 5 cars, c4 E, c5 L, c7 E, c9 L, c12 L = 40/3 + 50 + 70/3 + 90 + 120 = 296
+        // In train 5 cars, c4 E, c5 L, c7 E, c9 L, c12 L = 40/3 + 50 + 70/3 + 90 + 120
+        // = 296
         Assert.assertEquals("Depart Chelmsford tonnage", 296, r1l2.getTrainWeight());
 
         // test route pickup and drop controls
@@ -8323,12 +8926,13 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // try forcing c2 to Chelmsford
         train3.reset();
-        c2.setDestination(loc2, null);
+        c2.setDestination(chelmsford, null);
         new TrainBuilder().build(train3);
         Assert.assertEquals("c2 destination Chelmsford", "", c2.getDestinationTrackName());
 
         // confirm that c2 isn't part of this train
         Assert.assertNull("c2 isn't assigned to a train", c2.getTrain());
+        // code currently eliminates the car's destination TODO is this correct?
         Assert.assertNull("c2 destination has been set to null", c2.getDestination());
         Assert.assertNull("c2 next destination should be null", c2.getFinalDestination());
         Assert.assertNull("c2 next destination track should be null", c2.getFinalDestinationTrack());
@@ -8337,7 +8941,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train3.reset();
         r1l2.setDropAllowed(true);
         r1l2.setMaxCarMoves(0);
-        c2.setDestination(loc2, null);
+        c2.setDestination(chelmsford, null);
         new TrainBuilder().build(train3);
         Assert.assertEquals("c2 destination Chelmsford, no moves", "", c2.getDestinationTrackName());
 
@@ -8382,8 +8986,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk2.setPickupOption(Track.TRAINS);
 
         // Place car with FRED back at start of route
-        Assert.assertEquals("Place c2 again", Track.OKAY, c2.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c3 at start of route", Track.OKAY, c3.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c2 again", Track.OKAY, c2.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c3 at start of route", Track.OKAY, c3.setLocation(westford, loc1trk2));
 
         train3.reset();
         new TrainBuilder().build(train3);
@@ -8392,12 +8996,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car XP Q3 should be part of train", train3, c3.getTrain());
 
         // put some cars at start of Route
-        Assert.assertEquals("Place c1 again", Track.OKAY, c1.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c2 again", Track.OKAY, c2.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c3 again", Track.OKAY, c3.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c4 again", Track.OKAY, c4.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c6 again", Track.OKAY, c6.setLocation(loc2, loc2trk1));
-        Assert.assertEquals("Place c7 again", Track.OKAY, c7.setLocation(loc2, loc2trk2));
+        Assert.assertEquals("Place c1 again", Track.OKAY, c1.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c2 again", Track.OKAY, c2.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c3 again", Track.OKAY, c3.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c4 again", Track.OKAY, c4.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c6 again", Track.OKAY, c6.setLocation(chelmsford, loc2trk1));
+        Assert.assertEquals("Place c7 again", Track.OKAY, c7.setLocation(chelmsford, loc2trk2));
 
         r1l1.setMaxCarMoves(5);
         loc2trk1.setDropOption(Track.ROUTES);
@@ -8422,22 +9026,22 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("UP Q5 destination", "", c5.getDestinationTrackName());
 
         // interchange testing done, now test replace car type and road
-        Assert.assertTrue("loc1 should accept Boxcar", loc1.acceptsTypeName(carTypes[1]));
-        Assert.assertTrue("loc2 should accept Boxcar", loc2.acceptsTypeName(carTypes[1]));
+        Assert.assertTrue("loc1 should accept Boxcar", westford.acceptsTypeName(carTypes[1]));
+        Assert.assertTrue("loc2 should accept Boxcar", chelmsford.acceptsTypeName(carTypes[1]));
 
         // replace should modify locations and trains
         ct.replaceName(carTypes[1], "boxcar");
 
-        Assert.assertFalse("loc1 should not accept Boxcar", loc1.acceptsTypeName(carTypes[1]));
-        Assert.assertFalse("loc2 should not accept Boxcar", loc2.acceptsTypeName(carTypes[1]));
+        Assert.assertFalse("loc1 should not accept Boxcar", westford.acceptsTypeName(carTypes[1]));
+        Assert.assertFalse("loc2 should not accept Boxcar", chelmsford.acceptsTypeName(carTypes[1]));
         Assert.assertFalse("track loc1trk1 should not accept Boxcar", loc1trk1.isTypeNameAccepted(carTypes[1]));
         Assert.assertFalse("track loc2trk1 should not accept Boxcar", loc2trk1.isTypeNameAccepted(carTypes[1]));
         Assert.assertFalse("train 1 should not accept Boxcar", train1.isTypeNameAccepted(carTypes[1]));
         Assert.assertFalse("train 2 should not accept Boxcar", train2.isTypeNameAccepted(carTypes[1]));
         Assert.assertFalse("train 3 should not accept Boxcar", train3.isTypeNameAccepted(carTypes[1]));
 
-        Assert.assertTrue("loc1 should accept boxcar", loc1.acceptsTypeName("boxcar"));
-        Assert.assertTrue("loc2 should accept boxcar", loc2.acceptsTypeName("boxcar"));
+        Assert.assertTrue("loc1 should accept boxcar", westford.acceptsTypeName("boxcar"));
+        Assert.assertTrue("loc2 should accept boxcar", chelmsford.acceptsTypeName("boxcar"));
         Assert.assertTrue("track loc1trk1 should accept boxcar", loc1trk1.isTypeNameAccepted("boxcar"));
         Assert.assertTrue("track loc2trk1 should accept boxcar", loc2trk1.isTypeNameAccepted("boxcar"));
         Assert.assertTrue("train 1 should accept boxcar", train1.isTypeNameAccepted("boxcar"));
@@ -8446,8 +9050,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         ct.replaceName("boxcar", carTypes[1]);
 
-        Assert.assertTrue("loc1 should accept Boxcar", loc1.acceptsTypeName(carTypes[1]));
-        Assert.assertTrue("loc2 should accept Boxcar", loc2.acceptsTypeName(carTypes[1]));
+        Assert.assertTrue("loc1 should accept Boxcar", westford.acceptsTypeName(carTypes[1]));
+        Assert.assertTrue("loc2 should accept Boxcar", chelmsford.acceptsTypeName(carTypes[1]));
         Assert.assertTrue("track loc1trk1 should accept Boxcar", loc1trk1.isTypeNameAccepted(carTypes[1]));
         Assert.assertTrue("track loc2trk1 should accept Boxcar", loc2trk1.isTypeNameAccepted(carTypes[1]));
         Assert.assertTrue("train 1 should accept Boxcar", train1.isTypeNameAccepted(carTypes[1]));
@@ -8478,18 +9082,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         cr.replaceName("CP", "UP");
 
-        Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1
-                .isRoadNameAccepted("CP"));
-        Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1
-                .isRoadNameAccepted("PC"));
-        Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1
-                .isRoadNameAccepted("UP"));
+        Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1.isRoadNameAccepted("CP"));
+        Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
+        Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("UP"));
         Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isRoadNameAccepted("CP"));
         Assert.assertTrue("after replace Train 1 should accept road PC", train1.isRoadNameAccepted("PC"));
         Assert.assertTrue("after replace Train 1 should accept road UP", train1.isRoadNameAccepted("UP"));
         Assert.assertEquals("Caboose road", "UP", train1.getCabooseRoad());
         Assert.assertEquals("Engine road", "UP", train1.getEngineRoad());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -8503,7 +9104,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
@@ -8881,7 +9482,12 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 5", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 5", "Boston Engine Yard", e2.getDestinationTrackName());
-        
+
+        // require a caboose road that doesn't exist in staging, should fail
+        train1.setCabooseRoad("PS");
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -8895,7 +9501,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
@@ -9150,7 +9756,666 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         Assert.assertFalse("Build 6", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 9a", false, train1.isBuilt());
-        
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    @Test
+    public void testCarsWithFredFifoAndLifo() {
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+
+        // register the road names used
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+
+        Engine e1 = emanager.newRS("NH", "1");
+        e1.setModel("GP40");
+
+        // note that a car's last moved date gets set after a train reset
+        Calendar cal = java.util.Calendar.getInstance();
+        Date date = cal.getTime();
+        cal.add(java.util.Calendar.HOUR, -2);
+        date = cal.getTime();
+
+        Car c1 = cmanager.newRS("UP", "1");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
+        c1.setLength("32");
+        c1.setMoves(10);
+        c1.setCaboose(true);
+        c1.setLastDate(date);
+
+        Car c2 = cmanager.newRS("SP", "2");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
+        c2.setLength("30");
+        c2.setMoves(5);
+        c2.setCaboose(true);
+        c2.setLastDate(date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c3date = cal.getTime();
+
+        Car c3 = cmanager.newRS("SP", "3");
+        c3.setTypeName(carTypes[1]);
+        c3.setLength("33");
+        c3.setMoves(40);
+        c3.setLastDate(c3date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c4date = cal.getTime();
+
+        Car c4 = cmanager.newRS("UP", "4");
+        c4.setTypeName(carTypes[1]);
+        c4.setLength("40");
+        c4.setMoves(30);
+        c4.setFred(true);
+        c4.setLastDate(c4date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        date = cal.getTime();
+
+        Car c5 = cmanager.newRS("SP", "5");
+        c5.setTypeName(carTypes[1]);
+        c5.setLength("40");
+        c5.setMoves(8);
+        c5.setFred(true);
+        c5.setLastDate(date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c6date = cal.getTime();
+
+        Car c6 = cmanager.newRS("SP", "6");
+        c6.setTypeName(carTypes[1]);
+        c6.setLength("40");
+        c6.setMoves(20);
+        c6.setFred(true);
+        c6.setLastDate(c6date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c7date = cal.getTime();
+
+        Car c7 = cmanager.newRS("UP", "7");
+        c7.setTypeName(carTypes[5]);
+        c7.setLength("40");
+        c7.setMoves(5);
+        c7.setFred(true);
+        c7.setLastDate(c7date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c8date = cal.getTime();
+
+        Car c8 = cmanager.newRS("SP", "8");
+        c8.setTypeName(carTypes[1]);
+        c8.setLength("40");
+        c8.setMoves(4);
+        c8.setLastDate(c8date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c9date = cal.getTime();
+
+        Car c9 = cmanager.newRS("NH", "9");
+        c9.setTypeName(carTypes[1]);
+        c9.setLength("40");
+        c9.setMoves(3);
+        c9.setLastDate(c9date);
+
+        Car c10 = cmanager.newRS("NH", "10");
+        c10.setTypeName(carTypes[1]);
+        c10.setLength("40");
+        c10.setMoves(10);
+
+        Car c11 = cmanager.newRS("SP", "11");
+        c11.setTypeName(carTypes[1]);
+        c11.setLength("40");
+        c11.setMoves(3);
+
+        // Create 3 locations
+        Location harvard = lmanager.newLocation("Harvard");
+
+        Track harvardYard = harvard.addTrack("Harvard Yard", Track.YARD);
+        harvardYard.setLength(1000);
+        harvardYard.setServiceOrder(Track.FIFO); // first in first out
+
+        Location acton = lmanager.newLocation("Acton");
+
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(1000);
+
+        Location boston = lmanager.newLocation("Boston");
+
+        Track bostonYard = boston.addTrack("Boston Yard", Track.YARD);
+        bostonYard.setLength(1000);
+        bostonYard.deleteTypeName("Diesel");
+
+        Track bostonEngineYard = boston.addTrack("Boston Engine Yard", Track.YARD);
+        bostonEngineYard.setLength(200);
+        bostonEngineYard.deleteTypeName(carTypes[1]);
+        bostonEngineYard.deleteTypeName(carTypes[5]);
+        bostonEngineYard.deleteTypeName(Bundle.getMessage("Caboose"));
+
+        // Create route with 3 location
+        Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston");
+        rte1.addLocation(harvard);
+        rte1.addLocation(acton);
+        rte1.addLocation(boston);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestCarsWithFred");
+        train1.setRoute(rte1);
+
+        // Place cars
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(harvard, harvardYard));
+
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(harvard, harvardYard));
+
+        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(acton, actonYard));
+        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(acton, actonYard));
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, harvardYard));
+
+        // no requirements, so no caboose or FRED or engines
+        Assert.assertTrue("Build 1", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
+
+        // check destinations
+        Assert.assertEquals("c1 destination 1", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 1", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 1", "Boston Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 1", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 1", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 1", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 1", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 1", "Acton Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 1", "Boston Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 1", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 1", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 1", "", e1.getDestinationTrackName());
+
+        // should take car with FRED, FIFO c4 with FRED has the earliest date
+        train1.setRequirements(Train.FRED);
+        train1.reset();
+        Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 2", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 2", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 2", "Acton Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 2", "Boston Yard", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 2", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 2", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 2", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 2", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 2", "Boston Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 2", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 2", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 2", "", e1.getDestinationTrackName());
+
+        // should take car with FRED, LIFO c7 with FRED has the oldest date
+        harvardYard.setServiceOrder(Track.LIFO);
+        train1.reset();
+        Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 3", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 3", "Boston Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 3", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 3", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 3", "Boston Yard", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 3", "Acton Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 3", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 3", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 3", "", e1.getDestinationTrackName());
+
+        // should take car with FRED, LIFO c6 road SP with FRED has the oldest date
+        train1.setCabooseRoad("SP");
+        train1.reset();
+        Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 4", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 4", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 4", "Boston Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 4", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 4", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 4", "Boston Yard", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 4", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 4", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 4", "Acton Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 4", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 4", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 4", "", e1.getDestinationTrackName());
+
+        // should take car with FRED, FIFO c5 road SP with FRED has the earliest date
+        harvardYard.setServiceOrder(Track.FIFO);
+        train1.reset();
+        Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 6", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 6", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 6", "Acton Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 6", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 6", "Boston Yard", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 6", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 6", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 6", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 6", "Boston Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 6", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 6", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 1", "", e1.getDestinationTrackName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    @Test
+    public void testCabooseFifoAndLifo() {
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+
+        // register the road names used
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+
+        Engine e1 = emanager.newRS("NH", "1");
+        e1.setModel("GP40");
+
+        Calendar cal = java.util.Calendar.getInstance();
+        cal.add(java.util.Calendar.HOUR, -2);
+        Date c1date = cal.getTime();
+
+        // create cars, cabooses and cars with FRED
+        // c1 and c11 are regular cars on FIFO / LIFO track
+        Car c1 = cmanager.newRS("NH", "1");
+        c1.setTypeName(carTypes[1]);
+        c1.setLength("32");
+        c1.setMoves(10);
+        c1.setLastDate(c1date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c2date = cal.getTime();
+
+        Car c2 = cmanager.newRS("UP", "2");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
+        c2.setLength("30");
+        c2.setMoves(50);
+        c2.setCaboose(true);
+        c2.setLastDate(c2date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c3date = cal.getTime();
+
+        Car c3 = cmanager.newRS("SP", "3");
+        c3.setTypeName(Bundle.getMessage("Caboose"));
+        c3.setLength("33");
+        c3.setMoves(40);
+        c3.setCaboose(true);
+        c3.setLastDate(c3date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c4date = cal.getTime();
+
+        Car c4 = cmanager.newRS("NH", "4");
+        c4.setTypeName(Bundle.getMessage("Caboose"));
+        c4.setLength("40");
+        c4.setMoves(30);
+        c4.setCaboose(true);
+        c4.setLastDate(c4date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c5date = cal.getTime();
+
+        Car c5 = cmanager.newRS("SP", "5");
+        c5.setTypeName(Bundle.getMessage("Caboose"));
+        c5.setLength("40");
+        c5.setMoves(45);
+        c5.setCaboose(true);
+        c5.setLastDate(c5date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c6date = cal.getTime();
+
+        Car c6 = cmanager.newRS("SP", "6");
+        c6.setTypeName(carTypes[1]);
+        c6.setLength("40");
+        c6.setMoves(20);
+        c6.setFred(true);
+        c6.setLastDate(c6date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c7date = cal.getTime();
+
+        Car c7 = cmanager.newRS("UP", "7");
+        c7.setTypeName(carTypes[5]);
+        c7.setLength("40");
+        c7.setMoves(5);
+        c7.setFred(true);
+        c7.setLastDate(c7date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c8date = cal.getTime();
+
+        Car c8 = cmanager.newRS("NH-1", "8");
+        c8.setTypeName(carTypes[1]);
+        c8.setLength("40");
+        c8.setMoves(4);
+        c8.setCaboose(true);
+        c8.setLastDate(c8date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c9date = cal.getTime();
+
+        Car c9 = cmanager.newRS("NH-2", "9");
+        c9.setTypeName(carTypes[1]);
+        c9.setLength("40");
+        c9.setMoves(3);
+        c9.setCaboose(true);
+        c9.setLastDate(c9date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c10date = cal.getTime();
+
+        Car c10 = cmanager.newRS("NH", "10");
+        c10.setTypeName(carTypes[1]);
+        c10.setLength("40");
+        c10.setMoves(10);
+        c10.setCaboose(true);
+        c10.setLastDate(c10date);
+
+        cal.add(java.util.Calendar.MINUTE, 2);
+        Date c11date = cal.getTime();
+
+        Car c11 = cmanager.newRS("NH-1", "11");
+        c11.setTypeName(carTypes[1]);
+        c11.setLength("40");
+        c11.setMoves(3);
+        c11.setLastDate(c11date);
+
+        // Create 3 locations
+        Location harvard = lmanager.newLocation("Harvard");
+        Track harvardYard = harvard.addTrack("Harvard Yard", Track.YARD);
+        harvardYard.setLength(1000);
+
+        Location acton = lmanager.newLocation("Acton");
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(1000);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track bostonYard = boston.addTrack("Boston Yard", Track.YARD);
+        bostonYard.setLength(1000);
+
+        // Create route with 3 location
+        Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston");
+        rte1.addLocation(harvard);
+        rte1.addLocation(acton);
+        rte1.addLocation(boston);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestCabooseFifoLifo");
+        train1.setRoute(rte1);
+
+        // Place cars
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(harvard, harvardYard));
+
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(harvard, harvardYard));
+
+        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(harvard, harvardYard));
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, harvardYard));
+
+        // no requirements, so no caboose or FRED or engines
+        harvardYard.setServiceOrder(Track.FIFO); // first in first out
+        Assert.assertTrue("Build 1", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
+
+        // check destinations
+        Assert.assertEquals("c1 destination 1", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 1", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 1", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 1", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 1", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 1", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 1", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 1", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 1", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 1", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 1", "Acton Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 1", "", e1.getDestinationTrackName());
+
+        // now should take caboose, FIFO c2 has the earliest date
+        train1.setRequirements(Train.CABOOSE);
+        train1.reset();
+        Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 2", "Acton Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 2", "Boston Yard", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 2", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 2", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 2", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 2", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 2", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 2", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 2", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 2", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 2", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 2", "", e1.getDestinationTrackName());
+
+        // should take Caboose, LIFO c10 has the oldest date
+        harvardYard.setServiceOrder(Track.LIFO);
+        train1.reset();
+        Assert.assertTrue("Build 3", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 3", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 3", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 3", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 3", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 3", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 3", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 3", "Acton Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 3", "", e1.getDestinationTrackName());
+
+        // should take caboose, LIFO c5 road SP with FRED has the oldest date
+        train1.setCabooseRoad("SP");
+        train1.reset();
+        Assert.assertTrue("Build 4", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 4", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 4", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 4", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 4", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 4", "Boston Yard", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 4", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 4", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 4", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 4", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 4", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 4", "Acton Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 4", "", e1.getDestinationTrackName());
+
+        // should caboose, FIFO c3 road SP has the earliest date
+        harvardYard.setServiceOrder(Track.FIFO);
+        train1.reset();
+        Assert.assertTrue("Build 5", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 5", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 5", "Acton Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 5", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 5", "Boston Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 5", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 5", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 5", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 5", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 5", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 5", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 5", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 5", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 5", "", e1.getDestinationTrackName());
+
+        train1.reset();
+        train1.setNumberEngines("1");
+        Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 6", "Acton Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 6", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 6", "Boston Yard", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 6", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 6", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 6", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 6", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 6", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 6", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 6", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 6", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 6", "Boston Yard", e1.getDestinationTrackName());
+
+        train1.reset();
+        train1.setCabooseRoad(""); // engine road NH, c4 road NH
+        Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 7", "Acton Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 7", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 7", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 7", "Boston Yard", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 7", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 7", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 7", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 7", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 7", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 7", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 7", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 7", "Boston Yard", e1.getDestinationTrackName());
+
+        harvardYard.setServiceOrder(Track.LIFO);
+        train1.reset();
+        Assert.assertTrue("Build 8", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 8", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 8", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 8", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 8", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 8", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 8", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 8", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 8", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 8", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 8", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 8", "Boston Yard", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 8", "Acton Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 8", "Boston Yard", e1.getDestinationTrackName());
+
+        train1.reset();
+        // test "similar" names feature, c9 road name NH-2
+        cmanager.deregister(c4); // eliminate NH 4
+        cmanager.deregister(c10); // eliminate NH 10
+
+        Assert.assertTrue("Build 9", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 9", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 9", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 9", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 9", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 9", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 9", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 9", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 9", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 9", "", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 9", "Boston Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 9", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 9", "Acton Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 9", "Boston Yard", e1.getDestinationTrackName());
+
+        train1.reset();
+        // c8 road NH-1 has the earliest date
+        harvardYard.setServiceOrder(Track.FIFO);
+        Assert.assertTrue("Build 10", new TrainBuilder().build(train1));
+        Assert.assertEquals("Train 1 After Build 10", true, train1.isBuilt());
+        // check destinations
+        Assert.assertEquals("c1 destination 10", "Acton Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 10", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 10", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 10", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 10", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 10", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 10", "", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 10", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 10", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 10", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 10", "Boston Yard", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 10", "Boston Yard", e1.getDestinationTrackName());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -9164,7 +10429,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         cr.addName("NH");
 
         // place two engines in a consist
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
@@ -9290,7 +10555,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now depart staging, must take all cars in staging
         rl1.setMaxCarMoves(9); // there are nine cars departing staging
 
-        // All engines and cars in staging must move! Cabooses and cars with FRED to terminal
+        // All engines and cars in staging must move! Cabooses and cars with FRED to
+        // terminal
         train1.setNumberEngines("0");
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 After Build 10", train1.isBuilt());
@@ -9542,7 +10808,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 location 24", "Boston Engine Yard", e1.getTrackName());
         Assert.assertEquals("e2 location 24", "Boston Engine Yard", e2.getTrackName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -9551,7 +10817,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // create 2 consists and a single engine for testing
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -9572,7 +10838,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
-        Consist con2 = emanager.newConsist("C2");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
@@ -9588,7 +10854,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e5.setMoves(20);
 
         // 3 engine consist
-        Consist con3 = emanager.newConsist("C3");
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
@@ -9954,7 +11220,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e6 destination 5", "", e6.getDestinationTrackName());
         Assert.assertEquals("e7 destination 5", "", e7.getDestinationTrackName());
         Assert.assertEquals("e8 destination 5", "", e8.getDestinationTrackName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -9989,7 +11255,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 0);
 
-        // send one car to the other spur, this does not require routing, only one train needed
+        // send one car to the other spur, this does not require routing, only one train
+        // needed
         c1.setFinalDestination(acton);
         c1.setFinalDestinationTrack(actonSpur2);
 
@@ -10003,7 +11270,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations
         Assert.assertEquals("c1 destination", actonSpur2, c1.getDestinationTrack());
         Assert.assertEquals("c2 destination", chelmsfordSpur1, c2.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10055,7 +11322,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 0);
 
-        // send one car to the other spur, this does not require routing, only one train needed
+        // send one car to the other spur, this does not require routing, only one train
+        // needed
         c1.setFinalDestination(acton);
         c1.setFinalDestinationTrack(actonSpur2);
 
@@ -10080,15 +11348,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations
         Assert.assertEquals("c1 destination", actonSpur2, c1.getDestinationTrack());
         Assert.assertEquals("c2 destination", chelmsfordSpur1, c2.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
      * Test train build option to move car with a final destination, even if it
-     * isn't the most efficient route. Causes extra car movement. Three trains
-     * are created, the efficient route is train1 and train 3. Attempts to use
-     * train 2 to move car.
+     * isn't the most efficient route. Causes extra car movement. Three trains are
+     * created, the efficient route is train1 and train 3. Attempts to use train 2
+     * to move car.
      */
     @Test
     public void testTrainBuildOptionsServiceAllCarsWithFinalDestinationsA() {
@@ -10160,15 +11428,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations, a local move was the only option
         Assert.assertEquals("c1 assigned to train", train2, c1.getTrain());
         Assert.assertEquals("c1 destination", actonInterchange1, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
      * Test train build option to move car with a final destination, even if it
      * isn't the most efficient route. Causes extra car movement. Two trains are
-     * created, the efficient route is train2 Attempts to use train 1 to move
-     * car.
+     * created, the efficient route is train2 Attempts to use train 1 to move car.
      */
     @Test
     public void testTrainBuildOptionsServiceAllCarsWithFinalDestinationsB() {
@@ -10216,13 +11483,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations, a local move was the only option
         Assert.assertEquals("c1 assigned to train", train2, c1.getTrain());
         Assert.assertEquals("c1 destination", bostonInterchange1, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test that a car given a destination that isn't reachable, isn't moved if
-     * the option "Service all cars with a final destination" is enabled.
+     * Test that a car given a destination that isn't reachable, isn't moved if the
+     * option "Service all cars with a final destination" is enabled.
      */
     @Test
     public void testTrainBuildOptionsServiceAllCarsWithFinalDestinationsC() {
@@ -10266,7 +11533,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destination
         Assert.assertEquals("c1 not assigned to train", null, c1.getTrain());
         Assert.assertEquals("c1 destination", null, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10325,13 +11592,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // build should fail
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Tries to send a car with a final destination to a track that is too
-     * short, track CAPACITY issue.
+     * Tries to send a car with a final destination to a track that is too short,
+     * track CAPACITY issue.
      */
     @Test
     public void testCarWithFinalDesinationA() {
@@ -10377,7 +11644,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // track was too short for c1, so final destination should have been removed
         Assert.assertEquals("c1 final destination", null, c1.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10427,7 +11694,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("c1 final destination", acton, c1.getFinalDestination());
         Assert.assertEquals("c1 final destination track", actonInterchange1, c1.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10489,7 +11756,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car destination track", essex2Yard, c8.getDestinationTrack());
         Assert.assertEquals("car destination track", essex2Yard, c9.getDestinationTrack());
         Assert.assertEquals("car destination track", null, c10.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10549,7 +11816,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now place destination restrictions on departure track at Acton
         actonInterchange1.setDestinationOption(Track.INCLUDE_DESTINATIONS);
 
-        // there aren't any valid destinations for the departure track, cars should be stuck there
+        // there aren't any valid destinations for the departure track, cars should be
+        // stuck there
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 status", train1.isBuilt());
@@ -10602,7 +11870,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations
         Assert.assertEquals("c1 destination", chelmsfordSpur1, c1.getDestinationTrack());
         Assert.assertEquals("c2 destination", chelmsfordInterchange1, c2.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -10629,7 +11897,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -10723,7 +11990,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         RouteLocation rlActon = rte2.addLocation(acton);
         rlActon.setMaxCarMoves(3); // 3rd largest block goes here
 
-        // Create train, there are 3 blocks of cars in staging that were picked up by train 1
+        // Create train, there are 3 blocks of cars in staging that were picked up by
+        // train 1
         Train train2 = tmanager.newTrain("Train WestfordStaging-Danvers-Chelmsford-Boston-Acton");
         train2.setRoute(rte2);
 
@@ -10764,7 +12032,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car departed Chelmsford destination Danvers", danvers, c10.getDestination());
         Assert.assertEquals("Car departed Chelmsford destination Danvers", danvers, c11.getDestination());
 
-        // now try the case where the largest block is greater than any requested moves for a location
+        // now try the case where the largest block is greater than any requested moves
+        // for a location
         rlBoston.setMaxCarMoves(4);
 
         train2.reset();
@@ -10774,7 +12043,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now check to see if cars were blocked to the right locations
         Assert.assertEquals("Caboose must go to terminal", acton, c1.getDestination());
 
-        // largest block 5 cars was broken up since they all couldn't go to the same location
+        // largest block 5 cars was broken up since they all couldn't go to the same
+        // location
         Assert.assertEquals("Car orginally departed Acton", chelmsford, c2.getDestination());
         Assert.assertEquals("Car orginally departed Acton", acton, c3.getDestination());
         Assert.assertEquals("Car orginally departed Acton", acton, c4.getDestination());
@@ -10806,13 +12076,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car orginally departed Chelmsford", westford.getId(), c9.getLastLocationId());
         Assert.assertEquals("Car orginally departed Chelmsford", westford.getId(), c10.getLastLocationId());
         Assert.assertEquals("Car orginally departed Chelmsford", westford.getId(), c11.getLastLocationId());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * test car blocking out of staging. All cars in staging are from one
-     * location. Need at least two car blocks in staging for blocking to occur.
+     * test car blocking out of staging. All cars in staging are from one location.
+     * Need at least two car blocks in staging for blocking to occur.
      */
     @Test
     public void testCarBlockingFromStagingB() {
@@ -10831,7 +12101,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -10930,13 +12199,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car orginally departed Acton", danvers, c4.getDestination());
         Assert.assertEquals("Car orginally departed Acton", acton, c5.getDestination());
         Assert.assertEquals("Car orginally departed Acton", boston, c6.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * test car blocking out of staging. All cars in staging were placed there,
-     * so no blocking location ids. Blocking is not possible
+     * test car blocking out of staging. All cars in staging were placed there, so
+     * no blocking location ids. Blocking is not possible
      */
     @Test
     public void testCarBlockingFromStagingC() {
@@ -10951,7 +12220,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11017,7 +12285,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car orginally departed Acton", danvers, c4.getDestination());
         Assert.assertEquals("Car orginally departed Acton", acton, c5.getDestination());
         Assert.assertEquals("Car orginally departed Acton", boston, c6.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -11038,7 +12306,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11119,14 +12386,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", chelmsford, c6.getDestination());
         Assert.assertEquals("Car destination", acton, c7.getDestination());
         Assert.assertEquals("Car destination", boston, c8.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test exceptions for blocking cars out of staging. Car with destination,
-     * car with final destination, car with custom load, and car with "E" load
-     * and generate custom load out of staging enabled are all exceptions to car
+     * Test exceptions for blocking cars out of staging. Car with destination, car
+     * with final destination, car with custom load, and car with "E" load and
+     * generate custom load out of staging enabled are all exceptions to car
      * blocking.
      */
     @Test
@@ -11142,7 +12409,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11305,7 +12571,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", boston, c7.getDestination()); // largest block from Boston
         Assert.assertEquals("Car destination", danvers, c8.getDestination()); // largest block from Boston
 
-        // don't allow "Boxcar" to Acton  
+        // don't allow "Boxcar" to Acton
         acton.deleteTypeName("Boxcar");
 
         // this will cause the block c2 and c3 to break up
@@ -11321,7 +12587,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", danvers, c6.getDestination()); // largest block from Boston
         Assert.assertEquals("Car destination", boston, c7.getDestination()); // largest block from Boston
         Assert.assertEquals("Car destination", boston, c8.getDestination()); // largest block from Boston
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -11341,7 +12607,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11419,7 +12684,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", boston, c6.getDestination()); // largest block
         Assert.assertEquals("Car destination", boston, c7.getDestination());
         Assert.assertEquals("Car destination", boston, c8.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -11459,7 +12724,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc5trk1.setLength(1000);
 
         // create a 2 engine consist for departure
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -11533,9 +12798,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create train
         Train train1 = tmanager.newTrain("TestEngineChanges");
         train1.setRoute(rte1);
-        
+
         // exclude the engine road names, should be ignored
-        String[] roads = {"SP", "UP"};
+        String[] roads = { "SP", "UP" };
         train1.setRoadNames(roads);
         train1.setRoadOption(Train.EXCLUDE_ROADS);
 
@@ -11611,13 +12876,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e7 assigned to train", westford, e7.getDestination());
         Assert.assertEquals("e8 assigned to train", westford, e8.getDestination());
         Assert.assertEquals("e9 assigned to train", null, e9.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * The program allows up to two caboose changes in a train's route. Route
-     * Acton to Westford has caboose changes at Boston and Harvard.
+     * The program allows up to two caboose changes in a train's route. Route Acton
+     * to Westford has caboose changes at Boston and Harvard.
      */
     @Test
     public void testCabooseChanges() {
@@ -11735,6 +13000,24 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
         Assert.assertEquals("Caboose is part of train", westford, c5.getDestination());
 
+        // depart without caboose, add caboose at Harvard
+        train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
+        train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations
+        Assert.assertEquals("Caboose is part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c2.getDestination());
+        Assert.assertEquals("Caboose is part of train", null, c3.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c5.getDestination());
+
+        // depart with caboose and swap
+        train1.setRequirements(Train.CABOOSE);
+        train1.setSecondLegOptions(Train.ADD_CABOOSE);
+
         // now test failures by removing required cabooses
         Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(null, null));
         train1.reset();
@@ -11780,7 +13063,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
         Assert.assertEquals("Caboose is part of train", westford, c5.getDestination());
 
-        // now depart without a caboose, add one, then remove it, and continue to destination
+        // now depart without a caboose, add one, then remove it, and continue to
+        // destination
         train1.setRequirements(Train.NO_CABOOSE_OR_FRED);
         train1.setSecondLegOptions(Train.ADD_CABOOSE);
         train1.setThirdLegOptions(Train.REMOVE_CABOOSE);
@@ -11816,13 +13100,150 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     /**
-     * Test the automatic assignment of engines to a train based on HP
+     * The program allows up to two caboose changes in a train's route. Route Acton
+     * to Westford has caboose changes at Boston and Harvard. Test adding caboose
+     * later in train's route. Should add caboose with road name that matches
+     * engine.
+     */
+    @Test
+    public void testCabooseChangesWithEngine() {
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        // test confirms the order cabooses are assigned to the train
+        Setup.setBuildAggressive(true);
+
+        // create 5 locations with tracks
+        Location acton = lmanager.newLocation("Acton");
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(200);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track bostonYard = boston.addTrack("Boston Yard 1", Track.YARD);
+        bostonYard.setLength(200);
+
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track chelmsfordYard1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        chelmsfordYard1.setLength(200);
+
+        Location harvard = lmanager.newLocation("Harvard");
+        Track harvardYard1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
+        harvardYard1.setLength(200);
+
+        Location westford = lmanager.newLocation("Westford");
+        Track westfordYard = westford.addTrack("Westford Yard", Track.YARD);
+        westfordYard.setLength(200);
+
+        // place engine at start of route
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setMoves(20);
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard));
+
+        // create and place cabooses
+        Car c1 = cmanager.newRS("ABC", "1");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
+        c1.setLength("32");
+        c1.setCaboose(true);
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(acton, actonYard));
+
+        // car with FRED at departure
+        Car f1 = cmanager.newRS("CBA", "1");
+        f1.setTypeName(carTypes[1]);
+        f1.setLength("32");
+        f1.setFred(true);
+        Assert.assertEquals("Place f1", Track.OKAY, f1.setLocation(acton, actonYard));
+
+        Car c2 = cmanager.newRS("ABC", "2");
+        c2.setTypeName(Bundle.getMessage("Caboose"));
+        c2.setLength("32");
+        c2.setCaboose(true);
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(boston, bostonYard));
+
+        Car c3 = cmanager.newRS("UP", "3");
+        c3.setTypeName(Bundle.getMessage("Caboose"));
+        c3.setLength("32");
+        c3.setCaboose(true);
+        c3.setMoves(10);
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(boston, bostonYard));
+
+        Car c4 = cmanager.newRS("ABC", "4");
+        c4.setTypeName(Bundle.getMessage("Caboose"));
+        c4.setLength("32");
+        c4.setCaboose(true);
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(harvard, harvardYard1));
+
+        Car c5 = cmanager.newRS("STU", "5");
+        c5.setTypeName(Bundle.getMessage("Caboose"));
+        c5.setLength("32");
+        c5.setCaboose(true);
+        c5.setMoves(10);
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(harvard, harvardYard1));
+
+        Car c6 = cmanager.newRS("UP", "6");
+        c6.setTypeName(Bundle.getMessage("Caboose"));
+        c6.setLength("32");
+        c6.setCaboose(true);
+        c6.setMoves(11);
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(harvard, harvardYard1));
+
+        Route rte1 = rmanager.newRoute("Route Acton-Boston-Chelmsford-Harvard-Westford");
+        rte1.addLocation(acton);
+        RouteLocation rlBoston = rte1.addLocation(boston);
+        rte1.addLocation(chelmsford);
+        RouteLocation rlHarvard = rte1.addLocation(harvard);
+        rte1.addLocation(westford);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestCabooseChangesWithEngine");
+        train1.setRoute(rte1);
+
+        // depart without caboose and without engine
+        // add caboose at Boston
+        train1.setSecondLegOptions(Train.ADD_CABOOSE);
+        train1.setSecondLegStartRouteLocation(rlBoston);
+        // swap caboose at Harvard
+        train1.setThirdLegOptions(Train.ADD_CABOOSE);
+        train1.setThirdLegStartRouteLocation(rlHarvard);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c2.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c3.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c6.getDestination());
+
+        train1.reset();
+        // now require engine road UP
+        train1.setNumberEngines("1");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations, should use caboose with road UP
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c2.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c3.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c6.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the automatic assignment of single engines to a train based on HP
      * requirements.
      */
     @Test
     public void testAutoHPT() {
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-
+        Assert.assertEquals("check default", 6, Setup.getMaxNumberEngines());
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
 
         // create 5 locations with tracks, Route = Acton-Boston-Chelmsford-Danvers-Essex
@@ -11865,7 +13286,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e4.setTypeName("Diesel");
         e4.setHp("1600");
         e4.setLength("50");
-        e4.setWeightTons("130");
+        e4.setWeightTons("60");
         e4.setMoves(5);
 
         // place this engine later in the route
@@ -11874,8 +13295,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         e5.setTypeName("Diesel");
         e5.setHp("800");
         e5.setLength("50");
-        e5.setWeightTons("120");
-        e5.setMoves(0); // the 1st engine to try, but at the wrong location      
+        e5.setWeightTons("130");
+        e5.setMoves(0); // the 1st engine to try, but at the wrong location
 
         // Place engines
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
@@ -11893,24 +13314,76 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("TestAutoHP");
         train1.setRoute(route);
 
-        // use auto HPT
-        train1.setBuildConsistEnabled(true);
+        // use auto HPT to build consist
         train1.setNumberEngines(Train.AUTO_HPT);
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
         // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train, train only needs 200 HP", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // restrict engine selection to road "SP"
+        train1.setEngineRoad("SP");
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
         Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
-        Assert.assertEquals("e2 assigned to train, train only needs 400 HP", essex, e2.getDestination());
+        Assert.assertEquals("e2 assigned to train", essex, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        train1.setEngineRoad(Train.NONE);
+        // exclude road "SP" from this train
+        train1.addRoadName("SP");
+        train1.setRoadOption(Train.EXCLUDE_ROADS);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        train1.setRoadOption(Train.ALL_ROADS);
+        // restrict engine selection to model "GP30-200"
+        train1.setEngineModel("GP30-200");
+
+        // should fail
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        // Special case, engine removed, no train weight, therefore no engine added
+        train1.setBuildConsistEnabled(true);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // Special case, engine removed, no train weight, therefore no engine added
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
         Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
         Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
 
         // now increase the train's weight
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", carTypes[1], "40", actonYard1, 0);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
         c1.setWeightTons("400"); // 400 tons loaded
         c1.setLoadName(cld.getDefaultLoadName());
 
+        // fails, train needs more engine HP
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        train1.setEngineModel(Train.NONE);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
@@ -11921,8 +13394,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
         Assert.assertEquals("e4 assigned to train, train needs 1600 HP", essex, e4.getDestination());
 
-        // now increase the train's weight
-        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", carTypes[1], "40", bostonYard1, 0);
+        // again increase the train's weight
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", bostonYard1, 0);
         c2.setWeightTons("200"); // 200 tons loaded
         c2.setLoadName(cld.getDefaultLoadName());
 
@@ -11935,13 +13408,191 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
         Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
         Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
-        
+
+        // again increase the train's weight
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", bostonYard1, 0);
+        c3.setWeightTons("350"); // 350 tons loaded
+        c3.setLoadName(cld.getDefaultLoadName());
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", essex, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+
+        // Limit the number of engines to only 3
+        Setup.setMaxNumberEngines(3);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", essex, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test the automatic assignment of engines to a train based on HP
-     * requirements. There can be two engine changes in a train's route
+     * Test the automatic assignment of consisted engines to a train based on HP
+     * requirements.
+     */
+    @Test
+    public void testAutoHPTConsist() {
+
+        Assert.assertEquals("check default", 6, Setup.getMaxNumberEngines());
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+
+        // create 5 locations with tracks, Route = Acton-Boston-Chelmsford-Danvers-Essex
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", Track.YARD);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
+
+        Location essex = route.getTerminatesRouteLocation().getLocation();
+
+        // create a 2 engine consist for departure
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+
+        // create 4 new engine models with different HP ratings
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setConsist(con1);
+        e1.setMoves(10);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30-400");
+        e2.setTypeName("Diesel");
+        e2.setHp("400");
+        e2.setLength("50");
+        e2.setWeightTons("110");
+        e2.setMoves(0);
+
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40-800");
+        e3.setTypeName("Diesel");
+        e3.setHp("800");
+        e3.setLength("50");
+        e3.setWeightTons("120");
+        e3.setConsist(con1); // 1000 HP consist
+        e3.setMoves(10);
+
+        Engine e4 = emanager.newRS("UP", "10");
+        e4.setModel("GP40-1600");
+        e4.setTypeName("Diesel");
+        e4.setHp("900");
+        e4.setLength("50");
+        e4.setWeightTons("130");
+        e4.setMoves(5);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+
+        // add grade to route
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setGrade(1.0);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestAutoHP");
+        train1.setRoute(route);
+
+        // use auto HPT
+        train1.setNumberEngines(Train.AUTO_HPT);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train, train only needs 400 HP", essex, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // eliminate e2 from consideration
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(null, null));
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+
+        // eliminate e4 from consideration, only consist is left for use
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(null, null));
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // restore
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+        e4.setHp("1600");
+
+        // now increase the train's weight
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", carTypes[1], "40", actonYard1, 0);
+        c1.setWeightTons("200"); // 200 tons loaded
+        c1.setLoadName(cld.getDefaultLoadName());
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        // e1 and e3 in a consist of 1000 HP
+        Assert.assertEquals("e1 assigned to train, train needs 1000 HP", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train, train needs 1000 HP", essex, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // again increase the train's weight
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", carTypes[1], "40", bostonYard1, 0);
+        c2.setWeightTons("200"); // 200 tons loaded
+        c2.setLoadName(cld.getDefaultLoadName());
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the automatic assignment of engines to a train based on HP requirements.
+     * There can be two engine changes in a train's route
      */
     @Test
     public void testAutoHptEngineChanges() {
@@ -12052,18 +13703,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("TestAutoHpt");
         train1.setRoute(route);
 
-        // use auto HPT
+        // use auto HPT and build from individual engines
         train1.setBuildConsistEnabled(true);
         train1.setNumberEngines(Train.AUTO_HPT);
 
         train1.setSecondLegOptions(Train.CHANGE_ENGINES);
-        train1.setSecondLegNumberEngines("1");
+        train1.setSecondLegNumberEngines(Train.AUTO_HPT);
         train1.setSecondLegStartRouteLocation(rlBoston);
 
         // 3rd engine change at Danvers
         RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
-        train1.setThirdLegNumberEngines("1");
+        train1.setThirdLegNumberEngines(Train.AUTO_HPT);
         train1.setThirdLegStartRouteLocation(rlDanvers);
 
         // increase the train's departure weight
@@ -12096,7 +13747,284 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e10 assigned to train", essex, e10.getDestination());
         Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
         Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
-        
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the automatic assignment of consist to a train based on HP requirements.
+     * There can be two engine changes in a train's route
+     */
+    @Test
+    public void testAutoHptConsistChanges() {
+
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+
+        // create 5 locations with tracks, Route = Acton-Boston-Chelmsford-Danvers-Essex
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", Track.YARD);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
+
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", Track.YARD);
+
+        Location essex = route.getTerminatesRouteLocation().getLocation();
+
+        // create 4 new engine models with different HP ratings
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setMoves(6);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30-400");
+        e2.setTypeName("Diesel");
+        e2.setHp("400");
+        e2.setLength("50");
+        e2.setWeightTons("110");
+        e2.setMoves(5);
+
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40-800");
+        e3.setTypeName("Diesel");
+        e3.setHp("800");
+        e3.setLength("50");
+        e3.setWeightTons("120");
+        e3.setMoves(10);
+
+        Engine e4 = emanager.newRS("UP", "4");
+        e4.setModel("GP40-1600");
+        e4.setTypeName("Diesel");
+        e4.setHp("1600");
+        e4.setLength("50");
+        e4.setWeightTons("130");
+        e4.setMoves(15);
+
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+        e1.setConsist(con1);
+        e2.setConsist(con1);
+
+        // place the next 4 engines later in the route at Boston
+        Engine e5 = emanager.newRS("SP", "5");
+        e5.setModel("GP30-400");
+        e5.setMoves(10);
+
+        Engine e6 = emanager.newRS("UP", "6");
+        e6.setModel("GP30-400");
+        e6.setMoves(5);
+
+        Engine e7 = emanager.newRS("UP", "7");
+        e7.setModel("GP30-400");
+        e7.setMoves(2);
+
+        Engine e8 = emanager.newRS("SP", "8");
+        e8.setModel("GP30-400");
+        e8.setMoves(1);
+
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
+        e5.setConsist(con2);
+        e6.setConsist(con2);
+        e7.setConsist(con2);
+        e8.setConsist(con2);
+
+        // place the next 4 engines at Danvers
+        Engine e9 = emanager.newRS("UP", "9");
+        e9.setModel("GP30-200");
+        e9.setMoves(2);
+
+        Engine e10 = emanager.newRS("SP", "10");
+        e10.setModel("GP30-200");
+        e10.setMoves(5);
+
+        Engine e11 = emanager.newRS("SP", "11");
+        e11.setModel("GP30-200");
+        e11.setMoves(10);
+
+        Engine e12 = emanager.newRS("UP", "12");
+        e12.setModel("GP30-200");
+        e12.setMoves(15);
+
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
+        e9.setConsist(con3);
+        e10.setConsist(con3);
+        Consist con4 = InstanceManager.getDefault(ConsistManager.class).newConsist("C4");
+        e11.setConsist(con4);
+        e12.setConsist(con4);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(boston, bostonYard1));
+
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e10", Track.OKAY, e10.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e11", Track.OKAY, e11.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e12", Track.OKAY, e12.setLocation(danvers, danversYard1));
+
+        // add grade to route
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setGrade(0.5);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestConsistAutoHpt");
+        train1.setRoute(route);
+
+        // use auto HPT and build from individual engines
+        train1.setBuildConsistEnabled(true);
+        train1.setNumberEngines(Train.AUTO_HPT);
+
+        train1.setSecondLegOptions(Train.CHANGE_ENGINES);
+        train1.setSecondLegNumberEngines(Train.AUTO_HPT);
+        train1.setSecondLegStartRouteLocation(rlBoston);
+
+        // 3rd engine change at Danvers
+        RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
+        train1.setThirdLegOptions(Train.CHANGE_ENGINES);
+        train1.setThirdLegNumberEngines(Train.AUTO_HPT);
+        train1.setThirdLegStartRouteLocation(rlDanvers);
+
+        // increase the train's departure weight
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
+        c1.setWeightTons("200"); // 200 tons loaded
+        c1.setLoadName(cld.getDefaultLoadName());
+
+        // increase the train's weight departing Boston
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", bostonYard1, 0);
+        c2.setWeightTons("200"); // 200 tons loaded
+        c2.setLoadName(cld.getDefaultLoadName());
+
+        new TrainBuilder().build(train1);
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", boston, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", boston, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e5 assigned to train", danvers, e5.getDestination());
+        Assert.assertEquals("e6 assigned to train", danvers, e6.getDestination());
+        Assert.assertEquals("e7 assigned to train", danvers, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", danvers, e8.getDestination());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e9 assigned to train", essex, e9.getDestination());
+        Assert.assertEquals("e10 assigned to train", essex, e10.getDestination());
+        Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
+        Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the automatic assignment of consist to a train based on HP requirements.
+     * Consist with lower HP is first assigned to train, and is then replace with a
+     * consist with greater HP.
+     *
+     */
+    @Test
+    public void testAutoHptConsistSwap() {
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+
+        // create 5 locations with tracks, Route = Acton-Boston-Chelmsford-Danvers-Essex
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", Track.YARD);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
+
+        Location essex = route.getTerminatesRouteLocation().getLocation();
+
+        // create 4 new engine models with different HP ratings
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setMoves(6);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30-400");
+        e2.setTypeName("Diesel");
+        e2.setHp("400");
+        e2.setLength("50");
+        e2.setWeightTons("110");
+        e2.setMoves(5);
+
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40-800");
+        e3.setTypeName("Diesel");
+        e3.setHp("800");
+        e3.setLength("50");
+        e3.setWeightTons("120");
+        e3.setMoves(10);
+
+        Engine e4 = emanager.newRS("UP", "4");
+        e4.setModel("GP40-1600");
+        e4.setTypeName("Diesel");
+        e4.setHp("1600");
+        e4.setLength("50");
+        e4.setWeightTons("130");
+        e4.setMoves(15);
+
+        // Place both set of engines in a consist
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+        e1.setConsist(con1);
+        e2.setConsist(con1);
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
+        e3.setConsist(con2);
+        e4.setConsist(con2);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+
+        // add grade to route
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setGrade(0.5);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestConsistAutoHpt");
+        train1.setRoute(route);
+
+        train1.setNumberEngines(Train.AUTO_HPT);
+
+        // increase the train's departure weight
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
+        c1.setWeightTons("200"); // 200 tons loaded
+        c1.setLoadName(cld.getDefaultLoadName());
+
+        // increase the train's weight departing Boston
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", bostonYard1, 0);
+        c2.setWeightTons("200"); // 200 tons loaded
+        c2.setLoadName(cld.getDefaultLoadName());
+
+        new TrainBuilder().build(train1);
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -12218,7 +14146,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
         Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
         Assert.assertEquals("e4 assigned to train", null, e4.getDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -12227,6 +14155,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // improve test coverage
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+        Setup.setManifestFormat(Setup.TWO_COLUMN_TRACK_FORMAT);
 
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
@@ -12237,7 +14166,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         et.addName(engineTypes[2]);
 
         // create 2 consists and a single engine for testing
-        Consist con1 = emanager.newConsist("C1");
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
@@ -12258,7 +14187,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
-        Consist con2 = emanager.newConsist("C2");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
@@ -12274,7 +14203,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e5.setMoves(20);
 
         // 3 engine consist
-        Consist con3 = emanager.newConsist("C3");
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
@@ -12484,11 +14413,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train1.reset());
         loc1trk1.setTrackType(Track.STAGING);
         loc1trk2.setTrackType(Track.STAGING);
-        loc1.setLocationOps(Location.STAGING);
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
-        Assert.assertFalse("Train 1 After Build from staging, eight loco on departure track", train1
-                .isBuilt());
+        Assert.assertFalse("Train 1 After Build from staging, eight loco on departure track", train1.isBuilt());
 
         // move locos to other departure track
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk2));
@@ -12533,8 +14460,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // next location is Boston, skip it and go directly to Chelmsford
         Assert.assertTrue("Chelmsford is in train's route", train1.move("Chelmsford"));
         Assert.assertTrue("Next location in train's route is Westford", train1.move("Westford"));
-        Assert.assertFalse("Train is at Westford last location in train's route", train1
-                .move("Westford"));
+        Assert.assertFalse("Train is at Westford last location in train's route", train1.move("Westford"));
 
         train1.move(); // terminate train
 
@@ -12604,24 +14530,19 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("next dest track null", null, c11.getFinalDestinationTrack());
 
         // test train move to a an exact location
-        Assert.assertFalse("Old Harvard is not part of this trains route", train2
-                .moveToNextLocation("Old Harvard"));
-        Assert.assertFalse("Harvard is the last location in this trains route", train2
-                .moveToNextLocation("Harvard"));
-        Assert.assertFalse("Boston is the 3rd to last location in this trains route", train2
-                .moveToNextLocation("Boston"));
-        Assert.assertFalse("Westford is the current location in this trains route", train2
-                .moveToNextLocation("Westford"));
-        Assert.assertFalse("Acton is the 2nd to last location in this trains route", train2
-                .moveToNextLocation("Acton"));
-        Assert.assertTrue("Chelmsford is the next location in this trains route", train2
-                .moveToNextLocation("Chelmsford"));
-        Assert.assertTrue("Boston is the next location in this trains route", train2
-                .moveToNextLocation("Boston"));
-        Assert.assertTrue("Acton is the next location in this trains route", train2
-                .moveToNextLocation("Acton"));
-        Assert.assertTrue("Harvard is the next location in this trains route", train2
-                .moveToNextLocation("Harvard"));
+        Assert.assertFalse("Old Harvard is not part of this trains route", train2.moveToNextLocation("Old Harvard"));
+        Assert.assertFalse("Harvard is the last location in this trains route", train2.moveToNextLocation("Harvard"));
+        Assert.assertFalse("Boston is the 3rd to last location in this trains route",
+                train2.moveToNextLocation("Boston"));
+        Assert.assertFalse("Westford is the current location in this trains route",
+                train2.moveToNextLocation("Westford"));
+        Assert.assertFalse("Acton is the 2nd to last location in this trains route",
+                train2.moveToNextLocation("Acton"));
+        Assert.assertTrue("Chelmsford is the next location in this trains route",
+                train2.moveToNextLocation("Chelmsford"));
+        Assert.assertTrue("Boston is the next location in this trains route", train2.moveToNextLocation("Boston"));
+        Assert.assertTrue("Acton is the next location in this trains route", train2.moveToNextLocation("Acton"));
+        Assert.assertTrue("Harvard is the next location in this trains route", train2.moveToNextLocation("Harvard"));
         Assert.assertFalse("Train is at Harvard", train2.moveToNextLocation("Harvard"));
 
         train2.move(); // terminate train
@@ -12694,227 +14615,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // test private method getCarOrder
-    @Test
-    public void testCarOrderNORMAL() {
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        TrainBuilder tb = new TrainBuilder();
-        // start by creating a track
-        Location A = lmanager.newLocation("A");
-        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
-        interchangeTrack.setLength(1000);
-        interchangeTrack.setServiceOrder(Track.NORMAL);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date date = cal.getTime();
-
-        // place 3 cars on the track.
-        Car a = cmanager.newRS("ABC", "123");
-        a.setTypeName(carTypes[1]);
-        a.setLength("50");
-        a.setLastDate(date);
-        a.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car b = cmanager.newRS("ABC", "321");
-        b.setTypeName(carTypes[1]);
-        b.setLength("50");
-        b.setLastDate(date);
-        b.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car c = cmanager.newRS("ABC", "111");
-        c.setTypeName(carTypes[1]);
-        c.setLength("50");
-        c.setLastDate(date);
-        c.setLocation(A, interchangeTrack);
-
-        // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
-        try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
-
-        // and set the car list up.
-        tb._carList = new java.util.ArrayList<>();
-        tb._carList.add(a);
-        tb._carList.add(b);
-        tb._carList.add(c);
-
-        try {
-            // with Track.NORMAL order, the car you ask for is the
-            // car you get.
-            Car d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("NORMAL Order, 123 first", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("NORMAL Order, 321 second", b, d);
-            d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("NORMAL Order, 111 last", c, d);
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method getCarOrder in TrackBuilder class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
-        }
-    }
-
-    @Test
-    public void testCarOrderFIFO() {
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        TrainBuilder tb = new TrainBuilder();
-        // start by creating a track
-        Location A = lmanager.newLocation("A");
-        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
-        interchangeTrack.setLength(1000);
-        interchangeTrack.setServiceOrder(Track.FIFO);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date date = cal.getTime();
-
-        // and placing 3 cars on the track.
-        Car a = cmanager.newRS("ABC", "123");
-        a.setTypeName(carTypes[1]);
-        a.setLength("50");
-        a.setLastDate(date);
-        a.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car b = cmanager.newRS("ABC", "321");
-        b.setTypeName(carTypes[1]);
-        b.setLength("50");
-        b.setLastDate(date);
-        b.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car c = cmanager.newRS("ABC", "111");
-        c.setTypeName(carTypes[1]);
-        c.setLength("50");
-        c.setLastDate(date);
-        c.setLocation(A, interchangeTrack);
-
-        // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
-        try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
-
-        // and set the car list up.
-        tb._carList = new java.util.ArrayList<>();
-        tb._carList.add(a);
-        tb._carList.add(b);
-        tb._carList.add(c);
-
-        try {
-            // FIFO order should always return 123.
-            Car d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("FIFO Order, 123 first", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("FIFO Order, 123 second", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("FIFO Order, 123 third", a, d);
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method getCarOrder in TrackBuilder class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
-        }
-    }
-
-    @Test
-    public void testCarOrderLIFO() {
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-        TrainBuilder tb = new TrainBuilder();
-        // start by creating a track
-        Location A = lmanager.newLocation("A");
-        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
-        interchangeTrack.setLength(1000);
-        interchangeTrack.setServiceOrder(Track.LIFO);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date date = cal.getTime();
-
-        // and placing 3 cars on the track.
-        Car a = cmanager.newRS("ABC", "123");
-        a.setTypeName(carTypes[1]);
-        a.setLength("50");
-        a.setLastDate(date);
-        a.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car b = cmanager.newRS("ABC", "321");
-        b.setTypeName(carTypes[1]);
-        b.setLength("50");
-        b.setLastDate(date);
-        b.setLocation(A, interchangeTrack);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
-
-        Car c = cmanager.newRS("ABC", "111");
-        c.setTypeName(carTypes[1]);
-        c.setLength("50");
-        c.setLastDate(date);
-        c.setLocation(A, interchangeTrack);
-
-        // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
-        try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
-
-        // and set the car list up.
-        tb._carList = new java.util.ArrayList<>();
-        tb._carList.add(a);
-        tb._carList.add(b);
-        tb._carList.add(c);
-
-        try {
-            // LIFO order should always return 111.
-            Car d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("LIFO Order, 111 first", c, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("LIFO Order, 111 second", c, d);
-            d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("LIFO Order, 111 third", c, d);
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method getCarOrder in TrackBuilder class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
-        }
-    }
-
     /**
-     * Confirms that car with custom load in staging get routed to the correct
-     * spur that has a schedule demanding the car's type and load.
+     * Confirms that car with custom load gets routed to the correct spur that has a
+     * schedule demanding the car's type and load.
      */
     @Test
     public void testFindFinalDestinationForCarLoadA() {
@@ -12957,7 +14660,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13012,7 +14715,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Midtown spur 1", 20, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13088,9 +14791,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
-        // confirm that car destination is correct, car with FRED or caboose can go directly to terminal
+        // confirm that car destination is correct, car with FRED or caboose can go
+        // directly to terminal
         Assert.assertEquals("car destination", eastendSpur1, c1.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13111,6 +14815,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
+        Track westendSpur2 = westend.addTrack("Westend spur 1-2", Track.SPUR);
+        westendSpur2.setLength(200);
         Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
@@ -13128,9 +14834,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         // car c1 is on the Westend interchange track
         Car c1 = cmanager.getByRoadAndNumber("AA", "1");
 
-        // try local move, local track has the least number of moves, so tried first by program
+        // try local move, local track has the least number of moves, so tried first by
+        // program
         Schedule sch1 = smanager.getScheduleByName("Schedule for car load");
         westendSpur1.setSchedule(sch1); // now all spurs have schedules
+        westendSpur2.setSchedule(sch1);
 
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
@@ -13140,6 +14848,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm track move counts are correct
         Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Westend spur 2", 0, westendSpur2.getMoves());
         Assert.assertEquals("Midtown spur 1", 20, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
@@ -13156,16 +14865,35 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm track move counts are correct
         Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Westend spur 2", 0, westendSpur2.getMoves());
         Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
-        
+
+        // allow local moves, place car on spur with "Similar" name
+        train.reset();
+        train.setAllowLocalMovesEnabled(true);
+        c1.setLocation(westend, westendSpur1);
+
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is midtown spur 1", midtownSpur1, c1.getDestinationTrack());
+
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Westend spur 2", 0, westendSpur2.getMoves());
+        Assert.assertEquals("Midtown spur 1", 22, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test that car sent to a spur with a schedule that doesn't match removes
-     * the car's final destination and track.
+     * Test that car sent to a spur with a schedule that doesn't match removes the
+     * car's final destination and track.
      */
     @Test
     public void testFinalDestinationForCarLoadNoMatch() {
@@ -13193,7 +14921,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // should still have custom load
         Assert.assertEquals("car load name", "BAGS", c1.getLoadName());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13202,6 +14930,9 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testFindFinalDestinationForCarLoadAlternateTrack() {
+
+        // improve test coverage
+        Setup.setPrintHeadersEnabled(false);
 
         setupCustomCarLoad();
 
@@ -13244,7 +14975,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm track move counts are correct
         Assert.assertEquals("Westend spur 1", 0, westendSpur1.getMoves());
-        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves()); // bumped 
+        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves()); // bumped
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Midtown yard", 1, midtownYard.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
@@ -13337,7 +15068,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Midtown spur 2", 45, midtownSpur2.getMoves());
         Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
         Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13375,7 +15106,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // car is on the Westend interchange track
         Car c1 = cmanager.getByRoadAndNumber("AA", "1");
 
-        // now test car to staging, create four staging tracks since they are randomly selected
+        // now test car to staging, create four staging tracks since they are randomly
+        // selected
         Location staging = lmanager.newLocation("Staging");
 
         Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
@@ -13513,14 +15245,14 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train.reset();
         // need to change how staging tracks are selected or build will fail
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
         // confirm that car destination is correct
         Assert.assertEquals("no staging tracks available", null, c1.getDestinationTrack());
         Assert.assertEquals("car's final destination", null, c1.getFinalDestination());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13612,14 +15344,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car has custom load and destination
         Assert.assertEquals("car load", "E", c3.getLoadName());
         Assert.assertEquals("car destination track", westendSpur1, c3.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test car custom load generation from staging. Not able to route car to
-     * spur is tested. Tests that a "Flat" is rejected by car type when looking
-     * for a spur with a schedule.
+     * Test car custom load generation from staging. Not able to route car to spur
+     * is tested. Tests that a "Flat" is rejected by car type when looking for a
+     * spur with a schedule.
      * 
      */
     @Test
@@ -13676,18 +15408,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car load", "Flour", c3.getLoadName());
         Assert.assertEquals("car destination track", eastendSpur1, c3.getDestinationTrack());
         Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
      * Test generation of custom load for car out of staging, to a staging track
-     * serviced by a different train. Create two train routes, one out of
-     * staging, the other into staging. Note that the generation of custom loads
-     * is random out from staging to another staging track. There are three
-     * loads, "Nuts" which is excluded by the receiving staging location. "Bags"
-     * which is excluded by the 2nd train. And 'Flour" which is the only load
-     * that can travel from staging to staging.
+     * serviced by a different train. Create two train routes, one out of staging,
+     * the other into staging. Note that the generation of custom loads is random
+     * out from staging to another staging track. There are three loads, "Nuts"
+     * which is excluded by the receiving staging location. "Bags" which is excluded
+     * by the 2nd train. And 'Flour" which is the only load that can travel from
+     * staging to staging.
      */
     @Test
     public void testCustomCarLoadFromStagingC() {
@@ -13739,7 +15471,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car load", "E", c4.getLoadName());
         Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
 
-        //there's an interchange track at Westend, so we'll create a 2nd train that departs there to staging 2
+        // there's an interchange track at Westend, so we'll create a 2nd train that
+        // departs there to staging 2
         Route rte2 = rmanager.newRoute("Route Westend-Staging2");
         rte2.addLocation(westend);
         rte2.addLocation(staging2);
@@ -13787,13 +15520,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car final destination", null, c4.getFinalDestination());
         // track into staging should not be set
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test generated custom load out of staging. Departure staging track
-     * restricts ship load.
+     * Test generated custom load out of staging. Departure staging track restricts
+     * ship load.
      */
     @Test
     public void testCustomCarLoadFromStagingD() {
@@ -13836,13 +15569,13 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car load", "Bags", c4.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
-     * Test generated custom load out of staging. Departure train restricts
-     * which load can be serviced out of staging
+     * Test generated custom load out of staging. Departure train restricts which
+     * load can be serviced out of staging
      */
     @Test
     public void testCustomCarLoadFromStagingE() {
@@ -13885,7 +15618,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car load", "Bags", c4.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -13926,7 +15659,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40", stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50", stagingTrack1, 1);
 
-        // modify schedule to only allow delivery of a certain load on a given  day
+        // modify schedule to only allow delivery of a certain load on a given day
         Schedule schedule = smanager.getScheduleByName("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.getItemBySequenceId(1); // requests Boxcar with "Bags"
         ScheduleItem sch1Item2 = schedule.getItemBySequenceId(2); // requests Boxcar with "Flour"
@@ -13973,7 +15706,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car load", "Flour", c4.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
         Assert.assertEquals("car next pickup id", schedules.get(4).getId(), c4.getNextPickupScheduleId());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -14018,7 +15751,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40", stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50", stagingTrack1, 1);
 
-        // modify schedule to only allow delivery of a certain load on a given  day
+        // modify schedule to only allow delivery of a certain load on a given day
         Schedule schedule = smanager.getScheduleByName("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.getItemBySequenceId(1); // requests Boxcar with "Bags"
         ScheduleItem sch1Item2 = schedule.getItemBySequenceId(2); // requests Boxcar with "Flour"
@@ -14046,7 +15779,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // test bogus random number
         sch1Item1.setRandom("0"); // 0% chance
-        sch1Item2.setRandom("A"); // random disabled, 100% chance 
+        sch1Item2.setRandom("A"); // random disabled, 100% chance
         sch1Item3.setRandom("0"); // 0% chance
 
         train.reset();
@@ -14061,9 +15794,1294 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("car load", "E", c4.getLoadName());
         Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+
+    /**
+     * Tests division feature. Car with empty load at a spur should return to car's
+     * home division yard. If no yard available at home division, then spur at home
+     * division.
+     */
+    @Test
+    public void testDivisionDepartingSpurLoadEmpty() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        Track bostonYard2 = boston.getTrackByName("Boston Yard 2", null);
+
+        // Danvers is not reachable by train
+        Location danvers = lmanager.getLocationByName("Danvers");
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+        // place cars in kernel to improve test coverage
+        Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
+        c1.setKernel(kernel);
+        c2.setKernel(kernel);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        danvers.setDivision(divEast); // not reachable
+        c1.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultEmptyName());
+        // confirm default is type empty load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with empty load should return to yard at car's home division
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no home division)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", null, c2.getDestinationTrack());
+
+        // car with empty load should return to yard at car's home division
+        acton.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm default train can perform local move
+        Assert.assertTrue("Local moves allowed", train.isAllowLocalMovesEnabled());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", actonYard1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", actonYard1, c2.getDestinationTrack());
+
+        // disable local moves for train
+        train.setAllowLocalMovesEnabled(false);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no local moves for train)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", null, c2.getDestinationTrack());
+
+        // provide a home division yard at a new location
+        boston.setDivision(divEast);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination yard at Boston
+        Assert.assertEquals("Confirm c1 destination", bostonYard1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", bostonYard1, c2.getDestinationTrack());
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // remove yard tracks
+        boston.deleteTrack(bostonYard1);
+        boston.deleteTrack(bostonYard2);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination spur at Boston
+        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", bostonSpur1, c2.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with "load" type should return to car's home
+     * division spur when at foreign division. Car at home division can go to any
+     * spur.
+     */
+    @Test
+    public void testDivisionDepartingSpurLoadLoad() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+
+        // Danvers is not reachable by train
+        Location danvers = lmanager.getLocationByName("Danvers");
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        danvers.setDivision(divEast); // not reachable
+        c1.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultLoadName());
+        // confirm default is type load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_LOAD, c1.getLoadType());
+
+        // car with load should return to spur at car's home division
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no home division)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+
+        // car with load should return to spur at car's home division
+        boston.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+
+        // don't allow Boston Spur 1 to service Boxcar
+        bostonSpur1.deleteTypeName("Boxcar");
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", bostonSpur2, c1.getDestinationTrack());
+
+        // don't allow Boston Spur 2 to service Boxcar
+        bostonSpur2.deleteTypeName("Boxcar");
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+
+        // now test departing home division with load
+        acton.setDivision(divEast);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (Any spur is acceptable)
+        Assert.assertEquals("Confirm c1 destination", chelmsfordSpur1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with "load" type should return to car's home
+     * division staging when at foreign division. Car at home division can go to any
+     * staging.
+     */
+    @Test
+    public void testDivisionDepartingSpurLoadLoadToStaging() {
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
+
+        // Lowell is not reachable by train1
+        Location lowell = lmanager.newLocation("Lowell");
+        Track lowellStaging = lowell.addTrack("Staging", Track.STAGING);
+        lowellStaging.setLength(100);
+
+        Train train2 = tmanager.newTrain("Train Boston-Lowell DivisionTest");
+        Route route2 = rmanager.newRoute("Boston-Lowell");
+        route2.addLocation(boston);
+        route2.addLocation(lowell);
+        train2.setRoute(route2);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        lowell.setDivision(divEast);
+        c1.setDivision(divEast);
+        Location danvers = lmanager.getLocationByName("Danvers");
+        danvers.setDivision(divEast); // not reachable
+
+        c1.setLoadName(cld.getDefaultLoadName());
+        // confirm default is type load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_LOAD, c1.getLoadType());
+
+        // car with load should return to staging at car's home division
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination
+        Assert.assertEquals("Confirm c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", lowellStaging, c1.getFinalDestinationTrack());
+
+        // Change the car's division
+        Division divWest = dm.newDivision("divisionWest");
+        c1.setDivision(divWest);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", null, c1.getFinalDestinationTrack());
+
+        // now test departing home division with load
+        acton.setDivision(divEast);
+        c1.setDivision(divEast);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination (Any spur is acceptable)
+        Assert.assertEquals("Confirm c1 destination", chelmsfordSpur1, c1.getDestinationTrack());
+
+        chelmsfordSpur1.setLength(40);
+        chelmsford.deleteTrack(chelmsfordSpur2);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination (Any spur is acceptable)
+        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+
+        boston.deleteTrack(bostonSpur1);
+        boston.deleteTrack(bostonSpur2);
+        acton.deleteTrack(actonSpur2);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination is now staging
+        Assert.assertEquals("Confirm c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", lowellStaging, c1.getFinalDestinationTrack());
+
+        // division shouldn't matter when car has a load
+        lowell.setDivision(divWest);
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination is now staging
+        Assert.assertEquals("Confirm c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", lowellStaging, c1.getFinalDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with "empty" type should return to car's home
+     * division staging.
+     */
+    @Test
+    public void testDivisionDepartingSpurLoadEmptyToStaging() {
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+
+        // Lowell is not reachable by train1
+        Location lowell = lmanager.newLocation("Lowell");
+        Track lowellStaging = lowell.addTrack("Staging", Track.STAGING);
+        lowellStaging.setLength(100);
+
+        Train train2 = tmanager.newTrain("Train Boston-Lowell DivisionTest");
+        Route route2 = rmanager.newRoute("Boston-Lowell");
+        route2.addLocation(boston);
+        route2.addLocation(lowell);
+        train2.setRoute(route2);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        lowell.setDivision(divEast);
+        c1.setDivision(divEast);
+        Location danvers = lmanager.getLocationByName("Danvers");
+        danvers.setDivision(divEast); // not reachable
+
+        // confirm default is type empty
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with load should return to staging at car's home division
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination
+        Assert.assertEquals("Confirm c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", lowellStaging, c1.getFinalDestinationTrack());
+
+        // Change the car's division
+        Division divWest = dm.newDivision("divisionWest");
+        c1.setDivision(divWest);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination and final destination
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", null, c1.getFinalDestinationTrack());
+
+        // now test departing home division with empty
+        acton.setDivision(divEast);
+        c1.setDivision(divEast);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination yard at home division
+        Assert.assertEquals("Confirm c1 destination", actonYard1, c1.getDestinationTrack());
+
+        actonYard1.setLength(40);
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination yard at home division
+        Assert.assertEquals("Confirm c1 destination", actonYard2, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with empty load at a home division yard should
+     * move to a car's home division spur.
+     */
+    @Test
+    public void testDivisionDepartingYardLoadEmpty() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordStaging1 = chelmsford.addTrack("Staging 1", Track.STAGING);
+        chelmsfordStaging1.setLength(400);
+        Track chelmsfordStaging2 = chelmsford.addTrack("Staging 2", Track.STAGING);
+        chelmsfordStaging2.setLength(400);
+        chelmsfordStaging2.setMoves(10);
+        // delete spurs at Chelmsford
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        chelmsford.deleteTrack(chelmsfordSpur1);
+        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
+        chelmsford.deleteTrack(chelmsfordSpur2);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 16);
+
+        // for test coverage, make staging with the lowest moves unavailable for this
+        // train
+        JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", chelmsfordStaging1, 0);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultEmptyName());
+        // confirm default is type empty load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with empty load should move to spur at car's home division
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no home division)
+        Assert.assertEquals("Confirm c1 destination null", null, c1.getDestinationTrack());
+
+        // car with empty load should return to yard at car's home division
+        acton.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm default train can perform local move
+        Assert.assertTrue("Local moves allowed", train.isAllowLocalMovesEnabled());
+
+        // confirm car's destination is home division spur
+        Assert.assertEquals("Confirm c1 destination 1", actonSpur1, c1.getDestinationTrack());
+
+        // disable local moves for train
+        train.setAllowLocalMovesEnabled(false);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no local moves for train)
+        Assert.assertEquals("Confirm c1 destination 2", null, c1.getDestinationTrack());
+
+        // provide a home division spur at a new location
+        boston.setDivision(divEast);
+        chelmsford.setDivision(divEast);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination spur at Boston
+        Assert.assertEquals("Confirm c1 destination 3", bostonSpur1, c1.getDestinationTrack());
+
+        boston.setDivision(null);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination staging
+        Assert.assertEquals("Confirm c1 destination 4", chelmsfordStaging2, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with empty load at a home division yard should
+     * move to a car's home division spur. Test uses two trains to return car.
+     */
+    @Test
+    public void testDivisionDepartingYardLoadEmptyTwoTrains() {
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route1 = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route1);
+
+        Train train2 = tmanager.newTrain("Train Boston-Chelmsford-Danvers-Essex DivisionTest");
+        Route route2 = JUnitOperationsUtil.createFiveLocationRoute();
+        train2.setRoute(route2);
+        route2.deleteLocation(route2.getDepartsRouteLocation()); // remove Acton from route
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordInterchange1 = chelmsford.getTrackByName("Chelmsford Interchange 1", null);
+
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversSpur1 = danvers.getTrackByName("Danvers Spur 1", null);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 16);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        // empty car at division yard
+        acton.setDivision(divEast);
+        c1.setDivision(divEast);
+        c1.setLoadName(cld.getDefaultEmptyName());
+        // confirm default is type empty load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with empty load should move to spur at car's home division
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", actonSpur1, c1.getDestinationTrack());
+
+        // disable local moves for train
+        train1.setAllowLocalMovesEnabled(false);
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination (no local moves for train)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+
+        // provide a home division spur at a new location needing two trains
+        danvers.setDivision(divEast);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue(train1.isBuilt());
+
+        // confirm car's destination interchange at Chelmsford
+        Assert.assertEquals("Confirm c1 destination interchange", chelmsfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 final destination", danversSpur1, c1.getFinalDestinationTrack());
+        // Danvers spur move count was set at 10.
+        Assert.assertEquals("Spur move count", 11, danversSpur1.getMoves());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Tests division feature. Car with empty load at an interchange should return
+     * to car's home division yard. If no yard available at home division, then spur
+     * at home division.
+     */
+    @Test
+    public void testDivisionDepartingInterchangeLoadEmpty() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonInterchange1 = acton.getTrackByName("Acton Interchange 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        Track bostonYard2 = boston.getTrackByName("Boston Yard 2", null);
+
+        // Danvers is not reachable by train
+        Location danvers = lmanager.getLocationByName("Danvers");
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonInterchange1, 16);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonInterchange1, 16);
+        // place cars in kernel to improve test coverage
+        Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
+        c1.setKernel(kernel);
+        c2.setKernel(kernel);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        danvers.setDivision(divEast); // not reachable
+        c1.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultEmptyName());
+        // confirm default is type empty load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with empty load should return to yard at car's home division
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no home division)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", null, c2.getDestinationTrack());
+
+        // car with empty load should return to yard at car's home division
+        acton.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm default train can perform local move
+        Assert.assertTrue("Local moves allowed", train.isAllowLocalMovesEnabled());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", actonYard1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", actonYard1, c2.getDestinationTrack());
+
+        // disable local moves for train
+        train.setAllowLocalMovesEnabled(false);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no local moves for train)
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", null, c2.getDestinationTrack());
+
+        // provide a home division yard at a new location
+        boston.setDivision(divEast);
+
+        // test destination control
+        actonInterchange1.setDestinationOption(Track.INCLUDE_DESTINATIONS);
+        actonInterchange1.addDestination(acton);
+        actonInterchange1.addDestination(boston);
+        actonInterchange1.addDestination(danvers);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination yard at Boston
+        Assert.assertEquals("Confirm c1 destination", bostonYard1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", bostonYard1, c2.getDestinationTrack());
+
+        // remove Boston from the list of locations serviced by the car's interchange
+        // track
+        actonInterchange1.deleteDestination(boston);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination spur at Boston
+        Assert.assertEquals("Confirm c1 destination", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", null, c2.getDestinationTrack());
+
+        // restore Boston
+        actonInterchange1.addDestination(boston);
+        // remove yard tracks
+        boston.deleteTrack(bostonYard1);
+        boston.deleteTrack(bostonYard2);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination spur at Boston
+        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination", bostonSpur1, c2.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the generation of custom loads out staging using the division feature.
+     * Cars with a home division and empty type custom loads can only return to
+     * their home division spurs.
+     */
+    @Test
+    public void testStagingtoYardCustomLoadsDivisionA() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // register the car loads used
+        cld.addName("Boxcar", "Flour");
+        cld.addName("Boxcar", "EMPTY");
+        cld.setLoadType("Boxcar", "EMPTY", CarLoad.LOAD_TYPE_EMPTY);
+
+        // Route Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
+        Track southEndStaging2 = locationSouthEnd.getTrackById("3s2");
+        southEndStaging2.setMoves(100); // don't use this track
+
+        Location locationNI = lmanager.getLocationById("20");
+        Track yardNI = locationNI.getTrackById("20s1");
+        yardNI.setLength(300); // there are 3 cars on yard track 200ft
+        Track spurNI = locationNI.addTrack("NI Spur", Track.SPUR);
+        spurNI.setLength(300);
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // on staging track north end 1
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // on staging track north end 1
+        Car c5 = cmanager.getByRoadAndNumber("CP", "X20002"); // on staging track north end 2
+
+        Assert.assertEquals("Car c3 load type empty", CarLoad.LOAD_TYPE_EMPTY, c3.getLoadType());
+        Assert.assertEquals("Car c4 load type empty", CarLoad.LOAD_TYPE_EMPTY, c4.getLoadType());
+
+        // allow staging to generate custom loads for cars
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+        c3.setDivision(divEast);
+        c4.setDivision(divEast);
+
+        // build should fail no home division
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        locationNI.setDivision(divEast);
+        // build should now work
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // Check space available
+        c5.setLength("280"); // reserve all of the track space
+        c5.setFinalDestination(locationNI);
+        c5.setFinalDestinationTrack(yardNI);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", spurNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", spurNI, c4.getDestinationTrack());
+
+        // eliminate reservation factor
+        c5.setFinalDestination(null);
+        c5.setFinalDestinationTrack(null);
+
+        // demand the custom empty load
+        Schedule schedule = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("EMPTY");
+        spurNI.setSchedule(schedule);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", spurNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", spurNI, c4.getDestinationTrack());
+
+        locationNI.setDivision(null);
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the generation of custom loads out staging using the division feature.
+     * Cars with a home division and load type custom loads can only return to their
+     * home division spurs.
+     */
+    @Test
+    public void testStagingtoYardCustomLoadsDivisionB() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // register the car loads used
+        cld.addName("Boxcar", "Flour");
+
+        // Route Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
+        Track southEndStaging2 = locationSouthEnd.getTrackById("3s2");
+        southEndStaging2.setMoves(100); // don't use this track
+
+        Location locationNI = lmanager.getLocationById("20");
+        Track yardNI = locationNI.getTrackById("20s1");
+        Track spurNI = locationNI.addTrack("NI Spur", Track.SPUR);
+        spurNI.setLength(300);
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // on staging track north end 1
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // on staging track north end 1
+
+        Assert.assertEquals("Car c3 load type empty", CarLoad.LOAD_TYPE_EMPTY, c3.getLoadType());
+        Assert.assertEquals("Car c4 load type empty", CarLoad.LOAD_TYPE_EMPTY, c4.getLoadType());
+
+        // allow staging to generate custom loads for cars
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+        c3.setDivision(divEast);
+        c4.setDivision(divEast);
+
+        // build should fail no home division
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        locationNI.setDivision(divEast);
+        // build should now work
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "E", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "E", c4.getLoadName());
+
+        // demand the custom empty load
+        Schedule schedule = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("Flour");
+        spurNI.setSchedule(schedule);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", spurNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", spurNI, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "Flour", c4.getLoadName());
+
+        locationNI.setDivision(null);
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        // custom load departing home division of type load can go to any spur
+        locationNorthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", spurNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", spurNI, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "Flour", c4.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test staging to staging using the division feature. Empty cars with a home
+     * division, departing staging can return to home division staging.
+     */
+    @Test
+    public void testStagingtoStagingDivision() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // Route Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+
+        Location locationNorthEnd = lmanager.getLocationById("1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
+        Track southEndStaging2 = locationSouthEnd.getTrackById("3s2");
+        southEndStaging2.setMoves(100); // don't use this track
+
+        Location locationNI = lmanager.getLocationById("20");
+        Track spurNI = locationNI.addTrack("NI Spur", Track.SPUR);
+        spurNI.setLength(30); // too short to use!
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // on staging track north end 1
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // on staging track north end 1
+
+        Assert.assertEquals("Car c3 load type empty", CarLoad.LOAD_TYPE_EMPTY, c3.getLoadType());
+        Assert.assertEquals("Car c4 load type empty", CarLoad.LOAD_TYPE_EMPTY, c4.getLoadType());
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+        c3.setDivision(divEast);
+        c4.setDivision(divEast);
+
+        // build should fail no home division
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        // departing home division with load type empty
+        locationNorthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        locationSouthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", southEndStaging1, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", southEndStaging1, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "E", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "E", c4.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the generation of custom loads staging to staging using the division
+     * feature. Cars with a home division, departing home division staging, and load
+     * type custom loads can arrive into any staging.
+     */
+    @Test
+    public void testStagingtoStagingCustomLoadsDivisionA() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // register the car loads used
+        cld.addName("Boxcar", "Flour");
+
+        // Route Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
+        Track southEndStaging2 = locationSouthEnd.getTrackById("3s2");
+        southEndStaging2.setMoves(100); // don't use this track
+
+        Location locationNI = lmanager.getLocationById("20");
+        Track yardNI = locationNI.getTrackById("20s1");
+        Track spurNI = locationNI.addTrack("NI Spur", Track.SPUR);
+        spurNI.setLength(30); // too short to use!
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // on staging track north end 1
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // on staging track north end 1
+
+        Assert.assertEquals("Car c3 load type empty", CarLoad.LOAD_TYPE_EMPTY, c3.getLoadType());
+        Assert.assertEquals("Car c4 load type empty", CarLoad.LOAD_TYPE_EMPTY, c4.getLoadType());
+
+        // allow staging to generate custom loads for cars to spurs and staging
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+        northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+        c3.setDivision(divEast);
+        c4.setDivision(divEast);
+
+        // build should fail no home division
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        locationNI.setDivision(divEast);
+        // build should now work
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // demand the custom empty load
+        Schedule schedule = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("Flour");
+        spurNI.setSchedule(schedule);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        // NI spur track was too short
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "E", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "E", c4.getLoadName());
+
+        locationNI.setDivision(null);
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        // custom load departing home division of type load can go to any spur or
+        // staging
+        locationNorthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", southEndStaging1, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", southEndStaging1, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "Flour", c4.getLoadName());
+
+        // custom load departing foreign division staging of type load can go to home
+        // division staging
+        locationNorthEnd.setDivision(null);
+        locationSouthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", southEndStaging1, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", southEndStaging1, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "Flour", c4.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test the generation of custom loads staging to staging using the division
+     * feature. Cars with a home division, departing staging, and empty type custom
+     * loads can only arrive into home division staging.
+     */
+    @Test
+    public void testStagingtoStagingCustomLoadsDivisionB() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // register the car loads used
+        cld.addName("Boxcar", "EMPTY");
+        cld.setLoadType("Boxcar", "EMPTY", CarLoad.LOAD_TYPE_EMPTY);
+
+        // Route Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
+        Track southEndStaging2 = locationSouthEnd.getTrackById("3s2");
+        southEndStaging2.setMoves(100); // don't use this track
+
+        Location locationNI = lmanager.getLocationById("20");
+        Track yardNI = locationNI.getTrackById("20s1");
+        Track spurNI = locationNI.addTrack("NI Spur", Track.SPUR);
+        spurNI.setLength(30); // too short to use!
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001"); // on staging track north end 1
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002"); // on staging track north end 1
+
+        Assert.assertEquals("Car c3 load type empty", CarLoad.LOAD_TYPE_EMPTY, c3.getLoadType());
+        Assert.assertEquals("Car c4 load type empty", CarLoad.LOAD_TYPE_EMPTY, c4.getLoadType());
+
+        // allow staging to generate custom loads for cars to spurs and staging
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+        northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+        c3.setDivision(divEast);
+        c4.setDivision(divEast);
+
+        // build should fail no home division
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        locationNI.setDivision(divEast);
+        // build should now work
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // demand the custom empty load
+        Schedule schedule = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("EMPTY");
+        spurNI.setSchedule(schedule);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        // NI spur track was too short
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", yardNI, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "E", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "E", c4.getLoadName());
+
+        locationNI.setDivision(null);
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+
+        // custom load departing staging of type empty can go only to home division
+        // staging
+        locationSouthEnd.setDivision(divEast);
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car c1 destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", southEndStaging1, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", southEndStaging1, c4.getDestinationTrack());
+
+        // check car loads
+        Assert.assertEquals("car c3 load", "EMPTY", c3.getLoadName());
+        Assert.assertEquals("car c4 load", "EMPTY", c4.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    @Test
+    public void testLocalMove() {
+        Setup.setBuildAggressive(true);
+        Setup.setNumberPasses(2);
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford Local Test");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        RouteLocation bostonRl = route.getRouteLocationBySequenceNumber(2);
+        bostonRl.setMaxCarMoves(12);
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        bostonSpur1.setLength(190); // only room for 4 cars
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
+        // remove yard tracks at Boston
+        boston.deleteTrack(boston.getTrackByName("Boston Yard 1", null));
+        boston.deleteTrack(boston.getTrackByName("Boston Yard 2", null));
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+
+        // four cars at Acton Yard
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonYard1, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", actonYard1, 2);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("UP", "4", "Boxcar", "40", "DAB", "1958", actonYard1, 3);
+
+        // Eight cars at Boston
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("UP", "5", "Boxcar", "40", "DAB", "1958", bostonSpur2, 0);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("UP", "6", "Boxcar", "40", "DAB", "1958", bostonSpur2, 1);
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("UP", "7", "Boxcar", "40", "DAB", "1958", bostonSpur2, 2);
+        Car c8 = JUnitOperationsUtil.createAndPlaceCar("UP", "8", "Boxcar", "40", "DAB", "1958", bostonSpur2, 3);
+        Car c9 = JUnitOperationsUtil.createAndPlaceCar("UP", "9", "Boxcar", "40", "DAB", "1958", bostonSpur1, 5);
+        Car c10 = JUnitOperationsUtil.createAndPlaceCar("UP", "10", "Boxcar", "40", "DAB", "1958", bostonSpur1, 7);
+        Car c11 = JUnitOperationsUtil.createAndPlaceCar("UP", "11", "Boxcar", "40", "DAB", "1958", bostonSpur1, 9);
+        Car c12 = JUnitOperationsUtil.createAndPlaceCar("UP", "12", "Boxcar", "40", "DAB", "1958", bostonSpur1, 11);
+
+        // send all cars at Acton to Boston Spur
+        c1.setFinalDestination(boston);
+        c1.setFinalDestinationTrack(bostonSpur1);
+        c2.setFinalDestination(boston);
+        c2.setFinalDestinationTrack(bostonSpur1);
+        c3.setFinalDestination(boston);
+        c3.setFinalDestinationTrack(bostonSpur1);
+        c4.setFinalDestination(boston);
+        c4.setFinalDestinationTrack(bostonSpur1);
+
+        // try to move all cars at Boston to spur
+        c5.setFinalDestination(boston);
+        c5.setFinalDestinationTrack(bostonSpur1);
+        c6.setFinalDestination(boston);
+        c6.setFinalDestinationTrack(bostonSpur1);
+        c7.setFinalDestination(boston);
+        c7.setFinalDestinationTrack(bostonSpur1);
+        c8.setFinalDestination(boston);
+        c8.setFinalDestinationTrack(bostonSpur1);
+
+        Assert.assertTrue(new TrainBuilder().build(train));
+
+        // local moves have priority over new cars, so none from Acton placed
+        Assert.assertEquals("car c1 destination track", null, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", null, c2.getDestinationTrack());
+        Assert.assertEquals("car c3 destination track", null, c3.getDestinationTrack());
+        Assert.assertEquals("car c4 destination track", null, c4.getDestinationTrack());
+
+        Assert.assertEquals("car c5 destination track", bostonSpur1, c5.getDestinationTrack());
+        Assert.assertEquals("car c6 destination track", bostonSpur1, c6.getDestinationTrack());
+        Assert.assertEquals("car c7 destination track", bostonSpur1, c7.getDestinationTrack());
+        Assert.assertEquals("car c8 destination track", bostonSpur1, c8.getDestinationTrack());
+        Assert.assertEquals("car c9 destination track", chelmsfordSpur1, c9.getDestinationTrack());
+        Assert.assertEquals("car c10 destination track", chelmsfordSpur1, c10.getDestinationTrack());
+        Assert.assertEquals("car c11 destination track", chelmsfordSpur1, c11.getDestinationTrack());
+        Assert.assertEquals("car c12 destination track", chelmsfordSpur1, c12.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testHyphenFeature() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford Test");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        
+        // must accept car type "-"
+        acton.addTypeName("-");
+        actonYard1.addTypeName("-");
+        chelmsford.addTypeName("-");
+        chelmsfordSpur1.addTypeName("-");
+        train.addTypeName("-");
+
+        // 3 cars at Acton Yard using hyphen for road and car type
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "-", "40", "DAB", "1958", actonYard1, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-", "3", "-", "40", "DAB", "1958", actonYard1, 2);
+
+        Assert.assertTrue(new TrainBuilder().build(train));
+        
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("Train assignment", train, c2.getTrain());
+        Assert.assertEquals("Train assignment", train, c3.getTrain());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
 
     private void setupCustomCarLoad() {
 
@@ -14112,7 +17130,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // improve test coverage
         midtownSpur2.setHoldCarsWithCustomLoadsEnabled(true);
 
-        // create the schedule, each spur should request loads in this order: Flour, Nuts, Bags, repeat
+        // create the schedule, each spur should request loads in this order: Flour,
+        // Nuts, Bags, repeat
         Schedule schedule = smanager.newSchedule("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
         sch1Item1.setReceiveLoadName("Bags");
@@ -14132,7 +17151,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         c1.setLoadName("Bags");
 
-        // create the route        
+        // create the route
         Route route = rmanager.newRoute("Route Westend-Midtown-Eastend");
         route.addLocation(westend);
         route.addLocation(midtown);
@@ -14234,6 +17253,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         // increase test coverage
         Setup.setGenerateCsvManifestEnabled(true);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
+        Setup.setPrintHeadersEnabled(true);
+        // use all of the car attributes when creating Manifests
+        Setup.setDropManifestMessageFormat(Setup.getCarAttributes());
+        Setup.setPickupManifestMessageFormat(Setup.getCarAttributes());
+        // use all of the engine attributes when creating Manifests
+        Setup.setDropEngineMessageFormat(Setup.getEngineAttributes());
+        Setup.setPickupEngineMessageFormat(Setup.getEngineAttributes());
     }
 }

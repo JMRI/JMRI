@@ -1,125 +1,111 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Setup - Migrating System Prefixes</title>
-  <meta name="keywords" content=
-  "java model railroad JMRI install Dropbox">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="java model railroad JMRI install Dropbox">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI Setup: Migrating System Prefixes</h1>
-
-      <a href="../doc/Technical/Names.shtml">JMRI system names</a>
-      are supposed to have a 
-      <a href="../doc/Technical/Names.shtml#format">specific format</a>
-      that starts with a "system prefix" consisting of a single
-      letter, optionally followed by digits.
-      Unfortunately, for a while JMRI wasn't enforcing that properly, and 
-      in a few cases JMRI set itself up with prefixes that contained
-      multiple letters.  This can cause significant 
-      long term problems, so we're getting people to migrate their 
-      configurations and panel files to the proper format.
-      
+      <a href="../doc/Technical/Names.shtml">JMRI system names</a> are supposed to have a <a href=
+      "../doc/Technical/Names.shtml#format">specific format</a> that starts with a "system prefix"
+      consisting of a single letter, optionally followed by digits. Unfortunately, for a while JMRI
+      wasn't enforcing that properly, and in a few cases JMRI set itself up with prefixes that
+      contained multiple letters. This can cause significant long term problems, so we're getting
+      people to migrate their configurations and panel files to the proper format.
       <h2 id="if">Does this affect me?</h2>
       You can check if this is an issue for your setup any of a couple ways:
       <ul>
-      <li>Open the Preferences, and look at each of the "Connection" panes.  If the connection prefix 
-            has a letter or a single letter plus digits, this doesn't affect you.
-            If it has more than a single letter, you should do this migration.
-            (With 
-            <a href="/releasenotes/jmri4.13.4.shtml">JMRI 4.13.4</a>
-            or later, the background will be colored red 
-            and the tooltip will say "This is a legacy prefix that should be migrated, ask on JMRIusers" 
-            if the prefix needs to be migrated)
-      <li>Check the system log after running and quiting the program to see if there's a 
-            warning message about "The following system names need to be migrated..."
-            If it's there, you should do this migration.
+        <li>Open the Preferences, and look at each of the "Connection" panes. If the Connection
+        Prefix has a letter or a single letter plus digits, this doesn't affect you. If it has more
+        than a single letter, you should do this migration. (With <a href=
+        "/releasenotes/jmri4.13.4.shtml">JMRI 4.13.4</a> or later, the background will be colored
+        red and the tooltip will say "This is a legacy prefix that should be migrated, ask on
+        JMRIusers" if the prefix needs to be migrated)
+        </li>
+
+        <li>Check the system log after running and quitting the program to see if there's a warning
+        message about "The following system names need to be migrated..." If it's there, you should
+        do this migration.</li>
       </ul>
-      
+
       <h2 id="do">How to fix the issue</h2>
-      
-      To fix this issue, you update your configuration and panel files to
-      use new prefixes.
-      <p>
-      If you encounter any problems, please
-      ask for help on the 
-      <a href="https://groups.io/g/jmriusers">JMRI users group</a>.  
-      There are people there who will happily do the necessary file modifications.
-        If your computer is connected to the Internet, you can upload your configuration as 
-            described on
-            <a href="../../package/jmri/jmrit/mailreport/Report.shtml">this page</a>.
-            This will make it easy for the people on jmriusers
-            see exactly what's needed.
-      
+      To fix this issue, you update your configuration and panel files to use new prefixes.
+      <p>If you encounter any problems, please ask for help on the <a href=
+      "https://groups.io/g/jmriusers">JMRI users group</a>. There are people there who will happily
+      do the necessary file modifications, provided they happen to have the spare time available.
+      If your computer is connected to the Internet, you can upload your configuration as described
+      on <a href="../../package/jmri/jmrit/mailreport/Report.shtml">this page</a>. This will make
+      it easy for the people on jmriusers see exactly what's needed.</p>
+
       <ul>
-      <li>First, you should be using 
-            <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
-            or later. If you're using an earlier
-            version, please update to at least 
-            <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
-            and fix any problems.
-      <li>Next, determine the new prefix for your connection:
-            <ul>
-            <li>DCCPP for DCC++ should be changed to D
-            <li>DP for DCC4PC should be changed to D
-            <li>DX for Anya DX should be changed to D
-            <li>MC for Marklin CS2 should be changed to M
-            <li>MR for MRC should be changed to M
-            <li>PI for Raspberry Pi should be changed to P
-            <li>TM for TMCC should be changed to T
-            </ul>
-            However, if you already have a connection with that
-            letter, you'll need to pick another one.  The letter
-            is arbitrary, so just pick one that makes sense to you.
-        <li>Take a backup of all your files.  Maybe more than one.
-            And make sure that they're usable in case you need to restore 
-            from them!
-        <li>Take all your panel files, and edit them to change the prefix
-            of all the references.  To help with this, the last time
-            you run JMRI, it put a list of reference names in the log near the end,
-            and a similar "legacy_bean_names.csv" file was written to your user files directory.
-            You can search for each of those reference names in turn and change it to the new prefix.
-        <li>Start JMRI, open the Preferences to the Connection pane, 
-            change your connection prefix, Save and Restart.
-       </ul>
-      
-      <h2 id="not">What happens if I don't  make this change?</h2>
-      
-      If you don't make this change, your existing JMRI installation will keep working fine.
-      <p>
-      If/when you update to newer versions of JMRI:
-      <ul>
-      <li>When you update to JMRI 4.15.3 or later, you'll start getting prompts
-            about fixing this every time you start JMRI.
-      <li>If you update to JMRI 4.17.1 or later (summer 2019)
-            without fixing this, you won't be able to use your
-            existing configuration or panel files.
+        <li>First, you should be using <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a> or
+        later. If you're using an earlier version, please update to at least <a href=
+        "/releasenotes/jmri4.12.shtml">JMRI 4.12</a> and fix any problems.
+        </li>
+
+        <li>Next, determine the new prefix for your connection:
+          <ul>
+            <li>DCCPP for DCC++ should be changed to D</li>
+
+            <li>DP for DCC4PC should be changed to D</li>
+
+            <li>DX for Anyma DX should be changed to D</li>
+
+            <li>MC for Marklin CS2 should be changed to M</li>
+
+            <li>MR for MRC should be changed to M</li>
+
+            <li>PI for Raspberry Pi should be changed to P</li>
+
+            <li>TM for TMCC should be changed to T</li>
+          </ul>
+          However, if you already have a connection with that letter, you'll need to pick another
+          one. The letter is arbitrary, so just pick one that makes sense to you. If you insist to
+          use a letter already in use, you should add a number to it, for instance defining the new
+          prefix like "D1", in which case a valid turnout system name would be "D1T123".
+        </li>
+
+        <li>Take a backup of all your files. Maybe more than one. And make sure that they're usable
+        in case you need to restore from them!</li>
+
+        <li>Take all your panel files, and edit them to change the prefix of all the references. To
+        help with this, the last time you run JMRI, it put a list of reference names in the log
+        near the end, and a similar "legacy_bean_names.csv" file was written to your user files
+        directory. You can search for each of those reference names in turn and change it to the
+        new prefix.</li>
+
+        <li>Start JMRI (without loading the panel files yet), open the Preferences to the
+        Connection pane, change your connection prefix to your new choice (the field will turn
+        orange if the prefix is accepted), Save and Restart.</li>
       </ul>
-      We're sorry for this inconvenience, but we really do have to fix this.
-      Giving people over 18 months lead time seems sufficient.
-      
-      
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+
+      <h2 id="not">What happens if I don't make this change?</h2>
+      If you don't make this change, your existing JMRI installation will keep working fine.
+      <p>If/when you update to newer versions of JMRI:</p>
+
+      <ul>
+        <li>When you update to JMRI 4.15.3 or later, you'll start getting prompts about fixing this
+        every time you start JMRI.</li>
+
+        <li>If you update to JMRI 4.17.1 or later (summer 2019) without fixing this, you won't be
+        able to use your existing configuration or panel files.</li>
+      </ul>
+      We're sorry for this inconvenience, but we really do have to fix this. Giving people over 18
+      months lead time seems sufficient. <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -12,12 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
+import javax.annotation.concurrent.GuardedBy;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreeNode;
@@ -145,12 +141,15 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public static final int STRUT_SIZE = 5;
     static final String RED_X = "resources/icons/misc/X-red.gif";
 
+    @GuardedBy("ItemPalette")
     protected static JTabbedPane _tabPane;
+    @GuardedBy("ItemPalette")
     protected static HashMap<String, ItemPanel> _tabIndex;
 
     private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     private static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    private static int tabWidth;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -161,7 +160,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             return;     // never loaded
         }
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        // unfiltered, xml-stored, item palate icon tree
+        // unfiltered, xml-stored, item palette icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
         // discard old version
         if (tree != null) {
@@ -353,7 +352,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             }
             InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: {}", ex);
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", ex);
         }
     }
 
@@ -433,7 +432,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public ItemPalette(String title, Editor ed) {
         super(title, ed);
         init();
-        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get("Turnout"))));
+        setTitle(Bundle.getMessage("ItemPaletteTitle"));
     }
 
     private void init() {
@@ -449,23 +448,28 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         buildTabPane(this);
 
         setLayout(new BorderLayout(5, 5));
-        add(_tabPane, BorderLayout.CENTER);
-        JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
-        _currentItemPanel = (ItemPanel) sp.getViewport().getView();
-        _currentItemPanel.hideIcons();
+        synchronized (this) {
+            add(_tabPane, BorderLayout.CENTER);
+            JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
+            _currentItemPanel = (ItemPanel) sp.getViewport().getView();
+            _currentItemPanel.hideIcons();
+        }
     }
 
     /*
      * Add the tabs on the Control Panel Editor.
      */
     static void buildTabPane(ItemPalette palette) {
-        _tabPane = new JTabbedPane();
-        _tabIndex = new HashMap<>();
+        //synchronized (ItemPalette.class) {
+            _tabPane = new JTabbedPane();
+            _tabIndex = new HashMap<>();
+        //}
+        tabWidth = getTabWidth();
 
         ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance());
         addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
-        itemPanel.init();  // show panel on start
+        // panel shown on start
 
         itemPanel = new TableItemPanel<>(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance());
@@ -520,53 +524,57 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         itemPanel = new PortalItemPanel(palette, "Portal", null);
         addItemTab(itemPanel, "Portal", "BeanNamePortal");
 
+        setTabs();
         _tabPane.addChangeListener(palette);
     }
 
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
+        itemPanel.init();
         JScrollPane scrollPane = new JScrollPane(itemPanel);
-        _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
-        _tabIndex.put(key, itemPanel);
+        synchronized (ItemPalette.class) {
+            _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
+            _tabIndex.put(key, itemPanel);
+            log.debug("_tabIndex.size()={}", _tabIndex.size());
+        }
     }
 
-    @Override
-    public void setPreviewBg(int index) {
-        super.setPreviewBg(index);
-        if (_currentItemPanel != null) {    // wait until tab panels are created
-            for (ItemPanel panel : _tabIndex.values()) {
-                panel.previewColorChange();
+    static int getTabWidth() {
+        int maxTabWidth = 0;
+        for (Entry<String, String> t : ItemPanel.NAME_MAP.entrySet()) {
+            maxTabWidth = Math.max(maxTabWidth, new JLabel(Bundle.getMessage(t.getValue())).getWidth());
+        }
+        return maxTabWidth;
+    }
+
+    static void setTabs() {
+        JLabel lab = new JLabel();
+        lab.setPreferredSize(new Dimension(tabWidth, 30));
+        synchronized (ItemPalette.class) {
+            for (int i = 0; i == _tabPane.getTabCount(); i++) {
+                _tabPane.setTabComponentAt(i, lab);
             }
         }
     }
+
+//    @Override
+//    public void setPreviewBg(int index) {
+//        super.setPreviewBg(index);
+//        // introduced loop, deprecated and replaced by updating at the moment a tab is brought to front.
+//    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
-        ItemPanel p = (ItemPanel) sp.getViewport().getView();
-        p.closeDialogs();
-        p.init(); // (re)initialize tab pane
-        p.invalidate();
-        Dimension newTabDim = p.getPreferredSize();
-        Dimension oldTabDim = null;
+        ItemPanel newItemPanel = (ItemPanel) sp.getViewport().getView();
+        newItemPanel.closeDialogs();
+        newItemPanel.previewColorChange();
+        newItemPanel.revalidate();
+        // elegantly close previous ItemPanel
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
-            oldTabDim = _currentItemPanel.getSize();
-        } else {
-            oldTabDim = newTabDim;
         }
-        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
-        Dimension totalDim = _tabPane.getSize();
-        Dimension deltaDim;
-        if (log.isDebugEnabled()) {
-            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
-            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
-                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
-                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
-        }
-        deltaDim = p.shellDimension(p);
-        reSize(_tabPane, deltaDim, newTabDim);
-        _currentItemPanel = p;
+        _currentItemPanel = newItemPanel;
     }
 
     private void makeMenus() {
@@ -596,15 +604,17 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     private void closePanels(java.awt.event.WindowEvent e) {
-        java.awt.Component[] comps = _tabPane.getComponents();
-        if (log.isDebugEnabled()) {
-            log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
-        }
-        for (Component comp : comps) {
-            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
-            Component ip = vp.getView();
-            if (ip instanceof ItemPanel) {
-                ((ItemPanel) ip).closeDialogs();
+        synchronized(this) {
+            java.awt.Component[] comps = _tabPane.getComponents();
+            if (log.isDebugEnabled()) {
+                log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
+            }
+            for (Component comp : comps) {
+                javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
+                Component ip = vp.getView();
+                if (ip instanceof ItemPanel) {
+                    ((ItemPanel) ip).closeDialogs();
+                }
             }
         }
         super.windowClosing(e);
@@ -624,8 +634,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             String f = it.next();
             if (family.equals(f)) {
                 JOptionPane.showMessageDialog(null,
-                        java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
-                                new Object[]{family, type}),
+                        java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"), family, type),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
@@ -636,9 +645,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /**
      * Add a new Family of icons to the device type.
      *
-     * @param type type
-     * @param family family
-     * @param iconMap iconMap
+     * @param type type to retrieve
+     * @param family name for iconMap "family"
+     * @param iconMap icon HashMap providing the images
      * @return result
      */
     static protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {
@@ -658,12 +667,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return map of families
      */
     static public @Nonnull HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
-        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.get(type);
-        if (families == null) {
-            families = new HashMap<>();
-            _iconMaps.put(type, families);
-        }
-        return families;
+        return _iconMaps.computeIfAbsent(type, k -> new HashMap<>());
     }
 
     /**
@@ -782,7 +786,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return usable UI display name
      */
     static public String convertText(String name) {
-        String cName = null;
+        String cName;
         try {
             // NOI18N
             cName = Bundle.getMessage(name);

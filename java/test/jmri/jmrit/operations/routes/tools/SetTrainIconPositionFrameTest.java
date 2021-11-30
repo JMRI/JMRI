@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;
@@ -39,23 +39,24 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
 
         JUnitOperationsUtil.initOperationsData();
 
-        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
-        Assert.assertNotNull("exists", t);
+        SetTrainIconPositionFrame f = new SetTrainIconPositionFrame();
+        Assert.assertNotNull("exists", f);
 
         // no location selected
-        JemmyUtil.enterClickAndLeave(t.placeButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.placeButton);
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("NoLocationSelected"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("NoLocationSelected"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
         // select location, no panel error
-        t.locationBox.setSelectedIndex(1);
+        f.locationBox.setSelectedIndex(1);
 
-        JemmyUtil.enterClickAndLeave(t.placeButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.placeButton);
 
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+        
         // confirm train icon defaults for location and route
         Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
         Assert.assertNotNull(loc);
@@ -67,33 +68,32 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertEquals("icon position", 25, rl.getTrainIconX());
 
         // modify spinner and update
-        JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconSouthX);
+        JSpinnerOperator so = new JSpinnerOperator(f.spinTrainIconSouthX);
         so.setValue(234);
-        JemmyUtil.enterClickAndLeave(t.applyButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.applyButton);
         // confirm dialog should appear
-        JemmyUtil.pressDialogButton(t,
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{loc.getName()}),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
+        
         // confirm that location and routes have been modified
         Assert.assertEquals("icon position", 234, loc.getTrainIconSouth().x);
         Assert.assertEquals("icon position", 234, rl.getTrainIconX());
 
         so.setValue(567);
-        JemmyUtil.enterClickAndLeave(t.saveButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         // confirm dialog should appear
-        JemmyUtil.pressDialogButton(t,
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{loc.getName()}),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
+        
         // confirm that location has been modified, not routes
         Assert.assertEquals("icon position", 567, loc.getTrainIconSouth().x);
         Assert.assertEquals("icon position", 234, rl.getTrainIconX());
 
-        JUnitUtil.dispose(t);
-
+        JUnitUtil.dispose(f);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);

@@ -1,136 +1,100 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Function Mapping in Programmer Files</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Function Mapping in Programmer Files</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>Function Mapping in Programmer Files</h2>The "fnmapping"
-      element provides a convenient way to display the CV bits used
-      to map functions and outputs in a decoder.
+      <h2>Function Mapping in Programmer Files</h2>
+      The "fnmapping" element provides a convenient way to display the CV bits used to map
+      functions and outputs in a decoder.
+      <p>You can do a similar thing with lots of rows and columns in the display, but it would be a
+      lot more work, and the display wouldn't be nicely tuned.</p>
 
-      <p>You can do a similar thing with lots of rows and columns
-      in the display, but it would be a lot more work, and the
-      display wouldn't be nicely tuned.</p>
-
-      <p>The fnmapping element works by looking for variables with
-      names like "F2 controls output 1". Specifically, it's looking
-      for a name that consists of four (or five) parts:</p>
+      <p>The fnmapping element works by looking for variables with names like "F2 controls output
+      1". Specifically, it's looking for a name that consists of four (or five) parts:</p>
 
       <ol>
-        <li>A function name. This could be "FL" or "Fn" or "Fnn",
-        where n or nn is a decimal number in the range 0-28.<br>
-        Also supported are some special non-key states used by some
-        decoders to control outputs. These currently include
-        "STOP", "DRIVE", "FWD", "REV" and "Sn" or "Snn", where n or
-        nn is a decimal sensor number in the range 0-28.</li>
+        <li>A function name. This could be "FL" or "Fn" or "Fnn", where n or nn is a decimal number
+        in the range 0-28.<br>
+        Also supported are some special non-key states used by some decoders to control outputs.
+        These currently include "STOP", "DRIVE", "FWD", "REV" and "Sn" or "Snn", where n or nn is a
+        decimal sensor number in the range 0-28.</li>
 
-        <li>An optional "(f)" or "(r)" suffix to the function
-        name.</li>
+        <li>An optional "(f)" or "(r)" suffix to the function name.</li>
 
-        <li>The exact string " controls output ". Note the single
-        spaces before and after!</li>
+        <li>The exact string " controls output ". Note the single spaces before and after!</li>
 
         <li>An output's decimal number.</li>
 
-        <li>An optional "(alt)" suffix to the output number (or
-        name). This allows for an alternate definition of an
-        output, such as for the Tsunami function group exchange
-        feature.</li>
+        <li>An optional "(alt)" suffix to the output number (or name). This allows for an alternate
+        definition of an output, such as for the Tsunami function group exchange feature.</li>
       </ol>
 
-      <p>After finding all the matching variables in the
-      configuration file, the fnmapping element creates a
-      rectangular grid to display them.</p>
+      <p>After finding all the matching variables in the configuration file, the fnmapping element
+      creates a rectangular grid to display them.</p>
 
-      <p>In the context of a fnmapping element, variables have
-      several useful attributes and elements:</p>
-
-      <ul>
-        <li>Default - this can be used to set the default values.
-        This is particularly useful for constant (readonly)
-        variables, as otherwise they don't have any useful
-        value.</li>
-
-        <li>minOut - sets the minimum number of outputs that the
-        decoder needs to have defined before this variable is
-        effective. Since different decoders in the same family
-        often have different numbers of outputs wires, this allows
-        a single configuration file to handle multiple decoders.
-        (See below for an example)</li>
-
-        <li>minFn - similar to minOut, but working on the number of
-        functions that the decoder will respond to. This is
-        generally not as useful.</li>
-
-        <li>constant - this is an element, not an attribute, that
-        lets you define a variable as having a constant value that
-        the user can't change. An example of using this to display
-        a fixed map is displayed below.</li>
-      </ul>
-
-      <p>Several attributes and elements (e.g. "tooltip" &amp;
-      "label") on a fnmapping variable are ignored and
-      <strong><em>should not</em></strong> be added to a definition
-      file:</p>
-
-      <p>Several attributes and elements of the "model" element of
-      the decoder file also affect affect the Function Map
-      display:</p>
+      <p>In the context of a fnmapping element, variables have several useful attributes and
+      elements:</p>
 
       <ul>
-        <li>numOuts - the number of physical outputs (wires) on the
-        decoder.</li>
+        <li>Default - this can be used to set the default values. This is particularly useful for
+        constant (readonly) variables, as otherwise they don't have any useful value.</li>
 
-        <li>numFns - this is a legacy attribute that limits the
-        total number of function mapping lines displayed. It is no
-        longer required as the JMRI code now automatically
-        suppresses unused lines.</li>
+        <li>minOut - sets the minimum number of outputs that the decoder needs to have defined
+        before this variable is effective. Since different decoders in the same family often have
+        different numbers of outputs wires, this allows a single configuration file to handle
+        multiple decoders. (See below for an example)</li>
 
-        <li>output - the "name" and "label" attributes of the
-        "output" element can be used to modify what is displayed in
-        Function Map columns. For details see this <a href=
-        "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html"
-        target="_blank">Javadoc page</a>.</li>
+        <li>minFn - similar to minOut, but working on the number of functions that the decoder will
+        respond to. This is generally not as useful.</li>
 
-        <li>extFnsESU - when set, invokes the specialised
-        Function Map page required for later model ESU decoders.
-        The requirements and meaning of some fnmapping elements are
-        also changed. For details (and current valid settings for "extFnsESU") see this
-        <a href= "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanelESU.html"
-        target="_blank">Javadoc page</a>.</li>
+        <li>constant - this is an element, not an attribute, that lets you define a variable as
+        having a constant value that the user can't change. An example of using this to display a
+        fixed map is displayed below.</li>
       </ul>
 
-      <h2>Mapping Example</h2>These examples are taken from the
-      <a href=
-      "../../../../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>
-      decoder definition file.
+      <p>Several attributes and elements (e.g. "tooltip" & "label") on a fnmapping variable are
+      ignored and <strong><em>should not</em></strong> be added to a definition file:</p>
 
-      <p>The block of definitions for function zero in the forward
-      direction look like this:</p>
+      <p>Several attributes and elements of the "model" element of the decoder file also affect
+      affect the Function Map display:</p>
+
+      <ul>
+        <li>numOuts - the number of physical outputs (wires) on the decoder.</li>
+
+        <li>numFns - this is a legacy attribute that limits the total number of function mapping
+        lines displayed. It is no longer required as the JMRI code now automatically suppresses
+        unused lines.</li>
+
+        <li>output - the "name" and "label" attributes of the "output" element can be used to
+        modify what is displayed in Function Map columns. For details see this <a href=
+        "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html" target="_blank">Javadoc page</a>.
+        </li>
+
+        <li>extFnsESU - when set, invokes the specialised Function Map page required for later
+        model ESU decoders. The requirements and meaning of some fnmapping elements are also
+        changed. For details (and current valid settings for "extFnsESU") see this <a href=
+        "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanelESU.html" target="_blank">Javadoc page</a>.
+        </li>
+      </ul>
+
+      <h2>Mapping Example</h2>
+      These examples are taken from the <a href=
+      "../../../../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a> decoder definition
+      file.
+      <p>The block of definitions for function zero in the forward direction look like this:</p>
+
       <pre>
         &lt;variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
@@ -148,12 +112,11 @@
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
         &lt;variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
-</pre>Note that the "minOut" attribute ensure that only outputs
-actually defined as present are displayed.
+</pre>Note that the "minOut" attribute ensure that only outputs actually defined as present are
+displayed.
+      <p>The similar block of definitions for function two configure a different CV, but are
+      otherwise quite similar:</p>
 
-      <p>The similar block of definitions for function two
-      configure a different CV, but are otherwise quite
-      similar:</p>
       <pre>
         &lt;variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
@@ -171,15 +134,13 @@ actually defined as present are displayed.
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
         &lt;variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
-</pre>The only new thing here is that the "minFn" attribute is
-being used. This is useful when a family of decoders supports
-different numbers of functions (not outputs!) in different decoder
+</pre>The only new thing here is that the "minFn" attribute is being used. This is useful when a
+family of decoders supports different numbers of functions (not outputs!) in different decoder
 models.
+      <p>As you go to higher function numbers, the NMRA mapping between the bits in the CVs and the
+      output numbers changes. You can see that by looking at an example of how function ten is
+      mapped to outputs 7 through 14:</p>
 
-      <p>As you go to higher function numbers, the NMRA mapping
-      between the bits in the CVs and the output numbers changes.
-      You can see that by looking at an example of how function ten
-      is mapped to outputs 7 through 14:</p>
       <pre>
         &lt;variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
@@ -198,11 +159,10 @@ models.
         &lt;variable item="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10"&gt; &lt;enumVal&gt; 
                 &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
 </pre>
+      <h2>Fixed Mapping Example</h2>
+      You might still want to include the mapping values in a configuration file, even if the
+      decoder doesn't have a way to change them. This is an example of a constant mapping:
 
-      <h2>Fixed Mapping Example</h2>You might still want to include
-      the mapping values in a configuration file, even if the
-      decoder doesn't have a way to change them. This is an example
-      of a constant mapping:
       <pre>
         &lt;!-- Define the fixed Function-Output mapping --&gt;
         &lt;constant item="FL(f) controls output 1" minOut="1" default="1" /&gt; 
@@ -215,10 +175,12 @@ models.
         &lt;constant item="F6 controls output 8" minOut="8" minFn="6" default="1" /&gt; 
         &lt;constant item="F7 controls output 9" minOut="9" minFn="7" default="1" /&gt; 
         &lt;constant item="F8 controls output 10" minOut="10" minFn="8" default="1" /&gt; 
-</pre>This will be displayed in the same way as other mappings,
-except that the individual checkboxes will be inactive (grayed
-out). <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+</pre>This will be displayed in the same way as other mappings, except that the individual
+checkboxes will be inactive (grayed out). <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

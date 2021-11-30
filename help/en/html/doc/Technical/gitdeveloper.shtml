@@ -1,11 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Developing with JMRI Code</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git download">
@@ -16,429 +12,356 @@
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI Code: Developing with JMRI</h1>
 
       <h2>Background</h2>
-      Anybody is welcome to get a copy of the JMRI code and modify
-      it for their own purposes. What makes one a JMRI developer is
-      contributing those modifications back for others to use.<br>
-      This page discusses how to do that, assuming that you have
-      access to a copy of the code following
-      <a href="getgitcode.shtml">this procedure</a>.
+      Anybody is welcome to get a copy of the JMRI code and modify it for their own purposes. What
+      makes one a JMRI developer is contributing those modifications back for others to use.<br>
+      This page discusses how to do that, assuming that you have access to a copy of the code
+      following <a href="getgitcode.shtml">this procedure</a>.
+      <p>See the <a href="GitFAQ.shtml">JMRI Git FAQ page</a> for more details on these
+      processes.</p>
 
-      <p>See the <a href="GitFAQ.shtml">JMRI Git FAQ page</a> for
-      more details on these processes.</p>
+      <p>The links to the left provide more information on building with specific tools. You should
+      read the page for your particular setup.</p>
 
-      <p>The links to the left provide more information on building
-      with specific tools. You should read the page for your
-      particular setup.</p>
-
-      <p>The rest of this page provides an overview of the process
-      of developing JMRI code with Git. Basically, you create a new
-      branch, make your changes, compile/run/test until you've
-      finished your intended change, and then send that change back
-      for inclusion into the main repository.</p>
+      <p>The rest of this page provides an overview of the process of developing JMRI code with
+      Git. Basically, you create a new branch, make your changes, compile/run/test until you've
+      finished your intended change, and then send that change back for inclusion into the main
+      repository.</p>
 
       <p>That's done with a four-step process:</p>
 
       <ol>
         <li>You create a Git branch to hold your work.</li>
 
-        <li>You periodically "commit" your changes to your local
-        repository.</li>
+        <li>You periodically "commit" your changes to your local repository.</li>
 
-        <li>You periodically "push" those changes to a repository
-        of your own on GitHub.</li>
+        <li>You periodically "push" those changes to a repository of your own on GitHub.</li>
 
-        <li>When your change is complete, you create a "pull
-        request" that allows JMRI to get your change from your
-        GitHub repository and merge it into JMRI's main
-        repository.</li>
+        <li>When your change is complete, you create a "pull request" that allows JMRI to get your
+        change from your GitHub repository and merge it into JMRI's main repository.</li>
       </ol>
 
-      <h3>Create a Branch for Development</h3>Git is very good at
-      keeping development on parallel "branches" separate. Although
-      the primary development is on the "master" branch, we
-      strongly recommend that you don't directly make changes to
-      that. There are a lot of JMRI developers, and having them all
-      work on a single branch can get confusing. Instead, you
-      should create a separate branch for each of your projects,
-      work on it until it's ready to be merged back into the main
-      JMRI source, and then contribute the entire branch contents
-      back to our main repository.
-
+      <h3>Create a Branch for Development</h3>
+      Git is very good at keeping development on parallel "branches" separate. Although the primary
+      development is on the "master" branch, we strongly recommend that you don't directly make
+      changes to that. There are a lot of JMRI developers, and having them all work on a single
+      branch can get confusing. Instead, you should create a separate branch for each of your
+      projects, work on it until it's ready to be merged back into the main JMRI source, and then
+      contribute the entire branch contents back to our main repository.
       <p>To create a new branch:</p>
-<pre style="font-family: monospace;">
-  git checkout master<br>  
-  git pull<br>  
-  git checkout -b my-new-feature-or-fix<br>  
+
+      <pre style="font-family: monospace;">
+  git checkout master<br>
+  git pull<br>
+  git checkout -b my-new-feature-or-fix<br>
 </pre>
+      <p>The first two "git checkout master" & "git pull" lines makes sure that you are starting
+      from the most recent "master" branch contents. The master branch is where we do development
+      between test releases.</p>
 
-      <p>The first two "git checkout master" &amp; "git pull" lines
-      makes sure that you are starting from the most recent
-      "master" branch contents. The master branch is where we do
-      development between test releases.</p>
+      <p>The -b option in the last line creates a new branch which will contain your new work. This
+      lets you work on it without interference from other people's changes until you're ready to
+      merge with those. The "checkout" means that you're now working on that new branch, which will
+      hold whatever you commit in later steps.</p>
 
-      <p>The -b option in the last line creates a new branch which
-      will contain your new work. This lets you work on it without
-      interference from other people's changes until you're ready
-      to merge with those. The "checkout" means that you're now
-      working on that new branch, which will hold whatever you
-      commit in later steps.</p>
+      <h3>Develop and Test Locally</h3>
+      Now that you have a copy of the code available, you can directly work in it to develop any
+      changes you want to make. There are several different ways to do that, see the sidebar,
+      including <a href="Ant.shtml">using Ant from the command line</a>, <a href=
+      "NetBeans.shtml">using the NetBeans IDE</a>, <a href="Eclipse.shtml">using the Eclipse
+      IDE</a>, and <a href="IntelliJ.shtml">using the IntelliJ IDE</a>. You use one of those to
+      compile your code and organize it so that it can be run, and then to run both the individual
+      programs (PanelPro, DecoderPro et al) and various <a href="JUnit.shtml">tests that it's all
+      still working</a>.
+      <p>There's not much to worry about here. If you make a bad change, you can get back the
+      original (last changed in your checked-out branch) version with e.g.</p>
 
-<h3>Develop and Test Locally</h3>
-    Now that you have a copy of the code available, you can directly
-    work in it to develop any changes you want to make.
-    There are several different ways to do that, see the sidebar,
-    including 
-        <a href="Ant.shtml">using Ant from the command line</a>,
-        <a href="NetBeans.shtml">using the NetBeans IDE</a>,  
-        <a href="Eclipse.shtml">using the Eclipse IDE</a>, and 
-        <a href="IntelliJ.shtml">using the IntelliJ IDE</a>.
-    You use one of those to compile your code and organize it
-    so that it can be run, and then to run both the individual
-    programs (PanelPro, DecoderPro et al) and various 
-    <a href="JUnit.shtml">tests that it's all still working</a>.
-    
-    <p>
-    There's not much to worry about here.  If you make a bad change, you 
-    can get back the original (last changed in your checked-out branch)
-    version with e.g. 
-
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
   git checkout -- xml/decoderIndex.xml
-</pre>
-    (Note the two dashes, and change the file path to the one you want changed back)
-    Any changes you do make aren't recorded until you commit them, see below.
-    <p>
-    There are two things you should be careful of:
-    <ul>
-    <li>You have to tell git about new files that you create:
-<pre style="font-family: monospace;">
-                    git add java/src/jmri/util/MyNewFile.java
-</pre>
-    If you don't do that, by default git ignores a new file. This 
-    can be very confusing with a new file doesn't end up in the git 
-    repository.  Also, create new files as "readable by anybody";
-    if you create them in a protected or locked mode, git can have 
-    trouble processing them.
-    <li>Never, really never, copy files out of or into a 
-    git-managed directory.  Just don't do it.  It might seem
-    reasonable to "set a copy of the old files aside", and 
-    then pull them back in later (instead of using 
-    i.e. <code>git checkout --</code> to get back older versions)
-    but this can lead to you (accidentally) deleting other people's
-    work.  This is Very Not Good.  Don't copy files in and out of
-    your repository space.  If you're trying to do something special,
-    and you think that copying in and out is the only way to do it, 
-    ask for help:  There are ways of doing everything you want done
-    without risking the loss of other people's work.
-    </ul>
-    
-    <a name="note" id="note"></a>
-    <p>As you work, we encourage you to add a brief 
-    description of your changes to the 
-    draft release note, which 
-    can be found in the 
-    <a href="../../../releasenotes">help/en/releasenotes</a>
-    directory
-    as the 
-    <a href="../../../releasenotes/current-draft-note.shtml">help/en/releasenotes/current-draft-note.shtml</a> 
-    file. When your changes are eventually merged into the main 
-    repository and included in a release, this will be how other JMRI users find out 
-    about them.  You can also cut&amp;paste what you write here into 
-    your pull request (see below) to help explain your change to the people reviewing it.
-    If your work requires that the users be warned about something, i.e. to do a
-    migration, please also add that to the 
-    <a href="../../../releasenotes/current-draft-warnings.shtml">help/en/releasenotes/current-draft-warnings.shtml</a> 
-    file which works similarly.
-    
-<h3>Commit Changes to Your Local Repository</h3>
-      You should
-      commit your changes into your local repository often.
-
-      <p>With the older SVN system, 
-      there was one central repository that everybody
-      shared. Git provides everybody with their own local
-      repository, and then links them together with "pull", "push"
-      and "pull request" operations. When you commit, you're saving
-      a copy of your changes into your local repository where
-      they're safe, and can eventually be moved onward.</p>
-<pre style="font-family: monospace;">
-  git commit
-</pre>
-    When you do this, Git will open an editor window for your
-    commit note. The top line becomes the summary, which should be
-    clear by itself as this will appear in lists of changes. You should
-    keep that summary to 50 characters or less, so it can be displayed
-    compactly. Please add more detail in additional lines after the
-    summary, because that helps your friends and colleagues understand
-    what you've done. <a name="repo" id="repo"></a>
-
-      <h3>Get Your Own GitHub Repository</h3>
+</pre>(Note the two dashes, and change the file path to the one you want changed back) Any changes
+you do make aren't recorded until you commit them, see below.
+      <p>There are two things you should be careful of:</p>
 
       <ul>
-        <li>Get a <a href="https://github.com/join">GitHub
-        account</a> and login</li>
+        <li>You have to tell git about new files that you create:
 
-        <li>Tell GitHub to <a href=
-        "https://help.github.com/articles/fork-a-repo/">"fork"
-        JMRI's repository</a> into one of your own. There's a
-        <a href=
-        "https://help.github.com/articles/fork-a-repo/">good help
-        page</a>, but basically you go to the <a href=
-        "https://github.com/JMRI/JMRI">JMRI repository page</a> and
-        click the "fork" button in the upper right.</li>
+          <pre style="font-family: monospace;">
+                    git add java/src/jmri/util/MyNewFile.java
+</pre>If you don't do that, by default git ignores a new file. This can be very confusing with a
+new file doesn't end up in the git repository. Also, create new files as "readable by anybody"; if
+you create them in a protected or locked mode, git can have trouble processing them.
+        </li>
+
+        <li>Never, really never, copy files out of or into a git-managed directory. Just don't do
+        it. It might seem reasonable to "set a copy of the old files aside", and then pull them
+        back in later (instead of using i.e. <code>git checkout --</code> to get back older
+        versions) but this can lead to you (accidentally) deleting other people's work. This is
+        Very Not Good. Don't copy files in and out of your repository space. If you're trying to do
+        something special, and you think that copying in and out is the only way to do it, ask for
+        help: There are ways of doing everything you want done without risking the loss of other
+        people's work.</li>
       </ul>
 
-      <p>This gives you your own repository, which you can then
-      work with freely.</p>
+      <p id="note">As you work, we encourage you to add a brief description of your changes to the
+      draft release note, which can be found in the <a href=
+      "../../../releasenotes">help/en/releasenotes</a> directory as the <a href=
+      "../../../releasenotes/current-draft-note.shtml">help/en/releasenotes/current-draft-note.shtml</a>
+      file. When your changes are eventually merged into the main repository and included in a
+      release, this will be how other JMRI users find out about them. You can also cut&amp;paste
+      what you write here into your pull request (see below) to help explain your change to the
+      people reviewing it. If your work requires that the users be warned about something, i.e. to
+      do a migration, please also add that to the <a href=
+      "../../../releasenotes/current-draft-warnings.shtml">help/en/releasenotes/current-draft-warnings.shtml</a>
+      file which works similarly.</p>
 
-      <p>If you're using the command line, the next step is to
-      connect it to your local repository. (IDE users will do this
-      next part in their IDE, see those instructions) On the web
-      page for your repository, right side, is a "HTTPS Clone URL".
-      Copy that. In your repository directory on your local
-      computer, do</p>
-<pre style="font-family: monospace;">
+      <h3>Commit Changes to Your Local Repository</h3>
+      You should commit your changes into your local repository often.
+      <p>With the older SVN system, there was one central repository that everybody shared. Git
+      provides everybody with their own local repository, and then links them together with "pull",
+      "push" and "pull request" operations. When you commit, you're saving a copy of your changes
+      into your local repository where they're safe, and can eventually be moved onward.</p>
+
+      <pre style="font-family: monospace;">
+  git commit
+</pre>When you do this, Git will open an editor window for your commit note. The top line becomes
+the summary, which should be clear by itself as this will appear in lists of changes. You should
+keep that summary to 50 characters or less, so it can be displayed compactly. Please add more
+detail in additional lines after the summary, because that helps your friends and colleagues
+understand what you've done.
+      <h3 id="repo">Get Your Own GitHub Repository</h3>
+
+      <ul>
+        <li>Get a <a href="https://github.com/join">GitHub account</a> and login
+        </li>
+
+        <li>Tell GitHub to <a href="https://help.github.com/articles/fork-a-repo/">"fork" JMRI's
+        repository</a> into one of your own. There's a <a href=
+        "https://help.github.com/articles/fork-a-repo/">good help page</a>, but basically you go to
+        the <a href="https://github.com/JMRI/JMRI">JMRI repository page</a> and click the "fork"
+        button in the upper right.
+        </li>
+      </ul>
+
+      <p>This gives you your own repository, which you can then work with freely.</p>
+
+      <p>If you're using the command line, the next step is to connect it to your local repository.
+      (IDE users will do this next part in their IDE, see those instructions) On the web page for
+      your repository, right side, is a "HTTPS Clone URL". Copy that. In your repository directory
+      on your local computer, do</p>
+
+      <pre style="font-family: monospace;">
   git remote set-url --push origin https://github.com/yourname/JMRI.git
   git remote add yourname https://github.com/yourname/JMRI.git
-</pre>
-    (With the appropriate URL, changing "yourname" to your GitHub account name in three places)
+</pre>(With the appropriate URL, changing "yourname" to your GitHub account name in three places)
+      <p>After this, doing a "git push" will push your changes up to your repository. "git pull"
+      will still pull from the main repository so that you can get the most recent updates from
+      others. To check this, do a "git remote -v" which should show: (OK if it shows others or the
+      order is different)</p>
 
-      <p>After this, doing a "git push" will push your changes up
-      to your repository. "git pull" will still pull from the main
-      repository so that you can get the most recent updates from
-      others. To check this, do a "git remote -v" which should
-      show: (OK if it shows others or the order is different)</p>
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
    % git remote -v<br>
    origin       https://github.com/JMRI/JMRI.git (fetch)<br>
    origin       https://github.com/yourname/JMRI.git (push)
    yourname     https://github.com/yourname/JMRI.git
 </pre>
-    <a name="push" id="push"></a>
+      <h3 id="push">Push Your Changes to Your GitHub Repository</h3>
+      Now that you have a consistent set of changes committed locally, you can move them up to your
+      repository on GitHub. That makes them visible to everybody else.
 
-      <h3>Push Your Changes to Your GitHub Repository</h3>
-      
-      Now that
-      you have a consistent set of changes committed locally, you
-      can move them up to your repository on GitHub. That makes
-      them visible to everybody else.
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
   git push
 </pre>
-    <h4>Possible Problems and Solutions</h4>
-    Sometimes, git will tell you that you need a more complicated
-    push comment, with some options that start with - or --. Just copy
-    and paste that line to execute it. For example, you might get an 
-    error message like:
+      <h4>Possible Problems and Solutions</h4>
+      Sometimes, git will tell you that you need a more complicated push comment, with some options
+      that start with - or --. Just copy and paste that line to execute it. For example, you might
+      get an error message like:
 
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
 % git push
 fatal: The current branch my-branch has no upstream branch.
 To push the current branch and set the remote as upstream, use
 
     git push --set-upstream origin my-branch
-</pre>
+</pre>Just go ahead and do what it says:
 
-    Just go ahead and do what it says:
-<pre style="font-family: monospace;">        
+      <pre style="font-family: monospace;">
     git push --set-upstream origin my-branch
-</pre>
-    And occasionally, your local repository can be out of 
-    sync with your GitHub repository.  If you get a
-    message about "failed to push some refs" or similar, 
-    without specific commands to fix it, do
-    (the first command here is why we created that
-    remote with your name above; make sure it's there,
-    and substitute your GitHub name in the first line):
-<pre style="font-family: monospace;">        
+</pre>And occasionally, your local repository can be out of sync with your GitHub repository. If
+you get a message about "failed to push some refs" or similar, without specific commands to fix it,
+do (the first command here is why we created that remote with your name above; make sure it's
+there, and substitute your GitHub name in the first line):
+
+      <pre style="font-family: monospace;">
     git pull yourname
-</pre>
-    (If any lines are flagged as conflicts, edit those to remove the conflicts,
-    then "git add" them to resolve the conflict)
-<pre style="font-family: monospace;">
+</pre>(If any lines are flagged as conflicts, edit those to remove the conflicts, then "git add"
+them to resolve the conflict)
+
+      <pre style="font-family: monospace;">
     git commit -m "merging pull back"
     git push
-</pre>
-    It is definitely easier to do this if you 
-    have no modified files in your repository, 
-    e.g. you've committed all your local changes.
-    
-    <a name="pull" id="pull"></a>
-
-      <h3>Submit a Pull Request</h3>
-      
-      Once your changes are complete and ready to go, 
-      the last step is to make your
-      changes, already visible in your GitHub repository, known to
-      the JMRI maintainers so that one of them can pull it into the
-      main JMRI repository. To do that, you create and submit a
-      "pull request" that automatically has all the needed info.
-
+</pre>It is definitely easier to do this if you have no modified files in your repository, e.g.
+you've committed all your local changes.
+      <h3 id="pull">Submit a Pull Request</h3>
+      Once your changes are complete and ready to go, the last step is to make your changes,
+      already visible in your GitHub repository, known to the JMRI maintainers so that one of them
+      can pull it into the main JMRI repository. To do that, you create and submit a "pull request"
+      that automatically has all the needed info.
       <ul>
-        <li>Login to GitHub and go to the page for your JMRI clone
-        repository (yours, not the main JMRI one)</li>
+        <li>Login to GitHub and go to the page for your JMRI clone repository (yours, not the main
+        JMRI one)</li>
 
-        <li>There's a "Pull Request" button at the upper right of
-        the file listing. Click it.</li>
+        <li>There's a "Pull Request" button at the upper right of the file listing. Click it.</li>
 
-        <li>On the next page, select the branch you've been working
-        on and click the "Create pull request" button.</li>
+        <li>On the next page, select the branch you've been working on and click the "Create pull
+        request" button.</li>
 
-        <li>Fill out the forms. A short title that describes the
-        feature you've written helps other people find it. A few
-        lines in the comment about what it does, how you added it,
-        etc helps users understand the value of your feature.
-        If you've already 
-        made an entry in the draft release note (see above),
-        that can be a used here.</li>
+        <li>Fill out the forms. A short title that describes the feature you've written helps other
+        people find it. A few lines in the comment about what it does, how you added it, etc helps
+        users understand the value of your feature. If you've already made an entry in the draft
+        release note (see above), that can be a used here.</li>
 
-        <li>Click "Create pull request". That submits all the info,
-        starts the 
-        <a href="ContinuousIntegration.shtml">Continuous Integration (CI) tests</a>
-        and notifies the JMRI maintainers. </li>
-        
-        <li>One of the JMRI maintainers will check
-        over your code and the test results, and then either contact you for more info
-        (occasionally), or merge it into the master branch in the
-        the main repository (more often). You are automatically signed up for
-        notifications when things happens.</li>
-        
+        <li>Click "Create pull request". That submits all the info, starts the <a href=
+        "ContinuousIntegration.shtml">Continuous Integration (CI) tests</a> and notifies the JMRI
+        maintainers.
+        </li>
+
+        <li>One of the JMRI maintainers will check over your code and the test results, and then
+        either contact you for more info (occasionally), or merge it into the master branch in the
+        the main repository (more often). You are automatically signed up for notifications when
+        things happens.</li>
+
         <li>
-            <a id="labels" name="labels"></a>
-        Sometimes, a maintainer will put a label on your PR
-        to indicate its status. Some of the more interesting ones are:
+          <a id="labels"></a> Sometimes, a maintainer will put a label on your PR to indicate its
+          status. Some of the more interesting ones are:
           <ul>
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Test%20Release">After Next Test Release</a>" 
-                and "<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Production%20Release">After Next Production Release</a>" - placed
-                when a PR should be merged later for some reason
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Add%20to%20Next%20Release">Add To Next Release</a>" - needs to be merged before the next release is built
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/dev%2Ftest%2Fpublish%20infrastructure">dev/test/publish infrastucture</a>"
-                - there's a lot of automation around building
-                and publishing JMRI.  This change is to that infrastructure, not the 
-                released JMRI code itself.
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Contribution">Contribution</a>" - On an Issue, it indicates that the Issue contains a contributed 
-                file that some maintainer should 
-                <a href="GitFAQ.shtml#SFnetPatches">merge via a PR</a>.
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Cleanup">Cleanup</a>" - a change that improves the code, but doesn't really affect JMRI users directly
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Support%20Request">Support Request</a>" - A request for help figuring something out, typically found in the Issues section.
-                                Typically these items are closed if resolved, 
-                                or become "Enhancement" or "Bug" items.
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Enhancement">Enhancement</a>" - request that somebody make JMRI better in some way.
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Bug">Bug</a>" - a problem that's bitten at least one person.
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/Duplicate">Duplicate</a>", 
-                "<a href="https://github.com/JMRI/JMRI/labels/Invalid">Invalid</a>", 
-                "<a href="https://github.com/JMRI/JMRI/labels/Won%27t%20Fix">Won't Fix</a>" - items that have (typically) been closed
-                                without action.  Issues and PRs never go away, but these
-                                labels mark them as not intended for further consideration.
-          </ul>
-        If you have any questions about the use of those on your PR, 
-        you can add a comment to the PR and somebody will get back to you.
-        
-        <li>In addition to the labels, there's a "WIP" tag. It means 
-        "Work In Progress", and marks a PR as not yet ready to merge because
-        additional work (usually commits) is needed before merging.
-        Think of it as a blue flag on a train that indicates it's not ready to move.
-        It's added at the front of the PR's title, i.e. "WIP: My Fix", by 
-        editing the title with the pencil icon to the right.
-        
-        <li>If there are any problems found in the CI test process, you can make additional edits, 
-        commit those files to the <u>same</u> branch, and push them 
-        to your repository.  That'll get them included in an updated 
-        version of your PR automatically, rerun the tests, etc.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Test%20Release">After
+            Next Test Release</a>" and "<a href=
+            "https://github.com/JMRI/JMRI/labels/After%20Next%20Production%20Release">After Next
+            Production Release</a>" - placed when a PR should be merged later for some reason
+            </li>
 
-        <li>Once the code gets merged, it'll automatically show up in the next
-        regular test release.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Add%20to%20Next%20Release">Add To
+            Next Release</a>" - needs to be merged before the next release is built
+            </li>
+
+            <li>"<a href=
+            "https://github.com/JMRI/JMRI/labels/dev%2Ftest%2Fpublish%20infrastructure">dev/test/publish
+            infrastucture</a>" - there's a lot of automation around building and publishing JMRI.
+            This change is to that infrastructure, not the released JMRI code itself.
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Contribution">Contribution</a>" - On
+            an Issue, it indicates that the Issue contains a contributed file that some maintainer
+            should <a href="GitFAQ.shtml#SFnetPatches">merge via a PR</a>.
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Cleanup">Cleanup</a>" - a change that
+            improves the code, but doesn't really affect JMRI users directly
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Support%20Request">Support
+            Request</a>" - A request for help figuring something out, typically found in the Issues
+            section. Typically these items are closed if resolved, or become "Enhancement" or "Bug"
+            items.
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Enhancement">Enhancement</a>" -
+            request that somebody make JMRI better in some way.
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Bug">Bug</a>" - a problem that's
+            bitten at least one person.
+            </li>
+
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Duplicate">Duplicate</a>",
+              "<a href="https://github.com/JMRI/JMRI/labels/Invalid">Invalid</a>", "<a href=
+              "https://github.com/JMRI/JMRI/labels/Won%27t%20Fix">Won't Fix</a>" - items that have
+              (typically) been closed without action. Issues and PRs never go away, but these
+              labels mark them as not intended for further consideration.
+            </li>
+          </ul>
+          If you have any questions about the use of those on your PR, you can add a comment to the
+          PR and somebody will get back to you.
+        </li>
+
+        <li>In addition to the labels, there's a "WIP" tag. It means "Work In Progress", and marks
+        a PR as not yet ready to merge because additional work (usually commits) is needed before
+        merging. Think of it as a blue flag on a train that indicates it's not ready to move. It's
+        added at the front of the PR's title, i.e. "WIP: My Fix", by editing the title with the
+        pencil icon to the right.</li>
+
+        <li>If there are any problems found in the CI test process, you can make additional edits,
+        commit those files to the <u>same</u> branch, and push them to your repository. That'll get
+        them included in an updated version of your PR automatically, rerun the tests, etc.</li>
+
+        <li>Once the code gets merged, it'll automatically show up in the next regular test
+        release.</li>
       </ul>
 
-     <p>
-     Once your PR is merged, a <code>git checkout master; git pull</code>
-     will bring it back around to your repository and that cycle will be complete.
-     <p>
-      While all this is happening, you can work on something else by creating another 
-      branch and making changes there.
-      But first, pick up the most recent contents of our central repository with:</p>
-<pre style="font-family: monospace;">        
+      <p>Once your PR is merged, a <code>git checkout master; git pull</code> will bring it back
+      around to your repository and that cycle will be complete.</p>
+
+      <p>While all this is happening, you can work on something else by creating another branch and
+      making changes there. But first, pick up the most recent contents of our central repository
+      with:</p>
+
+      <pre style="font-family: monospace;">
     git checkout master
     git pull
-</pre>
-      Then you can create a new branch for a new project:
- <pre style="font-family: monospace;">        
+</pre>Then you can create a new branch for a new project:
+
+      <pre style="font-family: monospace;">
     git checkout -b another-new-feature
 </pre>
-     <p>just like you did at the start of this process, and continue
-     to develop.</p>
+      <p>just like you did at the start of this process, and continue to develop.</p>
 
-    <a name="release" id="release"></a>
-    <h3>After Your Pull Request Is Merged</h3>
-    
-    Once the changes in your PR has been merged onto the 
-    master branch, it will be included in the 
-    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">next development release</a>
-    built by 
-    <a href="ContinuousIntegration.shtml">our CI system</a>.
-    These packages can be downloaded and run to check that 
-    everything is working. You can also refer users to 
-    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">the built installers</a>
-    so they can test your changes.
-    
-    <p>
-    Approximately once a month, the contents of the master branch are 
-    taken and used to build a test release.  These are announced to
-    the user community to simultaneously make new features and fixes
-    available, and to put the most recent code into wider use to flush out problems.
-    The build process is
-    <a href=https://jmri.org/scripts/HOWTO-distribution.md>documented separately</a>.
-    People are encouraged to download and use these, then report 
-    any problems via GitHub or the jmriusers group.
-    
-    <p>
-    Approximately twice a year, a similar process is used to 
-    build production releases.
-    
-    <h3>Who are these people?</h3>
-    
-    JMRI is the work of 
-    <a href="../../../Acknowledgements.shtml">several hundred people</a>.
-    Anybody can contribute their work, large or small to JMRI, either by 
-    creating a PR (see above) or in other ways.  You don't need any 
-    special status to create a PR and have it evaluated, just an ability
-    to follow these instructions.
-    
-    <p>
-    There's a group of people with 
-    "developer"
-    status on the JMRI GitHub project
-    who work more generally on JMRI code, for example taking on and resolving
-    <a href="https://github.com/JMRI/JMRI/issues">Issues</a>
-    opened by others. These people can assign Issues and PRs 
-    to themselves, and do a few other minor things.
-    Typically, once somebody has solved a couple of Issues, they'll 
-    get an automated invitation to developer status from GitHub.
-    These people are expected to be subscribed to the
-    jmri-developers mailing list
-    and to have public GitHub profiles that identify them.
-    
-    <p>
-    A smaller group of JMRI 
-    "maintainers"
-    on GitHub have the ability to edit, label and close all Issues and PRs, and to merge the
-    contents of PRs to the main repository. This group does the infrastructure work
-    that keeps the project code moving forward while avoiding unnecessary risk to the 
-    project's code and other assets.
-    
-    
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <h3 id="release">After Your Pull Request Is Merged</h3>
+      Once the changes in your PR has been merged onto the master branch, it will be included in
+      the <a href="https://builds.jmri.org/jenkins/job/development/job/packages/">next development
+      release</a> built by <a href="ContinuousIntegration.shtml">our CI system</a>. These packages
+      can be downloaded and run to check that everything is working. You can also refer users to
+      <a href="https://builds.jmri.org/jenkins/job/development/job/packages/">the built
+      installers</a> so they can test your changes.
+      <p>Approximately once a month, the contents of the master branch are taken and used to build
+      a test release. These are announced to the user community to simultaneously make new features
+      and fixes available, and to put the most recent code into wider use to flush out problems.
+      The build process is <a href=
+      "https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">documented
+      separately</a>. People are encouraged to download and use these, then report any problems via
+      GitHub or the jmriusers group.</p>
+
+      <p>Approximately twice a year, a similar process is used to build production releases.</p>
+
+      <h3>Who are these people?</h3>
+      JMRI is the work of <a href="../../../Acknowledgements.shtml">several hundred people</a>.
+      Anybody can contribute their work, large or small to JMRI, either by creating a PR (see
+      above) or in other ways. You don't need any special status to create a PR and have it
+      evaluated, just an ability to follow these instructions.
+      <p>There's a group of people with "developer" status on the JMRI GitHub project who work more
+      generally on JMRI code, for example taking on and resolving <a href=
+      "https://github.com/JMRI/JMRI/issues">Issues</a> opened by others. These people can assign
+      Issues and PRs to themselves, and do a few other minor things. Typically, once somebody has
+      solved a couple of Issues, they'll get an automated invitation to developer status from
+      GitHub. These people are expected to be subscribed to the jmri-developers mailing list and to
+      have public GitHub profiles that identify them.</p>
+
+      <p>A smaller group of JMRI "maintainers" on GitHub have the ability to edit, label and close
+      all Issues and PRs, and to merge the contents of PRs to the main repository. This group does
+      the infrastructure work that keeps the project code moving forward while avoiding unnecessary
+      risk to the project's code and other assets. <!--#include virtual="/Footer.shtml" --></p>
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

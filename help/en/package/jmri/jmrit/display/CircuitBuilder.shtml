@@ -1,463 +1,510 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>JMRI: Circuit Builder Help</title>
-
-<meta name="author" content="Pete Cressman">
-<meta name="keywords" CONTENT="JMRI Circuit Builder Help">
-
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Circuit Builder Help</title>
+  <meta name="author" content="Pete Cressman">
+  <meta name="keywords" content="JMRI Circuit Builder Help"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-    <h1>Circuit Builder</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Circuit Builder</h1>
 
-    <span class="since">Since 2.12</span><br>
-    The <b>Circuit Builder</b> is a view of a <b>Control Panel Editor</b>
-    panel. It is an alternative to using the
-    <a href="../logix/OBlockTable.shtml">Occupancy Block Tables</a> to create 
-    <b>OBlocks, Portals and OPaths</b>.
-    Circuit Builder is a graphical tool to create and configure these objects
-    by "point and click" mouse operations. Here "track circuit" is just another name
-    for "OBlock". The
-    prototype name for track having a device that can detect occupancy is
-    <b>Track Circuit</b>.  In JMRI we have used the term <i>"Block"</i> and
-    <i>"OBlock"</i> to refer to what in the prototype world is a track circuit.
-    The term <b>Block</b> in the prototype world is <i>a length of track defined
-    by limits, whose use is governed by block signals, cab signals or block limit
-    markers and train orders.</i>  That is, a prototype block incorporates a
-    signaling system providing a way to manage safe usage of its trackage.  So
-    to model a prototype block, several track circuits may be needed.
-    The term <b>track circuit</b> here in JMRI is just an attempt to get a little closer to
-    prototype usage, but it is just another name for <b>OBlock</b> and the stuff 
-    (<b>Portals</b> and <b>OPaths</b>) that gets it to act a little more like a
-    prototype "Block".  Creating track circuits, that is, making and configuring
-    OBlocks, Portals and OPaths enables the creation and running of <b>Warrants</b>.
-    <p>
-    <span class="since">Since 4.17.3</span><br>
-    Circuit Builder can be used to place
-    Signal Masts or Signal Heads at Portals to display aspects and appearances that
-    indicate track conditions on your layout. These signals then can modify warrants
-    during their runtime to respond to track conditions.
-    </p>
-    
-    <h3>Getting Started</h3>
+      <p><span class="since">Since 2.12</span><br>
+      The <strong>Circuit Builder</strong> is a view of a <strong><a href=
+      "ControlPanelEditor.shtml">Control Panel Editor</a></strong> panel (CPE in short). CB is an
+      alternative to using the <a href="../logix/OBlockTable.shtml">Occupancy Block Tables</a> to
+      create <strong>OBlocks, Portals and OPaths</strong>. Circuit Builder is a graphical tool to
+      create and configure these objects by "point and click" mouse operations on your CPE panel.
+      Here "track circuit" is just another name for "OBlock". The prototype name for track having a
+      device that can detect occupancy is <strong>Track Circuit</strong>. In JMRI we have used the
+      term <em>"Block"</em> and <em>"OBlock"</em> to refer to what in the prototype world is a
+      track circuit. The term <strong>Block</strong> in the prototype world is <em>a length of
+      track defined by limits, whose use is governed by block signals, cab signals or block limit
+      markers and train orders.</em> That is, a prototype block incorporates a signaling system
+      providing a way to manage safe usage of its trackage. So to model a prototype block, several
+      track circuits may be needed. The term <strong>track circuit</strong> here in JMRI is just an
+      attempt to get a little closer to prototype usage, but it is just another name for
+      <strong>OBlock</strong> and the stuff (<strong>Portals</strong> and <strong>OPaths</strong>)
+      that gets it to act a little more like a prototype "Block". Creating track circuits, that is,
+      making and configuring OBlocks, Portals and OPaths enables the creation and running of
+      <strong><a href="../logix/Warrant.shtml">Warrants</a></strong>.</p>
 
-    The Circuit Builder tool can be opened from either the <b>Circuit Builder</b>
-    menu item under the <b>Add Items</b> menu or by the <b>Open Circuit Builder</b>
-    menu item under the <b>Warrant</b> menu.
-    <p>
-	Make a track diagram of your layout using track icons - of any kind, but
-	eventually they will need to be some kind of Indicator Track. The 
-	<b>Item Palette</b> menu item under the <b>Add Items</b> menu
-	can help you select the kind you want. Then open
-	CircuitBuilder as suggested above. The CircuitBuilder menu
-	will appear. Now use either the Circuit Builder window or the
-	Circuit Builder menu to make two track circuits (OBlocks). At least two OBlocks are 
-	needed before any Portals or Paths can be made, so the menu is restricted to an
-	'Add New Detector Circuit' item and a menu item to open this help file.<br>
-	<a href="#OBlocks">Add/Edit OBlocks</a><br>
-	After making two OBlocks you can make and configure the following items:<br>
-	<a href="#Portals">Add/Edit Portals</a><br>
-	<a href="#OPaths">Add/Edit Paths</a><br>
-	<a href="#DirectionArrows">Edit Portal direction Arrows</a><br>
-	<a href="#Signals">Add/Edit Signals</a><br>
-	When you are done editing, select the items under the <a href="#Errors">Error Checks</a> 
-	submenu for errors and omissions.<br>
-	</p>
-	    
-    <h2>Basic Operational Model of Circuit Builder</h2>
+      <p><span class="since">Since 4.17.3</span><br>
+      Circuit Builder can also be used to place Signal Masts or Signal Heads at Portals to display
+      aspects and appearances that indicate track conditions on your layout. These signals then can
+      modify Warrants during their runtime to respond to track conditions. More on this below.</p>
 
-    Circuit Builder works by using icons on a block by block basis. 
-    OBlocks, Portals and OPaths are created and linked by "point and click" on the
-    icons of your layout diagram.  The element types (OBlock, Portal,
-    OPath, Signal) are created and edited using various editing modes of the tool.
-    In short, it works as follows:
-    <p>
-    First create an OBlock by selecting track icons. Then create Portals by dragging 
-    an icon that overlaps two OBlocks. Then create OPaths by selecting the portal icons
-    and track icons that indicate the path. Finally perhaps add a signal to protect an
-    OBlock by selecting the portal of the approach. The result
-    of this editing transforms the track in your layout panels to indicator trackage
-    displaying the states of the blocks and their paths by color without altering the
-    original look of the panel. These operations are done from the CircuitBuilder menu
-    items and are detailed below.
-    </p><p>
-    Panel files previously made with Panel Editor
-    can be used with Circuit Builder as long as they can be loaded into this
-    version of JMRI.  Circuit Builder will guide you to upgrade plain track icons to
-    Indicator Track icons.  See <a href="ItemPalette.shtml">The Item Palette</a>
-    for more information about Indicator track icons.
-    </p><p>
-    CircuitBuilder is aware of all the objects defined in the Occupancy Block tables. 
-    When your layout track diagram is split up among several panels, each panel has a 
-    its own CircuitBuilder to edit its icons. It may post messages about missing icons but if the objects
-    are not meant to be represented on that panel, ignore them. This "discrepancy" is due
-    to the fact that OBlocks, Portals and Paths are global for all panels of your JMRI
-    session, but each Circuit Builder is concerned only by the icons on its panel.
-    </p>
+      <h3>Getting Started</h3>
+      The Circuit Builder tool can be opened from either the <strong>Circuit Builder</strong> menu
+      item under the <strong>Add Items</strong> menu or by the <strong>Open Circuit
+      Builder</strong> menu item under the <strong>Warrant</strong> menu. These menus only show
+      when a Control Panel Editor panel is displayed.
+      <p>In CPE make a track diagram of your layout using track icons - of any kind, but eventually
+      they will need to be some kind of Indicator Track. If you already have made a Panel Editor
+      panel, refer to <a href="ControlPanelEditor.shtml">CPE Help</a> how to open it in CPE
+      view.<br>
+      The <strong>Item Palette</strong> menu item under the <strong>Add Items</strong> menu can
+      help you select the kind you want. Then open CircuitBuilder as suggested above. The
+      CircuitBuilder menu will appear. Now use either the Circuit Builder window or the Circuit
+      Builder menu to make two track circuits (OBlocks). At least two OBlocks are needed before any
+      Portals or Paths can be made, so until then the menu is restricted to menu items</p>
 
-    <h3>Mouse Operations When Using CircuitBuilder</h3>
-    When in an editing mode of
-    Circuit Builder, the mouse click conventions differ somewhat from those of the panel editors.
-    When a Circuit Builder menu item is selected an editing window is opened and the panel is in
-    a Circuit Builder editing mode. Note the following when in a Circuit Builder editing mode:
-    <ul>
-        <li>Dragging is not supported except for portal icons when creating or editing Portals
-        or configuring a Signal Mast.</li>
+      <ul>
+        <li>Add New Detector Circuit</li>
+
+        <li>
+          <a href="#OBlocks">Add/Edit OBlocks</a>
+        </li>
+
+        <li>CircuitBuilder Help, which will open this help page</li>
+      </ul>
+
+      <p>As soon as two or more items have been created in the OBlock table extra items are
+      visible</p>
+
+      <ul>
+        <li>
+          <a href="#Portals">Add/Edit Portals</a>
+        </li>
+
+        <li>
+          <a href="#OPaths">Add/Edit Paths</a>
+        </li>
+
+        <li>
+          <a href="#DirectionArrows">Edit Portal direction Arrows</a>
+        </li>
+
+        <li>
+          <a href="#Signals">Add/Edit Signals</a>
+        </li>
+
+        <li>When you are done editing, select the items under the <a href="#Errors">Error
+        Checks</a> submenu for errors and omissions.
+        </li>
+      </ul>
+
+      <h2>Basic Operational Model of Circuit Builder</h2>
+      Circuit Builder works by using icons on a block by block basis. OBlocks, Portals and OPaths
+      are created and linked by "point and click" on the icons of your layout diagram. The element
+      types (OBlock, Portal, OPath, Signal) are created and edited using various editing modes of
+      the tool. In short, it works as follows:
+      <p>First create an OBlock by selecting track icons. Then create Portals by dragging an icon
+      that overlaps two OBlocks. Then create OPaths by selecting the portal icons and track icons
+      that indicate the path. Finally perhaps add a signal to protect an OBlock by selecting the
+      portal of the approach. The result of this editing transforms the track in your layout panels
+      to indicator trackage displaying the states of the blocks and their paths by color without
+      altering the original look of the panel. These operations are done from the CircuitBuilder
+      menu items and are detailed below.</p>
+
+      <p>Panel files previously made with Panel Editor can be used with Circuit Builder as long as
+      they can be loaded into this version of JMRI. Circuit Builder will guide you to upgrade plain
+      track icons to Indicator Track icons. See the <a href="ItemPalette.shtml">Item Palette
+      help</a> for more information about Indicator track icons.</p>
+
+      <p>CircuitBuilder is aware of all the objects defined in the Occupancy Block tables. When
+      your layout track diagram is split up among several panels, each panel has a its own
+      CircuitBuilder to edit its icons. It may post messages about missing icons but if the objects
+      are not meant to be represented on that panel, ignore them. This "discrepancy" is due to the
+      fact that OBlocks, Portals and Paths are global for all panels of your JMRI session, but each
+      Circuit Builder is concerned only by the icons on its panel.</p>
+
+      <h3>Mouse Operations When Using CircuitBuilder</h3>
+      When you are in Circuit Builder editing mode, the mouse click conventions differ somewhat
+      from those of the panel editors. When a Circuit Builder menu item is selected an editing
+      window is opened and the panel is in a Circuit Builder editing mode. Note the following when
+      in a Circuit Builder editing mode:
+      <ul>
+        <li>Dragging is not supported except for portal icons when creating or editing Portals or
+        configuring a Signal Mast.</li>
+
         <li>Most Control Panel Menus are disabled.</li>
+
         <li>Only track or portal or signal icons can be selected.</li>
-    </ul>
+      </ul>
 
-    <h3>Portal Icons</h3>
-    When not in one of the CircuitBuilder editing modes, portal icons are usually invisible. The only
-    situation in normal panel operation where they may be visible is when a warrant is allocated. 
-    In this case direction arrows can be shown
-    indicating the direction of travel of the warranted train.  Portal icons are necessary
-    for CircuitBuilder to be able to define Portals and OPaths. In such editing modes the icon is
-    usually a red circle that may be dragged or selected. <b>Note:</b> <i>It is important 
-    for defining paths that every track circuit
-    depicted on the panel have <b>all</b> its portals represented by a portal icon.</i> 
+      <h3>Portal Icons</h3>
+      When not in one of the CircuitBuilder editing modes, portal icons are usually invisible. The
+      only situation in normal panel operation where they may be visible is when a warrant is
+      allocated. In this case direction arrows can be shown indicating the direction of travel of
+      the warranted train. Portal icons are necessary for CircuitBuilder to be able to define
+      Portals and OPaths. In such editing modes the icon is usually a red circle that may be
+      dragged or selected. <strong>Note:</strong> <em>It is important for defining paths that every
+      track circuit depicted on the panel have <strong>each</strong> of its portals represented by
+      a portal icon.</em>
+      <h2>The Circuit Builder Menu</h2>
+      After two track circuits (OBlocks) have been created the full Circuit Builder menu appears.
+      Selecting a menu item will first ask you to select an OBlock from a pick list.<br>
+      Click [Show OBlock] to continue.<img class="floatRight" src=
+      "images/CircuitBuilderSelectOBlockPane.png" alt=
+      "After choosing a menu item, select an OBlock in this pane to work on">
+      <ul>
+        <li><strong>Add New Detector Circuit</strong> - Create an OBlock track circuit and assign
+        the icons that display it, then continue with the editing of the Circuit OBlock data.</li>
 
-    <h2>The Circuit Builder Menu</h2>
+        <li><strong>Edit Circuit OBlock</strong> - Edit an existing track circuit. In this window
+        you select or deselect the track icons that represent the OBlock graphically. Names of the
+        sensors that detect occupancy or errors should be entered as well as a length for the
+        block. (Warrants need a length for the paths to calculate speed changes.)</li>
 
-    After two track circuits (OBlocks) have been made the menu appears as follows. The menu 
-    item will first ask you to select an OBlock from a pick list.
-    <ul>
-     <li><b>Add New Detector Circuit</b> - Create an OBlock track circuit and assign the icons 
-            that display it, then continue with the editing of the Circuit OBlock data.</li>
-     <li><b>Edit Circuit OBlock</b> - Edit an existing track circuit.  In this window you select or 
-     	    deselect the track icons that represent the OBlock graphically. Names of the sensors 
-     	    that detect occupancy or errors should be entered as well as a length for the block.
-     	    (Warrants need a length for the paths to calculate speed changes.)  </li>
-     <li><b>Add/Edit Circuit Portals</b> -  Create or edit Portals connecting two track circuits.  After 
-     		choosing an OBlock, you will be in <b>portal editing</b> mode. In this window you define
-     		Portals by positioning them over track icons to connect OBlocks.</li>
-     <li><b>Add/Edit Circuit Paths</b> - Create or edit the paths (OPath) through a track circuit.  After
-     		choosing an OBlock you will be in <b>path editing</b> mode. In this window you define 
-     		OPaths by selecting track and portal icons.</li>
-     <li><b>Edit Portal Direction Icons</b> - <span class="since">(since 3.8)</span> Choose arrows to 
-     		indicate the direction of a Warrant route through a block. After
-     		choosing an OBlock you will be in <b>portal icon editing</b> mode. In this window you
-     		configure portal icons so they show the direction of travel when a warrant is allocated.</li>
-     <li><b>Add/Edit Signal Icons</b> - <span class="since">(since 4.17.3)</span> Attach a Signal Mast to
-     	    a Portal whose OBlocks are the approach block and block protected by the the signal.
-     	    <b>signal icon editing</b> mode.</li>
-	 <li><a name="Errors" id="Errors"></a>
-     		<b>Error Checks</b> - Provides information about objects that may require editing. These 
-     		menu sub-items
-     		either highlight the icons representing the object or display a list of track circuits or 
-     		Portals that may require editing.  Selecting an item from such a list will open a window for 
-     		the appropriate editing mode.
-    	<ul>
-        <li><b>Circuits without icons in this panel</b> - Has a submenu for each track circuit 
-        	OBlock that does not have an icon. A track circuit needs at least one Indicator 
-        	Track icon to display its state.</li>
-        <li><b>Circuits whose icons need conversion</b> - Has a submenu for each track circuit OBlock 
-        	whose track icons are not Indicator Track icons.<br>
-        	<b>Note:</b> <i>Only Indicator Track icons can display circuit state information.</i></li>
-        <li><b>Highlight track icons needing conversion</b> - Highlights all track icons that are not
-        	Indicator Track icons.  If all track icons are Indicator Track icons, this menu item
-        	it labeled <b>All track icons are Indicator icons</b></li>
-        <li><b>Highlight Indicator Track icons without circuits</b> - Highlights all track icons that are not
-        	associated with a track circuit.  If every track icon is associated with a circuit
-        	this menu item is labeled <b>All track icons belong to Circuits</b> </li>
-        <li><b>Circuits without a Portal or Path</b> - <span class="since">(since 4.17.3)</span> Has 
-        	a submenu for each track circuit OBlock that does not have a Portal or Path.  
-        	Select an item to add the required portal or Path.</li>
-        <li><b>Circuits with misplaced Portal Icons</b> - <span class="since">(since 4.16)</span> Has a 
-        	submenu for each track circuit OBlock that has a Portal icon positioned incorrectly. 
-        <li><b>Highlight misplaced Portal Icons</b> - Highlights all portal icons that are not
-        	positioned correctly.
-        	If every portal icon is positioned correctly
-        	this menu item is labeled <b>All Portal icons positioned OK</b> </li>
-       	<li><b>Portals without icons in this panel</b> - <span class="since">(since 4.16)</span> Has a 
-       		submenu for each Portal lacking an icon. Selecting an item opens a Portal Editing
-       		window and an icon can be dragged onto the panel.</li>
-        <li><b>Highlight Signals not configured to protect an OBlock</b> - <span class="since">(since 4.17.3)</span>
-        	Highlights all signal icons not protecting an OBlock at a Portal.
-        	If every signal icon provides protection correctly
-        	this menu item is labeled <b>All Signal icons positioned OK</b> </li>
-        <li><b>Check Portal and Path errors</b> - Examines the Portal and OPath definitions looking
-        	for errors or incomplete information.  A dialog box is displayed listing any errors
-        	found.</li>
-    	</ul>
-     <li><b>Change Portal Icon Set</b> - <span class="since">(since 4.21.1)</span> The icons used for
-         Portals may be changed or alternative icon sets created. If there are additional sets of
-         portal icons the set to use can be chosen here.</li>
-     <li><b>CircuitBuilder Help</b> - Opens this help file.</li>
-    </ul>
+        <li><strong>Add/Edit Circuit Portals</strong> - Create or edit Portals connecting two track
+        circuits. After choosing an OBlock, you will be in <strong>portal editing</strong> mode. In
+        this window you define Portals by positioning them over track icons to connect
+        OBlocks.</li>
 
-	Notice that except for the first and last three menu items, first you choose the OBlock, and
-	then edit the chosen element (OBlcock, Portal, Path, Arrow, Signals). For editing these items
-	a picklist is opened for you to select a circuit OBlock to edit. Selecting a row and pressing
-    the <b>Show OBlock</b> button then opens the window for the desired editing of that block.
-    <p>
-    Rather than having to do that for each editing operation, for convenience, 
-	the <b>Warrants</b> menu item <b>Open CircuitBuilder</b> keeps a widow open with the block
-	pick table and the various editing modes available from radio buttons.
-	</p>
-    <h2>How to Make OBlocks, Portals and OPaths</h2>
-	<a name="OBlocks" id="OBlocks"></a>
+        <li><strong>Add/Edit Circuit Paths</strong> - Create or edit the paths (OPath) through a
+        track circuit. After choosing an OBlock you will be in <strong>path editing</strong> mode.
+        In this window you define OPaths by selecting track and portal icons.</li>
 
-     Creation and editing of these objects is done is with the editing modes of Circuit Builder.
-     The editing windows contain some text to assist you when using them.
+        <li><strong><a href="#DirectionArrows">Edit Portal Direction Icons</a></strong> -
+        <span class="since">(since 3.8)</span> Choose arrows to indicate the direction of a Warrant
+        route through a block. After choosing an OBlock you will be in <strong>portal icon
+        editing</strong> mode. In this window you configure portal icons so they show the direction
+        of travel when a warrant is allocated.</li>
 
-    <h3>Creating OBlocks</h3>
+        <li><strong><a href="#Signals">Add/Edit Signal Icons</a></strong> - <span class=
+        "since">(since 4.17.3)</span> Attach a Signal Mast to a Portal whose OBlocks are the
+        approach block and block protected by the the signal. After choosing an OBlock you will be
+        in <strong>signal icon editing</strong> mode.</li>
 
-     From the <b>Circuit Builder</b> menu select the <b>Add New Detector Circuit</b> menu item.
-     This opens a dialog for you to create a circuit OBlock by supplying its system and user name. 
-     The window has fields to enter the system and user names for a new OBlock.  After pressing the
-     <b>Create OBlock</b> button, the System Name field will disappear and the button will be 
-     replaced with buttons that will allow you to change the user name or delete the block.
-     The window is now appears as <b>Edit Circuit OBlock</b> menu item.</li>
+        <li>
+          <a id="Errors"></a> <strong>Error Checks</strong> - Provides information about objects
+          that may require editing. These menu sub-items either highlight the icons representing
+          the object or display a list of track circuits or Portals that may require editing.
+          Selecting an item from such a list will open a window for the appropriate editing mode.
+          <ul>
+            <li><strong>Circuits without icons in this panel</strong> - Has a submenu for each
+            track circuit OBlock that does not have an icon. A track circuit needs at least one
+            Indicator Track icon to display its state.</li>
 
-    <h3>Editing OBlocks</h3>
-     The Edit Circuit window used is to identify the track icons will display the track circuit
-     and to enter the data needed for it to function.
-    <p>
-     In this mode, mouse clicks on a track icon in the basic window frame toggles selection of the track.
-     Select the icons you want to use to display the track circuit.
-     The icons for a track circuit typically are, but need not be, contiguous.
-     The icons that display the circuit are highlighted in blue. Icon types other than track icons
-     cannot be selected. No icons can be dragged.
-    <ul>
-        <li>At the top of the window is a non-editable field to show the current state of the circuit.
+            <li><strong>Circuits whose icons need conversion</strong> - Has a submenu for each
+            track circuit OBlock whose track icons are not Indicator Track icons.<br>
+            <strong>Note:</strong> <em>Only Indicator Track icons can display circuit state
+            information.</em></li>
+
+            <li><strong>Highlight track icons needing conversion</strong> - Highlights all track
+            icons that are not Indicator Track icons. If all track icons are Indicator Track icons,
+            this menu item it labeled <strong>All track icons are Indicator icons</strong></li>
+
+            <li><strong>Highlight Indicator Track icons without circuits</strong> - Highlights all
+            track icons that are not associated with a track circuit. If every track icon is
+            associated with a circuit this menu item is labeled <strong>All track icons belong to
+            Circuits</strong></li>
+
+            <li><strong>Circuits without a Portal or Path</strong> - <span class="since">(since
+            4.17.3)</span> Has a submenu for each track circuit OBlock that does not have a Portal
+            or Path. Select an item to add the required portal or Path.</li>
+
+            <li><strong>Circuits with misplaced Portal Icons</strong> - <span class="since">(since
+            4.16)</span> Has a submenu for each track circuit OBlock that has a Portal icon
+            positioned incorrectly.</li>
+
+            <li><strong>Highlight misplaced Portal Icons</strong> - Highlights all portal icons
+            that are not positioned correctly. If every portal icon is positioned correctly this
+            menu item is labeled <strong>All Portal icons positioned OK</strong></li>
+
+            <li><strong>Portals without icons in this panel</strong> - <span class="since">(since
+            4.16)</span> Has a submenu for each Portal lacking an icon. Selecting an item opens a
+            Portal Editing window and an icon can be dragged onto the panel.</li>
+
+            <li><strong>Highlight Signals not configured to protect an OBlock</strong> -
+            <span class="since">(since 4.17.3)</span> Highlights all signal icons not protecting an
+            OBlock at a Portal. If every signal icon provides protection correctly this menu item
+            is labeled <strong>All Signal icons positioned OK</strong></li>
+
+            <li><strong>Check Portal and Path errors</strong> - Examines the Portal and OPath
+            definitions looking for errors or incomplete information. A dialog box is displayed
+            listing any errors found.</li>
+          </ul>
         </li>
-        <li>The window has a text field showing the OBlock User Name. The field can be edited 
-        to change the user name of the OBlock circuit. Below it is a
-        <b>Change Name</b> button to accomplish the name change.
-        </li>
-        <li> Alongside is a <b>Delete Circuit</b> button to delete all components of the track circuit. 
-         <b>Note</b> this means, <i>the OBlock, <b>all</b> the
-         OPaths in it and <b>all</b> portals into and out of the block.</i>
-        </li>
-        <li>The window also has convenience fields that count the track icons
-        that are selected for the circuit.
-        </li>
-        <li>When adding or editing a circuit, the window has text fields to name the sensor that will detect
-        occupancy and a sensor that can indicate errors.  Each of these sensors are optional
-        and can be entered later. There is an <b>Open Picklist</b> button to display sensor names that can be dragged
-        and dropped onto the sensor name text fields.  If no occupancy detection sensor is named, the circuit will
-        be a <b>Dark Block</b>.  Warrants are able to start, end or pass through dark blocks.
-        </li>
-        <li>The window has a text field to enter the length of the OBlock and button for either 
-        inches or centimeter units.<br><b>Note:</b> <i>In order to create and run NXWarrants
-        over a block, the block must have a length.  Running recorded warrants also needs
-        block lengths to compute ramp parameters when responding to signals and other track
-        conditions</i>
-        </li>
-        <li>The <b>Convert Icons</b> button will convert the icons in the circuit to Track Indicator
-        icons if they are not already icons of this type.  This can be done later.  Converted icons
-        may need to be rotated and repositioned.
-        </li>
-        <li>The <b>Done</b> button completes the creation and editing of the track circuit.</li>
-    </ul></p>
 
-     When exiting the Edit Circuit window the OBlock is checked for any possible deficiencies. If
-     any are detected you will be prompted and given the option to return to the window or 
-     continue to close it.
-     <b>Note:</b> <i>Each OBlock must have 
-     at least one Indicator Track icon to represent it. Otherwise CircuitBuilder cannot define
-     Portals and Paths</i>
+        <li><strong>Change Portal Icon Set</strong> - <span class="since">(since 4.21.1)</span> The
+        icons used for Portals may be changed or alternative icon sets created. If there are
+        additional sets of portal icons the set to use can be chosen here.</li>
 
-	<a name="Portals" id="Portals"></a>
-    <h3>Portals - Add/Edit Circuit Portals</h3>
-    Use this window create and edit portals. A portal is represented by a red circle icon.
-    The track circuit icons are highlighted in blue. if any Portals have been defined, they
-     will be shown as a red circle and also highlighted in blue.
-    The blocks a portal connects are determined by positioning the icon so it spans the two
-    blocks it connects.  That is, the icon should overlap a track icon representing each of 
-    the two blocks. In this mode, only portal icons can be repositioned.
-    No other panel items can be moved or selected.
-    <p>
-    To create a new portal type in a name for it in the <b>Portal Name</b> text field. Then
-    drag the red circle portal icon to the panel. Place it so that it intersects with 
-    a track icon representing the OBlock you selected to open the window. The OBlock circuit 
-    you selected is the "home" block. Position the portal icon so it also intersects with a 
-    track icon representing an adjacent block. Overlapping both blocks defines the portal.
-    </p><p>
-    To create an icon for a portal previously defined, perhaps from the Occupancy Block tables,
-    select the portal from the "Portals into and out of circuit ..." list. Then, as above
-    drag and position the red circle icon.
-    </p><p>
-    Notice that when you select a portal from the portal list, its icon highlight 
-    changes from blue to pink. Conversely, selecting an portal icon
-    on the panel with a mouse click will select the portal it represents
-    in the portal list.  When repositioning a portal icon it may be necessary to "unlock"
-    its position.
-    </p><p>
-     There may be diagrams where a portal icon cannot span icons from each block
-     that the portal connects. An example of this might be when the panel diagram depicts a loop
-     as a line of blocks across the panel from left to right. Here a leftmost block icon 
-     cannot be spanned by one from the rightmost block. This can be handled in one of two ways.
-	 A non-contiguous track icon could be placed from one edge onto the opposite edge of the diagram
-	 and a have the portal icon overlap both blocks there.<br>
-	 <span class="since">(since 4.17.3)</span>
-	 Or <b>two</b> portal icons can be used for the same portal.
-	 Each icon placed on the respective blocks at the opposite sides of the diagram. 
-    <ul>
-        <li>The Edit Portal window has a list of the portals already defined for the
-        track circuit (OBlock) and a text field to name new portals to be created. The window
-        also has a icon to represent portals as a red circle in the main window.</li>
-        <li>The text field can be used to change the name of a portal with the
-        <b>Change Name</b> button to accomplish the name change.</li>
-        <li>Portals are created by naming them in the text field and dragging the red
-        circle icon to its position between the two track circuits it connects.  After dragging the
-        icon into position the portal is listed in the Portal List.</li>
-        <li>Portals that were created in the <b>Occupancy Tables</b> do not have red circle icons.
-        For any portal in the Portal List that does not have an icon, select it from the list and
-        drag a red circle icon to its position between the blocks it connects.
-        Portal icons are needed to create and display paths.<br><b>Note</b> <i>Please be 
-        sure <b>all</b> of the OBlock's portals are represented by icons before making paths.</i></li>
-        <li>To change the name of a portal, first select it from the list, then change the name in the
-        <b>Portal Name</b> text field and lastly, press the <b>Change Name</b> button.</li>
-        <li>To delete a portal, select it from the list and press the <b>Delete Portal</b> button.</li>
-        <li>The <b>Done</b> button completes the creation and/or editing of Portals.</li>
-    </ul>
+        <li><strong>CircuitBuilder Help</strong> - Opens this help file.</li>
+      </ul>
+      Notice that except for the first and last three menu items, first you choose the OBlock, and
+      then edit the chosen element (OBlcock, Portal, Path, Arrow, Signals). For editing these items
+      a picklist is opened for you to select a circuit OBlock to edit. Selecting a row and pressing
+      the <strong>Show OBlock</strong> button then opens the window for the desired editing of that
+      block.
+      <p>Rather than having to do that for each editing operation, for convenience, the
+      <strong>Warrants</strong> menu item <strong>Open CircuitBuilder</strong> keeps a widow open
+      with the block pick table and the various editing modes available from radio buttons.</p>
 
-    When exiting the Add/Edit Portal window the Portal is checked for any possible deficiencies. If
-    any are detected you will be prompted and given the option to return to the window or 
-    continue to close it.</p>
+      <h2 id="OBlocks">How to Make OBlocks, Portals and OPaths</h2>
+      Creation and editing of these objects is done is with the editing modes of Circuit Builder.
+      The editing windows contain some text to assist you when using them.
+      <h3>Creating OBlocks</h3>
 
-	<a name="OPaths" id="OPaths"></a>
-    <h3>Paths - Add/Edit Circuit Paths</h3>
-     Use this window is to create and edit the paths in the track circuit.
-     In this mode, no panel items can be moved.
-     The track circuit icons are highlighted in blue and the portal icons are
-     shown with a red circle highlighted in blue.
-    <p>
-    To create a new OPath, first press the <b>Clear Selection</b> button. Then type a name for the
-    path into the <b>Path Name</b> text field. Now select all
-    the track icons that mark the route. Selected route icons change their color to green. 
-    When selecting a turnout track icon, the position of
-    the points may not be correct. <b><i>To change the position of the points</i></b>, hold the <b>Shift</b>
-    key down while clicking on the turnout icon. At least one portal must be selected
-    to complete the definition of an OPath.  A selected a portal icon changes from a red 
-    circle to a green square.
-    </p><p>
-    Be sure you select all the turnout icons for turnouts that need to be set to define the path.  
-    Also, if the path traverses the block,
-    be sure that portal icons are selected for both entrance and exit. A path must have at
-    least one portal and at most two.
-    </p><p>
-    If the value of the <b>Length</b> text field is "0.0" the length of the path will be inherited
-    from the value of what was entered for the length of the OBlock circuit.  If the length of the
-    path is significantly different from the OBlock length (i.e. by more than 10%), enter a length
-    for the path. <b>Note:</b> Path lengths are needed for a warrant to calculate where to begin
-    a speed change required by a signal aspect or block occupation ahead of the train.
-    <ul>
-        <li>The Edit Paths window has a list of the paths already defined for the track circuit
-        	and a text field to name paths to be created.</li>
-        <li>The text field can be used to change the name of a path with the
-        	<b>Change Name</b> button to accomplish the name change.</li>
+      <p>From the <strong>Circuit Builder</strong> menu select the <strong>Add New Detector
+      Circuit</strong> menu item. This opens a dialog for you to create a circuit OBlock by
+      supplying its system and user name. The window has fields to enter the system and user names
+      for a new OBlock. After pressing the <strong>Create OBlock</strong> button, the System Name
+      field will disappear and the button will be replaced with buttons that will allow you to
+      change the user name or delete the block. The window is now appears as <strong>Edit Circuit
+      OBlock</strong> menu item.</p>
+
+      <h3>Editing OBlocks</h3>
+      The Edit Circuit window used is to identify the track icons will display the track circuit
+      and to enter the data needed for it to function.
+      <p>In this mode, mouse clicks on a track icon in the basic window frame toggles selection of
+      the track. Select the icons you want to use to display the track circuit. The icons for a
+      track circuit typically are, but need not be, contiguous. The icons that display the circuit
+      are highlighted in blue. Icon types other than track icons cannot be selected. No icons can
+      be dragged.</p>
+
+      <ul>
+        <li>At the top of the window is a non-editable field to show the current state of the
+        circuit.</li>
+
+        <li>The window has a text field showing the OBlock User Name. The field can be edited to
+        change the user name of the OBlock circuit. Below it is a <strong>Change Name</strong>
+        button to accomplish the name change.</li>
+
+        <li>Alongside is a <strong>Delete Circuit</strong> button to delete all components of the
+        track circuit. <strong>Note</strong> this means, <em>the OBlock, <strong>all</strong> the
+        OPaths in it and <strong>all</strong> portals into and out of the block.</em></li>
+
+        <li>The window also has convenience fields that count the track icons that are selected for
+        the circuit.</li>
+
+        <li>When adding or editing a circuit, the window has text fields to name the sensor that
+        will detect occupancy and a sensor that can indicate errors. Each of these sensors are
+        optional and can be entered later. There is an <strong>Open Picklist</strong> button to
+        display sensor names that can be dragged and dropped onto the sensor name text fields. If
+        no occupancy detection sensor is named, the circuit will be a <strong>Dark Block</strong>.
+        Warrants are able to start, end or pass through dark blocks.</li>
+
+        <li>The window has a text field to enter the length of the OBlock and button for either
+        inches or centimeter units.<br>
+        <strong>Note:</strong> <em>In order to create and run NXWarrants over a block, the block
+        must have a length. Running recorded warrants also needs block lengths to compute ramp
+        parameters when responding to signals and other track conditions</em></li>
+
+        <li>The <strong>Convert Icons</strong> button will convert the icons in the circuit to
+        Track Indicator icons if they are not already icons of this type. This can be done later.
+        Converted icons may need to be rotated and repositioned.</li>
+
+        <li>The <strong>Done</strong> button completes the creation and editing of the track
+        circuit.</li>
+      </ul>
+
+      <p>When exiting the Edit Circuit window the OBlock is checked for any possible deficiencies.
+      If any are detected you will be prompted and given the option to return to the window or
+      continue to close it. <strong>Note:</strong> <em>Each OBlock must have at least one Indicator
+      Track icon to represent it. Otherwise CircuitBuilder cannot define Portals and
+      Paths</em>.</p>
+
+      <h3 id="Portals">Portals - Add/Edit Circuit Portals</h3>
+
+      <p>Use this window create and edit portals. A portal is represented by a red circle icon. The
+      track circuit icons are highlighted in blue. if any Portals have been defined, they will be
+      shown as a red circle and also highlighted in blue. The blocks a portal connects are
+      determined by positioning the icon so it spans the two blocks it connects. That is, the icon
+      should overlap a track icon representing each of the two blocks. In this mode, only portal
+      icons can be repositioned. No other panel items can be moved or selected.</p>
+
+      <p>To create a new portal type in a name for it in the <strong>Portal Name</strong> text
+      field. Then drag the red circle portal icon to the panel. Place it so that it intersects with
+      a track icon representing the OBlock you selected to open the window. The OBlock circuit you
+      selected is the "home" block. Position the portal icon so it also intersects with a track
+      icon representing an adjacent block. Overlapping both blocks defines the portal.</p>
+
+      <p>To create an icon for a portal previously defined, perhaps from the Occupancy Block
+      tables, select the portal from the "Portals into and out of circuit ..." list. Then, as above
+      drag and position the red circle icon.</p>
+
+      <p>Notice that when you select a portal from the portal list, its icon highlight changes from
+      blue to pink. Conversely, selecting an portal icon on the panel with a mouse click will
+      select the portal it represents in the portal list. When repositioning a portal icon it may
+      be necessary to "unlock" its position.</p>
+
+      <p>There may be diagrams where a portal icon cannot span icons from each block that the
+      portal connects. An example of this might be when the panel diagram depicts a loop as a line
+      of blocks across the panel from left to right. Here a leftmost block icon cannot be spanned
+      by one from the rightmost block. This can be handled in one of two ways. A non-contiguous
+      track icon could be placed from one edge onto the opposite edge of the diagram and a have the
+      portal icon overlap both blocks there.<br>
+      <span class="since">(since 4.17.3)</span> Or <strong>two</strong> portal icons can be used
+      for the same portal. Each icon placed on the respective blocks at the opposite sides of the
+      diagram.</p>
+
+      <ul>
+        <li>The Edit Portal window has a list of the portals already defined for the track circuit
+        (OBlock) and a text field to name new portals to be created. The window also has a icon to
+        represent portals as a red circle in the main window.</li>
+
+        <li>The text field can be used to change the name of a portal with the <strong>Change
+        Name</strong> button to accomplish the name change.</li>
+
+        <li>Portals are created by naming them in the text field and dragging the red circle icon
+        to its position between the two track circuits it connects. After dragging the icon into
+        position the portal is listed in the Portal List.</li>
+
+        <li>Portals that were created in the <strong>Occupancy Tables</strong> do not have red
+        circle icons. For any portal in the Portal List that does not have an icon, select it from
+        the list and drag a red circle icon to its position between the blocks it connects. Portal
+        icons are needed to create and display paths.<br>
+        <strong>Note</strong> <em>Please be sure <strong>all</strong> of the OBlock's portals are
+        represented by icons before making paths.</em></li>
+
+        <li>To change the name of a portal, first select it from the list, then change the name in
+        the <strong>Portal Name</strong> text field and lastly, press the <strong>Change
+        Name</strong> button.</li>
+
+        <li>To delete a portal, select it from the list and press the <strong>Delete
+        Portal</strong> button.</li>
+
+        <li>The <strong>Done</strong> button completes the creation and/or editing of Portals.</li>
+      </ul>
+
+      <p>When exiting the Add/Edit Portal window the Portal is checked for any possible
+      deficiencies. If any are detected you will be prompted and given the option to return to the
+      window or continue to close it.</p>
+
+      <h3 id="OPaths">Paths - Add/Edit Circuit Paths</h3>
+      Use this window is to create and edit the paths in the track circuit. In this mode, no panel
+      items can be moved. The track circuit icons are highlighted in blue and the portal icons are
+      shown with a red circle highlighted in blue.
+      <p>To create a new OPath, first press the <strong>Clear Selection</strong> button. Then type
+      a name for the path into the <strong>Path Name</strong> text field. Now select all the track
+      icons that mark the route. Selected route icons change their color to green. When selecting a
+      turnout track icon, the position of the points may not be correct. <strong><em>To change the
+      position of the points</em></strong>, hold the <strong>Shift</strong> key down while clicking
+      on the turnout icon. At least one portal must be selected to complete the definition of an
+      OPath. A selected a portal icon changes from a red circle to a green square.</p>
+
+      <p>Be sure you select all the turnout icons for turnouts that need to be set to define the
+      path. Also, if the path traverses the block, be sure that portal icons are selected for both
+      entrance and exit. A path must have at least one portal and at most two.</p>
+
+      <p>If the value of the <strong>Length</strong> text field is "0.0" the length of the path
+      will be inherited from the value of what was entered for the length of the OBlock circuit. If
+      the length of the path is significantly different from the OBlock length (i.e. by more than
+      10%), enter a length for the path. <strong>Note:</strong> Path lengths are needed for a
+      warrant to calculate where to begin a speed change required by a signal aspect or block
+      occupation ahead of the train.</p>
+
+      <ul>
+        <li>The Edit Paths window has a list of the paths already defined for the track circuit and
+        a text field to name paths to be created.</li>
+
+        <li>The text field can be used to change the name of a path with the <strong>Change
+        Name</strong> button to accomplish the name change.</li>
+
         <li>Paths are created by selecting the icons that display the path. The selected icons are
-        	displayed green.  A second mouse click deselects the icon.</li>
-        <li>When selecting a turnout icon for the path, it needs to have its points set correctly.  To keep
-        	the icon selected green when you throw the switch, hold the Shift Key down when clicking
-        	with the mouse.  This keeps the selection green while throwing the switch.</li>
+        displayed green. A second mouse click deselects the icon.</li>
+
+        <li>When selecting a turnout icon for the path, it needs to have its points set correctly.
+        To keep the icon selected green when you throw the switch, hold the Shift Key down when
+        clicking with the mouse. This keeps the selection green while throwing the switch.</li>
+
         <li>It is important that portals for the entrance and/or exit of the path be selected also.
-        	When a portal icon (red circle) is selected it turns into a green square.  A path may have
-        	one portal selected, if it is a stub siding but must have two portals selected (entrance to and
-        	exit from the block) if it is a through path.</li>
-        <li>To change the name of a path, first select it from the list, then change the name in the
-        	<b>Path Name</b> text field and lastly, press the <b>Change Name</b> button.</li>
-        <li>The window has a text field to enter the length of the OPath and button for either 
-        	inches or centimeter units.</li>
-        <li>To delete a path, select it from the list and press the <b>Delete Path</b> button.</li>
-    </ul>
+        When a portal icon (red circle) is selected it turns into a green square. A path may have
+        one portal selected, if it is a stub siding but must have two portals selected (entrance to
+        and exit from the block) if it is a through path.</li>
 
-    When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
-    any are detected you will be prompted and given the option to return to the window or 
-    continue to close it.</p>
-    
-	<a name="DirectionArrows" id="DirectionArrows"></a>
-    <h3>Portals - Edit Portal Direction Icons</h3>
-     <span class="since">Since 3.8</span><br>
-    Use this window to modify the portal icon to show the direction
-    of travel for a warrant. Portal icons must exist in order to have direction arrows when a 
-    warrant is allocated.
-     The track circuit icons are highlighted in blue and the portal icons are
-     shown with a red circle highlighted in blue.
-    <p>
-    To set the direction, either select a portal icon or select a portal from the 
-    "Portals into and out of circuit ..." list. A green arrow will replace the red circle on
-     the highlighted portal icon. To have the arrow display the correct direction the arrow
-	must point <b>into</b> the OBlock circuit. If it does not, select one or the other of the
-	green arrows on the <b>Entry Icon</b> box. The arrows can be moved and rotated to display a
-	more desirable direction. <i>If a n icon is moved, be sure it retains its position 
-	overlapping the blocks it joins.</i> 
-	</p><p>
-	If you do not want an arrow to display at the portal when
-	a warrant is allocated, select the "No Icon" icon.
-	</p><p>
-	After all the portal icon arrows are pointing into the block, verify that each adjacent OBock 
-	also has its portal direction arrow set <b>into</b> that block.</p> 
+        <li>To change the name of a path, first select it from the list, then change the name in
+        the <strong>Path Name</strong> text field and lastly, press the <strong>Change
+        Name</strong> button.</li>
 
-	<a name="Signals" id="Signals"></a>
-    <h3>Signals - Edit Signal Masts</h3>
-     <span class="since">Since 4.17.3</span><br>
-     Use this window to configure a Signal Head or Signal Mast to protect the OBlock. 
-     The track circuit icons are highlighted in blue and the portal icons are
-     shown with a red circle highlighted in blue.
-    <p>
-    To set a signal to protect the OBlock, choose the portal where the signal will guard
-    entrance into the block. The opposing block of the portal will be the
-    approach OBlock. Choosing the portal can be done by
-    either selecting a highlighted portal icon or selecting a portal from the 
-    "Portals into and out of circuit ..." list.
-    </p><p>
-    Enter the name of the signal into the <b>Signal Name</b> text field. Alternatively
-    there are <b>Open Picklist</b> buttons to display signal names. Drag a name into
-    the Signal Name text field. Pressing the <b>Configure Signal</b> button will attach the signal
-    at the portal. 
-    </p><p>
-    <b>Important Note:</b><br>
-    It is recommended to use Signal Masts rather than Signal Heads.  If you do use a Signal Head
-    be sure it is <b>not</b> part of the definition of a Signal Mast. Signal Head appearances are
-    translated to speed names according to to a table in Warrant Preferences. Then,
-    as above, the speed name is used to regulate train speed.
-	</p><p>
-	The signal add/edit window has the following items.
-    <ul>
-    	<li>A list of the portals into the OBlock. Select a portal to add or remove the 
-    		block protection by a signal. If a signal already protects at the selected
-    		portal, its name is displayed in the Signal Name text field.</li>
-    	<li>A Signal Name text field for the name of a protecting signal.</li>
-    	<li>Buttons to set block protection or remove it.</li>
-    	<li>Buttons to display pick lists for dragging signal names into the
-    		Signal Name text field</li>
-    	<li>A text field to adjust the target point a warrant calculates for the
-    		place where a speed change should start, if a
-    		signal aspect requires it. (Speed changes required in a protected block
-    		must be completed before entering the block.)  The number is an offset
-    		from the portal entrance point to the block. It may be positive or negative.</li>
-    </ul>
-	Selecting a signal icon will select the portal if it protects the block there.
-	Otherwise a dialog windows opens to configure or replace protection.</p>
-    
-    <h2>Further Reference</h2>
-    <ul>
-        <li>For a step-by-step instruction on Warrants and Circuit Builder, check out the
-        <a href="https://jmri.org/community/clinics/">clinic</a> presentation by Dick Bronson on <a
-        href="http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor
-            plus Warrants</a>.</li>
-    </ul>
+        <li>The window has a text field to enter the length of the OPath and button for either
+        inches or centimeter units.</li>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <li>To delete a path, select it from the list and press the <strong>Delete Path</strong>
+        button.</li>
+      </ul>
+
+      <p>When exiting the Add/Edit Path window the Path is checked for any possible deficiencies.
+      If any are detected you will be prompted and given the option to return to the window or
+      continue to close it.</p>
+
+      <h3 id="DirectionArrows">Portals - Edit Portal Direction Icons</h3>
+      <span class="since">Since 3.8</span><br>
+      Use this window to modify the portal icon to show the direction of travel for a warrant.
+      Portal icons must exist in order to have direction arrows when a warrant is allocated. The
+      track circuit icons are highlighted in blue and the portal icons are shown with a red circle
+      highlighted in blue.
+      <p>To set the direction, either select a portal icon or select a portal from the "Portals
+      into and out of circuit ..." list. A green arrow will replace the red circle on the
+      highlighted portal icon. To have the arrow display the correct direction the arrow must point
+      <strong>into</strong> the OBlock circuit. If it does not, select one or the other of the
+      green arrows on the <strong>Entry Icon</strong> box. The arrows can be moved and rotated to
+      display a more desirable direction. <em>If an icon is moved, be sure it retains its position
+      overlapping the blocks it joins.</em></p>
+
+      <p>If you do not want an arrow to display at the portal when a warrant is allocated, select
+      the "No Icon" icon.</p>
+
+      <p>After all the portal icon arrows are pointing into the block, verify that each adjacent
+      OBock also has its portal direction arrow set <strong>into</strong> that block.</p>
+
+      <h3 id="Signals">Signals - Edit Signal Masts</h3>
+      <span class="since">Since 4.17.3</span><br>
+      <img src="images/CircuitBuilderSignalEditPane.png" alt="Edit Signal (on Portal) panel" class=
+      "floatRight"> Use this window to configure a Signal Head or Signal Mast to protect the
+      OBlock. The track circuit icons are highlighted in blue and the portal icons are shown with a
+      red circle highlighted in blue.
+      <p>To set a signal to protect the OBlock, choose the portal where the signal will guard
+      entrance into the block. The opposing block of the portal will be the approach OBlock.
+      Choosing the portal can be done by either selecting a highlighted portal icon or selecting a
+      portal from the "Portals into and out of circuit ..." list.</p>
+
+      <p>Enter the name of the signal into the <strong>Signal Name</strong> text field.
+      Alternatively there are <strong>Open Picklist</strong> buttons to display signal names. Drag
+      a name into the Signal Name text field. Pressing the <strong>Configure Signal</strong> button
+      will attach the signal at the portal.</p>
+
+      <p><strong>Important Note:</strong><br>
+      It is recommended to use Signal Masts rather than Signal Heads. If you do use a Signal Head
+      be sure it is <strong>not</strong> part of the definition of a Signal Mast. Signal Head
+      appearances are translated to speed names according to to a table in Warrant Preferences.
+      Then, as above, the speed name is used to regulate train speed.</p>
+
+      <p>The signal add/edit window has the following items.</p>
+
+      <ul>
+        <li>A list of the portals into the OBlock. Select a portal to add or remove the block
+        protection by a signal. If a signal already protects at the selected portal, its name is
+        displayed in the Signal Name text field.</li>
+
+        <li>A Signal Name text field for the name of a protecting signal.</li>
+
+        <li>Buttons to set block protection or remove it.</li>
+
+        <li>Buttons to display pick lists for dragging signal names into the Signal Name text
+        field</li>
+
+        <li>A text field to adjust the target point a warrant calculates for the place where a
+        speed change should start, if a signal aspect requires it. (Speed changes required in a
+        protected block must be completed before entering the block.) The number is an offset from
+        the portal entrance point to the block. It may be positive or negative.</li>
+      </ul>
+
+      <p>Selecting a signal icon will select the portal if it protects the block there. Otherwise a
+      dialog windows opens to configure or replace protection.</p>
+
+      <h2>Further Reference</h2>
+
+      <ul>
+        <li>For a step-by-step instruction on Warrants and Circuit Builder, check out the (somewhat
+        outdated but still a great introduction to the basic concepts of Warrants) <a href=
+        "https://jmri.org/community/clinics/">clinic</a> presentation by Dick Bronson on <a href=
+        "http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor plus
+        Warrants</a>.
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

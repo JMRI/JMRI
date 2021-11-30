@@ -1,80 +1,51 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax DS54 Examples</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI LocoNet DS54">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI LocoNet DS54"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: DS54 Examples</h1>
 
-      <p class="subtitle">Examples of using a Digitrax DS54 with
-      JMRI.</p>
+      <p class="subtitle">Examples of using a Digitrax DS54 with JMRI.</p>
 
-      <p>The Digitrax DS54 accessory decoder can be configured in a
-      large number of ways (<a href=
-      "../../../manual/index.shtml">DecoderPro</a> can help with
-      that).</p>
+      <p>The Digitrax DS54 accessory decoder can be configured in a large number of ways (<a href=
+      "../../../manual/index.shtml">DecoderPro</a> can help with that).</p>
 
       <p>Walter Thompson walked through the details of this:</p>
 
-      <p>With the DS54 at defaults these are the LocoNet&reg; msgs
-      when either Switch A or Aux A goes positive causing the
-      Turnout to "toggle" state:<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70
-      35].<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50
-      15]</p>
+      <p>With the DS54 at defaults these are the LocoNet® msgs when either Switch A or Aux A goes
+      positive causing the Turnout to "toggle" state:<br>
+      When Switch A (blue lead) goes high loconet msg [b2 8 70 35].<br>
+      When Aux A (orange lead) goes high loconet msg [b2 8 50 15]</p>
 
-      <p>I then set "When Switch A input changes, send" ="Turnout
-      feedback msg"<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70
-      36]<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50
-      15]</p>
+      <p>I then set "When Switch A input changes, send" ="Turnout feedback msg"<br>
+      When Switch A (blue lead) goes high loconet msg [b2 8 70 36]<br>
+      When Aux A (orange lead) goes high loconet msg [b2 8 50 15]</p>
 
-      <p>I then set "When Aux A input changes, send"= "Turnout
-      feedback message"<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70
-      36]<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50
-      16]</p>
+      <p>I then set "When Aux A input changes, send"= "Turnout feedback message"<br>
+      When Switch A (blue lead) goes high loconet msg [b2 8 70 36]<br>
+      When Aux A (orange lead) goes high loconet msg [b2 8 50 16]</p>
 
-      <p>Therefore, when the Switch and Aux inputs are set to send
-      a turnout feedback message, the feedback mechanisms built
-      into recent versions of JMRI can be used to track the turnout
-      state when the local inputs are used to change the
-      turnout.</p>
+      <p>Therefore, when the Switch and Aux inputs are set to send a turnout feedback message, the
+      feedback mechanisms built into recent versions of JMRI can be used to track the turnout state
+      when the local inputs are used to change the turnout.</p>
 
       <h2>Exact Feedback</h2>
 
-      <p>To use exact feedback, you need to connect two
-      microswitches to the turnout and to the Switch and Aux inputs
-      on the DS54. (You can use the built in Tortoise contacts for
-      this)</p>
+      <p>To use exact feedback, you need to connect two microswitches to the turnout and to the
+      Switch and Aux inputs on the DS54. (You can use the built in Tortoise contacts for this)</p>
 
       <p>Configure the DS54 channel with:</p>
+
       <pre>
  Aux A input"='Active ON, trigger on change, Positive Level"
  Aux A task"="No Output change"
@@ -83,127 +54,102 @@
  Switch A task"="No Output change"
  Switch A input changes, send"= "Exact turnout feedback message"
 </pre>
-
-      <p>Configure Turnout LT9 (via the Turnout Table) to use
-      "EXACT" feedback.</p>
+      <p>Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.</p>
 
       <table border="1">
         <tr>
           <th>Commentary</th>
-
           <th>LocoNet messages</th>
         </tr>
 
         <tr>
           <td>Start with Turnout 9 closed<br>
           Switch A will be Closed and Aux A open.</td>
-
           <td>none</td>
         </tr>
 
         <tr>
-          <th colspan="2"> </th>
+          <th colspan="2">
+          </th>
         </tr>
 
         <tr>
           <td>Issue a "Throw Turnout 9" command from<br>
           the throttle or the turnout table</td>
-
-          <td><code>[b0 8 10 57]</code> Requesting Switch at 9 to
-          Thrown (output On)<br>
-          <code>[b0 8  0 47]</code> Requesting Switch at 9 to
-          Thrown (output Off)</td>
+          <td><code>[b0 8 10 57]</code> Requesting Switch at 9 to Thrown (output On)<br>
+          <code>[b0 8 0 47]</code> Requesting Switch at 9 to Thrown (output Off)</td>
         </tr>
 
         <tr>
           <td>Turnout starts to move and opens Switch A</td>
-
-          <td><code>[b1 8 60 26]</code> Turnout 9 Switch input is
-          Thrown (input on)</td>
+          <td><code>[b1 8 60 26]</code> Turnout 9 Switch input is Thrown (input on)</td>
         </tr>
 
         <tr>
-          <td>Moving turnout closes Aux A and reaches the end of
-          its travel.</td>
-
-          <td><code>[b1 8 50 16]</code> Turnout 9 Aux input is
-          Closed (input off)</td>
+          <td>Moving turnout closes Aux A and reaches the end of its travel.</td>
+          <td><code>[b1 8 50 16]</code> Turnout 9 Aux input is Closed (input off)</td>
         </tr>
 
         <tr>
-          <th colspan="2"> </th>
+          <th colspan="2">
+          </th>
         </tr>
 
         <tr>
           <td>Now issue a "Close Turnout 9" command</td>
-
-          <td><code>[b0 8 30 77]</code> Requesting Switch at 9 to
-          Closed (output On)<br>
-          <code>[b0 8 20 67]</code> Requesting Switch at 9 to
-          Closed (output Off)</td>
+          <td><code>[b0 8 30 77]</code> Requesting Switch at 9 to Closed (output On)<br>
+          <code>[b0 8 20 67]</code> Requesting Switch at 9 to Closed (output Off)</td>
         </tr>
 
         <tr>
           <td>Turnout starts to move, opens Aux A</td>
-
-          <td><code>[b1 8 40  6]</code> Turnout 9 Aux input is
-          Thrown (input on)</td>
+          <td><code>[b1 8 40 6]</code> Turnout 9 Aux input is Thrown (input on)</td>
         </tr>
 
         <tr>
-          <td>Moving turnout closes Switch A and reaches the end of
-          its travel.</td>
-
-          <td><code>[b1 8 70 36]</code> Turnout 9 Switch input is
-          Closed (input off)</td>
+          <td>Moving turnout closes Switch A and reaches the end of its travel.</td>
+          <td><code>[b1 8 70 36]</code> Turnout 9 Switch input is Closed (input off)</td>
         </tr>
       </table>
 
       <h1>Programming the DS54</h1>
 
-      <p>The DS54 CV values can be programmed via JMRI using the
-      JMRI programming tools using the "Service Mode" programming
-      track. This requires a JMRI connection to a command station,
-      and the DS54's track inputs must be connected to the
-      programming track. As described in the DS54 documentation, it
-      is necessary to connect a 100 Ohm 2 Watt resistor between one
-      of the programming track rails and the "Yellow" input wire of
-      one of the DS54's output connectors. It is also necessary to
-      disconnect all other input signal sources.</p>
+      <p>The DS54 CV values can be programmed via JMRI using the JMRI programming tools using the
+      "Service Mode" programming track. This requires a JMRI connection to a command station, and
+      the DS54's track inputs must be connected to the programming track. As described in the DS54
+      documentation, it is necessary to connect a 100 Ohm 2 Watt resistor between one of the
+      programming track rails and the "Yellow" input wire of one of the DS54's output connectors.
+      It is also necessary to disconnect all other input signal sources.</p>
 
-      <p>Once the connections described above have been made, place
-      the programming jumper across the programming jumper pins and
-      open the JMRI "Service-Mode Programmer" tool. Navigate to the
-      "Digitrax" entry, and select DS54 as the decoder type, and
-      press the "Open Programmer" button. You may then read and
-      write the CVs just like any mobile decoder.</p>
+      <p>Once the connections described above have been made, place the programming jumper across
+      the programming jumper pins and open the JMRI "Service-Mode Programmer" tool. Navigate to the
+      "Digitrax" entry, and select DS54 as the decoder type, and press the "Open Programmer"
+      button. You may then read and write the CVs just like any mobile decoder.</p>
 
-      <p>When ready to place the DS54 back in normal service,
-      disconnect the programming track connections and programming
-      resistor, and be sure to remove the programming jumper.</p>
+      <p>When ready to place the DS54 back in normal service, disconnect the programming track
+      connections and programming resistor, and be sure to remove the programming jumper.</p>
 
       <h1>DS54 Wiring</h1>
 
-      <p>It is strongly recommended that when multiple DS54s are
-      used, that they be connected to the track wires with
-      consistent phasing. In other words, all DS54 devices should
-      connect the RailA connection to the same terminal position on
-      the DS54, and that all DS54s connect the RailB connection to
-      the <i>other</i> terminal position. This is important to
-      ensure that there is not an unexpected current flow on the
-      LocoNet cable due to out-of-phase connections on the DS54
-      track connections. Note that this means that the DS54 track
-      connections should <i>not</i> be made using track power that
-      is from an <i>autoreversing</i> power district.</p>
+      <p>It is strongly recommended that when multiple DS54s are used, that they be connected to
+      the track wires with consistent phasing. In other words, all DS54 devices should connect the
+      RailA connection to the same terminal position on the DS54, and that all DS54s connect the
+      RailB connection to the <em>other</em> terminal position. This is important to ensure that
+      there is not an unexpected current flow on the LocoNet cable due to out-of-phase connections
+      on the DS54 track connections. Note that this means that the DS54 track connections should
+      <em>not</em> be made using track power that is from an <em>autoreversing</em> power
+      district.</p>
 
-      <p>Technical details on this issue can be found in <a href=
-      "DigitraxPower.shtml">a discussion of power leads on
-      Digitrax components</a>.</p>
+      <p>Technical details on this issue can be found in <a href="DigitraxPower.shtml">a discussion
+      of power leads on Digitrax components</a>.</p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href=
-      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

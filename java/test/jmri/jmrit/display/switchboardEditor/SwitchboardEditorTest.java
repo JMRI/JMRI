@@ -1,164 +1,219 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
+
 import jmri.*;
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
-
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JMenuOperator;
+import jmri.util.swing.JemmyUtil;
 
 /**
- * Test simple functioning of SwitchboardEditor
+ * Test functioning of SwitchboardEditor.
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Egbert Broerse Copyright (C) 2017, 2020
+ * @author Egbert Broerse Copyright (C) 2017, 2020, 2021
  */
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
-    //private static SwitchboardEditor e = null;
+    // SwitchboardEditor e is already present in super
+    private EditorFrameOperator jfo;
+
+    @Override
+    @Disabled("ChangeView is not applicable to SwitchBoards")
+    @Test
+    public void testChangeView() {
+    }
 
     @Test
     public void testDefaultCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor p = new SwitchboardEditor();
-        Assert.assertNotNull("exists", p);
-        p.dispose();
+        e = new SwitchboardEditor();
+        Assertions.assertNotNull(e, "exists");
     }
 
     @Test
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", e);
+        Assertions.assertNotNull(e, "exists");
     }
 
     @Test
     public void checkOptionsMenuExists() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setVisible(true);
-        EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
-        Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 9, jmo.getItemCount());
+        Assertions.assertNotNull(jmo, "Options Menu Exists");
+        Assertions.assertEquals(10, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
-    public void testIsDirty() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void checkSetEditable() {
+        e.setAllEditable(true);
+        JMenuBarOperator jmbo = new JMenuBarOperator(jfo);
+        Assertions.assertEquals(4, jmbo.getMenuCount(), "Editable Menu Count: 4");
+        e.setAllEditable(false);
+        Assertions.assertEquals(3, jmbo.getMenuCount(), "Non-editable Menu Count: 3");
+        e.setAllEditable(true); // reset to be able to get to the menuBar to delete e
+    }
+
+    @Test
+    @Disabled("Works locally (Linux) and on Appveyor (Windows).  Unable to find popup after click on Travis")
+    public void testTurnoutSwitchPopup() {
+        e.setSwitchManu("I");
+        e.setSwitchType("T");
+        // initially selected connection should be Internal
+        Assertions.assertEquals("I", e.getSwitchManu(), "Internal connection default at startup");
+        Assertions.assertEquals(1, e.getPanelMenuRangeMin(), "MinSpinner=1 default at startup");
+        Assertions.assertEquals(24, e.getPanelMenuRangeMax(), "MaxSpinner=24 default at startup");
+        Assertions.assertEquals("Turnouts", e.getSwitchTypeName(), "Type=Turnout default at startup");
+        BeanSwitch sw = e.getSwitch("IT1");
+        Assertions.assertNotNull(sw, "Found BeanSwitch IT1");
+
+        Thread popup_thread1 = new Thread(() -> {
+            JPopupMenuOperator jpmo = new JPopupMenuOperator();
+            jpmo.pushMenuNoBlock(sw.getNameString()); // close it
+        });
+        popup_thread1.setName("Switch popup");
+        popup_thread1.start();
+
+        sw.showPopUp(new MouseEvent(sw, 1, 0, 0, 0, 0, 1, false));
+
+        JUnitUtil.waitFor(() -> !(popup_thread1.isAlive()), "Switch popup");
+    }
+
+    @Test
+    public void testStartsNotDirty() {
         // defaults to false.
-        Assert.assertFalse("isDirty", e.isDirty());
+        Assertions.assertFalse(e.isDirty(), "isDirty starts as false");
     }
 
     @Test
     public void testSetDirty() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        Assertions.assertTrue(e.isDirty(), "isDirty after set");
     }
 
     @Test
     public void testSetDirtyWithParameter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
         e.setDirty(true);
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        Assertions.assertTrue(e.isDirty(), "isDirty after set");
     }
 
     @Test
     public void testResetDirty() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
         e.setDirty(true);
         // then call resetDirty, which sets it back to false.
         e.resetDirty();
-        Assert.assertFalse("isDirty after reset", e.isDirty());
+        Assertions.assertFalse(e.isDirty(), "isDirty after reset");
     }
 
     @Test
     public void testGetSetDefaultTextColor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, e.getDefaultTextColor());
+        Assertions.assertEquals(ColorUtil.ColorBlack, e.getDefaultTextColor(), "Default Text Color");
         e.setDefaultTextColor(Color.PINK);
-        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, e.getDefaultTextColor());
+        Assertions.assertEquals(ColorUtil.ColorPink, e.getDefaultTextColor(), "Default Text Color after Set");
     }
 
     @Test
     public void testSwitchRangeTurnouts() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Switch Type Turnouts", "T", e.getSwitchType());
-        Assert.assertEquals("Default Switch Shape Button", "button", e.getSwitchShape());
-        Assert.assertEquals("Default Rows 0", 0, e.getRows()); // autoRows on
-        e.setRows(10);
-        Assert.assertEquals("Set Rows 10", 10, e.getRows());
+        e.setSwitchType("T");
+        e.setSwitchManu("I"); // set explicitly
+        Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type is Turnouts");
+        Assertions.assertEquals("button", e.getSwitchShape(), "Default Switch Shape Button");
+        Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
+        e.setRows(10); // will turn off autoRows checkboxmenu
+        Assertions.assertEquals(10, e.getRows(), "Rows should now be be 10");
         e.setShowUserName(false);
-        Assert.assertEquals("Show User Name is No", "no", e.showUserName());
+        Assertions.assertEquals("no", e.showUserName(), "Show User Name is No");
         e.setSwitchShape("symbol");
-        Assert.assertEquals("Switch shape set to 'symbol'", "symbol", e.getSwitchShape());
-        ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // connect to item 1
-        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, 1, "test")); // to item 2
+        Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
+        ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // will connect to item 1
+
+        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // and to item 2
+
         e.setHideUnconnected(true); // speed up redraw
         e.updatePressed(); // rebuild for new Turnouts + symbol shape
-        Assert.assertEquals("2 connected switches shown", 2, e.getTotal());
+        Assertions.assertEquals(2, e.getTotal(), "1 connected switch shown");
     }
 
     @Test
     public void testSwitchInvertSensors() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("S");
-        e.updatePressed(); // rebuild for Sensors
-        Sensor sensor20 = ((SensorManager) e.getManager('S')).provideSensor("IS20");
-        Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS20"));
-        Objects.requireNonNull(InstanceManager.sensorManagerInstance().getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
-        e.setHideUnconnected(true); // speed up redraw
-        e.updatePressed(); // connect switch IS20 to Sensor IS20
-        Assert.assertEquals("IS20 is Unknown", Sensor.UNKNOWN, sensor20.getState());
-        Assert.assertNotNull(e.getSwitch("IS20"));
-        Assert.assertEquals("IS20 is Inactive", "IS20: ?", e.getSwitch("IS20").getIconLabel());
+        // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
+        e.setSwitchManu("I"); // so set explicitly
+        e.updatePressed();    // rebuild for Sensors
+        SensorManager sm = ((SensorManager) e.getManager('S'));
+        Sensor sensor20 = sm.provideSensor("IS20");
+        Assertions.assertNotNull(sm.getSensor("IS20"));
+        Objects.requireNonNull(sm.getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
+        e.updatePressed(); // recreate to connect switch "IS20" to Sensor sensor20
+        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) item displayed");
+        Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "sensor20 state is Unknown");
+        Assertions.assertNotNull(e.getSwitch("IS20"));
+        Assertions.assertEquals("IS20: ?", e.getSwitch("IS20").getIconLabel(), "IS20 displays Unknown");
         sensor20.setCommandedState(Sensor.ACTIVE);
-        e.updatePressed(); // connect switch IS20 to Sensor IS20
-        Assert.assertEquals("IS20 displays Active", "IS20: +", e.getSwitch("IS20").getIconLabel());
+        // should follow state
+        Assertions.assertEquals("IS20: +", e.getSwitch("IS20").getIconLabel(), "IS20 displays Active");
         e.getSwitch("IS20").doMouseClicked(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false));
-        Assert.assertEquals("IS20 is Inactive", Sensor.INACTIVE, sensor20.getState());
-        Assert.assertEquals("IS20 displays Inactive", "IS20: -", e.getSwitch("IS20").getIconLabel());
+        Assertions.assertEquals(Sensor.INACTIVE, sensor20.getState(), "sensor20 state is Inactive");
+        Assertions.assertEquals("IS20: -", e.getSwitch("IS20").getIconLabel(), "IS20 displays Inactive");
         e.getSwitch("IS20").setBeanInverted(true);
-        Assert.assertEquals("IS20 is Active", Sensor.ACTIVE, sensor20.getState());
-        Assert.assertEquals("IS20 displays Active", "IS20: +", e.getSwitch("IS20").getIconLabel());
+        Assertions.assertEquals(Sensor.ACTIVE, sensor20.getState(), "sensor20 state is Active");
+        Assertions.assertEquals("IS20: +", e.getSwitch("IS20").getIconLabel(), "IS20 displays Active");
+    }
+
+    @Test
+    public void testHideUnconnected() {
+        // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
+        e.setSwitchType("T");
+        e.setSwitchManu("I"); // so set explicitly
+        Assertions.assertTrue(e.getManager() instanceof TurnoutManager, "manager is a TurnoutManager");
+        ((TurnoutManager) e.getManager()).provideTurnout("IT24"); // active manager should be a TurnoutManager, connect to item 1
+        e.setHideUnconnected(true);
+        e.updatePressed(); // setHideUnconnected will not invoke updatePressed
+        Assertions.assertEquals(1, e.getTotal(), "1 connected switch shown");
     }
 
     @Test
     public void testSwitchAllLights() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("L");
+        e.setSwitchManu("I"); // so set explicitly as LightManager
         e.updatePressed(); // rebuild for Lights
         e.getSwitch("IL1").doMouseClicked(null); // no result, so nothing to test
-        Assert.assertNull("Click on unconnected switch", e.getSwitch("IL1").getLight());
+        Assertions.assertNull(e.getSwitch("IL1").getLight(), "Click on unconnected switch");
         Light light1 = ((LightManager) e.getManager('L')).provideLight("IL1");
-        Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
+        Assertions.assertNotNull(InstanceManager.lightManagerInstance().getLight("IL1"));
         e.updatePressed(); // connect switch IL1 to Light IL1
-        Assert.assertEquals("IL1 is Off", Light.OFF, light1.getState());
+        Assertions.assertEquals(Light.OFF, light1.getState(), "IL1 is Off");
 
-        Assert.assertNotNull(e.getSwitch("IL1"));
+        Assertions.assertNotNull(e.getSwitch("IL1"));
         e.getSwitch("IL1").doMouseClicked(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false));
-        Assert.assertEquals("IL1 is On", Light.ON, light1.getState());
+        Assertions.assertEquals(Light.ON, light1.getState(), "IL1 is On");
 
         e.switchAllLights(Light.OFF);
-        Assert.assertEquals("IL1 is Off via All", Light.OFF, light1.getState());
+        Assertions.assertEquals(Light.OFF, light1.getState(), "IL1 is Off via All");
 
-        Assert.assertEquals("Default 4x6 switches shown", 24, e.getTotal());
+        Assertions.assertEquals(24, e.getTotal(), "Default 4x6 switches shown");
         e.setHideUnconnected(true);
         e.updatePressed(); // rebuild to hide unconnected
-        Assert.assertEquals("1 connected switch shown", 1, e.getTotal());
+        Assertions.assertEquals(1, e.getTotal(), "1 connected switch shown");
+    }
+
+    @Test
+    public void testGetSwitches() {
+        e.setMinSpinner(8);
+        e.setMaxSpinner(17);
+        e.updatePressed();
+        Assertions.assertEquals(10, e.getSwitches().size(), "Get array containing all items");
     }
 
     // from here down is testing infrastructure
@@ -168,23 +223,29 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            e = new SwitchboardEditor("Switchboard Editor Test");
-        }
+
+        e = new SwitchboardEditor("Switchboard Editor Test");
+        e.setVisible(true);
+        JemmyUtil.waitFor(e);
+        jfo = new EditorFrameOperator(e);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
-           // dispose on Swing thread
-           new EditorFrameOperator(e.getTargetFrame()).closeFrameWithConfirmations();
-           e = null;
+            // dispose on Swing thread
+            jfo.deleteViaFileMenuWithConfirmations();
+            e = null;
         }
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

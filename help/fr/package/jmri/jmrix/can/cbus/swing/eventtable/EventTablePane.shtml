@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content="JMRI CBUS help support event table tool">
+  <title>JMRI: CBUS® Event Table</title><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI : Tableau des événements CBUS</h1>
+
+      <ul class="snav">
+        <li><a href="#stats">Colonnes</a>
+        </li>
+
+        <li><a href="#importexport">Importation et exportation de tableaux</a>
+        </li>
+
+        <li><a href="#opc">OPCs</a>
+        </li>
+      </ul>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
+      width="630" height="210" alt="CBUS Event Table Screen" align="right">
+      <p>Le Tableau des Événements de CBUS affiche les informations relatives aux événements sur
+      votre connexion <a href=".">CBUS</a>.</p>
+
+      <p>Les messages entrants vers JMRI et les messages sortants sont enregistrés dans le
+      tableau.</p>
+
+      <p>Pendant que la fenêtre est ouverte, elle maintient une liste d'événements courts on / off,
+      des événements longs on / off, des événements OPC étendus on / off, des événements on / off
+      de réponse d'accessoires.</p>
+
+      <p>.</p>
+
+      <p>Chaque combinaison d'événement et de nœud est unique, le nombre maximum d'événements est
+      de 65 535.</p>
+
+      <p>.</p>
+
+      <p>Le nombre maximum de nœuds est également de 65 535.</p>
+
+      <p>Le tableau commencera toujours sans aucune entrée, les données ne sont pas maintenues
+      entre les sessions.</p>
+
+      <p>.</p>
+
+      <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant à votre liste d'actions de
+      démarrage JMRI.<br>
+      PanelPro &gt; Modifier les préférences &gt; Démarrage &gt; Ajouter &gt; Effectuer une action
+      &gt; Ouvrir le Tableau des Événements CBUS.</p>
+
+      <p>Les codes d'événements courts seront dépouillés de tout numéro de nœud contenu dans le
+      message CAN de l'événement.</p>
+
+      <p>Toutes les valeurs numériques sont décimales.</p>
+
+      <p>Le filtre mettra en évidence tout texte saisi, vous pouvez utiliser et des espaces dans le
+      champ de recherche.<br>
+      Le tableau ne montrera alors que les événements qui contiennent l'expression recherchée.<br>
+      Le texte dans le panneau d'information au bas du tableau d'événements sera également mis en
+      évidence.</p>
+
+      <p>Les nouveaux événements ajoutés au tableau d'événements ne seront pas mis en évidence.<br>
+      Nouveaux événements ajoutés au tableau créé manuellement avec la fenêtre de création
+      d'événements à droite de la fenêtre de filtrage ont par défaut un statut inconnu et
+      n'envoient pas de message d'événement lors de leur création.</p>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-filter-611x271.png"
+      width="611" height="271" alt="CBUS Event Table Filter" align="right">
+      <h2><a name="stats" id="stats">Colonnes</a>
+      </h2>
+
+      <p>Les colonnes peuvent être sélectionnées pour être affichées via la barre de menu
+      supérieure, elles sont réparties en 4 catégories.</p>
+
+      <ul>
+        <li>Colonnes d'Événements</li>
+
+        <li>Colonnes de Statistiques</li>
+
+        <li>Colonnes de Rétrosignalisation</li>
+
+        <li>Colonnes JMRI</li>
+      </ul>
+
+      <p>L'ordre des colonnes peut être réorganisé en faisant glisser l'en-tête de la colonne.</p>
+
+      <p>Changer l'ordre de tri des colonnes en cliquant avec le bouton gauche de la souris sur
+      l'en-tête de colonne.</p>
+
+      <h3>Colonnes d'événements</h3>
+
+      <ul>
+        <li>Evénement : Numéro de l'événement ( ou du dispositif ) signalé dans un message CAN
+        d'événement.</li>
+
+        <li>Nœud : Numéro de nœud rapporté par un message CAN d'événement.</li>
+
+        <li>Nom de l'événement : Nom de l'événement modifiable ( fourni par FCU File Import ).</li>
+
+        <li>Nom Nœud : Nom de nœud modifiable ( Fourni par FCU File Import ).</li>
+
+        <li>Commentaire de l'événement : Editable</li>
+
+        <li>On ou Off : État actuel de l'événement, vide pour inconnu.</li>
+
+        <li>Basculer : Si l'état du dernier événement signalé est actuellement activé, envoie un
+        événement désactivé et vice versa.</li>
+
+        <li>Envoie On : Envoie un événement On, si l'événement a un numéro de nœud, ce sera un
+        événement long sinon court.</li>
+
+        <li>Envoie Off : Envoie un événement Off, Si l'événement a un numéro de nœud, ce sera un
+        événement long sinon court.</li>
+
+        <li>CAN ID : Le dernier ID CAN entendu par l'événement.</li>
+
+        <li>Supprimer : ( L'événement sera ajouté à nouveau à la table s'il est détecté sur le
+        réseau. )</li>
+      </ul>
+
+      <h3>Colonnes Statistiques</h3>
+      <img src=
+      "../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-stats-804x244.png"
+      width="802" height="244" alt="CBUS Event Table Statistics">
+      <ul>
+        <li>Last Heard : horodatage de la dernière fois que l'événement a été détecté.</li>
+
+        <li>Total Session : Total courant</li>
+
+        <li>On Session : Total courant sur les événements.</li>
+
+        <li>Off Session : Exécution du total des événements off.</li>
+
+        <li>In Session : Exécution du total des événements reçus en entrée par JMRI.</li>
+
+        <li>Out Session : Exécution du total des événements envoyés par le JMRI.</li>
+      </ul>
+
+      <h3>Colonnes de liens JMRI</h3>
+
+      <ul>
+        <li>Les liens JMRI sur événement</li>
+
+        <li>Liens JMRI hors événement</li>
+      </ul>
+
+      <p>La table d'événements peut boucler sur le Tableau des Capteurs, des Aiguillages et des
+      Lumières. pour toute adresse matérielle CBUS ( pas les éléments internes ).<br>
+      Tous les nouveaux événements trouvés qui ne sont pas déjà sur le tableau seront ajoutés.</p>
+
+      <p>.</p>
+
+      <p>Cliquer sur les colonnes JMRI, puis Rafraîchir les colonnes pour alimenter les colonnes
+      Événement JMRI activé et Événement JMRI désactivé.</p>
+
+      <p>L'adresse nom d'utilisateur est affichée, si elle n'est pas présente alors l'adresse
+      matérielle sera affichée.</p>
+
+      <p>Il pourrait bien y avoir plusieurs éléments liés à un événement d'activation ou de
+      désactivation, ceux-ci sont tous affichés bien que vous puissiez avoir besoin d'élargir la
+      colonne.<br>
+      ( Cela ne fonctionnera pas avec les adresses configurées pour surveiller une gamme
+      d'événements bien que ceux-ci ne semblent pas si courants )</p>
+      <img src=
+      "../../../../../../../html/hardware/can/cbus/images/swing/event-table/event-table-jmri-links-1096x279.png"
+      width="1096" height="279" alt="CBUS Event Table JMRI Links">
+      <h3><a name="importexport" id="importexport">Imprimer et exporter / importer à partir du MERG
+      FCU</a>
+      </h3>
+
+      <p>Dans le menu Fichier, choisissez Exporter pour ouvrir la boîte de dialogue
+      d'enregistrement du fichier et enregistrer le contenu du tableau dans un fichier texte CSV
+      (valeurs séparées par des virgules).</p>
+
+      <p>Choisissez le menu Imprimer (aperçu) pour créer une copie papier du tableau
+      d'événements.</p>
+
+      <p>Cliquez sur le menu Imprimer (Aperçu) pour créer une copie papier du Tableau
+      d'Événements.</p>
+
+      <p>Les événements ne sont pas actuellement maintenus entre les sessions.</p>
+
+      <p>.</p>
+
+      <p>Il n'est actuellement pas possible de charger les données des sessions précédentes dans le
+      tableau à partir d'un fichier.</p>
+
+      <p>Vous pouvez importer les noms d'événements et les noms de nœuds à partir d'un fichier de
+      configuration du MERG FCU. On y accède à partir du <a href=
+      "../nodeconfig/NodeConfigToolPane.shtml#fcuimport">Gestionnaire des nœuds CBUS du MERG</a>,
+      où le fichier FCU peut être prévisualisé avant l'importation.</p>
+
+      <h3><a name="opc" id="opc">Codes d'Opération Pris en cCharge</a>
+      </h3>
+      .
+      <ul>
+        <li>ASON - Envoyé lorsque l'utilisateur clique sur le bouton envoyer sur / basculer, numéro
+        de nœud 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>ASOF - Envoyé lorsque l'utilisateur clique sur le bouton send off / toggle, nœud numéro
+        0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>ACON - Envoyé lorsque l'utilisateur clique sur le bouton envoyer on / toggle, numéro de
+        nœud &gt; 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>ACOF - Envoyé lorsque l'utilisateur clique sur le bouton d'envoi désactivé / à bascule,
+        numéro de nœud &gt; 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>ASRQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud 0</li>
+
+        <li style="list-style: none">.</li>
+
+        <li>AREQ - Envoyé lorsque l'utilisateur clique sur le bouton d'état, numéro de nœud &gt;
+        0</li>
+
+        <li style="list-style: none">.</li>
+      </ul>
+
+      <p>Les OPC reçus peuvent provenir d'autres composants JMRI, ou d'une connexion externe
+      CBUS.</p>
+
+      <p>Tous les opscodes définis comme un événement accessoire ( à l'exception de Fast Clock )
+      sont des Surveillants constants, c'est-à-dire</p>
+
+      <p>.</p>
+
+      <ul>
+        <li>ASRQ / AREQ - Démarre automatiquement le minuteur de rétrosignalisationr pour
+        l'événement associé.</li>
+
+        <li>ACON / ACOF</li>
+
+        <li>ARON / AROF</li>
+
+        <li>ASON / ASOF</li>
+
+        <li>ARSON / ARSOF</li>
+
+        <li>ACON1 / ACOF1</li>
+
+        <li>ARON1 / AROF1</li>
+
+        <li>ASON1 / ASOF1</li>
+
+        <li>ARSON1 / ARSOF1</li>
+
+        <li>ACON2 / ACOF2</li>
+
+        <li>ARON2 / AROF2</li>
+
+        <li>ASON2 / ASOF2</li>
+
+        <li>ARSON2 / ARSOF2</li>
+
+        <li>ACON3 / ACOF3</li>
+
+        <li>ARON3 / AROF3</li>
+
+        <li>ASON3 / ASOF3</li>
+
+        <li>ARSON3 / ARSOF3</li>
+      </ul>
+
+      <h4>Différence par rapport au guide du développeur CBUS 6b</h4>
+
+      <p>Dans ce modèle de données, il est supposé que les combinaisons d'événements et de nœuds
+      constituent le facteur unique.</p>
+
+      <p>Tout événement OPC envoyé avec des octets de données supplémentaires sera enregistré en
+      fonction de sa combinaison principale d'événement et de nœud, sans tenir compte des octets de
+      données supplémentaires.</p>
+
+      <p>Les données supplémentaires ne sont pas enregistrées.</p>
+
+      <p>Les données supplémentaires ne sont pas actuellement affichées dans le tableau, bien qu'il
+      soit probable qu'elles soient ajoutées en tant que colonne à un moment donné.</p>
+
+      <h3>Aide JMRI</h3>
+
+      <p>Vous pouvez afficher cette page d'aide au sein de JMRI en sélectionnant Aide &gt; Aide de
+      la fenêtre dans la barre supérieure de la fenêtre du tableau d'événements du MERG.</p>
+
+      <p>La <a href="../console/CbusConsoleFrame.shtml">Console CBUS</a> peut vous aider à
+      comprendre quels événements se produisent sur votre réseau.</p>
+
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI
+      CBUS</a>.</p>
+
+      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
+      .
+      <p>Traduction 2021-03-19</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
+</html>

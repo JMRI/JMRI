@@ -1,0 +1,552 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Conditional State Variables and Actions List</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Liste des Conditions Variables d'État et Actions</h1>
+
+      <dl>
+        <dd>
+          <h2><a name="variable" id="variable">Variables d'ùtat Disponibles</a>
+          </h2>
+
+          <p>Les variables d'état qui sont actuellement disponibles pour être utilisées dans les
+          conditions sont répertoriées ci-dessous, avec des informations sur chacune d'elles. Les
+          variables d'état doivent toujours être évaluées à vrai ou fausse. La condition résultant
+          en vrai est donnée pour chacune d'elles. Si la condition n'est pas remplie, la variable
+          d'état est évaluée à faux. Lorsqu'un Logix est actif, les états des entités (capteur,
+          aiguillage, feu, etc.) spécifiées dans les variables d'état dans ses conditions sont
+          surveillés, sauf si la case à cocher Déclencheurs de Calcul de la variable d'état soit
+          décochée. Un calcul de toutes les conditions du Logix est déclenché lorsqu'un état
+          surveillé change, comme indiqué ci-dessous (si ce n'est pas évident).</p>
+
+          <ul>
+            <li>Capteur
+              <ul>
+                <li><strong>Capteur actif</strong> : ùvalue à vrai si l'état du capteur spécifié
+                est actif.</li>
+
+                <li><strong>Capteur inactif</strong> : ùvalue à vrai si l'état du capteur spécifié
+                est inactif.</li>
+              </ul>
+            </li>
+
+            <li>Aiguillage
+              <ul>
+                <li><strong>Aiguillage Dévié</strong> : ùvalue à vrai si l'état connu de
+                l'aiguillage spécifié est dévié.</li>
+
+                <li style="list-style: none">.</li>
+
+                <li><strong>Aiguillage Direct</strong> : ùvalue à vrai si l'état connu de
+                l'aiguillage spécifié est direct.</li>
+              </ul>
+            </li>
+
+            <li>Lumière
+              <ul>
+                <li><strong>Lumière Allumée</strong> : ùvalue à vrai si la lumière spécifiée est
+                allumée.</li>
+
+                <li><strong>Lumière éteinte</strong> : ùvalue à vrai si la lumière spécifiée est
+                éteinte.</li>
+              </ul>
+            </li>
+
+            <li>Feu
+              <ul>
+                <li><strong>L'apparence du Feu est égale</strong> : ùvalue à vrai si l'apparence du
+                feu spécifiée correspond à l'aspect variable (apparence) sélectionné.</li>
+
+                <li><strong>Feu Allumé</strong> : ùvalue à vrai si le feu spécifiée est
+                allumée..</li>
+
+                <li><strong>Feu Forcé</strong> : ùvalue à vrai si lfeu spécifiée est forcé.</li>
+              </ul>
+            </li>
+
+            <li>Mât de signalisation
+              <ul>
+                <li><strong>Aspect Mât de Signalisation ùgale</strong> : ùvalue à vrai si l'aspect
+                du mât de signalisation spécifié est égal à l'aspect spécifié dans la variable
+                d'état. Le calcul est déclenché lorsque l'aspect du mât de signalisation
+                change.</li>
+
+                <li><strong>Mât de Signalisation Allumé</strong> : ùvalue à vrai si le mât de
+                signalisation spécifié est allumé.</li>
+
+                <li><strong>Mât de Signalisation Forcé</strong> : ùvalue à vrai si le mât de
+                signalisation spécifié est forcé.</li>
+              </ul>
+            </li>
+
+            <li>Mémoire
+              <ul>
+                <li>
+                  <strong>Comparaison mémoire-valeur</strong> : Compare la valeur enregistrée dans
+                  la mémoire spécifiée à la valeur spécifiée dans la variable d'état en utilisant
+                  un opérateur de comparaison spécifié. ùvalue à vrai si la comparaison est vraie.
+                  Il existe 5 opérateurs de comparaison qui peuvent être utilisés pour l'évaluation
+                  :
+                  <ul>
+                    <li>"moins que"</li>
+
+                    <li>"inférieur ou égal"</li>
+
+                    <li>"égal"</li>
+
+                    <li>"supérieur ou égal"</li>
+
+                    <li>"supérieur à"</li>
+                  </ul>
+                  Le calcul est déclenché lorsque la mémoire surveillée change de sorte que la
+                  comparaison avec la valeur change.
+                </li>
+
+                <li>
+                  <strong>Comparaison mémoire-mémoire</strong> : Compare la valeur enregistrée dans
+                  une mémoire spécifiée à la valeur enregistrée dans un second emplacement de
+                  mémoire. Il existe 5 opérateurs de comparaison qui peuvent être utilisés pour
+                  l'évaluation :
+                  <ul>
+                    <li>"moins que"</li>
+
+                    <li>"inférieur ou égal"</li>
+
+                    <li>"égal"</li>
+
+                    <li>"plus grand que ou égal"</li>
+
+                    <li>"supérieur à"</li>
+                  </ul>
+                  Le calcul est déclenché lorsqu'une des valeurs de la mémoire surveillée change de
+                  sorte que la valeur de comparaison change.
+                </li>
+              </ul>
+            </li>
+
+            <li>Condition
+              <ul>
+                <li><strong>Condition Vrai</strong> : évalue à vrai si l'état de la condition
+                spécifié est vrai.</li>
+
+                <li><strong>Condition Faux</strong> : ùvalue à vrai si l'état de la condition
+                spécifiée est faux.</li>
+              </ul>
+            </li>
+
+            <li>Bulletin d'Ordre
+              <ul>
+                <li><strong>Itinéraire libre</strong> : évalue à vrai quand l'itinéraire est est
+                disponible.</li>
+
+                <li><strong>Itinéraire Défini</strong> : ùvalue à vrai lorsque l'itinéraire a été
+                définie.</li>
+
+                <li><strong>Itinéraire Alloué</strong> : ùvalue à vrai lorsque l'itinéraire a été
+                allouée.</li>
+
+                <li><strong>Itinéraire Occupé</strong> : ùvalue à vrai lorsque l'Itinéraire a été
+                occupé.</li>
+
+                <li><strong>Train en cours de circulation</strong> : ùvalue à vrai lorsqu'un train
+                est en circulation.</li>
+              </ul>
+            </li>
+
+            <li>Horloge rapide
+              <ul>
+                <li><strong>Etendue de l'Horloge Rapide</strong> : ùvalue à vrai si l'heure
+                actuelle de l'horloge rapide est comprise entre le début et la fin de la période de
+                temps. Les heures doivent être doivent être spécifiées au format hh:mm, où hh
+                représente les heures et mm les minutes, par rapport à une horloge de 24 heures. Le
+                calcul est déclenché lorsque l'heure de l'horloge rapide entre dans la plage et
+                lorsque l'heure de l'horloge rapide sort de la plage.</li>
+              </ul>
+            </li>
+
+            <li>Occupation Canton
+              <ul>
+                <li><strong>Occupé</strong> : ùvalue à vrai lorsque le canton est occupé.</li>
+
+                <li><strong>Erreur d'alimentation</strong> : ùvalue à vrai lorsqu'une erreur
+                d'alimentation est survenue.</li>
+
+                <li><strong>Hors Service</strong> : ùvalue à vrai lorsqu'un canton est hors
+                service.</li>
+
+                <li><strong>ùteint</strong> : ùvalue à vrai lorsqu'un canton est éteint.</li>
+
+                <li><strong>PChemin Occupé</strong> : ùvalue à vrai lorsqu'unchemin est occupé</li>
+
+                <li><strong>Innoccupé</strong> : ùvalue à vrai lorsqu'un chemin n'est pas
+                occupé.</li>
+
+                <li><strong>Affecté</strong> : ùvalue à vrai lorsque le canton est affecté.</li>
+              </ul>
+            </li>
+
+            <li>Entrée Sortie
+              <ul>
+                <li><strong>Active</strong> : ùvalue à vrai lorsque l'entrée/sortie est
+                active.</li>
+
+                <li><strong>Inactive</strong> : ùvalue à vrai lorsque l'entrée/sortie n'est pas
+                active.</li>
+              </ul>
+            </li>
+          </ul>
+        </dd>
+
+        <dd>
+          <h2><a name="action" id="action">Actions disponibles</a>
+          </h2>
+          .
+          <p>Les actions qui sont actuellement disponibles pour être utilisées dans les Conditions
+          sont listées ci-dessous avec des informations sur chacune d'elles :</p>
+
+          <ul>
+            <li>Capteur
+              <ul>
+                <li><strong>Définir Capteur</strong> : Définit le capteur spécifié à l'état choisi.
+                Spécifiez le capteur à définir en saisissant son nom. Spécifiez l'état à définir en
+                choisissant Actif ou Inactif dans le menu contextuel.</li>
+
+                <li><strong>Capteur à Réglage Différé</strong> : Règle le capteur spécifié à l'état
+                choisi après avoir attendu un nombre de secondes spécifié. Spécifiez le capteur à
+                régler en saisissant son nom. Spécifiez l'état à définir en en choisissant Actif ou
+                Inactif dans le menu contextuel. Spécifiez le nombre de secondes à attendre avant
+                de définir le capteur en saisissant un nombre dans le champ le plus à droite. Si
+                cette condition est déjà en attente pour régler ce capteur, cette action est
+                ignorée, et l'action précédente continue comme prévu initialement.(voir aussi
+                <strong>Réinitialiser Capteur à Réglage Différé</strong> ci-dessous.)</li>
+
+                <li><strong>Réinitialiser Capteur à Réglage Différé</strong> : Règle le capteur
+                spécifié à l'état choisi après avoir attendu un nombre de secondes spécifié.
+                Spécifiez le capteur à régler en saisissant son nom. Spécifiez l'état à définir en
+                en choisissant Actif ou Inactif dans le menu contextuel. Spécifiez le nombre de
+                secondes à attendre avant de définir le capteur en saisissant un nombre dans le
+                champ le plus à droite. Cette action est la même que <strong>Capteur à Réglage
+                Différé</strong>, sauf que si cette condition est déjà en attente active pour
+                définir le capteur spécifié, l'attente précédente est annulée, et une nouvelle
+                période d'attente est lancée. En effet , le temps d'attente est redémarré. Le
+                capteur n'est pas défini avant l'expiration de la période d'attente la plus
+                récente.</li>
+
+                <li><strong>Annulation des Minuteries pour le Capteur</strong> : Annule toutes les
+                minuteries d'attente pour définir le capteur spécifié dans toutes les Conditions
+                dans toutes les Logix. Spécifiez le capteur en entrant son nom. Le capteur n'est
+                pas défini ; toutes les actions retardées actives pour ce réglage du capteur
+                spécifié sont annulées sans régler le capteur.</li>
+              </ul>
+            </li>
+
+            <li>Aiguillage
+              <ul>
+                <li><strong>Définir Aiguillage</strong> : Met l'aiguillage spécifié à l'état
+                choisi. Spécifiez l'aiguillage à définir en saisissant son nom. Direct ou Dévié
+                dans le menu contextuel.</li>
+
+                <li><strong>Réglage Aiguillage Temporisé</strong> : met l'aiguillage spécifié à
+                l'état choisi après avoir attendu un nombre de secondes spécifié. Spécifiez
+                l'aiguillage à régler en saisissant son nom. Spécifiez l'état à définir en en
+                choisissant Direct ou Dévié dans le menu contextuel. Spécifiez le nombre de
+                secondes à attendre avant d'activer l'aiguillage en saisissant un nombre dans le
+                champ le plus à droite. Si cette condition est déjà en attente d'activer cet
+                aiguillage, cette action est ignorée et l'action précédente se poursuit comme prévu
+                initialement.(voir aussi <strong>Réinitialisation de l'Aiguillage
+                Temporisé</strong> ci-dessous.)</li>
+
+                <li><strong>Verrouillage de l'Aiguillage</strong> : Permet de verrouiller ou de
+                déverrouiller un aiguillage. Entrez le nom de l'aiguillage et choisissez
+                l'opération dans le menu contextuel. <strong>Note:</strong> Pour contrôler le type
+                de verrouillage de l'aiguillage, allez dans le <a href=
+                "AiguillageTable.shtml">Tableau Aiguillages</a> et sélectionnez le Mode de
+                verrouillage.</li>
+
+                <li><strong>Annulation des Temporisation d'Aiguillage</strong> : Annule toutes les
+                Temporisations en attente pour régler les aiguillages spécifiés dans toutes les
+                Conditions dans toutes les Logix. Spécifiez l'Aiguillage en en entrant son nom.
+                L'aiguillage n'est pas activé ; toutes les actions retardées actives pour définir
+                l'Aiguillage spécifié sont annulées sans régler l'aiguillage.</li>
+
+                <li><strong>Réinitialisation de l'Aiguillage Retardé</strong> : Met le aiguillage
+                spécifié à l'état choisi après avoir attendu pendant un nombre de secondes
+                spécifié. Spécifiez l'aiguillage en saisissant son nom. Spécifiez l'état à définir
+                en en choisissant Fermé ou Lancé dans le menu contextuel. Spécifiez le nombre de
+                secondes à attendre avant d'activer le aiguillage en saisissant un nombre dans le
+                champ le plus à droite. Cette action est la même que <strong>Réglage Aiguillage
+                Temporisé</strong>, sauf que si cette condition est déjà en attente active pour
+                régler le aiguillage spécifié, l'attente précédente est annulée, et une nouvelle
+                période d'attente est lancée. En effet , le temps d'attente est redémarré.
+                L'aiguillage n'est pas activé jusqu'à ce que la période d'attente la plus récente
+                expire.</li>
+              </ul>
+            </li>
+
+            <li>Lumière
+              <ul>
+                <li><strong>Régler la lumière</strong> : règle la lumière spécifiée sur l'état
+                choisi. Spécifiez la lumière à régler en saisissant son nom. Spécifiez l'état à
+                définir en choisissant On ou Off dans le le menu contextuel.</li>
+
+                <li><strong>Définir l'intensité de la lumière</strong> : Définit l'intensité d'une
+                lumière à intensité variable spécifiée à la valeur d'intensité saisie. Spécifiez la
+                lumière à définir en saisissant son nom. Spécifiez l'intensité en saisissant le
+                pourcentage d'intensité sous la forme d'un nombre entier compris entre 0 et 100. Si
+                la lumière spécifiée n'est pas une lumière variable, ou si la valeur d'intensité
+                valeur d'intensité saisie n'est pas un nombre entier dans la plage requise, un
+                message d'erreur s'affiche.</li>
+
+                <li><strong>Définir le temps de transition de la lumière</strong> : Définit le
+                temps de transition d'une lumière à intensité variable spécifiée ua temps saisie.
+                Spécifiez la lumière à définir en saisissant son nom. Spécifiez le temps de
+                transition en saisissant le nombre de minutes d'horloge rapide nécessaires pour
+                pour passer de 0 à 100 % d'intensité. Si le lumière spécifiée n'est pas une lumière
+                variable, ou si un nombre entier positif n'est pas saisi pour le nombre de minutes
+                d'horloge rapide, un message d'erreur s'affiche.</li>
+              </ul>
+            </li>
+
+            <li>Feu
+              <ul>
+                <li><strong>Définir l'apparence du Feu</strong> : Définit le feu spécifié à
+                l'apparence choisie. Spécifiez le feu à définir en saisissant son nom. Spécifiez
+                l'apparence à définir en choisissant dans le menu contextuel.</li>
+
+                <li><strong>Définir Feu Forcé</strong> : Définit le feu spécifié. à forcer.
+                Spécifiez le feu à forcer en saisissant son nom.</li>
+
+                <li><strong>Libérer Feu Forcé</strong> : Efface le forç:age du feu spécifié.
+                Spécifiez le feu en saisissant son nom.</li>
+
+                <li><strong>Definir Feu ùteint</strong> : Règle le feu spécifiée sur non allumé .
+                Spécifiez le feul en saisissant son nom.</li>
+
+                <li><strong>Definir Feu Allumé</strong> : règle le feu spécifié sur allumé.
+                Spécifiez le feu en saisissant son nom.</li>
+              </ul>
+            </li>
+
+            <li>Mât de signalisation
+              <ul>
+                <li><strong>Définir l'Aspect du Mât de Signalisation</strong> : Définit le mât de
+                signal spécifié à l'aspect choisi. Spécifiez le mât de signal à définir en
+                saisissant son nom. Sélectionnez l'aspect dans la liste Aspect du mât de
+                signal.</li>
+
+                <li><strong>Définir Mât de Signalisation Forcé</strong> : Définit le mât de signal
+                spécifié à forcer. Spécifiez le mât de signal à forcé en saisissant son nom.</li>
+
+                <li><strong>Libérer Forç:age Mât de Signalisation</strong> : Efface la mise à
+                forcer du mât de signalisation spécifié. Spécifiez le mât de signalisation en
+                entrant son nom.</li>
+
+                <li><strong>Définir Mât de Signalisation ùteint</strong> : Définit le mât de
+                signalisation spécifié comme non allumé. Spécifiez le mât de signal en saisissant
+                son nom.</li>
+
+                <li><strong>Libérer Mât de Signalisation ùteint</strong> : Règle le mât de signal
+                spécifié à allumé. Spécifiez le mât de signal en saisissant son nom.</li>
+              </ul>
+            </li>
+
+            <li>Mémoire
+              <ul>
+                <li><strong>Définir la mémoire</strong> : Définit la mémoire spécifiée à la valeur
+                saisie. Spécifiez la mémoire à définir en saisissant son nom. Spécifiez la valeur à
+                définir dans la mémoire en la la saisissant dans le champ le plus à droite.</li>
+
+                <li><strong>Copier la mémoire vers la mémoire</strong> : Copie la valeur d'une
+                variable de mémoire à une autre variable de mémoire. Spécifiez la mémoire à partir
+                de laquelle il faut copier en saisissant son nom dans le champ le plus à gauche.
+                Spécifiez la mémoire qui doit recevoir la valeur copiée en saisissant son nom dans
+                le champ le plus à droite.</li>
+              </ul>
+            </li>
+
+            <li>Logix
+              <ul>
+                <li><strong>Activer Logix</strong> : Active le logix spécifié. Spécifiez le logix à
+                activer en saisissant son nom.</li>
+
+                <li><strong>Désactiver Logix</strong> : Désactive le logix spécifié. Spécifiez le
+                logix à désactiver en saisissant son nom.</li>
+              </ul>
+            </li>
+
+            <li>Entrée Sortie
+              <ul>
+                <li><strong>Definir Paire E/S Activée</strong> : active la paire entrée/sortie
+                spécifiée. Spécifiez la paire entrée/sortie à activer en saisissant son nom.</li>
+
+                <li><strong>Definir Paire E/S Désactivée</strong> : Désactive la paire
+                d'entrée/sortie paire d'entrée/sortie spécifiée. Spécifiez la paire d'entrée/sortie
+                à activer en entrant son nom.</li>
+
+                <li><strong>Definir Segment Paire E/S Actif / Inactif</strong> : Demander que le
+                segment d'itinéraire pour la paire d'entrée/sortie spécifiée soit activé s'il n'est
+                pas actif ou désactivé s'il est actif. Spécifiez la Paire d'entrée/sortie à activer
+                en saisissant son nom.</li>
+              </ul>
+            </li>
+
+            <li>Bulletin d'Ordre
+              <ul>
+                <li><strong>Allocation du Bulletin d'Ordre Itinéraire</strong> : Attribue (réserve)
+                les OCantons composant l'itinéraire du Bulletin d'Ordre pour une utilisation par le
+                Bulletin d'Ordre. Spécifiez le Bulletin d'Ordre en saisissant son Nom Système ou
+                son Nom Utilisateur.</li>
+
+                <li><strong>Désaffecter le Bulletin d'Ordre</strong> : Désaffecte les OCantons
+                composant l'itinéraire du Bulletin d'Ordre afin qu'ils puissent être être alloués à
+                d'autres Bulletins d'Ordre. Spécifiez le bBulletin d'Ordre en saisissant son Nom
+                dSystème ou son Nom Utilisateur.</li>
+
+                <li><strong>Définir l'itinéraire Aiguillages</strong> : Définit l'ensemble des
+                aiguillages composant l'itinéraire du Bulletin d'Ordre. Précisez le Bulletin
+                d'Ordre en saisissant son nom système ou son nom utilisateur.</li>
+
+                <li><strong>Fonctionnement automatique du train</strong> : lance la lecture du
+                script enregistré pour le train spécifié dans le Bulletin d'Ordre. Spécifiez le
+                Bulletin d'Ordre en saisissant son nom système ou son nom tilisateur.</li>
+
+                <li><strong>Train à conduite manuelle</strong> : sert d'"autorisation" à un
+                opérateur qu'un train à conduite humaine dispose de droits de circulation pour
+                l'étendue de l'itinéraire du Bulletin d'Ordre. Spécifiez le Bulletin d'Ordre en
+                entrant son nom système ou son nom utilisateur.</li>
+
+                <li>
+                  <strong>Commande du train automatique</strong> : émet la commande spécifiée à un
+                  train à marche automatique. Spécifiez le Bulletin d'Ordre du train en saisissant
+                  son nom système ou son nom utilisateur. Les commandes sont :
+                  <ul>
+                    <li>Arrêt</li>
+
+                    <li>Reprendre</li>
+
+                    <li>Abandon</li>
+                  </ul>
+                </li>
+
+                <li><strong>Définir l'ID du train</strong> : Définissez l'ID du train à partir du
+                tableau de service ou de l'adresse DCC. Lorsqu'une adresse DCC est utilisée,
+                précisez également Long ou Court. Exemple : 1234(L) ou 10(S).</li>
+
+                <li><strong>Définir le nom du train</strong> : Définir le nom du train pour le...
+                Bulletin d'Ordre sélectionné.</li>
+
+                <li><strong>Définir Facteur du R&amp;gulateur</strong> : Augmente ou diminue les
+                paramètres d'accélération d'un train en marche automatique par le facteur spécifié.
+                Spécifiez le Bulletin d'Ordre du train en entrant son Nom Système ou Nom
+                Utilisateur.</li>
+              </ul>
+            </li>
+
+            <li>Horloge rapide
+              <ul>
+                <li><strong>Définir l'Heure de l'Horloge Rapide</strong> : Définit l'heure de
+                l'horloge rapide à l'heure saisie. L'heure est saisie sous la forme <em>hh:mm</em>
+                où <em>hh</em> représente les heures et <em>mm</em> représente les minutes sur une
+                horloge de 24 heures. Cette action règle l'horloge rapide à l'heure spécifiée, que
+                l'horloge rapide soit en marche ou arrêtée.</li>
+
+                <li><strong>Démarrer l'Horloge Rapide</strong> : démarre l'horloge rapide de JiMRI.
+                en cours d'exécution. Si l'horloge rapide est déjà en cours d'exécution, cette
+                action n'a aucun effet.</li>
+
+                <li><strong>Arrêt Horloge Rapide</strong> : Met en pause l'horloge rapide JMRI. Si
+                l'horloge rapide n'est pas en cours d'exécution, cette action n'a aucun effet.</li>
+              </ul>
+            </li>
+
+            <li>Canton d'occupation
+              <ul>
+                <li style="list-style: none; display: inline">
+                  <ul>
+                    <li><strong>Désallocation du canton</strong> : Désaffecte un canton
+                    d'occupation. Spécifiez le canton d'occupation en saisissant son nom ystème ou
+                    son nom utilisateur.</li>
+
+                    <li><strong>Définir la valeur du canton</strong> : Définit une valeur pour le
+                    canton sélectionné.</li>
+
+                    <li><strong>Définir Erreur Canton</strong> : Définit l'état du canton
+                    sélectionné à "erreur de cantonnement".</li>
+
+                    <li><strong>Effacer Erreur Canton</strong> : Supprimer le statut "Erreur
+                    Canton" epour le cantonnement sélectionné</li>
+
+                    <li style="list-style: none">.</li>
+
+                    <li><strong>Définir Canton Hors-Service</strong> : Définit le statut d'un
+                    cantonnement d'occupation à Hors-Service. Spécifiez le canton d'occupation en
+                    saisissant son nom système ou son nom utilisateur.</li>
+
+                    <li><strong>Effacer Canton Hors-Service</strong> : Définit l'état d'un
+                    cantonnement d'occupation à l'état actuel. Spécifiez l'OCanton en saisissant
+                    son nom système ou son nom utilisateur.</li>
+                  </ul>
+                </li>
+
+                <li>Audio
+                  <ul>
+                    <li><strong>Jouer un fichier son</strong> : Lit le fichier son spécifié.
+                    Spécifiez le fichier sonore à lire en saisissant son nom dans le champ prévu à
+                    cet effet. Cliquez sur <strong>Définir</strong> pour faire apparaître une boîte
+                    de dialogue de sélection de fichier pour faciliter la recherche du fichier.
+                    Naviguez jusqu'à votre fichier sonore, puis cliquez sur le nom de votre fichier
+                    sonore dans la boîte de dialogue pour trouver le fichier. nom de votre fichier
+                    sonore dans la boîte de dialogue pour le copier (y compris son chemin) dans le
+                    champ.</li>
+
+                    <li><strong>Commande de l'Objet Audio</strong>:</li>
+                  </ul>
+                </li>
+
+                <li>Scénario
+                  <ul>
+                    <li><strong>Scripts : Exécuter le script</strong> : lance le script spécifié.
+                    Spécifiez le script à lancer en saisissant son nom dans le champ prévu à cet
+                    effet. Cliquez sur <strong>Définir</strong> pour faire apparaître une boîte de
+                    dialogue de sélection de fichier pour trouver le fichier. Naviguez jusqu'à
+                    votre fichier de script, puis cliquez sur le nom de votre fichier de script
+                    dans la boîte de dialogue pour le copier (y compris son chemin d'accès) dans le
+                    champ</li>
+
+                    <li><strong>Scripts : Exécuter la commande Jython</strong> : Saisissez la
+                    commande dans le champ Commande de script.</li>
+                  </ul>
+                </li>
+
+                <li>Autres
+                  <ul>
+                    <li><strong>Déclenchement Itinéraire</strong> : Déclenche l'itinéraire
+                    spécifié. Précisez l'itinéraire en entrant son nom.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+
+      <h2>Les pages de la documentation Logix sont classées logiquement</h2>
+      .
+      <p>Traduction 2021-03-29</p>
+      <!--#include virtual="LogixDocList.shtml" -->
+    </div>
+  </div>
+</body>
+</html>

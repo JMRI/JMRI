@@ -11,7 +11,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="8" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+  <!--  Added update paths to newest fw 1.14.050 -->
   <version version="7" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2020-05-05"/>
   <!-- Added fw version 1.10+, 1.11+, 1.12+, and 1.13+
     -->
@@ -36,58 +38,58 @@
     -->
   <decoder>
     <family name="SUSI sound modules" mfg="Doehler und Haass">
-      <model model="SH10A (firmware 1.00+)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.00+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.01+)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.01+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.02+)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.02+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.03+)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.03+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.04+)" numOuts="0" numFns="0" productID="SH10A_1.04" comment="SH10A with firmware 1.04 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.04+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.04" comment="SH10A with firmware 1.04 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.05+)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.05+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.06+)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.06+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.07+)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.07+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.08+)" numOuts="2" numFns="30" productID="SH10A_1.08" comment="SH10A with firmware 1.08 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.08+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.08" comment="SH10A with firmware 1.08 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.09+)" lowVersionID="56" highVersionID="56" numOuts="2" numFns="30" productID="SH10A_1.09" comment="SH10A with firmware 1.09 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.09+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="56" highVersionID="56" numOuts="2" numFns="30" productID="SH10A_1.09" comment="SH10A with firmware 1.09 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.10+)" lowVersionID="27" highVersionID="27" numOuts="2" numFns="30" productID="SH10A_1.10" comment="SH10A with firmware 1.10 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.10+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="27" highVersionID="27" numOuts="2" numFns="30" productID="SH10A_1.10" comment="SH10A with firmware 1.10 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.11+)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="30" productID="SH10A_1.11" comment="SH10A with firmware 1.11 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.11+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="30" productID="SH10A_1.11" comment="SH10A with firmware 1.11 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.12+)" lowVersionID="48" highVersionID="48" numOuts="2" numFns="30" productID="SH10A_1.12" comment="SH10A with firmware 1.12 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.12+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="48" highVersionID="48" numOuts="2" numFns="30" productID="SH10A_1.12" comment="SH10A with firmware 1.12 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.13+)" lowVersionID="98" highVersionID="98" numOuts="2" numFns="30" productID="SH10A_1.13" comment="SH10A with firmware 1.13 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.13+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="98" highVersionID="98" numOuts="2" numFns="30" productID="SH10A_1.13" comment="SH10A with firmware 1.13 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
@@ -106,7 +108,7 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
       <!-- CVs added in fw 1.01  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
-      <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->	
+      <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
       <!-- CVs added in fw 1.02  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>

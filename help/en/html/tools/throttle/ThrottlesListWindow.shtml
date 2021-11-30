@@ -1,59 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Throttles List</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project" />
-  <meta name="Author" content="Lionel Jeanson" />
-  <meta name="Language" content="EN" />
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii" />
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen" />
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print" />
-  <link rel="icon" href="/images/jmri.ico" type="image/png" />
-  <link rel="home" title="Home" href="/" />
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="description" content="Throttle documentation for JMRI project">
+  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Throttles List Window</h1>
 
-      <h1>Throttles List</h1>
+      <p><img src="images/ThrottleListWindow.png" alt="">
+      </p>
+      This window is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
+      toolbar.</a><br><br>
+      The Throttles List shows all currently opened Throttles in JMRI, with their respective direction and speed. <br>
+      If an <a href="RostersMediaPane.shtml">icon is available for that roster entry</a>, it will be used.<br>
+      If button icons are enabled in  <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>, speed and direction
+      will show graphicaly. <br>
 
-      <p><img src="images/ThrottleListWindow.png" alt="" /></p>This
-      list is accessible from the <a href=
-      "ThrottleToolBar.shtml">Throttle pane toolbar.</a><br />
-      The Throttles List shows all currently opened Throttles in
-      JMRI. If an <a href="RostersMediaPane.shtml">icon is
-      available for the Rosters in the database</a>, it will be
-      automatically used.<br />
-      <br />
-      Clicking on a line will bring the matching throttle up.<br />
+      <br>
+      Clicking on a line will bring the matching throttle up.<br>
 
-      <h2>New button</h2>This button creates a new Throttle window
-      (hence different from clicking the "New" button in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br />
+      <h3>New button</h3>
+      This button creates a new Throttle window (hence different from clicking the "New" button in
+      <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br>
 
-      <h2>Power button</h2>Same one as in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br />
+      <h3>Stop button</h3>
+      Will emergency stop all JMRI managed throttles.<br>
+      Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
 
-      <h2>Stop button</h2>Same one as in <a href=
-      "ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br />
+      <h3>Power button</h3>
+      Manage layout power.<br>
+      Same one as in <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>.<br>
+
+      <h3>Preferences button</h3>
+      Open the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences pane</a>.
+
+
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

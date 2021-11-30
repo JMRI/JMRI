@@ -1,36 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - RFID Readers</title>
-  <!-- Style -->
   <meta name="keywords" content="JMRI hardware rfid readers">
   <!--#include virtual="/Style.shtml" -->
-  <!-- /Style -->
-
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: RFID Readers</h1>
-      <em>RFID support in JMRI is rapidly evolving; the actual code might be ahead or
-      behind the documentation on any given day.</em>
+      <em>RFID support in JMRI is rapidly evolving; the actual code might be ahead or behind the
+      documentation on any given day.</em>
+      <p>JMRI provides support for general JMRI <a href="../../tools/Sensors.shtml">Sensors</a> and
+      <a href="../../tools/Reporters.shtml">Reporters</a> in terms of RFID Reader "events".</p>
 
-      <p>JMRI provides support for general JMRI <a href=
-      "../../tools/Sensors.shtml">Sensors</a> and <a href=
-      "../../tools/Reporters.shtml">Reporters</a> in terms of RFID
-      Reader "events". <a name="hardware" id="hardware"></a></p>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <h2>Supported Hardware</h2>
-
-      <h3>Protocols</h3>JMRI supports several different RFID Reader
-      Protocols:
-
+      <h3>Protocols</h3>
+      JMRI supports several different RFID Reader Protocols:
       <ul>
         <li>CORE-ID / ID-Innovations - since version 2.11.4</li>
 
@@ -41,140 +33,119 @@
         <li>Parallax - since v 3.9.2</li>
       </ul>
 
-      <p>Choose the appropriate Protocol when setting the
+      <p>Choose the appropriate Protocol when setting the Preferences.</p>
+
+      <p>JMRI also supports up to 8 individual readers connected via a Concentrator. Right now, the
+      only supported Concentrator is that from <a href="../merg/Details.shtml#c7">MERG</a>, and
+      then only for readers using the CORE-ID protocol.<br>
+      Select "MERG Concentrator" for the "Adapter" on the Connections tab in the JMRI
       Preferences.</p>
 
-      <p>JMRI also supports up to 8 individual readers connected
-      via a Concentrator. Right now, the only supported
-      Concentrator is that from <a href="../can/cbus/Details.shtml#c7">MERG</a>, and then only for readers
-      using the CORE-ID protocol.<br>
-      
-      Select "MERG Concentrator" for the "Adapter" on the
-      Connections tab in the JMRI Preferences. </p>
-
-      <h2><a name="connecting"
-      id="connecting">Connecting</a></h2>
-      
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
       <ul>
-        <li>Direct serial connections have been supported since
-        JMRI 2.11.4</li>
+        <li>Direct serial connections have been supported since JMRI 2.11.4</li>
 
-        <li>Network connections are targeted for the JMRI 4.1.2
-        release series.</li>
+        <li>Network connections are targeted for the JMRI 4.1.2 release series.</li>
       </ul>
 
-      <h3>Settings</h3><a href="images/RFID_Preferences.png"><img src=
-      "images/RFID_Preferences.png" align="right" height="220" width=
-      "430" alt="JMRI RFID Preferences"></a>
+      <h3>Settings</h3>
+      <a href="images/RFID_Preferences.png"><img src="images/RFID_Preferences.png" class=
+      "floatRight" height="220" width="430" alt="JMRI RFID Preferences"></a>
+      <p>You configure JMRI's connection to your RFID hardware in JMRI's Preferences.<br>
+      It appears as "RFID" in the System Manufacturer drop-down list.</p>
 
-      <p>You configure JMRI's connection to your RFID hardware in
-      JMRI's Preferences.<br>
-      It appears as "RFID" in the System Manufacturer drop-down
-      list.</p>
-      <p>The "Baud rate" advanced connection setting is typically not critical 
-      for USB-connected RFID connections so it may be "greyed out" to indicate 
-      that it is not selectable.</p>
+      <p>The "Baud rate" advanced connection setting is typically not critical for USB-connected
+      RFID connections so it may be "greyed out" to indicate that it is not selectable.</p>
 
       <h3>Reader Configuration</h3>
+
       <h4>Olimex readers</h4>
-      <p>Olimex MOD-RFID125 and MOD-RFID1356MIFARE readers must be operating in "CDC" 
-          mode.  This mode is typically configured using a pushbutton on the reader.</p>
-      
+
+      <p>Olimex MOD-RFID125 and MOD-RFID1356MIFARE readers must be operating in "CDC" mode. This
+      mode is typically configured using a pushbutton on the reader.</p>
+
       <h3>Naming</h3>
 
-      <p>The <a href="../../doc/Technical/Names.shtml">system
-      letter</a> for RFID connections is "F". Details of RFID event
-      and object names are described below. 
+      <p>The <a href="../../doc/Technical/Names.shtml">system letter</a> for RFID connections is
+      "F". Details of RFID event and object names are described below. 
       <!-- , with technical details on a <a href="Names.shtml">separate page</a> --></p>
 
-      <p>JMRI associates RFID events with individual JMRI objects
-      (Sensors, Reporters, etc.) via System Names. A System Name
-      like "<code>FSA</code>" defines a Sensor that follows the "A"
-      reader, whereas a System Name like "<code>FRB</code>" defines
-      a Reporter that follows the "B" reader.</p>
+      <p>JMRI associates RFID events with individual JMRI objects (Sensors, Reporters, etc.) via
+      System Names. A System Name like "<code>FSA</code>" defines a Sensor that follows the "A"
+      reader, whereas a System Name like "<code>FRB</code>" defines a Reporter that follows the "B"
+      reader.</p>
 
       <h3>Sensors</h3>
 
-      <p>RFID readings coming into JMRI applications can be
-      accessed via JMRI Sensor objects. The Sensor's 
-      <!-- <a href="Names.shtml">system name</a> -->System Name
-      determines which RFID Reader it corresponds to.</p>
+      <p>RFID readings coming into JMRI applications can be accessed via JMRI Sensor objects. The
+      Sensor's <!-- <a href="Names.shtml">system name</a> -->System Name determines which RFID
+      Reader it corresponds to.</p>
 
-      <p>A Sensor is defined by two events: The one that sets it
-      ACTIVE, and the one that sets it INACTIVE. When an RFID Tag
-      is within the proximity of an RFID Reader, the associated
-      sensor is ACTIVE; outside of these times it is INACTIVE. You
-      create Sensors using the <a href=
-      "../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
-      Add...</a> button on the <a href=
-      "../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
-      Table</a>.</p>
+      <p>A Sensor is defined by two events: The one that sets it ACTIVE, and the one that sets it
+      INACTIVE. When an RFID Tag is within the proximity of an RFID Reader, the associated sensor
+      is ACTIVE; outside of these times it is INACTIVE. You create Sensors using the <a href=
+      "../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a> button on the <a href=
+      "../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.</p>
 
       <h3>Reporters</h3>
 
-      <p>RFID readings coming into JMRI applications can also be
-      accessed via JMRI Reporter objects. The Reporter's 
-      <!-- <a href="Names.shtml">system name</a> -->system name
-      determines which RFID Reader it corresponds to.</p>
+      <p>RFID readings coming into JMRI applications can also be accessed via JMRI Reporter
+      objects. The Reporter's <!-- <a href="Names.shtml">system name</a> -->system name determines
+      which RFID Reader it corresponds to.</p>
 
-      <p>A Reporter can contain arbitrary information, unlike a
-      Sensor which is only ACTIVE or INACTIVE. Each Reporter is
-      associated with some specific source of information on the
-      layout, and makes that devices information available to the
-      rest of JMRI.</p>
+      <p>A Reporter can contain arbitrary information, unlike a Sensor which is only ACTIVE or
+      INACTIVE. Each Reporter is associated with some specific source of information on the layout,
+      and makes that devices information available to the rest of JMRI.</p>
 
-      <p>When an RFID Reader reports that a specific tag has been
-      seen, the corresponding Reporter will contain details of the
-      specific <a href="../../tools/IdTags.shtml">IdTag</a> seen.
-      This then enables other JMRI tools to react to this
-      information.</p>
+      <p>When an RFID Reader reports that a specific tag has been seen, the corresponding Reporter
+      will contain details of the specific <a href="../../tools/IdTags.shtml">IdTag</a> seen. This
+      then enables other JMRI tools to react to this information.</p>
 
       <h4>Reporter Table</h4>
 
-      <p>The <a href=
-      "../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter
-      Table</a> provides easy access to the contents of all
-      Reporters that JMRI knows about. JMRI automatically creates
-      Reporter objects for devices discovered on the layout.<br>
+      <p>The <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
+      provides easy access to the contents of all Reporters that JMRI knows about. JMRI
+      automatically creates Reporter objects for devices discovered on the layout.<br>
       There's also an <a href=
-      "../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">
-      "Add..." button</a> for manually creating your own internal
-      Reporters.</p>
+      "../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> for
+      manually creating your own internal Reporters.</p>
 
       <h4>Displaying Reporter Values on Panels</h4>
 
-      <p>A Reporter's value can be displayed on a Control Panel via either the 
-      <a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a> or the
-      <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml"> Control Panel Editor</a>.
+      <p>A Reporter's value can be displayed on a Control Panel via either the <a href=
+      "../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a> or the <a href=
+      "../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>.
       These are the steps for using Panel Editor:</p>
 
       <ul>
-        <li>Open the Panel Editor window for your panel and select "Reporter" from the pulldown menu under
-        "Select the type of icon to Add to Panel."</li>
+        <li>Open the Panel Editor window for your panel and select "Reporter" from the pulldown
+        menu under "Select the type of icon to Add to Panel."</li>
 
-        <li>Select the Reporter from the list, or add a new one by typing the desired System Name.</li>
+        <li>Select the Reporter from the list, or add a new one by typing the desired System
+        Name.</li>
 
-        <li>Click the button to "Add to Panel." The Reporter icon will be placed on the Panel. You will see
-        "&lt;no report&gt;" displayed.  Use the Reporter Table to change the value.</li>
+        <li>Click the button to "Add to Panel." The Reporter icon will be placed on the Panel. You
+        will see "&lt;no report&gt;" displayed. Use the Reporter Table to change the value.</li>
 
-        <li>You can drag the icon to where you want by right-clicking your mouse and dragging the value.</li>
+        <li>You can drag the icon to where you want by right-clicking your mouse and dragging the
+        value.</li>
 
-        <li>The pop-up menu on the icon will let you change the
-        formatting.</li>
-        
+        <li>The pop-up menu on the icon will let you change the formatting.</li>
       </ul>
-      
-      <p>Note that a Reporter cannot be displayed directly on a Layout Editor Panel.  Instead, use a script
-      such as <a href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a> to parse the 
-      information in the Reporter and copy what you want into a <a href="../../tools/Memories.shtml">Memory.</a>
-      That Memory can then be displayed on a Layout Editor Panel.
-      </p>
-      
+
+      <p>Note that a Reporter cannot be displayed directly on a Layout Editor Panel. Instead, use a
+      script such as <a href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a>
+      to parse the information in the Reporter and copy what you want into a <a href=
+      "../../tools/Memories.shtml">Memory.</a> That Memory can then be displayed on a Layout Editor
+      Panel.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

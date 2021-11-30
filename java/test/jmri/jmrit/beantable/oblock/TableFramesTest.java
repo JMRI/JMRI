@@ -11,8 +11,6 @@ import jmri.util.JUnitUtil;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -22,24 +20,24 @@ public class TableFramesTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
         TableFrames tf = new TableFrames();
-        Assert.assertNotNull("exists", tf);
+        Assertions.assertNotNull(tf, "exists");
         tf.initComponents();
     }
 
     @Test
     public void testCTorTabbed() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
         TableFrames tf = new TableFrames();
-        Assert.assertNotNull("exists", tf);
+        Assertions.assertNotNull(tf, "exists");
     }
 
     @Test
     public void testImport() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // use original _desktop interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
 
@@ -79,7 +77,7 @@ public class TableFramesTest {
         //new JButtonOperator(new JFrameOperator((JFrame) pane), Bundle.getMessage("ButtonOK")).doClick();
         // check import result
 
-        Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
+        Assertions.assertNotNull(InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"), "Imported OBlock");
         //2 x WARN  - Portal IP0001-0002 needs an OBlock on each side [main] jmrit.beantable.oblock.SignalTableModel.makeList()
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
@@ -95,6 +93,7 @@ public class TableFramesTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

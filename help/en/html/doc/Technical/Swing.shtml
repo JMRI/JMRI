@@ -1,238 +1,208 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Use of Swing</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code standards recommendation Swing">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI technical code standards recommendation Swing">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-  <h1>JMRI Code: Use of Swing</h1>
-      <b>Note:</b> This page describes a toolkit for creating
-      JMRI's GUI that's been slowly developed as part of JMRI.
-      Please use this if you're creating new JMRI user interfaces.
-      Note that there are proposals to move JMRI to other, non-specific
-      toolkits in this area. Before you do work to extend or improve
-      this toolkit itself, please ask on jmri-developers about that status
-      of that work.
-      
-      <p>We use Java Swing for our GUI
-      development. It's a lot more powerful than the original AWT,
-      and the price is right. In particular, we try to use the
-      "Bean format" of setting and getting members, call-backs to
-      notify of changes, etc, to make it easier to build
-      applications from JMRI components.
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-    <h2>General Principles</h2>
-    
-    
-    
-    
-      <p>We have been evolving a particular pattern for using
-      Swing, described here. The JMRI codebase contains several
-      generations of implementations, so not all of it looks like
-      this, but we're moving classes in this direction as time
-      allows.</p>
+    <div id="mainContent">
+      <h1>JMRI Code: Use of Swing</h1>
+      <strong>Note:</strong> This page describes a toolkit for creating JMRI's GUI that's been
+      slowly developed as part of JMRI. Please use this if you're creating new JMRI user
+      interfaces. Note that there are proposals to move JMRI to other, non-specific toolkits in
+      this area. Before you do work to extend or improve this toolkit itself, please ask on
+      jmri-developers about that status of that work.
+      <p>We use Java Swing for our GUI development. It's a lot more powerful than the original AWT,
+      and the price is right. In particular, we try to use the "Bean format" of setting and getting
+      members, call-backs to notify of changes, etc, to make it easier to build applications from
+      JMRI components.</p>
 
-      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png" align="right" height="193" width="334"></a>
-      <p>The basic structure is:
+      <h2>General Principles</h2>
+
+      <p>We have been evolving a particular pattern for using Swing, described here. The JMRI
+      codebase contains several generations of implementations, so not all of it looks like this,
+      but we're moving classes in this direction as time allows.</p>
+      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png" class=
+      "floatRight" height="193" width="334" alt="class structure"></a>
+      <p>The basic structure is:</p>
+
       <ul>
-      <li>Keep Swing code in packages with <code>swing</code>
-      in the package path.  For example, prefer putting 
-      Swing code in <code>jmri.jmrit.vsdecoder.swing</code> or a subpackage
-      of that, instead of putting it in <code>jmri.jmrit.vsdecoder</code> itself.
-      This helps keep the <u>other</u> code non-Swing-specific, e.g.
-      so it can be used with other toolkits or on systems without graphics.
-      This pattern is similar to the way that 
-      <a href="XmlPersistance.shtml">ConfigureXml code</a> lives in 
-      separate <code>.configurexml</code> packages.
-      <li>Implement graphical tools as
-      JmriPanel objects. These are JPanels with enough extra
-      structure that the JMRI applications can directly work with them.
-      For example, a JmriPanel subclass can be instantiated and
-      placed in a properly laid out window by creating a
-      JmriNamedPanel action with just the name of the JmriPanel
-      class, which in turn can be done with various automated
-      tools.<br>
-      Do not create JmriJFrame or JFrame subclasses with
-      lots of specific function<br>
-      This pattern lets us write a tool panel just once, and
-      then use it in lots of various places, embedded into windows
-      in several ways. It also greatly reduces the number of
-      classes that need to be loaded at startup time, because there
-      are not separate *Action and *Frame classes, and JmriPanel
-      subclasses don't have to be loaded just because they are
-      listed in a menu.
-      <li>
-      Use the Swing and AWT native support for decoding events.
-      Do not write your own code for decode clicks, mouse down, 
-      drags or other user interactions; use the Swing classes for that.
-      For example, use 
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseAdapter.html"><code>MouseAdapter</code></a>
-      as a way of getting events for mouse pressed, mouse clicked, and mouse released.  These
-      will differ on different platforms and with different hardware, and it extremely
-      unlikely that any code you write will do a better job of 
-      decoding all that.
-      
+        <li>Keep Swing code in packages with <code>swing</code> in the package path. For example,
+        prefer putting Swing code in <code>jmri.jmrit.vsdecoder.swing</code> or a subpackage of
+        that, instead of putting it in <code>jmri.jmrit.vsdecoder</code> itself. This helps keep
+        the <u>other</u> code non-Swing-specific, e.g. so it can be used with other toolkits or on
+        systems without graphics. This pattern is similar to the way that <a href=
+        "XmlPersistance.shtml">ConfigureXml code</a> lives in separate <code>.configurexml</code>
+        packages.
+        </li>
+
+        <li>Implement graphical tools as JmriPanel objects. These are JPanels with enough extra
+        structure that the JMRI applications can directly work with them. For example, a JmriPanel
+        subclass can be instantiated and placed in a properly laid out window by creating a
+        JmriNamedPanel action with just the name of the JmriPanel class, which in turn can be done
+        with various automated tools.<br>
+        Do not create JmriJFrame or JFrame subclasses with lots of specific function<br>
+        This pattern lets us write a tool panel just once, and then use it in lots of various
+        places, embedded into windows in several ways. It also greatly reduces the number of
+        classes that need to be loaded at startup time, because there are not separate *Action and
+        *Frame classes, and JmriPanel subclasses don't have to be loaded just because they are
+        listed in a menu.</li>
+
+        <li>Use the Swing and AWT native support for decoding events. Do not write your own code
+        for decode clicks, mouse down, drags or other user interactions; use the Swing classes for
+        that. For example, use <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseAdapter.html"><code>MouseAdapter</code></a>
+        as a way of getting events for mouse pressed, mouse clicked, and mouse released. These will
+        differ on different platforms and with different hardware, and it extremely unlikely that
+        any code you write will do a better job of decoding all that.
+        </li>
       </ul>
 
-    <h2>JMRI Pattern for Swing Window Creation</h2>
-      <a id="life" name="life"/>
+      <h2 id="life">JMRI Pattern for Swing Window Creation</h2>
+
       <p>The <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
-      jmri.util.swing</a> package contains the support code.</p>
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing</a>
+      package contains the support code.</p>
 
       <h3>Life Cycle of a JmriPanel</h3>
-      
-      First the ctor runs, then
-      initComponents. That second part should be the place for
-      connections to other components, as all lower level objects
-      have been created. (subclasses for particular systems might
-      have e.g. more initComponents methods, called later)
+      First the ctor runs, then initComponents. That second part should be the place for
+      connections to other components, as all lower level objects have been created. (subclasses
+      for particular systems might have e.g. more initComponents methods, called later)
+      <p>Dispose is called at the end. (Note that JPanels don't have a dispose(), that's normally
+      only part of JFrames, but we provide it here for cleanup)</p>
 
-      <p>Dispose is called at the end. (Note that JPanels don't
-      have a dispose(), that's normally only part of JFrames, but
-      we provide it here for cleanup)</p>
+      <h3 id="display">Displaying a JmriPanel</h3>
 
-      <a id="display" name="display"/>
-      <h3>Displaying a JmriPanel</h3>
-      
-      <p>JmriPanels are best created by name with
-      JmriNamedPaneAction, which has the advantage of greatly
-      reducing the number of classes that need to be loaded to
-      populate a menu.</p>
+      <p>JmriPanels are best created by name with JmriNamedPaneAction, which has the advantage of
+      greatly reducing the number of classes that need to be loaded to populate a menu.</p>
 
-      <p>To create an action, e.g. for a menu item, the simplest form is:
+      <p>To create an action, e.g. for a menu item, the simplest form is:</p>
+
       <pre><code>
       new jmri.util.swing.JmriNamedPaneAction("Log4J Tree", "jmri.jmrit.log.Log4JTreePane");
-      </code></pre>
-      The first argument is the human-readable name, and the 2nd is the name of the panel class.
-      <p>
-      An example of a fuller form:
+      </code></pre>The first argument is the human-readable name, and the 2nd is the name of the
+panel class.
+      <p>An example of a fuller form:</p>
+
       <pre><code>
       new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),<br>
                 new jmri.util.swing.sdi.JmriJFrameInterface(),<br>
                 "jmri.jmrit.log.Log4JTreePane");
-      </code></pre><!-- without <br> does not reflow on iPad when viewd online, causing rest of the page to shrink-->
+      </code></pre>
+<!-- without <br> does not reflow on iPad when viewd online, causing rest of the page to shrink-->
+
       <ul>
-      <li>The first argument is the human-readable name for the action, 
-      e.g. what will show in the menu or on the button.  That's internationalized
-      here by using 
-      <a href="I8N.shtml">Bundle</a>.
-      <li>The second argument is the context in which to display it, which
-      in this case is a new plain window.  (See below for more info on the options here)
-      <li>And the third argument is the name of the specific JmriPanel
-      class to be instantiated and used when the action is invoked.  The class
-      isn't loaded until first used, because we've put a String name here, which
-      saves a bunch of time at startup for large menus.
+        <li>The first argument is the human-readable name for the action, e.g. what will show in
+        the menu or on the button. That's internationalized here by using <a href=
+        "I8N.shtml">Bundle</a>.
+        </li>
+
+        <li>The second argument is the context in which to display it, which in this case is a new
+        plain window. (See below for more info on the options here)</li>
+
+        <li>And the third argument is the name of the specific JmriPanel class to be instantiated
+        and used when the action is invoked. The class isn't loaded until first used, because we've
+        put a String name here, which saves a bunch of time at startup for large menus.</li>
       </ul>
-      See the 
-      <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JmriNamedPaneAction.html">JmriNamedPaneAction Javadoc</a> for more information.
-      
-      <p>If you need specialized initialization that can't be built into the
-      JmriPanel itself via it's <code>initComponents</code> 
-      and <code>initContext(..)</code> methods, perhaps
-      to make decision about connections, make a specialized Action class by extending
-      <code>jmri.util.swing.JmriNamedPaneAction</code>,
-      providing the appropriate constructors, and 
-      including a 
-      <code>@Override public JmriPanel makePanel()</code>
-      method that does any case-specific initialization that's needed
-      before the panel can be used. For an example (may have been changed)
-      see
-      <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/swing/LnNamedPaneAction.java">jmri.jmrix.loconet.swing.LnNamedPaneAction</a>.
-      
-      <p>If none that can be used, look into using JmriAbstractAction as
-      the base for a separate class implementing Action.</p>
+      See the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/JmriNamedPaneAction.html">JmriNamedPaneAction
+      Javadoc</a> for more information.
+      <p>If you need specialized initialization that can't be built into the JmriPanel itself via
+      it's <code>initComponents</code> and <code>initContext(..)</code> methods, perhaps to make
+      decision about connections, make a specialized Action class by extending
+      <code>jmri.util.swing.JmriNamedPaneAction</code>, providing the appropriate constructors, and
+      including a <code>@Override public JmriPanel makePanel()</code> method that does any
+      case-specific initialization that's needed before the panel can be used. For an example (may
+      have been changed) see <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/swing/LnNamedPaneAction.java">
+      jmri.jmrix.loconet.swing.LnNamedPaneAction</a>.</p>
+
+      <p>If none that can be used, look into using JmriAbstractAction as the base for a separate
+      class implementing Action.</p>
 
       <h3>Menus, ToolsBars, Buttons, etc</h3>
-      If you're using JmriPanels as described above,
-      JMRI also provides tools for creating menus, toolbars,
-      button fields, etc more easily.
-      
-      <p>
-    Generic creation of menus, toolbars and navigation trees from XML definition
-    files are provided by the 
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JMenuUtil.html">jmri.util.swing.JMenuUtil</a>,
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JToolBarUtil.html">jmri.util.swing.JToolBarUtil</a>, and
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/JTreeUtil.html">jmri.util.swing.JTreeUtil</a>
-    classes
-       
-      <p>I18N of those menus, toolbars and trees is then done via the XML content
-      in the <a href="I8N.shtml">usual way</a>.</p>
+      If you're using JmriPanels as described above, JMRI also provides tools for creating menus,
+      toolbars, button fields, etc more easily.
+      <p>Generic creation of menus, toolbars and navigation trees from XML definition files are
+      provided by the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/JMenuUtil.html">jmri.util.swing.JMenuUtil</a>,
+      <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/JToolBarUtil.html">jmri.util.swing.JToolBarUtil</a>,
+      and <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/JTreeUtil.html">jmri.util.swing.JTreeUtil</a>
+      classes</p>
 
-      
-      <a id="windows" name="windows"/>
-      <h2>Window Control</h2>
+      <p>I18N of those menus, toolbars and trees is then done via the XML content in the <a href=
+      "I8N.shtml">usual way</a>.</p>
 
+      <h2 id="windows">Window Control</h2>
       JMRI provides three different ways of embedding JmriPanels in windows:
       <ul>
-      <li>The jmri.util.swing.sdi package provides the traditional JMRI "single-document interface", where there are multiple independent windows
-      <li>The jmri.util.swing.multipane package provides a  "multi-pane" or IDE-style interface", where each window is tiled with inter-related panes.
-        This is used for the (new) DecoderPro.
-      <li>The jmri.util.swing.mdi package provides a "multi-document interface", where a primary window contains multiple independent sub-windows.
-            This currently isn't used by a JMRI app, at least not as far as we know, but it's available if wanted.
+        <li>The jmri.util.swing.sdi package provides the traditional JMRI "single-document
+        interface", where there are multiple independent windows</li>
+
+        <li>The jmri.util.swing.multipane package provides a "multi-pane" or IDE-style interface",
+        where each window is tiled with inter-related panes. This is used for the (new)
+        DecoderPro.</li>
+
+        <li>The jmri.util.swing.mdi package provides a "multi-document interface", where a primary
+        window contains multiple independent sub-windows. This currently isn't used by a JMRI app,
+        at least not as far as we know, but it's available if wanted.</li>
       </ul>
-        
-      <p>Each of those then provides an implementation of WindowInterface that creates new windows, subwindows or other constructs as needed, so as to put
-      panels in the right place.</p>
 
-      <p>(See the
-      <a href="https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing package Javadocs</a>
-      for more information</p>
+      <p>Each of those then provides an implementation of WindowInterface that creates new windows,
+      subwindows or other constructs as needed, so as to put panels in the right place.</p>
 
-      <a id="misc" name="misc"/>
-      <h2>Misc</h2>
-      
+      <p>(See the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing package
+      Javadocs</a> for more information</p>
+
+      <h2 id="misc">Misc</h2>
       (This section needs more organization)
+      <p>JmriJFrame is in the wrong package for historical reasons, will eventually move to
+      jmri.util.swing.</p>
 
-      <p>JmriJFrame is in the wrong package for historical reasons, will eventually move to jmri.util.swing.</p>
-
-      <p>Older classes, some still to be moved to jmri.util.swing,
-      some are 1.1.8 adapters that should just go away.</p>
+      <p>Older classes, some still to be moved to jmri.util.swing, some are 1.1.8 adapters that
+      should just go away.</p>
 
       <ul>
-      <li>AbstractFrameAction</li>
+        <li>AbstractFrameAction</li>
+
         <li>BusyGlassPane</li>
+
         <li>FileChooserFilter</li>
+
         <li>FontUtil</li>
+
         <li>JTableUtil</li>
+
         <li>JmriInsets</li>
+
         <li>JmriJFrame</li>
+
         <li>JmriJFrameAction</li>
+
         <li>JmriSpinner</li>
+
         <li>MouseInputAdapterInstaller</li>
+
         <li>ResizableImagePanel</li>
+
         <li>WindowMenu</li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

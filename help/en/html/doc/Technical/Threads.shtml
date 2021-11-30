@@ -1,292 +1,243 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Threading</title>
-    <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI Code: Threading</h1>
-      
-      <p>The vast majority of JMRI code (and
-      programmers) don't have to worry about threading. Their code
-      gets invoked, and invokes other code, and threading takes
-      care of itself. This is particularly true of event-based
-      code, which responds to events from e.g. the GUI or a layout
-      object changing, and calls methods on other objects, which
-      may in turn create more events.</p>
 
-      <p>This simplicity comes from using a single thread for
-      processing most of JMRI's activity: The Java Swing event
-      thread.</p>
+      <p>The vast majority of JMRI code (and programmers) don't have to worry about threading.
+      Their code gets invoked, and invokes other code, and threading takes care of itself. This is
+      particularly true of event-based code, which responds to events from e.g. the GUI or a layout
+      object changing, and calls methods on other objects, which may in turn create more
+      events.</p>
 
-      <p>Note that this does <em>not</em> mean that other things
-      can't be happening. For example, this script fragment:</p>
+      <p>This simplicity comes from using a single thread for processing most of JMRI's activity:
+      The Java Swing event thread.</p>
 
-<pre style="font-family: monospace;">
+      <p>Note that this does <em>not</em> mean that other things can't be happening. For example,
+      this script fragment:</p>
+
+      <pre style="font-family: monospace;">
     state = sensors.provideSensor("mySensor").getState()<br>
     turnouts.provideTurnout("myTurnout").setState(THROWN)<br>
     print state == sensors.provideSensor("mySensor").getState()<br>
-</pre>
-    can print either true or false, because changing that turnout
-    <em>can</em> change associated sensors instantaneously.
-
-      <p>There are times when you might want to do something a bit
-      more complex using an additional thread:</p>
+</pre>can print either true or false, because changing that turnout <em>can</em> change associated
+sensors instantaneously.
+      <p>There are times when you might want to do something a bit more complex using an additional
+      thread:</p>
 
       <ul>
-        <li>You might want to put long-running processing in a
-        separate thread to keep the rest of JMRI responsive.</li>
+        <li>You might want to put long-running processing in a separate thread to keep the rest of
+        JMRI responsive.</li>
 
-        <li>The easiest way to code a state machine that talks to
-        layout hardware might be to use a separate thread.</li>
+        <li>The easiest way to code a state machine that talks to layout hardware might be to use a
+        separate thread.</li>
 
-        <li>You might be interfacing to some other existing code
-        that uses threads.</li>
+        <li>You might be interfacing to some other existing code that uses threads.</li>
       </ul>
-      
-      We would prefer that you handle the threading issues
-      that arise in that case via the 
-      <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
-      class. ThreadingUtil provides utilities that make it easy to
-      invoke needed functions on the right thread.
+      We would prefer that you handle the threading issues that arise in that case via the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
+      class. ThreadingUtil provides utilities that make it easy to invoke needed functions on the
+      right thread.
+      <p>For example, if you want to read a bunch of data from a file, spend some time munging it,
+      and then create a window to present it all, you might want to do all that work on a separate
+      thread. At the end, when it's time to set your new frame visible, <a href=
+      "http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">
+      you have to to that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
 
-      <p>For example, if you want to read a bunch of data from a
-      file, spend some time munging it, and then create a window to
-      present it all, you might want to do all that work on a
-      separate thread. At the end, when it's time to set your new
-      frame visible, 
-      <a href="http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">you have to to that on the Swing (GUI) thread</a>.
-      Here's the code to do that:</p>
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
     frame = new JmriJFrame();  // frame declared as instance variable<br>
     // spend a long time reading data and configuring the frame<br>
     ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br>
-</pre>
-        ThreadingUtil separates operations on the GUI (e.g. Java
-        Swing) thread, and operations on the Layout (e.g. Sensors,
-        Turnouts, etc) thread. There's no real difference now, but in the
-        interest of perhaps someday needing to separate those, we've
-        introduced the two versions now. Please try to pick the
-        mostly-likely-right one when coding.
+</pre>ThreadingUtil separates operations on the GUI (e.g. Java Swing) thread, and operations on the
+Layout (e.g. Sensors, Turnouts, etc) thread. There's no real difference now, but in the interest of
+perhaps someday needing to separate those, we've introduced the two versions now. Please try to
+pick the mostly-likely-right one when coding.
+      <p>(N.B.: You'll find lots of older cases that use explicitly use
+      javax.swing.SwingUtilities.invokeLater(r) or javax.swing.SwingUtilities.invokeAndWait(r);
+      these should be migrated to the newer JMRI-specific methods as time is available to keep our
+      code just a tiny bit cleaner and more flexible.)</p>
 
-      <p>(N.B.: You'll find lots of older cases that use explicitly
-      use javax.swing.SwingUtilities.invokeLater(r) or
-      javax.swing.SwingUtilities.invokeAndWait(r); these should be
-      migrated to the newer JMRI-specific methods as time is
-      available to keep our code just a tiny bit cleaner and more
-      flexible.) 
-      
-      <p>
-      If you do write a method that has to be called on a particular
-      thread, please annotate it with a 
-      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a>
-      or
-      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
-      to ease later static checking.
+      <p>If you do write a method that has to be called on a particular thread, please annotate it
+      with a <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a> or <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a> to
+      ease later static checking.</p>
 
-      <p>
-      If you have ensured that a method is thread safe and may be run on any thread, please mark it with
-      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
-      
-      <p>
-      If you want to check at runtime that something is running on the intended thread:
-<pre style="font-family: monospace;">
+      <p>If you have ensured that a method is thread safe and may be run on any thread, please mark
+      it with <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a></p>
+
+      <p>If you want to check at runtime that something is running on the intended thread:</p>
+
+      <pre style="font-family: monospace;">
     ThreadingUtil.requireGuiThread(log);
-</pre>
-    or
-<pre style="font-family: monospace;">
-    ThreadingUtil.requireLayoutThread(log);
-</pre>
-        That check does take a bit of time, so it should probably only be 
-        done on entry to a large chunk of code, or perhaps be protected 
-        by a check of <code>log.isDebugEnabled()</code>. If 
-        the call occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code>
-        logs the first occurance with traceback info.
-      
-    In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
-    and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are
-    <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, 
-    <code>@Immutable</code>, and 
-    <code>@GuardedBy</code> annotations that are useful.
-    See the discussion on the 
-    <a href="SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
-    <p>
-    If you do need to launch a thread of your own, there are a few things
-    to remember:
-    <ul>
-        <li>Please put your thread into the JMRI thread group by
-            putting <code>ThreadingUtil.getJmriThreadGroup()</code>
-            as the first argument to the 
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#constructor.summary">Thread constructor</a>.
-            This makes it easier to sort JMRI-created threads from system and library threads
-            when debugging.
-        <li>Please make sure that your new thread(s)
-            are terminated properly at the end each
-            <a href="JUnit.shtml">JUnit test</a>
-            for your code.  If you leave them running, 
-            they interfere with later tests. See the 
-            <a href="#ending">next section</a>
-            for how to terminate threads.
-    </ul>
-    
-     
-<a id="ending" name="ending"></a>
-<h3>Ending Threads</h3>
+</pre>or
 
-    This is really about interrupt() and our use of it.
-    
-    <p>
-    Bottom line recommendation:  <em>Never</em> swallow <code>InterruptedException</code>!
-    If you call a method that throws it, your choices are (from best to worst):
-    <ol>
-    <li>InterruptedException means your operation has been interrupted:  Some other 
-        piece of code has <em>deliberately</em> asked your operation to end.
-        This is not an error, and shouldn't be treated as one.  If you can, 
-        terminate what the code is doing and return to normal operation.
-    <li>If you can't reliably terminate whatever is being done, perhaps because you're 
-        code is a low-level part, just pass the InterruptedException up:  
-        Don't <code>catch</code> it, just have your method says that it
-        <code>throws InterruptedException</code>.
-    <li>Sometimes you can't change the signature of your method: Perhaps it's overriding a
-        Java definition by inheritance. Only if you can't terminate cleanly or pass it up,
-        you can mark the interrupt and continue:
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
+    ThreadingUtil.requireLayoutThread(log);
+</pre>That check does take a bit of time, so it should probably only be done on entry to a large
+chunk of code, or perhaps be protected by a check of <code>log.isDebugEnabled()</code>. If the call
+occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurance with
+traceback info. In addition to the <code>@InvokeOnGuiThread</code>,
+<code>@InvokeOnLayoutThread</code> and <code>@InvokeOnAnyThread</code> annotations mentioned here,
+there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutable</code>, and
+<code>@GuardedBy</code> annotations that are useful. See the discussion on the <a href=
+"SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
+      <p>If you do need to launch a thread of your own, there are a few things to remember:</p>
+
+      <ul>
+        <li>Please put your thread into the JMRI thread group by putting
+        <code>ThreadingUtil.getJmriThreadGroup()</code> as the first argument to the <a href=
+        "https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#constructor.summary">Thread
+        constructor</a>. This makes it easier to sort JMRI-created threads from system and library
+        threads when debugging.
+        </li>
+
+        <li>Please make sure that your new thread(s) are terminated properly at the end each
+        <a href="JUnit.shtml">JUnit test</a> for your code. If you leave them running, they
+        interfere with later tests. See the <a href="#ending">next section</a> for how to terminate
+        threads.
+        </li>
+      </ul>
+
+      <h3 id="ending">Ending Threads</h3>
+      This is really about interrupt() and our use of it.
+      <p>Bottom line recommendation: <em>Never</em> swallow <code>InterruptedException</code>! If
+      you call a method that throws it, your choices are (from best to worst):</p>
+
+      <ol>
+        <li>InterruptedException means your operation has been interrupted: Some other piece of
+        code has <em>deliberately</em> asked your operation to end. This is not an error, and
+        shouldn't be treated as one. If you can, terminate what the code is doing and return to
+        normal operation.</li>
+
+        <li>If you can't reliably terminate whatever is being done, perhaps because you're code is
+        a low-level part, just pass the InterruptedException up: Don't <code>catch</code> it, just
+        have your method says that it <code>throws InterruptedException</code>.</li>
+
+        <li>Sometimes you can't change the signature of your method: Perhaps it's overriding a Java
+        definition by inheritance. Only if you can't terminate cleanly or pass it up, you can mark
+        the interrupt and continue:
+
+          <pre style="font-family: monospace;">
         try {
             wait()
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-</pre>
-        This will let execution continue, as if you hadn't received the interrupt, but 
-        the <em>next</em> that execution hits a blocking call, that call will 
-        immediately get an interrupt too. Perhaps it can handle it better!
-    </ol>
-    
-    For more background, please read 
-    <a href="https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
+</pre>This will let execution continue, as if you hadn't received the interrupt, but the <em>
+          next</em> that execution hits a blocking call, that call will immediately get an
+          interrupt too. Perhaps it can handle it better!
+        </li>
+      </ol>
+      For more background, please read <a href=
+      "https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
+      <h3 id="timer">Timed Events</h3>
+      The <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a> class
+      provides the <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">
+      runOnGUIDelayed</a> and <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">
+      runOnLayoutDelayed</a> methods to make it easy to run some code after a delay. In general,
+      you should use these whenever possible instead of explicit javax.swing.Timer or
+      java.util.Timer objects.
+      <p>We recommend you not use the java.util.Timer class directly because of significant
+      issues:</p>
 
-<a id="timer" name="timer"></a>
-<h3>Timed Events</h3> 
-    The <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
-    class provides the
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnGUIDelayed</a>
-    and
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnLayoutDelayed</a>
-    methods to make it easy to run some code after a delay.
-    In general, you should use these whenever possible instead of explicit 
-    javax.swing.Timer or java.util.Timer objects.
-    <p>
-    We recommend you not use the java.util.Timer class directly because of significant issues:
-    <ul>
-        <li>Each Timer object creates and keeps its own thread, which is very hard to end.
-            This can cause significant memory use if not handled carefully.
-        <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI thread.
-    </ul>
-    
-   The <a href="https://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
-   can help with these issues.
-    
-<h3>Other Items of Interest</h3>    
+      <ul>
+        <li>Each Timer object creates and keeps its own thread, which is very hard to end. This can
+        cause significant memory use if not handled carefully.</li>
 
-    <p>
-    Using a 
-    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue</a>
-    from the 
-    <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html">java.util.concurrent</a>
-    package can remove the need to mess with thread synchronization and locking.
-    That can be a huge win!
-    
-    <p>
-    The 
-    <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/ThreadingDemoAndTest.java">java/test/jmri/util/ThreadingDemoAndTest.java</a>
-    file is an example of using threads for join, interrupt, etc.
-    It also includes a BlockingQueue example.
-    
-    <p>
-    The 
-    <a href="https://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
-    class can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
-    The 
-    <a href="https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/automat/Siglet.java">jmri.jmrit.automat.Siglet</a>
-    class is an example of using this.
-    
-    
-<h2>Debugging</h2>
+        <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI
+        thread.</li>
+      </ul>
+      The <a href="https://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
+      can help with these issues.
+      <h3>Other Items of Interest</h3>
 
-<a id="dump"></a>
-<h3>Getting a thread-dump</h3>
+      <p>Using a <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue</a>
+      from the <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html">java.util.concurrent</a>
+      package can remove the need to mess with thread synchronization and locking. That can be a
+      huge win!</p>
 
-When debugging threading issues, it can be helpful to get a "thread dump".
-<p>
-To do this when using an Oracle JVM (most common case), open a separate window
-and on that command line enter the command 'jvisualvm'.  This will open a new
-window with tools for browsing all the Java currently running on your machine.
-Then
-<ol>
-<li>In the upper left, double-click the line that shows your running JMRI instance.
-    (You might have to open the "Local" selector to see it) If should
-    say something about PanelPro or DecoderPro. It'll take a few seconds,
-    but then the right side will open with new information.
-<li>Select the "Threads" tab in the middle-upper on the right side.
-<li>Click the "Thread Dump" button in upper right.
-<li>A new tab will open with the dump. There's no direct way to save that, but 
-    you can copy and paste those contents into an editor to save them or an email to send them.
-</ol>
+      <p>The <a href=
+      "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/ThreadingDemoAndTest.java">java/test/jmri/util/ThreadingDemoAndTest.java</a>
+      file is an example of using threads for join, interrupt, etc. It also includes a
+      BlockingQueue example.</p>
 
-<p>
-If for some reason you can't use jvisualvm, then:
-<ul>
-<li>On Linux and macOS when running from a command line, type control-backspace
-<li>On Linux and macOS when running detached, e.g. from startup icon, 
-    <ul> 
-    <li>Get the process ID (PID) from e.g. ps or Activity Monitor (under application name, e.g. PanelPro)<br>
-<code>
-ps | grep java | grep apps | awk '{print $1}'<br>
-</code>
-    <li>and then send a QUIT signal to that process.  E.g., if it's 6190, <br>
-<code>
-kill -s QUIT 6190<br>
-</code>
-    or you can combine them:<br>
-<code>
-kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br>
-</code>
-    <li>Then look for the output in Console or ....
-    </ul>
-<li>If you're running under Netbeans or Eclipse, there are simple menu commands to do this.
-</ul>
-Note that if running under Ant or an IDE, you might get more than one dump:  The one
-you're looking for from JMRI, plus many one from Ant or the IDE itself.
+      <p>The <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
+      class can handle listening to lots of NamedBeans without possibly missing or overlapping some
+      notifications. The <a href=
+      "https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/automat/Siglet.java">jmri.jmrit.automat.Siglet</a>
+      class is an example of using this.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <h2>Debugging</h2>
+      <a id="dump"></a>
+      <h3>Getting a thread-dump</h3>
+      When debugging threading issues, it can be helpful to get a "thread dump".
+      <p>To do this when using an Oracle JVM (most common case), open a separate window and on that
+      command line enter the command 'jvisualvm'. This will open a new window with tools for
+      browsing all the Java currently running on your machine. Then</p>
+
+      <ol>
+        <li>In the upper left, double-click the line that shows your running JMRI instance. (You
+        might have to open the "Local" selector to see it) If should say something about PanelPro
+        or DecoderPro. It'll take a few seconds, but then the right side will open with new
+        information.</li>
+
+        <li>Select the "Threads" tab in the middle-upper on the right side.</li>
+
+        <li>Click the "Thread Dump" button in upper right.</li>
+
+        <li>A new tab will open with the dump. There's no direct way to save that, but you can copy
+        and paste those contents into an editor to save them or an email to send them.</li>
+      </ol>
+
+      <p>If for some reason you can't use jvisualvm, then:</p>
+
+      <ul>
+        <li>On Linux and macOS when running from a command line, type control-backspace</li>
+
+        <li>On Linux and macOS when running detached, e.g. from startup icon,
+          <ul>
+            <li>Get the process ID (PID) from e.g. ps or Activity Monitor (under application name,
+            e.g. PanelPro)<br>
+            <code>ps | grep java | grep apps | awk '{print $1}'<br></code></li>
+
+            <li>and then send a QUIT signal to that process. E.g., if it's 6190,<br>
+            <code>kill -s QUIT 6190<br></code> or you can combine them:<br>
+            <code>kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br></code></li>
+
+            <li>Then look for the output in Console or ....</li>
+          </ul>
+        </li>
+
+        <li>If you're running under Netbeans or Eclipse, there are simple menu commands to do
+        this.</li>
+      </ul>
+      Note that if running under Ant or an IDE, you might get more than one dump: The one you're
+      looking for from JMRI, plus many one from Ant or the IDE itself. 
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

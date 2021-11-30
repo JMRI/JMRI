@@ -4,15 +4,15 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.SpurEditFrame;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -26,7 +26,7 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
+        SpurEditFrame tf = new SpurEditFrame();
         TrackEditCommentsAction t = new TrackEditCommentsAction(tf);
         Assert.assertNotNull("exists",t);
     }
@@ -38,13 +38,13 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
-        TrackEditFrame tf = new TrackEditFrame();
+        SpurEditFrame tf = new SpurEditFrame();
         tf.initComponents(location, track);
         
         TrackEditCommentsAction a = new TrackEditCommentsAction(tf);
         Assert.assertNotNull("exists", a);
         
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         
         JmriJFrame f = JmriJFrame.getFrame(track.getName());
         Assert.assertNotNull("frame exists", f);

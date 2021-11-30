@@ -1,311 +1,165 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Technology Road Map</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-  <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-    <h1>JMRI: Technology Road Map</h1>
-      This page is the road map
-      for JMRI's future development, including changes to our use
-      of Java technologies. It is maintained and updated through
-      continuing discussion on the <a href=
-      "https://jmri-developers.groups.io/g/jmri/topics">
-      jmri-developers mailing list</a>.
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-      <p>There's also a <a href="TechRoadMapOlder.shtml">page
-      containing the history</a>, particularly the saga of how we
-      moved forward to Java 1.6 and Java 8 across a series of
+    <div id="mainContent">
+      <h1>JMRI: Technology Road Map</h1>
+      This page is the road map for JMRI's future development, including changes to our use of Java
+      technologies. It is maintained and updated through continuing discussion on the <a href=
+      "https://jmri-developers.groups.io/g/jmri/topics">jmri-developers mailing list</a>.
+      <p>There's also a <a href="TechRoadMapOlder.shtml">page containing the history</a>,
+      particularly the saga of how we moved forward to Java 1.6 and Java 8 across a series of
       platform-related changes.</p>
 
-      <h2>JMRI Releases</h2>This section describes the (notional)
-      plans for JMRI releases in the future.
+      <h2>JMRI Releases</h2>
+
+      <p>This section describes the history and (notional) plans for JMRI releases in the future.</p>
 
       <table border="1">
         <tr>
-          <th>Release</th>
-
-          <th>Description</th>
-
-          <th>Date</th>
-
-          <td>JRE</td>
-
-          <td>JDK</td>
+          <th style="text-align:center">Release</th>
+          <th style="text-align:left">Description</th>
+          <th style="text-align:center">Date</th>
+          <td style="text-align:center">JRE</td>
+          <td style="text-align:center">JDK</td>
         </tr>
 
         <tr>
-          <td>3.11.*</td>
-
+          <td style="text-align:center">3.11.*</td>
           <td>Development series</td>
-
-          <td></td>
-
-          <td>1.6</td>
-
-          <td>8</td>
+          <td>
+          </td>
+          <td style="text-align:center">1.6</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.0</td>
-
+          <td style="text-align:center">4.0</td>
           <td>Production version, culmination of 3.11.* series</td>
-
-          <td>July 2015 <b>(done)</b></td>
-
-          <td>8</td>
-
-          <td>8</td>
+          <td style="text-align:center">July 2015</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.2</td>
-
+          <td style="text-align:center">4.2</td>
           <td>Production version, culmination of 4.1.* series</td>
-
-          <td>December 2015 <b>(done)</b></td>
-
-          <td>8</td>
-
-          <td>8</td>
+          <td style="text-align:center">December 2015</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.4</td>
-
-          <td>Production version, culmination of 4.3.* series</td>
-
-          <td>Early Summer 2016</td>
-
-          <td>8</td>
-
-          <td>8</td>
+          <td style="text-align:center">...</td>
+          <td>...</td>
+          <td style="text-align:center">...</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>4.6</td>
-
-          <td>Production version, culmination of 4.5.* series</td>
-
-          <td>Late Fall 2016</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.8</td>
-
-          <td>Production version, culmination of 4.7.* series</td>
-
-          <td>Early Summer 2017</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.10</td>
-
-          <td>Production version, culmination of 4.9.* series</td>
-
-          <td>December 2017</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.12</td>
-
-          <td>Production version, culmination of 4.11.* series</td>
-
-          <td>July 2018</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.14</td>
-
-          <td>Production version, culmination of 4.13.* series</td>
-
-          <td>December 2018</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.16</td>
-
-          <td>Production version, culmination of 4.15.* series</td>
-
-          <td>July 2019</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.18</td>
-
-          <td>Production version, culmination of Fall 2019 series</td>
-
-          <td>December 2019</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.20</td>
-
-          <td>Production version, culmination of Spring 2020 series</td>
-
-          <td>July 2020</td>
-
-          <td>8</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td>4.22</td>
-
+          <td style="text-align:center">4.22</td>
           <td>Production version, culmination of Fall 2020 series</td>
-
-          <td>December 2020</td>
-
-          <td>8</td>
-
-          <td>8</td>
+          <td style="text-align:center">February 2021</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
         <tr>
-          <td>(Probably) 5.0</td>
-
+          <td style="text-align:center">4.24</td>
           <td>Production version, culmination of Spring 2021 series</td>
-
-          <td>June 2021</td>
-
-          <td>11</td>
-
-          <td>11</td>
+          <td style="text-align:center">July 2021</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
         </tr>
 
+        <tr>
+          <td style="text-align:center">4.26</td>
+          <td>Production version, culmination of Fall 2021 series</td>
+          <td style="text-align:center">January 2022</td>
+          <td style="text-align:center">8</td>
+          <td style="text-align:center">8</td>
+        </tr>
 
+        <tr>
+          <td style="text-align:center">(Intended) 5.0</td>
+          <td>Production version, culmination of Spring 2022 series</td>
+          <td style="text-align:center">June 2022</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.2</td>
+          <td>Production version, culmination of Fall 2022 series</td>
+          <td style="text-align:center">Jan 2023</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
       </table>
 
       <h3>Java and JMRI in the Near Future</h3>
-      
-      The 4.1.* series of test
-      releases in Fall 2015 started the requirement for Java 8.
-      This has continued through the following release series.
-      Java 8 will continue to be the requirement through at least Fall of 2020.
-      This involves doing development, test and production release
-      builds using Java 1.8.0_181. (We also 
-      <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on Jenkins with Java 1.8_0_151</a>
-      to ensure Windows XP compatibility)
-      
-      <p>The current long-term-support Java release is
-      Java 11 from Fall of 2018.  
-      Oracle has
-      <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">aligned their Java and the OpenJDK from that point</a>.
-      Because some people will
-      need to have that on their computers for other purposes, 
-      we ensure JMRI can build and run on Oracle Java 8 through 11
-      and OpenJDK version 11
-      by using 
-      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/">Jenkins</a>
-      to 
-      <ul>
-      <li>Build and run AllTest on each of the JDKs for Java 9, 10, 11; and
-      <li>Run allTest from each of those JDK 9, 10 and 11 builds on a Java 8u181 JRE; and
-      <li>Run AllTest from our JDK 8 builds on each of the Java 9, 10 and 11 JREs.
-      </ul>
-      You can follow the current status of these on the
-      <a href="CI-status.shtml">CI Status page</a>.
-      
-      <p>
-      At some point, the Java version required by JMRI has to move forward.
-      For example, Oracle 
-      <a href="http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has announced</a> that they'll stop providing standalone JRE installers 
-      by the end of 2020, by which time JMRI distributions will have to contain
-      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs
-      (<a href="http://adoptopenjdk.net">will continue to provide independent JREs</a>). 
-      That in turn might require tools like
-      jlink from Java 9 or later.
-
-      <p>
-      While we don't know with certainty when JMRI development will move past Java 8, 
-      we expect that it will be during the Spring 2021 development releases, 
-      leading to the June 2021 production releases requiring Java 11 and 
-      therefore being called JMRI 5.0.
-      There might be one or two JMRI updates and minor releases early
-      in Spring that would still work with Java 8.
-      
-      <h4>Java Release and Operating System Support</h4>More
-      information on Java releases and the operating systems that
-      support them is on a <a href="JVMCapabilities.shtml">separate
+      The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This has
+      continued through the following release series. Java 8 will continue to be the requirement
+      through the Fall of 2021. This involves doing development, test and production release
+      builds using Java 1.8.0_181. (We also <a href=
+      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on
+      Jenkins with Java 1.8_0_151</a> to ensure Windows XP compatibility)
+      <p>The next long-term-support (LTS) Java release is Java 11 from Fall of 2018. Oracle has
+      <a href=
+      "https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">
+      aligned their Java and the OpenJDK from that point</a>. Because some people will need to have
+      that on their computers for other purposes, we have been building and running JMRI
+      for testing purposes on Oracle Java 8
+      through 11 and OpenJDK version 11 by using <a href=
+      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a>.
+      You can follow the current status of these on the <a href="CI-status.shtml">CI Status
       page</a>.
+      <p>Java 17 is the current LTS release.  JMRI is built and tests are run on it too,
+      but we don't recommend using it due to some remaining compatibility issues.
 
-      <h2>Migration Notes</h2>This is a section of notes for
-      various code migrations that are in progress or contemplated.
-      These don't directly
-      affect JMRI users in the way that Java version changes do, but 
-      they may effect external users of the JMRI libraries.
-      
+      <p>In the near future, the Java version required by JMRI will move forward. We expect
+      that it will be during the Spring 2022 development releases, leading to the June 2022
+      production releases requiring Java 11 and therefore being called JMRI 5.0. There might be one
+      or two JMRI updates and minor releases early in Spring that would still work with Java 8.</p>
+
+      <h4>Java Release and Operating System Support</h4>
+      More information on Java releases and the operating systems that support them is on a
+      <a href="JVMCapabilities.shtml">separate page</a>.
+
+      <h2>Migration Notes</h2>
+
+      <p>This is a section of notes for various code migrations that are in progress or
+      contemplated. These don't directly affect JMRI users in the way that Java version changes do,
+      but they may effect external users of the JMRI libraries.</p>
+
       <ul>
-        <li>At some point, we have to migrate away from <a href=
-        "Help.shtml">JavaHelp and JHelpDev</a>. At a minimum, we'll
-        need to <a href=
-        "http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html">
-        replace the renderer</a>. There are <a href=
-        "http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">
-        several alternative help systems</a> available. <a href=
-        "http://www.oracle.com/technetwork/topics/index-083946.html">
-        Oracle Help</a> might be a good choice. DocBook as a tool
-        for generating multiple documentation forms is also being
-        considered.</li>
-
-        <li>USB access technology has advanced a lot since support
-        for some basic libraries was added to JMRI. At some point,
-        we should replace those early library versions, but it will
+        <li>USB access technology has advanced a lot since support for some basic libraries was
+        added to JMRI. At some point, we should replace those early library versions, but it will
         break some user scripts.</li>
 
-        <li>Our <a href="Logging.shtml">logging methodology</a> is
-        now a hybrid of native logging (in some included
-        libraries), Log4J 1.2.17 (our logger) and SLF4J (a logging abstraction
-        layer). We may choose to simplify that, but at 
-        least we have to move to another logger at some point.
+        <li>Our <a href="Logging.shtml">logging methodology</a> is now a hybrid of native logging
+        (in some included libraries), Log4J 1.2.17 (our logger) and SLF4J (a logging abstraction
+        layer). We may choose to simplify that, but at least we have to move to another logger at
+        some point.
         </li>
-
       </ul>
-
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,44 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Power Control</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Power Control</h1>
 
-      <p>The On/Off buttons on this pane do the same thing the
-      Power On/Off buttons do on your hand held throttle. It turns
-      the DCC Rail A/B voltage On/Off.</p>
-      <p>Where the DCC system supports a concept of an "Idle" state for
-          DCC track power, and JMRI has been updated to support that feature,
-          the pane will include an "Idle" button.  Exactly what the "Idle" state
-          means is DCC system-dependent.  An example is shown in the image below.</p>
-      <p><img src="images/PowerControlWithIdleButton.png" alt="Power control panel showing Idle pushbutton"></p>
+      <p>The On/Off buttons on this pane do the same thing the Power On/Off buttons do on your hand
+      held throttle. It turns the DCC Rail A/B voltage On/Off.</p>
 
+      <p>Where the DCC system supports a concept of an "Idle" state for DCC track power, and JMRI
+      has been updated to support that feature, the pane will include an "Idle" button. Exactly
+      what the "Idle" state means is DCC system-dependent. An example is shown in the image
+      below.</p>
+
+      <p><img src="images/PowerControlWithIdleButton.png" alt=
+      "Power control panel showing Idle pushbutton">
+      </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

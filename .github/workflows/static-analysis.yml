@@ -29,7 +29,6 @@ jobs:
     - name: Build with Maven
       run: |
         # compile with ECJ for warnings or errors
-        #mvn -P test-warnings-check clean compile 
         mvn antrun:run -Danttarget=tests-warnings-check
         # run Spotbugs and Checkstyle
         mvn clean test -U -P travis-spotbugs --batch-mode --file=pom.xml
@@ -37,5 +36,7 @@ jobs:
         mvn javadoc:javadoc -U --batch-mode --file=pom.xml
         # check html
         mvn exec:exec -P travis-scanhelp --file=pom.xml
+        # check properties
+        mvn antrun:run -Danttarget=checkPropertiesFiles
         #run Architecture tests
-        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test --file=pom.xml
+        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml

@@ -20,11 +20,11 @@ import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for the Warrant creation
+ * Tests for Warrant creation.
  *
  * @author Pete Cressman 2015
  *
- * todo - test error conditions
+ * TODO - test error conditions
  */
 public class WarrantTest {
 
@@ -73,7 +73,7 @@ public class WarrantTest {
             sEast.setState(Sensor.ACTIVE);
             sNorth.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.ACTIVE);
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         bWest.allocate(warrant);
         bEast.allocate(warrant);
@@ -83,7 +83,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         bWest.deAllocate(warrant);
         bEast.deAllocate(warrant);
@@ -97,7 +97,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
@@ -125,7 +125,7 @@ public class WarrantTest {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        } catch (JmriException je) {
+        } catch (JmriException ignore) {
         }
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
@@ -180,7 +180,7 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
-        warrant.getSpeedUtil().setDccAddress("999(L)");
+        warrant.getSpeedUtil().setAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
 
         warrant.setTrainName("TestTrain");
@@ -195,9 +195,6 @@ public class WarrantTest {
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -224,7 +221,7 @@ public class WarrantTest {
 
     }
 
-    class WarrantListener implements PropertyChangeListener {
+    static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;
 
@@ -324,7 +321,7 @@ public class WarrantTest {
 
     @AfterEach
     public void tearDown() {
-        warrant.stopWarrant(true);
+        warrant.stopWarrant(true, true);
         _OBlockMgr = null;
         _portalMgr = null;
         _sensorMgr = null;
@@ -338,7 +335,7 @@ public class WarrantTest {
         sNorth = null;
         sSouth = null;
         warrant = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+
         JUnitUtil.tearDown();
     }
 

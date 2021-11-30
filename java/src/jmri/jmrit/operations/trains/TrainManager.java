@@ -39,9 +39,10 @@ import jmri.util.ColorUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
+ *         2014
  */
-public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainManager extends PropertyChangeSupport
+        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     static final String NONE = "";
 
@@ -52,7 +53,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     private boolean _printPreview = false; // when true, preview train manifest
     private boolean _openFile = false; // when true, open CSV file manifest
     private boolean _runFile = false; // when true, run CSV file manifest
-    
+
     // Conductor attributes
     private boolean _showLocationHyphenName = false;
 
@@ -164,15 +165,16 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         setDirtyAndFirePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
                 enable ? "Preview" : "Print"); // NOI18N
     }
-    
+
     /**
      * When true show entire location name including hyphen
+     * 
      * @return true when showing entire location name
      */
     public boolean isShowLocationHyphenNameEnabled() {
         return _showLocationHyphenName;
     }
-    
+
     public void setShowLocationHyphenNameEnabled(boolean enable) {
         boolean old = _showLocationHyphenName;
         _showLocationHyphenName = enable;
@@ -268,7 +270,25 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             }
         }
     }
-    
+
+    public boolean isBuiltRestricted() {
+        for (Train train : getList()) {
+            if (!train.getBuiltStartYear().equals(Train.NONE) || !train.getBuiltEndYear().equals(Train.NONE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isLoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isRoadRestricted() {
         for (Train train : getList()) {
             if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
@@ -277,10 +297,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
         return false;
     }
-    
-    public boolean isLoadRestricted() {
+
+    public boolean isOwnerRestricted() {
         for (Train train : getList()) {
-            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+            if (!train.getOwnerOption().equals(Train.ALL_OWNERS)) {
                 return true;
             }
         }
@@ -358,8 +378,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_trainHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -375,8 +394,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         train.dispose();
         Integer oldSize = Integer.valueOf(_trainHashTable.size());
         _trainHashTable.remove(train.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_trainHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
@@ -449,12 +467,14 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      *         destination.
      */
     public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
-        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(), car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
+//        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(),
+//                car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
-            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
-                    .getMessage("trainFindForCar"), new Object[]{car.toString(), car.getLocationName(),
-                car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
+            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED,
+                    MessageFormat.format(Bundle.getMessage("trainFindForCar"),
+                            new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
+                                    car.getDestinationName(), car.getDestinationTrackName() }));
         }
         for (Train train : getTrainsByIdList()) {
             if (train == excludeTrain) {
@@ -465,6 +485,9 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             }
             // does this train service this car?
             if (train.isServiceable(buildReport, car)) {
+                log.debug("Found train ({}) for car ({}) location ({}, {}) destination ({}, {})", train.getName(),
+                        car.toString(), car.getLocationName(), car.getTrackName(), car.getDestinationName(),
+                        car.getDestinationTrackName()); // NOI18N
                 return train;
             }
         }
@@ -710,7 +733,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't
+     * support no color as a selection.
      * 
      * @return the available colors used highlighting table rows including no color.
      */
@@ -881,8 +905,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Sets the switch list status for all built trains. Used for switch lists
-     * in consolidated mode.
+     * Sets the switch list status for all built trains. Used for switch lists in
+     * consolidated mode.
      *
      * @param status Train.PRINTED, Train.UNKNOWN
      */
@@ -896,8 +920,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Sets all built trains manifests to modified. This causes the train's
-     * manifest to be recreated.
+     * Sets all built trains manifests to modified. This causes the train's manifest
+     * to be recreated.
      */
     public void setTrainsModified() {
         for (Train train : getTrainsByTimeList()) {
@@ -914,7 +938,17 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             @Override
             public void run() {
                 for (Train train : trains) {
-                    train.buildIfSelected();
+                    if (train.buildIfSelected()) {
+                        continue;
+                    }
+                    if (isBuildMessagesEnabled() && train.isBuildEnabled() && !train.isBuilt()) {
+                        if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
+                                MessageFormat.format(Bundle.getMessage("buildFailedMsg"),
+                                        new Object[] { train.getName(), }),
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                            break;
+                        }
+                    }
                 }
                 setDirtyAndFirePropertyChange(TRAINS_BUILT_CHANGED_PROPERTY, false, true);
             }
@@ -932,14 +966,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                 }
                 status = false; // failed to print all selected trains
                 if (isBuildMessagesEnabled()) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("NeedToBuildBeforePrinting"), new Object[]{train.getName(),
-                        (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                        : Bundle.getMessage("print"))}),
+                    int response = JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("NeedToBuildBeforePrinting"),
+                                    new Object[] { train.getName(),
+                                            (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                                    : Bundle.getMessage("print")) }),
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
-                                    new Object[]{isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                                .getMessage("print")}),
-                            JOptionPane.ERROR_MESSAGE);
+                                    new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                            : Bundle.getMessage("print") }),
+                            JOptionPane.OK_CANCEL_OPTION);
+                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                        break;
+                    }
                 }
             }
         }
@@ -954,22 +992,29 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                     train.terminate();
                 } else {
                     status = false;
-                    int response = JOptionPane.showConfirmDialog(null, Bundle
-                            .getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
-                            .getMessage("TerminateTrain"),
-                            new Object[]{train.getName(), train.getDescription()}),
-                            JOptionPane.YES_NO_OPTION);
+                    int response = JOptionPane.showConfirmDialog(null,
+                            Bundle.getMessage("WarningTrainManifestNotPrinted"),
+                            MessageFormat.format(Bundle.getMessage("TerminateTrain"),
+                                    new Object[] { train.getName(), train.getDescription() }),
+                            JOptionPane.YES_NO_CANCEL_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
                         train.terminate();
                     }
                     // Quit?
-                    if (response == JOptionPane.CLOSED_OPTION) {
+                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
                         break;
                     }
                 }
             }
         }
         return status;
+    }
+
+    public void resetBuildFailedTrains() {
+        for (Train train : getList()) {
+            if (train.isBuildFailed())
+                train.reset();
+        }
     }
 
     public void load(Element root) {
@@ -996,16 +1041,15 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                     _runFile = a.getValue().equals(Xml.TRUE);
                 }
                 // verify that the Trains Window action is valid
-                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null
-                        && (a.getValue().equals(TrainsTableFrame.MOVE)
-                        || a.getValue().equals(TrainsTableFrame.RESET)
-                        || a.getValue().equals(TrainsTableFrame.TERMINATE)
-                        || a.getValue().equals(
-                                TrainsTableFrame.CONDUCTOR))) {
+                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null &&
+                        (a.getValue().equals(TrainsTableFrame.MOVE) ||
+                                a.getValue().equals(TrainsTableFrame.RESET) ||
+                                a.getValue().equals(TrainsTableFrame.TERMINATE) ||
+                                a.getValue().equals(TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
             }
-            
+
             // Conductor options
             Element eConductorOptions = options.getChild(Xml.CONDUCTOR_OPTIONS);
             if (eConductorOptions != null) {
@@ -1083,7 +1127,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         e.setAttribute(Xml.RUN_FILE, isRunFileEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.TRAIN_ACTION, getTrainsFrameTrainAction());
         options.addContent(e);
-        
+
         // Conductor options
         e = new Element(Xml.CONDUCTOR_OPTIONS);
         e.setAttribute(Xml.SHOW_HYPHEN_NAME, isShowLocationHyphenNameEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1134,9 +1178,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: {} old: {} new: {}",
-                e.getPropertyName(),
-                e.getOldValue(),
+        log.debug("TrainManager sees property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(),
                 e.getNewValue());
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){

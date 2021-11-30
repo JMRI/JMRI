@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.21.3-SNAPSHOT</version>
+    <version>4.25.7-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -19,11 +19,11 @@
         <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
-        <jemmy.version>22-00c9f753cd0a</jemmy.version>
+        <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.26</openlcb.version>
+        <openlcb.version>0.7.28</openlcb.version>
         <netbeans.version>RELEASE113</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -33,7 +33,7 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.8</ant.version>
+        <ant.version>1.10.11</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
@@ -116,7 +116,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.12</version>
+                        <version>4.2.3</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -474,7 +474,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.12</version>
+                <version>4.2.3</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -510,7 +510,7 @@
                         <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
                         <!-- exclude the line endings tests from automatic execution -->
-                        <exclude>jmri.util.FileLineEndings</exclude>
+                        <exclude>jmri.util.FileLineEndingsCheck</exclude>
                         <!-- ignore since base classes for other tests -->
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
@@ -803,7 +803,7 @@
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>      
+                        </goals>
                         <configuration>
                             <skip>${skipTests}</skip>
                         </configuration>
@@ -1261,13 +1261,13 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.6.0</version>
+            <version>3.141.59</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>3.4.0</version>
+            <version>4.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1404,6 +1404,12 @@
             <version>1.2.1</version>
         </dependency>
         <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
@@ -1430,13 +1436,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>4.4.0</version>
+            <version>5.9.0</version>
         </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>
@@ -1516,9 +1522,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.purejavacomm</groupId>
+            <groupId>org.opensmarthouse</groupId>
             <artifactId>purejavacomm</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -1552,7 +1558,7 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy</artifactId>
+            <artifactId>jemmy-2.3.1.1</artifactId>
             <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1627,6 +1633,28 @@
             <artifactId>apiguardian-api</artifactId>
             <version>1.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-transcoder -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.14</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>fop</artifactId>
+                    <groupId>fop</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -1640,8 +1668,12 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>mvnrepository.com</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
         <!--
-        Repository hosting libraries not available through maven.org
+        Local "repository" hosting libraries not available through maven.org
         -->
         <repository>
             <id>lib</id>

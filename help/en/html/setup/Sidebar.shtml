@@ -6,32 +6,33 @@
 	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl>
 
-		<dt><h3><a href="index.shtml">Setup</a></h3></dt>
+		<dt><a href="index.shtml">Setup</a></dt>
 		<dd>
 			<ul>
 			<li><a href="../../package/apps/TabbedPreferences.shtml">Preferences Pane</a></li>
 			<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
-			<li><a href="../setup/Errors.shtml">Error Codes</a></li>
+			<li><a href="../apps/Errors.shtml">Error Codes</a></li>
 			<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
 			</ul>
                 </dd>
 
 	   <!--#include virtual="../../parts/SidebarInstall.shtml" -->
-		
+
            <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 
            <!--#include virtual="../../parts/SidebarTools.shtml" -->
 
             <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
-	    
-	    <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
 
-		
+	    <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->
+
+
     </dl>
 
       <!--#include virtual="../../parts/SidebarTail.shtml" -->
 
 	</div> <!-- closes #side -->
 
-
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

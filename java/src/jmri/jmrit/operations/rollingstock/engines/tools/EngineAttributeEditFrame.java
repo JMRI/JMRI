@@ -20,19 +20,12 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
-    // valid attributes for this frame
-    public static final String ROAD = Bundle.getMessage("Road");
-    public static final String MODEL = Bundle.getMessage("Model");
-    public static final String TYPE = Bundle.getMessage("Type");
-    public static final String COLOR = Bundle.getMessage("Color");
-    public static final String LENGTH = Bundle.getMessage("Length");
-    public static final String OWNER = Bundle.getMessage("Owner");
-    public static final String CONSIST = Bundle.getMessage("Consist");
+    // incremental attributes for this frame
+    public static final String MODEL = "Model";
+    public static final String CONSIST = "Consist";
 
-    public EngineAttributeEditFrame() {
+    public EngineAttributeEditFrame(){
     }
-
-//    public String _attribute; // track which attribute is being edited
 
     public void initComponents(String attribute) {
         initComponents(attribute, NONE);
@@ -66,7 +59,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineLengths.class).deleteName(deleteItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.deleteConsist(deleteItem);
+            InstanceManager.getDefault(ConsistManager.class).deleteConsist(deleteItem);
         }
     }
 
@@ -80,14 +73,11 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineTypes.class).addName(addItem);
         }
         if (_attribute.equals(LENGTH)) {
-            String length = convertLength(addItem);
-            if (!length.equals(FAILED)) {
-                InstanceManager.getDefault(EngineLengths.class).addName(length);
-                comboBox.setSelectedItem(length);
-            }
+            InstanceManager.getDefault(EngineLengths.class).addName(addItem);
+            comboBox.setSelectedItem(addItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.newConsist(addItem);
+            InstanceManager.getDefault(ConsistManager.class).newConsist(addItem);
         }
     }
 
@@ -118,7 +108,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineModels.class).replaceName(oldItem, newItem);
         }
         if (_attribute.equals(CONSIST)) {
-            engineManager.replaceConsistName(oldItem, newItem);
+            InstanceManager.getDefault(ConsistManager.class).replaceConsistName(oldItem, newItem);
         }
         if (_attribute.equals(TYPE)) {
             InstanceManager.getDefault(EngineTypes.class).replaceName(oldItem, newItem);
@@ -144,8 +134,8 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineLengths.class).addPropertyChangeListener(this);
         }
         if (_attribute.equals(CONSIST)) {
-            comboBox = engineManager.getConsistComboBox();
-            engineManager.addPropertyChangeListener(this);
+            comboBox = InstanceManager.getDefault(ConsistManager.class).getComboBox();
+            InstanceManager.getDefault(ConsistManager.class).addPropertyChangeListener(this);
         }
     }
 
@@ -154,13 +144,13 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineLengths.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(ConsistManager.class).removePropertyChangeListener(this);
         engineManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        super.propertyChange(e);
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
                     e.getNewValue());
@@ -174,9 +164,10 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(EngineLengths.class).updateComboBox(comboBox);
         }
-        if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
-            engineManager.updateConsistComboBox(comboBox);
+        if (e.getPropertyName().equals(ConsistManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(ConsistManager.class).updateComboBox(comboBox);
         }
+        super.propertyChange(e);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class);

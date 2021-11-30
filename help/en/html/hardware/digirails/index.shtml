@@ -1,57 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digikeijs (Digirails)</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Digikeijs (Digirails)</h1>
 
-      <h1>Hardware Support: Digikeijs (Digirails)</h1><a name=
-      "hardware" id="hardware"></a>
-
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
-      <p>JMRI can connect to a Digirails DR5000 Digicentral command
-      station via a network connection or USB connection.</p>
+      <p>JMRI can connect to a Digirails DR5000 Digicentral command station via a network
+      connection or USB connection.</p>
 
-      <a name="limitations" id="limitations"></a>
-      <h2>Limitations</h2>
+      <h2 id="limitations">Limitations</h2>
 
       <p>Please report your results.</p>
-      
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2>
+
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Settings</h3>
 
       <p>To configure the connection:</p>
 
       <h4>ESU/EcoS via network</h4>
-      
+
       <ul>
-        <li>Open the JMRI "Preferences" under the "Edit" menu (or
-        the PanelPro menu on OS X)</li>
+        <li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)</li>
 
         <li>Select "ESU" as the System Manufacturer</li>
 
@@ -59,90 +42,91 @@
 
         <li>Enter the IP address for your DR5000 unit</li>
 
-        <li>You may optionally change the connection name to
-        "Digirails"</li>
+        <li>You may optionally change the connection name to "Digirails"</li>
 
         <li>Leave the port number at 15471</li>
 
-        <li>Click "Save" &amp; restart</li>
+        <li>Click "Save" & restart</li>
       </ul>
-      
+
       <h4>Digitrax/LocoNet</h4>
-      
-      <p>Providing that the Digikeijs DR5000 unit has been configured to 
-      use "LocoNet over TCP/IP LBServer" protocol (Firmware version 1.3.0 when writing this documentation)</p>
+
+      <p>Providing that the Digikeijs DR5000 unit has been configured to use "LocoNet over TCP/IP
+      LBServer" protocol (Firmware version 1.3.0 when writing this documentation)</p>
 
       <ul>
-       <li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)</li>
-       
-       <li>Select Digitrax as the System Manufacturer</li>
-       
-       <li>Select "LocoNet over TCP" as the System Connection</li>
+        <li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)</li>
 
-       <li>Enter the IP address for your DR5000 unit</li>
+        <li>Select Digitrax as the System Manufacturer</li>
 
-       <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
-       
-       <li>Under Additional Connection settings, set port to 5550</li>
+        <li>Select "LocoNet over TCP" as the System Connection</li>
+
+        <li>Enter the IP address for your DR5000 unit</li>
+
+        <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
+
+        <li>Under Additional Connection settings, set port to 5550</li>
       </ul>
-      
+
       <h4>Via USB</h4>
-      
-      First, make sure your computer has the 
-      <a href="ttps://www.ftdichip.com/Drivers/VCP.htm">correct USB drivers installed</a>.
-      <p>
-      Then, set the JMRI connection preferences to:
+      First, make sure your computer has the <a href=
+      "https://www.ftdichip.com/Drivers/VCP.htm">correct USB drivers installed</a>.
+      <p>Then, set the JMRI connection preferences to:</p>
+
       <ul>
-        <li>System Manufacturer: Digitrax
-        <li>System connection: LocoNet LocoBuffer-USB
-        <li>Serial Port: (as needed for your USB connection)
-        <li>Command station type DSC100 (Chief)
+        <li>System Manufacturer: Digitrax</li>
+
+        <li>System connection: LocoNet LocoBuffer-USB</li>
+
+        <li>Serial Port: (as needed for your USB connection)</li>
+
+        <li>Command station type DSC100 (Chief)</li>
       </ul>
-            
-      <p>Turnout, Sensor, Signal and Throttle support is available for a JMRI-connected DR5000 unit.</p>
-           
+
+      <p>Turnout, Sensor, Signal and Throttle support is available for a JMRI-connected DR5000
+      unit.</p>
+
       <h3>Throttles</h3>
 
       <h3>Sensors</h3>
-      <p>The S88 bus on the DR5000 (whether in use or not) is configured by default to
-      think it has one 16-channel input device connected. The S88 and LocoNet
-      busses apparently share addresses. Whenever an input from LS0 to LS15 goes HIGH on
-      LocoNet, the S88 bus says 'NOPE'. The resulting LOW signal is in turn broadcast onto
-      the LocoNet bus. Set the number of connected S88 units to zero in the (Windows)
-      configuration application. (thanks to Steve R. Jan. 2018)</p>
+
+      <p>The S88 bus on the DR5000 (whether in use or not) is configured by default to think it has
+      one 16-channel input device connected. The S88 and LocoNet busses apparently share addresses.
+      Whenever an input from LS0 to LS15 goes HIGH on LocoNet, the S88 bus says 'NOPE'. The
+      resulting LOW signal is in turn broadcast onto the LocoNet bus. Set the number of connected
+      S88 units to zero in the (Windows) configuration application. (thanks to Steve R. Jan.
+      2018)</p>
 
       <h3>Turnouts</h3>
 
-      <p>The Digirails DR4018 decoder can drive turnouts with
-      several protocols.</p>
+      <p>The Digirails DR4018 decoder can drive turnouts with several protocols.</p>
 
-      <a name="dr4018" id="dr4018"></a>
-      <h3>Signals</h3>
+      <h3 id="dr4018">Signals</h3>
 
-      <p>The Digirails DR4018 decoder can be configured for
-      signaling using DecoderPro.<br>
+      <p>The Digirails DR4018 decoder can be configured for signaling using DecoderPro.<br>
       To configure the signal Masts, use the <a href=
-      "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">
-      Matrix Signal Mast</a> driver.<br>
+      "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">Matrix Signal
+      Mast</a> driver.<br>
       The Add Mast settings are:<br>
-      <a href="matrixPanelProrailCreate.png"><img src=
-      "matrixPanelProrailCreate.png" width="381" height="489"
-      hspace="0" vspace="0" alt=
-      "DCC Decoder panel"></a></p><a name="tools" id="tools"></a>
+      <a href="matrixPanelProrailCreate.png"><img src="matrixPanelProrailCreate.png" width="381"
+      height="489" alt="DCC Decoder panel"></a></p>
 
+      <h2 id="tools">Third Party info</h2>
 
-      <h2>Third Party info</h2>
-      <p>For more information on how to
-      connect and use a DR5000, refer to the following:</p>
+      <p>For more information on how to connect and use a DR5000, refer to the following:</p>
 
       <ul>
-        <li><a href=
-        "http://support.digikeijs.com/display/DS/DR5000-ADJ/">
-        Digirails DR5000 documentation</a></li>
+        <li>
+          <a href=
+          "https://support.digikeijs.com/hc/en-us/articles/360001203338-DR5000-ADJ-Manuals-Downloads">
+          Digikeijs DR5000 documentation</a>
+        </li>
       </ul>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

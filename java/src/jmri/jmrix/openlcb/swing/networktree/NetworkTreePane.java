@@ -56,7 +56,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         treePane = new TreePane();
         treePane.setPreferredSize(new Dimension(300, 300));
 
-        treePane.initComponents(memo.get(MimicNodeStore.class), memo.get(Connection.class), memo.get(NodeID.class), new ActionLoader(memo.get(OlcbInterface.class))
+        treePane.initComponents(memo.get(MimicNodeStore.class), memo.get(Connection.class), memo.get(NodeID.class), new ActionLoader(memo)
         );
         add(treePane);
 
@@ -94,8 +94,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
-    @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
+    //private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
      * Nested class to open specific windows when proper tree element is picked.
@@ -104,8 +103,9 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
 
         private final ClientActions actions;
 
-        ActionLoader(OlcbInterface iface) {
-            actions = new ClientActions(iface);
+        ActionLoader(CanSystemConnectionMemo memo) {
+            OlcbInterface iface = memo.get(OlcbInterface.class);
+            actions = new ClientActions(iface, memo);
             this.store = iface.getNodeStore();
             this.mcs = iface.getMemoryConfigurationService();
         }

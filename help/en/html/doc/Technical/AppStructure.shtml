@@ -1,11 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Application Structure</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
@@ -14,62 +10,55 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-    <h1>JMRI Code: Application Structure</h1>
-      
-      This page discusses the structure of JMRI application(s).
-      For the structure of the JMRI library itself, see the
-      <a href="IntroStructure.shtml">Introduction to JMRI Library Structure page</a>.
-      
-      JMRI ships with several main "applications":
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI Code: Application Structure</h1>
+      This page discusses the structure of JMRI application(s). For the structure of the JMRI
+      library itself, see the <a href="IntroStructure.shtml">Introduction to JMRI Library Structure
+      page</a>. JMRI ships with several main "applications":
       <dl>
-      <dt>DecoderPro</dt>
+        <dt>DecoderPro</dt>
+
+        <dd>From <code>apps.gui3.dp3.DecoderPro3</code>: This is an example of a "new structure"
+        application.</dd>
+
+        <dt>PanelPro</dt>
+
+        <dd>From <code>apps.PanelPro.PanelPro</code>: This is an example of a "original structure"
+        application.</dd>
+
+        <dt>JmriFaceless</dt>
+
         <dd>
-            From <code>apps.gui3.dp3.DecoderPro3</code>: This is an example of a "new structure" application.
-        </dd>
-      <dt>PanelPro</dt>
-        <dd>
-            From <code>apps.PanelPro.PanelPro</code>: This is an example of a "original structure" application.
-        </dd>
-      <dt>JmriFaceless</dt>
-        <dd>
-            From <code>app.JmriFaceless</code>, this is a version of PanelPro that's
-            been optimized to run on computers without displays and mice,
-            i.e. a <a href="https://jmri.org/install/Raspbian.shtml">Raspberry PI</a>.
-            It uses the original structure.
+          From <code>app.JmriFaceless</code>, this is a version of PanelPro that's been optimized
+          to run on computers without displays and mice, i.e. a <a href=
+          "https://jmri.org/install/Raspbian.shtml">Raspberry PI</a>. It uses the original
+          structure.
         </dd>
       </dl>
-      
-    <a id="newApp" name="newApp"></a>
-    <h2>New Application Structure</h2>
-    
-        The currently-recommended application form had the main application class descending from
-        the <code><a href="https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code> class.
-        
-        <p>Most of the required customization for a new application consists of overriding apps.Apps methods that 
-        control the display during startup: providing the main image, name and program link, etc.
-        <p>Beyond that, the new application class can override implementations that create menus, load
-        help, configure preferences, etc.
-        
-        <p>The startup sequence for e.g. DecoderPro, starting with <code>DecoderPro#main(..)</code> is quite short:
-<pre>
+
+      <h2 id="newApp">New Application Structure</h2>
+      The currently-recommended application form had the main application class descending from the
+      <code><a href="https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code>
+      class.
+      <p>Most of the required customization for a new application consists of overriding apps.Apps
+      methods that control the display during startup: providing the main image, name and program
+      link, etc.</p>
+
+      <p>Beyond that, the new application class can override implementations that create menus,
+      load help, configure preferences, etc.</p>
+
+      <p>The startup sequence for e.g. DecoderPro, starting with <code>DecoderPro#main(..)</code>
+      is quite short:</p>
+
+      <pre>
     public static void main(String args[]) {
         preInit(args);
         DecoderPro3 app = new DecoderPro3(args);
@@ -81,82 +70,93 @@
         setConfigFilename("DecoderProConfig3.xml", args);
     }
 </pre>
+      <ul>
+        <li><code><a href=
+        "https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html#preInit-java.lang.String-">apps.gui3.Apps3.preInit</a></code>
+        initializes conditions for basic running: set up logging, set up the console, etc.</li>
 
-        <ul>
-        <li><code><a href="https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html#preInit-java.lang.String-">apps.gui3.Apps3.preInit</a></code> initializes conditions for basic running:
-            set up logging, set up the console, etc.
-        <li><code><a href="https://jmri.org/JavaDoc/doc/apps/AppsBase.html#setConfigFilename-java.lang.String-java.lang.String:A-">apps.gui3.Apps3.setConfigFilename</a></code>
-            sets the filename (pathname) for the configuration file, either from system properties, launch arguments, or if needed from a default argument.
-        <li>The DecoderPro constructor just refers up to the App3 constructor, which in turn handles some GUI initiatlization
-            and relies on the AppsBase constructor for the rest.
-        <li>Apps3.start() is then responsible for the program's dynamics.
-        </ul>
-    
-        <p>
-        Some useful milestones:
-        <dl>
+        <li><code><a href=
+        "https://jmri.org/JavaDoc/doc/apps/AppsBase.html#setConfigFilename-java.lang.String-java.lang.String:A-">
+        apps.gui3.Apps3.setConfigFilename</a></code> sets the filename (pathname) for the
+        configuration file, either from system properties, launch arguments, or if needed from a
+        default argument.</li>
+
+        <li>The DecoderPro constructor just refers up to the App3 constructor, which in turn
+        handles some GUI initiatlization and relies on the AppsBase constructor for the rest.</li>
+
+        <li>Apps3.start() is then responsible for the program's dynamics.</li>
+      </ul>
+
+      <p>Some useful milestones:</p>
+
+      <dl>
         <dt>Windows, toolbars and menus</dt>
-            <dd>The Gui3 support (see the <a href="Swing.shtml">JMRI Swing page</a>) is used to 
-                define toolsbars and menus.  For example, apps.gui3.dp3.DecoderPro3#getMenuFile() loads
-                from xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml and apps.gui3.dp3.DecoderPro3#getToolbarFile()
-                loads from xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
-            </dd>
-            
-            <dt>Load configuration</dt>
-            <dd>
-                <a id="load" name="load"></a>
-                <a href="https://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"><code>apps.AppsBase.jmri.ConfigureManager()</code></a>
-                loads the configuration file, and in the process loads and activates many of the
-                user level objects in the system.  In particular, this is the start of 
-                loading the 
-                <a href="SystemStructure.shtml">system connections</a>.
-            </dd>
-        </dl>
-        <p>For more information, see the <code><a href="https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code> Javadoc.
 
-    
-    <a id="oldApp" name="oldApp"></a>
-    <h2>Older Application Structure</h2>
-    
-        The older, original application form had the main application class descending from
-        the <code><a href="https://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a></code> class.
+        <dd>
+          The Gui3 support (see the <a href="Swing.shtml">JMRI Swing page</a>) is used to define
+          toolsbars and menus. For example, apps.gui3.dp3.DecoderPro3#getMenuFile() loads from
+          xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml and
+          apps.gui3.dp3.DecoderPro3#getToolbarFile() loads from
+          xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+        </dd>
 
-        <p>Most of the required customization for a new application consists of overriding apps.Apps methods that 
-        control the display during startup: providing the main image, name and program link, etc.
-        <p>Beyond that, the new application class can override implementations that create menus, load
-        help, configure preferences, etc.
+        <dt>Load configuration</dt>
 
-        <p>The startup sequence for e.g. PanelPro, is then:
-        <ol>
-        <li><code>PanelPro#main(..)</code> starts and does some initial interactions by invoking methods from 
-            <code>apps.Apps</code>
-        <li>It then constructs a <code>PanelPro</code> object, most of whose behavior is inherited from
-            <code>apps.Apps</code>.
-        <li>Finally, it uses the <code>apps.Apps#createFrame</code> method to complete the setup.
-        </ol>
-    
-        <p>For more information, see the <code><a href="https://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a></code> Javadoc.
+        <dd id="load">
+          <a href=
+          "https://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"><code>apps.AppsBase.jmri.ConfigureManager()</code></a>
+          loads the configuration file, and in the process loads and activates many of the user
+          level objects in the system. In particular, this is the start of loading the <a href=
+          "SystemStructure.shtml">system connections</a>.
+        </dd>
+      </dl>
 
-    <a id="minApp" name="minApp"></a>
-    <h2>Minimal Application Structure</h2>
+      <p>For more information, see the <code><a href=
+      "https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code> Javadoc.</p>
 
-        (This may be out of date)
-      <p>The apps.SampleMinimalProgram class provides a minimal
-      example of starting a program that uses JMRI. It's got a
-      hard-coded layout configuration. See the internal comments
-      for more info.</p>
+      <h2 id="oldApp">Older Application Structure</h2>
+      The older, original application form had the main application class descending from the
+      <code><a href="https://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a></code> class.
+      <p>Most of the required customization for a new application consists of overriding apps.Apps
+      methods that control the display during startup: providing the main image, name and program
+      link, etc.</p>
 
-      <p>The preferred way is to use the JMRI configuration system to read a
-      configuration file and do the initialization. There's
-      commented out code in apps.SampleMinimalProgram that shows
-      how to do that.</p>
+      <p>Beyond that, the new application class can override implementations that create menus,
+      load help, configure preferences, etc.</p>
 
-      <p>The JMRI applications themselves use a more powerful
-      "profile" mechanism that's inherited from the apps.Apps and
-      apps.AppsBase classes.
-      </p>
+      <p>The startup sequence for e.g. PanelPro, is then:</p>
+
+      <ol>
+        <li><code>PanelPro#main(..)</code> starts and does some initial interactions by invoking
+        methods from <code>apps.Apps</code></li>
+
+        <li>It then constructs a <code>PanelPro</code> object, most of whose behavior is inherited
+        from <code>apps.Apps</code>.</li>
+
+        <li>Finally, it uses the <code>apps.Apps#createFrame</code> method to complete the
+        setup.</li>
+      </ol>
+
+      <p>For more information, see the <code><a href=
+      "https://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a></code> Javadoc.</p>
+
+      <h2 id="minApp">Minimal Application Structure</h2>
+      (This may be out of date)
+      <p>The apps.SampleMinimalProgram class provides a minimal example of starting a program that
+      uses JMRI. It's got a hard-coded layout configuration. See the internal comments for more
+      info.</p>
+
+      <p>The preferred way is to use the JMRI configuration system to read a configuration file and
+      do the initialization. There's commented out code in apps.SampleMinimalProgram that shows how
+      to do that.</p>
+
+      <p>The JMRI applications themselves use a more powerful "profile" mechanism that's inherited
+      from the apps.Apps and apps.AppsBase classes.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

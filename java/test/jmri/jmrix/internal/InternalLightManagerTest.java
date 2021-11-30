@@ -67,6 +67,11 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
 
     @BeforeEach
     @Override

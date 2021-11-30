@@ -32,6 +32,9 @@ public class LayoutEditorWindowTest {
         // It's up at this point, and can be manipulated
         // Ask to close window
         to.closeFrameWithConfirmations();
+
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
     }
 
     // Setup for log4J
@@ -49,6 +52,7 @@ public class LayoutEditorWindowTest {
     public void tearDown() throws Exception {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

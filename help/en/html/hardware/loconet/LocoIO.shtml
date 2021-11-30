@@ -1,417 +1,441 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>JMRI LocoIO Programmer Tools</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI LocoIO Programmer Tools</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI LocoIO Programmer</h1>
 
-      <p>The <strong>preferred method to program a LocoIO board</strong> since
-      JMRI 3 is using <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with the
-      dedicated <a href=
-      "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a> Decoder
-      Definition. See full instructions <a href="#current">below</a>.</p>
+      <p>The <strong>preferred method to program a LocoIO board</strong> since JMRI 3 is using
+      <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with the dedicated <a href=
+      "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
+      Decoder Definition. See full instructions <a href="#current">below</a>.</p>
 
-      <p>A LocoIO board is a DIY stationary interface to LocoNet for inputs (fascia pushbuttons, turnout feedback or
-      occupancy sensors) and outputs (fascia indicator LEDs, signal LED's, turnout motors etc.). The original <a href=
-      "http://www.locobuffer.com/LocoIO/LocoIO.htm">LocoIO</a>
-      design by John Jabour was further developed by <a href="http://users.telenet.be/deloof/">Hans Deloof</a> from
-      Belgium.<br>
-      A typical board contains 16 signal pins, also called channels or ports. Each port can be individually programmed
-      as an input or an output, and to perform a number of different things (depending on the module's hardware and
-      firmware (PIC) version:</p>
+      <p>A LocoIO board is a DIY stationary interface to LocoNet for inputs (fascia pushbuttons,
+      turnout feedback or occupancy sensors) and outputs (fascia indicator LEDs, signal LED's,
+      turnout motors etc.). The original <a href=
+      "http://www.locobuffer.com/LocoIO/LocoIO.htm">LocoIO</a> design by John Jabour was further
+      developed by <a href="http://users.telenet.be/deloof/">Hans Deloof</a> from Belgium.<br>
+      A typical board contains 16 signal pins, also called channels or ports. Each port can be
+      individually programmed as an input or an output, and to perform a number of different things
+      (depending on the module's hardware and firmware (PIC) version:</p>
 
       <p>Inputs:</p>
+
       <ul>
         <li>Block Detector - Active Low</li>
+
         <li>Block Detector - Active High</li>
+
         <li>Block Detector - Active Low - Delayed</li>
+
         <li>Block Detector - Active High - Delayed</li>
+
         <li>Push Button - Active Low</li>
+
         <li>Push Button - Active Low - Indirect</li>
+
         <li>Switch Point Feedback - Normal</li>
+
         <li>Switch Point Feedback - Contact 2</li>
+
         <li>Switch Point Feedback - Contact 1</li>
+
         <li>Push Button - Active High - Indirect</li>
+
         <li>Push Button - Active High</li>
+
         <li>Toggle Switch</li>
+
         <li>Toggle Switch - Indirect</li>
       </ul>
 
       <p>Outputs</p>
+
       <ul>
         <li>Fixed - 1 - Off</li>
+
         <li>Fixed - 2 - Off</li>
+
         <li>Fixed - 1 - On</li>
+
         <li>Fixed - 2 - On</li>
+
         <li>Pulse - 2 - Soft Reset</li>
+
         <li>Pulse - 1 - Soft Reset</li>
+
         <li>Pulse - 2 - Hard Reset</li>
+
         <li>Pulse - 1 - Hard Reset</li>
+
         <li>Fixed - 1 - Off - Blink</li>
+
         <li>Fixed - 2 - Off - Blink</li>
+
         <li>Fixed - 1 - On - Blink</li>
+
         <li>Fixed - 2 - On - Blink</li>
+
         <li>Fixed - 1 - Off - 4-Way</li>
+
         <li>Fixed - 1 - Off - 4-Way - Blink</li>
+
         <li>Fixed - 2 - Off - 4-Way</li>
+
         <li>Fixed - 2 - Off - 4-Way - Blink</li>
+
         <li>Fixed - 1 - On - 4-Way</li>
+
         <li>Fixed - 1 - On - 4-Way - Blink</li>
+
         <li>Fixed - 2 - On - 4-Way</li>
+
         <li>Fixed - 2 - On - 4-Way - Blink</li>
+
         <li>Block (Occupancy) Detector</li>
+
         <li>Block Detector - Blink</li>
+
         <li>Servo (LocoServo ports 5-12 only)</li>
       </ul>
-      <p>Since rev 1.49</p>
+
+      <p>Since LocoIO rev 1.49</p>
+
       <ul>
         <li>Port Not In Use</li>
-        <li>On older boards, you are advised to configure unused ports as Output Fixed to prevent accidental
-          signals</li>
+
+        <li>On older boards, you are advised to configure unused ports as Output Fixed to prevent
+        accidental signals</li>
       </ul>
+
       <p>See the Cheat Sheet included in the DecoderPro LocoIO Programmer for further details.</p>
 
-      <p>The ports are configured via LocoNet messages, but the DecoderPro Programming
-      interface takes care of many technical details. Documentation is included below and
-      in the decoder definition file.</p>
+      <p>The ports are configured via LocoNet messages, but the DecoderPro Programming interface
+      takes care of many technical details. Documentation is included below and in the decoder
+      definition file.</p>
 
-      <a name="current" id="current"></a>
-      <h2>LocoIO Programmer via Roster</h2>
+      <h2 id="current">LocoIO Programmer via Roster</h2>
+      <span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.2.shtml" target=
+      "_blank">JMRI 4.21.2</a></span>
       <p>The <a href=
-      "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a> Decoder
-      Definition in the "Public Domain and DIY" category supports set-up of a wide range of LocoIO
-      devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo hardware since 2020.
+      "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
+      Decoder Definition in the "Public Domain and DIY" category supports set-up of a wide range of
+      LocoIO devices up to LocoIO/LocoBooster/LocoRCD/LocoServo rev 1.54 hardware since 2020.</p>
 
       <p>To use the current LocoIO Programmer follow these steps:</p>
+
       <ol>
-        <li>Turn on the layout and power up the LocoIO hardware. No jumpers or buttons on the LocoIO need touching in
-          order to preceed.</li>
-        <li>Open DecoderPro or the Roster menu option in PanelPro.</li>>
-        <li>In the Decoder Installed box, navigate to
-          "Public-domain and DIY" &gt; "Hans Deloof LocoIO".</li>
-        <li>Looking at your hardware, select the correct PIC programmer firmware version from the list. It often is
-          labeled on the biggest IC chip. If your version is not in the list, select the first higher one. In this
-          example we pick "LocoIO v1.53":<br>
-          <a href="images/LocoIoDefinition/Create1_New.png"><img
-          src="images/LocoIoDefinition/Create1_New.png"
-          width="370" height="235" alt="Screenshot LocoIO Config step 1"></a>
+        <li>Turn on the layout and power up the LocoIO hardware. No jumpers or buttons on the
+        LocoIO need touching in order to preceed.</li>
+
+        <li>Open DecoderPro or the Roster menu option in PanelPro.</li>
+
+        <li>In the Decoder Installed box, navigate to "Public-domain and DIY" &gt; "Hans Deloof
+        LocoIO".</li>
+
+        <li>Looking at your hardware, select the correct PIC programmer firmware version from the
+        list. It often is labeled on the biggest IC chip. If your version is not in the list,
+        select the first higher one. In this example we pick "LocoIO v1.53":<br>
+          <a href="images/LocoIoDefinition/Create1_New.png"><img src=
+          "images/LocoIoDefinition/Create1_New.png" width="370" height="235" alt=
+          "Screenshot LocoIO Config step 1"></a>
         </li>
-        <li>On the right of the Create New Loco pane, enter a name for this module, eg. "LocoIO 81/1 rev 1.53", and
-        fix the ultra-long decoder DCC address suggested. We chose 81, the factory default board address:<br>
-        <a href="images/LocoIoDefinition/Create2_Correct.png"><img
-        src="images/LocoIoDefinition/Create2_Correct.png"
-        width="370" height="235" alt="Screenshot LocoIO Config step 2"></a><br>
-        Click [Save] and close the Create New Loco pane.</li>
+
+        <li>On the right of the Create New Loco pane, enter a name for this module, eg. "LocoIO
+        81/1 rev 1.53", and fix the ultra-long decoder DCC address suggested. We chose 81, the
+        factory default board address:<br>
+          <a href="images/LocoIoDefinition/Create2_Correct.png"><img src=
+          "images/LocoIoDefinition/Create2_Correct.png" width="370" height="235" alt=
+          "Screenshot LocoIO Config step 2"></a><br>
+          Click [Save] and close the Create New Loco pane.
+        </li>
 
         <li>You will see the new entry appear in the Roster.<br>
-        Select it, make sure to select Programming on Main, and click [Program]:<br>
-        <a href="images/LocoIoDefinition/Create3_POM.png"><img
-        src="images/LocoIoDefinition/Create3_POM.png"
-        width="294" height="230" alt="Screenshot LocoIO Config step 3"></a>
+          Select it, make sure to select Programming on Main, and click [Program]:<br>
+          <a href="images/LocoIoDefinition/Create3_POM.png"><img src=
+          "images/LocoIoDefinition/Create3_POM.png" width="294" height="230" alt=
+          "Screenshot LocoIO Config step 3"></a>
         </li>
 
-        <li>On the Basic tab, enter the actual LocoIO Main Address and Sub-address, "81" and "1" respectively in our
-        example:<br>
-        <a href="images/LocoIoDefinition/Create4_CheckAddress.png"><img
-        src="images/LocoIoDefinition/Create4_CheckAddress.png"
-        width="343" height="261" alt="Screenshot LocoIO Config step 4"></a>
+        <li>On the Basic tab, enter the actual LocoIO Main Address and Sub-address, "81" and "1"
+        respectively in our example:<br>
+          <a href="images/LocoIoDefinition/Create4_CheckAddress.png"><img src=
+          "images/LocoIoDefinition/Create4_CheckAddress.png" width="343" height="261" alt=
+          "Screenshot LocoIO Config step 4"></a>
         </li>
 
-        <li>Next, go to the Roster Entry pane, click [Save to Roster] and close &amp; reopen the LocoIO
-          definition from the Roster to update the actual decoder address:<br>
-          <a href="images/LocoIoDefinition/Create5_SaveClose.png"><img
-          src="images/LocoIoDefinition/Create5_SaveClose.png"
-          width="343" height="261" alt="Screenshot LocoIO Config step 5"></a>
+        <li>Next, go to the Roster Entry pane, click [Save to Roster] and close & reopen the LocoIO
+        definition from the Roster to update the actual decoder address:<br>
+          <a href="images/LocoIoDefinition/Create5_SaveClose.png"><img src=
+          "images/LocoIoDefinition/Create5_SaveClose.png" width="343" height="261" alt=
+          "Screenshot LocoIO Config step 5"></a>
         </li>
 
-        <li>Returning to the Basic tab, click [Read full sheet]. If a LocoIO is found at the address, its firmware
-        version is displayed (the Monitor LocoNet window will show more precise information regarding the firmware).</li>
+        <li>Returning to the Basic tab, click [Read full sheet]. If a LocoIO is found at the
+        address, its firmware version is displayed (the Monitor LocoNet window will show more
+        precise information regarding the firmware).</li>
 
-        <li><strong>Warning:</strong> If you wish to change the address of a LocoIO board,
-        you <strong>MUST first ensure that ONLY a single LocoIO-based board is
-        connected to the LocoNet</strong>, as the address is set via a broadcast message.<br>
-        If you Write CV2 and CV3 on the CVs tab or press [Write All] from the Basic tab, <strong>ALL</strong>
-        LocoIO's on your LocoNet will be reprogrammed with the same new address.
+        <li><strong>Warning:</strong> If you wish to change the address of a LocoIO board, you
+        <strong>MUST first ensure that ONLY a single LocoIO-based board is connected to the
+        LocoNet</strong>, as the address is set via a broadcast message.<br>
+        If you Write CV2 and CV3 on the CVs tab or press [Write All] from the Basic tab,
+        <strong>ALL</strong> LocoIO's on your LocoNet will be reprogrammed with the same new
+        address.</li>
+
+        <li>
+          <br>
+          <a href="images/LocoIoDefinition/Create6_Locotab.png"><img src=
+          "images/LocoIoDefinition/Create6_Locotab.png" width="343" height="262" alt=
+          "Screenshot LocoIO Config step 6"></a>
         </li>
 
-        <li><br>
-          <a href="images/LocoIoDefinition/Create6_Locotab.png"><img
-                  src="images/LocoIoDefinition/Create6_Locotab.png"
-                  width="343" height="262" alt="Screenshot LocoIO Config step 6"></a>
+        <li>
+          <br>
+          <a href="images/LocoIoDefinition/Create7_LocotabRead.png"><img src=
+          "images/LocoIoDefinition/Create7_LocotabRead.png" width="343" height="262" alt=
+          "Screenshot LocoIO Config step 7"></a>
         </li>
 
-        <li><br>
-          <a href="images/LocoIoDefinition/Create7_LocotabRead.png"><img
-                  src="images/LocoIoDefinition/Create7_LocotabRead.png"
-                  width="343" height="262" alt="Screenshot LocoIO Config step 7"></a>
+        <li>
+          <br>
+          <a href="images/LocoIoDefinition/Create8a_InitialPortstab.png"><img src=
+          "images/LocoIoDefinition/Create8a_InitialPortstab.png" width="579" height="199" alt=
+          "Screenshot LocoIO Config step 8a"></a>
         </li>
 
-        <li><br>
-          <a href="images/LocoIoDefinition/Create8a_InitialPortstab.png"><img
-                  src="images/LocoIoDefinition/Create8a_InitialPortstab.png"
-                  width="579" height="199" alt="Screenshot LocoIO Config step 8a"></a>
+        <li>
+          <br>
+          <a href="images/LocoIoDefinition/Create8b_After1stReadAll.png"><img src=
+          "images/LocoIoDefinition/Create8b_After1stReadAll.png" width="592" height="442" alt=
+          "Screenshot LocoIO Config step 8b"></a>
         </li>
 
-        <li><br>
-          <a href="images/LocoIoDefinition/Create8b_After1stReadAll.png"><img
-                  src="images/LocoIoDefinition/Create8b_After1stReadAll.png"
-                  width="592" height="442" alt="Screenshot LocoIO Config step 8b"></a>
+        <li>After Read All, many ports will show a Mode selected. Due to the complexity of the
+        LocoIO memory DecoderPro can't figure out some choices, so you will have to assist at this
+        point for those ports that still show "Port not in Use". At least you will notice the
+        numbers already changed. For example on Port 4 the number in the Config field reads
+        "95":<br>
+          <a href="images/LocoIoDefinition/Create9a_Port4Combo.png"><img src=
+          "images/LocoIoDefinition/Create9a_Port4Combo.png" width="405" height="130" alt=
+          "Screenshot LocoIO Config step 9a"></a>
         </li>
 
-        <li>After Read All, many ports will show a Mode selected. Due to the complexity of the LocoIO memory
-          DecoderPro can't figure out some choices, so you will have to assist at this point for those ports that still
-          show "Port not in Use". At least you will notice the numbers already changed.
-          For example on Port 4 the number in the Config field reads "95":<br>
-          <a href="images/LocoIoDefinition/Create9a_Port4Combo.png"><img
-          src="images/LocoIoDefinition/Create9a_Port4Combo.png"
-          width="405" height="130" alt="Screenshot LocoIO Config step 9a"></a>
+        <li>Turn to the Cheat Sheet tab reference, in the Config column look up "95". It's is a
+        Block Detector - Active High:<br>
+          <a href="images/LocoIoDefinition/Create9b_CheatSheet.png"><img src=
+          "images/LocoIoDefinition/Create9b_CheatSheet.png" width="274" height="195" alt=
+          "Screenshot LocoIO Config step 9b"></a>
         </li>
 
-        <li>Turn to the Cheat Sheet tab reference, in the Config column look up "95". It's is a Block Detector -
-          Active High:<br>
-          <a href="images/LocoIoDefinition/Create9b_CheatSheet.png"><img
-          src="images/LocoIoDefinition/Create9b_CheatSheet.png"
-          width="274" height="195" alt="Screenshot LocoIO Config step 9b"></a>
-        </li>
-
-        <li>Return to the Ports tab and in the Port 4 Mode combo, pick "Block Detector - Active High" (either odd or even
-          address, will correct automatically later on):<br>
-          <a href="images/LocoIoDefinition/Create9c_Port4ComboOpen.png"><img
-          src="images/LocoIoDefinition/Create9c_Port4ComboOpen.png"
-          width="425" height="130" alt="Screenshot LocoIO Config step 9c"></a>
+        <li>Return to the Ports tab and in the Port 4 Mode combo, pick "Block Detector - Active
+        High" (either odd or even address, will correct automatically later on):<br>
+          <a href="images/LocoIoDefinition/Create9c_Port4ComboOpen.png"><img src=
+          "images/LocoIoDefinition/Create9c_Port4ComboOpen.png" width="425" height="130" alt=
+          "Screenshot LocoIO Config step 9c"></a>
         </li>
 
         <li>After clicking [Read changes on sheet]:<br>
-          <a href="images/LocoIoDefinition/Create9d_Port4ModeSet.png"><img
-          src="images/LocoIoDefinition/Create9d_Port4ModeSet.png"
-          width="427" height="126" alt="Screenshot LocoIO Config step 9d"></a>
+          <a href="images/LocoIoDefinition/Create9d_Port4ModeSet.png"><img src=
+          "images/LocoIoDefinition/Create9d_Port4ModeSet.png" width="427" height="126" alt=
+          "Screenshot LocoIO Config step 9d"></a>
         </li>
 
-        <li>After fixing all mode combo's that are not "0", once again click [Read full sheet] to update all fields
-          and inspect the LocoIO configuration. Scroll down to see more ports:<br>
-          <a href="images/LocoIoDefinition/Create10_Ready.png"><img
-          src="images/LocoIoDefinition/Create10_Ready.png"
-          width="564" height="442" alt="Screenshot LocoIO Config step 10"></a>
+        <li>After fixing all mode combo's that are not "0", once again click [Read full sheet] to
+        update all fields and inspect the LocoIO configuration. Scroll down to see more ports:<br>
+
+          <a href="images/LocoIoDefinition/Create10_Ready.png"><img src=
+          "images/LocoIoDefinition/Create10_Ready.png" width="564" height="442" alt=
+          "Screenshot LocoIO Config step 10"></a>
         </li>
 
-        <li>Inputs allow setting up to two more actions carried out when the pin goes to ON. You can set the action
-          type and the address on the right hand side of the LocoIO programmer pane as shown here. See the HDL
-          documentation for examples and further information:<br>
-          <a href="images/LocoIoDefinition/Create11_Opcode.png"><img
-          src="images/LocoIoDefinition/Create11_Opcode.png"
-          width="275" height="116" alt="Screenshot LocoIO Opcode Config"></a>
+        <li>Inputs allow setting up to two more actions carried out when the pin goes to ON. You
+        can set the action type and the address on the right hand side of the LocoIO programmer
+        pane as shown here. See the HDL documentation for examples and further information:<br>
+          <a href="images/LocoIoDefinition/Create11_Opcode.png"><img src=
+          "images/LocoIoDefinition/Create11_Opcode.png" width="275" height="116" alt=
+          "Screenshot LocoIO Opcode Config"></a>
         </li>
 
         <li>A LocoBooster module will show several special options:<br>
-          <a href="images/LocoIoDefinition/Create12_Lbooster.png"><img
-          src="images/LocoIoDefinition/Create12_Lbooster.png"
-          width="400" height="541" alt="Screenshot LocoBooster Config pane"></a>
+          <a href="images/LocoIoDefinition/Create12_Lbooster.png"><img src=
+          "images/LocoIoDefinition/Create12_Lbooster.png" width="400" height="541" alt=
+          "Screenshot LocoBooster Config pane"></a>
         </li>
-
       </ol>
 
       <h3>Third Party info</h3>
+
       <ul>
-      <li>For more information on the LocoIO and how to use the boards, see <a
-      href="http://users.telenet.be/deloof/">LocoHDL</a></li>.
-      <li>Original LocoIO DIY project description is available at
-      <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">www.locobuffer.com</a></li>
+        <li>For more information on the LocoIO and how to use the boards, see <a href=
+        "http://users.telenet.be/deloof/">LocoHDL</a>.
+        </li>
+
+        <li>Original LocoIO DIY project description is available at <a href=
+        "http://www.locobuffer.com/LocoIO/LocoIO.htm">www.locobuffer.com</a>
+        </li>
       </ul>
 
-      <a name="second" id="second"></a>
-      <h2>LocoIO Programmer 2 <strong>(no longer supported)</strong></h2>
-      <a href="images/LocoIO_v2.png"><img src="images/LocoIO_v2.png"
-      width="397" height="305" alt="Screenshot of LocoIO Configuration Tool
-      v2 (deprecated)"></a>
-      <p><em>The following entry is only shown as reference for JMRI
-      versions before 3.0.</em></p>
-      <p>You can still use it for the original boards, but consider
-      switching over to configuring your LocoIO boards with the current
-      programmer, documented <a href="#current">above</a>.</p>
-      <p>Version 2 was written by John Plocher for JMRI release 1.8 and
-      <em>only</em> dealt with SV1 &amp; SV2 (address/subaddress)
-      and SV3-SV50 (primary Mode, Value1 and Value2 for ports
-      1-16). In particular, it did not handle SV0 (board
-      level configuration), SV51-SV98 (alternate Opcodes) or
-      SV101-124 (servo config).</p>
+      <h2 id="second">LocoIO Programmer 2 <strong>(no longer supported)</strong></h2>
+      <a href="images/LocoIO_v2.png"><img src="images/LocoIO_v2.png" width="397" height="305" alt=
+      "Screenshot of LocoIO Configuration Tool v2 (deprecated)"></a>
+      <p><em>The following entry is only shown as reference for JMRI versions before 3.0.</em>
+      </p>
+
+      <p>You can still use it for the original boards, but consider switching over to configuring
+      your LocoIO boards with the current programmer, documented <a href="#current">above</a>.</p>
+
+      <p>Version 2 was written by John Plocher for JMRI release 1.8 and <em>only</em> dealt with
+      SV1 & SV2 (address/subaddress) and SV3-SV50 (primary Mode, Value1 and Value2 for ports 1-16).
+      In particular, it did not handle SV0 (board level configuration), SV51-SV98 (alternate
+      Opcodes) or SV101-124 (servo config).</p>
 
       <p>Available options:</p>
+
       <ul>
-        <li>Enter the LocoIO board address as hex value (example: 0x51 =
-        81 decimal)</li>
-        <li>Click on "Probe" button.If a locoIO is found at that address,
-        its firmware version is displayed (the Monitor LocoNet window
-        will show all the LocoIO's that responded to the probe request
-        if you need to refresh your memory)</li>
+        <li>Enter the LocoIO board address as hex value (example: 0x51 = 81 decimal)</li>
+
+        <li>Click on "Probe" button.If a locoIO is found at that address, its firmware version is
+        displayed (the Monitor LocoNet window will show all the LocoIO's that responded to the
+        probe request if you need to refresh your memory)</li>
+
         <li>Select a port operation mode from the drop down list</li>
-        <li>"Read All" reads all the CV values from the LocoIO
-        specified. "Write All" writes them all out</li>
-        <li>The individual read/write buttons do the same, but for
-        only one port at a time.</li>
-        <li>"Capture" extracts the address out of the next turnout
-        or occupancy sensor LocoNet message it sees and uses it as
-        the address of the selected port.</li>
+
+        <li>"Read All" reads all the CV values from the LocoIO specified. "Write All" writes them
+        all out</li>
+
+        <li>The individual read/write buttons do the same, but for only one port at a time.</li>
+
+        <li>"Capture" extracts the address out of the next turnout or occupancy sensor LocoNet
+        message it sees and uses it as the address of the selected port.</li>
       </ul>
 
-      <a name="older" id="older"></a>
-      <h2>LocoIO Programmer 1 <strong>(no longer supported)</strong></h2><a href=
-      "images/locoio.gif"><img src="images/locoio.gif" width="346"
-      height="162" alt="Screenshot of LocoIO Configuration Tool v1
-      (deprecated)"></a>
+      <h2 id="older">LocoIO Programmer 1 <strong>(no longer supported)</strong></h2>
+      <a href="images/locoio.gif"><img src="images/locoio.gif" width="346" height="162" alt=
+      "Screenshot of LocoIO Configuration Tool v1 (deprecated)"></a>
+      <p>The first LocoIO programmer was part of JMRI 1.x. It provided a table-based interface for
+      configuring <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">John Jabour's LocoIO
+      board</a>, a powerful component for building CTC boards and control panels. (More information
+      on the board is available at <a href=
+      "http://www.locobuffer.com/LocoIO/LocoIO.htm">http://www.locobuffer.com/LocoIO/LocoIO.htm</a>)</p>
 
-      <p>The first LocoIO programmer was part of JMRI 1.x.
-      It provided a table-based interface for configuring <a href=
-      "http://www.locobuffer.com/LocoIO/LocoIO.htm">John Jabour's
-      LocoIO board</a>, a powerful component for building CTC
-      boards and control panels. (More information on the board is
-      available at
-      <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm"
-      >http://www.locobuffer.com/LocoIO/LocoIO.htm</a>)</p>
+      <p>The LocoIO programmer v1 used a table to represent the configuration of each channel.</p>
 
-      <p>The LocoIO programmer v1 used a table to represent the
-      configuration of each channel.</p>
-
-      <p>The "Action" column is used to select how the channel/port
-      behaves. Click in a cell to be given a menu of available
-      choices. Currently, the choices are:</p>
+      <p>The "Action" column is used to select how the channel/port behaves. Click in a cell to be
+      given a menu of available choices. Currently, the choices are:</p>
 
       <div class="list">
         <dl>
-          <dt class="left"><dfn>"Toggle switch controls
-          turnout"</dfn></dt>
+          <dt class="left"><dfn>"Toggle switch controls turnout"</dfn>
+          </dt>
 
           <dd class="first">
-            <p>Generate a OPC_SW_REQ to close/throw a turnout when
-            a toggle switch changes state. When the input goes
-            high, a "close" command is sent; when the input goes
-            low, a "throw" command is sent. The channel
-            configuration value is 0x0F.</p>
+            <p>Generate a OPC_SW_REQ to close/throw a turnout when a toggle switch changes state.
+            When the input goes high, a "close" command is sent; when the input goes low, a "throw"
+            command is sent. The channel configuration value is 0x0F.</p>
           </dd>
 
-          <dt class="left"><dfn>"Input low flips
-          turnout"</dfn></dt>
+          <dt class="left"><dfn>"Input low flips turnout"</dfn>
+          </dt>
 
           <dd>
-            <p>Generate a OPC_SW_REQ LocoNet message when the input
-            goes low. This is intended for use with a momentary
-            pushbutton. The command sent will alternate the
-            position of the addressed turnout or signal; if "close"
-            was last sent, a "throw" will be sent now and
-            vice-versa. The channel configuration value is
-            0x2F.</p>
+            <p>Generate a OPC_SW_REQ LocoNet message when the input goes low. This is intended for
+            use with a momentary pushbutton. The command sent will alternate the position of the
+            addressed turnout or signal; if "close" was last sent, a "throw" will be sent now and
+            vice-versa. The channel configuration value is 0x2F.</p>
           </dd>
 
-          <dt class="left"><dfn>"Input high flips
-          turnout"</dfn></dt>
+          <dt class="left"><dfn>"Input high flips turnout"</dfn>
+          </dt>
 
           <dd>
-            <p>Generate a OPC_SW_REQ LocoNet message when the input
-            goes high. This is intended for use with a momentary
-            pushbutton. The command sent will alternate the
-            position of the addressed turnout or signal; if "close"
-            was last sent, a "throw" will be sent now and
-            vice-versa. The channel configuration value is
-            0x6F.</p>
+            <p>Generate a OPC_SW_REQ LocoNet message when the input goes high. This is intended for
+            use with a momentary pushbutton. The command sent will alternate the position of the
+            addressed turnout or signal; if "close" was last sent, a "throw" will be sent now and
+            vice-versa. The channel configuration value is 0x6F.</p>
           </dd>
 
-          <dt class="left"><dfn>"Status message sets
-          output"</dfn></dt>
+          <dt class="left"><dfn>"Status message sets output"</dfn>
+          </dt>
 
           <dd>
-            <p>Drive an output from OPC_INPUT_REP input status
-            messages on the LocoNet. The output goes high when an
-            "input high" message is received, and goes low when an
-            "input low" message is received. These messages are
-            also used for block occupancy status; the output will
-            go high when the block is occupied, and low when its
-            empty. The channel configuration value is 0XC0.</p>
+            <p>Drive an output from OPC_INPUT_REP input status messages on the LocoNet. The output
+            goes high when an "input high" message is received, and goes low when an "input low"
+            message is received. These messages are also used for block occupancy status; the
+            output will go high when the block is occupied, and low when its empty. The channel
+            configuration value is 0XC0.</p>
           </dd>
 
-          <dt class="left"><dfn>"Turnout close cmd sets
-          output"</dfn></dt>
+          <dt class="left"><dfn>"Turnout close cmd sets output"</dfn>
+          </dt>
 
           <dd>
-            <p>Drive an output on the LocoIO board from received
-            OPC_SW_REQ commands. The channel configuration value is
-            0x80. This adjusts the address field to look for a
-            command that sets the turnout "closed".</p>
+            <p>Drive an output on the LocoIO board from received OPC_SW_REQ commands. The channel
+            configuration value is 0x80. This adjusts the address field to look for a command that
+            sets the turnout "closed".</p>
           </dd>
 
-          <dt class="left"><dfn>"Turnout throw cmd sets
-          output"</dfn></dt>
+          <dt class="left"><dfn>"Turnout throw cmd sets output"</dfn>
+          </dt>
 
           <dd>
-            <p>Drive an output on the LocoIO board from received
-            OPC_SW_REQ commands. The channel configuration value is
-            0x80. This adjusts the address field to look for a
-            command that sets the turnout "thrown".</p>
+            <p>Drive an output on the LocoIO board from received OPC_SW_REQ commands. The channel
+            configuration value is 0x80. This adjusts the address field to look for a command that
+            sets the turnout "thrown".</p>
           </dd>
         </dl>
       </div>
 
-      <p>The "Hex Value1,Value2" column sets the address that the
-      LocoIO board will use for LocoNet communications. This
-      contains a hexadecimal representation of the two
-      configuration values described in John Jabour's LocoIO
-      programming guide. You generally won't need to figure out
-      these addresses, as the <span class="button">capture</span>
-      buttons will find them for you.</p>
+      <p>The "Hex Value1,Value2" column sets the address that the LocoIO board will use for LocoNet
+      communications. This contains a hexadecimal representation of the two configuration values
+      described in John Jabour's LocoIO programming guide. You generally won't need to figure out
+      these addresses, as the <span class="button">capture</span> buttons will find them for
+      you.</p>
 
-      <p>The <span class="button">Read</span> button reads from the
-      LocoIO board via the LocoNet and shows the current
-      configuration for that pin. The <span class=
-      "button">Write</span> button stores the current settings to
-      the LocoIO board.</p>
+      <p>The <span class="button">Read</span> button reads from the LocoIO board via the LocoNet
+      and shows the current configuration for that pin. The <span class="button">Write</span>
+      button stores the current settings to the LocoIO board.</p>
 
-      <p>The <span class="button">Capture</span> button provides an
-      easier way to find a needed LocoNet address. Configure the
-      input and output for a particular pin, then press the
-      <span class="button">Capture</span> button. The address in
-      the next LocoNet message of the right type will be put in the
-      address column.</p>
+      <p>The <span class="button">Capture</span> button provides an easier way to find a needed
+      LocoNet address. Configure the input and output for a particular pin, then press the
+      <span class="button">Capture</span> button. The address in the next LocoNet message of the
+      right type will be put in the address column.</p>
 
-      <p>For example, if you have a channel set to act when a
-      "Turnout closed status message" is received, press the
-      <span class="button">Capture</span> button and use your
-      throttle to command the correct turnout Closed.</p>
+      <p>For example, if you have a channel set to act when a "Turnout closed status message" is
+      received, press the <span class="button">Capture</span> button and use your throttle to
+      command the correct turnout Closed.</p>
 
-      <p>As another example, if the channel is configured to send a
-      "Send throw turnout command", press the <span class=
-      "button">Capture</span> button and use your throttle to
-      command the correct turnout Thrown.</p>
+      <p>As another example, if the channel is configured to send a "Send throw turnout command",
+      press the <span class="button">Capture</span> button and use your throttle to command the
+      correct turnout Thrown.</p>
 
-      <p>At the bottom of the table are some general controls. The
-      LocoIO address field sets the address of the board being
-      programmed. LocoIO processors are sent with an address of
-      1051 programmed; see below for how to change that. Address
-      "0" is a global address which any LocoIO board will respond
-      to; make sure you have only one connected when you use
-      that!</p>
+      <p>At the bottom of the table are some general controls. The LocoIO address field sets the
+      address of the board being programmed. LocoIO processors are sent with an address of 1051
+      programmed; see below for how to change that. Address "0" is a global address which any
+      LocoIO board will respond to; make sure you have only one connected when you use that!</p>
 
-      <p>The <span class="button">Set address</span> button will
-      use the global address to configure a specific address into a
-      LocoIO board. Again, make sure you have only one connected.</p>
+      <p>The <span class="button">Set address</span> button will use the global address to
+      configure a specific address into a LocoIO board. Again, make sure you have only one
+      connected.</p>
 
-      <p>The <span class="button">Read All</span> and <span class=
-      "button">Write All</span> buttons read or write all of the
-      channels, and are just a convenience.</p>
+      <p>The <span class="button">Read All</span> and <span class="button">Write All</span> buttons
+      read or write all of the channels, and are just a convenience.</p>
 
-      <p>Status messages during capture/read/write are displayed at
-      the bottom of the window. If no response is heard from the
-      LocoIO unit, the operation will be retried until it succeeds
-      or until you close the window.</p>
-
-
-    <!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Status messages during capture/read/write are displayed at the bottom of the window. If no
+      response is heard from the LocoIO unit, the operation will be retried until it succeeds or
+      until you close the window.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

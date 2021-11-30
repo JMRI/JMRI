@@ -23,6 +23,7 @@ import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -90,6 +91,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             });
         }
         
+        CbusConfigPaneProvider.loadInstances();
+
         _selectedNode = -1;
 
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
@@ -166,9 +169,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         this.setPreferredSize(new Dimension(700, 450));
         
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainNodePane, tabbedPane);
-        split.setDividerLocation(100); // px from top of node table pane
+        split.setDividerLocation(preferences.getNodeTableSplit()); // px from top of node table pane
         split.setContinuousLayout(true);
         _pane1.add(split, BorderLayout.CENTER);
+        split.addPropertyChangeListener((PropertyChangeEvent changeEvent) -> {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
+                preferences.setNodeTableSplit(sourceSplitPane.getDividerLocation());
+            }
+        });
         
         add(_pane1);
         _pane1.setVisible(true);
@@ -550,6 +560,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         
       //  nodeTable = null;
       //  eventScroll = null;
+      
+        // May need to take a node out of learn mode so signal that we are closing
+        // Currently only applies to servo modules and the NV edit gui pane
+        getTabs().forEach((pn) -> {
+            if (pn instanceof CbusNodeEditNVarPane) {
+                pn.dispose();
+            }
+        });
+        
         super.dispose();
     }
 

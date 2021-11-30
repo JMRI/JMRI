@@ -1,0 +1,225 @@
+<html>
+<head>
+<title>LogixNG sequence</title>
+
+<meta charset="utf-8"/>
+
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/logger.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="logixng_sequence.js"></script>
+        <script type="text/javascript">
+        </script>
+
+
+
+
+</head>
+<body>
+<h1>LogixNG - Sequence</h1>
+
+This image shows a model railroad with a harbour with a ship, a coal yard with a crane, and a steam engine and a coal
+car.
+
+
+
+<p>
+&nbsp;
+<p>
+
+<hr>
+
+<svg id="svg-object" width="1000" height="800">
+
+
+
+  <defs>
+    <g id="CoalYard">
+      <rect x="-100" y="-100" width="200" height="200" stroke="#385D8A" stroke-width="4" fill="#948A54" />    <!-- frame -->
+	</g>
+  </defs>
+
+  <use id="CoalYardHandle" x="0" y="0" z="-100" transform="translate(580,490) rotate(30)" xlink:href="#CoalYard"/>
+
+
+
+
+<!-- Water-->
+<rect x="200" y="0" width="800" height="155" stroke="black" stroke-width="0" fill="#7F7FFF" />    <!-- rail -->
+
+<!-- Ship -->
+<polygon points="500,50 500,150 850,150 900,100 850,50" style="fill:#4F414D;stroke:black;stroke-width:3" />		<!-- frame -->
+<rect x="520" y="60" width="40" height="80" stroke="black" stroke-width="4" fill="#2F212D" />					<!-- cabin -->
+<polygon points="580,60 580,140 845,140 885,100 845,60" style="fill:#948A54;stroke:black;stroke-width:3" />		<!-- loaded dock -->
+
+
+
+
+  <rect x="0" y="187" width="354" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect x="0" y="213" width="345" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect x="390" y="187" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect x="380" y="213" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect id="turnout_1_1" x="355" y="187" width="34" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect id="turnout_1_2" x="346" y="213" width="33" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect id="turnout_2_1" x="392" y="90" width="35" height="2" stroke="black" stroke-width="0" fill="black" transform="rotate(15)" visibility="hidden" />    <!-- rail -->
+  <rect id="turnout_2_2" x="390" y="116" width="30" height="2" stroke="black" stroke-width="0" fill="black" transform="rotate(15)" visibility="hidden" />    <!-- rail -->
+
+  <defs>
+    <g id="Track2">
+      <rect x="-400" y="-13" width="680" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+      <rect x="-400" y="+13" width="680" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+	</g>
+  </defs>
+
+  <use id="Track2_Handle" x="0" y="0" xlink:href="#Track2"/>
+
+
+
+
+
+<rect x="0" y="200" width="1000" height="2" stroke="black" stroke-width="0" fill="blue" visibility="hidden" />							<!-- center of rail -->
+<line id="DivergingCenterRail" x1="362" y1="200" x2="1000" y2="568" style="stroke:rgb(255,0,0);stroke-width:2" visibility="hidden" />	<!-- center of rail -->
+
+
+
+
+<circle cx="30" cy="201" r="6" stroke="black" stroke-width="2" fill="red" />	<!-- sensor 1 -->
+<circle cx="760" cy="201" r="6" stroke="black" stroke-width="2" fill="red" />	<!-- sensor 2 -->
+<circle cx="840" cy="475" r="6" stroke="black" stroke-width="2" fill="red" />	<!-- sensor 3 -->
+
+
+
+
+  <defs>
+    <g id="Loco">
+      <rect x="-228" y="-84" width="300" height="162" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- frame -->
+      <rect x="-168" y="-40" width="240" height="80" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- boiler -->
+      <circle cx="-161" cy="0" r="42" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />                    <!-- chimney -->
+      <rect x="72" y="-119" width="149" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- cabin -->
+	</g>
+  </defs>
+
+  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco"/>
+
+
+  <defs>
+    <g id="Car">
+      <rect x="-221" y="-119" width="437" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- frame -->
+      <rect x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- empty loading dock -->
+      <rect id="CarLoad" x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#948A54" visibility="hidden" />     <!-- filled loading dock -->
+      <circle cx="0" cy="0" r="20" stroke="black" stroke-width="2" fill="blue" visibility="hidden" />   <!-- only used to see the center of the car -->
+	</g>
+  </defs>
+
+  <use id="CarHandle" x="0" y="0" xlink:href="#Car"/>
+
+
+
+  <defs>
+    <g id="Crane">
+      <rect x="-150" y="-110" width="300" height="220" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- crane cabin -->
+      <rect x="-10" y="-408" width="20" height="300" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />      <!-- crane arm -->
+      <rect id="CraneBucket" x="-70" y="-410" width="140" height="100" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- empty bucket -->
+<!--      <rect x="-70" y="-410" width="140" height="100" stroke="#385D8A" stroke-width="4" fill="#948A54" />     <!-- filled bucket -->
+      <defs>
+        <g id="CraneUpDown">
+          <line x1="0" y1="-30" x2="0" y2="30" style="stroke:black;stroke-width:5" />	<!-- arrow to show if arm is lifted or not -->
+          <line x1="-20" y1="0" x2="0" y2="-30" style="stroke:black;stroke-width:5" />	<!-- arrow to show if arm is lifted or not -->
+          <line x1="20" y1="0" x2="0" y2="-30" style="stroke:black;stroke-width:5" />	<!-- arrow to show if arm is lifted or not -->
+	    </g>
+      </defs>
+      <use id="CraneUpDown" x="70" y="0" xlink:href="#CraneUpDown"/>
+	</g>
+  </defs>
+
+  <use id="CraneHandle" x="0" y="0" xlink:href="#Crane"/>
+
+
+
+
+</svg>
+
+<script>
+//window.setInterval(myTimer, 500);
+
+
+
+
+var circle = document.getElementById('Daniel1');
+
+// console.log("circle: "+circle);
+/*
+for (var key in circle) {
+  console.log(key);
+}
+*/
+
+var item = document.getElementById('LocoHandle');
+item.setAttribute("transform", "translate(100,200) scale(0.3) rotate(0)");
+
+var item = document.getElementById('CarHandle');
+item.setAttribute("transform", "translate(250,200) scale(0.3) rotate(0)");
+
+var item = document.getElementById('CraneHandle');
+item.setAttribute("transform", "translate(737,540) scale(0.3) rotate(30)");
+
+var item = document.getElementById('Track2_Handle');
+item.setAttribute("transform", "translate(730,410) rotate(30)");
+
+
+var angle = 0;
+var turnoutClosed = true;
+
+function myTimer() {
+/*
+//  var circle = document.getElementById('DanielAA');
+  var circle = document.getElementById('DanielBB');
+  var x = parseFloat(circle.getAttributeNS(null, 'x'));
+//  circle.setAttributeNS(null, 'x', x + 1);
+//  circle.setAttributeNS(null, 'rotate', '20deg');
+//  circle.setAttributeNS(null, 'x', 0);
+//  circle.setAttribute("transform", "translate(-100,-100) rotate("+angle+") translate(100,100)");
+  circle.setAttribute("transform", "rotate("+angle+") translate(100,100)");
+//  circle.setAttributeNS(null, 'x', 100);
+*/
+
+  
+  var circle = document.getElementById('LocoHandle');
+  circle.setAttribute("transform", "translate(100,200) scale(0.3) rotate("+angle+")");
+
+//  circle.setAttributeNS(null, 'x', 400);
+
+  angle += 10;
+
+
+
+  var turnout_1_1 = document.getElementById('turnout_1_1');
+  var turnout_1_2 = document.getElementById('turnout_1_2');
+  var turnout_2_1 = document.getElementById('turnout_2_1');
+  var turnout_2_2 = document.getElementById('turnout_2_2');
+
+  turnoutClosed = !turnoutClosed;
+  if (turnoutClosed) {
+    turnout_1_1.setAttribute("visibility", "visible");
+    turnout_1_2.setAttribute("visibility", "visible");
+    turnout_2_1.setAttribute("visibility", "hidden");
+    turnout_2_2.setAttribute("visibility", "hidden");
+  } else {
+    turnout_1_1.setAttribute("visibility", "hidden");
+    turnout_1_2.setAttribute("visibility", "hidden");
+    turnout_2_1.setAttribute("visibility", "visible");
+    turnout_2_2.setAttribute("visibility", "visible");
+  }
+
+} 
+
+</script>
+
+</body>
+</html>

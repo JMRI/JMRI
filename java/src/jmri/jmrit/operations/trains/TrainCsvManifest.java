@@ -76,10 +76,10 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 String locationName = routeLocationName;
                 if (!routeLocationName.equals(previousRouteLocationName)) {
                     printLocationName(fileOut, locationName);
-                    if (rl != train.getRoute().getDepartsRouteLocation()) {
+                    if (rl != train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("AT", Bundle.getMessage("csvArrivalTime"), train.getExpectedArrivalTime(rl)); // NOI18N
                     }
-                    if (rl == train.getRoute().getDepartsRouteLocation()) {
+                    if (rl == train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("DT", Bundle.getMessage("csvDepartureTime"), train.getFormatedDepartureTime()); // NOI18N
                     } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                         fileOut.printRecord("DTR", Bundle.getMessage("csvDepartureTimeRoute"), rl.getFormatedDepartureTime()); // NOI18N
@@ -96,7 +96,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                             printLocationComment(fileOut, comment);
                         }
                     }
-                    if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled()) {
+                    if (Setup.isPrintTruncateManifestEnabled() && location.isSwitchListEnabled()) {
                         fileOut.printRecord("TRUN", Bundle.getMessage("csvTruncate"));
                     }
                 }
@@ -121,13 +121,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     }
                 }
 
-                // block pick up cars by destination
-                boolean found = false; // begin blocking at rl
-                for (RouteLocation rld : routeList) {
-                    if (rld != rl && !found) {
-                        continue;
-                    }
-                    found = true;
+                // block pick up cars
+                for (RouteLocation rld : train.getTrainBlockingOrder()) {
                     for (Car car : carList) {
                         if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
                             newWork = true;
@@ -180,7 +175,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                         printCar(fileOut, car, "HOLD", Bundle.getMessage("csvHoldCar"), count);
                     }
                 }
-                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the previous?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
                     String nextRouteLocationName = splitString(rlNext.getName());

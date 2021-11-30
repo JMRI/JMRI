@@ -140,6 +140,31 @@ public class SprogVersion {
     }
 
     /**
+     * Check if the SPROG supports use of CV hints when reading. This means
+     * SPROG IIv4 or SPROG 3v4 version 4.5 or higher
+     *
+     * @return boolean if the current SPROG supports CV hints when reading
+     */
+    public boolean supportsCVHints() {
+        int major = this.getMajorVersion();
+        int minor = this.getMinorVersion();
+        if (log.isDebugEnabled()) {
+            log.debug("Major: {} Minor: {}", major, minor);
+        }
+        if ((this.sprogType.sprogType == SprogType.SPROGIIv4) && (minor >= 5)
+                || (this.sprogType.sprogType == SprogType.SPROG3) && (major == 4) && (minor >= 5)) {
+            if (log.isDebugEnabled()) {
+                log.debug("This version supports CV hints");
+            }
+            return true;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("This version does not support CV hints");
+        }
+        return false;
+    }
+
+    /**
      *
      * @return String representation of SPROG version
      */

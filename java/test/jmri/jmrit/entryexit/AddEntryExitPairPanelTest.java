@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterAll;
+import jmri.util.junit.rules.RetryRule;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -26,6 +26,9 @@ public class AddEntryExitPairPanelTest {
     static HashMap<String, LayoutEditor> panels = new HashMap<>();
     static EntryExitPairs eep;
 
+    //@Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -36,6 +39,8 @@ public class AddEntryExitPairPanelTest {
     @Test
     public void testPanelActions() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // Open the NX window
         AddEntryExitPairAction nxAction = new AddEntryExitPairAction("ENTRY EXIT", panels.get("Alpha"));  // NOI18N
@@ -65,8 +70,8 @@ public class AddEntryExitPairPanelTest {
         java.util.List<AddEntryExitPairFrame>  frames = jmri.util.JmriJFrame.getFrameList(AddEntryExitPairFrame.class);
         Assert.assertEquals("Should be only one frame", 1, frames.size());
         frames.get(0).nxPanel.optionWindow(null);
-        
-        
+
+
         // Close the options window
         JFrameOperator optionFrame = new JFrameOperator(Bundle.getMessage("OptionsTitle"));  // NOI18N
         Assert.assertNotNull("optionFrame", optionFrame);  // NOI18N
@@ -76,8 +81,8 @@ public class AddEntryExitPairPanelTest {
         nxFrame.dispose();
     }
 
-    @BeforeAll
-    public static void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
@@ -86,11 +91,19 @@ public class AddEntryExitPairPanelTest {
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
     }
 
-    @AfterAll
-    public static void tearDown() {
-        panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+    @AfterEach
+    public void tearDown() {
+        if (panels != null) {
+            panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        }
         panels = null;
+
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

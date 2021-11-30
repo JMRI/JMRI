@@ -1,357 +1,258 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Set Signals at 3-Way Turnout Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Set Signals at 3-Way Turnout</h1>
 
       <h2>Introduction</h2>
 
-      <p>In Layout Editor a 3-way turnout is modeled by using two
-      turnouts, usually one right-hand and one left-hand, oriented
-      so that the throat of the second turnout is connected to the
-      continuing track of the first turnout by a very short Track
-      Segment. This tool provides an automated procedure for
-      assigning signal heads and automatically creating signal
-      logic for a 3-way turnout modeled in this way. This tool can
-      also be used to place signals and set logic for two real
-      turnouts that are oriented as described above, where the user
-      does not want to put signals between the two
-      turnouts--essentially two real left-handed or right-handed
+      <p>In Layout Editor a 3-way turnout is modeled by using two turnouts, usually one right-hand
+      and one left-hand, oriented so that the throat of the second turnout is connected to the
+      continuing track of the first turnout by a very short Track Segment. This tool provides an
+      automated procedure for assigning signal heads and automatically creating signal logic for a
+      3-way turnout modeled in this way. This tool can also be used to place signals and set logic
+      for two real turnouts that are oriented as described above, where the user does not want to
+      put signals between the two turnouts--essentially two real left-handed or right-handed
       turnouts that simulate a real 3-way turnout.</p>
 
-      <p>Six signal heads may be placed around the 3-way turnout as
-      shown below:</p><a href="./images/DoubleXover8.gif"><img src=
-      "images/3_WayTurnout.jpg" width="469" height="180"
-      hspace="0" vspace="0"></a>
+      <p>Six signal heads may be placed around the 3-way turnout as shown below:</p>
+      <a href="images/3_WayTurnout.jpg"><img src="images/3_WayTurnout.jpg" width="469" height="180"
+      alt="3 way turnout"></a>
+      <p>The turnout at the throat, is referred to as <strong>Turnout A</strong> and the other
+      turnout is <strong>Turnout B</strong>. Six signal heads are possible--three at the throat,
+      indicating the status of the Continuing track (top signal head), Diverging track A (middle
+      signal head), and Diverging track B (bottom signal head), and one head at each of the three
+      other tracks.</p>
 
-      <p>The turnout at the throat, is referred to as <b>Turnout
-      A</b> and the other turnout is <b>Turnout B</b>. Six signal
-      heads are possible--three at the throat, indicating the
-      status of the Continuing track (top signal head), Diverging
-      track A (middle signal head), and Diverging track B (bottom
-      signal head), and one head at each of the three other
-      tracks.</p>
+      <p>If requested, this tool will place signal icons on the panel at the six positions shown
+      above and will set up control logic for each of the six specified signal heads. In some
+      situations, a user may elect to only place one signal head at the throat, resulting in only
+      four signal heads around the 3-way turnout. This tool will place the four specified heads,
+      and will set up logic for the heads at the Diverging A, Diverging B, and Continuing tracks,
+      but it cannot set up logic for the single head at the throat. Instructions on how to do that
+      manually, with help from this tool are below.</p>
 
-      <p>If requested, this tool will place signal icons on the
-      panel at the six positions shown above and will set up
-      control logic for each of the six specified signal heads. In
-      some situations, a user may elect to only place one signal
-      head at the throat, resulting in only four signal heads
-      around the 3-way turnout. This tool will place the four
-      specified heads, and will set up logic for the heads at the
-      Diverging A, Diverging B, and Continuing tracks, but it
-      cannot set up logic for the single head at the throat.
-      Instructions on how to do that manually, with help from this
-      tool are below.</p>
+      <p>Prior to selecting this tool, both turnouts must be on the panel, connected as shown by a
+      single track segment, and required signal heads must be in the Signal Head Table. This tool
+      places signal heads only when the main track of each turnout is vertical or horizontal (or
+      mostly vertical or horizontal) on the panel, so design your panel accordingly. The control
+      logic created by this tool only works correctly if each of the three track segments connected
+      to the continuing and two diverging legs of the 3-way turnout is assigned to a different
+      block, and those blocks are different from the block of the track segment connected to the
+      throat of the 3-way turnout. The 3-way turnout (the two turnouts and their connecting short
+      track segment) may be in a separate block or in the same block as the track segment connected
+      to the throat.</p>
 
-      <p>Prior to selecting this tool, both turnouts must be on the
-      panel, connected as shown by a single track segment, and
-      required signal heads must be in the Signal Head Table. This
-      tool places signal heads only when the main track of each
-      turnout is vertical or horizontal (or mostly vertical or
-      horizontal) on the panel, so design your panel accordingly.
-      The control logic created by this tool only works correctly
-      if each of the three track segments connected to the
-      continuing and two diverging legs of the 3-way turnout is
-      assigned to a different block, and those blocks are different
-      from the block of the track segment connected to the throat
-      of the 3-way turnout. The 3-way turnout (the two turnouts and
-      their connecting short track segment) may be in a separate
-      block or in the same block as the track segment connected to
-      the throat.</p>
+      <p>When this item is selected, a dialog is shown for entry of the names (system or user) of
+      the two turnouts, and the names (system or user) of six (or four) signal heads to be assigned
+      to the 3-way turnout. You may enter both turnout names, or enter only one turnout and allow
+      the program to find the other. If you enter only one turnout, make sure you put it in the
+      correct position. To check that the second turnout has been found correctly, click the
+      <strong>Get Saved</strong> button.</p>
 
-      <p>When this item is selected, a dialog is shown for entry of
-      the names (system or user) of the two turnouts, and the names
-      (system or user) of six (or four) signal heads to be assigned
-      to the 3-way turnout. You may enter both turnout names, or
-      enter only one turnout and allow the program to find the
-      other. If you enter only one turnout, make sure you put it in
-      the correct position. To check that the second turnout has
-      been found correctly, click the <b>Get Saved</b> button.</p>
+      <p>For each signal head, check boxes are available for selecting whether an icon is to be
+      placed on the panel, and whether control logic is to be created for the signal head.
+      Regardless of whether icons are placed or logic is created, Layout Editor will record that
+      the entered signal heads are assigned to the specified turnouts. <strong>Assigning signal
+      heads to turnouts is important to completely describe your layout in Layout Editor.</strong>
+      Even if you elect to place your icons and set up your signal logic manually, you should use
+      this tool to assign the signal heads to their 3-way turnout.</p>
 
-      <p>For each signal head, check boxes are available for
-      selecting whether an icon is to be placed on the panel, and
-      whether control logic is to be created for the signal head.
-      Regardless of whether icons are placed or logic is created,
-      Layout Editor will record that the entered signal heads are
-      assigned to the specified turnouts. <b>Assigning signal heads
-      to turnouts is important to completely describe your layout
-      in Layout Editor.</b> Even if you elect to place your icons
-      and set up your signal logic manually, you should use this
-      tool to assign the signal heads to their 3-way turnout.</p>
-
-      <p>After a 3-way turnout is setup using this set up tool,
-      Layout Editor keeps track of the fact that Turnout A and
-      Turnout B are linked. So if you select <b>Set Signals...</b>
-      in the popup menu of either turnout, you will return to this
-      dialog with both turnouts filled in. If you should later
-      desire to 'unlink' the two turnouts and add the missing
-      signals, for each of the turnouts, select <b>Set Signals at
-      Turnout...</b>, fill in the turnout name manually, enter
-      signal heads, and click <b>Done</b>. After this is done for
-      both turnouts, the turnouts will no longer be linked.</p>
+      <p>After a 3-way turnout is setup using this set up tool, Layout Editor keeps track of the
+      fact that Turnout A and Turnout B are linked. So if you select <strong>Set
+      Signals...</strong> in the popup menu of either turnout, you will return to this dialog with
+      both turnouts filled in. If you should later desire to 'unlink' the two turnouts and add the
+      missing signals, for each of the turnouts, select <strong>Set Signals at Turnout...</strong>,
+      fill in the turnout name manually, enter signal heads, and click <strong>Done</strong>. After
+      this is done for both turnouts, the turnouts will no longer be linked.</p>
 
       <h3>The Set Signals at 3-Way Turnout Dialog</h3>
 
-      <p>In the <b>Turnout A Name</b> and <b>Turnout B Name</b>
-      field, enter the name (system or user) of one or two of the
-      turnouts. If only one is entered, the tool will find the
-      other when the <b>Done</b> or <b>Get Saved</b> buttons are
-      clicked. If the tool cannot find the second turnout, or if
-      the two entered turnouts are not on the panel or not
-      connected as described above by a single track segment, an
-      error message results. The turnout at the throat of the 3-way
-      turnout must be entered as Turnout A, and the turnout
-      farthest from the throat must be entered as Turnout B.</p>
+      <p>In the <strong>Turnout A Name</strong> and <strong>Turnout B Name</strong> field, enter
+      the name (system or user) of one or two of the turnouts. If only one is entered, the tool
+      will find the other when the <strong>Done</strong> or <strong>Get Saved</strong> buttons are
+      clicked. If the tool cannot find the second turnout, or if the two entered turnouts are not
+      on the panel or not connected as described above by a single track segment, an error message
+      results. The turnout at the throat of the 3-way turnout must be entered as Turnout A, and the
+      turnout farthest from the throat must be entered as Turnout B.</p>
 
-      <p>Signal Head names (either system or user) are entered in
-      the next section. If signal heads at these turnouts have been
-      entered previously, click <b>Get Saved</b> to retrieve the
-      signal head names previously entered. The tool provides for
-      entry of three signals at the throat and one each at the
-      other three tracks. The throat signal heads and the Diverging
-      A signal head are placed in Turnout A. The Diverging B and
-      Continuing signal heads are placed in Turnout B. The Throat
-      Continuing signal head (green in the above figure) reflects
-      travel to the continuing track from the throat track. The
-      other two throat signals reflect travel to their respective
-      diverging tracks. If only one throat signal is entered, it
-      should be entered in the Throat Continuing position.</p>
+      <p>Signal Head names (either system or user) are entered in the next section. If signal heads
+      at these turnouts have been entered previously, click <strong>Get Saved</strong> to retrieve
+      the signal head names previously entered. The tool provides for entry of three signals at the
+      throat and one each at the other three tracks. The throat signal heads and the Diverging A
+      signal head are placed in Turnout A. The Diverging B and Continuing signal heads are placed
+      in Turnout B. The Throat Continuing signal head (green in the above figure) reflects travel
+      to the continuing track from the throat track. The other two throat signals reflect travel to
+      their respective diverging tracks. If only one throat signal is entered, it should be entered
+      in the Throat Continuing position.</p>
 
-      <p>If there was a signal head previously assigned to any
-      position, and you enter a <i>different</i> signal head in the
-      same place, the new signal head will replace the previous
-      signal head, and the icon of the previous signal head (if
-      there was one) will be deleted from the panel. Similarly, if
-      you replace both previously assigned <b>Throat Diverging</b>
-      signal heads with blank entries (no signal heads), the
-      previous entries are deleted, and there will not be any
-      signal heads at those positions. <b>If a signal head is
-      changed, you must redo any logic that involves it.</b></p>
+      <p>If there was a signal head previously assigned to any position, and you enter a
+      <em>different</em> signal head in the same place, the new signal head will replace the
+      previous signal head, and the icon of the previous signal head (if there was one) will be
+      deleted from the panel. Similarly, if you replace both previously assigned <strong>Throat
+      Diverging</strong> signal heads with blank entries (no signal heads), the previous entries
+      are deleted, and there will not be any signal heads at those positions. <strong>If a signal
+      head is changed, you must redo any logic that involves it.</strong></p>
 
-      <p>Check <b>Add Signal Icon to Panel</b> to request that an
-      icon for a signal head be placed on the panel at the turnout
-      position indicated. This tool can only place a signal icon on
-      turnouts that are almost vertical or almost horizontal. If
-      this is not so, a message is printed, and you should place
-      the signal icon manually using the Layout Editor tool bar.
-      Regardless, the signal head name is assigned to the specified
-      turnout position. This assignment is important for setting up
-      logic for other signals down the track. Assigning signal
-      heads is also important in completely describing your layout
-      in Layout Editor.</p>
+      <p>Check <strong>Add Signal Icon to Panel</strong> to request that an icon for a signal head
+      be placed on the panel at the turnout position indicated. This tool can only place a signal
+      icon on turnouts that are almost vertical or almost horizontal. If this is not so, a message
+      is printed, and you should place the signal icon manually using the Layout Editor tool bar.
+      Regardless, the signal head name is assigned to the specified turnout position. This
+      assignment is important for setting up logic for other signals down the track. Assigning
+      signal heads is also important in completely describing your layout in Layout Editor.</p>
 
-      <p>Check <b>Set up Logic</b> to request that the tool set up
-      signal control logic for a signal head. For each of these
-      signal heads, the tool creates a Simple Signal Logic for that
-      head, and in addition where necessary, it creates a Logix
-      that ensures that the turnouts are synchronized for the
-      signal. The tool will attempt to setup the logic and
-      automatically fill in entries from the information available.
-      If the tool does not have enough information available to set
-      up the logic, a message results, and you will have to return
-      later after more blocks (with occupancy sensors) and/or
-      signals have been assigned to turnouts and block boundaries
-      on the panel. <b>Note: This tool cannot currently set up
-      logic for a single head at the throat of a 3-way turnout. See
-      below for how to do so manually</b>.</p>
+      <p>Check <strong>Set up Logic</strong> to request that the tool set up signal control logic
+      for a signal head. For each of these signal heads, the tool creates a Simple Signal Logic for
+      that head, and in addition where necessary, it creates a Logix that ensures that the turnouts
+      are synchronized for the signal. The tool will attempt to setup the logic and automatically
+      fill in entries from the information available. If the tool does not have enough information
+      available to set up the logic, a message results, and you will have to return later after
+      more blocks (with occupancy sensors) and/or signals have been assigned to turnouts and block
+      boundaries on the panel. <strong>Note: This tool cannot currently set up logic for a single
+      head at the throat of a 3-way turnout. See below for how to do so manually</strong>.</p>
 
       <h3>Notes</h3>
 
-      <p>This tool will set up Simple Signal Logic in a
-      standardized manner that should cover most cases. If the
-      signals do not behave the way you want them to, feel free to
-      edit the Simple Signal Logic manually to get the performance
-      you want. To edit the simple signal logic for a signal head,
-      in Edit Mode, summon the popup menu of the icon for the
-      signal head whose logic is to be edited, and select <b>Edit
-      Logic...</b>. Usually addition or removal of a sensor, or
-      checking or unchecking an option, is all that is required. In
-      more complicated cases, you may need to create a Logix to set
-      the state of an internal sensor, that is then added to the
-      Simple Signal Logic.</p>
+      <p>This tool will set up Simple Signal Logic in a standardized manner that should cover most
+      cases. If the signals do not behave the way you want them to, feel free to edit the Simple
+      Signal Logic manually to get the performance you want. To edit the simple signal logic for a
+      signal head, in Edit Mode, summon the popup menu of the icon for the signal head whose logic
+      is to be edited, and select <strong>Edit Logic...</strong>. Usually addition or removal of a
+      sensor, or checking or unchecking an option, is all that is required. In more complicated
+      cases, you may need to create a Logix to set the state of an internal sensor, that is then
+      added to the Simple Signal Logic.</p>
 
-      <p>When setting up logic, this tool will follow track within
-      a block until it finds a signal at the end of the block away
-      from the turnout being signaled. If your layout contains
-      sections that are signaled and sections that are not, to get
-      this tool to set up logic correctly, you may have to create
-      and assign a virtual signal (a signal that does not
-      correspond to an actual signal on the layout) at the
-      unsignaled end of the block that connects track that is
-      signaled with track that is not signaled. (You do not need to
-      add an icon for the virtual signal to your panel, but it must
-      exist in your signal head table, and must be assigned to a
-      turnout or block boundary using a Set Signals ... tool.) If a
-      block ends with an end bumper, no virtual signal is required
-      at the end bumper end.</p>
+      <p>When setting up logic, this tool will follow track within a block until it finds a signal
+      at the end of the block away from the turnout being signaled. If your layout contains
+      sections that are signaled and sections that are not, to get this tool to set up logic
+      correctly, you may have to create and assign a virtual signal (a signal that does not
+      correspond to an actual signal on the layout) at the unsignaled end of the block that
+      connects track that is signaled with track that is not signaled. (You do not need to add an
+      icon for the virtual signal to your panel, but it must exist in your signal head table, and
+      must be assigned to a turnout or block boundary using a Set Signals ... tool.) If a block
+      ends with an end bumper, no virtual signal is required at the end bumper end.</p>
 
-      <p>If a block has an internal turnout (the turnout, and the
-      track segments at its throat and continuing legs are within
-      the block), the program will expect signals at that turnout
-      even if it's not at the end of the block. However, at times
-      the user may not want to signal a seldom used turnout within
-      a block. When following track through a block, the program
-      will skip over unsignaled internal turnouts if <b>Skip
-      Unsignaled Internal Turnouts</b> is checked in the Layout
-      Editor <b>Tools</b> menu. It will always, however, warn that
-      it is doing so. <b>Use this option with caution.</b> There is
-      no signal protecting against a skipped turnout being set
-      incorrectly, so if an unsignaled internal turnout is not set
-      correctly, derailed trains could result.</p>
+      <p>If a block has an internal turnout (the turnout, and the track segments at its throat and
+      continuing legs are within the block), the program will expect signals at that turnout even
+      if it's not at the end of the block. However, at times the user may not want to signal a
+      seldom used turnout within a block. When following track through a block, the program will
+      skip over unsignaled internal turnouts if <strong>Skip Unsignaled Internal Turnouts</strong>
+      is checked in the Layout Editor <strong>Tools</strong> menu. It will always, however, warn
+      that it is doing so. <strong>Use this option with caution.</strong> There is no signal
+      protecting against a skipped turnout being set incorrectly, so if an unsignaled internal
+      turnout is not set correctly, derailed trains could result.</p>
 
-      <p>When setting up the Logix used in the control logic, the
-      tool creates an internal sensor to communicate with the
-      Simple Signal Logic. The Logix will appear in your Logix
-      table, and the internal sensor will appear in your sensor
-      table. The system names of the Logix and internal sensor will
-      be, IX or IS followed by TTT_X_HHH, where TTT is the system
-      name of the turnout where the signal head is located, X is
-      either C or T depending on whether the signal head is located
-      on the continuing (CLOSED) track or the diverging (THROWN)
-      track, and HHH is the system name of the signal head. The
-      purpose of this Logix is to ensure that the aspect of the
-      signal head will be red if the turnout not in the Simple
-      Signal Logic is switched against the track the signal head is
-      signaling.</p>
+      <p>When setting up the Logix used in the control logic, the tool creates an internal sensor
+      to communicate with the Simple Signal Logic. The Logix will appear in your Logix table, and
+      the internal sensor will appear in your sensor table. The system names of the Logix and
+      internal sensor will be, IX or IS followed by TTT_X_HHH, where TTT is the system name of the
+      turnout where the signal head is located, X is either C or T depending on whether the signal
+      head is located on the continuing (CLOSED) track or the diverging (THROWN) track, and HHH is
+      the system name of the signal head. The purpose of this Logix is to ensure that the aspect of
+      the signal head will be red if the turnout not in the Simple Signal Logic is switched against
+      the track the signal head is signaling.</p>
 
-      <p>This tool sets up three-aspect signaling. When a signal
-      head is showing status when moving to a diverging route, the
-      tool will set up for limited speed (the least restrictive
-      aspect is not green, but yellow), and the signal will show
-      yellow when it otherwise would show green. You can change
-      this with a simple edit (see below).</p>
+      <p>This tool sets up three-aspect signaling. When a signal head is showing status when moving
+      to a diverging route, the tool will set up for limited speed (the least restrictive aspect is
+      not green, but yellow), and the signal will show yellow when it otherwise would show green.
+      You can change this with a simple edit (see below).</p>
 
-      <p>If you have a special situation at a signal, you may have
-      to edit the information entered by this tool into the Simple
-      Signal Logic. If you would like four-aspect signaling, you
-      can easily manually edit the logic to achieve this.
-      Similarly, by simple hand edits of the logic, you can add
-      approach lighting. If you don't want yellow when moving to a
-      diverging route, but prefer green, open the Simple Signal
-      Logic for the head you want to change and uncheck <b>Limited
-      Speed</b>. The Simple Signal Logic dialog can be accessed
-      from the popup menu of each signal icon. If your special
-      situation cannot be handled by Simple Signal Logic, you
-      should refer to Logix to tailor the signal logic to your
-      needs.</p>
+      <p>If you have a special situation at a signal, you may have to edit the information entered
+      by this tool into the Simple Signal Logic. If you would like four-aspect signaling, you can
+      easily manually edit the logic to achieve this. Similarly, by simple hand edits of the logic,
+      you can add approach lighting. If you don't want yellow when moving to a diverging route, but
+      prefer green, open the Simple Signal Logic for the head you want to change and uncheck
+      <strong>Limited Speed</strong>. The Simple Signal Logic dialog can be accessed from the popup
+      menu of each signal icon. If your special situation cannot be handled by Simple Signal Logic,
+      you should refer to Logix to tailor the signal logic to your needs.</p>
 
       <h3>Logic for a Single Head at the Throat</h3>
 
-      <p>There are different ways to set up the logic for a single
-      head at the throat of a 3-way turnout. The following
-      procedure will work, and is fairly straightforward.</p>
+      <p>There are different ways to set up the logic for a single head at the throat of a 3-way
+      turnout. The following procedure will work, and is fairly straightforward.</p>
 
       <ul>
         <li>
-          <p>Define three virtual signal heads in the Signal Table,
-          and enter them as the <b>Throat - Continuing</b>,
-          <b>Throat - Diverging A</b>, and <b>Throat - Diverging
-          B</b> heads, along with the real <b>Diverging A</b>,
-          <b>Continuing</b>, and <b>Diverging B</b> signal heads.
-          Virtual signal heads are signal heads that are not on the
-          layout--only in the computer.</p>
+          <p>Define three virtual signal heads in the Signal Table, and enter them as the
+          <strong>Throat - Continuing</strong>, <strong>Throat - Diverging A</strong>, and
+          <strong>Throat - Diverging B</strong> heads, along with the real <strong>Diverging
+          A</strong>, <strong>Continuing</strong>, and <strong>Diverging B</strong> signal heads.
+          Virtual signal heads are signal heads that are not on the layout--only in the
+          computer.</p>
         </li>
 
         <li>
-          <p>Check <b>Set up Logic</b> for each of the virtual
-          signal heads, but do not check <b>Add Signal Icon to
-          Panel</b> for any of these three virtual signal heads.
-          Click <b>Done</b>. This will set up the logic for the
-          three virtual signal heads.</p>
+          <p>Check <strong>Set up Logic</strong> for each of the virtual signal heads, but do not
+          check <strong>Add Signal Icon to Panel</strong> for any of these three virtual signal
+          heads. Click <strong>Done</strong>. This will set up the logic for the three virtual
+          signal heads.</p>
         </li>
 
         <li>
-          <p>Reopen the tool and clear the names of the three
-          virtual signal heads. Place the real throat signal
-          head in the <b>Throat - Continuing</b> position. Check
-          <b>Add Signal Icon to Panel</b>, but do not check <b>Set
-          up Logic</b> for this signal head. Click <b>Done</b>. The
-          three virtual turnouts are no longer assigned to the
-          3-way turnout, but they are still in the computer and
-          their logic will still function.</p>
+          <p>Reopen the tool and clear the names of the three virtual signal heads. Place the real
+          throat signal head in the <strong>Throat - Continuing</strong> position. Check
+          <strong>Add Signal Icon to Panel</strong>, but do not check <strong>Set up Logic</strong>
+          for this signal head. Click <strong>Done</strong>. The three virtual turnouts are no
+          longer assigned to the 3-way turnout, but they are still in the computer and their logic
+          will still function.</p>
         </li>
 
         <li>
-          <p>Set up a Logix to set the appearance of the single
-          real throat signal head based on the appearances of the
-          three virtual signal heads. Basically the real signal
-          head should be set to the least restrictive of the
-          appearances of the three virtual signal heads. This can
-          be accomplished by a Logix with seven Conditionals with
-          increasing numbers of simple state variables, set up as
-          follows:</p>
+          <p>Set up a Logix to set the appearance of the single real throat signal head based on
+          the appearances of the three virtual signal heads. Basically the real signal head should
+          be set to the least restrictive of the appearances of the three virtual signal heads.
+          This can be accomplished by a Logix with seven Conditionals with increasing numbers of
+          simple state variables, set up as follows:</p>
 
           <ul>
-            <li>Conditional 1: if Signal Green IHV1, then Set
-            Signal Appearance IH1 Green</li>
+            <li>Conditional 1: if Signal Green IHV1, then Set Signal Appearance IH1 Green</li>
 
-            <li>Conditional 2: if Conditional False C1 AND Signal
-            Green IHV2, then Set Signal Appearance IH1 Green</li>
+            <li>Conditional 2: if Conditional False C1 AND Signal Green IHV2, then Set Signal
+            Appearance IH1 Green</li>
 
-            <li>Conditional 3: if Conditional False C1 AND
-            Conditional False C2 AND Signal Green IHV3, then Set
-            Signal Appearance IH1 Green</li>
+            <li>Conditional 3: if Conditional False C1 AND Conditional False C2 AND Signal Green
+            IHV3, then Set Signal Appearance IH1 Green</li>
 
-            <li>Conditional 4: if Conditional False C1 AND
-            Conditional False C2 AND Conditional False C3 AND
-            Signal Yellow IHV1, then Set Signal Appearance IH1
-            Yellow</li>
+            <li>Conditional 4: if Conditional False C1 AND Conditional False C2 AND Conditional
+            False C3 AND Signal Yellow IHV1, then Set Signal Appearance IH1 Yellow</li>
 
-            <li>Conditional 5: if Conditional False C1 AND
-            Conditional False C2 AND Conditional False C3 AND
-            Conditional False C4 AND Signal Yellow IHV2, then Set
-            Signal Appearance IH1 Yellow</li>
+            <li>Conditional 5: if Conditional False C1 AND Conditional False C2 AND Conditional
+            False C3 AND Conditional False C4 AND Signal Yellow IHV2, then Set Signal Appearance
+            IH1 Yellow</li>
 
-            <li>Conditional 6: if Conditional False C1 AND
-            Conditional False C2 AND Conditional False C3 AND
-            Conditional False C4 AND Conditional False C5 AND
-            Signal Yellow IHV3, then Set Signal Appearance IH1
-            Yellow</li>
+            <li>Conditional 6: if Conditional False C1 AND Conditional False C2 AND Conditional
+            False C3 AND Conditional False C4 AND Conditional False C5 AND Signal Yellow IHV3, then
+            Set Signal Appearance IH1 Yellow</li>
 
-            <li>Conditional 7: if Conditional False C1 AND
-            Conditional False C2 AND Conditional False C3 AND
-            Conditional False C4 AND Conditional False C5 AND
-            Conditional False C6, then Set Signal Appearance IH1
-            Red</li>
+            <li>Conditional 7: if Conditional False C1 AND Conditional False C2 AND Conditional
+            False C3 AND Conditional False C4 AND Conditional False C5 AND Conditional False C6,
+            then Set Signal Appearance IH1 Red</li>
           </ul>
 
-          <p>Where IHV1, IHV2, and IHV3 are the virtual signal
-          heads, IH1 is the real head, and C1, C2, ... , C7 are
-          Conditionals 1 through 7. Substitute the actual names of
-          these items when you set up your Logix.</p>
+          <p>Where IHV1, IHV2, and IHV3 are the virtual signal heads, IH1 is the real head, and C1,
+          C2, ... , C7 are Conditionals 1 through 7. Substitute the actual names of these items
+          when you set up your Logix.</p>
         </li>
       </ul>
 
-      <p><b>Please remember to save your panel after using this
-      tool.</b></p>
-
+      <p><strong>Please remember to save your panel after using this tool.</strong>
+      </p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -2,10 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -179,10 +176,9 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         List<T> out = new ArrayList<>();
         int i = 0;
         while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
+            arr[i++] = en.nextElement();
         }
-        java.util.Arrays.sort(arr);
+        Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getById(arr[i]));
         }
@@ -339,7 +335,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @return list of RollingStock ordered by RollingStock location
      */
     public List<T> getByLocationList() {
-        return getByList(getList(), BY_LOCATION);
+        return getByList(getByNumberList(), BY_LOCATION);
     }
 
     /**

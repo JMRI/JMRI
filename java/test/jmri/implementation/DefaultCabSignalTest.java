@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * Unit tests for the DefaultCabSignal 
+ * Unit tests for the DefaultCabSignal
  *
  * @author Paul Bender Copyright (C) 2019
  */
@@ -67,6 +67,7 @@ public class DefaultCabSignalTest {
         cs.dispose(); // verify no exceptions
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

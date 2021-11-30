@@ -62,7 +62,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * load common attributes and elements
+     * Load common attributes and elements.
      *
      * @param shared  the shared element
      * @param perNode the per node element
@@ -101,7 +101,8 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
             if (shared.getAttribute("systemPrefix") != null) {
                 adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
-                checkAndWarnPrefix(shared.getAttribute("systemPrefix").getValue()); // for removal after #4670 resolved
+                // next line for removal after #4670 resolved, see jmri.jmrix.AbstractConnectionConfig
+                checkAndWarnPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
 
@@ -134,20 +135,20 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     
     
     /** 
-     * Check for a deprecated system prefix and warn if found
+     * Check for a deprecated system prefix and warn if found.
+     *
      * @param prefix The alphanumeric prefix to test for
      * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
      */
     @Deprecated // part of #4670 migration to parsable prefixes
     protected void checkAndWarnPrefix(String prefix) {
-        if (prefix.length() == 1 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
+        if ((prefix.length() == 1) && !org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
         if (prefix.length() > 1 
                 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(0,1)) 
                 && org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(1)) ) return;
         
         // No longer checking jmri.Manager.isLegacySystemPrefix(prefix)) as this is more rigorous
-            
-            
+
         // unparsable, so warn
         log.warn("Connection is using a prefix that needs to be migrated: {}", prefix);
         log.warn("See http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml for more information");

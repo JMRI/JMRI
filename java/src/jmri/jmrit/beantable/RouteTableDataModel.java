@@ -6,8 +6,8 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import java.awt.event.MouseEvent;
 
 /**
  * TableDataModel for the Route Table.
@@ -34,69 +34,55 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
 
     @Override
     public String getColumnName(int col) {
-        if (col == VALUECOL) {
-            return "";  // no heading on "Set"
-        }
-        if (col == SETCOL) {
-            return "";  // no heading on "Edit"
-        }
-        if (col == ENABLECOL) {
-            return Bundle.getMessage("ColumnHeadEnabled");
-        }
-        if (col == LOCKCOL) {
-            return Bundle.getMessage("Locked");
-        } else {
-            return super.getColumnName(col);
+        switch (col) {
+            case VALUECOL: // no heading on "Edit"
+            case SETCOL: // no heading on "Set"
+                return "";  
+            case ENABLECOL:
+                return Bundle.getMessage("ColumnHeadEnabled");
+            case LOCKCOL:
+                return Bundle.getMessage("Locked");
+            default:
+                return super.getColumnName(col);
         }
     }
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == SETCOL) {
-            return JButton.class;
-        }
-        if (col == ENABLECOL) {
-            return Boolean.class;
-        }
-        if (col == LOCKCOL) {
-            return Boolean.class;
-        } else {
-            return super.getColumnClass(col);
+        switch (col) {
+            case SETCOL:
+                return JButton.class;
+            case ENABLECOL:
+            case LOCKCOL:
+                return Boolean.class;
+            default:
+                return super.getColumnClass(col);
         }
     }
 
     @Override
     public int getPreferredWidth(int col) {
-        if (col == SETCOL) {
-            return new JTextField(6).getPreferredSize().width;
-        }
-        if (col == ENABLECOL) {
-            return new JTextField(6).getPreferredSize().width;
-        }
-        if (col == LOCKCOL) {
-            return new JTextField(6).getPreferredSize().width;
-        } else {
-            return super.getPreferredWidth(col);
+        switch (col) {
+            case SETCOL:
+            case ENABLECOL:
+            case LOCKCOL:
+                return new JTextField(6).getPreferredSize().width;
+            default:
+                return super.getPreferredWidth(col);
         }
     }
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == USERNAMECOL) {
-            return true;
-        }
-        if (col == SETCOL) {
-            return true;
-        }
-        if (col == ENABLECOL) {
-            return true;
-        }
-        // Route lock is available if turnouts are lockable
-        if (col == LOCKCOL) {
-            Route r = (Route) getValueAt(row, SYSNAMECOL);
-            return r.canLock();
-        } else {
-            return super.isCellEditable(row, col);
+        switch (col) {
+            case USERNAMECOL:
+            case SETCOL:
+            case ENABLECOL:
+                return true;
+            case LOCKCOL: // Route lock is available if turnouts are lockable
+                return ((Route) getValueAt(row, SYSNAMECOL)).canLock();
+            default:
+                return super.isCellEditable(row, col);
         }
     }
 
@@ -144,37 +130,21 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
                 fireTableRowsUpdated(row, row);
                 break;
             case SETCOL:
-                // set up to edit. Use separate Runnable so window is created on top
-                class WindowMaker implements Runnable {
-
-                    int row;
-
-                    WindowMaker(int r) {
-                        row = r;
-                    }
-
-                    @Override
-                    public void run() {
-                        JmriJFrame editFrame = new RouteEditFrame(((Route) getValueAt(row, SYSNAMECOL)).getSystemName());
-                        editFrame.setVisible(true);
-                    }
-
-                }
-                WindowMaker t = new WindowMaker(row);
-                javax.swing.SwingUtilities.invokeLater(t);
+                SwingUtilities.invokeLater(() -> {
+                    JmriJFrame editFrame = new RouteEditFrame(((Route) getValueAt(row, SYSNAMECOL)).getSystemName());
+                    editFrame.setVisible(true);
+                });
                 break;
             case ENABLECOL: {
                 // alternate
                 Route r = (Route) getValueAt(row, SYSNAMECOL);
-                boolean v = r.getEnabled();
-                r.setEnabled(!v);
+                r.setEnabled(!r.getEnabled());
                 break;
             }
             case LOCKCOL: {
                 // alternate
                 Route r = (Route) getValueAt(row, SYSNAMECOL);
-                boolean v = r.getLocked();
-                r.setLocked(!v);
+                r.setLocked(!r.getLocked());
                 break;
             }
             default:
@@ -205,13 +175,12 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     // want to update when enabled parameter changes
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("Enabled")) { // NOI18N
-            return true;
-        }
-        if (e.getPropertyName().equals("Locked")) { // NOI18N
-            return true;
-        } else {
-            return super.matchPropertyName(e);
+        switch (e.getPropertyName()) {
+            case "Enabled": // NOI18N
+            case "Locked": // NOI18N
+                return true;
+            default:
+                return super.matchPropertyName(e);
         }
     }
 
@@ -221,12 +190,12 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     }
 
     @Override
-    public Route getBySystemName(String name) {
+    public Route getBySystemName(@Nonnull String name) {
         return InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
     }
 
     @Override
-    public Route getByUserName(String name) {
+    public Route getByUserName(@Nonnull String name) {
         return InstanceManager.getDefault(RouteManager.class).getByUserName(name);
     }
 
@@ -244,11 +213,6 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     public String getValue(String s) {
         return Bundle.getMessage("Set");
         //Title of Set button in Route table
-    }
-
-    @Override
-    protected String getBeanType() {
-        return Bundle.getMessage("BeanNameRoute");
     }
 
     private static final Logger log = LoggerFactory.getLogger(RouteTableDataModel.class);

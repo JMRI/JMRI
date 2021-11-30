@@ -5,17 +5,21 @@
       <enumChoice choice="not used">
         <choice>not used</choice>
         <choice xml:lang="de">nicht verwendet</choice>
+        <choice xml:lang="cs">nepoužito</choice>
       </enumChoice>
       <enumChoice choice="Slow fade in/out">
         <choice>Slow fade in/out</choice>
         <choice xml:lang="de">Langsames Auf- und Abdimmen</choice>
+        <choice xml:lang="cs">Pomalé zhasínání vstup/výstup</choice>
       </enumChoice>
       <enumChoice choice="Flourescent lamp">
         <choice>Flourescent lamp</choice>
         <choice xml:lang="de">Leuchtstoffröhren-Effekt</choice>
+        <choice xml:lang="cs">Efekt zářivky</choice>
       </enumChoice>
       <enumChoice choice="sparks with hevy braking">
         <choice>Sparks with hevy braking</choice>
         <choice xml:lang="de">Bremsfunken bei starkem Bremsen</choice>
+        <choice xml:lang="cs">Jiskry při prudkém brždění</choice>
       </enumChoice>
 </enumChoiceGroup>

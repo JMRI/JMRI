@@ -26,7 +26,7 @@ import org.openlcb.DatagramAcknowledgedMessage;
 import org.openlcb.DatagramMessage;
 import org.openlcb.EventID;
 import org.openlcb.IdentifyConsumersMessage;
-import org.openlcb.IdentifyEventsMessage;
+import org.openlcb.IdentifyEventsAddressedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.Message;
 import org.openlcb.MimicNodeStore;
@@ -92,7 +92,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         iface = memo.get(OlcbInterface.class);
-        actions = new ClientActions(iface);
+        actions = new ClientActions(iface, memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
         connection = memo.get(org.openlcb.Connection.class);
@@ -276,8 +276,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
-    } // NOI18N
+        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame";  // NOI18N
+    }
 
     @Override
     public String getTitle() {
@@ -306,7 +306,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        CanMessage m = createPacket(packetTextField.getText());
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        CanMessage m = createPacket(input);
         log.debug("sendButtonActionPerformed: {}",m);
         tc.sendCanMessage(m, this);
     }
@@ -339,7 +341,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        Message m = new IdentifyEventsMessage(srcNodeID, destNodeID());
+        Message m = new IdentifyEventsAddressedMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 

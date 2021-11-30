@@ -62,6 +62,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
         silenceableProperties.add("beans");
+        setRegisterSelf();
+    }
+    
+    final void setRegisterSelf(){
         registerSelf();
     }
 
@@ -143,6 +147,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public E getBySystemName(@Nonnull String systemName) {
         return _tsys.get(systemName);
@@ -156,6 +161,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      * @param comparator a Comparator encapsulating the system specific comparison behavior
      * @return a named bean of the appropriate type, or null if not found
      */
+    @CheckForNull
     protected E getBySystemName(String systemName, Comparator<String> comparator){
         for (Map.Entry<String,E> e : _tsys.entrySet()) {
             if (0 == comparator.compare(e.getKey(), systemName)) {
@@ -174,6 +180,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @CheckForNull
     @Override
     public E getNamedBean(@Nonnull String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);
@@ -661,13 +668,13 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      * @param prefix system prefix, just system name, not type letter.
      * @param ignoreInitialExisting false to return the starting address if it 
      *                          does not exist, else true to force an increment.
-     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
      * @throws JmriException    if unable to get the current / next address, 
      *                          or more than 10 next addresses in use.
      */
     @Nonnull
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        log.debug("getNextValid for address {}", curAddress);
+        log.debug("getNextValid for address {} ignoring {}", curAddress, ignoreInitialExisting);
         String testAddr;
         NamedBean bean;
         int increment;
@@ -679,7 +686,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             bean = getBySystemName(testAddr);
             increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
             testAddr = testAddr.substring(getSystemNamePrefix().length());
-            getIncrement(testAddr, increment);
+            
+            // do not check for incrementability here as could be String only
+            // getIncrement(testAddr, increment);
         }
         catch ( NamedBean.BadSystemNameException | JmriException ex ){
             throw new JmriException(ex.getMessage());

@@ -63,12 +63,14 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        JMRIClientMessage m = new JMRIClientMessage(packetTextField.getText().length() + 1);
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        JMRIClientMessage m = new JMRIClientMessage(input.length() + 1);
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
-        m.setElement(packetTextField.getText().length(), '\n');
+        m.setElement(input.length(), '\n');
         tc.sendJMRIClientMessage(m, this);
     }
 

@@ -4,6 +4,8 @@ import jmri.Sensor;
 import jmri.SystemConnectionMemo;
 import jmri.managers.AbstractSensorManager;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author Fredrik Elestedt Copyright (C) 2020
@@ -20,7 +22,7 @@ public class IpocsSensorManager extends AbstractSensorManager {
   }
 
   @Override
-  protected Sensor createNewSensor(String systemName, String userName) {
+  protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
     return new IpocsSensor(getPortController(), systemName, userName);
   }
 }

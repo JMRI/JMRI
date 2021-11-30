@@ -37,6 +37,9 @@
             <display item="ESU V4 Function Settings General Slider 3" layout="above" format="hslider"/>
             <display item="ESU V4 Function Settings General Check 3" format="checkbox"/>
         </row>
+        <label>
+            <text> </text>
+        </label>
         <row>
             <display item="ESU V4 Function Settings General Slider 4" layout="above" label=""/>
             <display item="ESU V4 Function Settings General Slider 4" layout="above" format="hslider"/>
@@ -48,6 +51,8 @@
         <row>
             <display item="ESU V4 Function Settings General Slider 5" layout="above" label=""/>
             <display item="ESU V4 Function Settings General Slider 5" layout="above" format="hslider"/>
+            <display item="ESU V4 Function Settings General Slider-percent 5" layout="above" label=""/>
+            <display item="ESU V4 Function Settings General Slider-percent 5" layout="above" format="hslider-percent"/>
             <display item="ESU V4 Function Settings General Check 5" format="checkbox"/>
         </row>
         <row>
@@ -188,8 +193,27 @@
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
             </row>
+            <label>
+                <text> </text>
+            </label>
             <separator/>
             <display item="ESU AUX10/Sensor" layout="above" format="radiobuttons"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="ESU Sensor 1" layout="above" format="offradiobutton"/>
+            <row>
+                <display item="ESU Sensor 1a" layout="above" label="OR"/>
+                <display item="ESU Sensor 1a" layout="above" format="hslider"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <display item="ESU Sensor 2" layout="above" format="offradiobutton"/>
+            <row>
+                <display item="ESU Sensor 2a" layout="above" label="OR"/>
+                <display item="ESU Sensor 2a" layout="above" format="hslider"/>
+            </row>
         </column>
     </group>
     <group include="MBW Silberling,Bachmann MK2F">

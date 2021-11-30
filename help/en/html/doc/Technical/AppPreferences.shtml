@@ -1,96 +1,223 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta name="generator" content=
-          "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-    <title>JMRI: Application Preferences</title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code">
-    <!-- Style -->
-    <meta http-equiv="Content-Type" content=
-          "text/html; charset=us-ascii">
-    <link rel="stylesheet" type="text/css" href="/css/default.css"
-          media="screen">
-    <link rel="stylesheet" type="text/css" href="/css/print.css"
-          media="print">
-    <link rel="icon" href="/images/jmri.ico" type="image/png">
-    <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Application Preferences</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-            <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
+      <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
             this div (remove @ between the hyphens (-), not allowed in an HTML comment) -->
-            <!-- 2018 note that this output may contain invalid characters like curly quotes, which should be
+      <!-- 2018 note that this output may contain invalid characters like curly quotes, which should be
             replaced by straight quotes before uploading -->
-            <h1 id="jmri-preferences">JMRI Preferences</h1>
-            <p>Preferences in JMRI are stored in two different formats within three different spaces.</p>
-            <p>The access structure for JMRI preferences is based upon the access structure for project properties (called the Auxiliary Configuration for a project) and preferences within the NetBeans IDE.</p>
-            <p>There are two APIs, <em>PreferencesManager</em> and <em>PreferencesPanel</em> that implement the access to and control of preferences within a JMRI application.</p>
 
-            <h1 id="preference-spaces">Preference Spaces</h1>
-            <h2 id="the-current-profile">The Current Profile</h2>
-            <p>Most preferences are stored together within a single <em>Profile</em>. There are two spaces within a <em>Profile</em>, the <strong>shared</strong> space and the <strong>private</strong> space.</p>
-            <p>A Profile has a location, a name, and an identity. The identity is formed of two parts, a "safe" version of the name that can be used in file or directory names, and a random number (8 hexidecimal digits) to ensure uniqueness.</p>
-            <p>It is recommended that Profile locations have the extension <code>.jmri</code> to allow Profiles to be assigned a Uniform Type Identifier (UTI) in iOS and macOS. JMRI applications default to including the extension in the Profile location when creating one, but use of this extension is not enforced. See <a href="StartUpScripts.shtml">Startup Scripts</a> for more details on UTIs and their use.</p>
-            <h3 id="shared">Shared</h3>
-            <p>Shared preferences are preferences within a single profile that are shared across multiple computers running that profile. An example of a shared preference is the use of the LocoNet connection "LocoNet".</p>
-            <p>Shared preferences are stored in the root of the <code>profile</code> directory within the Profile.</p>
-            <h3 id="private">Private</h3>
-            <p>Private preferences are preferences within a single profile that are only used on a single computer running that profile. An example of a private preference is the use of the port "COM3" to get to the system the connection "LocoNet" uses.</p>
-            <p>Private preferences are stored in directories named <code>jmri-UUID-ID</code> where "UUID" is a universally unique identifier for the computer and "ID" is the random digits in the identity of the profile. A unique private preferences directory is created for each user for each computer a profile is used on.</p>
-            <h2 id="settings-directory">Settings Directory</h2>
-            <p>The settings directory is where JMRI retains preferences that are not stored within a single profile, and which are only used on a single computer. An example of a preference in the Settings Directory are the preferences for how a JMRI application selects the Profile to use.</p>
-            <p>The settings directory is per user account on a single computer.</p>
+      <h1 id="jmri-preferences">JMRI Preferences</h1>
 
-            <p>There's more information on the <a href="https:ProfileFileStructure.shtml">Profile File Structure page</a>.
-            
-            <h1 id="preference-formats">Preference Formats</h1>
-            <p>Preferences within a JMRI application may be stored as XML elements or as Java Preferences.</p>
-            <h2 id="xml-elements">XML Elements</h2>
-            <p>The XML elements for JMRI preferences are stored in two different files within a single space: <code>profile.xml</code> (or <code>preferences.xml</code>) and <code>user-interface.xml</code>. Within the two different files, preferences are stored using the same means and same structure, however the intention of the two files are different.</p>
-            <p>A manager for preferences using either of these files manages a type of preference, for example, connection configurations or table state. The manager uses the methods in <a href="http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html">AuxiliaryConfiguration</a> to get, put, or remove these XML elements. These methods all require the Element or the Element's name and if the Element is shared or private.</p>
-            <p>XML elements for JMRI preferences must all have valid and resolvable namespaces. These namespaces <em>do not</em> have to be unique to or defined within the jmri.org web site.</p>
-            <h3 id="properties.xml">properties.xml</h3>
-            <p><code>properties.xml</code> <em>should</em> contain preferences that have been explicitly set by the user within the JMRI Preferences user interface. These preferences tend to have significant impact on how an application operates and may require that the application be restarted to take effect.</p>
-            <p><code>preferences.xml</code> only contains preferences that apply to all profiles operating under a single user on a single computer.
-            <h3 id="profile.xml">profile.xml</h3>
-            <p><code>profile.xml</code> <em>should</em> contain preferences that have been explicitly set by the user within the JMRI Preferences user interface. These preferences tend to have significant impact on how an application operates and may require that the application be restarted to take effect.</p>
-            <p>Shared and private versions of <code>profile.xml</code> are retained within a single profile.</p>
-            <h3 id="user-interface.xml">user-interface.xml</h3>
-            <p><code>user-interface.xml</code> contains implicit preferences, such as window size and location, table sort order, and other captured user-interface state that is automatically restored as needed.</p>
-            <p><code>user-interface.xml</code> is only private within a single profile.</p>
-            <h2 id="java-preferences">Java Preferences</h2>
-            <p>JMRI application preferences that a simple (a number, boolean, or string), or a list of simple preferences, and can only be meaningfully used once within a single Profile are candidates for storage as <a href="https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html">Java Preferences</a>.</p>
-            <p>JMRI uses a Properties format for storing Java Preferences in the file <code>profile.properties</code> within both Shared and Private spaces in a single Profile.  The file <code>preferences.properties</code> is used for storing preferences that apply to all profiles run by a single user within a single computer.</p>
-            <p>JMRI further constrains Java Preferences by putting them in separate "namespaces" based on package names. This allows preferences in two different packages to use the same name for a preference (for example, the JMRI Web Server and Simple Server both have a "port" property, but because these are in different packages, they do not conflict).</p>
-            <h1 id="accessing-preferences">Accessing Preferences</h1>
-            <p>If another class is already controlling the preferences you want to access, use that class's methods to access that preference. If not, create a class to manage that preference on behalf of other classes within a JMRI application.</p>
-            <p>Direct access to the preferences files outlined above is strongly discouraged, as direct access could result in one preferences manager overwriting another manager's preferences. Use the methods in <a href="http://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html">ProfileUtils</a> to access the AuxiliaryConfiguration and Java Preferences for a single Profile or the application settings (pass null for the profile to get application settings).</p>
+      <p>Preferences in JMRI are stored in two different formats within three different spaces.</p>
 
-            <h1 id="preferences-managers">Preferences Managers</h1>
-            <p><a href="http://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferenceManagers</a> are the primary handlers of preference retrieval and storage in JMRI applications.</p>
-            <p>The JMRI library has a number of Preferences Managers. These managers all provide an implementation of the PreferencesManager interface to allow them to be discovered. Preferences managers are loaded by the JMRI configuration manager, which uses the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">ServiceLoader API</a> to create an instance of every preferences manager (this allows third-party JARs to implement preferences managers; see the ServiceLoader API docs for details on how this works and the <a href="https://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API docs</a> for details of how JMRI meets the ServiceLoader API requirements).</p>
-            <p>Because the mechanism by which preferences managers are discovered has no deterministic order, the preferences managers API includes methods that allow a preference manager to require that other specific preference managers are correctly initialized before it is initialized.</p>
-            <h1 id="preferences-panels">Preferences Panels</h1>
-            <p><a href="http://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencePanels</a> are the user interface for interacting with Preferences Managers within the Preferences window of a JMRI application.</p>
-            <p>When the Preferences window is initialized, it uses the ServiceLoader API to create an instance of every preferences panel (this allows third-party JARs to implement preferences panels).</p>
-            <p>Preferences panels provide hints for grouping the panels together, but do not provide hints for ordering preferences panels. Some groupings of preferences panels are well know within the Preferences window, and are given in a specific order, after which every other group of preferences panels are ordered alphabetically.</p>
-            <h1 id="scripts">Scripts</h1>
-            <p>The following scripts included in the JMRI distribution show how to access preferences within a script:</p>
-            <ul>
-                <li><strong><a href="https://jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> - Jython sample code that also demonstrates using another Jython script (<a href="https://jmri.org/jython/preferences.py">preferences.py</a>) within a script</li>
-                <li><strong><a href="https://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> - Working JavaScript or ECMAScript script that controls some ZeroConf network preferences</li>
-            </ul>
+      <p>The access structure for JMRI preferences is based upon the access structure for project
+      properties (called the Auxiliary Configuration for a project) and preferences within the
+      NetBeans IDE.</p>
 
-            <!--#include virtual="/Footer.shtml" -->
-        </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
+      <p>There are two APIs, <em>PreferencesManager</em> and <em>PreferencesPanel</em> that
+      implement the access to and control of preferences within a JMRI application.</p>
+
+      <h1 id="preference-spaces">Preference Spaces</h1>
+
+      <h2 id="the-current-profile">The Current Profile</h2>
+
+      <p>Most preferences are stored together within a single <em>Profile</em>. There are two
+      spaces within a <em>Profile</em>, the <strong>shared</strong> space and the
+      <strong>private</strong> space.</p>
+
+      <p>A Profile has a location, a name, and an identity. The identity is formed of two parts, a
+      "safe" version of the name that can be used in file or directory names, and a random number
+      (8 hexidecimal digits) to ensure uniqueness.</p>
+
+      <p>It is recommended that Profile locations have the extension <code>.jmri</code> to allow
+      Profiles to be assigned a Uniform Type Identifier (UTI) in iOS and macOS. JMRI applications
+      default to including the extension in the Profile location when creating one, but use of this
+      extension is not enforced. See <a href="StartUpScripts.shtml">Startup Scripts</a> for more
+      details on UTIs and their use.</p>
+
+      <h3 id="shared">Shared</h3>
+
+      <p>Shared preferences are preferences within a single profile that are shared across multiple
+      computers running that profile. An example of a shared preference is the use of the LocoNet
+      connection "LocoNet".</p>
+
+      <p>Shared preferences are stored in the root of the <code>profile</code> directory within the
+      Profile.</p>
+
+      <h3 id="private">Private</h3>
+
+      <p>Private preferences are preferences within a single profile that are only used on a single
+      computer running that profile. An example of a private preference is the use of the port
+      "COM3" to get to the system the connection "LocoNet" uses.</p>
+
+      <p>Private preferences are stored in directories named <code>jmri-UUID-ID</code> where "UUID"
+      is a universally unique identifier for the computer and "ID" is the random digits in the
+      identity of the profile. A unique private preferences directory is created for each user for
+      each computer a profile is used on.</p>
+
+      <h2 id="settings-directory">Settings Directory</h2>
+
+      <p>The settings directory is where JMRI retains preferences that are not stored within a
+      single profile, and which are only used on a single computer. An example of a preference in
+      the Settings Directory are the preferences for how a JMRI application selects the Profile to
+      use.</p>
+
+      <p>The settings directory is per user account on a single computer.</p>
+
+      <p>There's more information on the <a href="https:ProfileFileStructure.shtml">Profile File
+      Structure page</a>.</p>
+
+      <h1 id="preference-formats">Preference Formats</h1>
+
+      <p>Preferences within a JMRI application may be stored as XML elements or as Java
+      Preferences.</p>
+
+      <h2 id="xml-elements">XML Elements</h2>
+
+      <p>The XML elements for JMRI preferences are stored in two different files within a single
+      space: <code>profile.xml</code> (or <code>preferences.xml</code>) and
+      <code>user-interface.xml</code>. Within the two different files, preferences are stored using
+      the same means and same structure, however the intention of the two files are different.</p>
+
+      <p>A manager for preferences using either of these files manages a type of preference, for
+      example, connection configurations or table state. The manager uses the methods in <a href=
+      "http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html">AuxiliaryConfiguration</a>
+      to get, put, or remove these XML elements. These methods all require the Element or the
+      Element's name and if the Element is shared or private.</p>
+
+      <p>XML elements for JMRI preferences must all have valid and resolvable namespaces. These
+      namespaces <em>do not</em> have to be unique to or defined within the jmri.org web site.</p>
+
+      <h3 id="properties.xml">properties.xml</h3>
+
+      <p><code>properties.xml</code> <em>should</em> contain preferences that have been explicitly
+      set by the user within the JMRI Preferences user interface. These preferences tend to have
+      significant impact on how an application operates and may require that the application be
+      restarted to take effect.</p>
+
+      <p><code>preferences.xml</code> only contains preferences that apply to all profiles
+      operating under a single user on a single computer.</p>
+
+      <h3 id="profile.xml">profile.xml</h3>
+
+      <p><code>profile.xml</code> <em>should</em> contain preferences that have been explicitly set
+      by the user within the JMRI Preferences user interface. These preferences tend to have
+      significant impact on how an application operates and may require that the application be
+      restarted to take effect.</p>
+
+      <p>Shared and private versions of <code>profile.xml</code> are retained within a single
+      profile.</p>
+
+      <h3 id="user-interface.xml">user-interface.xml</h3>
+
+      <p><code>user-interface.xml</code> contains implicit preferences, such as window size and
+      location, table sort order, and other captured user-interface state that is automatically
+      restored as needed.</p>
+
+      <p><code>user-interface.xml</code> is only private within a single profile.</p>
+
+      <h2 id="java-preferences">Java Preferences</h2>
+
+      <p>JMRI application preferences that a simple (a number, boolean, or string), or a list of
+      simple preferences, and can only be meaningfully used once within a single Profile are
+      candidates for storage as <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html">Java
+      Preferences</a>.</p>
+
+      <p>JMRI uses a Properties format for storing Java Preferences in the file
+      <code>profile.properties</code> within both Shared and Private spaces in a single Profile.
+      The file <code>preferences.properties</code> is used for storing preferences that apply to
+      all profiles run by a single user within a single computer.</p>
+
+      <p>JMRI further constrains Java Preferences by putting them in separate "namespaces" based on
+      package names. This allows preferences in two different packages to use the same name for a
+      preference (for example, the JMRI Web Server and Simple Server both have a "port" property,
+      but because these are in different packages, they do not conflict).</p>
+
+      <h1 id="accessing-preferences">Accessing Preferences</h1>
+
+      <p>If another class is already controlling the preferences you want to access, use that
+      class's methods to access that preference. If not, create a class to manage that preference
+      on behalf of other classes within a JMRI application.</p>
+
+      <p>Direct access to the preferences files outlined above is strongly discouraged, as direct
+      access could result in one preferences manager overwriting another manager's preferences. Use
+      the methods in <a href=
+      "http://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html">ProfileUtils</a> to access
+      the AuxiliaryConfiguration and Java Preferences for a single Profile or the application
+      settings (pass null for the profile to get application settings).</p>
+
+      <h1 id="preferences-managers">Preferences Managers</h1>
+
+      <p><a href=
+      "http://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferenceManagers</a> are
+      the primary handlers of preference retrieval and storage in JMRI applications.</p>
+
+      <p>The JMRI library has a number of Preferences Managers. These managers all provide an
+      implementation of the PreferencesManager interface to allow them to be discovered.
+      Preferences managers are loaded by the JMRI configuration manager, which uses the <a href=
+      "https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">ServiceLoader
+      API</a> to create an instance of every preferences manager (this allows third-party JARs to
+      implement preferences managers; see the ServiceLoader API docs for details on how this works
+      and the <a href="https://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API
+      docs</a> for details of how JMRI meets the ServiceLoader API requirements).</p>
+
+      <p>Because the mechanism by which preferences managers are discovered has no deterministic
+      order, the preferences managers API includes methods that allow a preference manager to
+      require that other specific preference managers are correctly initialized before it is
+      initialized.</p>
+
+      <h1 id="preferences-panels">Preferences Panels</h1>
+
+      <p><a href=
+      "http://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencePanels</a> are
+      the user interface for interacting with Preferences Managers within the Preferences window of
+      a JMRI application.</p>
+
+      <p>When the Preferences window is initialized, it uses the ServiceLoader API to create an
+      instance of every preferences panel (this allows third-party JARs to implement preferences
+      panels).</p>
+
+      <p>Preferences panels provide hints for grouping the panels together, but do not provide
+      hints for ordering preferences panels. Some groupings of preferences panels are well know
+      within the Preferences window, and are given in a specific order, after which every other
+      group of preferences panels are ordered alphabetically.</p>
+
+      <h1 id="scripts">Scripts</h1>
+
+      <p>The following scripts included in the JMRI distribution show how to access preferences
+      within a script:</p>
+
+      <ul>
+        <li>
+          <strong><a href=
+          "https://jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> -
+          Jython sample code that also demonstrates using another Jython script (<a href=
+          "https://jmri.org/jython/preferences.py">preferences.py</a>) within a script
+        </li>
+
+        <li><strong><a href=
+        "https://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> -
+        Working JavaScript or ECMAScript script that controls some ZeroConf network
+        preferences</li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

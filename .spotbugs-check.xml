@@ -18,6 +18,7 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
+           <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
         </Or>
      </Match>
 

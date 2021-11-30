@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.display.Positionable;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -28,7 +31,7 @@ public class PortalIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a PortalIcon
+     * Default implementation for storing the contents of a PortalIcon.
      *
      * @param o Object to store, of type PortalIcon
      * @return Element containing the complete info
@@ -82,9 +85,11 @@ public class PortalIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         if (!(o instanceof ControlPanelEditor)) {
             log.error("Can't load portalIcon.  Panel editor must use ControlPanelEditor.");
             return;
@@ -109,7 +114,11 @@ public class PortalIconXml extends PositionableLabelXml {
         Portal portal = block.getPortalByName(portalName);
 
         PortalIcon l = new PortalIcon(ed, portal);
-        ed.putItem(l);
+        try {
+            ed.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);
@@ -139,11 +148,8 @@ public class PortalIconXml extends PositionableLabelXml {
         if ((a = element.getAttribute("arrowSwitch")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        l.setArrowOrientatuon(value);
-        value = false;
-        if ((a = element.getAttribute("arrowHide")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
+        l.setArrowOrientation(value);
+        value = (a = element.getAttribute("arrowHide")) != null && a.getValue().equals("yes");
         l.setHideArrows(value);
 
         Element iconsElem = element.getChild("icons");

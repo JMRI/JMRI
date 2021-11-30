@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
- * a DCC++ Command Station, on a DCC++ network.
+ * DCC++ Command Station, on a DCC++ network.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Portions by Paul Bender Copyright (C) 2003
@@ -48,10 +48,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
     
     /**
-     * Returns the Station Type of the connected Command Station
+     * Get the Station Type of the connected Command Station
      * it is populated by response from the CS, initially "Unknown" 
      * @return StationType
      */
+    @Nonnull
     public String getStationType() {
         return stationType;
     }
@@ -64,10 +65,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Returns the Build of the connected Command Station
+     * Get the Build of the connected Command Station
      * it is populated by response from the CS, initially "Unknown" 
      * @return Build
      */
+    @Nonnull
     public String getBuild() {
         return build;
     }
@@ -84,16 +86,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Returns the canonical version of the connected Command Station
+     * Get the canonical version of the connected Command Station
      * it is populated by response from the CS, so initially '0.0.0' 
      * @return Version
      */
+    @Nonnull
     public String getVersion() {
         return version;
     }
 
     /**
-     * Parses the DCC++ CS status response to pull out the base station version
+     * Parse the DCC++ CS status response to pull out the base station version
      * and software version.
      * @param l status response to query.
      */
@@ -117,20 +120,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
         int newNumSlots = l.getValueInt(1);
-        if (newNumSlots < maxNumSlots) {
-            log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
-            return;
-        }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        setCommandStationMaxNumSlots(newNumSlots);
     }
     protected void setCommandStationMaxNumSlots(int newNumSlots) {
         if (newNumSlots < maxNumSlots) {
             log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
             return;
         }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        if (newNumSlots != maxNumSlots) {
+            log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
+            maxNumSlots = newNumSlots;
+        }
     }
     protected int getCommandStationMaxNumSlots() {
         return maxNumSlots;
@@ -166,6 +166,34 @@ public class DCCppCommandStation implements jmri.CommandStation {
         try {
             //command stations starting with 3 handle their own function refresh
             ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Can this command station handle the Read with a starting value ('V'erify)
+     * @return true if yes or false if no
+     */
+    public boolean isReadStartValSupported() {
+        boolean ret = false;
+        try {
+            //command stations starting with 3 can handle reads with startVals
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Can this command station handle the Servo and Vpin Turnout creation message formats?
+     * @return true if yes or false if no
+     */
+    public boolean isServoTurnoutCreationSupported() {
+        boolean ret = false;
+        try {
+            // SERVO and VPIN turnout commands added at 3.2.0
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.2.0") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  
@@ -222,7 +250,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission.
      */
     @Override
-    public boolean sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(@Nonnull byte [] packet, int repeats) {
 
         if (_tc == null) {
             log.error("Send Packet Called without setting traffic controller");
@@ -233,7 +261,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
         //  DCC++ BaseStation code appends its own error-correction byte.
         // So we have to omit the JMRI-generated one.
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
-        log.debug("sendPacket:'{}'", msg.toString());
+        assert msg != null;
+        log.debug("sendPacket:'{}'", msg);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);
@@ -276,9 +305,10 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "DCCPP";
+            return "D";
         }
         return adaptermemo.getSystemPrefix();
     }
@@ -311,4 +341,3 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private final static Logger log = LoggerFactory.getLogger(DCCppCommandStation.class);
 
 }
-

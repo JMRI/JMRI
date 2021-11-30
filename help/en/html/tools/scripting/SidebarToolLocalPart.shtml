@@ -1,21 +1,22 @@
 <!-- SidebarToolLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/tools/scripting pages -->
 
-		<dt><h3><a href="index.shtml">Scripting</a></h3></dt>
+		<dt><a href="index.shtml">Scripting</a></dt>
 		<dd>Information on writing scripts to control JMRI in more detail:
 		    <ul>
 		    <li><a href="Start.shtml">Getting Started</a>
-		    <li><a href="Python.shtml">The Python/Jython Language</a>
+            <li><a href="Python.shtml">The Python/Jython Language</a>
 		    <li><a href="ex_set_turnouts.shtml">Example: Setting Turnouts</a>
 		    <li><a href="Examples.shtml">Examples (Links)</a>
 		    <li><a href="HowTo.shtml">JMRI Scripting &quot;How To...&quot;</a>
 			<li><a href="WhatWhere.shtml">JMRI Scripting &quot;What...Where&quot;</a>
 			<li><a href="Jynstruments.shtml">Jynstruments to modify the GUI</a>
+			<li><a href="JythonApps.shtml">Jython Apps for JMRI</a>
             <li><a href="AppleScript.shtml">Open Scripting (for Mac)</a>
 		    </ul>
 		</dd>
 
-		<dt><h3><a href="Python.shtml">Python and Jython (General Info)</a></h3></dt>
+		<dt><a href="Python.shtml">Python and Jython (General Info)</a></dt>
 		<dd>JMRI scripts are in Jython, a version of Python, a popular general-purpose computer language
 		    <ul>
 		    <li><a href="Python.shtml">The Python/Jython Language</a>

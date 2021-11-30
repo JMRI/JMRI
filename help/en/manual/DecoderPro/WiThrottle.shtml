@@ -1,64 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>WiThrottle</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>WiThrottle</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg;</h1>
+    <div id="mainContent">
+      <h1 id="Top">DecoderPro®</h1>
 
       <h2>WiThrottle</h2>
 
-      <div align="right">
-        <p><a href="Main_Throttle_menubar.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Throttle_menubar.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
+        <p><a href="index.shtml">Back to Index</a>
+        </p>
       </div>
 
-      <p>This window controls the connection between WiFi
-      throttles, e. g. an iPhone, iPod Touch, or Android Phone and
-      JMRI <a href="Start_Preferences.shtml">Preference</a> in the
-      WiThrottle Pane.</p>
+      <p>This window controls the connection between WiFi throttles, e. g. an iPhone, iPod Touch,
+      or Android Phone and JMRI <a href="Start_Preferences.shtml">Preference</a> in the WiThrottle
+      Pane.</p>
 
       <blockquote>
         <blockquote>
           <blockquote>
             <blockquote>
-              <p><img style="width: 331px; height: 271px;" src=
-              "images/ThrottleWi.png" alt="WiThrottle"></p>
+              <p><img style="width: 331px; height: 271px;" src="images/ThrottleWi.png" alt=
+              "WiThrottle">
+              </p>
             </blockquote>
           </blockquote>
 
           <p>Menu Bar</p>
 
-          <p style="margin-left: 40px;"><img style=
-          "width: 217px; height: 167px;" src=
-          "images/ThrottleWi_menu.png" alt="menu"></p>
+          <p style="margin-left: 40px;"><img style="width: 217px; height: 167px;" src=
+          "images/ThrottleWi_menu.png" alt="menu">
+          </p>
 
           <ul>
             <li>WiThrottle
-
               <ul>
                 <li>Start Server</li>
               </ul>
@@ -72,13 +70,11 @@
               </ul>
 
               <blockquote>
-                <p style="margin-left: 40px;"><img style=
-                "width: 669px; height: 209px;" src=
-                "images/ThrottleWi_ControlsFilter.png" alt=
-                "filter"></p>
+                <p style="margin-left: 40px;"><img style="width: 669px; height: 209px;" src=
+                "images/ThrottleWi_ControlsFilter.png" alt="filter">
+                </p>
 
-                <p>Set up Turnouts and Routes that can be
-                controlled by DecoderPro&reg; for control by
+                <p>Set up Turnouts and Routes that can be controlled by DecoderPro® for control by
                 WiThrottle.</p>
               </blockquote>
 
@@ -89,8 +85,7 @@
 
             <li style="list-style: none">
               <blockquote>
-                <p>Opens the WiThrottle Preferences Pane in
-                preferences.</p>
+                <p>Opens the WiThrottle Preferences Pane in preferences.</p>
               </blockquote>
             </li>
 
@@ -101,12 +96,18 @@
         </blockquote>
       </blockquote>
 
-      <div align="right">
-        <p><a href="Main_Throttle_menubar.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Throttle_menubar.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <p><a href="index.shtml">Back to Index</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -24,11 +22,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
- * Tests for the NXFrame class, and it's interactions with Warrants.
+ * Tests for the NXFrame class, and its interactions with Warrants.
  *
  * @author Pete Cressman 2015
  *
- * todo - test error conditions
+ * TODO - test error conditions
  */
 @Timeout(30)
 public class NXFrameTest {
@@ -76,12 +74,14 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -117,12 +117,12 @@ public class NXFrameTest {
         nxFrame.setMaxSpeed(2);
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
-        
+
         nxFrame.setMaxSpeed(0.6f);
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
 
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
@@ -144,13 +144,15 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -181,10 +183,10 @@ public class NXFrameTest {
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 
-        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);     
+        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);
         nxFrame._speedUtil.setRampTimeIncrement(100);
         nxFrame.setMaxSpeed(0.6f);
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
@@ -193,11 +195,11 @@ public class NXFrameTest {
 
         WarrantTableModel model = tableFrame.getModel();
         assertThat(model).withFailMessage("tableFrame model").isNotNull();
-        
+
         JUnitUtil.waitFor(() -> {
             return model.getRowCount() > 1;
         }, "NXWarrant loaded into table");
-        
+
         Warrant warrant = tableFrame.getModel().getWarrantAt(model.getRowCount()-1);
 
         assertThat(warrant).withFailMessage("warrant").isNotNull();
@@ -221,10 +223,10 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
+            return Bundle.getMessage("atHalt", name).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
-        assertThat(Bundle.getMessage("Halted", block.getDisplayName(), "1")).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
+        assertThat(Bundle.getMessage("atHalt", block.getDisplayName())).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
@@ -260,6 +262,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -275,7 +279,7 @@ public class NXFrameTest {
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         assertThat(warrant).withFailMessage("warrant").isNotNull();
-       
+
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -294,7 +298,7 @@ public class NXFrameTest {
         // we may want to use jemmy to close the panel as well.
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-    }    
+    }
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -303,6 +307,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -318,7 +324,7 @@ public class NXFrameTest {
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(1);
         assertThat(warrant).withFailMessage("warrant").isNotNull();
-       
+
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
 
         SpeedUtil sp = warrant.getSpeedUtil();
@@ -337,14 +343,14 @@ public class NXFrameTest {
         assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block.getSensor().getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
-        new QueueTool().waitEmpty(10);
+        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
-        new QueueTool().waitEmpty(10);
+        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
 
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -376,35 +382,34 @@ public class NXFrameTest {
      * @return active end sensor
      * @throws Exception exception thrown
      */
-    protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
-        OBlock block = mgr.getOBlock(route[0]);
-        Sensor sensor = block.getSensor();
+    protected static Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
+        Sensor sensor = null;
         for (int i = 1; i < route.length; i++) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-
-            OBlock nextBlock = mgr.getOBlock(route[i]);
-            Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
-            if (!dark) {
-                nextSensor = nextBlock.getSensor();
-                nextSensor.setState(Sensor.ACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
-            } else {
-                nextSensor = null;
-            }
-            if (sensor != null) {
-                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-                sensor.setState(Sensor.INACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
-            }
-            if (!dark) {
-                sensor = nextSensor;
-                block = nextBlock;
-            }
+            sensor = moveToNextBlock(i, route, mgr);
         }
-        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
+
+    protected static Sensor moveToNextBlock(int idx, String[] route, OBlockManager mgr) {
+        assertThat(idx > 0 && idx < route.length).withFailMessage("Index "+ idx + " invalid ").isTrue();
+
+        OBlock fromBlock = mgr.getOBlock(route[idx - 1]);
+        Sensor fromSensor = fromBlock.getSensor();
+        assertThat(fromSensor).withFailMessage("fromSensor not found").isNotNull();
+
+        OBlock toBlock = mgr.getOBlock(route[idx]);
+        Sensor toSensor = toBlock.getSensor();
+        assertThat(toSensor).withFailMessage("toSensor not found").isNotNull();
+
+        JUnitUtil.waitFor(300);
+        NXFrameTest.setAndConfirmSensorAction(toSensor, Sensor.ACTIVE, toBlock);
+
+        JUnitUtil.waitFor(200);
+        NXFrameTest.setAndConfirmSensorAction(fromSensor, Sensor.INACTIVE, fromBlock);
+
+        return toSensor;
+    }
+
 
     protected static void setAndConfirmSensorAction(Sensor sensor, int state, OBlock block)  {
         if (state == Sensor.ACTIVE) {
@@ -451,7 +456,9 @@ public class NXFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.removeMatchingThreads("Engineer(");
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

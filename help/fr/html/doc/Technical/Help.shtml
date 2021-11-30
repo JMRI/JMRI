@@ -119,7 +119,7 @@ utilisons un formulaire particulier pour les pages web dans le syst&#232;me d'ai
 les serveurs Web principaux  recherchent les fichiers pour
 <a href="http://httpd.apache.org/docs/1.3/howto/ssi.html"> les serveurs inclus </a>.
 <li> Lorsque vous cr&#233;ez une nouvelle page, commencez par une copie
-soit du fichier mod&#232;le Aide/fr/TemplateBar.shtml ou de l'aide/fr/TemplatePlain.shtml
+soit du fichier mod&#232;le Aide/fr/template-sidebar.shtml ou de l'aide/fr/template-no-sidebar.shtml
 , selon que vous souhaitez ou non inclure une "Sidebar"
 via un fichier du m&#234;me nom. Cela mettra en haut et en bas la
 mati&#232;re en place pour obtenir que la page s'affiche correctement.
@@ -215,7 +215,7 @@ chaque ajout pour actualiser les versions web.
 <a name="site" id="site"></a><h2> Mise &#224; jour du site JMRI.org </h2>
 Des changements pour les pages d'aide qui sont v&#233;rifi&#233;es devrait appara&#238;tre automatiquement sur le site JMRI.org
 apr&#232;s un court moment.Il y a une
-<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
+<a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
 <!--#include virtual="/Footer.shtml" -->

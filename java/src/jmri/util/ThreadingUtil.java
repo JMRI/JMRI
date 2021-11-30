@@ -2,12 +2,14 @@ package jmri.util;
 
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+
+import jmri.JmriException;
+import jmri.Reference;
 
 /**
  * Utilities for handling JMRI's threading conventions.
@@ -38,6 +40,27 @@ public class ThreadingUtil {
      */
     static public void runOnLayout(@Nonnull ThreadAction ta) {
         runOnGUI(ta);
+    }
+
+    /**
+     * Run some layout-specific code before returning.
+     * This method catches and rethrows JmriException and RuntimeException.
+     * <p>
+     * Typical uses:
+     * <p> {@code
+     * ThreadingUtil.runOnLayout(() -> {
+     *     sensor.setState(value);
+     * }); 
+     * }
+     *
+     * @param ta What to run, usually as a lambda expression
+     * @throws JmriException when an exception occurs
+     * @throws RuntimeException when an exception occurs
+     */
+    static public void runOnLayoutWithJmriException(
+            @Nonnull ThreadActionWithJmriException ta)
+            throws JmriException, RuntimeException {
+        runOnGUIWithJmriException(ta);
     }
 
     /**
@@ -126,6 +149,61 @@ public class ThreadingUtil {
     }
 
     /**
+     * Run some GUI-specific code before returning.
+     * This method catches and rethrows JmriException and RuntimeException.
+     * <p>
+     * Typical uses:
+     * <p> {@code
+     * ThreadingUtil.runOnGUI(() -> {
+     *     mine.setVisible();
+     * });
+     * }
+     * <p>
+     * If an InterruptedException is encountered, it'll be deferred to the 
+     * next blocking call via Thread.currentThread().interrupt()
+     * 
+     * @param ta What to run, usually as a lambda expression
+     * @throws JmriException when an exception occurs
+     * @throws RuntimeException when an exception occurs
+     */
+    static public void runOnGUIWithJmriException(
+            @Nonnull ThreadActionWithJmriException ta)
+            throws JmriException, RuntimeException {
+        
+        if (isGUIThread()) {
+            // run now
+            ta.run();
+        } else {
+            // dispatch to Swing
+            warnLocks();
+            try {
+                Reference<JmriException> jmriException = new Reference<>();
+                Reference<RuntimeException> runtimeException = new Reference<>();
+                SwingUtilities.invokeAndWait(() -> {
+                    try {
+                        ta.run();
+                    } catch (JmriException e) {
+                        jmriException.set(e);
+                    } catch (RuntimeException e) {
+                        runtimeException.set(e);
+                    }
+                });
+                JmriException je = jmriException.get();
+                if (je != null) throw je;
+                RuntimeException re = runtimeException.get();
+                if (re != null) throw re;
+            } catch (InterruptedException e) {
+                log.debug("Interrupted while running on GUI thread");
+                Thread.currentThread().interrupt();
+            } catch (InvocationTargetException e) {
+                log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUI:", e);
+                // should have been handled inside the ThreadAction
+            }
+        }
+    }
+
+    /**
      * Run some GUI-specific code before returning a value.
      * <p>
      * Typical uses:
@@ -150,7 +228,7 @@ public class ThreadingUtil {
         } else {
             warnLocks();
             // dispatch to Swing
-            final AtomicReference<E> result = new AtomicReference<>();
+            final Reference<E> result = new Reference<>();
             try {
                 SwingUtilities.invokeAndWait(() -> {
                     result.set(ta.run());
@@ -334,6 +412,28 @@ public class ThreadingUtil {
          */
         @Override
         public void run();
+    }
+
+    /**
+     * Interface for use in ThreadingUtil's lambda interfaces
+     */
+    @FunctionalInterface
+    static public interface ThreadActionWithJmriException {
+
+        /**
+         * When an object implementing interface <code>ThreadActionWithJmriException</code>
+         * is used to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @throws JmriException when an exception occurs
+         * @throws RuntimeException when an exception occurs
+         * @see     java.lang.Thread#run()
+         */
+        public void run() throws JmriException, RuntimeException;
     }
 
     /**

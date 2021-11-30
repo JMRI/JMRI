@@ -1,62 +1,40 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: OBlock Add/Edit Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help OBlock Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help OBlock Table"><!--#include virtual="/Style.shtml" -->
 
   <style type="text/css">
-<!- page specific styling of numbered steps & subheading -->
+  <!- page specific styling of numbered steps & subheading -->
   p.flushleft {
         text-indent: -37px;
         }
   </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Warrants: Creating and Editing OBlocks, Portals and OPaths</h1>
 
-      <p>Start by entering each Occupancy Block of your layout into
-      the <b>Occupancy Block Table</b>:</p>
+      <p>Start by entering each Occupancy Block of your layout into the <strong>Occupancy Block
+      Table</strong>:</p>
 
       <ol>
-        <li>Enter a System Name for the OBlock. If you do not
-        preface the entry with "OB", it will be prepended to your
-        entry automatically.</li>
+        <li>Enter a System Name for the OBlock. If you do not preface the entry with "OB", it will
+        be prepended to your entry automatically.</li>
 
         <li>(Optionally) Enter a User Name for the OBlock.</li>
 
-        <li>Enter the System Name or User Name of the detection
-        Sensor for the Block.<br>
-          <i>You may skip entering this for now and come back and
-          enter it later.</i><br>
-          Note: If there is more than one Sensor that detects
-          occupancy of the Block, 'OR' them together and trigger a
-          single Internal Sensor to use for this entry. For
-          example, suppose LS10, LS11 and LS12 are detection
-          Sensors and IS100 is an Internal Sensor. Presuming
-          "Active" means Occupied, write a Logix Conditional with
-          these three state Variables:
-
+        <li>Enter the System Name or User Name of the detection Sensor for the Block.<br>
+          <em>You may skip entering this for now and come back and enter it later.</em><br>
+          Note: If there is more than one Sensor that detects occupancy of the Block, 'OR' them
+          together and trigger a single Internal Sensor to use for this entry. For example, suppose
+          LS10, LS11 and LS12 are detection Sensors and IS100 is an Internal Sensor. Presuming
+          "Active" means Occupied, write a Logix Conditional with these three state Variables:
           <ul>
             <li>Sensor "LS10" state is Sensor Active</li>
 
@@ -64,148 +42,119 @@
 
             <li>Sensor "LS12" state is Sensor Active</li>
           </ul>
-
-          Select <b>OR</b> as the Logic Operator<br>
+          Select <strong>OR</strong> as the Logic Operator<br>
           and add as Actions:
-
           <ul>
-            <li>On Change to True, set Sensor, "IS100" to
-            Active.</li>
+            <li>On Change to True, set Sensor, "IS100" to Active.</li>
 
-            <li>On Change to False, set Sensor, "IS100" to
-            Inactive.</li>
+            <li>On Change to False, set Sensor, "IS100" to Inactive.</li>
           </ul>
 
-          <p>Note: Upon entering a System Name, the row of a new
-          entry will jump to its sorting position as ordered by
-          System Name. To continue editing the row, look for it at
-          the top of the window. It will stay in place as long as
-          it has the same System Name.</p>
+          <p>Note: Upon entering a System Name, the row of a new entry will jump to its sorting
+          position as ordered by System Name. To continue editing the row, look for it at the top
+          of the window. It will stay in place as long as it has the same System Name.</p>
 
-          <p class="flushleft">Next, enter the Portals between the
-          Blocks into the <b>Portal Table</b>:</p>
+          <p class="flushleft">Next, enter the Portals between the Blocks into the <strong>Portal
+          Table</strong>:</p>
         </li>
 
-        <li>For each point between the Blocks you have defined
-        in the Occupancy Block Table, enter a Portal row for each
-        Portal (gap) between the two Blocks.
+        <li>For each point between the Blocks you have defined in the Occupancy Block Table, enter
+        a Portal row for each Portal (gap) between the two Blocks.
+          <p>A pair of adjacent Blocks may have several Portals between them. This is expected, so
+          just give each Portal a unique name. The Block names can be dragged from the Occupancy
+          Block table to save typing.</p>
 
-          <p>A pair of adjacent Blocks may have several Portals
-          between them. This is expected, so just give each Portal
-          a unique name. The Block names can be dragged from the
-          Occupancy Block table to save typing.</p>
+          <p>Note: The computer will notify you from time to time until you have entered a Block on
+          each side of the Portal Name. It doesn't matter on which side of the Portal Name you
+          enter a Block Name, just be sure to enter both sides</p>
 
-          <p>Note: The computer will notify you from time to time
-          until you have entered a Block on each side of the Portal
-          Name. It doesn't matter on which side of the Portal Name
-          you enter a Block Name, just be sure to enter both
-          sides</p>
+          <p>Note: It may be helpful to open the <strong>Block-Portal Cross Reference
+          Table</strong> to review whether all the portals have been entered.</p>
 
-          <p>Note: It may be helpful to open the <b>Block-Portal
-          Cross Reference Table</b> to review whether all the
-          portals have been entered.</p>
-
-          <p class="flushleft">Next, If there are Signals at a
-          Portal, enter them into the <b>Signal Table</b>:</p>
+          <p class="flushleft">Next, If there are Signals at a Portal, enter them into the
+          <strong>Signal Table</strong>:</p>
         </li>
 
-        <li>Enter the System Name or User Name of the Signal. This
-        may be either a SignalMast or SignalHead.</li>
+        <li>Enter the System Name or User Name of the Signal. This may be either a SignalMast or
+        SignalHead.</li>
 
-        <li>Enter the name of the Block <b><i>facing</i></b> the
-        Signal into the <b>From (Approach) Block</b> column. It is
-        important that the approaching Block of the Signal is
-        correctly named. This is the Block that will detect when a
-        speed change might be needed.</li>
+        <li>Enter the name of the Block <strong><em>facing</em></strong> the Signal into the
+        <strong>From (Approach) Block</strong> column. It is important that the approaching Block
+        of the Signal is correctly named. This is the Block that will detect when a speed change
+        might be needed.</li>
 
-        <li>Enter the Portal Name or the name of the Block whose
-        entrance is protected.</li>
+        <li>Enter the Portal Name or the name of the Block whose entrance is protected.</li>
 
-        <li>Enter any delay of milliseconds to wait after entering
-        the approach Block before changing the train speed (This
-        time delay is used only when the signal indicates a speed
+        <li>Enter any delay of milliseconds to wait after entering the approach Block before
+        changing the train speed (This time delay is used only when the signal indicates a speed
         change).
-
-          <p class="flushleft">Next, identify the Paths in each
-          Block:</p>
+          <p class="flushleft">Next, identify the Paths in each Block:</p>
         </li>
 
-        <li>Moving through the Occupancy Block Table row by row,
-        complete these steps:
-
+        <li>Moving through the Occupancy Block Table row by row, complete these steps:
           <ul>
-            <li>Press the <b>Paths</b> button and open the
-            <b>Block-Path</b> Table for the row;</li>
+            <li>Press the <strong>Paths</strong> button and open the <strong>Block-Path</strong>
+            Table for the row;</li>
 
-            <li>Enter a path name for a Path within the Block of
-            the row in the <b>Path Name</b> column.<br>
-            Note: The name of the Block is in quotes in the title
-            bar of the table.</li>
+            <li>Enter a path name for a Path within the Block of the row in the <strong>Path
+            Name</strong> column.<br>
+            Note: The name of the Block is in quotes in the title bar of the table.</li>
 
-            <li>Enter the names of the Portals where the Path
-            enters and exits the Block.<br>
+            <li>Enter the names of the Portals where the Path enters and exits the Block.<br>
 
-              <p>Note: It doesn't matter on which side of the Path
-              name you enter a Portal name. Dead end spurs will
-              only have one Portal.</p>
+              <p>Note: It doesn't matter on which side of the Path name you enter a Portal name.
+              Dead end spurs will only have one Portal.</p>
 
-              <p>Reminder: You may use 'Drag and Drop' to enter
-              text. When selecting an item to drag, it may require
-              two clicks; one to select the row and a second to
-              select the column entry. Holding the second click
-              down, you can drag the text from that row, column
-              field.</p>
+              <p>Reminder: You may use 'Drag and Drop' to enter text. When selecting an item to
+              drag, it may require two clicks; one to select the row and a second to select the
+              column entry. Holding the second click down, you can drag the text from that row,
+              column field.</p>
             </li>
           </ul>
 
-          <p class="flushleft">Finally, complete the definition of
-          each Path in each Block:</p>
+          <p class="flushleft">Finally, complete the definition of each Path in each Block:</p>
         </li>
 
-        <li>For each Path in each <b>Block-Path table</b>, complete
-        these steps:
-
+        <li>For each Path in each <strong>Block-Path table</strong>, complete these steps:
           <ul>
-            <li>Press the <b>Turnouts</b> button and open the
-            <b>Block-Path-Turnout</b> table for the each row in the
-            <b>Block-Path</b> table</li>
+            <li>Press the <strong>Turnouts</strong> button and open the
+            <strong>Block-Path-Turnout</strong> table for the each row in the
+            <strong>Block-Path</strong> table</li>
 
-            <li>Enter the System Name or User Name of a Turnout in
-            the Path.<br>
+            <li>Enter the System Name or User Name of a Turnout in the Path.<br>
 
-              <p>Note: The name of the Path and its Block are
-              displayed in quotes in the title bar of the
-              table.</p>
+              <p>Note: The name of the Path and its Block are displayed in quotes in the title bar
+              of the table.</p>
             </li>
 
-            <li>Enter the position of the Turnout in the <b>Turnout
-            Setting</b> column - either 'Closed' or 'Thrown'.</li>
+            <li>Enter the position of the Turnout in the <strong>Turnout Setting</strong> column -
+            either 'Closed' or 'Thrown'.</li>
           </ul>
 
-          <p class="flushleft">Most likely you will have
-          encountered several dialogs urging you to fix this or
-          that; try to resolve all of them.</p>
+          <p class="flushleft">Most likely you will have encountered several dialogs urging you to
+          fix this or that; try to resolve all of them.</p>
 
-          <p class="flushleft">Now, you are ready to define some
-          Routes for Warrants. Of course, there will probably still
-          be a few errors or missing items; the 'Create Warrant'
-          frame provides a tool to find and fix them:</p>
+          <p class="flushleft">Now, you are ready to define some Routes for Warrants. Of course,
+          there will probably still be a few errors or missing items; the 'Create Warrant' frame
+          provides a tool to find and fix them:</p>
         </li>
 
-        <li>Select <b>Create New Warrant</b> from the
-        <b>Warrants</b> menu in a Panel Editor Panel.</li>
+        <li>Select <strong>Create New Warrant</strong> from the <strong>Warrants</strong> menu in a
+        Panel Editor Panel.</li>
       </ol>
 
-      <p>To read about how OBlocks, Portals and OPaths can be used
-      to generate train routes and make automated train scripts,
-      see <a href="Warrant.shtml">Warrants</a>.</p>
+      <p>To read about how OBlocks, Portals and OPaths can be used to generate train routes and
+      make automated train scripts, see <a href="Warrant.shtml">Warrants</a>.</p>
 
-      <p>Also see the <a href="WarrantTable.shtml">Warrant
-      Table help</a> for details on creating and editing Warrants.</p>
+      <p>Also see the <a href="WarrantTable.shtml">Warrant Table help</a> for details on creating
+      and editing Warrants.</p>
 
       <p>Back to <a href="OBlockTable.shtml">OBlock Table</a> Help.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

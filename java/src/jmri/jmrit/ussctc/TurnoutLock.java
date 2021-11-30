@@ -19,18 +19,18 @@ public class TurnoutLock implements Lock {
     public TurnoutLock(String name, int okValue) {
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(name);
         turnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name,t);
-        this.value = okValue;      
+        this.value = okValue;
     }
 
-    NamedBeanHandle<Turnout> turnout; 
+    NamedBeanHandle<Turnout> turnout;
     int value;
-    
+
     /**
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
     @Override
-    public boolean isLockClear() {
+    public boolean isLockClear(LockLogger lockLogger) {
         if (turnout.getBean().getKnownState() != value) {
                 lockLogger.setStatus(this, "Locked due to setting: "+turnout.getBean().getDisplayName());
             return false;
@@ -38,5 +38,12 @@ public class TurnoutLock implements Lock {
         lockLogger.setStatus(this, "");
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        String retval = isLockClear(debugLockLogger) ? "clear " : "locked";
+        retval = retval+debugLockLogger.memory.getValue();
+        return retval;
+    }
+
 }

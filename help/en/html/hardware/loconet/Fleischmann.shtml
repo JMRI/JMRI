@@ -1,47 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Fleischmann Twin Centre via Serial
-  Port</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Fleischmann Twin Centre via Serial Port</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
-  <meta name="keywords" content=
-  "Uhlenbrock Intellibox java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Fleischmann Twin Centre</h1>
 
-      <p>JMRI can communicate with the Fleischmann Twin Centre
-      over LocoNet in several ways. For more details, see the
-      <a href="Uhlenbrock.shtml">page on configuring
-      Uhlenbrock-compatible devices</a>.</p>
+      <p>JMRI can communicate with the Fleischmann Twin Centre over LocoNet in several ways. For
+      more details, see the <a href="Uhlenbrock.shtml">page on configuring Uhlenbrock-compatible
+      devices</a>.</p>
 
-      <p>The Fleischmann z21 System is covered under
-      <a href="../roco/z21/index.shtml">Roco Z21</a>.</p>
-
+      <p>The Fleischmann z21 System is covered under <a href="../roco/z21/index.shtml">Roco
+      Z21</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

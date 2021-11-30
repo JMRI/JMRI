@@ -35,7 +35,10 @@ import jmri.util.table.ButtonRenderer;
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
-
+    volatile List<Train> sysList = trainManager.getTrainsByTimeList();
+    JTable _table = null;
+    TrainsTableFrame _frame = null;
+    
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int TIME_COLUMN = ID_COLUMN + 1;
@@ -43,9 +46,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private static final int BUILD_COLUMN = BUILDBOX_COLUMN + 1;
     private static final int NAME_COLUMN = BUILD_COLUMN + 1;
     private static final int DESCRIPTION_COLUMN = NAME_COLUMN + 1;
-    private static final int ROAD_COLUMN = DESCRIPTION_COLUMN + 1;
+    private static final int BUILT_COLUMN = DESCRIPTION_COLUMN + 1;
+    private static final int ROAD_COLUMN = BUILT_COLUMN + 1;
     private static final int LOAD_COLUMN = ROAD_COLUMN + 1;
-    private static final int ROUTE_COLUMN = LOAD_COLUMN + 1;
+    private static final int OWNER_COLUMN = LOAD_COLUMN + 1;
+    private static final int ROUTE_COLUMN = OWNER_COLUMN + 1;
     private static final int DEPARTS_COLUMN = ROUTE_COLUMN + 1;
     private static final int TERMINATES_COLUMN = DEPARTS_COLUMN + 1;
     private static final int CURRENT_COLUMN = TERMINATES_COLUMN + 1;
@@ -78,8 +83,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setShowAll(boolean showAll) {
         _showAll = showAll;
         updateList();
-        fireTableStructureChanged();
-        initTable();
+        fireTableDataChanged();
     }
 
     public boolean isShowAll() {
@@ -90,34 +94,30 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        synchronized (this) {
-            if (_sort == SORTBYID) {
-                sysList = trainManager.getTrainsByIdList();
-            } else {
-                sysList = trainManager.getTrainsByTimeList();
-            }
+        List<Train> tempList;
+        if (_sort == SORTBYID) {
+            tempList = trainManager.getTrainsByIdList();
+        } else {
+            tempList = trainManager.getTrainsByTimeList();
+        }
 
-            if (!isShowAll()) {
-                // filter out trains not checked
-                for (int i = sysList.size() - 1; i >= 0; i--) {
-                    if (!sysList.get(i).isBuildEnabled()) {
-                        sysList.remove(i);
-                    }
+        if (!isShowAll()) {
+            // filter out trains not checked
+            for (int i = tempList.size() - 1; i >= 0; i--) {
+                if (!tempList.get(i).isBuildEnabled()) {
+                    tempList.remove(i);
                 }
             }
         }
+        sysList = tempList;
 
         // and add listeners back in
         addPropertyChangeTrains();
     }
 
-    private synchronized Train getTrainByRow(int row) {
+    private Train getTrainByRow(int row) {
         return sysList.get(row);
     }
-
-    List<Train> sysList = trainManager.getTrainsByTimeList();
-    JTable _table = null;
-    TrainsTableFrame _frame = null;
 
     void initTable(JTable table, TrainsTableFrame frame) {
         _table = table;
@@ -127,9 +127,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         initTable();
     }
 
-    // Train frame table column widths (13), starts with id column and ends with
-    // edit
-    private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 120, 120, 120, 120, 120, 90, 70 };
+    // Train frame table column widths, starts with id column and ends with edit
+    private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
+            70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -163,12 +163,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), _sort == SORTBYID);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), _sort == SORTBYTIME);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), trainManager.isBuiltRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), trainManager.isRoadRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), trainManager.isLoadRestricted());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), trainManager.isOwnerRestricted());
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -206,10 +208,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return NAMECOLUMNNAME;
             case DESCRIPTION_COLUMN:
                 return DESCRIPTIONCOLUMNNAME;
+            case BUILT_COLUMN:
+                return Bundle.getMessage("Built");
             case ROAD_COLUMN:
                 return Bundle.getMessage("Road");
             case LOAD_COLUMN:
                 return Bundle.getMessage("Load");
+            case OWNER_COLUMN:
+                return Bundle.getMessage("Owner");
             case ROUTE_COLUMN:
                 return ROUTECOLUMNNAME;
             case DEPARTS_COLUMN:
@@ -235,11 +241,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILDBOX_COLUMN:
                 return Boolean.class;
             case ID_COLUMN:
+                return Integer.class;
             case TIME_COLUMN:
             case NAME_COLUMN:
             case DESCRIPTION_COLUMN:
+            case BUILT_COLUMN:
             case ROAD_COLUMN:
             case LOAD_COLUMN:
+            case OWNER_COLUMN:
             case ROUTE_COLUMN:
             case DEPARTS_COLUMN:
             case CURRENT_COLUMN:
@@ -279,7 +288,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         switch (col) {
             case ID_COLUMN:
-                return train.getId();
+                return Integer.parseInt(train.getId());
             case TIME_COLUMN:
                 return train.getDepartureTime();
             case NAME_COLUMN:
@@ -288,12 +297,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return train.getDescription();
             case BUILDBOX_COLUMN:
                 return Boolean.valueOf(train.isBuildEnabled());
+            case BUILT_COLUMN:
+                return getBuiltString(train);
             case ROAD_COLUMN:
                 return getModifiedString(train.getRoadNames().length, train.getRoadOption().equals(Train.ALL_ROADS),
                         train.getRoadOption().equals(Train.INCLUDE_ROADS));
             case LOAD_COLUMN:
                 return getModifiedString(train.getLoadNames().length, train.getLoadOption().equals(Train.ALL_LOADS),
                         train.getLoadOption().equals(Train.INCLUDE_LOADS));
+            case OWNER_COLUMN:
+                return getModifiedString(train.getOwnerNames().length, train.getOwnerOption().equals(Train.ALL_OWNERS),
+                        train.getOwnerOption().equals(Train.INCLUDE_OWNERS));
             case ROUTE_COLUMN:
                 return train.getTrainRouteName();
             case DEPARTS_COLUMN: {
@@ -322,8 +336,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("OpenFile");
                     }
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
-                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"), new Object[] { train.getName() }),
-                                row, col);
+                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"),
+                                new Object[] { train.getName() }), row, col);
                         return Bundle.getMessage("RunFile");
                     }
                     setToolTip(Bundle.getMessage("PrintTrainTip"), row, col);
@@ -340,7 +354,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("Build");
             }
             case ACTION_COLUMN: {
-                if (train.getBuildFailed()) {
+                if (train.isBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
                 if (train.getCurrentRouteLocation() == train.getTrainTerminatesRouteLocation() &&
@@ -359,7 +373,22 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void setToolTip(String text, int row, int col) {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         ButtonRenderer buttonRenderer = (ButtonRenderer) tcm.getColumnByModelIndex(col).getCellRenderer();
-        buttonRenderer.setToolTipText(text);
+        if (buttonRenderer != null) {
+            buttonRenderer.setToolTipText(text);
+        }
+    }
+
+    private String getBuiltString(Train train) {
+        if (!train.getBuiltStartYear().equals(Train.NONE) && train.getBuiltEndYear().equals(Train.NONE)) {
+            return "A " + train.getBuiltStartYear();
+        }
+        if (train.getBuiltStartYear().equals(Train.NONE) && !train.getBuiltEndYear().equals(Train.NONE)) {
+            return "B " + train.getBuiltEndYear();
+        }
+        if (!train.getBuiltStartYear().equals(Train.NONE) && !train.getBuiltEndYear().equals(Train.NONE)) {
+            return "R " + train.getBuiltStartYear() + ":" + train.getBuiltEndYear();
+        }
+        return "";
     }
 
     private String getModifiedString(int number, boolean all, boolean accept) {
@@ -396,7 +425,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public Color getRowColor(int row) {
         Train train = getTrainByRow(row);
-//          log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 
@@ -459,7 +487,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    // one of four buttons: Report, Move, Conductor or Terminate
+    // one of five buttons: Report, Move, Reset, Conductor or Terminate
     private void actionTrain(int row) {
         // no actions while a train is being built
         if (build != null && build.isAlive()) {
@@ -467,7 +495,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         Train train = getTrainByRow(row);
         // move button becomes report if failure
-        if (train.getBuildFailed()) {
+        if (train.isBuildFailed()) {
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
@@ -542,8 +570,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-        if (e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Train.BUILT_YEAR_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.OWNERS_CHANGED_PROPERTY)) {
             updateColumnVisible();
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
@@ -554,24 +584,20 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
                 (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
-            updateList();
-            fireTableDataChanged();
+            SwingUtilities.invokeLater(() -> {
+                updateList();
+                fireTableDataChanged();
+            });
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
-            int row;
-            synchronized (this) {
-                row = sysList.indexOf(train);
-            }
-            if (Control.SHOW_PROPERTY) {
-                log.debug("Update train table row: {} name: {}", row, train.getName());
-            }
-            if (row >= 0 && _table != null) {
-                SwingUtilities.invokeLater(() -> {
+            SwingUtilities.invokeLater(() -> {
+                int row = sysList.indexOf(train);
+                if (row >= 0 && _table != null) {
                     fireTableRowsUpdated(row, row);
                     int viewRow = _table.convertRowIndexToView(row);
                     _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                });
-            }
+                }
+            });
         }
     }
 

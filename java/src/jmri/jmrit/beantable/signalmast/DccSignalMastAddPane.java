@@ -16,7 +16,7 @@ import jmri.util.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring MatrixSignalMast objects.
+ * A pane for configuring DCC SignalMast objects.
  *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
@@ -25,18 +25,59 @@ import org.openide.util.lookup.ServiceProvider;
 public class DccSignalMastAddPane extends SignalMastAddPane {
 
     public DccSignalMastAddPane() {
+        init();
+    }
+
+    final void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // lit/unlit controls
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
-        p.add(allowUnLit);
-        p.setAlignmentX(Component.LEFT_ALIGNMENT);
-        add(p);
-        
+
+        add(unLitOption());
+        add(connectionData());
+
         dccMastScroll = new JScrollPane(dccMastPanel);
         dccMastScroll.setBorder(BorderFactory.createEmptyBorder());
         add(dccMastScroll);
+    }
+
+    JPanel connectionData() {
+        JPanel p = new JPanel();
+
+        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border.setTitle(Bundle.getMessage("DCCMastConnection"));
+        p.setBorder(border);
+
+        p.setLayout(new jmri.util.javaworld.GridLayout2(3, 3));
+
+        p.add(systemPrefixBoxLabel);
+        p.add(systemPrefixBox);
+        p.add(new JLabel());    // Empty 1,3 cell
+
+        p.add(dccAspectAddressLabel);
+        dccAspectAddressField.setText("");
+        dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
+        p.add(dccAspectAddressField);
+        p.add(dccOffSetAddress);
+
+        p.add(new JLabel(Bundle.getMessage("DCCMastPacketSendCount")));
+        packetSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
+        p.add(packetSendCountSpinner);
+        packetSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
+
+        return p;
+    }
+
+    JPanel unLitOption() {
+        JPanel p = new JPanel();
+
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("AllowUnLitLabel"))));
+        p.add(allowUnLit);
+
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCUnlitAspectId"))));
+        unlitIdSpinner.setModel(new SpinnerNumberModel(31, 0, 31, 1));
+        p.add(unlitIdSpinner);
+
+        return p;
     }
 
     /** {@inheritDoc} */
@@ -47,13 +88,17 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     JScrollPane dccMastScroll;
     JPanel dccMastPanel = new JPanel();
+
     JLabel systemPrefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
     JComboBox<String> systemPrefixBox = new JComboBox<>();
+
     JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCMastAddress")));
     JTextField dccAspectAddressField = new JTextField(5);
 
+    JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
+
     JCheckBox allowUnLit = new JCheckBox();
-    JTextField unLitAspectField = new JTextField(5);
+//     JTextField unLitAspectField = new JTextField(5);
 
     LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
 
@@ -61,6 +106,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     SignalSystem sigsys;
     /* IMM Send Count */
     JSpinner packetSendCountSpinner = new JSpinner();
+    JSpinner unlitIdSpinner = new JSpinner();
 
     /**
      * Check if a command station will work for this subtype.
@@ -70,15 +116,15 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     protected boolean usableCommandStation(CommandStation cs) {
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull SignalAppearanceMap map, 
+    public void setAspectNames(@Nonnull SignalAppearanceMap map,
                                @Nonnull SignalSystem sigSystem) {
         log.trace("setAspectNames(...) start");
 
         dccAspect.clear();
-        
+
         Enumeration<String> aspects = map.getAspects();
         sigsys = map.getSignalSystem();
 
@@ -86,15 +132,15 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
             dccAspect.put(aspect, aPanel);
-            log.trace(" in loop, dccAspect: {} ", map.getProperty(aspect, "dccAspect")); 
+            log.trace(" in loop, dccAspect: {} ", map.getProperty(aspect, "dccAspect"));
             aPanel.setAspectId((String) sigSystem.getProperty(aspect, "dccAspect"));
         }
 
         systemPrefixBox.removeAllItems();
-        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        List<CommandStation> connList = InstanceManager.getList(CommandStation.class);
         if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
-                jmri.CommandStation station = connList.get(x);
+                CommandStation station = connList.get(x);
                 if (usableCommandStation(station)) {
                     systemPrefixBox.addItem(station.getUserName());
                 }
@@ -105,27 +151,18 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
         dccMastPanel.removeAll();
 
-        dccMastPanel.add(systemPrefixBoxLabel);
-        dccMastPanel.add(systemPrefixBox);
-
-        dccMastPanel.add(dccAspectAddressLabel);
-        dccAspectAddressField.setText("");
-        dccMastPanel.add(dccAspectAddressField);
-
-        dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastPacketSendCount")));
-        packetSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
-        packetSendCountSpinner.setPreferredSize(new JTextField(5).getPreferredSize());
-        dccMastPanel.add(packetSendCountSpinner);
-        packetSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
-
         for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
             log.trace("   aspect: {}", entry.getKey());
             dccMastPanel.add(entry.getValue().getPanel());
         }
 
+        if (dccAspect.size() % 2 > 0) {
+            dccMastPanel.add(new JLabel());     // finish odd number aspect list
+        }
+
         dccMastPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCMastCopyAspectId"))));
         dccMastPanel.add(copyFromMastSelection());
-        
+
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 2)); // 0 means enough
         dccMastPanel.revalidate();
         dccMastScroll.revalidate();
@@ -136,21 +173,21 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public boolean canHandleMast(@Nonnull SignalMast mast) {
-        // because that mast can be subtyped by something 
+        // because that mast can be subtyped by something
         // completely different, we text for exact here.
         return mast.getClass().getCanonicalName().equals(DccSignalMast.class.getCanonicalName());
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setMast(SignalMast mast) { 
+    public void setMast(SignalMast mast) {
         log.debug("setMast({}) start", mast);
-        if (mast == null) { 
-            currentMast = null; 
+        if (mast == null) {
+            currentMast = null;
             log.debug("setMast() end early with null");
-            return; 
+            return;
         }
-        
+
         if (! (mast instanceof DccSignalMast) ) {
             log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
             log.debug("setMast({}) end early: wrong type", mast);
@@ -171,10 +208,10 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                 }
             }
         }
-        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        List<CommandStation> connList = InstanceManager.getList(CommandStation.class);
         if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
-                jmri.CommandStation station = connList.get(x);
+                CommandStation station = connList.get(x);
                 if (usableCommandStation(station)) {
                     systemPrefixBox.addItem(station.getUserName());
                 }
@@ -183,15 +220,19 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             systemPrefixBox.addItem("None");
         }
         dccAspectAddressField.setText("" + currentMast.getDccSignalMastAddress());
+        dccOffSetAddress.setSelected(currentMast.useAddressOffSet());
         systemPrefixBox.setSelectedItem(currentMast.getCommandStation().getUserName());
 
         systemPrefixBoxLabel.setEnabled(false);
         systemPrefixBox.setEnabled(false);
         dccAspectAddressLabel.setEnabled(false);
         dccAspectAddressField.setEnabled(false);
+
+        allowUnLit.setSelected(currentMast.allowUnLit());
         if (currentMast.allowUnLit()) {
-            unLitAspectField.setText("" + currentMast.getUnlitId());
+            unlitIdSpinner.setValue(currentMast.getUnlitId());
         }
+
         // set up DCC IMM send count
         packetSendCountSpinner.setValue(currentMast.getDccSignalMastPacketSendCount());
         log.debug("setMast({}) end", mast);
@@ -212,7 +253,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         }
         return true;
     }
-    
+
     /**
      * Get the first part of the system name
      * for the specific mast type.
@@ -222,7 +263,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         return "F$dsm:";
     }
 
-    /** 
+    /**
      * Create a mast of the specific subtype.
      * @param name A valid subtype name
      * @return A SignalMast of that subtype
@@ -230,7 +271,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     protected DccSignalMast constructMast(@Nonnull String name) {
         return new DccSignalMast(name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean createMast(@Nonnull
@@ -238,7 +279,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                     String mastname, @Nonnull
                             String username) {
         log.debug("createMast({},{} start)", sigsysname, mastname);
-        
+
         // are we already editing?  If no, create a new one.
         if (currentMast == null) {
             log.trace("Creating new mast");
@@ -258,7 +299,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                     + ":" + mastname.substring(11, mastname.length() - 4);
             name += "(" + dccAspectAddressField.getText() + ")";
             currentMast = constructMast(name);
-            InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
+            InstanceManager.getDefault(SignalMastManager.class).register(currentMast);
         }
 
         for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
@@ -270,13 +311,14 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                 currentMast.setAspectEnabled(entry.getKey());
             }
         }
-        if (!username.equals("")) {
+        if (!username.isEmpty()) {
             currentMast.setUserName(username);
         }
 
+        currentMast.useAddressOffSet(dccOffSetAddress.isSelected());
         currentMast.setAllowUnLit(allowUnLit.isSelected());
         if (allowUnLit.isSelected()) {
-            currentMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
+            currentMast.setUnlitId((Integer) unlitIdSpinner.getValue());
         }
 
         int sendCount = (Integer) packetSendCountSpinner.getValue(); // from a JSpinner with 1 set as minimum 4 max
@@ -285,6 +327,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         log.debug("createMast({},{} end)", sigsysname, mastname);
         return true;
    }
+
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
     static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
@@ -301,7 +344,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     }
 
     private boolean validateDCCAddress() {
-        if (dccAspectAddressField.getText().equals("")) {
+        if (dccAspectAddressField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressBlank"));
             return false;
         }
@@ -328,7 +371,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     @Nonnull JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
-        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
+        for (SignalMast mast : InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof DccSignalMast){
                 mastSelect.addItem(mast.getDisplayName());
             }
@@ -338,15 +381,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         } else {
             mastSelect.insertItemAt("", 0);
             mastSelect.setSelectedIndex(0);
-            mastSelect.addActionListener(new ActionListener() {
+            mastSelect.addActionListener((ActionEvent e) -> {
                 @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
-                    String sourceMast = (String) eb.getSelectedItem();
-                    if (sourceMast != null && !sourceMast.equals("")) {
-                        copyFromAnotherDCCMastAspect(sourceMast);
-                    }
+                JComboBox<String> eb = (JComboBox<String>) e.getSource();
+                String sourceMast = (String) eb.getSelectedItem();
+                if (sourceMast != null && !sourceMast.isEmpty()) {
+                    copyFromAnotherDCCMastAspect(sourceMast);
                 }
             });
         }
@@ -358,7 +398,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
      * @param strMast User or system name of mast to copy from
      */
     void copyFromAnotherDCCMastAspect(@Nonnull String strMast) {
-        DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(SignalMastManager.class).getNamedBean(strMast);
         if (mast == null) {
             log.error("can't copy from another mast because {} doesn't exist", strMast);
             return;
@@ -413,7 +453,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                 String value = aspectId.getText();
                 return Integer.parseInt(value);
 
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 log.error("failed to convert DCC number");
             }
             return -1;
@@ -444,7 +484,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                 aspectId.addFocusListener(new FocusListener() {
                     @Override
                     public void focusLost(FocusEvent e) {
-                        if (aspectId.getText().equals("")) {
+                        if (aspectId.getText().isEmpty()) {
                             return;
                         }
                         if (!validateAspectId(aspectId.getText())) {
@@ -457,11 +497,8 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                     }
 
                 });
-                disabledCheck.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setAspectDisabled(disabledCheck.isSelected());
-                    }
+                disabledCheck.addActionListener((ActionEvent e) -> {
+                    setAspectDisabled(disabledCheck.isSelected());
                 });
 
             }

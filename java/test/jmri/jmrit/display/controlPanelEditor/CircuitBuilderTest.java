@@ -2,10 +2,13 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -179,12 +182,10 @@ public class CircuitBuilderTest {
         getCPEandCB();
         cb.editCircuitPaths("editCircuitPathsItem", false);
 
-//        JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
-//        JDialogOperator jdo = new JDialogOperator(frame, Bundle.getMessage("NeedDataTitle"));
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NeedDataTitle"));
         JButtonOperator ok = new JButtonOperator(jdo, "OK");
         ok.push();
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
     }
 
     void getCPEandCB() {
@@ -193,13 +194,13 @@ public class CircuitBuilderTest {
         try {
             InstanceManager.getDefault(ConfigureManager.class).load(f);
         } catch(JmriException je) {
-            log.error("CircuitBuilderTest can't load CircuitBuilderTester.xml {}", je);
+            log.error("CircuitBuilderTest can't load CircuitBuilderTester.xml;", je);
         }
         cpe = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("CircuitBuilderTest Editor");
         Assert.assertNotNull("exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("exists", cb );
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
     }
 
     @BeforeEach
@@ -217,6 +218,14 @@ public class CircuitBuilderTest {
             cpe.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<Runnable> rlist = sm.getRunnables();
+            if (rlist.size() == 1 && rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                sm.deregister((ShutDownTask)rlist.get(0));
+            }
+        }
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(CircuitBuilderTest.class);

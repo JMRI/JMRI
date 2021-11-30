@@ -105,7 +105,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonDownload"));
             loadButton.setEnabled(false);
             loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);

@@ -11,6 +11,9 @@ import org.junit.jupiter.api.*;
  */
 public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase{
 
+    private TamsTrafficController tc;
+    private TamsSystemConnectionMemo memo;
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",tm);
@@ -20,14 +23,19 @@ public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        tc = new TamsInterfaceScaffold();
+        memo = new TamsSystemConnectionMemo(tc);
         tm = new TamsThrottleManager(memo);
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tm.dispose();
+        tm = null;
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
     }
 

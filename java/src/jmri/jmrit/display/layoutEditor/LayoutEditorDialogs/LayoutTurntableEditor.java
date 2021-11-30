@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * MVC Editor component for PositionablePoint objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutTurntableEditor extends LayoutTrackEditor {
 
@@ -46,7 +46,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private final NamedBeanComboBox<Block> editLayoutTurntableBlockNameComboBox = new NamedBeanComboBox<>(
              InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLayoutTurntableSegmentEditBlockButton;
-     
+
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
     private JCheckBox editLayoutTurntableDccControlledCheckBox;
@@ -122,7 +122,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
              editLayoutTurntableSegmentEditBlockButton.addActionListener(this::editLayoutTurntableEditBlockPressed);
              editLayoutTurntableSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
              headerPane.add(panel2a);
-             
+
             // setup add ray track button
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
@@ -148,6 +148,16 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             JScrollPane rayScrollPane = new JScrollPane(editLayoutTurntableRayPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             contentPane.add(rayScrollPane, BorderLayout.CENTER);
         }
+
+        editLayoutTurntableBlockNameComboBox.setSelectedIndex(-1);
+        LayoutBlock lb = layoutTurntable.getLayoutBlock();
+        if (lb != null) {
+            Block blk = lb.getBlock();
+            if (blk != null) {
+                editLayoutTurntableBlockNameComboBox.setSelectedItem(blk);
+            }
+        }
+
         editLayoutTurntableDccControlledCheckBox.setSelected(layoutTurntable.isTurnoutControlled());
         editLayoutTurntableDccControlledCheckBox.addActionListener((ActionEvent e) -> {
             layoutTurntable.setTurnoutControlled(editLayoutTurntableDccControlledCheckBox.isSelected());
@@ -443,7 +453,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             rayTurnoutStateComboBox.setVisible(vis);
             rayTurnoutStateLabel.setVisible(vis);
         }
-    }    
+    }
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableEditor.class);

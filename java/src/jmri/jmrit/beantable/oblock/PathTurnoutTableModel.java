@@ -107,7 +107,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             case TURNOUT_NAME_COL:
                 return Bundle.getMessage("LabelItemName");
             case STATE_COL:
-                return Bundle.getMessage("ColumnState"); // state
+                return Bundle.getMessage("TurnoutState"); // state
             default:
                 // fall through
                 break;

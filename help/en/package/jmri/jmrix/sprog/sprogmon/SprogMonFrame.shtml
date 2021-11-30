@@ -1,33 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SPROG Monitor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send SPROG message monitor">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: SPROG Command Monitor</h1>
-      <p>The SPROG Command Monitor window provides
-      a way to monitor SPROG commands sent and received.</p>
 
-      <img src="../images/SprogMonTool.png" width="693" height="191">
-
-      <p>This is the
-      package/jmri/jmrix/sprog/console/SprogConsoleFrame page.</p>
-
+      <p>The SPROG Command Monitor window provides a way to monitor SPROG commands sent and
+      received.</p>
+      <img src="../images/SprogMonTool.png" width="693" height="191" alt="sprog monitor window">
+      <p>This is the package/jmri/jmrix/sprog/console/SprogConsoleFrame page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

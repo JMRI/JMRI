@@ -1,179 +1,240 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: USS CTC Tools</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: USS CTC Tools</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h2>JMRI: Utility USS CTC Tools</h2>
 
-      <h2>JMRI: Utils USS CTC Tools</h2>
-      
-      <p class="example">
-      This is the original implementation of CTC and provides capabilities that are enabled using scripting.
-      See also <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">the newer CTC implementation</a> that provides
-      a GUI editor to configure the CTC rules and a run-time to implement CTC logic. It also builds a skeleton
-      Panel Editor CTC panel with the turnout levers/indicators, signal levers/indicators, code button, etc.,
-      and a minimal track plan.
-      </p>
+      <p class="example">This is the original implementation of CTC and provides capabilities that
+      are enabled using scripting. See also <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">the
+      newer CTC implementation</a> that provides a GUI editor to configure the CTC rules and a
+      run-time to implement CTC logic. It also builds a skeleton Panel Editor CTC panel with the
+      turnout levers/indicators, signal levers/indicators, code button, etc., and a minimal track
+      plan.</p>
 
-      <p>JMRI contains tools to help in the automation of USS CTC
-      Panels. These can be used for either screen-based Panels, or
-      to drive a physical panel with real levers and lights.</p>
-            
+      <p>JMRI contains tools to help in the automation of USS CTC Panels. These can be used for
+      either screen-based Panels, or to drive a physical panel with real levers and lights.</p>
+
       <h3>Script-based Tools<span class="since">Since JMRI 4.8</span></h3>
-      <p>These tools are very powerful, but currently can only be configured via a script.
-      <br>
-      For information how to do this, see:
+
+      <p>These tools are very powerful, but currently can only be configured via a script.<br>
+      For information how to do this, see:</p>
+
       <ul>
-      <li>The <a href="https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample script
-      <li>The <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation on
-        the various components</a>
+        <li>The <a href=
+        "https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample
+        script and it's associated
+        <a href=
+        "https://jmri.org/jython/ctc/TwoColumnMachine.xml">jython/ctc/TwoColumnMachine.xml</a>
+        panel file.
+        </li>
+
+        <li>The <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation
+        on the various components</a>
+        </li>
       </ul>
-      
       The available tools are:
       <dl>
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a></dt>
-                            <dd>Implements the code line between the CTC machine and the field.
-                            Can use a turnout output to tell e.g. a lamp to light or relays to make noise.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a></dt>  
-                            <dd>Corresponds to a single station on the code line, usually
-                            a single column on the CTC machine and all the items in the field that
-                            are connected to it.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a></dt>
-                            <dd>One per section, this defines the connection to the code button (a sensor input)
-                            and the code lamp (a turnout output) on the panel.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout Section</a></dt>
-                            <dd>Controls a single turnout in the field. You configure it with that turnout's name
-                            along with sensor inputs for the lever on the panel, and turnout outputs for the
-                            indicator lamps. Can optionally take Lock objects to add prototypical locking.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead Section</a></dt>
-                            <dd>Controls the signal heads around a single OS in the field.
-                            You configure it with lists of left-going and right-going heads
-                            which it can hold and release, 
-                            along with sensor inputs for the lever on the panel, and turnout outputs for the
-                            indicator lamps. Can optionally take Lock objects to add prototypical locking.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track Circuit Section</a></dt>
-                            <dd>This drives a track occupancy indicator lamp (an output) on the panel from a 
-                                occupancy sensor in the field (a sensor input). Optionally, 
-                                can ring a bell when goes occupied or unoccupied.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer Call Section</a></dt>
-                            <dd>This drives a maintainer call lamp (an output) in the field from a 
-                                lever or switch on the central panel (a sensor input).
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy Lock</a></dt>
-                            <dd>When added to a Turnout or SignalHead section, this prevents changes
-                            while the OS section (defined into the Lock) is occupied.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a></dt>
-                            <dd>When added to a Turnout section, this prevents changes
-                            while the OS section has a route cleared through the Turnout.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a></dt>
-                            <dd>When added to a Turnout section, this prevents changes
-                            while the OS section has signals running time.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic Lock</a></dt>
-                            <dd>Locks against signals being cleared in opposite directions onto
-                            a single segment of track.  Can be configured with turnout settings
-                            (BeanSetting objects) to allow e.g. signals at opposite ends of a town
-                            to clear when one turnout is set ot the main and the other to the siding.
-      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout Lock</a></dt>
-                            <dd>A bit of a misnomer, because this refers to locking based on the state of a JMRI Turnout,  
-                            which should be considered a generalized output.  Can be used to e.g. lock 
-                            sections when a Call On state (on an internal turnout that represents the state)
-                            has been set (by e.g. a Maintainer Call section used to set that JMRI Turnout
-                            in the field).
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a>
+        </dt>
+
+        <dd>Implements the code line between the CTC machine and the field. Can use a turnout
+        output to tell e.g. a lamp to light or relays to make noise.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a>
+        </dt>
+
+        <dd>Corresponds to a single station on the code line, usually a single column on the CTC
+        machine and all the items in the field that are connected to it.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a>
+        </dt>
+
+        <dd>One per section, this defines the connection to the code button (a sensor input) and
+        the code lamp (a turnout output) on the panel.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout
+          Section</a>
+        </dt>
+
+        <dd>Controls a single turnout in the field. You configure it with that turnout's name along
+        with sensor inputs for the lever on the panel, and turnout outputs for the indicator lamps.
+        Can optionally take Lock objects to add prototypical locking.</dd>
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead
+          Section</a>
+        </dt>
+
+        <dd>Controls the signal heads around a single OS in the field. You configure it with lists
+        of left-going and right-going heads which it can hold and release, along with sensor inputs
+        for the lever on the panel, and turnout outputs for the indicator lamps. Can optionally
+        take Lock objects to add prototypical locking.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track
+          Circuit Section</a>
+        </dt>
+
+        <dd>This drives a track occupancy indicator lamp (an output) on the panel from a occupancy
+        sensor in the field (a sensor input). Optionally, can ring a bell when goes occupied or
+        unoccupied.</dd>
+
+        <dt>
+          <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer
+          Call Section</a>
+        </dt>
+
+        <dd>This drives a maintainer call lamp (an output) in the field from a lever or switch on
+        the central panel (a sensor input).</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy
+          Lock</a>
+        </dt>
+
+        <dd>When added to a Turnout or SignalHead section, this prevents changes while the OS
+        section (defined into the Lock) is occupied.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a>
+        </dt>
+
+        <dd>When added to a Turnout section, this prevents changes while the OS section has a route
+        cleared through the Turnout.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a>
+        </dt>
+
+        <dd>When added to a Turnout section, this prevents changes while the OS section has signals
+        running time.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic
+          Lock</a>
+        </dt>
+
+        <dd>Locks against signals being cleared in opposite directions onto a single segment of
+        track. Can be configured with turnout settings (BeanSetting objects) to allow e.g. signals
+        at opposite ends of a town to clear when one turnout is set ot the main and the other to
+        the siding.</dd>
+
+        <dt>
+          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout
+          Lock</a>
+        </dt>
+
+        <dd>A bit of a misnomer, because this refers to locking based on the state of a JMRI
+        Turnout, which should be considered a generalized output. Can be used to e.g. lock sections
+        when a Call On state (on an internal turnout that represents the state) has been set (by
+        e.g. a Maintainer Call section used to set that JMRI Turnout in the field).</dd>
       </dl>
-<!-- 
-      (The following pages exist, but aren't right for the post-4.7.4 content)
+
+      There's a separate page describing the
+      <a href="Conventions.shtml">naming conventions</a> used in the example, in case you find that
+      these will save you some work on the setup.
+
+      <p>These tools log information to several JMRI Memory objects, which in turn can be placed
+      onto panels as MemoryIcons to show e.g. which lock is preventing an operation.
+      Prototype CTC machines don't have these, of course, but they're very useful for
+      model railroad dispatchers.</p>
+
       <dl>
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
-        Turnout Lever</a></dt>
+        <dt>IMUSS CTC:CODELINE:1:LOG</dt>
 
-        <dd>Controls a Turnout from a lever on the Panel, along
-        with the two indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
-        Signal Lever</a></dt>
-
-        <dd>Controls a set of Signals from a lever on the Panel,
-        along with the three indicator lights.</dd>
-
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code
-        Button</a></dt>
-
-        <dd>Implements the code button and code lamp.</dd>
-      </dl>
- -->
-
-      There's a page with a worked example (not yet present), 
-      and a separate page describing the 
-      <a href="Conventions.shtml">naming conventions</a> used in the example, in case
-      you find that these will save you some work on the setup.
-      
-      <p>
-      These tools log information to several JMRI Memory objects, which
-      in turn can be placed onto panels as MemoryIcons.
-      <dl>
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
         <dd>What the code line is doing</dd>
 
-        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
-        <dd>Whether time is running</dd>
+        <dt>IMUSS CTC:SIGNAL LOCK:1:TIME</dt>
 
-        <dt>IMUSS CTC:LOCK:1:LOG</dt>
-        <dd>Whether any locks are showing as locked</dd>
-        
+        <dd>Activity associated with the signals</dd>
+
+        <dt>IMUSS CTC:TURNOUT LOCK:1:LOG</dt>
+
+        <dd>Activity associated with turnout locks</dd>
       </dl>
-      
-      The "1" in those can change if there's more than one set of objects, 
-      i.e. if more than one code line is being modelled.
-      
+      The "1" in those can change if there's more than one set of objects, i.e. if more than one
+      code line is being modelled.
+      <p>These tools also create sensors that indicate whether a particular
+      station is locked due to running time or not. They're called
+      ISUSS CTC:SIGNALSECTION:1:RUNNINGTIME:1:, ISUSS CTC:SIGNALSECTION:2:RUNNINGTIME:1:, etc
+      and can be placed on panels to display that the station is running time.
+      </p>
+      <p>Note that the example panel uses one set of
+      <a href="https://www.jmri.org/resources/icons/USSpanels/">display icons</a>.
+      JMRI has other sets (See
+      <a href="https://www.jmri.org/resources/icons/CTCpanels/">these</a> and others)
+      that let you make up other styles and sizes, and you can always make up your own.
+      For examples of creating CTC panels, please see the
+      <a href="https://www.jmri.org/community/examples/Gallery.shtml">gallery page</a>.
+      Often the best way to create
+      the background is to draw the entire thing as a single background image using
+      graphics tools on your computer.
+      (There's a
+      <a href="https://groups.io/g/CMRI-Users/message/9383">nice summary of CTC lamp colors</a>
+      by Mike Burgett)</p>
+
+      <p>There's also another set of
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC tools</a>
+      for building CTC controls in a more graphical way.</p>
+
+      <h4>Model Railroad Compromizes</h4>
+
+      Activity on a model railroad is typically much faster than on the prototype railroad.
+      It can be very frustrating to a dispatcher, particularly one who doesn't use the
+      panel every day, to have the panel's indicators and operations falling behind the
+      railroad.  To help with this, these tools allow two compromises.  See the
+      sample scripts for examples of how to tune these.
+      <ol>
+        <li>You can adjust the timing of the various operations. By default, they're
+            somewhat faster than the prototype. You can make them faster or slower.
+        <li>On the prototype, indicator lamps go off when the code button is pushed and
+            only come back on when an indication is received back. By default, these
+            tools will keep the indicators lit when no change has been requested.  This
+            makes it easier for the dispatcher to consider their next move while
+            actions are occurring.
+      </ol>
       <h3>Standalone Tools</h3>
-
-      These can be created from the USS menu under Tools in 
-      JMRI applications. They work by creating Logix and/or
-      Routes that implement the desired functionality.
-      You could do that by hand, of course, but these
-      are meant as a simplification.
-      
+      These can be created from the USS menu under Tools in JMRI applications. They work by
+      creating Logix and/or Routes that implement the desired functionality. You could do that by
+      hand, of course, but these are meant as a simplification.
       <dl>
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower</a></dt>
+        <dt>
+          <a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower</a>
+        </dt>
 
-        <dd>Slaves an output Turnout device to follow the state of
-        an input Sensor device. This could, for example, make a
-        layout turnout follow a fascia switch connected to a
+        <dd>Slaves an output Turnout device to follow the state of an input Sensor device. This
+        could, for example, make a layout turnout follow a fascia switch connected to a
         Sensor.</dd>
 
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">
-        OS Indicator</a></dt>
+        <dt>
+          <a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator</a>
+        </dt>
 
-        <dd>Drives the occupancy indicator lamps on the Panel. This
-        takes input from a Sensor to show the track section is
-        occupied, and also optionally can light the indicator if
-        the section has been unlocked.</dd>
-
+        <dd>Drives the occupancy indicator lamps on the Panel. This takes input from a Sensor to
+        show the track section is occupied, and also optionally can light the indicator if the
+        section has been unlocked.</dd>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

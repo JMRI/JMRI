@@ -1,90 +1,88 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Decoder - Decoder Information</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Decoder - Decoder Information</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Decoder Information</h2>
-      <p>The JMRI project has collected a large amount of
-      information about DCC decoders, which it makes publicly
-      available in several ways. These are described on this page.</p>
+
+      <p>The JMRI project has collected a large amount of information about DCC decoders, which it
+      makes publicly available in several ways. These are described on this page.</p>
 
       <h2>Access to the information via the web</h2>
-      <p>Web pages are automatically created from the DecoderPro
-      configuration files as part of each release. These contain:</p>
+
+      <p>Web pages are automatically created from the DecoderPro configuration files as part of
+      each release. These contain:</p>
 
       <ul>
-        <li><a href="../../xml/XSLT/pages/DecoderId.html">Decoder
-        identification CV values</a> used by DecoderPro to identify
-        the manufacturer and type of an unknown decoder.</li>
+        <li>
+          <a href="../../xml/XSLT/pages/DecoderId.html">Decoder identification CV values</a> used
+          by DecoderPro to identify the manufacturer and type of an unknown decoder.
+        </li>
 
-        <li><a href="../../xml/XSLT/pages/decoderIndex.html">Index
-        to individual decoder pages</a>, listed by manufacturer.
-        This provides a one-page summary of the characteristics and
-        CV contents of the decoders.</li>
+        <li>
+          <a href="../../xml/XSLT/pages/decoderIndex.html">Index to individual decoder pages</a>,
+          listed by manufacturer. This provides a one-page summary of the characteristics and CV
+          contents of the decoders.
+        </li>
 
         <li>Selection guides listing <a href=
-        "../../xml/XSLT/pages/SelectionGuide.html#size">decoder
-        size</a>, and by <a href=
-        "../../xml/XSLT/pages/SelectionGuide.html#electrical">decoder
-        electrical characteristics</a>.</li>
+        "../../xml/XSLT/pages/SelectionGuide.html#size">decoder size</a>, and by <a href=
+        "../../xml/XSLT/pages/SelectionGuide.html#electrical">decoder electrical
+        characteristics</a>.
+        </li>
 
-        <li><a href="../../xml/XSLT/pages/CVSummary.html">Combined
-        summary of CVs for all decoders</a>.<br>Note that this is a
-        <i>very</i> large page!</li>
+        <li>
+          <a href="../../xml/XSLT/pages/CVSummary.html">Combined summary of CVs for all
+          decoders</a>.<br>
+          Note that this is a <em>very</em> large page!
+        </li>
       </ul>
 
       <h2>Information in Comma-Separated-Values (CSV) format</h2>
-      <p>To make it easier to import into a spreadsheet or
-      other program, these are also made available as files in
-      Comma-Separated-Values (CSV) format.</p>
+
+      <p>To make it easier to import into a spreadsheet or other program, these are also made
+      available as files in Comma-Separated-Values (CSV) format.</p>
 
       <ul>
-        <li><a href=
-        "../../xml/XSLT/pages/decodersizes.csv">decodersizes.csv</a>
-        Physical size for each defined decoder</li>
+        <li>
+          <a href="../../xml/XSLT/pages/decodersizes.csv">decodersizes.csv</a> Physical size for
+          each defined decoder
+        </li>
 
-        <li><a href=
-        "../../xml/XSLT/pages/cvsummary.csv">cvsummary.csv</a> CVs
-        present in each decoder</li>
+        <li>
+          <a href="../../xml/XSLT/pages/cvsummary.csv">cvsummary.csv</a> CVs present in each
+          decoder
+        </li>
 
-        <li><a href=
-        "../../xml/XSLT/pages/decoderpower.csv">decoderpower.csv</a>
-        Power limits and connector by decoder</li>
+        <li>
+          <a href="../../xml/XSLT/pages/decoderpower.csv">decoderpower.csv</a> Power limits and
+          connector by decoder
+        </li>
       </ul>
 
       <h2>XML files</h2>
-      <p>The definitive version of the data is in
-      XML files. These can be obtained from any JMRI distribution,
-      or via the web at <a href=
-      "https://jmri.org/xml">https://jmri.org/xml</a>.</p>
+
+      <p>The definitive version of the data is in XML files. These can be obtained from any JMRI
+      distribution, or via the web at <a href="https://jmri.org/xml">https://jmri.org/xml</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- closes #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

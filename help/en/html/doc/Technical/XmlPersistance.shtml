@@ -1,60 +1,48 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
 
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: XML Persistance</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code xml persistance">
+  <meta name="keywords" content="JMRI technical code xml persistance">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>JMRI Code: XML Persistance</h1>
 
-    <h1>JMRI Code: XML Persistance</h1>
+      <p>JMRI uses XML for persisting internal structures, especially when storing the preferences
+      and panel files.</p>
 
-      <p>JMRI uses XML for persisting internal structures,
-      especially when storing the preferences and panel files.</p>
+      <p>XML persistance is done via some explicitly written code. Basically, certain classes
+      register themselves with a instance of the "<a href=
+      "https://jmri.org/JavaDoc/doc/jmri/ConfigureManager.html">ConfigureManager</a>". Normally,
+      that will be the implementation that stores to and loads from XML files: <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/ConfigXmlManager.html">jmri.configurexml.ConfigXmlManager</a>.
+      When it's time to store, the ConfigureXmlManager is told to do it. It goes through the
+      registered objects and finds the persisting class responsible for storing the object. E.g.
+      class a.b.Foo will have the class a.b.configurexml.FooXml located. If that class is found,
+      it's told to store the Foo object, and it adds Xml content to a JDOM document to do that. If
+      it's not located, an error message is issued.</p>
 
-      <p>XML persistance is done via some explicitly written code.
-      Basically, certain classes register themselves with a
-      instance of the 
-      "<a href="https://jmri.org/JavaDoc/doc/jmri/ConfigureManager.html">ConfigureManager</a>". 
-      Normally, that will be the implementation that stores to and loads from
-      XML files: 
-      <a href="https://jmri.org/JavaDoc/doc/jmri/configurexml/ConfigXmlManager.html">jmri.configurexml.ConfigXmlManager</a>.
-      When it's time
-      to store, the ConfigureXmlManager is told to do it. It goes
-      through the registered objects and finds the persisting class
-      responsible for storing the object. E.g. class a.b.Foo will
-      have the class a.b.configurexml.FooXml located. If that class
-      is found, it's told to store the Foo object, and it adds Xml
-      content to a JDOM document to do that. If it's not located,
-      an error message is issued.</p>
+      <p>On load, an XML file is read by the manager. Each element is examined for a "class"
+      attribute. If found, that class is loaded and handed the element to process. Etc.</p>
 
-      <p>On load, an XML file is read by the manager. Each element
-      is examined for a "class" attribute. If found, that class is
-      loaded and handed the element to process. Etc.</p>
+      <p>Although the basic structure is cleanly separated, the code with the *Xml classes tends to
+      have a lot of replication and special case. To keep that all sane, we do a lot of unit and CI
+      testing on it.</p>
 
-      <p>Although the basic structure is cleanly separated, the
-      code with the *Xml classes tends to have a lot of replication and 
-      special case.  To keep that all sane, we do a lot of 
-      unit and CI testing on it.</p>
+      <h3 id="ex">Example</h3>
 
-      <h3><a id="ex" name="ex">Example</a></h3>
       <p>A LightManager knows about Lights.<br>
-      There are lots of concrete classes implementing the Light
-      interface:</p>
+      There are lots of concrete classes implementing the Light interface:</p>
 
       <ul>
         <li>jmri.jmrix.loconet.LnLight</li>
@@ -62,11 +50,9 @@
         <li>jmri.jmrix.cmri.serial.SerialLight</li>
 
         <li>jmri.jmrix.powerline.SerialLight</li>
-      </ul>These have their own internal information, which is not
-      always the same.
-
-      <p>There are also multiple LightManager concrete classes to
-      handle them:</p>
+      </ul>
+      These have their own internal information, which is not always the same.
+      <p>There are also multiple LightManager concrete classes to handle them:</p>
 
       <ul>
         <li>jmri.jmrix.loconet.LnLightManager</li>
@@ -76,36 +62,30 @@
         <li>jmri.jmrix.powerline.SerialLightManager</li>
       </ul>
 
-      <p>Each type of manager is stored and loaded via a
-      persistance class, who is found by looking the a class with
-      "Xml" appended to the name, in a "configurexml" direct
-      subpackage:</p>
+      <p>Each type of manager is stored and loaded via a persistance class, who is found by looking
+      the a class with "Xml" appended to the name, in a "configurexml" direct subpackage:</p>
 
       <ul>
         <li>jmri.jmrix.loconet.configurexml.LnLightManagerXml</li>
 
-        <li>
-        jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml</li>
+        <li>jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml</li>
 
-        <li>
-        jmri.jmrix.powerline.configurexml.SerialLightManagerXml</li>
+        <li>jmri.jmrix.powerline.configurexml.SerialLightManagerXml</li>
       </ul>
 
-      <p>In the case of Light concrete classes, the code for
-      persisting the managers directly stores and loads the
-      individual lights. This is because (so far) a given manager
-      only has one type of Light (e.g. LnLightManager only has to
-      worry about LnLight). In cases where this is not true, e.g.
-      SignalHeads which have multiple classes, there are
-      persistance classes for the individual objects in addition to
-      the manager.</p>
+      <p>In the case of Light concrete classes, the code for persisting the managers directly
+      stores and loads the individual lights. This is because (so far) a given manager only has one
+      type of Light (e.g. LnLightManager only has to worry about LnLight). In cases where this is
+      not true, e.g. SignalHeads which have multiple classes, there are persistance classes for the
+      individual objects in addition to the manager.</p>
 
-      <h3><a id="add" name="add">Adding More Information to a Class</a></h3>
-      <p>If you want to
-      store more state information, find the persisting class and
-      add code to it to create and read attributes or elements.<br>
-      Perhaps the easiest way to do this is to create a sample
-      panel file with the objects you want to store in it:</p>
+      <h3 id="add">Adding More Information to a Class</h3>
+
+      <p>If you want to store more state information, find the persisting class and add code to it
+      to create and read attributes or elements.<br>
+      Perhaps the easiest way to do this is to create a sample panel file with the objects you want
+      to store in it:</p>
+
       <pre>
   &lt;sensors class="jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml" /&gt;
     &lt;sensor systemName="CS3001" /&gt;
@@ -120,152 +100,138 @@
     &lt;/signalhead&gt;
   &lt;/signalheads&gt;
 </pre>
-
-      <p>Note the "class" attributes. They give the fully-qualified
-      name of the class that can load or store that particular
-      element. In the case of Sensors, we see there are two
-      managers in use: One for C/MRI, and one for internal Sensors.
-      For SignalHeads, there's only one manager,
+      <p>Note the "class" attributes. They give the fully-qualified name of the class that can load
+      or store that particular element. In the case of Sensors, we see there are two managers in
+      use: One for C/MRI, and one for internal Sensors. For SignalHeads, there's only one manager,
       jmri.configurexml.AbstractSignalHeadManager persisted by
-      jmri.configurexml.AbstractSignalHeadManager, but each
-      particular SignalHead implementing class has it's own
-      persisting class.</p>
+      jmri.configurexml.AbstractSignalHeadManager, but each particular SignalHead implementing
+      class has it's own persisting class.</p>
 
       <p>To e.g. add more data to a sensor object, the
-      jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
-      and jmri.managers.configurexml.InternalSensorManagerXml
-      classes would have to be modified. This is where all the code
-      to transfer to and from the stored form should go; don't add
-      code in e.g. primary classes SerialSensorManager and InternalSensorManager
-      to translate to or from the stored form. This keeps the main 
-      classes internal and flexible, allowing the persistance to be 
-      worked on (and tested and debugged!) separately.</p>
-      
+      jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml and
+      jmri.managers.configurexml.InternalSensorManagerXml classes would have to be modified. This
+      is where all the code to transfer to and from the stored form should go; don't add code in
+      e.g. primary classes SerialSensorManager and InternalSensorManager to translate to or from
+      the stored form. This keeps the main classes internal and flexible, allowing the persistance
+      to be worked on (and tested and debugged!) separately.</p>
+
       <p>Boolean values should be stored as the strings "true" and "false".</p>
-      
-      <p>The 
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeBooleanValue-org.jdom2.Element-java.lang.String-boolean-"><code>getAttributeBooleanValue</code></a>, 
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeIntegerValue-org.jdom2.Element-java.lang.String-int-"><code>getAttributeIntValue</code></a>, and 
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeDoubleValue-org.jdom2.Element-java.lang.String-double"><code>getAttributeIntegerValue</code></a>
-      methods provide a simple way of parsing input and handling errors.
-      </p>
-      
-      <p>Although much of the early code stored information in attributes, 
-      consider putting the data being stored in elements instead.  This 
-      makes for simpler XML Schema and XSLT definitions, and the structured nature can 
-      be easier for humans to read.</p>
 
-      <p>If you do add new attributes or elements, don't forget to
-      update the format definition, see below.</p>
+      <p>The <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeBooleanValue-org.jdom2.Element-java.lang.String-boolean-">
+      <code>getAttributeBooleanValue</code></a>, <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeIntegerValue-org.jdom2.Element-java.lang.String-int-">
+      <code>getAttributeIntValue</code></a>, and <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeDoubleValue-org.jdom2.Element-java.lang.String-double">
+      <code>getAttributeIntegerValue</code></a> methods provide a simple way of parsing input and
+      handling errors.</p>
 
-      <p>Note that in some cases, there's an inheritance
-      relationship amoung the persisting classes that can help. For
-      example, the LocoNet <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">
-      LnSensorManagerXml</a> class inherits from <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">
-      jmri.configurexml.AbstractSensorManagerConfigXML</a>, which
-      does almost all the work of storing and loading sensors.</p>
-      
-      
-      <h3><a id="errors" name="errors">Handling Errors</a></h3>
-      
-      If theres a parsing error, exception, etc, it should be reported
-      via the ErrorHandler.  This accumulates reports and presents them
-      (in a almost-useful way) to the user when appropriate.
-      <p>
-      For an example of how to do that, see the <code>getAttributeBooleanValue</code>
-      method.
-      
-      <h3><a id="enum" name="enum">Persisting enum values</a></h3>
-      
-    The "EnumIO" tool built into AbstractXmlAdapter that reads and writes enums via the names of their elements.
-    <p>
-    You add a member in your configureXml load/store class:
-<pre>
+      <p>Although much of the early code stored information in attributes, consider putting the
+      data being stored in elements instead. This makes for simpler XML Schema and XSLT
+      definitions, and the structured nature can be easier for humans to read.</p>
+
+      <p>If you do add new attributes or elements, don't forget to update the format definition,
+      see below.</p>
+
+      <p>Note that in some cases, there's an inheritance relationship amoung the persisting classes
+      that can help. For example, the LocoNet <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
+      class inherits from <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.configurexml.AbstractSensorManagerConfigXML</a>,
+      which does almost all the work of storing and loading sensors.</p>
+
+      <h3 id="errors">Handling Errors</h3>
+      If theres a parsing error, exception, etc, it should be reported via the ErrorHandler. This
+      accumulates reports and presents them (in a almost-useful way) to the user when appropriate.
+      <p>For an example of how to do that, see the <code>getAttributeBooleanValue</code>
+      method.</p>
+
+      <h3 id="enum">Persisting enum values</h3>
+      The "EnumIO" tool built into AbstractXmlAdapter that reads and writes enums via the names of
+      their elements.
+      <p>You add a member in your configureXml load/store class:</p>
+
+      <pre>
     static final EnumIO&lt;MyEmum&gt; enumMap = new EnumIoNamesNumbers&lt;&gt;(MyEnum);
 </pre><br>
-    Then to store your value, in this example from the <code>myEnumValue</code>
-    variable, you pass the enum value through that map element in your <code>store</code> method:
+      Then to store your value, in this example from the <code>myEnumValue</code> variable, you
+      pass the enum value through that map element in your <code>store</code> method:
 
-<pre>
+      <pre>
             element.setAttribute("name", "" + enumMap.outputFromEnum(myEnumValue));
 </pre><br>
-Storing into an element is similar
+      Storing into an element is similar To restore the value on load:
 
-To restore the value on load:
-<pre>
-	myEnumValue = enumMap.inputFromAttribute(element.getAttribute("name"));
+      <pre>
+        myEnumValue = enumMap.inputFromAttribute(element.getAttribute("name"));
 </pre><br>
-      
-      There are several variations available, please see 
-      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html">the Javadoc</a>.
+      There are several variations available, please see <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html">the Javadoc</a>.
       Briefly:
       <ul>
-        <li>EnumIoNames - just stores and loads the enum element names.
-        <li>EnumIoNamesNumbers - stores and loads the enum element names.
-                    On load, if it encounters a small integer value n, i.e.
-                    from an older file format, that will be translated to the nth
-                    enum value.
-        <li>EnumIoOrdinals - just stores and loads via the enum's ordinal numbers.
-                    This provides complete load and store backwards compatibility
-                    with earlier versions of the file.
-        <li>EnumIoMapped - allows you to provide arbitrary mappings between enums and
-                    the values loaded and stored.  It's possible to provide multiple
-                    load values that make to a single enum value, i.e. "3" and "Ralph".
+        <li>EnumIoNames - just stores and loads the enum element names.</li>
+
+        <li>EnumIoNamesNumbers - stores and loads the enum element names. On load, if it encounters
+        a small integer value n, i.e. from an older file format, that will be translated to the nth
+        enum value.</li>
+
+        <li>EnumIoOrdinals - just stores and loads via the enum's ordinal numbers. This provides
+        complete load and store backwards compatibility with earlier versions of the file.</li>
+
+        <li>EnumIoMapped - allows you to provide arbitrary mappings between enums and the values
+        loaded and stored. It's possible to provide multiple load values that make to a single enum
+        value, i.e. "3" and "Ralph".</li>
       </ul>
-      
-      
-      <h3><a id="refs" name="refs">Persisting References to NamedBeans</a></h3>
-      
-      Classes should, but don't always, 
-      <a href="Patterns.shtml#handles">hold references to NamedBeans via NamedBean handles</a>.
-      <p>
-      If you're adding persistance for a class that doesn't do that, please
-      update it before going further.  That will save a lot of future trouble.
-      <p>
-      To store a NamedBeanHandle reference, just store the result of the <code>getName()</code>
-      method of the NamedBeanHandle. That's the name the user refers to it by.
-      <p>
-      To load a reference, retrieve that name, look up the corresponding NamedBean
-      (typically with <code>get(String)</code> method of the corresponding manager)
-      and then create the NamedBeanHandle via the usual call:
-      <code>InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, thing)</code>
-      
-      
+
+      <h3 id="refs">Persisting References to NamedBeans</h3>
+      Classes should, but don't always, <a href="Patterns.shtml#handles">hold references to
+      NamedBeans via NamedBean handles</a>.
+      <p>If you're adding persistance for a class that doesn't do that, please update it before
+      going further. That will save a lot of future trouble.</p>
+
+      <p>To store a NamedBeanHandle reference, just store the result of the <code>getName()</code>
+      method of the NamedBeanHandle. That's the name the user refers to it by.</p>
+
+      <p>To load a reference, retrieve that name, look up the corresponding NamedBean (typically
+      with <code>get(String)</code> method of the corresponding manager) and then create the
+      NamedBeanHandle via the usual call:
+      <code>InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name,
+      thing)</code></p>
+
       <h3>Class Migration</h3>
-      Sometimes, classes need to be moved to another package as part of
-      code maintenance.  Since the fully-qualified class name, including package name,
-      has been written to files, if we just move the class it will break reading of those
-      files (in addition to breaking any user-written code that might refer to them).
-      To handle this:
+      Sometimes, classes need to be moved to another package as part of code maintenance. Since the
+      fully-qualified class name, including package name, has been written to files, if we just
+      move the class it will break reading of those files (in addition to breaking any user-written
+      code that might refer to them). To handle this:
       <ul>
-        <li>Move the *Xml file to its new location, just below the class it's loading and storing
-        <li>Make an entry in the <code>java/src/jmri/configurexml/ClassMigration.properties</code> 
-            file to map the old location to the new location
+        <li>Move the *Xml file to its new location, just below the class it's loading and
+        storing</li>
+
+        <li>Make an entry in the <code>java/src/jmri/configurexml/ClassMigration.properties</code>
+        file to map the old location to the new location</li>
+
         <li>Optionally, create an empty *Xml class in the old location that just inherits from the
-            *Xml class in the new location (so that it will still work) and mark it deprecated.
-            This keeps functional other people's code that e.g. might inherit from it.
-            You can remove this after a decent interval.
+        *Xml class in the new location (so that it will still work) and mark it deprecated. This
+        keeps functional other people's code that e.g. might inherit from it. You can remove this
+        after a decent interval.</li>
       </ul>
-      
-      There's also a service-oriented approach. For more on that, please see
-      <a href="https://jmri.org/JavaDoc/doc/jmri/configurexml/ClassMigration.html">jmri.configurexml.ClassMigration</a>
-      that works in a similar way.
-      For an example, see
-      <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/pi/configurexml/RaspberryPiClassMigration.java">jmri.jmrix.pi.configurexml.RaspberryPiClassMigration</a>
-      
-      <h2><a id="schema" name="schema">Schema Management</a></h2>
-      <p>JMRI controls XML semantics using <a href="XmlSchema.shtml">XML
-      Schema</a>.</p>
+      There's also a service-oriented approach. For more on that, please see <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/ClassMigration.html">jmri.configurexml.ClassMigration</a>
+      that works in a similar way. For an example, see <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/pi/configurexml/RaspberryPiClassMigration.java">
+      jmri.jmrix.pi.configurexml.RaspberryPiClassMigration</a>
+      <h2 id="schema">Schema Management</h2>
 
-      <p>For example, layout information is stored in XML files as
-      a "layout-config" element, whose contents are then defined
-      via a schema file. These files are kept in the <a href=
+      <p>JMRI controls XML semantics using <a href="XmlSchema.shtml">XML Schema</a>.</p>
+
+      <p>For example, layout information is stored in XML files as a "layout-config" element, whose
+      contents are then defined via a schema file. These files are kept in the <a href=
       "https://jmri.org/xml/schema">xml/schema</a> directory.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

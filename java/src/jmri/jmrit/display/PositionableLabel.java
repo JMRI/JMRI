@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -21,12 +23,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +48,8 @@ import org.slf4j.LoggerFactory;
 public class PositionableLabel extends JLabel implements Positionable {
 
     protected Editor _editor;
+
+    private String _id;            // user's Id or null if no Id
 
     protected boolean _icon = false;
     protected boolean _text = false;
@@ -85,6 +92,20 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setId(String id) throws Positionable.DuplicateIdException {
+        if (Objects.equals(this._id, id)) return;
+        _editor.positionalIdChange(this, id);
+        this._id = id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return _id;
     }
 
     public final boolean isIcon() {
@@ -487,10 +508,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public void updateIcon(NamedIcon s) {
-        _namedIcon = s;
-        super.setIcon(_namedIcon);
-        updateSize();
-        repaint();
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            _namedIcon = s;
+            super.setIcon(_namedIcon);
+            updateSize();
+            repaint();
+        });
     }
 
     /*

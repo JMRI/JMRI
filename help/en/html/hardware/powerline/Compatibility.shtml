@@ -1,217 +1,198 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <title>JMRI Hardware Support - Powerline - Adapter
-  Compatibility</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Powerline - Adapter Compatibility</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Powerline - Compatible Adapters</h1>
 
-      <p>This page helps you identify the type of Adapter you have,
-      and - if it is supported - gives you information how to
-      configure JMRI to connect it.</p>
+      <p>This page helps you identify the type of Adapter you have, and - if it is supported -
+      gives you information how to configure JMRI to connect it.</p>
 
-      <p>See also the main page on <a href=
-      "index.shtml">configuring JMRI for Powerline
+      <p>See also the main page on <a href="index.shtml">configuring JMRI for Powerline
       controllers</a>.</p>
 
-      <h3>X10 Adapters</h3><!-- start table of types -->
+      <h3>X10 Adapters</h3>
+      <!-- start table of types -->
 
       <table border="1">
         <!-- header row -->
 
         <tr>
           <th>Manufacturer</th>
-
           <th>Model</th>
-
           <th>Image</th>
-
           <th>Identification Help</th><!-- Comment -->
 
           <th>JMRI Status</th>
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td>
+            <a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
-          <td nowrap>CM11A<br>
+          <td style="white-space: nowrap">CM11A<br>
           RCA HC60CRX</td><!-- Model -->
 
-          <td><img src="images/hc60crx.jpg" width="88" height="118"></td>
-          <!-- Image -->
+          <td><img src="images/hc60crx.jpg" width="88" height="118" alt="hc60crx">
+          </td><!-- Image -->
 
-          <td>This adapter can be identified by the 4 pin RJ-11
-          connection on the bottom.<br>
-          To use this with JMRI, select "Powerline Controller" in
-          the JMRI preferences, the proper serial port, and "CM11"
-          for the adapter.<br>
-          This adapter is no longer in production. Only the Insteon
-          2412S is currently being produced.</td><!-- Comment -->
+          <td>This adapter can be identified by the 4 pin RJ-11 connection on the bottom.<br>
+          To use this with JMRI, select "Powerline Controller" in the JMRI preferences, the proper
+          serial port, and "CM11" for the adapter.<br>
+          This adapter is no longer in production. Only the Insteon 2412S is currently being
+          produced.</td><!-- Comment -->
 
-          <td>Support is available starting in JMRI 2.1.3</td>
-          <!-- Type -->
+          <td>Support is available starting in JMRI 2.1.3</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td>
+            <a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
-          <td nowrap>CP290</td><!-- Model -->
+          <td style="white-space: nowrap">CP290</td><!-- Model -->
 
-          <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif"
-          width="114" height="71"></td><!-- Image -->
+          <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71" alt=
+          "cp290">
+          </td><!-- Image -->
 
-          <td>This is a console-like adapter. It can also provides
-          buttons for operating X10 devices.<br>
-          To use this with JMRI, select "Powerline Controller" in
-          the JMRI preferences, the proper serial port, and "CP290"
-          for the adapter.<br>
-          This adapter is no longer in production. Consider the
-          Insteon 2412S as an alternative.</td><!-- Comment -->
+          <td>This is a console-like adapter. It can also provides buttons for operating X10
+          devices.<br>
+          To use this with JMRI, select "Powerline Controller" in the JMRI preferences, the proper
+          serial port, and "CP290" for the adapter.<br>
+          This adapter is no longer in production. Consider the Insteon 2412S as an
+          alternative.</td><!-- Comment -->
 
-          <td>Support is available starting in JMRI 2.1.5</td>
-          <!-- Type -->
+          <td>Support is available starting in JMRI 2.1.5</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td>
+            <a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td>CM15A</td><!-- Model -->
 
-          <td><img src="images/cm15a.jpg" width="108" height="149"></td>
-          <!-- Image -->
+          <td><img src="images/cm15a.jpg" width="108" height="149" alt="cm15a">
+          </td><!-- Image -->
 
-          <td>This is the adapter that comes with the ActiveHome
-          Professional. Best identified by the USB connection on
-          the bottom and an antenna on the side.</td>
-          <!-- Comment -->
+          <td>This is the adapter that comes with the ActiveHome Professional. Best identified by
+          the USB connection on the bottom and an antenna on the side.</td><!-- Comment -->
 
-          <td>Not Supported (<i>yet</i>). We hope to support it,
-          pending USB support updates and somebody willing to
-          test.<br>
+          <td>Not Supported (<em>yet</em>). We hope to support it, pending USB support updates and
+          somebody willing to test.<br>
           Last Edited: 17 Jan 2008</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.x10.com">X10.com</a></td>
-          <!-- Manufacturer -->
+          <td>
+            <a href="http://www.x10.com">X10.com</a>
+          </td><!-- Manufacturer -->
 
           <td>CM17A</td><!-- Model -->
 
-          <td><img src="images/cm17a.jpg" width="128" height="99">
-          <img src="images/tm751.jpg" width="112" height="145"></td>
-          <!-- Image -->
+          <td><img src="images/cm17a.jpg" width="128" height="99" alt="cm17a"> <img src=
+          "images/tm751.jpg" width="112" height="145" alt="tm751"></td><!-- Image -->
 
-          <td>This device (top) depends on another X10 device that
-          is the true controller, typically the TM751 device
-          (bottom). While it is a serial device, it uses the
-          RTS/DTS lines instead of the data lines. That lets the
-          device work while having most other serial devices work
-          through it.</td><!-- Comment -->
+          <td>This device (top) depends on another X10 device that is the true controller,
+          typically the TM751 device (bottom). While it is a serial device, it uses the RTS/DTS
+          lines instead of the data lines. That lets the device work while having most other serial
+          devices work through it.</td><!-- Comment -->
 
           <td>Not Supported.<br>
-          Because of the tight timing and detailed hardware access
-          these units require, it's unlikely we're going to support
-          this device.<br>
+          Because of the tight timing and detailed hardware access these units require, it's
+          unlikely we're going to support this device.<br>
           Last Edited: 17 Jan 2008</td><!-- Type -->
         </tr>
-      </table><!-- end of table of types -->
+      </table>
+      <!-- end of table of types -->
 
-      <h3>Insteon Adapters</h3><!-- start table of types -->
+      <h3>Insteon Adapters</h3>
+      <!-- start table of types -->
 
       <table border="1">
         <!-- header row -->
 
         <tr>
           <th>Manufacturer</th>
-
           <th>Model</th>
-
           <th>Image</th>
-
           <th>Identification Help</th><!-- Comment -->
 
           <th>JMRI Status</th>
         </tr>
 
         <tr>
-          <td><a href=
-          "http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">
-          Smart Home</a></td><!-- Manufacturer -->
+          <td>
+            <a href="http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart
+            Home</a>
+          </td><!-- Manufacturer -->
 
           <td>PowerLinc Modem 2412S</td><!-- Model -->
 
-          <td><img src=
-          "http://cache1.smarthome.com/images/2414s.jpg" width=
-          "138" height="138"></td><!-- Image -->
+          <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138" alt=
+          "2414s">
+          </td><!-- Image -->
 
-          <td>This is the serial (not USB) Insteon adapter. It can
-          control both Insteon and X10 devices.</td>
-
+          <td>This is the serial (not USB) Insteon adapter. It can control both Insteon and X10
+          devices.</td>
           <td>Support is available starting in JMRI 2.9.1<br>
           Last Edited: 3 Jan 2010</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href=
-          "http://www.smarthome.com">Smarthome.com</a></td><!-- Manufacturer -->
+          <td>
+            <a href="http://www.smarthome.com">Smarthome.com</a>
+          </td><!-- Manufacturer -->
 
-          <td nowrap>Power Linc 2414U</td><!-- Model -->
+          <td style="white-space: nowrap">Power Linc 2414U<br>
+          Obsolete ??? 8/2021</td><!-- Model -->
 
-          <td><img src=
-          "http://www.smarthome.com/images/2414ubig.jpg" width=
-          "133" height="133"></td><!-- Image -->
+          <td>
+          </td><!-- Image -->
 
-          <td>This version can be identified by the USB connection
-          on the bottom.<br></td><!-- Comment -->
+          <td>This version can be identified by the USB connection on the bottom.<br></td>
+          <!-- Comment -->
 
-          <td>Not Supported (<i>yet</i>) We hope to support it,
-          pending USB support and somebody willing to test.<br>
+          <td>Not Supported (<em>yet</em>) We hope to support it, pending USB support and somebody
+          willing to test.<br>
           Last Edited: 4 Feb 2008</td><!-- Type -->
         </tr>
 
         <tr>
-          <td><a href="http://www.insteon.com">Insteon.com</a></td>
-          <!-- Manufacturer -->
+          <td>
+            <a href="http://www.insteon.com">Insteon.com</a>
+          </td><!-- Manufacturer -->
 
-          <td nowrap>Insteon Hub, Hub Pro</td><!-- Model -->
+          <td style="white-space: nowrap">Insteon Hub, Hub Pro</td><!-- Model -->
 
           <td><img src=
           "http://static1.squarespace.com/static/53fce470e4b0374adfdd30bc/t/5489fdf4e4b02da9d6a5b81c/1418329589819/tech-specs-front-and-back.png?format=500w"
-          width="115" height="115"></td><!-- Image -->
+          width="115" height="115" alt="500w">
+          </td><!-- Image -->
 
-          <td>These connect via an Ethernet port<br></td>
-          <!-- Comment -->
+          <td>These connect via an Ethernet port<br></td><!-- Comment -->
 
-          <td>Not Supported (<i>yet</i>) We hope to support it
-          next, pending USB support and somebody willing to
-          test.<br>
+          <td>Not Supported (<em>yet</em>) We hope to support it next, pending USB support and
+          somebody willing to test.<br>
           Last Edited: 11 Nov 2015</td><!-- Type -->
         </tr>
-      </table><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      </table>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

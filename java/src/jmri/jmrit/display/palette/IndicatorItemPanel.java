@@ -175,9 +175,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 t.setLevel(Editor.TURNOUTS);
                 return t;                
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons");
-                return  sb.toString();
+                return _itemType + " icons";
             }
             return null;
         }

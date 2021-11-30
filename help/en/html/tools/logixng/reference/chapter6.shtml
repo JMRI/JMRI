@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 6</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference expression items">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 6</h1>
+
+      <h2>Expression Descriptions</h2>
+
+      <p>The expression descriptions are grouped by the socket type and category.</p>
+
+      <ul>
+        <li>Digital expression
+          <ul>
+            <li>
+              <a href="#digital_expression_item">Item</a>
+            </li>
+
+            <li>
+              <a href="#digital_expression_common">Common</a>
+            </li>
+
+            <li>
+              <a href="#digital_expression_loconet">LocoNet</a>
+            </li>
+
+            <li>
+              <a href="#digital_expression_other">Other</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>Analog expression
+          <ul>
+            <li>
+              <a href="#analog_expression_item">Item</a>
+            </li>
+
+            <li>
+              <a href="#analog_expression_common">Common</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>String expression
+          <ul>
+            <li>
+              <a href="#string_expression_item">Item</a>
+            </li>
+
+            <li>
+              <a href="#string_expression_common">Common</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="#generic_expression">Generic Expression</a>
+        </li>
+      </ul>
+
+      <h3>Expression dialogs</h3>
+
+      <p>When the category and type has been selected, the detail expression dialog will be
+      displayed. The content of the dialog will vary depending on the category and type. The
+      typical digital expression item dialog is described below.</p>
+
+      <p>The dialog for adding and editing expressions consists of an upper part that contains the
+      item and the states for that item. The lower part is common to all expresssions.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/typical_expression.png"><img src=
+        "images/chapter6/typical_expression.png" alt="Chapter 6 typical expression" width="991"
+        height="303"></a>
+      </div>
+
+      <p>The <strong>Edit</strong> screen is the same except for the title, the Create button and
+      the current content will be in the fields.</p>
+
+      <p>The left section is normally used to select the item, such as a turnout or a sensor. The
+      right section is the state to be checked. The center section will normally have a <strong>is
+      / is not</strong> combo box. The default mode will be to use the <strong>Direct</strong>
+      tabs.</p>
+
+      <p>See <a href="chapter7.shtml">Reference</a>, <a href="chapter8.shtml">Local Variable</a>
+      and <a href="chapter9.shtml">Formula</a> for details about the other tabs.</p>
+
+      <p>The lower section contains a standard set of items</p>
+
+      <dl>
+        <dt>Error Handling</dt>
+
+        <dd>
+          If <strong>Use default</strong> is selected, the value in <a href=
+          "../LogixNG.shtml#preferences">Preference</a> will be used. For other options see
+          <a href="../ErrorHandling.shtml">error handling</a>.
+        </dd>
+
+        <dt>Catch "Abort execution"</dt>
+
+        <dd>If the error handling (see previous) for any child node is set to <strong>Abort
+        execution</strong>, a parent node should have this option checked. This lets the parent
+        node handle the error.</dd>
+
+        <dt>Listen</dt>
+
+        <dd>Normally, any change to an expression item should trigger the true/false evaluation.
+        Sometimes an expression item should participate in the evaluation but not trigger it. The
+        Listen checkbox is used to control the trigger state.</dd>
+
+        <dt>Edit comment</dt>
+
+        <dd>Each expression can have a comment. The comment dialog has a multiline text area. Click
+        <strong>OK</strong> to save the comment.</dd>
+
+        <dt>Formula functions</dt>
+
+        <dd>
+          These are explained in the <a href="chapter9.shtml">Formula</a> chapter.
+        </dd>
+
+        <dd>
+        </dd>
+
+        <dt>Cancel</dt>
+
+        <dd>Close the dialog without applying any changes.</dd>
+
+        <dd>
+        </dd>
+
+        <dt>Create/OK</dt>
+
+        <dd>Save the new expression or the changes to an existing expression.</dd>
+
+        <dd>
+        </dd>
+      </dl>
+      <a id="digital_expression_item"></a>
+      <h3>Digital expression :: Item</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_item.png"><img src=
+        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
+      </div>
+
+      <h5>Block</h5>
+
+      <ul>
+        <li><strong>Occupied:</strong> Evaluate to true if the sensor assigned to the block is
+        active.</li>
+
+        <li><strong>not Occupied:</strong> Evaluate to true if the sensor assigned to the block is
+        inactive.</li>
+
+        <li><strong>some other state:</strong> Evaluate to true if the state is unknown,
+        inconsistent or undetected.</li>
+
+        <li><strong>Allocated:</strong> Evaluate to true if the related layout block has use extra
+        color enabled.</li>
+
+        <li><strong>equal to:</strong> Evaluate to true if the value of the block matches a string
+        value or a reference value, which is typically a memory variable.</li>
+      </ul>
+
+      <h5>Clock</h5>
+
+      <ul>
+        <li><strong>Fast clock:</strong> Evaluate to true if the fast clock time is between two
+        hh:mm values.</li>
+
+        <li><strong>System clock:</strong> Evaluate to true if the system clock time is between two
+        hh:mm values.</li>
+      </ul>
+
+      <h5>Conditional</h5>
+
+      <p>If the conditional named is used in more than one Logix, the results are
+      unpredictable.</p>
+
+      <ul>
+        <li><strong>False:</strong> Evaluate to true if the state of the specified conditional is
+        false.</li>
+
+        <li><strong>True:</strong> Evaluate to true if the state of the specified conditional is
+        true.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the state of the specified conditional is
+        unknown or inconsistent.</li>
+      </ul>
+
+      <h5>Dispatcher</h5>
+
+      <p>A Dispatcher train only exists from the time it is created until it is terminated.
+      LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
+      See the <em>Saving and Retrieving Active Train Information</em> section at
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/NewTrain.shtml">
+      Activate New Train</a>.  The train is started using the LogixNG Dispatcher
+      <em>Load train from train info file</em> Action.  If the related train does not exist when
+      the expression is evaluated, the result will be false. That means a false result is either
+      actually false or the train does not exist.</p>
+
+      <p>Train Mode:</p>
+      <ul>
+        <li><strong>Automatic</strong></li>
+        <li><strong>Dispatched</strong></li>
+        <li><strong>Manual</strong></li>
+      </ul>
+
+      <p>Train Status:</p>
+      <ul>
+        <li><strong>Running</strong></li>
+        <li><strong>Paused</strong></li>
+        <li><strong>Waiting</strong></li>
+        <li><strong>Working</strong></li>
+        <li><strong>Ready</strong></li>
+        <li><strong>Stopped</strong></li>
+        <li><strong>Done</strong></li>
+      </ul>
+
+      <h5>Entry/Exit</h5>
+
+      <ul>
+        <li><strong>Inactive:</strong> Evaluate to true if the state of the specified entry/exit
+        pair is inactive.</li>
+
+        <li><strong>Active:</strong> Evaluate to true if the state of the specified entry/exit pair
+        is active.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the state of the specified entry/exit pair
+        is unknown or inconsistent.</li>
+
+        <li>Evaluate if an Entry/Exit pair is active, inactive or other.</li>
+      </ul>
+
+      <h5>Light</h5>
+
+      <ul>
+        <li><strong>Off:</strong> Evaluate to true if the state of the specified light is off.</li>
+
+        <li><strong>On:</strong> Evaluate to true if the state of the specified light is on.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the state of the specified light is unknown
+        or inconsistent.</li>
+      </ul>
+
+      <h5>Local variable</h5>
+
+      <p>Compares the value of the specified local variable to either a string, a memory variable
+      or another local variable. Evaluates to true if the comparison is true.</p>
+
+      <ul>
+        <li><strong>is less than</strong>
+        </li>
+
+        <li><strong>is less than or equal</strong>
+        </li>
+
+        <li><strong>is equal to</strong>
+        </li>
+
+        <li><strong>is greater than or equal to</strong>
+        </li>
+
+        <li><strong>is greater than</strong>
+        </li>
+
+        <li><strong>is not equal to</strong>
+        </li>
+
+        <li><strong>is null</strong>
+        </li>
+
+        <li><strong>is not null</strong>
+        </li>
+
+        <li><strong>does match regular expression</strong>
+        </li>
+
+        <li><strong>does not match regular expresson</strong>
+        </li>
+      </ul>
+
+      <p>For information about regular expressions, see:
+      https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+      <h5>Memory</h5>
+
+      <p>Compares the value of the specified memory variable to either a string, another memory
+      variable or a local variable. Evaluates to true if the comparison is true.</p>
+
+      <ul>
+        <li><strong>is less than</strong>
+        </li>
+
+        <li><strong>is less than or equal</strong>
+        </li>
+
+        <li><strong>is equal to</strong>
+        </li>
+
+        <li><strong>is greater than or equal to</strong>
+        </li>
+
+        <li><strong>is greater than</strong>
+        </li>
+
+        <li><strong>is not equal to</strong>
+        </li>
+
+        <li><strong>is null</strong>
+        </li>
+
+        <li><strong>is not null</strong>
+        </li>
+
+        <li><strong>does match regular expression</strong>
+        </li>
+
+        <li><strong>does not match regular expresson</strong>
+        </li>
+      </ul>
+
+      <p>For information about regular expressions, see:
+      https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
+
+      <h5>OBlock</h5>
+
+      <ul>
+        <li><strong>Unoccupied:</strong> Evaluate to true if the specified oblock is not
+        occupied.</li>
+
+        <li><strong>Occupied:</strong> Evaluate to true if the specified oblock is occupied.</li>
+
+        <li><strong>Allocated:</strong> Evaluate to true if the specified oblock is allocated.</li>
+
+        <li><strong>Running:</strong> Evaluate to true if the specified oblock is running (is path
+        occupied in Logix).</li>
+
+        <li><strong>OutOfService:</strong> Evaluate to true if the specified oblock is out of
+        service.</li>
+
+        <li><strong>Dark:</strong> Evaluate to true if the specified oblock is dark.</li>
+
+        <li><strong>TrackError:</strong> Evaluate to true if the specified oblock has a track error
+        (is power error in Logix).</li>
+      </ul>
+
+      <h5>Power</h5>
+
+      <ul>
+        <li><strong>On:</strong> Evaluate to true if the power state is on.</li>
+
+        <li><strong>Off:</strong> Evaluate to true if the power state is off.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the power state is unknown or
+        inconsistent.</li>
+      </ul>
+
+      <h5>Reference</h5>
+
+      <p>If there is a possibility that a <a href="chapter7.shtml">reference</a> will refer to an
+      item that does not exist or it is the wrong item type, the Reference expression can test that
+      case and return true or false.</p>
+
+      <p>An example would be a <a href="chapter11.shtml">table</a> that has optional cells. A table
+      for a staging yard ladder will have a variable number of turnouts based on the selected
+      track.</p>
+
+      <p>Enter the reference to be checked and specify the type.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/reference_dialog.png"><img src=
+        "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog" width="718" height=
+        "252"></a>
+      </div>
+
+      <h5>Reporter</h5>
+
+      <p>Compare the content of one of the three Reporter data fields to a string, a memory variable
+      or a local variable.  See the <strong>Memory</strong> description for a list of the
+      comparisons.</p>
+
+      <ul>
+        <li><strong>Current Report:</strong> The current value unless the hardware says there is
+        nothing to report.  In that case the value will be null.</li>
+
+        <li><strong>Last Report:</strong> Normally the current report and last report are the same.
+        If the current report is null, this will be most recent valid report.  If no report has ever
+        been received, this will be null.</li>
+
+        <li><strong>State:</strong> A number that represents the last report.</li>
+      </ul>
+
+      <p>Note:  The meaning of the reports and the state number are defined by originating
+      hardware.</p>
+
+      <h5>Script</h5>
+
+      <p>A script expression calls a Jython script. The Jython context contains a
+      <strong>result</strong> boolean object. When the script is done, it does a
+      <code>result.setValue(x)</code> where x is, or evaluates to, True or False.</p>
+
+      <h5>Sensor</h5>
+
+      <ul>
+        <li><strong>Inactive:</strong> Evaluate to true if the state of the specified sensor is
+        inactive.</li>
+
+        <li><strong>Active:</strong> Evaluate to true if the state of the specified sensor is
+        active.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the state of the specified sensor is
+        unknown or inconsistent.</li>
+      </ul>
+
+      <h5>Signal head</h5>
+
+      <ul>
+        <li><strong>has appearance:</strong> Evaluate to true if the specified signal head
+        appearance matches the selected appearance.</li>
+
+        <li><strong>has not appearance:</strong> Evaluate to true if the specified signal head
+        appearance does not match the selected appearance.</li>
+
+        <li><strong>is lit:</strong> Evaluate to true if the state of the specified signal head is
+        lit.</li>
+
+        <li><strong>is not lit:</strong> Evaluate to true if the state of the specified signal head
+        is no lit.</li>
+
+        <li><strong>is held:</strong> Evaluate to true if the state of the specified signal head is
+        held.</li>
+
+        <li><strong>is not held:</strong> Evaluate to true if the state of the specified signal
+        head is not held.</li>
+      </ul>
+
+      <h5>Signal mast</h5>
+
+      <ul>
+        <li><strong>has aspect:</strong> Evaluate to true if the specified signal mast aspect
+        matches the selected aspect.</li>
+
+        <li><strong>has not aspect:</strong> Evaluate to true if the specified signal mast aspect
+        does not match the selected aspect.</li>
+
+        <li><strong>is lit:</strong> Evaluate to true if the state of the specified signal mast is
+        lit.</li>
+
+        <li><strong>is not lit:</strong> Evaluate to true if the state of the specified signal mast
+        is no lit.</li>
+
+        <li><strong>is held:</strong> Evaluate to true if the state of the specified signal mast is
+        held.</li>
+
+        <li><strong>is not held:</strong> Evaluate to true if the state of the specified signal
+        mast is not held.</li>
+
+        <li><strong>is permissive sml disabled:</strong> Evaluate to true if the specified signal
+        mast has permissive sml disbled.</li>
+
+        <li><strong>is not permissive sml disabled:</strong> Evaluate to true if the specified
+        signal does not have permissive sml disabled.</li>
+      </ul>
+
+      <h5>Turnout</h5>
+
+      <ul>
+        <li><strong>Closed:</strong> Evaluate to true if the state of the specified turnout is
+        closed.</li>
+
+        <li><strong>Thrown:</strong> Evaluate to true if the state of the specified turnout is
+        thrown.</li>
+
+        <li><strong>Other:</strong> Evaluate to true if the state of the specified turnout is
+        unknown or inconsistent.</li>
+      </ul>
+
+      <h5>Warrant</h5>
+
+      <ul>
+        <li><strong>Route free:</strong> Evaluate to true if the specified route is available.</li>
+
+        <li><strong>Route occupied:</strong> Evaluate to true if the specified route is
+        occupied.</li>
+
+        <li><strong>Route allocated:</strong> Evaluate to true if the specified route has been
+        allocated.</li>
+
+        <li><strong>Route set:</strong> Evaluate to true if the specified turnout has been
+        set.</li>
+
+        <li><strong>Train is running:</strong> Evaluate to true if the specified route has a train
+        running.</li>
+      </ul>
+      <a id="digital_expression_common"></a>
+      <h3>Digital expression :: Common</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_common.png"><img src=
+        "images/chapter6/digital_expression_common.png" alt="Chapter 6 expression common list"
+        width="136" height="98"></a>
+      </div>
+
+      <h5>And</h5>
+
+      <p>And evaluates the child expressions and if all of them returns true, the And expression
+      returns true as well.</p>
+
+      <h5>Antecedent</h5>
+
+      <p>The Antecedent expression is mainly included to make import from Logix to LogixNG simple.
+      It works exactly as Antecedent in Logix. It has a number of child expressions and an
+      antecedent that defines how the evaluation of the expressions should be done. Each child
+      expression is referenced in the antecedent by R1, R2, R3, ..., there R1 is the first child
+      expression, R2 is the second child expression, and so on. Note that this differs from other
+      expressions in LogixNG. Other LogixNG expressions use the socket name, but since the
+      Antecedent expression is included to work as Antecedent works in Logix, the antecedent has
+      been kept from Logix Antecedent as well. <em>Note: Antecedent is included for compability
+      with Logix but it's recommended to use Formula instead. Formula is much more powerful, uses
+      the socket names and also works with numbers and strings.</em></p>
+      <a id="digital_formula"></a>
+      <h5>Digital Formula</h5>
+
+      <p>Formula is the next generation of Antecedent. It supports many operators, like ==, !=,
+      &lt;=, &gt;=, &lt;, &gt;, +, -, *, / and %. It supports local variables, memories and
+      functions. It supports all the types of expressions, digital, analog and string expressions.
+      See <a href="#generic_expression">Generic expression</a> for details on the result of merging
+      the other expressions.</p>
+
+      <h5>Not</h5>
+
+      <p>The Not expression has one child expression and answers <strong>true</strong> if the child
+      expression answers <strong>false</strong>, and <strong>false</strong> if the child expression
+      answers <strong>true</strong>.</p>
+
+      <h5>Or</h5>
+
+      <p>Or evaluates the child expressions and if at least one of them returns true, the Or
+      expression returns true as well.</p>
+      <a id="digital_expression_loconet"></a>
+      <h3>Digital expression :: LocoNet</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_loconet.png"><img src=
+        "images/chapter6/digital_expression_loconet.png" alt="Chapter 6 expression loconet list"
+        width="136" height="26"></a>
+      </div>
+
+      <h5>Slot Usage</h5>
+
+      <p>Evaluate the LocoNet slot usage.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/loconet_slot_usage.png"><img src=
+        "images/chapter6/loconet_slot_usage.png" alt="Chapter 6 loconet slot usage" width="962"
+        height="505"></a>
+      </div>
+      <a id="digital_expression_other"></a>
+      <h3>Digital expression :: Other</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_other.png"><img src=
+        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list" width=
+        "232" height="134"></a>
+      </div>
+
+      <h5>Always false</h5>
+
+      <p>The False expression always answers <strong>false</strong>.</p>
+
+      <h5>Always true</h5>
+
+      <p>The True expression always answers <strong>true</strong>. This expression is commonly used
+      as a child to the Trigger Once expression.</p>
+
+      <h5>Call module</h5>
+
+      <p>Call a module and and return its true/false response. See <a href=
+      "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+      <h5>Hold</h5>
+
+      <p>The Hold expression has two child expressions, one trigger expression and one hold
+      expression. For this expression to become <strong>true</strong>, both the trigger expression
+      and the hold expression must answer <strong>true</strong>. But then it stays
+      <strong>true</strong> as long as the hold expression stays <strong>true</strong>.</p>
+      <a id="LastResult"></a>
+      <h5>Last result of digital expression</h5>
+
+      <p>Each digital expression retains its most recent true/false state. This can be checked if
+      the expression has a user name. See <a href="chapter3.shtml">Chapter 3</a>. Select the user
+      name from the combo box.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/expression_last_result.png"><img src=
+        "images/chapter6/expression_last_result.png" alt="Chapter 6 expression last result" width=
+        "485" height="247"></a>
+      </div>
+
+      <h5>Log data</h5>
+
+      <p>The <strong>Log data</strong> expresson works the same as the <strong>Log data</strong>
+      action. See <a href="chapter5.shtml#ActionLogData">Log data action</a> for details.</p>
+
+      <p>Since this is an expression, it must return true or false. The window for creating the
+      expression version includes a combo box for selecting True or False</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/log_data_return.png"><img src=
+        "images/chapter6/log_data_return.png" alt="Chapter 6 log data return options" width="231"
+        height="91"></a>
+      </div>
+
+      <p><strong>True</strong> is recommended for <strong>And</strong> expressions and
+      <strong>False</strong> for <strong>Or</strong> expressions.</p>
+
+      <h5>Trigger once</h5>
+
+      <p>The TriggerOnce expression answers true one single time and then false until its child
+      expression becomes False and then True again.</p>
+
+      <p>Most often, the TriggerOnce expression will have the expression Always true as its child
+      and it will then answers true one single time and then false until JMRI is restarted.</p>
+      <a id="analog_expression_item"></a>
+      <h3>Analog expression :: Item</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/analog_expression_item.png"><img src=
+        "images/chapter6/analog_expression_item.png" alt="Chapter 6 analog expression item list"
+        width="201" height="80"></a>
+      </div>
+
+      <h5>Analog constant</h5>
+
+      <p>Return a constant as an analog value.</p>
+
+      <h5>AnalogIO</h5>
+
+      <p>AnalogIO reads the value of an AnalogIO and returns its value. There is currently two
+      items that can be used with AnalogIO:</p>
+
+      <ul>
+        <li>Variable lights</li>
+
+        <li>Meters</li>
+      </ul>
+
+      <p>Some connections supports meters, for example current and/or voltage meters. This depends
+      on the hardware connected to JMRI. An example is the Roco Z21 that has a current and voltage
+      meter that JMRI can listen to.</p>
+
+      <h5>Memory as analog value</h5>
+
+      <p>Return value of a memory variable as an analog value.</p>
+      <a id="MidnightMinutes"></a>
+      <h5>Minutes since midnight</h5>
+
+      <p>Return the number of minutes since midnight using either the fast clock or the system
+      clock.</p>
+      <a id="analog_expression_common"></a>
+      <h3>Analog expression :: Common</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/analog_expression_common.png"><img src=
+        "images/chapter6/analog_expression_common.png" alt=
+        "Chapter 6 analog expression common list" width="201" height="26"></a>
+      </div>
+
+      <h5>Analog formula</h5>
+
+      <p>Return the result of a formula as an analog value.</p>
+      <a id="string_expression_item"></a>
+      <h3>String expression :: Item</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/string_expression_item.png"><img src=
+        "images/chapter6/string_expression_item.png" alt="Chapter 6 string expression item list"
+        width="196" height="44"></a>
+      </div>
+
+      <h5>Memory as string value</h5>
+
+      <p>Return value of a memory variable as a string value.</p>
+
+      <h5>String constant</h5>
+
+      <p>Return a constant as an string value.</p>
+      <a id="string_expression_common"></a>
+      <h3>String expression :: Common</h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/string_expression_common.png"><img src=
+        "images/chapter6/string_expression_common.png" alt=
+        "Chapter 6 string expression common list" width="196" height="26"></a>
+      </div>
+
+      <h5>String formula</h5>
+
+      <p>Return the result of a formula as a string value.</p>
+      <a id="generic_expression"></a>
+      <h3>Generic expression</h3>
+
+      <p>The <a href="#digital_formula">Digital Formula</a> expression can use any of the other
+      expressions. This means the lists from the other sockets and categories are combined.</p>
+
+      <p>The combined <strong>Item</strong> list:</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/generic_expression_item.png"><img src=
+        "images/chapter6/generic_expression_item.png" alt="Chapter 6 generic expression item list"
+        width="196" height="26"></a>
+      </div>
+
+      <p>The combined <strong>Common</strong> list:</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/generic_expression_common.png"><img src=
+        "images/chapter6/generic_expression_common.png" alt=
+        "Chapter 6 generic expression common list" width="196" height="26"></a>
+      </div>
+
+      <p>The <strong>LocoNet</strong> and <strong>Other</strong> lists are the same as Digital
+      expression.</p>
+
+      <hr>
+
+      <p><a href="chapter7.shtml">Chapter 7 - References</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

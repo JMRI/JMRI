@@ -323,6 +323,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         a = null;
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

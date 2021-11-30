@@ -1,330 +1,303 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Sensors</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Sensor Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Sensor Add Edit"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Adding/Editing Sensors</h1>
 
       <div class="toc">
         <ul>
-          <li><a href="#addsensor">Add a Sensor</a></li>
-          <li><a href="#editsensor">Edit a Sensor</a></li>
-          <li><a href="#hardwaresensor">Hardware specific Sensor</a> properties</li>
+          <li>
+            <a href="#addsensor">Add a Sensor</a>
+          </li>
+
+          <li>
+            <a href="#editsensor">Edit a Sensor</a>
+          </li>
+
+          <li>
+            <a href="#hardwaresensor">Hardware specific Sensor</a> properties
+          </li>
         </ul>
       </div>
 
-      <a name="addsensor" id="addsensor"></a>
-      <h2>Add a new Sensor</h2>
-      <p>When adding a Sensor, from the "System connection:" drop down
-      list select the hardware connection this Sensor is
-      attached to.</p><img src="images/AddSensor.png" alt="Add Sensor">
+      <h2 id="addsensor">Add a new Sensor</h2>
 
-      <p>Enter a valid address for the Sensor (look at
-      the Tooltip for accepted input options per system).
-      If desired, enter a User Name which can be anything you
-      wish to describe the Sensor.<br>
+      <p>When adding a Sensor, from the "System connection:" drop down list select the hardware
+      connection this Sensor is attached to.</p>
+      <img src="images/AddSensor.png" alt="Add Sensor">
+      <p>Enter a valid address for the Sensor (look at the Tooltip for accepted input options per
+      system). If desired, enter a User Name which can be anything you wish to describe the
+      Sensor.<br>
       Finish by clicking the "OK" button.</p>
 
       <h3>Creating A Number of Sensors</h3>
 
-      <p>It is also possible to create a number of Sensors in one
-      go.<br>
-      Where supported the "Add a sequential range" check box will be
-      enabled.</p><img src="images/AddSensorNumber.png" alt="Add Sequential Sensor">
+      <p>It is also possible to create a number of Sensors in one go.<br>
+      Where supported the "Add a sequential range" check box will be enabled.</p>
+      <img src="images/AddSensorNumber.png" alt="Add Sequential Sensor">
+      <p>Checking this box will enable the "Number of items" spinner. Click the small arrows up or
+      down to set the number of Sensors you wish to add. Clicking "OK" will then create that number
+      of sequential Sensors in the table.<br>
+      If a User Name has been entered, a number will be added to the end of the name to keep each
+      Sensor User Name unique.</p>
 
-      <p>Checking this box will enable
-      the "Number of items" spinner. Click the small arrows
-      up or down to set the number of Sensors you wish to add.
-      Clicking "OK" will then create that
-      number of sequential Sensors in the table.<br>
-      If a User Name has been entered, a number will be added to
-      the end of the name to keep each Sensor User Name unique.</p>
+      <h2 id="editsensor">Edit a Sensor</h2>
 
-      <a name="editsensor" id="editsensor"></a>
-      <h2>Edit a Sensor</h2>
-
-      <p>Clicking on [Edit] in any line of the Sensor Table opens the
-      Edit Sensor pane to edit the following:</p>
+      <p>Clicking on [Edit] in any line of the Sensor Table opens the Edit Sensor pane to edit the
+      following:</p>
 
       <div class="toc">
         <ul>
-          <li><a href="#basic">Basic</a></li>
-          <li><a href="#debounce">Debounce Delays</a></li>
-          <li><a href="#pullup">Pull-Up/Down</a></li>
-          <li><a href="#usage">Usage</a></li>
-          <li><a href="#properties">Properties</a></li>
+          <li>
+            <a href="#basic">Basic</a>
+          </li>
+
+          <li>
+            <a href="#debounce">Debounce Delays</a>
+          </li>
+
+          <li>
+            <a href="#pullup">Pull-Up/Down</a>
+          </li>
+
+          <li>
+            <a href="#usage">Usage</a>
+          </li>
+
+          <li>
+            <a href="#properties">Properties</a>
+          </li>
         </ul>
       </div>
 
-      <a name="basic" id="basic"></a>
-      <h3>Basic</h3>
-      <p>This tab lets you see and change basic information about the Sensor
-      as entered on its creation:</p>
+      <h3 id="basic">Basic</h3>
+
+      <p>This tab lets you see and change basic information about the Sensor as entered on its
+      creation:</p>
+
       <ul>
         <li>User Name</li>
+
         <li>a Comment on the sensor (free text to keep a note)</li>
-        <li>a checkbox to use this Sensor as Inverted (Inactive will be
-        interpreted as Active and vice versa)</li>
+
+        <li>a checkbox to use this Sensor as Inverted (Inactive will be interpreted as Active and
+        vice versa)</li>
       </ul>
+      <a href="images/SensorEditDelaysTab.png"><img src="images/SensorEditDelaysTab.png" height=
+      "248" width="515" class="floatRight" alt="Sensor Edit Debounce Delays pane"></a>
+      <h3 id="debounce">Debounce Delays</h3>
 
-      <a href="images/SensorEditDelaysTab.png"><img
-              src="images/SensorEditDelaysTab.png" height="248" width="515"
-              align="right" alt="Sensor Edit Debounce Delays pane"></a>
+      <p>This tab lets you see and change Sensor specific values for the <a href=
+      "SensorTable.shtml#Debounce">Sensor Debounce Delay</a>.</p>
 
-      <a name="debounce" id="debounce"></a>
-      <h3>Debounce Delays</h3>
-      <p>This tab lets you see and change Sensor specific values for
-      the <a href="SensorTable.shtml#Debounce">Sensor Debounce Delay</a>.</p>
+      <h3 id="pullup">Pull-Up/-Down</h3>
 
-      <a name="pullup" id="pullup"></a>
-      <h3>Pull-Up/-Down</h3>
-      <p>This tab lets you set whether your hardware has a puul-up or
-      pull-down resistor installed over the Sensor input.</p>
+      <p>This tab lets you set whether your hardware has a puul-up or pull-down resistor installed
+      over the Sensor input.</p>
 
-      <a name="usage" id="usage"></a>
-      <h3>Usage</h3>
-      <p>This is an information field, showing where you have the
-      Sensor displayed on a Panel.</p>
+      <h3 id="usage">Usage</h3>
 
-      <a name="properties" id="properties"></a>
-      <h3>Properties</h3>
+      <p>This is an information field, showing where you have the Sensor displayed on a Panel.</p>
+
+      <h3 id="properties">Properties</h3>
+
       <p>Custom properties, only advised for advanced users.</p>
 
-      <a name="hardwaresensor" id="hardwaresensor"></a>
-      <h2>Hardware Specific Information</h2>
+      <h2 id="hardwaresensor">Hardware Specific Information</h2>
 
-      <p>Please refer to our
-      <a href="../../../../html/doc/Technical/Names.shtml#entrysummary">summary of allowed entry patterns</a>
-      per connection.</p>
+      <p>Please refer to our <a href=
+      "../../../../html/doc/Technical/Names.shtml#entrysummary">summary of allowed entry
+      patterns</a> per connection.</p>
 
       <h3>NCE AIU Number to JMRI Sensor Mapping</h3>
-      The NCE
-      Auxiliary Input Unit (or AIU) allows the NCE command station
-      to check the status of inputs from the layout. These are
-      referenced in JMRI as Sensors with names like "NS785". "NS"
-      means "NCE Sensor", and "785" is the number of a specific
-      Sensor input.
-
-      <p>The hardware address can be entered in two different
-      ways:</p>
+      The NCE Auxiliary Input Unit (or AIU) allows the NCE command station to check the status of
+      inputs from the layout. These are referenced in JMRI as Sensors with names like "NS785". "NS"
+      means "NCE Sensor", and "785" is the number of a specific Sensor input.
+      <p>The hardware address can be entered in two different ways:</p>
 
       <dl>
         <dd>
-          <p>Enter in the AIU Cab Address followed by the Pin
-          Number separated by a ":"<br>
-          So for a sensor on AIU Cab Address 50, pin 2 you would
-          enter into the Hardware Address field :<br>
+          <p>Enter in the AIU Cab Address followed by the Pin Number separated by a ":"<br>
+          So for a sensor on AIU Cab Address 50, pin 2 you would enter into the Hardware Address
+          field :<br>
           50:2</p>
 
-          <p>The Sensor number can also be found and entered into
-          the hardware address field by using the following
-          formula:</p>
+          <p>The Sensor number can also be found and entered into the hardware address field by
+          using the following formula:</p>
 
-          <p>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number
-          On AIU) -1</p>
+          <p>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number On AIU) -1</p>
 
-          <p>For example: The AIU cab address is set to 50 and one
-          of the BD20s is connected to pin 2. Therefore the Sensor
-          ID would be:</p>
+          <p>For example: The AIU cab address is set to 50 and one of the BD20s is connected to pin
+          2. Therefore the Sensor ID would be:</p>
 
           <p>Sensor ID = (50 - 1) * 16 + (2) -1</p>
 
           <p>Sensor ID = 785</p>
         </dd>
       </dl>
-      <p><a href="../../../../html/hardware/nce/NCE.shtml#names">More
-      on NCE sensor naming</a>.</p>
+
+      <p><a href="../../../../html/hardware/nce/NCE.shtml#names">More on NCE sensor naming</a>.</p>
 
       <h3>LocoNet Sensor to JMRI Sensor Mapping</h3>
 
-      <p>LocoNet Sensor addresses are either simply entered as an ordinal
-      number or made up from two different parts: the Board number and
-      the Channel number.<br>
-      Sensors can also be configured from the Turnout addresses for
-      the Aux &amp; Switch input.</p>
+      <p>LocoNet Sensor addresses are either simply entered as an ordinal number or made up from
+      two different parts: the Board number and the Channel number.<br>
+      Sensors can also be configured from the Turnout addresses for the Aux & Switch input.</p>
 
-      <p>The hardware address can be entered in a number of
-      different ways:</p>
+      <p>The hardware address can be entered in a number of different ways:</p>
 
       <dl>
         <dd>
-          <p>If you know the Sensor number, enter it in the Hardware
-          Address field.</p>
+          <p>If you know the Sensor number, enter it in the Hardware Address field.</p>
         </dd>
+
         <dd>
-          <p>Enter the board number, followed by the channel number
-          separated by a ":"<br>
-          So for a Sensor on board 11, channel 1 you would enter
-          into the Hardware Address field:<br>
+          <p>Enter the board number, followed by the channel number separated by a ":"<br>
+          So for a Sensor on board 11, channel 1 you would enter into the Hardware Address
+          field:<br>
           11:1</p>
 
-          <p>For Sensors attached to Turnouts, you enter into the
-          hardware address field "T:" followed by the Turnout
-          number. This will add the Aux input associated with the
-          Turnout. To add both the Aux and the Switch input, check
-          "Add a sequential range" and set the number to add to 2.<br>
-          So for a Sensor attached to Turnout 81 you would enter
-          the following:<br>
+          <p>For Sensors attached to Turnouts, you enter into the hardware address field "T:"
+          followed by the Turnout number. This will add the Aux input associated with the Turnout.
+          To add both the Aux and the Switch input, check "Add a sequential range" and set the
+          number to add to 2.<br>
+          So for a Sensor attached to Turnout 81 you would enter the following:<br>
           T:81</p>
         </dd>
-        <dd>
-          <p>The third method is to calculate the address of the
-          Sensor and add it manually into the hardware address
-          field using the following method:</p>
 
-          <p>If you want to calculate the address of a BDL168
-          input, you can use<br>
+        <dd>
+          <p>The third method is to calculate the address of the Sensor and add it manually into
+          the hardware address field using the following method:</p>
+
+          <p>If you want to calculate the address of a BDL168 input, you can use<br>
           number = 16 * (board number) + (channel number) - 16</p>
 
-          <p>where "channel number" runs from 1 to 16. For example,
-          the first circuit (number 1) on board 11 has number:<br>
-          number = 16 * (11) + (1) - 16 = 161</p>as we saw in the
-          example above.
-
-          <p>If you want to calculate the address of a DS54 aux
-          input, use:<br>
+          <p>where "channel number" runs from 1 to 16. For example, the first circuit (number 1) on
+          board 11 has number:<br>
+          number = 16 * (11) + (1) - 16 = 161</p>
+          as we saw in the example above.
+          <p>If you want to calculate the address of a DS54 aux input, use:<br>
           number = 2 * (turnout number - 1) + 1</p>
 
-          <p>For example, the aux input associated with Turnout 81
-          has number:<br>
+          <p>For example, the aux input associated with Turnout 81 has number:<br>
           number = 2 * (81 - 1) + 1 = 161</p>
 
           <p>If it's the switch input, you add one more to that:<br>
           number = 2 * (turnout number - 1) + 2</p>
 
-          <p>For example, the switch input associated with Turnout
-          12 has number:<br>
+          <p>For example, the switch input associated with Turnout 12 has number:<br>
           number = 2 * ( 12 - 1 ) + 2 = 24</p>
         </dd>
       </dl>
-      <p><a href="../../../../html/hardware/loconet/Addressing.shtml">More
-      on LocoNet sensor naming</a>.</p>
+
+      <p><a href="../../../../html/hardware/loconet/Addressing.shtml">More on LocoNet sensor
+      naming</a>.</p>
 
       <h3>Lenz XpressNet Sensor to JMRI Sensor Mapping</h3>
 
-      <p>XpressNet Sensor addresses are made up from two different
-      parts: the Feedback Encoder address and Contact.</p>
+      <p>XpressNet Sensor addresses are made up from two different parts: the Feedback Encoder
+      address and Contact.</p>
 
-      <p>The hardware address can be entered in a number of
-      different ways</p>
+      <p>The hardware address can be entered in a number of different ways</p>
 
       <dl>
         <dd>
-          Enter in the encoder address, followed by the contact
-          separated by a ":"<br>
-          So for a Sensor on Feedback Encoder address 99, Contact 3
-          you would enter into the Hardware Address field:<br>
+          Enter in the encoder address, followed by the contact separated by a ":"<br>
+          So for a Sensor on Feedback Encoder address 99, Contact 3 you would enter into the
+          Hardware Address field:<br>
           99:3
-
-          <p>If you wish to calculate the address of the Sensor,
-          subtract 1 from the Feedback Encoder's address, multiply
-          that result by 8, and then add the input number you are
+          <p>If you wish to calculate the address of the Sensor, subtract 1 from the Feedback
+          Encoder's address, multiply that result by 8, and then add the input number you are
           using.<br>
-          For Example, if you are using Contact 3 on a Feedback
-          Encoder with address 99, 99 - 1 = 98. 98*8=784.
-          784+3=787.<br>
+          For Example, if you are using Contact 3 on a Feedback Encoder with address 99, 99 - 1 =
+          98. 98*8=784. 784+3=787.<br>
           The feedback address you will use is 787.</p>
         </dd>
       </dl>
-      <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More
-      on XPressNet sensor naming</a>.</p>
 
-      <h3>CBUS&trade; to JMRI Sensor Mapping</h3>
+      <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More on XPressNet
+      sensor naming</a>.</p>
+
+      <h3>CBUS® to JMRI Sensor Mapping</h3>
+
       <p>Short event 18 on and off : "+18".</p>
-      <p>Short event 18 on, short event 21 off : "+18;-21".</p> 
+
+      <p>Short event 18 on, short event 21 off : "+18;-21".</p>
+
       <p>Long event Node 2 Event 18 on and off : "+N2E18".</p>
+
       <p>CAN frame hex string : "X9000020012;X91FFFFFFFE".</p>
-      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for CBUS sensor naming</a>.</p>
+
+      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for CBUS sensor
+      naming</a>.</p>
 
       <h3>Maple and C/MRI Sensor to JMRI Sensor Mapping</h3>
 
-      <p>Maple and C/MRI sensor addresses are made up from two
-      different parts: a Node Id and Pin/Sensor Id.</p>
+      <p>Maple and C/MRI sensor addresses are made up from two different parts: a Node Id and
+      Pin/Sensor Id.</p>
 
-      <p>The hardware address can be entered in a number of
-      different ways:</p>
+      <p>The hardware address can be entered in a number of different ways:</p>
 
       <dl>
         <dd>
-          Enter the Node Id, followed by the Sensor Id, separated
-          by a ":". This method can also be used for the
-          alternative/extended addressing.<br>
-          So for a Sensor on Node 2, pin 3 you would enter the
-          following into the hardware address field:<br>
+          Enter the Node Id, followed by the Sensor Id, separated by a ":". This method can also be
+          used for the alternative/extended addressing.<br>
+          So for a Sensor on Node 2, pin 3 you would enter the following into the hardware address
+          field:<br>
           2:3
-
-          <p>Another method of adding the Sensor address is to use
-          the following formula:</p>Node Id x 1000 + pin.<br>
+          <p>Another method of adding the Sensor address is to use the following formula:</p>
+          Node Id x 1000 + pin.<br>
           So for a Sensor on Node 2, pin 3<br>
           (2x1000)+3 = 2003
-
-          <p>To use the alternative/extended addressing scheme,
-          refer to your C/MRI hardware connection guide.</p>
+          <p>To use the alternative/extended addressing scheme, refer to your C/MRI hardware
+          connection guide.</p>
         </dd>
       </dl>
-      <p>More on
-      <a href="../../../../html/hardware/maple/index.shtml#naming">Maple</a>
-      and
+
+      <p>More on <a href="../../../../html/hardware/maple/index.shtml#naming">Maple</a> and
       <a href="../../../../html/hardware/cmri/CMRI.shtml#L001">C/MRI sensor naming</a>.</p>
 
       <h3>Grapevine Sensor to JMRI Sensor Mapping</h3>
+
       <p>There are three separate types of Grapevine Sensors:</p>
 
       <dl>
         <dt>Advanced Serial Detectors</dt>
 
         <dd>
-          Up to three Advanced Serial Detector boards can be
-          attached to a Grapevine Node. Each provides eight
-          occupancy detectors, and associates a motion detector
-          with each of those.
-
+          Up to three Advanced Serial Detector boards can be attached to a Grapevine Node. Each
+          provides eight occupancy detectors, and associates a motion detector with each of those.
           <table>
             <tr>
               <th>Board</th>
-
               <th>Occupancy</th>
-
               <th>Motion</th>
             </tr>
 
             <tr>
               <td>Master</td>
-
               <td>1-8</td>
-
               <td>9-16</td>
             </tr>
 
             <tr>
               <td>Slave 1</td>
-
               <td>17-24</td>
-
               <td>25-32</td>
             </tr>
 
             <tr>
               <td>Slave 2</td>
-
               <td>33-40</td>
-
               <td>41-48</td>
             </tr>
           </table>
@@ -332,29 +305,27 @@
 
         <dt>Original Serial Sensors</dt>
 
-        <dd>Occupancy Sensors on the original serial boards replace
-        Sensors attached through advanced boards at addresses 1 to
-        8. There are no motion sensors in this case.</dd>
+        <dd>Occupancy Sensors on the original serial boards replace Sensors attached through
+        advanced boards at addresses 1 to 8. There are no motion sensors in this case.</dd>
 
         <dt>Parallel Sensors</dt>
 
-        <dd>The parallel sensors, connectors on the Grapevine node
-        itself appear as JMRI sensors 101 to 108 on the node. If
-        the optional second bank of serial sensors are present,
-        they appear as sensors 109 to 116 on the node.</dd>
+        <dd>The parallel sensors, connectors on the Grapevine node itself appear as JMRI sensors
+        101 to 108 on the node. If the optional second bank of serial sensors are present, they
+        appear as sensors 109 to 116 on the node.</dd>
       </dl>
-      <p><a href="../../../../html/hardware/grapevine/Names.shtml">More
-        on Grapevine sensor naming</a>.</p>
 
-      <p>Back to the <a href="SensorTable.shtml">Sensor Table help
-      page</a>.</p>
+      <p><a href="../../../../html/hardware/grapevine/Names.shtml">More on Grapevine sensor
+      naming</a>.</p>
 
-        <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
-        <p></p>
+      <p>Back to the <a href="SensorTable.shtml">Sensor Table help page</a>.</p>
 
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

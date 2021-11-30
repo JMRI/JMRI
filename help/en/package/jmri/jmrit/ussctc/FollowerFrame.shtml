@@ -1,80 +1,59 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Followers Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Followers">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Followers"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Followers</h1>
-      <img src="images/FollowerFrame.jpg" alt=
-      "Screen shot" align="right"><br>
-      <p>This provides a simple way to set a Turnout to "follow" the
-      state of an input sensor. You might want this so you can
-      connect a fascia toggle switch to a Sensor, and have it drive
-      a switch motor that's connected as a JMRI Turnout, for
-      example.</p>
+      <img src="images/FollowerFrame.jpg" alt="Screen shot" class="floatRight"><br>
+
+      <p>This provides a simple way to set a Turnout to "follow" the state of an input sensor. You
+      might want this so you can connect a fascia toggle switch to a Sensor, and have it drive a
+      switch motor that's connected as a JMRI Turnout, for example.</p>
 
       <p>Fields and buttons:</p>
 
       <dl>
         <dt>Output Name</dt>
 
-        <dd>Enter the system name or user name of the Turnout the
-        follower will control</dd>
+        <dd>Enter the system name or user name of the Turnout the follower will control</dd>
 
         <dt>Sensor Name</dt>
 
-        <dd>Enter the system name or user name of the Sensor the
-        follower will watch</dd>
+        <dd>Enter the system name or user name of the Sensor the follower will watch</dd>
 
         <dt>Invert</dt>
 
-        <dd>Normally, the turnout is set THROWN when the Sensor is
-        ACTIVE, and set CLOSED when the sensor is INACTIVE.
-        Checking the "Invert" box causes the turnout to be set
-        THROWN when the sensor is INACTIVE, and set CLOSED when the
-        Sensor is ACTIVE.</dd>
+        <dd>Normally, the turnout is set THROWN when the Sensor is ACTIVE, and set CLOSED when the
+        sensor is INACTIVE. Checking the "Invert" box causes the turnout to be set THROWN when the
+        sensor is INACTIVE, and set CLOSED when the Sensor is ACTIVE.</dd>
 
         <dt>Veto Name</dt>
 
-        <dd>If a sensor is added here, the follower will not
-        control the turnout when the sensor is ACTIVE. This can be
-        used e.g. to lock a turnout from local control.</dd>
+        <dd>If a sensor is added here, the follower will not control the turnout when the sensor is
+        ACTIVE. This can be used e.g. to lock a turnout from local control.</dd>
 
         <dt>View</dt>
 
-        <dd>Enter an output turnout name and click this button to
-        see any existing follower configuration.</dd>
+        <dd>Enter an output turnout name and click this button to see any existing follower
+        configuration.</dd>
 
         <dt>Add/Update</dt>
 
-        <dd>File out fields as desired and press Add/Update to
-        create a new follower or modify an existing one.</dd>
+        <dd>File out fields as desired and press Add/Update to create a new follower or modify an
+        existing one.</dd>
       </dl>
-
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

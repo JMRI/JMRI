@@ -37,7 +37,7 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
     
-    /**
+    /*
      * Properties strings sent to property change listeners
      */
     

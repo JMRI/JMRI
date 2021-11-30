@@ -63,7 +63,7 @@
 				<choice xml:lang="it">Usa Vstart-Vmid-Vmax (CV29, bit 4)</choice>
 				<choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax (CV29, bit 4)</choice>
 				<choice xml:lang="de">Anfahr-, Mitten-, Höchstgeschwindigkeit nutzen (CV29, bit 4)</choice>
-				<choice xml:lang="cs">Použít rozjezdové napětí, střední napětí a maximální napětí (CV29, bit 4)</choice>
+				<choice xml:lang="cs">Použít rozjezdovou rychlost, střední rychlost a maximální rychlost (CV29, bit 4)</choice>
 				<choice xml:lang="nl">Gebruik Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
 			</enumChoice>
 			<enumChoice choice="Use Speed Table">

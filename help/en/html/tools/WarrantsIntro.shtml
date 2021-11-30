@@ -1,143 +1,185 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Warrants Introduction</title>
   <meta name="author" content="Pete Cressman">
   <meta name="author" content="Jerry Grochow">
-  <meta name="keywords" content="JMRI Warrant Help">
-  
-  <!--#include virtual="/Style.shtml" -->
-
+  <meta name="keywords" content="JMRI Warrant Help"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-    <!--#include virtual="/Header.shtml" -->
-    <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
-      <div id="mainContent">
- 
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>JMRI: Warrants Introduction</h1>
 
-      <p class="noted">
-      <strong>Getting Started:</strong> This page is a brief introduction to warrants with links to other help pages. Read
-      the more complete <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants Help</a>, including the section "Get Started
-      with Warrants."  See also the <a href="../../../../community/clinics/">clinic presentation</a> by Dick Bronson: 
-      <a href="http://www.rr-cirkits.com/Clinics/Clinics.html"> JMRI 2014: Automatic Train Control Using Warrants</a>
-      (in two parts and a little out-of-date, but still useful for getting started). 
-      </p>
+      <p class="noted"><strong>Getting Started:</strong> This page is a brief introduction to
+      warrants with links to other help pages. Read the more complete <a href=
+      "../../package/jmri/jmrit/logix/Warrant.shtml">Warrants Help</a>, including the section "Get
+      Started with Warrants." See also the <a href="../../../../community/clinics/">clinic
+      presentation</a> by Dick Bronson: <a href=
+      "http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014: Automatic Train Control Using
+      Warrants</a> (in two parts and a little out-of-date, but still useful for getting
+      started).</p>
 
-      <p>A Warrant in JMRI is a collection of information sufficient to run an automated train. It will set the turnouts for
-      a specified route and drive the train over the route. When running using block occupancy detection and signal 
-      configuration, it will make a best effort to control speed according to signal aspects or by occupancy of other
-      trains or other track conditions ahead. Trains can also be tracked on the panel as they run on the layout.
-      </p>
-      
-      <p>A JMRI Warrant is suggestive of what
-      a warrant is used for on a prototype railroad, but there is no
-      intention to replicate any particular railroad's mode of
-      operation. It is simply the idea of giving an automated train
-      the trackage rights to move from point A to point B (and then
-      move it along).</p>
-      
-      <p>Warrants are issued using the <a href="../../package/jmri/jmrit/logis/display/ControlPanelEditor.shtml">
-      Control Panel Editor</a> and the <a href="WarrantTable.shtml">The Warrants List</a> which is available in Control Panel
-      Editor. The Warrants List is only available when the building blocks for warrants (OBlocks, OPaths, and Portals) have 
-      been previously defined. These elements are created by:
-      </p>
-      
+      <p>A Warrant in JMRI is a collection of information sufficient to run an automated train. It
+      will set the turnouts for a specified route and drive the train over the route. When running
+      using block occupancy detection and signal configuration, it will make a best effort to
+      control speed according to signal aspects or by occupancy of other trains or other track
+      conditions ahead. Trains can also be tracked on the panel as they run on the layout.</p>
+
+      <p>A JMRI Warrant is suggestive of what a warrant is used for on a prototype railroad, but
+      there is no intention to replicate any particular railroad's mode of operation. It is simply
+      the idea of giving an automated train the trackage rights to move from point A to point B
+      (and then move it along).</p>
+
+      <p>Warrants are issued using the <a href=
+      "../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a> and the
+      <a href="../../package/jmri/jmrit/logix/WarrantTable.shtml">The Warrants List</a> which is
+      available in Control Panel Editor. The Warrants List is only available when the building
+      blocks for warrants (OBlocks, OPaths, and Portals) have been previously defined. These
+      elements are created by:</p>
+
       <ul>
-        <li>entering data directly into the <a href="../../package/jmri/jmrit/logix/OBlockEdit.shtml">Occupancy Block
-        Table</a> (under Tools&rArr;Tables),</li>
-        <li>creating them based on Layout Editor <a href="Blocks.shtml">Blocks</a> (select "Import Blocks as Occupancy 
-        Blocks" under <strong>Option</strong> in the Occupancy Block Table window),</li>
-        <li>or using the graphical interface of the <a href="../../package/jmri/jmrit/logix/display/CircuitBuilder.shtml">
-        Circuit Builder</a> (also part of Control Panel Editor).</li>
+        <li>entering data directly into the <a href=
+        "../../package/jmri/jmrit/logix/OBlockEdit.shtml">Occupancy Block Table</a> (under
+        Tools⇒Tables),
+        </li>
+
+        <li>creating them based on Layout Editor <a href="Blocks.shtml">Blocks</a> (select "Import
+        Blocks as Occupancy Blocks" under <strong>Option</strong> in the Occupancy Block Table
+        window),
+        </li>
+
+        <li>or using the graphical interface of the <a href=
+        "../../package/jmri/jmrit/display/CircuitBuilder.shtml">Circuit Builder</a> (also part of
+        Control Panel Editor).
+        </li>
       </ul>
-      
-      <p>Note that OBlocks, OPaths, and Portals are stored independently of Blocks used by the Layout Editor. 
-      Sensors used for determining occupancy can be used simultaneously by both Blocks and OBlocks.
-      </p>
-      
+
+      <p>Note that OBlocks, OPaths, and Portals are stored independently of Blocks used by the
+      Layout Editor. Sensors used for determining occupancy can be used simultaneously by both
+      Blocks and OBlocks.</p>
+
       <p>Trains are tracked on the CPE panel as they run on the layout if the layout includes
-      <a href="../../package/jmri/jmrit/logix/Tracker.shtml">Indicator Track Icons.</a>
-      </p>
+      <a href="../../package/jmri/jmrit/logix/Tracker.shtml">Indicator Track Icons.</a></p>
 
+      <h2 id="types">Warrant Types</h2>
 
-     <h2><a name="types" id="types">Warrant Types</a></h2>
-     
       <p>There are three types of Warrants available:</p>
+
       <ul>
-        <li>A <b>Recorded Script Warrant</b>, where throttle commands are recorded from a throttle you 
-        use to drive a train over preselected route. The Warrant then replicates all the
-        commands when played back.</li>
+        <li>A <strong>Recorded Script Warrant</strong>, where throttle commands are recorded from a
+        throttle you use to drive a train over preselected route. The Warrant then replicates all
+        the commands when played back.</li>
 
-        <li>An <b>NX Warrant</b> (eNtry/eXit), where throttle commands are generated automatically to 
-        move a train between Blocks chosen by you "on the fly".</li>
+        <li>An <strong>NX Warrant</strong> (eNtry/eXit), where throttle commands are generated
+        automatically to move a train between Blocks chosen by you "on the fly".</li>
 
-        <li>A <b>Fast Reacting</b> Warrant. This type does not follow the usual Warrant rules, 
-        but reacts to signals when entering their approach block with an immediate speed
+        <li>A <strong>Fast Reacting</strong> Warrant. This type does not follow the usual Warrant
+        rules, but reacts to signals when entering their approach block with an immediate speed
         change. This type of warrant is better suited to smaller layouts.</li>
       </ul>
 
-      <h2><a name="creating" id="creating">Creating a Warrant</a></h2>
-      
+      <h2 id="creating">Creating a Warrant</h2>
+
       <p>A Warrant consists of two parts:</p>
+
       <ul>
-        <li>The <b>Route</b> over which a Train will run</li>
-        <li>the <b>Commands</b> it will receive when running over the
-        route.</li>
+        <li>The <strong>Route</strong> over which a Train will run</li>
+
+        <li>the <strong>Commands</strong> it will receive when running over the route.</li>
       </ul>
-      
-      <p>To define the commands for a Warrant, you
-      drive the train over the route you selected and the commands you
-      used are recorded for playback later. For an NX Warrant, commands
-      are generated automatically for the route you have selected.</p>
 
-      <h3><a name="CreateRoute" id="CreateRoute">Creating the Route</a></h3>
+      <p>To define the commands for a Warrant, you drive the train over the route you selected and
+      the commands you used are recorded for playback later. For an NX Warrant, commands are
+      generated automatically for the route you have selected.</p>
 
-      <p>A Warrant Route is a series of <em>Block Paths</em> (OBlocks, OPaths) linked together so a train may travel
-      over it. A Warrant Route is created by first choosing an <em>Origin block</em> (an OBlock), a starting path (OPath) and a 
-      portal (Portal) to exit the Originating block. Then, a <em>Destination block</em> (another OBlock) is chosen and a path 
-      (an OPath) on which to end the route. Optionally, you may also choose a <em>Via</em> Block, that is, an OBlock the route 
-      <strong>must</strong> include  and an <em>Avoid</em> Block, that is, any OBlock the route <strong>must not</strong>
-      include.
-      </p>
-      
-     <h3><a name="record" id="record">Recording the Commands</a></h3>
-     
-      <p>The second part of a Warrant comprises the throttle commands to control the train as it traverses the route. These commands
-      are recorded automatically by running a train over the route in "Learn Mode" or are generated automatically as an "NX 
-      Warrant". The command script contain the elapsed time between commands so that playback will attempt to duplicate this timing.
-      If, however, a Warrant is run with a different engine or a different consist, or even the same engine depending on whether its
-      motor is hot or cold, this timing may not be exact. The command script will synchronize upon entering each detection OBlock by 
-      either issuing additional commands immediately if the train is fast or waiting to issue commands if the train is slow.
-      </p>
+      <h3 id="CreateRoute">Creating the Route</h3>
 
-      <h2><a name="reading" id="reading">More Warranted Reading</a></h2>
- 
-    <ul>
-      <li><a href="../../package/jmrit/logix/WarrantTable.shtml">The Warrant List</a>: table from which you can control warrant routes
-          and dispatch trains</li>
-      <li><a href="../../package/jmri/jmrit/logix/NXWarrant.shtml#prefs">Preferences related to Warrants</a></li>
-      <li><a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">Definitions of OBlocks, Portals and OPaths</a></li>
-      <li><a href="../../package/jmri/jmrit/logix/OBlockEdit.shtml">Creating OBlocks, Portals and OPaths using tables</a></li>
-      <li><a href="../../package/jmri/jmrit/logix/display/CircuitBuilder.shtml">Using the Circuit Builder Tool</a> for creating OBlocks, Portals and Paths</li>
-      <li><a href="../../package/jmri/jmrit/logix/CreateEditWarrant.shtml">Creating and Editing Warrants</a>.</li>
-      <li><a href="../../package/jmri/jmrit/logix/Train Trackers">Using Train Trackers</a> to display the identity of trains as they
-          are moved by operators from one occupancy block to another.</li>
-      <li><a href="../../package/jmri/jmrit/logix/NXWarrant.shtml">About NX Warrants</a> and creating temporary eNtry/eXit (NX) Warrant.</li>
-      <li><a href="../../package/jmri/jmrit/SpeedChanges.shtml">How Warrants handle speed changes</a></li>
-      <li><a href="../../../../community/clinics/">Clinic presentation</a> by Dick Bronson: <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">
-          NMRA 2014 Automatic Train Control Using Warrants</a> (in two parts)</li>
-    </ul>
+      <p>A Warrant Route is a series of <em>Block Paths</em> (OBlocks, OPaths) linked together so a
+      train may travel over it. A Warrant Route is created by first choosing an <em>Origin
+      block</em> (an OBlock), a starting path (OPath) and a portal (Portal) to exit the Originating
+      block. Then, a <em>Destination block</em> (another OBlock) is chosen and a path (an OPath) on
+      which to end the route. Optionally, you may also choose a <em>Via</em> Block, that is, an
+      OBlock the route <strong>must</strong> include and an <em>Avoid</em> Block, that is, any
+      OBlock the route <strong>must not</strong> include.</p>
 
+      <h3 id="record">Recording the Commands</h3>
+
+      <p>The second part of a Warrant comprises the throttle commands to control the train as it
+      traverses the route. These commands are recorded automatically by running a train over the
+      route in "Learn Mode" or are generated automatically as an "NX Warrant". The command script
+      contain the elapsed time between commands so that playback will attempt to duplicate this
+      timing. If, however, a Warrant is run with a different engine or a different consist, or even
+      the same engine depending on whether its motor is hot or cold, this timing may not be exact.
+      The command script will synchronize upon entering each detection OBlock by either issuing
+      additional commands immediately if the train is fast or waiting to issue commands if the
+      train is slow.</p>
+
+      <h2 id="reading">More Warranted Reading</h2>
+
+      <ul>
+        <li>
+          <a href="../../package/jmri/jmrit/logix/WarrantTable.shtml">The Warrant List</a>: table
+          from which you can control warrant routes and dispatch trains
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/NXWarrant.shtml#prefs">Preferences related to
+          Warrants</a>
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">Definitions of OBlocks,
+          Portals and OPaths</a>
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/OBlockEdit.shtml">Creating OBlocks, Portals and
+          OPaths using tables</a>
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/display/CircuitBuilder.shtml">Using the Circuit Builder
+          Tool</a> for creating OBlocks, Portals and Paths
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/CreateEditWarrant.shtml">Creating and Editing
+          Warrants</a>.
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/Tracker.shtml">Using Train Trackers</a> to
+          display the identity of trains as they are moved by operators from one occupancy block to
+          another.
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/NXWarrant.shtml">About NX Warrants</a> and
+          creating temporary eNtry/eXit (NX) Warrant.
+        </li>
+
+        <li>
+          <a href="../../package/jmri/jmrit/logix/SpeedChanges.shtml">How Warrants handle speed
+          changes</a>
+        </li>
+
+        <li>
+          <a href="../../../../community/clinics/">Clinic presentation</a> by Dick Bronson:
+          <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">NMRA 2014 Automatic Train
+          Control Using Warrants</a> (in two parts)
+        </li>
+      </ul>
       <!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
-  </body>
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
 </html>

@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqPointsLockCommand;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SetElectricalPointsLockPacket extends Packet {
   public final static byte IDENT = 14;
-  private RqPointsLockCommand command;
+  private RqPointsLockCommand command = null;
 
   @Override
   public byte getId() {

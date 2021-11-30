@@ -1,10 +1,13 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -44,19 +47,25 @@ public class TurnoutTableWindowTest {
         Assert.assertNotNull("AR selected", jcbo.getSelectedObjects());
 
         // Find the Show Feedback information checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowFeedbackInfo"));
+        JLabelOperator jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowFeedbackInfo"));
+        JCheckBox jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("FBbox selected", jcbo.getSelectedObjects());
 
         // Find the Show Lock information checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowLockInfo"));
+        jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowLockInfo"));
+        jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("LKbox selected", jcbo.getSelectedObjects());
 
         // Find the Show Turnout Speed details checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowTurnoutSpeedDetails"));
+        jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowTurnoutSpeedDetails"));
+        jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("TSbox selected", jcbo.getSelectedObjects());
@@ -70,7 +79,7 @@ public class TurnoutTableWindowTest {
         JFrameOperator afo = new JFrameOperator(Bundle.getMessage("TitleAddTurnout"));
 
         // Find hardware address field
-        JLabelOperator jlo = new JLabelOperator(afo,Bundle.getMessage("LabelHardwareAddress"));
+        jlo = new JLabelOperator(afo,Bundle.getMessage("LabelHardwareAddress"));
         JTextField hwAddressField = (JTextField) jlo.getLabelFor();
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
@@ -104,17 +113,11 @@ public class TurnoutTableWindowTest {
         jbo.doClick();
         // Ask to close Add pane
         afo.requestClose();
-
-        // Open the Edit Turnout IT1 pane, how to find & click the LT1 Edit col button?
+        
+        // Open the Edit Turnout IT1 pane, 
         // Find the Edit button in EDITCOL of line 0 (for LT1)
-        //AbstractButtonFinder edfinder = new AbstractButtonFinder("Edit");
-        //JButton editbutton = (JButton) edfinder.find(ft, 0);
-        //Assert.assertNotNull(editbutton);
-        // Click button to edit turnout
-        //getHelper().enterClickAndLeave(new MouseEventData(this, editbutton));
-        // open Edit pane by method instead
-        Turnout it1 = InstanceManager.turnoutManagerInstance().getTurnout("IT1");
-        a.editButton(it1); // open edit pane
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        tbl.clickOnCell(0, TurnoutTableDataModel.EDITCOL);
 
         // Find Edit Turnout pane by name
         JFrameOperator efo = new JFrameOperator("Edit Turnout IT1");

@@ -46,7 +46,7 @@ public class SensorIconWindowTest {
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
         co.clickMouse(xloc,yloc,1);
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
@@ -71,6 +71,7 @@ public class SensorIconWindowTest {
         // close the panel target frame.
         EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
         to.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     @Test
@@ -101,14 +102,14 @@ public class SensorIconWindowTest {
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
         co.clickMouse(xloc,yloc,1);
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
@@ -129,6 +130,7 @@ public class SensorIconWindowTest {
         // close the panel editor frame
         EditorFrameOperator to = new EditorFrameOperator(panel);
         to.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     @BeforeEach
@@ -143,6 +145,7 @@ public class SensorIconWindowTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

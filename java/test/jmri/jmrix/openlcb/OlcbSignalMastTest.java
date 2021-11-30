@@ -226,10 +226,13 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());      
         messages = new java.util.ArrayList<>(); // reset test message queue
 
-        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
+        machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
+                new NodeID()), null);
         Assert.assertEquals("no reply if wrong address", 0, messages.size());
         
-        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
+        machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
+                        nodeID),
+                null);
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
         Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
@@ -238,7 +241,17 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
         messages = new java.util.ArrayList<>(); // reset test message queue
 
-        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
+        machine.handleIdentifyEventsGlobal( new IdentifyEventsGlobalMessage(new NodeID()),
+                null);
+        Assert.assertEquals("four sent", 4, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
+        messages = new java.util.ArrayList<>(); // reset test message queue
+
+        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null);
         Assert.assertEquals("no reply", 0, messages.size());
 
         machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0})), null); 
@@ -296,10 +309,12 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());
         messages = new java.util.ArrayList<>(); // reset test message queue
 
-        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
+        machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
+                new NodeID()), null);
         Assert.assertEquals("no reply if wrong address", 0, messages.size());
         
-        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
+        machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
+                nodeID), null);
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
         Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());

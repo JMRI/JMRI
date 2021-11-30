@@ -524,6 +524,9 @@ final public class ConnectivityUtil {
                     // turnout is inside current block, add it to the list
                     result.add(new LayoutTrackExpectedState<>(ls, getTurnoutSetting(ls, cType, suppress)));
                 }
+            } else if (HitPointType.isTurntableRayHitType(cType)) {
+                // Declare arrival at a turntable ray to be the end of the block
+                trackSegment = null;
             }
         }
         return result;

@@ -376,10 +376,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             try {
             switch (col) {
                 case FORWARD_SPEED_COL:
-                    entry.getValue().setForwardSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setForwardSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 case REVERSE_SPEED_COL:
-                    entry.getValue().setReverseSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setReverseSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 default:
                     // fall out

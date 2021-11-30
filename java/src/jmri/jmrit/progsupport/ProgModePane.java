@@ -1,8 +1,7 @@
 package jmri.jmrit.progsupport;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JSeparator;
+import javax.swing.*;
+import java.awt.*;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide a JPanel to configure the programming mode.
  * <p>
- * The using code should get a configured programmer with getProgrammer.
+ * The using code should get a configured programmer with getProgrammer().
  * <p>
  * This pane will only display ops mode options if ops mode is available, as
  * evidenced by an attempt to get an ops mode programmer at startup time.
@@ -68,7 +67,10 @@ public class ProgModePane extends ProgModeSelector {
         if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
 
             mServicePane = new ProgServiceModePane(direction, group);
-            add(mServicePane);
+            JPanel temp = new JPanel();
+            temp.add(mServicePane);
+            temp.setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramServiceMode")));
+            add(temp);
             addSep = true;
         }
 

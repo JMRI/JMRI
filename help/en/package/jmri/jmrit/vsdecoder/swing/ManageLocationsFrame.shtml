@@ -1,45 +1,31 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Virtual Sound Decoder</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI Virtual Sound Decoder</h1>
 
-      <p>This is the quick
-      reference page for the JMRI Virtual Sound Decoder Manage VSD
-      Locations tool.</p>
+      <p>This is the quick reference page for the JMRI Virtual Sound Decoder Manage VSD Locations
+      tool.</p>
 
-      <p>The Manage VSD Locations window provides a consolidated location to manage
-      and set the apparent physical location of sounds for trains using Virtual Sound Decoder.</p>
+      <p>The Manage VSD Locations window provides a consolidated location to manage and set the
+      apparent physical location of sounds for trains using Virtual Sound Decoder.</p>
 
-      <p>Locations can be assigned to Reporters, Blocks, Operations Locations and to
-      the Listener (there is only one Listener).</p>
+      <p>Locations can be assigned to Reporters, Blocks, Operations Locations and to the Listener
+      (there is only one Listener).</p>
 
       <p>You can set X / Y / Z coordinates for each location.<br>
-      Reporters, Blocks and Operations Locations can be marked as "Tunnel".
-      This will change the sound when a locomotive is within such a location.</p>
+      Reporters, Blocks and Operations Locations can be marked as "Tunnel". This will change the
+      sound when a locomotive is within such a location.</p>
 
       <h2>Tabs</h2>
 
@@ -48,43 +34,46 @@
 
         <li>Blocks Tab: Set locations for JMRI Blocks</li>
 
-        <li>Operations Locations Tab: Set locations for JMRI
-        Operations Locations</li>
+        <li>Operations Locations Tab: Set locations for JMRI Operations Locations</li>
 
-        <li>Listeners Tab: Set location and orientation of the
-        Listener</li>
+        <li>Listeners Tab: Set location and orientation of the Listener</li>
       </ul>
 
       <h2>Notes</h2>
 
       <ul>
         <li>Listeners attributes are saved to VSDecoder Preferences (VSDecoderPreferences.xml).<br>
-        Operations locations are saved to the folder operations in your current JMRI Profile (OperationsLocationRoster.xml).<br>
+        Operations locations are saved to the folder operations in your current JMRI Profile
+        (OperationsLocationRoster.xml).<br>
         Both are loaded automatically at VSD start respectively JMRI start.</li>
 
         <li>Reporters and Blocks are not saved to a file.<br>
-        If you want to store Reporters or Blocks to a file, go to Tools-&gt;Tables-&gt;table-&gt;File-&gt;Store...<br>
-        In case you have an open Panel with a reference to a location, store that Panel.<br>
-        Reporters or Blocks must be loaded manually (Panels-&gt;Load Panels) or via JMRI Preferences
-        Startup Action (Open File).</li>
+          If you want to store Reporters or Blocks to a file, go to <strong>Tools ⇒ Tables ⇒ table
+          ⇒ File ⇒ Store...</strong><br>
+          In case you have an open Panel with a reference to a location, store that Panel.<br>
+          Reporters or Blocks must be loaded manually or via JMRI Preferences Startup Action (Open
+          File).<br>
+          See <a href="../../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your
+          Work</a> for details on loading and storing.
+        </li>
 
-        <li>If you add new Reporters, Blocks or Locations you must close and re-open
-        the Manage VSD Locations window to have them appear.</li>
+        <li>If you add new Reporters, Blocks or Locations you must close and re-open the Manage VSD
+        Locations window to have them appear.</li>
 
-        <li>"Use Location" marks locations which should be saved.
-        It is a temporary filter and is not saved.</li>
+        <li>"Use Location" marks locations which should be saved. It is a temporary filter and is
+        not saved.</li>
 
-        <li>The Reporters and Blocks tables have an additional column "User Name".
-        If a "User Name" doesn't exist, the "System Name" is displayed.</li>
+        <li>The Reporters and Blocks tables have an additional column "User Name". If a "User Name"
+        doesn't exist, the "System Name" is displayed.</li>
 
-        <li>The Listeners attribute "Listener Mode" is not supported and will be
-        removed at a later time.</li>
+        <li>The Listeners attribute "Listener Mode" is not supported and will be removed at a later
+        time.</li>
       </ul>
-
-      <a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
+      <a id="prefs">(This is the jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
       <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

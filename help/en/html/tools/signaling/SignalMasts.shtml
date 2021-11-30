@@ -1,115 +1,95 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Signal Masts documentation</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse, B. Milhaupt">
-  <meta name="Date.Modified" content="20200106">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="Date.Modified" content="20200106"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI: Signal Masts</h1>
 
       <p class="subtitle">Using Signal Masts</p>
 
       <div class="para">
-        <a href=
-        "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"
-        width="619" height="166" align="right"></a>
-
-        <p>JMRI Signal Mast objects allow you to display
-        prototypical Aspects on signals. For background
-        information, see the <a href="AspectSignaling.shtml">Aspect
-        Signaling</a> page.</p>
+        <a href="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src=
+        "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png" width="619" height="166"
+        class="floatRight" alt="signal mast table"></a>
+        <p>JMRI Signal Mast objects allow you to display prototypical Aspects on signals. For
+        background information, see the <a href="AspectSignaling.shtml">Aspect Signaling</a>
+        page.</p>
 
         <h3>The Signal Mast Table</h3>
 
         <p>Signal Masts are configured through the <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
-        Signal Mast Table</a>. You access this tool from the
-        <b>Tools &gt; Tables &gt; Signal Masts</b> menu.</p>
+        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You
+        access this tool from the <strong>Tools ⇒ Tables ⇒ Signal Masts</strong> menu.</p>
 
-        <p>From the table, you can manually set individual Signal
-        Masts to any Aspect that they're able to display by
-        selecting it from one of the combo boxes in the "Aspect" column.<br>
-        You can change the settings of a Signal Mast by clicking
-        the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
-            "Edit"</a> button in the corresponding line.</p><a name=
-        "add" id="add"></a>
+        <p>From the table, you can manually set individual Signal Masts to any Aspect that they're
+        able to display by selecting it from one of the combo boxes in the "Aspect" column.<br>
+        You can change the settings of a Signal Mast by clicking the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Edit"</a> button in the
+        corresponding line.</p>
 
-        <h3>Creating a Signal Mast</h3>
+        <h3 id="add">Creating a Signal Mast</h3>
 
-        <p>You add a new Signal Mast by clicking on the "Add..."
-        button at the bottom of the Signal Mast Table, which takes
-        you to the <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
-        "Add/Edit Signal Mast" pane</a>.</p>
+        <p>You add a new Signal Mast by clicking on the "Add..." button at the bottom of the Signal
+        Mast Table, which takes you to the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add/Edit Signal Mast"
+        pane</a>.</p>
 
-        <h3>Signal Mast Repeaters</h3><img src=
-        "images/SignalMastRepeaterPane.png" width="291" height="98"
-        align="right">
-        
-        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to 
-            mimic another signal mast's aspect.</p>
+        <h3>Signal Mast Repeaters</h3>
+        <img src="images/SignalMastRepeaterPane.png" width="291" height="98" class="floatRight"
+        alt="signal mast repeaters">
+        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to mimic another
+        signal mast's aspect.</p>
+
         <p>This can be useful in a number of ways:</p>
+
         <ul>
-            <li>When one physical signal mast must provide an aspect which is exactly 
-                identical to another physical signal mast.  This could be used to 
-                "repeat" the aspect of a "hard-to-see" signal mast on some other 
-                easy-to-see signal mast, such as one modeled in the fascia of the 
-                layout.</li>
-            <li>When there are multiple different routes between two physical signal masts, 
-                JMRI Signal Mast Logic discovery will only identify logic for one
-                of the routes.  By providing multiple signal masts at the "destination"
-                end of the route, it is possible to manually create and configure
-                Signal Mast Logic for each of the alternate routes, such that the
-                "source" signal mast displays the correct indication to protect the 
-                "destination" signal mast, regardless of which route is selected.</li>            
+          <li>When one physical signal mast must provide an aspect which is exactly identical to
+          another physical signal mast. This could be used to "repeat" the aspect of a
+          "hard-to-see" signal mast on some other easy-to-see signal mast, such as one modeled in
+          the fascia of the layout.</li>
+
+          <li>When there are multiple different routes between two physical signal masts, JMRI
+          Signal Mast Logic discovery will only identify logic for one of the routes. By providing
+          multiple signal masts at the "destination" end of the route, it is possible to manually
+          create and configure Signal Mast Logic for each of the alternate routes, such that the
+          "source" signal mast displays the correct indication to protect the "destination" signal
+          mast, regardless of which route is selected.</li>
         </ul>
-        <p>See the <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
-            Signal Mast Repeater</a> documentation for more details.</p>
+
+        <p>See the <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">Signal
+        Mast Repeater</a> documentation for more details.</p>
 
         <h2>Saving and Reloading Configuration</h2>
 
-        <p>The Signal Mast information is kept in your <i>layout
-        configuration</i>, along with Turnouts, Lights, Sensors,
-        control panel setup etc.<br>
-        To save this information on disk, allowing to <a href=
-        "../../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> next time you run JMRI, use <b>Store Configuration...</b>
-        in the <b>File</b> menu at the top of the Signal Mast Table (or
-        other tables from the Tools menu), or select <b>Store
-        Panel...</b> in the <b>Panel</b> menu.</p>
-        <p>For more information on creating and displaying
-        panels, including how to show signals on your panels,
-        please see the <a href=
-        "../../apps/PanelPro/Panels.shtml">Panels pages</a>.</p>
+        <p>The Signal Mast information is kept in your <em>layout configuration</em>, along with
+        Turnouts, Lights, Sensors, control panel setup etc. To save this information on disk,
+        allowing you to reload it next time you run JMRI, see <a href=
+        "../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
-        <p>Back to the <a href="index.shtml#tools">Signaling main
-        help page</a>.</p>
-        <!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
+        <p>For more information on creating and displaying panels, including how to show signals on
+        your panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels
+        pages</a>.</p>
+
+        <p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>
+      </div>
+      <!--closes para-->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
   </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

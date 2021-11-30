@@ -108,15 +108,17 @@ public class CarSetFrameTest extends OperationsTestCase {
         Car c4 = cManager.getByRoadAndNumber("CP", "99");
         Assert.assertNotNull("car exists", c3);
         Assert.assertNotNull("car exists", c4);
-        Kernel k = cManager.newKernel("test");
+        f.loadCar(c3);
+        
+        Kernel k = InstanceManager.getDefault(KernelManager.class).newKernel("test");
         c3.setKernel(k);
         c4.setKernel(k);
         
-        f.loadCar(c3);
-
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        Assert.assertEquals("confirm kernel", "test", f.kernelComboBox.getItemAt(1));
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"), c3.getKernelName()), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
     
@@ -161,19 +163,22 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // pressing "Save" when car has destination and train will cause dialog box to appear
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
         
         // Confirm that car's destination is still there
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());
         
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsInRoute"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -222,11 +227,13 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // remove this type from train
         train1.deleteTypeName(c3.getTypeName());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -275,12 +282,14 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's road name from train
         train1.setRoadOption(Train.EXCLUDE_ROADS);
         train1.addRoadName(c3.getRoadName());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -329,11 +338,12 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's built date from train
         train1.setBuiltEndYear("1984");
-
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -382,12 +392,13 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Exclude car's owner name from train
         train1.setOwnerOption(Train.EXCLUDE_OWNERS);
         train1.addOwnerName(c3.getOwner());
-
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -441,8 +452,9 @@ public class CarSetFrameTest extends OperationsTestCase {
         Track track = westford.getTracksList().get(0);
         Assert.assertEquals("Confirm car placement", Track.OKAY, c3.setLocation(westford, track));
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
@@ -491,6 +503,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // Set car's destination outside of train's route
         Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
         Track track = westford.getTracksList().get(0);
@@ -498,8 +511,9 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         Assert.assertNotNull("Car's route location exists", c3.getRouteLocation());
         
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertEquals("car has still has destination", westford, c3.getDestination());
         Assert.assertNull("Car's route location is removed", c3.getRouteLocation());

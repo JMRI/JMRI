@@ -1,290 +1,235 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Simple Signal Logic</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20171115">
   <meta name="keywords" content="JMRI help Simple Signal Logic">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Simple Signal Logic</h1>
 
-      <a name="contents" id="contents"></a>
-      <h2>Contents</h2>
+      <h2 id="contents">Contents</h2>
 
-      <p>The documentation below describes Signaling with JMRI
-      using an older tool, SSL, and discusses how to set up basic
-      signaling situations with it.</p>
+      <p>The documentation below describes Signaling with JMRI using an older tool, SSL, and
+      discusses how to set up basic signaling situations with it.</p>
 
       <ul>
-        <li><a href="#intro">Introduction</a></li>
+        <li>
+          <a href="#intro">Introduction</a>
+        </li>
 
-        <li><a href="#start">Getting Started</a></li>
+        <li>
+          <a href="#start">Getting Started</a>
+        </li>
 
-        <li><a href="#more">More information</a></li>
+        <li>
+          <a href="#more">More information</a>
+        </li>
       </ul>
 
-      <a name="intro" id="intro"></a>
-      <h2>Introduction</h2>
+      <h2 id="intro">Introduction</h2>
 
-      <p>Simple Signal Logic (SSL) provided the first method to
-      enable the rapid setup of basic Automatic Block Signaling
-      (ABS) style signaling in JMRI. For more complex operations
-      beyond the capability of SSL refer to the newer and preferred
-      method of Signal Mast Logic on the <a href=
-      "../../../../html/tools/signaling/index.shtml">Signaling main
-      help page</a>. Note that SSL ignores any Signal Mast objects
-      and only drives individual Signal Heads.<br>
-      <b>Don't use the SSL Tool when you have already built Signal
-      Masts and the more advanced Signal Mast Logic in the same
-      Panel/Configuration file.</b><br>
-      SSL has no option to delete an SSL entry or provide an overview
-      of all SSL rules other than looking at the XML file of your
-      Panel, so make notes as you add SSL items and back up your
-      configuration XML file.</p>
+      <p>Simple Signal Logic (SSL) provided the first method to enable the rapid setup of basic
+      Automatic Block Signaling (ABS) style signaling in JMRI. For more complex operations beyond
+      the capability of SSL refer to the newer and preferred method of Signal Mast Logic on the
+      <a href="../../../../html/tools/signaling/index.shtml">Signaling main help page</a>. Note
+      that SSL ignores any Signal Mast objects and only drives individual Signal Heads.</p>
 
-      <p>Much of basic ABS signaling can be boiled down to "a
-      Signal Head goes red when a train can't safely enter the
-      block it protects; it goes yellow when the block following
-      the protected block can't be entered". Although that's a
-      simplification, it can serve as a powerful starting point for
-      understanding signaling logic.</p>
+      <p><strong>Don't use the SSL Tool when you have already built Signal Masts and the more
+      advanced Signal Mast Logic in the same Panel/Configuration file.</strong>
+      </p>
 
-      <p>The SSL user interface was designed to be user friendly to
-      all users with basic familiarity with JMRI. SSL provides a
-      means for setting up basic signals in an intuitive manner,
-      without the user having to be familiar with all of the logic
-      necessary to account for the different Signal Aspects.
-      <a href="../../../../images/SslExample.png"><img src=
-      "../../../../images/SslExample.png" align="right"
-      width="452" height="287" hspace="0" vspace="0" alt=
+      <p>Much of basic ABS signaling can be boiled down to "a Signal Head goes red when a train
+      can't safely enter the block it protects; it goes yellow when the block following the
+      protected block can't be entered". Although that's a simplification, it can serve as a
+      powerful starting point for understanding signaling logic.</p>
+
+      <p>The SSL user interface was designed to be user friendly to all users with basic
+      familiarity with JMRI. SSL provides a means for setting up basic signals in an intuitive
+      manner, without the user having to be familiar with all of the logic necessary to account for
+      the different Signal Aspects. <a href="../../../../images/SslExample.png"><img src=
+      "../../../../images/SslExample.png" class="floatRight" width="452" height="287" alt=
       "Simple Signal Logic panel figure"></a></p>
 
-      <p>The Simple Signal Logic Tool allows you to configure JMRI
-      to use a basic ABS type of logic to set the appearance of
-      Signal Heads. Using the SSL Tool, you enter information for
-      each Signal Head on:</p>
+      <p>The Simple Signal Logic Tool allows you to configure JMRI to use a basic ABS type of logic
+      to set the appearance of Signal Heads. The fields will vary based on the the selected option.
+      Using the SSL Tool, you enter information for each Signal Head on:</p>
 
       <ul>
-        <li><b>For Signal Head:</b> The Signal Head being
-        driven.</li>
+        <li><strong>For Signal Head:</strong> The Signal Head being driven.</li>
 
-        <li><b>Protects Sensor/s:</b> Which sensors (occupancy
-        detectors) cover the block immediately past the signal.
-        When any of these sensors show "active" the Signal Head
-        will be set to red.</li>
+        <li><strong>Protects Sensor/s:</strong> Which sensors (occupancy detectors) cover the block
+        immediately past the signal. When any of these sensors show "active" the Signal Head will
+        be set to red.</li>
 
-        <li><b>Red When Turnout:</b> If the block contains a
-        Turnout, pick or enter the Turnout System Name and use the
-        selection buttons to choose whether you're entering the
-        Closed or Thrown leg. The Signal Head will be set to Rred
-        whenever the turnout is set against this track.</li>
+        <li><strong>Red When Turnout:</strong> If the block contains a Turnout, pick or enter the
+        Turnout System Name and use the selection buttons to choose whether you're entering the
+        Closed or Thrown leg. The Signal Head will be set to Rred whenever the turnout is set
+        against this track.</li>
 
-        <li><b>Protects Signal:</b> The next Signal Head that the
-        train will reach; this Signal Head will be set Yellow if
-        the next signal head is red.</li>
+        <li><strong>Protects Signal:</strong> The next Signal Head that the train will reach; this
+        Signal Head will be set Yellow if the next signal head is red.</li>
 
-        <li><b>With Flashing Yellow</b> If the checkbox is checked,
-        the Signal Head will be set flashing yellow (JMRI will
-        alternate between Dark and Yellow) if the next protected
-        signal head is yellow, thereby giving four-block
-        signaling.</li>
+        <li><strong>With Flashing Yellow</strong> If the checkbox is checked, the Signal Head will
+        be set flashing yellow (JMRI will alternate between Dark and Yellow) if the next protected
+        signal head is yellow, thereby giving four-block signaling.</li>
 
-        <li><b>Limited Speed</b> If this checkbox is checked, this
-        Signal Head will be set to Yellow as the least restrictive
-        Aspect.</li>
+        <li><strong>Limited Speed</strong> If this checkbox is checked, this Signal Head will be
+        set to Yellow as the least restrictive Aspect.</li>
 
-        <li><b>Restricting Speed</b> If this checkbox is checked, this
-        Signal Head will be set to Flashing Red as the least restrictive
-        Aspect.</li>
+        <li><strong>Restricting Speed</strong> If this checkbox is checked, this Signal Head will
+        be set to Flashing Red as the least restrictive Aspect.</li>
 
-        <li><b>Is Distant Signal</b> If this checkbox is checked,
-        this Signal will be set to the most restrictive aspect of
-        either this Signal Head or the next protected Signal
+        <li><strong>Is Distant Signal</strong> If this checkbox is checked, this Signal will be set
+        to the most restrictive aspect of either this Signal Head or the next protected Signal
         Head.</li>
 
-        <li><b>Approach Lighting Sensor:</b> The sensor that
-        controls whether this Signal Head is lit or not. Only the
-        actual hardware Signal Head on the layout will go dark.
-        Panel indicators will show the normal signal Appearance.
-        Leave this entry blank to always show Lit.</li>
+        <li><strong>Approach Lighting Sensor:</strong> The sensor that controls whether this Signal
+        Head is lit or not. Only the actual hardware Signal Head on the layout will go dark. Panel
+        indicators will show the normal signal Appearance. Leave this entry blank to always show
+        Lit.</li>
 
-        <li><b>Facing Point Turnout</b> The Signal Head is located
-        on the single track side of the Turnout, facing a choice of
-        two or more tracks in the direction of travel.</li>
+        <li><strong>Facing Point Turnout</strong> The Signal Head is located on the single track
+        side of the Turnout, facing a choice of two or more tracks in the direction of travel.</li>
 
-        <li><b>Trailing Point Turnout</b> The Signal Head is
-        located on the double track side of the Turnout, facing a
-        single track in the direction of travel.</li>
+        <li><strong>Trailing Point Turnout</strong> The Signal Head is located on the double track
+        side of the Turnout, facing a single track in the direction of travel.</li>
       </ul>
 
-      <p>The case of a facing point turnout which leads to two
-      different "Protected Signals" is also covered although the
-      above figure doesn't show it. If a single Signal Head is used
-      to control both branches, then choose "On Facing-Point
-      Turnout". If a different Signal Head will control each route,
-      then simply choose "Main" or "Diverging" leg of turnout, as
-      required for each one.</p>
+      <p>The case of a facing point turnout which leads to two different "Protected Signals" is
+      also covered. If a single Signal Head is used to control both branches, then choose "On
+      Facing-Point Turnout". If a different Signal Head will control each route, then simply choose
+      "Main" or "Diverging" leg of turnout, as required for each one.</p>
 
-      <p>Pause your mouse over any entry or item in the SSL
-      creation pane for a brief "tooltip" help reminder.</p>
+      <p>Pause your mouse over any entry or item in the SSL creation pane for a brief "tooltip"
+      help reminder.</p>
 
-      <p>It's clear that SSL won't cover complicated interlockings
-      nor will it cover the speed-signaling seen on some
-      prototypes. However, when combined with the logic
-      capabilities of JMRI <a href=
-      "../../../html/tools/Routes.shtml">Routes</a> and <a href=
-      "../../../html/tools/Logix.shtml">Logix</a>, SSL can be used
-      to create a CTC panel, as Bob Bucklew shows on <a href=
-      "http://www.quaker-valley.com/CTC/QV_CTCnew.html">his web
-      site</a>.</p><a name="start" id="start"></a>
+      <p>Use the <strong>Apply</strong> button to create a new SSL defintion or update an existing
+      defintion. The <strong>Delete</strong> button will remove the SSL definition.</p>
 
-      <h2>Getting Started</h2>
+      <p>It's clear that SSL won't cover complicated interlockings nor will it cover the
+      speed-signaling seen on some prototypes. However, when combined with the logic capabilities
+      of JMRI <a href="../../../../html/tools/Routes.shtml">Routes</a> and <a href=
+      "../../../../html/tools/Logix.shtml">Logix</a>, SSL can be used to create a CTC panel, as Bob
+      Bucklew shows on <a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">his web
+      site</a>.</p>
 
-      <p>Follow these steps to create your first JMRI Signal and
-      become familiar with the SSL user interface. As a starter
-      this example defines just one "virtual" Signal Head that
-      doesn't really exist on the layout, so it can work with any
-      kind of layout hardware. See the <a href=
-      "../../../../html/tools/signaling/index.shtml">Signaling main
-      help page</a> for information on how to set up your own
-      signals.</p>
+      <h2 id="start">Getting Started</h2>
+
+      <p>Follow these steps to create your first JMRI Signal and become familiar with the SSL user
+      interface. As a starter this example defines just one "virtual" Signal Head that doesn't
+      really exist on the layout, so it can work with any kind of layout hardware. See the <a href=
+      "../../../../html/tools/signaling/index.shtml">Signaling main help page</a> for information
+      on how to set up your own signals.</p>
 
       <ol>
-        <li>Select <b>Signal Heads</b> in the PanelPro
-        <b>Tools &gt; Tables &gt; Signals</b> menu.</li>
+        <li>Select <strong>Signal Heads</strong> in the PanelPro <strong>Tools &gt; Tables &gt;
+        Signals</strong> menu.</li>
 
-        <li>In the Signal Head Table window that appears, click
-        the <b>Add...</b> button to begin defining a new signal
-        head.</li>
+        <li>In the Signal Head Table window that appears, click the <strong>Add...</strong> button
+        to begin defining a new signal head.</li>
 
-        <li>In the Add New Signal Head pane that appears, choose the
-        "Virtual Signal" type.</li>
+        <li>In the Add New Signal Head pane that appears, choose the "Virtual Signal" type.</li>
 
         <li>Enter a system name such as "IH1000".</li>
 
-        <li>Click <b>Create</b> to enter this head into the Signal Head
-        Table.</li>
+        <li>Click <strong>Create</strong> to enter this head into the Signal Head Table.</li>
 
-        <li>Enter all the Signal Heads that you will be using for
-        this test, using different names. The actual name doesn't
-        matter, they just have to be different.</li>
+        <li>Enter all the Signal Heads that you will be using for this test, using different names.
+        The actual name doesn't matter, they just have to be different.</li>
 
-        <li>Now select <b>Simple Signal Logic...</b> in the
-        <b>Tools</b> menu.</li>
+        <li>Now select <strong>Simple Signal Logic...</strong> in the <strong>Tools</strong>
+        menu.</li>
 
-        <li>Fill in the various entries to match your signal's
-        requirements as previously shown.</li>
+        <li>Fill in the various entries to match your signal's requirements as previously
+        shown.</li>
 
-        <li>Click <b>Apply</b> to make this entry active.</li>
+        <li>Click <strong>Apply</strong> to make this entry active.</li>
 
         <li>Be sure to save your work.</li>
       </ol>
 
-      <p>You have just created an SSL entry to control a Signal
-      Head. It's as simple as that. It took you more time to read
-      this tutorial than to create your first SSL entry.<br>
-      The following example would allow you to build actual Simple
-      Signal Logic for signals connected to a specific kind of DCC
-      system:</p>
+      <p>You have just created an SSL entry to control a Signal Head. It's as simple as that. It
+      took you more time to read this tutorial than to create your first SSL entry.<br>
+      The following example would allow you to build actual Simple Signal Logic for signals
+      connected to a specific kind of DCC system:</p>
 
       <ol>
-        <li>Select <b>Tables &gt; Turnouts</b> in the <b>Tools</b>
-        menu.</li>
+        <li>Select <strong>Tables &gt; Turnouts</strong> in the <strong>Tools</strong> menu.</li>
 
-        <li>Check to be sure that the outputs (Turnout addresses)
-        that will control your Signals Heads are in the Turnout
-        Table. If not, click the <b>Add...</b> button at the bottom
-        of the Turnout Table.</li>
+        <li>Check to be sure that the outputs (Turnout addresses) that will control your Signals
+        Heads are in the Turnout Table. If not, click the <strong>Add...</strong> button at the
+        bottom of the Turnout Table.</li>
 
-        <li>In the Add New Turnout window that appears, enter a
-        System Name, (e.g. "LT1") and "test" for User Name, then
-        click <b>Create</b>.<br>
-        <i>Note:</i> All System Names of JMRI objects must follow
-        the JMRI Naming rules, starting with a capital prefix for
-        the DCC connection type (e.g. "L" for LocoNet) followed bij a
-        capital T in the case of Turnouts and the actual hardware
-        address of the Turnout.</li>
+        <li>In the Add New Turnout window that appears, enter a System Name, (e.g. "LT1") and
+        "test" for User Name, then click <strong>Create</strong>.<br>
+        <em>Note:</em> All System Names of JMRI objects must follow the JMRI Naming rules, starting
+        with a capital prefix for the DCC connection type (e.g. "L" for LocoNet) followed bij a
+        capital T in the case of Turnouts and the actual hardware address of the Turnout.</li>
 
-        <li>Clicking on the corresponding <b>Closed/Thrown</b>
-        entries in the Turnout Table should now cause your Signal
-        Head to change state.</li>
+        <li>Clicking on the corresponding <strong>Closed/Thrown</strong> entries in the Turnout
+        Table should now cause your Signal Head to change state.</li>
 
-        <li>Select <b>Signal Heads</b> in the <b>Tools &gt; Tables
-        &gt; Signals</b> menu.</li>
+        <li>Select <strong>Signal Heads</strong> in the <strong>Tools &gt; Tables &gt;
+        Signals</strong> menu.</li>
 
-        <li>In the Signal Head Table window that appears, click
-        <b>Add...</b> to begin defining a new Signal Head.</li>
+        <li>In the Signal Head Table window that appears, click <strong>Add...</strong> to begin
+        defining a new Signal Head.</li>
 
-        <li>In the Add New Signal window that appears choose the
-        correct signal type to match your hardware. The required
-        item boxes will appear.</li>
+        <li>In the Add New Signal window that appears choose the correct signal type to match your
+        hardware. The required item boxes will appear.</li>
 
-        <li>Enter a System Name, for example "LH152". <i>Note:</i>
-        Signal Head system names must start with the connection
-        prefix plus "H" for Head (i.e. CH, IH, LH, NH, XH, etc.)
-        and be followed by the hardware address ("number") of the
-        Signal Head.</li>
+        <li>Enter a System Name, for example "LH152". <em>Note:</em> Signal Head system names must
+        start with the connection prefix plus "H" for Head (i.e. CH, IH, LH, NH, XH, etc.) and be
+        followed by the hardware address ("number") of the Signal Head.</li>
 
-        <li>Next pick or create one or more Turnouts that will
-        control this Signal Head. <i>Note:</i> In the case of
-        SE8C connected signals, just enter the first Turnout number
-        of each pair.
-        The second Turnout number is automatically known.</li>
+        <li>Next pick or create one or more Turnouts that will control this Signal Head.
+        <em>Note:</em> In the case of SE8C connected signals, just enter the first Turnout number
+        of each pair. The second Turnout number is automatically known.</li>
 
-        <li>Click <b>Create</b> to enter this head into the Signal
-        Head Table.</li>
+        <li>Click <strong>Create</strong> to enter this head into the Signal Head Table.</li>
 
         <li>Enter all the Signal Heads that you will be using.</li>
 
-        <li>Now select <b>Simple Signal Logic...</b> in the
-        PanelPro <b>Tools</b> menu.</li>
+        <li>Now select <strong>Simple Signal Logic...</strong> in the PanelPro
+        <strong>Tools</strong> menu.</li>
 
-        <li>Fill in the various entries to match the requirements
-        of your first signal as previously shown.</li>
+        <li>Fill in the various entries to match the requirements of your first signal as
+        previously shown.</li>
 
-        <li>Click <b>Apply</b> to make this entry active.</li>
+        <li>Click <strong>Apply</strong> to make this entry active.</li>
 
         <li>Repeat steps 13-14 for each of your Signal Heads.</li>
 
-        <li>Be sure to save your work by selecting "Store Panels..."
-        from the Panels menu.</li>
+        <li>Be sure to save your work. See <a href=
+        "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.
+        </li>
       </ol>
 
-      <a name="more" id="more"></a>
-      <h2>More on SSL</h2>
+      <h2 id="more">More on SSL</h2>
 
       <ul>
         <li>Check out the <a href=
-        "../../../../html/tools/signaling/SimpleSignalExample.shtml">
-        Simple Signal Logic example</a>.</li>
+        "../../../../html/tools/signaling/SimpleSignalExample.shtml">Simple Signal Logic
+        example</a>.
+        </li>
 
-        <li><a href=
-        "../../../../html/tools/signaling/Logic.shtml">Backgrounds
-        on SSL</a></li>
+        <li>
+          <a href="../../../../html/tools/signaling/Logic.shtml">Backgrounds on SSL</a>
+        </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

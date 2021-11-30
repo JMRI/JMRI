@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,7 +32,7 @@ import jmri.swing.JTablePersistenceManager;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
+ *         2014
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -338,10 +337,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
-                            train.getName()}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        int response = JOptionPane.showConfirmDialog(this,
+                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeOpenFile"),
+                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.OK_CANCEL_OPTION);
+                        if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                            break;
+                        }
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -352,39 +354,32 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             // Processes the CSV Manifest files using an external custom program.
             TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
             if (!tcm.excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
-                        tcm.getDirectoryName(), tcm.getFileName());
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", tcm.getDirectoryName(),
+                        tcm.getFileName());
                 JOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                                new Object[]{
-                                    tcm.getDirectoryName(),
-                                    tcm.getFileName()
-                                }),
-                        Bundle.getMessage("ManifestCreatorNotFound"),
-                        JOptionPane.ERROR_MESSAGE);
+                                new Object[] { tcm.getDirectoryName(), tcm.getFileName() }),
+                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             List<Train> trains = getSortByList();
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this,
+                        int response = JOptionPane.showConfirmDialog(this,
                                 MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
-                                        new Object[]{
-                                            train.getName()
-                                        }),
-                                Bundle.getMessage("ErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);
+                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.OK_CANCEL_OPTION);
+                        if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                            break;
+                        }
                     } else if (train.isBuilt()) {
-                        // Make sure our csv manifest file exists for this Train.
-                        File csvFile = train.createCSVManifestFile();
-                        // Add it to our collection to be processed.
-                        tcm.addCVSFile(csvFile);
+                        // Add csv manifest file to our collection to be processed.
+                        tcm.addCsvFile(train.createCsvManifestFile());
                         train.setPrinted(true);
                     }
                 }
             }
-
             // Now run the user specified custom Manifest processor program
             tcm.process();
         }
@@ -503,7 +498,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     private void updateSwitchListButton() {
-        log.debug("update switch list button");
         List<Location> locations = locationManager.getList();
         for (Location location : locations) {
             if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
@@ -561,17 +555,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             return;
         }
         if (OperationsXml.areFilesDirty()) {
-            int result = javax.swing.JOptionPane.showOptionDialog(this,
-                    Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"),
-                    javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
-                    new String[]{ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"), // NOI18N
-                        ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnNoClose")}, // NOI18N
+            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("PromptQuitWindowNotWritten"),
+                    Bundle.getMessage("PromptSaveQuit"), javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
+                    new String[] { ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"), // NOI18N
+                            ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnNoClose") }, // NOI18N
                     ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
-            if (result == javax.swing.JOptionPane.NO_OPTION) {
-                return;
+            if (result != javax.swing.JOptionPane.NO_OPTION) {
+                // user wants to save
+                storeValues();
             }
-            // user wants to save
-            storeValues();
         }
     }
 
@@ -583,14 +576,15 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(TrainScheduleManager.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateTitle();
         }
-        if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
+            log.debug("update switch list button location ({})", e.getSource());
             updateSwitchListButton();
         }
         if (e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)) {

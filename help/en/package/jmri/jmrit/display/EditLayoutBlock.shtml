@@ -1,200 +1,139 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Edit Block Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Block">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>Create/Edit Block</h1>Blocks are sections of track whose
-      occupancy may be individually monitored. Dividing track into
-      blocks is optional. Blocks set up in a track diagram normally
-      correspond to physical blocks on a layout. Block occupancy is
-      indicated by the state of an <i>occupancy sensor</i>. When a
-      layout's track is divided into blocks, all of the track need
-      not belong to a block. For example, yard track is normally
-      not in a block, whereas mainline track almost always would be
-      divided into blocks. The main use of blocks is to facilitate
-      signaling, but blocks may be used for other layout control
-      and animation functions.
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Create/Edit Block</h1>
+      Blocks are sections of track whose occupancy may be individually monitored. Dividing track
+      into blocks is optional. Blocks set up in a track diagram normally correspond to physical
+      blocks on a layout. Block occupancy is indicated by the state of an <em>occupancy
+      sensor</em>. When a layout's track is divided into blocks, all of the track need not belong
+      to a block. For example, yard track is normally not in a block, whereas mainline track almost
+      always would be divided into blocks. The main use of blocks is to facilitate signaling, but
+      blocks may be used for other layout control and animation functions.
+      <p>If a block name is entered in the <strong>Block: Name</strong> field of the tool bar prior
+      to adding a turnout, level crossing, or track segment, the added item is assigned to that
+      block; if a sensor name (system name or user name) was entered into the <strong>Occupancy
+      Sensor</strong> field, that sensor will be assigned to the entered block. A turnout, level
+      crossing, or track segment may also be assigned to a block by entering that block's name in
+      the edit dialog accessed by selecting <strong>Edit...</strong> in that items popup menu. In
+      either case, if a block with the entered name doesn't exist, one is created.</p>
 
-      <p>If a block name is entered in the <b>Block: Name</b> field
-      of the tool bar prior to adding a turnout, level crossing, or
-      track segment, the added item is assigned to that block; if a
-      sensor name (system name or user name) was entered into the
-      <b>Occupancy Sensor</b> field, that sensor will be assigned
-      to the entered block. A turnout, level crossing, or track
-      segment may also be assigned to a block by entering that
-      block's name in the edit dialog accessed by selecting
-      <b>Edit...</b> in that items popup menu. In either case, if a
-      block with the entered name doesn't exist, one is
-      created.</p>
+      <p>A block name may be any series of alphabetic or numeric characters that describe the
+      block, for example, "Red Main 2", "Lake Siding", or "Moose Block". Once a block is created,
+      its name may not be changed; attempting to change a block's name will create a new block
+      having the new name. After all items assigned to the old block are changed to the new block,
+      the block with the old name will be automatically deleted (see below).</p>
 
-      <p>A block name may be any series of alphabetic or numeric
-      characters that describe the block, for example, "Red Main
-      2", "Lake Siding", or "Moose Block". Once a block is created,
-      its name may not be changed; attempting to change a block's
-      name will create a new block having the new name. After all
-      items assigned to the old block are changed to the new block,
-      the block with the old name will be automatically deleted
-      (see below).</p>
+      <p>Blocks may be viewed in the <strong>Block Table</strong>, that may be accessed using the
+      <strong>Tools</strong> menu. Block information for a Layout Editor panel is kept in two
+      parts, which are always linked together automatically. For each block, Layout Editor specific
+      information is stored and managed in a Layout Editor specific part, and the generic part of
+      the block information is stored in a JMRI Block. When a Layout Editor block is created, a
+      corresponding JMRI Block is automatically created. The automatically created Block will have
+      a system name <em>IBnnn</em> (where <em>nnn</em> is a number), and a user name the same as
+      the block name mentioned above. It is the generic Blocks that are displayed in the Block
+      Table. Avoid changing the user name in the Block Table, because this will break the link
+      between the two parts of the block information.</p>
 
-      <p>Blocks may be viewed in the <b>Block Table</b>, that may
-      be accessed using the <b>Tools</b> menu. Block information
-      for a Layout Editor panel is kept in two parts, which are
-      always linked together automatically. For each block, Layout
-      Editor specific information is stored and managed in a Layout
-      Editor specific part, and the generic part of the block
-      information is stored in a JMRI Block. When a Layout Editor
-      block is created, a corresponding JMRI Block is automatically
-      created. The automatically created Block will have a system
-      name <i>IBnnn</i> (where <i>nnn</i> is a number), and a user
-      name the same as the block name mentioned above. It is the
-      generic Blocks that are displayed in the Block Table. Avoid
-      changing the user name in the Block Table, because this will
-      break the link between the two parts of the block
-      information.</p>
+      <p>Of interest in the Block Table is the "Value" column. The "Value" can be used to identify
+      trains as they move around the layout. If a train is parked in a Block, and train identifying
+      text is manually entered into the "Value" entry for that Block, the text will be propagated
+      from Block to Block as the train is run around the layout. When the train enters a Block, the
+      text "Value" of the block the train entered from will be copied into the "Value" of the
+      entered Block; when the train exits a Block, the "Value" of the now empty block will be
+      cleared. If a Memory Variable is assigned to the block (see below), the "Value" of the Memory
+      Variable will be set to the "Value" of the block. So by placing a Memory Icon near the block,
+      the identity of the train in the block can be displayed in the Layout Editor panel.
+      <strong>Caution: Tracking trains using this method requires smoothly running block detection
+      circuitry.</strong> False or flickering block detection can easily confuse things.</p>
 
-      <p>Of interest in the Block Table is the "Value" column. The
-      "Value" can be used to identify trains as they move around
-      the layout. If a train is parked in a Block, and train
-      identifying text is manually entered into the "Value" entry
-      for that Block, the text will be propagated from Block to
-      Block as the train is run around the layout. When the train
-      enters a Block, the text "Value" of the block the train
-      entered from will be copied into the "Value" of the entered
-      Block; when the train exits a Block, the "Value" of the now
-      empty block will be cleared. If a Memory Variable is assigned
-      to the block (see below), the "Value" of the Memory Variable
-      will be set to the "Value" of the block. So by placing a
-      Memory Icon near the block, the identity of the train in the
-      block can be displayed in the Layout Editor panel.
-      <b>Caution: Tracking trains using this method requires
-      smoothly running block detection circuitry.</b> False or
-      flickering block detection can easily confuse things.</p>
+      <p>Turnout, level crossing, and track segment edit dialogs provide access to the Create/Edit
+      Block dialog where information specific to a block may be entered or edited. The
+      <strong>Occupancy Sensor:</strong> field in the Create/Edit Block dialog shows the name of
+      the occupancy sensor currently assigned to the block, if there is one. To enter or change the
+      occupancy sensor, enter the name (system name or user name) of a sensor in the Sensor Table
+      in the <strong>Occupancy Sensor:</strong> field. A sensor may be assigned as the occupancy
+      sensor of only one block; attempting to do otherwise will result in an error message.
+      Normally, the state of an occupancy sensor is "Active" when a block is occupied, so "Active"
+      for occupied sense is the automatic default. This can be changed by selecting "Inactive" in
+      the <strong>Occupied Sense:</strong> selection box.</p>
+      You can edit the sensor debounce options from this window, setting the Sensor Debounce helps
+      to prevent false triggers of a sensor being passed into the system and triggering other
+      events in the system.<br>
+      Such false triggers could be due to a dirty piece of track or electrical interference.
+      <strong>Use Global Debounce Values</strong> check box, allows you to select if the sensor
+      will use the default sensor debounce values if configured.<br>
+      <strong>Inactive Delay</strong> and <strong>Active Delay</strong> allow you to specify the
+      amount of time in milliSeconds that the system waits before registering the state change of a
+      sensor.
+      <p>Block track colors are used instead of the default track color if a section of track is in
+      a block. The track items in a block are drawn with different track colors for occupied and
+      unoccupied states, allowing the track in a block to change color as a train enters and leaves
+      that block. To set track colors, select the unoccupied track color in the <strong>Track
+      Color:</strong> selection box, and select the occupied track color in the <strong>Occupied
+      Track Color:</strong> selection box. An alternate unoccupied track color is provided for
+      special uses. For example, Dispatcher has an option to use the alternate unoccupied track
+      color for blocks that are allocated but unoccupied. Set the alternate unoccupied track color
+      using the <strong>Alternate Track Color:</strong> selection box. When track color is set,
+      Layout Editor will use the occupied track color if a block is occupied, then if not occupied,
+      will use the alternate unoccupied track color if it has been requested, otherwise it uses the
+      unoccupied track color.</p>
 
-      <p>Turnout, level crossing, and track segment edit dialogs
-      provide access to the Create/Edit Block dialog where
-      information specific to a block may be entered or edited. The
-      <b>Occupancy Sensor:</b> field in the Create/Edit Block
-      dialog shows the name of the occupancy sensor currently
-      assigned to the block, if there is one. To enter or change
-      the occupancy sensor, enter the name (system name or user
-      name) of a sensor in the Sensor Table in the <b>Occupancy
-      Sensor:</b> field. A sensor may be assigned as the occupancy
-      sensor of only one block; attempting to do otherwise will
-      result in an error message. Normally, the state of an
-      occupancy sensor is "Active" when a block is occupied, so
-      "Active" for occupied sense is the automatic default. This
-      can be changed by selecting "Inactive" in the <b>Occupied
-      Sense:</b> selection box.</p>You can edit the sensor debounce
-      options from this window, setting the Sensor Debounce helps
-      to prevent false triggers of a sensor being passed into the
-      system and triggering other events in the system.<br>
-      Such false triggers could be due to a dirty piece of track or
-      electrical interference. <b>Use Global Debounce Values</b>
-      check box, allows you to select if the sensor will use the
-      default sensor debounce values if configured.<br>
-      <b>Inactive Delay</b> and <b>Active
-      Delay</b> allow you to specify the amount of time in
-      milliSeconds that the system waits before registering the
-      state change of a sensor.
+      <p>The <strong>Memory Variable Name:</strong> field in the Create/Edit Block dialog shows the
+      name of the memory variable currently assigned to the block, if there is one. To enter or
+      change the memory variable, enter the name (system name or user name) of a memory variable in
+      the Memory Table in the <strong>Memory Variable Name:</strong> field. Assigning a memory
+      variable is optional. An assigned memory variable will contain as its "value" the "value" of
+      the Block, and is useful in identifying trains as they are tracked around the layout (see
+      above).</p>
 
-      <p>Block track colors are used instead of the default track
-      color if a section of track is in a block. The track items in
-      a block are drawn with different track colors for occupied
-      and unoccupied states, allowing the track in a block to
-      change color as a train enters and leaves that block. To set
-      track colors, select the unoccupied track color in the
-      <b>Track Color:</b> selection box, and select the occupied
-      track color in the <b>Occupied Track Color:</b> selection
-      box. An alternate unoccupied track color is provided for
-      special uses. For example, Dispatcher has an option to use
-      the alternate unoccupied track color for blocks that are
-      allocated but unoccupied. Set the alternate unoccupied track
-      color using the <b>Alternate Track Color:</b> selection box.
-      When track color is set, Layout Editor will use the occupied
-      track color if a block is occupied, then if not occupied,
-      will use the alternate unoccupied track color if it has been
-      requested, otherwise it uses the unoccupied track color.</p>
+      <p>The <strong>Permissive Working Allowed</strong> check box allows the block to be set so
+      that if it is already occupied, then another train is allowed to enter that block. This
+      feature is mainly used within the SignalMast logic.</p>
 
-      <p>The <b>Memory Variable Name:</b> field in the Create/Edit
-      Block dialog shows the name of the memory variable currently
-      assigned to the block, if there is one. To enter or change
-      the memory variable, enter the name (system name or user
-      name) of a memory variable in the Memory Table in the
-      <b>Memory Variable Name:</b> field. Assigning a memory
-      variable is optional. An assigned memory variable will
-      contain as its "value" the "value" of the Block, and is
-      useful in identifying trains as they are tracked around the
-      layout (see above).</p>
+      <p>If layout block routing has been enabled for use with the Signalmast Logic additional
+      fields will be presented.</p>
 
-      <p>The <b>Permissive Working Allowed</b> check box allows the
-      block to be set so that if it is already occupied, then
-      another train is allowed to enter that block. This feature is
-      mainly used within the SignalMast logic.</p>
+      <p>The <strong>Block Metric</strong> assigns a cost against a particular block so it is
+      possible to determine if the signal logic should use this block over another block if there
+      are multiple paths. The lower the metric the more preferred it is. By default Main Line
+      blocks have a value of 50, while a Side Track has a value of 200</p>
 
-      <p>If layout block routing has been enabled for use with the
-      Signalmast Logic additional fields will be presented.</p>
+      <p>The <strong>Attached Block</strong> fields represent each block that is connected to this
+      one, here you can determine if a route to a next block can be used both ways or only in one
+      direction in working out the signaling logic. The options are.<br>
+      <strong>Bi-Directional</strong> traffic can flow freely between each block.<br>
+      <strong>Send Only</strong> is where this block can only be used to send traffic to the
+      neighboring block, the neighboring block can not send traffic to us.<br>
+      <strong>Receive Only</strong>, this block can only receive traffic from the adjacent block we
+      can not send traffic to it.<br>
+      So for example you might have a passing loop on a single section of line, you can use this so
+      that trains always use the left hand path.</p>
 
-      <p>The <b>Block Metric</b> assigns a cost against a
-      particular block so it is possible to determine if the signal
-      logic should use this block over another block if there are
-      multiple paths. The lower the metric the more preferred it
-      is. By default Main Line blocks have a value of 50, while a
-      Side Track has a value of 200</p>
+      <p>Since blocks are items on the physical layout, the same block may be used in more than one
+      panel. Consequently, block information is saved in the non- panel specific portion of the
+      layout information, when panels are saved to a file on disk.</p>
 
-      <p>The <b>Attached Block</b> fields represent each block that
-      is connected to this one, here you can determine if a route
-      to a next block can be used both ways or only in one
-      direction in working out the signaling logic. The options
-      are.<br>
-      <b>Bi-Directional</b> traffic can flow freely between each
-      block.<br>
-      <b>Send Only</b> is where this block can only be used to send
-      traffic to the neighboring block, the neighboring block can
-      not send traffic to us.<br>
-      <b>Receive Only</b>, this block can only receive traffic from
-      the adjacent block we can not send traffic to it.<br>
-      So for example you might have a passing loop on a single
-      section of line, you can use this so that trains always use
-      the left hand path.</p>
-
-      <p>Since blocks are items on the physical layout, the same
-      block may be used in more than one panel. Consequently, block
-      information is saved in the non- panel specific portion of
-      the layout information, when panels are saved to a file on
-      disk.</p>
-
-      <p>Blocks are deleted automatically when they are no longer
-      used. Layout Editor keeps track of the number of track items
-      (turnouts, track segments, and level crossings) that are
-      assigned to a block. This count is displayed in the
-      Create/Edit Block dialog as <b>Current Use Count:</b>. When
-      panels are saved to disk, only those blocks with a use count
-      greater than zero are saved.</p>
+      <p>Blocks are deleted automatically when they are no longer used. Layout Editor keeps track
+      of the number of track items (turnouts, track segments, and level crossings) that are
+      assigned to a block. This count is displayed in the Create/Edit Block dialog as
+      <strong>Current Use Count:</strong>. When panels are saved to disk, only those blocks with a
+      use count greater than zero are saved.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

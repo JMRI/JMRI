@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
@@ -17,13 +14,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import org.slf4j.Logger;
@@ -65,12 +60,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if (init) {
             return;
         }
-        hostNameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.setHostName(hostNameField.getText());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
-            }
+        hostNameField.addActionListener(e -> {
+            adapter.setHostName(hostNameField.getText());
+            p.setComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
         });
         hostNameField.addKeyListener(new KeyListener() {
             @Override
@@ -87,14 +79,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
-        portField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    adapter.setPort(Integer.parseInt(portField.getText()));
-                } catch (java.lang.NumberFormatException ex) {
-                    log.warn("Could not parse port attribute");
-                }
+        portField.addActionListener(e -> {
+            try {
+                adapter.setPort(Integer.parseInt(portField.getText()));
+            } catch (NumberFormatException ex) {
+                log.warn("Could not parse port attribute");
             }
         });
 
@@ -117,12 +106,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-        adNameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.setAdvertisementName(adNameField.getText());
-            }
-        });
+        adNameField.addActionListener(e -> adapter.setAdvertisementName(adNameField.getText()));
 
         adNameField.addKeyListener(new KeyListener() {
             @Override
@@ -139,12 +123,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-        serviceTypeField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.setServiceType(serviceTypeField.getText());
-            }
-        });
+        serviceTypeField.addActionListener(e -> adapter.setServiceType(serviceTypeField.getText()));
 
         serviceTypeField.addKeyListener(new KeyListener() {
             @Override
@@ -175,7 +154,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                     adapter.setOptionState(item, options.get(item).getItem());
                 });
                 // listen for key press so you don't have to hit enter
-                ((JTextField) entry.getValue().getComponent()).addKeyListener(new KeyListener() {
+                (entry.getValue().getComponent()).addKeyListener(new KeyListener() {
                     @Override
                     public void keyPressed(KeyEvent keyEvent) {
                     }
@@ -192,60 +171,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         }
 
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
-            });
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-            });
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-        }
+        addNameEntryCheckers(adapter);
 
         // set/change delay interval between (actually before) output (Turnout) commands
-        outputIntervalSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue());
-            }
-        });
+        outputIntervalSpinner.addChangeListener(e -> adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue()));
 
         init = true;
     }
@@ -276,7 +205,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -339,17 +268,21 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             String[] optionsAvailable = adapter.getOptions();
             options.clear();
             for (String i : optionsAvailable) {
-                if (! adapter.isOptionTypeText(i) ) {
-                    JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
+                if (adapter.isOptionTypeText(i) ) {
+                    JTextField opt = new JTextField(15);
+                    opt.setText(adapter.getOptionState(i));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                } else if (adapter.isOptionTypePassword(i) ) {
+                    JTextField opt = new JPasswordField(15);
+                    opt.setText(adapter.getOptionState(i));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                } else {
+                    JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                     opt.setSelectedItem(adapter.getOptionState(i));
                 
                     // check that it worked
                     checkOptionValueValidity(i, opt);
                 
-                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
-                } else {
-                    JTextField opt = new JTextField(15);
-                    opt.setText(adapter.getOptionState(i));
                     options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
                 }
             }
@@ -360,7 +293,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }
@@ -407,25 +340,13 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));
         showAutoConfig.setForeground(Color.blue);
-        showAutoConfig.addItemListener(
-                new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                setAutoNetworkConfig();
-            }
-        });
+        showAutoConfig.addItemListener(e -> setAutoNetworkConfig());
         showAutoConfig.setSelected(adapter.getMdnsConfigure());
         setAutoNetworkConfig();
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
-        showAdvanced.addItemListener(
-                new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                showAdvancedItems();
-            }
-        });
+        showAdvanced.addItemListener(e -> showAdvancedItems());
         showAdvancedItems();
 
         init = false;  // need to reload action listeners

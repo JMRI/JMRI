@@ -28,7 +28,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
     public void testCreate() {
         ConditionalManager m = l;
 
-        Conditional c1 = m.createNewConditional("IX01C01", "");        
+        Conditional c1 = m.createNewConditional("IX01C01", "");
         Conditional c2 = m.createNewConditional("IX01C02", "");
 
         Assert.assertFalse(c1 == c2);
@@ -39,18 +39,18 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
     public void testUserNameOverlap() {
         ConditionalManager m = l;
 
-        Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
+        Conditional c1 = m.createNewConditional("IX02C01", "Foo");
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");
 
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
@@ -81,6 +81,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
     public void tearDown() throws Exception {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

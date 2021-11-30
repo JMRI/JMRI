@@ -28,15 +28,11 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
-    // valid attributes for this frame
-    public static final String ROAD = Bundle.getMessage("Road");
-    public static final String TYPE = Bundle.getMessage("Type");
-    public static final String COLOR = Bundle.getMessage("Color");
-    public static final String LENGTH = Bundle.getMessage("Length");
-    public static final String OWNER = Bundle.getMessage("Owner");
-    public static final String KERNEL = Bundle.getMessage("Kernel");
+    // incremental attributes for this frame
+    public static final String COLOR = "Color";
+    public static final String KERNEL = "Kernel";
 
-    public CarAttributeEditFrame() {
+    public CarAttributeEditFrame(){
     }
 
     /**
@@ -58,7 +54,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
 
         setTitle(MessageFormat.format(Bundle.getMessage("TitleCarEditAtrribute"), new Object[] { attribute }));
         carManager.addPropertyChangeListener(this);
-        
+
         addComboBoxAction(comboBox);
 
         // build menu
@@ -91,7 +87,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(CarLengths.class).deleteName(deleteItem);
         }
         if (_attribute.equals(KERNEL)) {
-            carManager.deleteKernel(deleteItem);
+            InstanceManager.getDefault(KernelManager.class).deleteKernel(deleteItem);
         }
     }
 
@@ -132,14 +128,11 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(CarColors.class).addName(addItem);
         }
         if (_attribute.equals(LENGTH)) {
-            String length = convertLength(addItem);
-            if (!length.equals(FAILED)) {
-                InstanceManager.getDefault(CarLengths.class).addName(length);
-                comboBox.setSelectedItem(length);
-            }
+            InstanceManager.getDefault(CarLengths.class).addName(addItem);
+            comboBox.setSelectedItem(addItem);
         }
         if (_attribute.equals(KERNEL)) {
-            carManager.newKernel(addItem);
+            InstanceManager.getDefault(KernelManager.class).newKernel(addItem);
         }
         if (_attribute.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).addName(addItem);
@@ -151,7 +144,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         super.replaceItem(oldItem, newItem);
         // replace kernel
         if (_attribute.equals(KERNEL)) {
-            carManager.replaceKernelName(oldItem, newItem);
+            InstanceManager.getDefault(KernelManager.class).replaceKernelName(oldItem, newItem);
         }
         // now adjust cars, locations and trains
         if (_attribute.equals(TYPE)) {
@@ -182,7 +175,8 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
         }
         if (_attribute.equals(KERNEL)) {
-            comboBox = carManager.getKernelComboBox();
+            comboBox = InstanceManager.getDefault(KernelManager.class).getComboBox();
+            InstanceManager.getDefault(KernelManager.class).addPropertyChangeListener(this);
         }
     }
 
@@ -293,13 +287,13 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(KernelManager.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        super.propertyChange(e);
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
                     e.getNewValue());
@@ -313,12 +307,13 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarLengths.class).updateComboBox(comboBox);
         }
-        if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY)) {
-            carManager.updateKernelComboBox(comboBox);
+        if (e.getPropertyName().equals(KernelManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(KernelManager.class).updateComboBox(comboBox);
         }
         if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateCarQuanity();
         }
+        super.propertyChange(e);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class);

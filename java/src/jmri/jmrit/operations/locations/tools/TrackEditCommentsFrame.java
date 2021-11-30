@@ -9,27 +9,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 public class TrackEditCommentsFrame extends OperationsFrame {
 
     // text areas
     JTextArea commentBothTextArea = new JTextArea(5, 100);
-    JScrollPane commentBothScroller = new JScrollPane(commentBothTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
     JTextArea commentPickupTextArea = new JTextArea(5, 100);
-    JScrollPane commentPickupScroller = new JScrollPane(commentPickupTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
     JTextArea commentSetoutTextArea = new JTextArea(5, 100);
-    JScrollPane commentSetoutScroller = new JScrollPane(commentSetoutTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-    Dimension minScrollerDim = new Dimension(1200, 300);
+    
+    // scrollers
+    JScrollPane commentBothScroller = new JScrollPane(commentBothTextArea);
+    JScrollPane commentPickupScroller = new JScrollPane(commentPickupTextArea);
+    JScrollPane commentSetoutScroller = new JScrollPane(commentSetoutTextArea);
+    
+    // text color choosers
+    JColorChooser commentColorChooserBoth = new JColorChooser();
+    JColorChooser commentColorChooserPickup = new JColorChooser();
+    JColorChooser commentColorChooserSetout = new JColorChooser();
 
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     
@@ -49,30 +51,40 @@ public class TrackEditCommentsFrame extends OperationsFrame {
             return;
         }
         _track = track;
-        // the following code sets the frame's initial state
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        
+        // Layout the panel by rows
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        
+        JPanel panelComments = new JPanel();
+        JScrollPane panelPane = new JScrollPane(panelComments);
+        panelComments.setLayout(new BoxLayout(panelComments, BoxLayout.Y_AXIS));
+        
+        panelPane.setBorder(BorderFactory.createTitledBorder(""));
 
         JPanel pCb = new JPanel();
         pCb.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentBoth")));
         pCb.setLayout(new GridBagLayout());
-        commentBothScroller.setMinimumSize(minScrollerDim);
         addItem(pCb, commentBothScroller, 1, 0);
+        
+        addItem(pCb, OperationsPanel.getColorChooserPanel(track.getCommentBoth(), commentColorChooserBoth), 2, 0);
 
         JPanel pCp = new JPanel();
         pCp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentPickup")));
         pCp.setLayout(new GridBagLayout());
-        commentPickupScroller.setMinimumSize(minScrollerDim);
         addItem(pCp, commentPickupScroller, 1, 0);
+        
+        addItem(pCp, OperationsPanel.getColorChooserPanel(track.getCommentPickup(), commentColorChooserPickup), 2, 0);
 
         JPanel pCs = new JPanel();
         pCs.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentSetout")));
         pCs.setLayout(new GridBagLayout());
-        commentSetoutScroller.setMinimumSize(minScrollerDim);
         addItem(pCs, commentSetoutScroller, 1, 0);
+        
+        addItem(pCs, OperationsPanel.getColorChooserPanel(track.getCommentSetout(), commentColorChooserSetout), 2, 0);
 
-        commentBothTextArea.setText(track.getCommentBoth());
-        commentPickupTextArea.setText(track.getCommentPickup());
-        commentSetoutTextArea.setText(track.getCommentSetout());
+        commentBothTextArea.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
+        commentPickupTextArea.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
+        commentSetoutTextArea.setText(TrainCommon.getTextColorString(track.getCommentSetout()));
 
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
@@ -83,24 +95,26 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         printManifest.setSelected(track.isPrintManifestCommentEnabled());
         printSwitchList.setSelected(track.isPrintSwitchListCommentEnabled());
 
-        getContentPane().add(pCb);
-        getContentPane().add(pCp);
-        getContentPane().add(pCs);
-        getContentPane().add(pB);
+        panelComments.add(pCb);
+        panelComments.add(pCp);
+        panelComments.add(pCs);
+        
+        add(panelPane);
+        add(pB);
 
         addButtonAction(saveButton);
 
         setTitle(track.getName());
-        initMinimumSize(new Dimension(Control.panelHeight400, Control.panelWidth600));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
     }
 
     // Buttons
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            _track.setCommentBoth(commentBothTextArea.getText());
-            _track.setCommentPickup(commentPickupTextArea.getText());
-            _track.setCommentSetout(commentSetoutTextArea.getText());
+            _track.setCommentBoth(TrainCommon.formatColorString(commentBothTextArea.getText(), commentColorChooserBoth.getColor()));
+            _track.setCommentPickup(TrainCommon.formatColorString(commentPickupTextArea.getText(), commentColorChooserPickup.getColor()));
+            _track.setCommentSetout(TrainCommon.formatColorString(commentSetoutTextArea.getText(), commentColorChooserSetout.getColor()));
             _track.setPrintManifestCommentEnabled(printManifest.isSelected());
             _track.setPrintSwitchListCommentEnabled(printSwitchList.isSelected());
             // save location file
@@ -110,7 +124,7 @@ public class TrackEditCommentsFrame extends OperationsFrame {
             }
         }
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
             .getName());
 }

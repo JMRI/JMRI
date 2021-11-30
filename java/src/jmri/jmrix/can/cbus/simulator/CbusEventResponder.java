@@ -1,7 +1,8 @@
 package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -23,14 +24,12 @@ public class CbusEventResponder extends CbusSimCanListener {
     
     private int _node;
     private int _mode;
-    private final Random _random;
     
     public ArrayList<String> evModes;
     public ArrayList<String> evModesTip;
     
     public CbusEventResponder( CanSystemConnectionMemo memod ){
         super(memod,null);
-        _random = new Random();
         init();
     }
     
@@ -113,7 +112,7 @@ public class CbusEventResponder extends CbusSimCanListener {
         boolean sendOn = false;
         switch (_mode) {
             case 1: // random
-                sendOn = _random.nextBoolean();
+                sendOn = ThreadLocalRandom.current().nextBoolean();
                 break;
             case 2: // Odd On / Even Off
                 sendOn = m.getElement(4) % 2 != 0;

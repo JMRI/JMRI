@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -29,6 +29,12 @@
         <surname>Kuhn</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -37,7 +43,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>
         This file containts only variables that are common to ALL normal D&amp;H decoders,
-		EXCEPT the low current DH06A that has different default values.
+		Low current DH06A has different default values.
       </revremark>
     </revision>
     <revision>
@@ -58,10 +64,23 @@
       <authorinitials>RK</authorinitials>
       <revremark>disable CV49 for Sound Decoder</revremark>
     </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2021-10-08</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added specific defaults for DH06A with latest firmware (no need for separate file Vars_common_pwr_low.xml anymore)</revremark>
+    </revision>
   </revhistory>
   <!-- MOTOR SETTINGS -->
   <variable item="Vhigh" CV="5" default="92">
     <!-- Dif. Default for DH06A -->
+    <defaultItem default="46" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="127"/>
     <label>Vhigh</label>
     <label xml:lang="it">Volt Massimi</label>
@@ -69,7 +88,9 @@
     <label xml:lang="de">Höchstgeschwindigkeit</label>
     <label xml:lang="ca">Voltatge Màxim</label>
   </variable>
-  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018)">
+  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2018),Sound Decoders (2020)">
+    <!-- Dif. Default for DH06A -->
+    <defaultItem default="0" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="3"/>
     <label>Impulse width</label>
     <label xml:lang="it">Largh.Impulsi</label>
@@ -78,6 +99,8 @@
     <label xml:lang="ca">Llargària de l'impuls</label>
   </variable>
   <variable CV="61" default="63" item="Speed in shunting mode" tooltip="CV61 (0-127)">
+    <!-- Dif. Default for DH06A -->
+    <defaultItem default="31" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="127"/>
     <label>Speed in shunting mode</label>
     <label xml:lang="it">Velocità in Manovra</label>

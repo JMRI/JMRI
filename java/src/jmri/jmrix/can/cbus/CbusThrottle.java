@@ -45,7 +45,9 @@ public class CbusThrottle extends AbstractThrottle {
         _recoveryAttempts = 0;
 
         // cache settings
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions 0-28 default to false
         this.dccAddress = (DccLocoAddress) address;
         this.isForward = true;
@@ -54,7 +56,6 @@ public class CbusThrottle extends AbstractThrottle {
         // start periodically sending keep alives, to keep this attached
         log.debug("Start Throttle refresh");
         startRefresh();
-
     }
 
     /**
@@ -190,20 +191,15 @@ public class CbusThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         log.debug("setSpeedSetting({}) ", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
             this.speedSetting = -1.f;
         }
-        
-        if ( this.speedSetting <= 0 ) {
-                setDispatchActive(false);
-        }
-        else {
-            setDispatchActive(true);
-        }
+
+        setDispatchActive(!(this.speedSetting <= 0));
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             sendToLayout();
@@ -214,8 +210,11 @@ public class CbusThrottle extends AbstractThrottle {
     
     // TODO - use intSpeed( speedSetting, SPEED_STEPS )
     // following a speed or direction change, sends to layout
-    private void sendToLayout(){
-        int new_spd = intSpeed(this.speedSetting);
+    private void sendToLayout() {
+        int new_spd;
+        synchronized(this) {
+            new_spd = intSpeed(this.speedSetting);
+        }
         if (this.isForward) {
             new_spd = new_spd | 0x80;
         }
@@ -237,7 +236,7 @@ public class CbusThrottle extends AbstractThrottle {
      * No compensation required for a direction flag
      * @param speed integer speed value
      */
-    protected void updateSpeedSetting(int speed) {
+    protected synchronized void updateSpeedSetting(int speed) {
         
         log.debug("Updated speed/dir for speed:{}",speed);
         
@@ -246,13 +245,8 @@ public class CbusThrottle extends AbstractThrottle {
         if (speed < 0) {
             this.speedSetting = -1.f;
         }
-        
-        if ( this.speedSetting <= 0 ) {
-                setDispatchActive(false);
-        }
-        else {
-            setDispatchActive(true);
-        }
+
+        setDispatchActive(!(this.speedSetting <= 0));
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);

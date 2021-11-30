@@ -1,6 +1,3 @@
-codecov:
-  ci:
-    - !appveyor # ignore CI builds by AppVeyor
 coverage:
   # number of decimal places to display
   precision: 1

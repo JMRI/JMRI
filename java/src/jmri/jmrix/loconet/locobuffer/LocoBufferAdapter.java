@@ -115,7 +115,7 @@ public class LocoBufferAdapter extends LnPortController {
                     activeSerialPort.isReceiveThresholdEnabled()                                        
                 );
             } catch (Exception et) {
-                log.info("failed to set serial timeout: {}", et); // NOI18N
+                log.info("failed to set serial timeout: ", et); // NOI18N
             }
 
             // get and save stream

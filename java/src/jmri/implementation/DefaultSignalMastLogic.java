@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -19,6 +20,8 @@ import jmri.NamedBeanUsageReport;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
+import jmri.SignalMastLogic;
+import jmri.SignalMastLogicManager;
 import jmri.Turnout;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -51,6 +54,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     boolean useAutoGenTurnouts = true;
 
     LayoutBlock facingBlock = null;
+    LayoutBlock remoteProtectingBlock = null;
 
     boolean disposing = false;
 
@@ -310,6 +314,70 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         } catch (jmri.JmriException e) {
             throw e;
         }
+    }
+
+    /**
+     * Add direction sensors to SML
+     *
+     * @return number of errors
+     */
+    @Override
+    public int setupDirectionSensors() {
+        // iterrate over the signal masts
+        int errorCount = 0;
+        for (SignalMast sm : getDestinationList()) {
+            String displayName = sm.getDisplayName();
+            Section sec = getAssociatedSection(sm);
+            Block facingBlock = null;
+            if (sec != null) {
+                Sensor fwd = sec.getForwardBlockingSensor();
+                Sensor rev = sec.getReverseBlockingSensor();
+                LayoutBlock lBlock = getFacingBlock();
+                if (lBlock == null) {
+                    try {
+                        useLayoutEditor(true, sm); // force a refind
+                    } catch (jmri.JmriException ex) {
+                        continue;
+                    }
+                }
+                if (lBlock != null) {
+                    facingBlock = lBlock.getBlock();
+                    EntryPoint fwdEntryPoint = sec.getEntryPointFromBlock(facingBlock, Section.FORWARD);
+                    EntryPoint revEntryPoint = sec.getEntryPointFromBlock(facingBlock, Section.REVERSE);
+                    log.debug("Mast[{}] Sec[{}] Fwd[{}] Rev [{}]",
+                            displayName, sec, fwd, rev);
+                    if (fwd != null && fwdEntryPoint != null) {
+                        addSensor(fwd.getUserName(), Sensor.INACTIVE, sm);
+                        log.debug("Mast[{}] Sec[{}] Fwd[{}] fwdEP[{}] revEP[{}]",
+                                displayName, sec, fwd,
+                                fwdEntryPoint.getBlock().getUserName());
+
+                    } else if (rev != null && revEntryPoint != null) {
+                        addSensor(rev.getUserName(), Sensor.INACTIVE, sm);
+                        log.debug("Mast[{}] Sec[{}] Rev [{}] fwdEP[{}] revEP[{}]",
+                                displayName, sec, rev,
+                                revEntryPoint.getBlock().getUserName());
+
+                    } else {
+                        log.error("Mast[{}] Cannot Establish entry point to protected section", displayName);
+                        errorCount += 1;
+                    }
+                } else {
+                    log.error("Mast[{}] No Facing Block", displayName);
+                    errorCount += 1;
+                }
+            } else {
+                log.error("Mast[{}] No Associated Section", displayName);
+                errorCount += 1;
+            }
+        }
+        return errorCount;
+    }
+
+    @Override
+    public void removeDirectionSensors() {
+        //TODO find aaway of easilty identifying the ones we added.
+        return ;
     }
 
     @Override
@@ -916,10 +984,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             log.debug(advancedAspect[i]);
                             if ((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable) || (!divergRoute)) && (nonDivergAspects.contains(i))) {
                                 log.debug("In list");
-                                if ((strSpeed != null) && (!strSpeed.equals(""))) {
+                                if ((strSpeed != null) && (!strSpeed.isEmpty())) {
                                     float speed = 0.0f;
                                     try {
-                                        speed = Float.valueOf(strSpeed);
+                                        speed = Float.parseFloat(strSpeed);
                                     } catch (NumberFormatException nx) {
                                         // not a number, perhaps a name?
                                         try {
@@ -2077,7 +2145,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
-            LayoutBlock remoteProtectingBlock = null;
+            remoteProtectingBlock = null;
             for (int i = 0; i < layout.size(); i++) {
                 if (log.isDebugEnabled()) {
                     log.debug("{} Layout name {}", destination.getDisplayName(), editor.getLayoutName());
@@ -2230,7 +2298,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     }
                     //We use the best connectivity for the current block;
                     connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
-                    turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    if (i == lblks.size() - 1 && remoteProtectingBlock != null) {
+                        turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), remoteProtectingBlock.getBlock());
+                    }else{
+                        turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    }
                     for (int x = 0; x < turnoutList.size(); x++) {
                         LayoutTurnout lt = turnoutList.get(x).getObject();
                         if (lt instanceof LayoutSlip) {

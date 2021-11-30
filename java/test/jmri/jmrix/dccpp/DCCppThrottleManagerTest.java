@@ -13,28 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DCCppThrottleManagerTest.java
- * <p>
  * Test for the jmri.jmrix.dccpp.DCCppThrottleManager class
  *
  * @author Paul Bender
  * @author Mark Underwood (C) 2015
+ * @author Egbert Broerse 2021
  */
 public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
-
-    private DccThrottle throttle;
-    boolean failedThrottleRequest = false;
-    DCCppCommandStation cs = null;
-
-    @Override
-    @BeforeEach
-    public void setUp() {
-        JUnitUtil.setUp();
-        cs = new DCCppCommandStation();
-        cs.setCommandStationMaxNumSlots(12); // the "traditional" value for DCC++
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(cs);
-        tm = new DCCppThrottleManager(new DCCppSystemConnectionMemo(tc));
-    }
 
     @Test
     public void testCreateLnThrottleRunAndRelease() {
@@ -71,17 +56,37 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         Assert.assertEquals(0,tm.getThrottleUsageCount(locoAddress));
         Assert.assertEquals(false, (((DCCppThrottleManager)tm).throttles.containsKey(locoAddress))); //now you dont
         Assert.assertEquals(-1, cs.getRegisterNum(1203)); //now you dont
+    }
 
+    private DCCppSystemConnectionMemo memo;
+    DCCppInterfaceScaffold tc;
+    private DccThrottle throttle;
+    boolean failedThrottleRequest = false;
+    DCCppCommandStation cs = null;
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        cs = new DCCppCommandStation();
+        cs.setCommandStationMaxNumSlots(12); // the "traditional" value for DCC++
+        tc = new DCCppInterfaceScaffold(cs);
+        memo = new DCCppSystemConnectionMemo(tc);
+        tm = new DCCppThrottleManager(memo);
     }
 
     @AfterEach
     public void tearDown() {
-        tm =null;
+        DCCppThrottleManager dtm = (DCCppThrottleManager)tm;
+        dtm.dispose();
+        tm = null;
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         cs = null;
         JUnitUtil.resetWindows(false, false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManagerTest.class);

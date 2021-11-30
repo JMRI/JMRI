@@ -626,7 +626,10 @@ public class SlotManagerTest {
         Assert.assertEquals("initial status", -999, status);
 
         // check that SI write happened
-        Assert.assertEquals("two messages sent", 2, lnis.outbound.size());
+        JUnitUtil.waitFor(() -> {
+            return 2 == lnis.outbound.size();
+        }, "two messages sent");
+
         Assert.assertEquals("write SI message",
                 "EF 0E 7C 6B 00 00 00 00 00 0F 02 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -642,7 +645,10 @@ public class SlotManagerTest {
         Assert.assertTrue("started short timer", startedShortTimer);
         Assert.assertFalse("didn't start long timer", startedLongTimer);
         jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
-        Assert.assertEquals("still two messages sent", 2, lnis.outbound.size());
+
+        JUnitUtil.waitFor(() -> {
+            return 2 == lnis.outbound.size();
+        }, "still two messages sent");
 
         // completion received back (DCS240 sequence) to SI write
         log.debug("send E7 reply back");
@@ -678,7 +684,10 @@ public class SlotManagerTest {
         log.debug("checking..");
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", 55, value);
-        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        JUnitUtil.waitFor(() -> {
+            return 3 == lnis.outbound.size();
+        }, "three messages sent");
 
         log.debug(".... end testReadThroughFacade ...");
     }
@@ -1251,6 +1260,62 @@ public class SlotManagerTest {
             Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
 
         }
+    }
+
+    @Test
+    public void testSetCommon() {
+        // Set slot 5 common, request slot 5
+        slotmanager.message(new LocoNetMessage(new int[]{0xB5, 0x05, 0x17, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 5 after delay");
+        Assert.assertEquals("Request read slot 5",
+                "BB 05 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testMove_NullMove() {
+        // slot move 4 > 4 read nothing after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xba, 0x01, 0x01, 0x00}));
+        JUnitUtil.waitFor(200);
+        Assert.assertEquals("No Outbound Data", 0, lnis.outbound.size());
+    }
+
+   @Test
+    public void testMove_TrueMove() {
+        // slot move 1 > 2 read 1 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xba, 0x01, 0x02, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 1 after delay");
+        Assert.assertEquals("Request read slot 1",
+                "BB 01 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testLink() {
+        // slot Link 3 > 4 read 4 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xb8, 0x03, 0x04, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 4 after delay");
+        Assert.assertEquals("Request read slot 4",
+                "BB 04 00 00",
+                lnis.outbound.elementAt(0).toString());
+    }
+
+    @Test
+    public void testUnLink() {
+        // slot unLink 6 from 7 read 7 after delay.
+        slotmanager.message(new LocoNetMessage(new int[]{0xb9, 0x06, 0x07, 0x00}));
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        }, "Requests slot read 7 after delay");
+        Assert.assertEquals("Request read slot 7",
+                "BB 07 00 00",
+                lnis.outbound.elementAt(0).toString());
     }
 
     LocoNetInterfaceScaffold lnis;

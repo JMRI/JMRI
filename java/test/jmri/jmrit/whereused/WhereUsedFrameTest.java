@@ -207,7 +207,11 @@ public class WhereUsedFrameTest {
         new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
         new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
         new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
+
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }

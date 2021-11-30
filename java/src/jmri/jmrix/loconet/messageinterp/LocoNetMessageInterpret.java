@@ -19,6 +19,7 @@ import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -59,9 +60,13 @@ import org.slf4j.LoggerFactory;
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
  *
+ * Reverse-engineering of device-specific LNSV messages was provided by K. Drenth,
+ * used with permission.
+ *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpret {
 
@@ -540,7 +545,26 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
-            /**
+            /*
+             * ********************************************************************************************
+             * OPC_MULTI_SENSE_LONG 0xE0 messages about transponding.
+             *
+             * This op code is not documented by Digitrax. The use of this message was observed when using a
+             * Digikeijs 5088RC.  With a capable decoder, this message contains additional Railcom information
+             * (direction, speed, QoS) compared to the standard OPC_MULTI_SENSE message.
+             *
+             * Reverse engineering performed by Michael Richardson.
+             * ********************************************************************************************
+             */
+            case LnConstants.OPC_MULTI_SENSE_LONG: {
+                result = interpretOpcMultiSenseLong(l, reporterPrefix);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
+
+            /*
              * ********************************************************************************************
              * OPC_WR_SL_DATA 0xEF ; WRITE SLOT DATA, 10 bytes * ; Follow on
              * message: LACK * ; <0xEF>,<0E>,<SLOT#>,<STAT>,<ADR>,<SPD>,<DIRF>,
@@ -691,8 +715,8 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
-//          TODO: put this back for intelibox cmd station.
-//            it conflicts with loconet speed/dire etc.
+//          TODO: put this back for intellibox cmd station.
+//            it conflicts with loconet speed/dir etc.
             case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
@@ -710,7 +734,7 @@ public class LocoNetMessageInterpret {
                 break;
         } // end switch over opcode type
         return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
-                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
     }
 
 
@@ -887,7 +911,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcPeerXfer20_8(LocoNetMessage l) {
-        /**
+        /*
          * **********************************************************************************
          * IPL-capable device ping - OPC_RE_IPL (Device Ping Operations) * The
          * message bytes as assigned as follows:
@@ -1029,7 +1053,7 @@ public class LocoNetMessageInterpret {
                         && (l.getElement(13) == 0) && (l.getElement(14) == 0)
                         && (l.getElement(15) == 0) && (l.getElement(16) == 0)
                         && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-                    /**
+                    /*
                      * **********************************************************************************
                      * IPL capable device query - RE_IPL_IDENTITY_OPERATION
                      * (Device Query) * The message bytes are assigned as
@@ -1050,7 +1074,7 @@ public class LocoNetMessageInterpret {
 
                     return Bundle.getMessage("LN_MSG_IPL_DISCOVER_ALL_DEVICES");
                 } else if (((l.getElement(5) != 0) || (l.getElement(6) != 0))) {
-                    /**
+                    /*
                      * **********************************************************************************
                      * IPL device query by type - RE_IPL_IDENTITY_OPERATION
                      * (Device Query) * The message bytes are assigned as
@@ -1453,6 +1477,7 @@ public class LocoNetMessageInterpret {
         if (result.length() > 0) {
             return result;
         }
+
         result = interpretSV0Message(l);
         if (result.length() > 0) {
             return result;
@@ -1460,6 +1485,21 @@ public class LocoNetMessageInterpret {
 
         // check for a specific type - SV Programming messages format 2
         result = interpretSV2Message(l);
+        if (result.length() > 0) {
+            return result;
+        }
+
+        return "";
+    }
+
+    private static String interpretOpcPeerXfer15(LocoNetMessage l) {
+        /*
+         * see interpretOpcImm15
+         * and jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.java
+         */
+
+        // check for a specific type - Uhlenbrock LNSV Programming messages format
+        String result = interpretLncvMessage(l);
         if (result.length() > 0) {
             return result;
         }
@@ -1547,6 +1587,29 @@ public class LocoNetMessageInterpret {
             }
         }
         return svReply;
+    }
+
+    private static String interpretLncvMessage(LocoNetMessage l) {
+        String lncvReply = "";
+        LncvMessageContents cvmc = null;
+        try {
+            // assume the message is an LNCV message
+            cvmc = new LncvMessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an LNCV message.  Ignore the exception.
+        }
+        if (cvmc != null) {
+            // the message was indeed an LNCV message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                lncvReply = cvmc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted LNCV message.  Ignore the exception.
+            }
+        }
+        return lncvReply;
     }
 
     private static String interpretOpcPeerXfer10(LocoNetMessage l) {
@@ -1745,6 +1808,13 @@ public class LocoNetMessageInterpret {
                 }
                 break;
             }
+            case 0x0F: {
+                result = interpretOpcPeerXfer15(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
             case 0x0A: {
                 result = interpretOpcPeerXfer10(l);
                 if (result.length() > 0) {
@@ -1806,8 +1876,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                        Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
-
+                                        Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
             case (LnConstants.OPC_SW_REQ):
                 // response for OPC_SW_REQ
@@ -1832,7 +1901,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
 
                 }
 
@@ -1856,7 +1925,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
 
                 }
 
@@ -1866,19 +1935,21 @@ public class LocoNetMessageInterpret {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_REJECT");
                 } else if (ack1 == 0x7f) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_ACCEPT");
-                } else if (l.getElement(1) == 0x6D && l.getElement(2) == 0x01) {
+                } else if (ack1 == 0x01) { // (l.getElement(1) == 0x6D) is same as case, same code for LNCV "unsupported CV"
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UHL_PROG");
-
+                } else if (ack1 == 0x02) { // LNCV Uhlenbrock programming reply
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LNCV_READONLY");
+                } else if (ack1 == 0x03) { // LNCV Uhlenbrock programming reply
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LNCV_ILLEGALVAL");
                 } else {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
-
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
 
             case LnConstants.OPC_IMM_PACKET_2:
-                // response for OPC_IMM_PACKET
+                // response for OPC_IMM_PACKET_2
                 return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LIM_MASTER",
                         ack1, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                 StringUtil.twoHexFromInt(ack1)));
@@ -2196,6 +2267,12 @@ public class LocoNetMessageInterpret {
                     return result;
                 }
                 break;
+            case LnConstants.OPC_MULTI_SENSE_RAILCOM_AD:
+                result = interpretOpcMultiSenseRailcomAD(l, reporterPrefix);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             default:
                 break;
         }
@@ -2269,6 +2346,179 @@ public class LocoNetMessageInterpret {
             return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT_NOT_BDL16X",
                     locoAddr, transpActivity, reporterSystemName,
                     reporterUserName, bxp88Number, bxp88Zone, bxpa1Number);
+        }
+    }
+
+    private static String convertRailComAD(int indexValue, int dynamicValue) {
+        /**
+         ***************************************************
+         * RailCom App DYN (ID 7) message
+         * indexValue = 6 bit value value per standard
+         * dynamicValue = 8 bit value per standard
+         **/
+
+        String indexString = "";
+        switch (indexValue) {
+            case 0: //Speed
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_0");
+                break;
+            case 7: //QoS
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_7");
+                break;
+            default:
+                indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_UNKNOWN");
+                break;
+        }
+
+        return Bundle.getMessage("LN_MSG_RAILCOM_REPORT",
+                indexValue, indexString, dynamicValue);
+    }
+
+    private static String interpretOpcMultiSenseRailcomAD(LocoNetMessage l, String reporterPrefix) {
+        /**
+        ***************************************************
+        * Multi Sense Standard RailCom App DYN message (Loconet OpCode 0xD0)
+        * The message bytes as assigned as follows:
+        *
+        * <0xD0> <RC_I> <RCDV_L> <AD_H> <AD_L> <CHK>
+        *
+        * <RC_I> is encoded as shown below
+        * bit 7 always 0
+        * bits 6-5 always 10 (0x40)
+        * bits 4-1 RailCom App:Dyn Index Value (4 bit value, but expected 6 bits per standard)
+        * bit 0 RailCom Dynamic Value high bit
+        *
+        * <RCDV_L> RCDV_L{6:0} represent the upper 7 bits * of the 8 bit RailCom Dynamic Value.  The 8th bit is bit 0 of <RC_I>
+        *
+        * <AD_H> is encoded as shown below: * When
+        * <AD_H> = 0x7D, * Address is a 7 bit value defined solely by
+        * <AD_L>. * When <AD_H> is not 0x7D, * Address is a 14 bit
+        * value; AD_H{6:0} represent the upper 7 bits * of the 14 bit
+        * address.
+        *
+        * Information reverse-engineered by Michael Ricahrdson
+        **/
+
+        String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
+        int indexValue = (l.getElement(1) & 0x1E)/2; //bits 4-1
+        int dynamicValue = l.getElement(2) + (l.getElement(1) & 0x01) * 128;
+
+        String railcomAdString = convertRailComAD(indexValue, dynamicValue);
+
+        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_RAILCOM_REPORT",
+                locoAddr, railcomAdString);
+    }
+
+    private static String interpretOpcMultiSenseLong(LocoNetMessage l, String reporterPrefix) {
+         /***************************************************
+         * Multi Sense Long RailCom App DYN message (Loconet OpCode 0xE0)
+         * The message bytes as assigned as follows:
+         *
+         * <0xE0> <0x09> <MSL_I> <BLK_L> <AD_H> <AD_L> <RCDV_H> <RCDV_L> <CHK>
+         *
+         * <0xEO> OpCode
+         * <Ox09> Message Length
+         * <MSL_I> is encoded as shown below
+         *  bit 7 always 0
+         *  bits 6-5 (00 = Absent, 01 = Present, 10 = Present with AppDyn Message, 11 = unknown)
+         *  bit 4 ? - unverified - currently part of detection block number logic following Multi Sense Standard
+         *  bits 0-3 block high
+         *
+         * <BLK_L> 11 bit number representing the detection block. Lower 7 bits plus 4 high bits from <MSL_I> {3:0}
+         *
+         * <AD_H> is encoded as shown below:
+         *  When <AD_H> = 0x7D, Address is a 7 bit value defined solely by <AD_L>.
+         *  When <AD_H> is not 0x7D, Address is a 14 bit value;
+         *  AD_H{6:0} represent the upper 7 bits * of the 14 bit address.
+         *
+         * <RCDV_H> is encoded as shown below:
+         *  bit 7 always 0
+         *  bit 6 - Loco direction: 0 = East, 1 = West
+         *  bits 5-1 RailCom App:Dyn Index Value (5 bit value, but expected 6 bits per standard)
+         *  bit 0 RailCom Dynamic Value high bit
+         *
+         * <RCDV_L> {6:0} represent the lower 7 bits of the 8 bit RailCom Dynamic Value.  The 8th bit is bit 0 of <RCDV_H>
+         *
+         * <CHK>
+         *
+         * Information reverse-engineered by Michael Ricahrdson
+         */
+
+        if (l.getElement(1) == 0x09){  // Only process 0xE0 0x09 messages
+            // Transponding Event
+            // get system and user names
+
+            int type = l.getElement(2) & LnConstants.OPC_MULTI_SENSE_MSG; //bits 5-4
+            //0x00 = absent = 00
+            //0x20 = present = 10
+            //0x40 = present with App Dyn = 01
+            //0x60 = unknown = 11
+
+            if (type == 0x60) { //unknown at this point
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
+            }
+
+            // Now Process 0x00, 0x20, and 0x40
+            String reporterSystemName = reporterPrefix + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
+
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
+            String reporterUserName = "";
+            if (reporter != null) {
+                String uname = reporter.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    reporterUserName = uname;
+                }
+            }
+
+            String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
+
+            String transpActivity = "";
+
+            String direction = ((l.getElement(6) & 0x40) == 0)
+                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_EAST")
+                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_WEST");
+
+            switch (type) {
+                case LnConstants.OPC_MULTI_SENSE_RAILCOM_AD:
+                    int indexValue = (l.getElement(6) & 0x3E)/2; //bits 5-1
+                    int dynamicValue = l.getElement(7) + (l.getElement(6) & 0x01) * 128;
+                    transpActivity = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
+
+                    String railcomAdString = convertRailComAD(indexValue, dynamicValue);
+                    String multiSenseLongString = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                        locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_RAILCOM_REPORT",
+                            multiSenseLongString, railcomAdString);
+
+                case LnConstants.OPC_MULTI_SENSE_PRESENT:
+                    if ((l.getElement(6) & 0x3F) != 0 || l.getElement(7) != 0 ) {
+                        // within current understanding values here are not expected
+                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
+                    }
+
+                    transpActivity = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
+
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                            locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+
+                case LnConstants.OPC_MULTI_SENSE_ABSENT:
+                    if ((l.getElement(6) & 0x3F) != 0 || l.getElement(7) != 0 )  {
+                        // within current understanding values here are not expected
+                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
+                    }
+
+                    transpActivity = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
+
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                            locoAddr, direction, transpActivity, reporterSystemName, reporterUserName);
+
+                default:
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
+            }
+
+        } else {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
         }
     }
 
@@ -2484,7 +2734,7 @@ public class LocoNetMessageInterpret {
         boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40 ? true : false;
         switch (slot) {
          // Slots > 120 & < 128 are all special, but these are the only ones we know to decode.
-         // Extended System Slots 248 thru 251 delt with seperately, not here
+         // Extended System Slots 248 thru 251 dealt with separately, not here
             case LnConstants.FC_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
             case LnConstants.CFG_SLOT:
@@ -2724,7 +2974,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
-        /**
+        /*
          * FAST Clock: The system FAST clock and parameters are implemented in
          * Slot#123 <7B>. Use <EF> to write new clock information, Slot read of
          * 0x7B,<BB><7B>.., will return current System clock information, and
@@ -2806,7 +3056,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
-        /**
+        /*
          * ********************************************************************************************
          * Programmer track: * ================= * The programmer track is
          * accessed as Special slot #124 ( $7C, 0x7C). It is a full *
@@ -2831,7 +3081,7 @@ public class LocoNetMessageInterpret {
          * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7>
          * reply at completion. * * Note that the <7F> code will occur in
          * Operations Mode Read requests if the System is not * configured for
-         * and has no Advanced Acknowlegement detection installed.. Operations
+         * and has no Advanced Acknowledgement detection installed.. Operations
          * Mode * requests can be made and executed whilst a current Service
          * Mode programming task is keeping * the Programming track BUSY. If a
          * Programming request is rejected, delay and resend the * complete
@@ -3064,7 +3314,7 @@ public class LocoNetMessageInterpret {
                         responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_UNDECODED",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(pstat)));
-                        hexMessage = Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                        hexMessage = Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                     }
                 }
             } else {
@@ -3589,7 +3839,7 @@ public class LocoNetMessageInterpret {
             case 0x09:
                 if (l.getElement(4) == 0x00) {
                     return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW")+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
                 break;
             default:
@@ -3600,6 +3850,19 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcImmPacket(LocoNetMessage l) {
         /*
+         * OPC_IMM_PACKET   0xED
+         */
+        if (l.getElement(1) == 0x0F) { // length = 15
+            // check for a specific type - Uhlenbrock LNSV Programming messages format
+            String result = interpretLncvMessage(l);
+            if (result.length() > 0) {
+                return result;
+            }
+
+            return "";
+        }
+
+        /* Else:
          * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
          *                         ; Follow on message: LACK
          *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
@@ -3623,6 +3886,7 @@ public class LocoNetMessageInterpret {
          * Decodes for the F9-F28 functions taken from the NMRA standards and
          * coded by Leo Bicknell.
          */
+
         // sendPkt = (sendPktMsg *) msgBuf;
         int val7f = l.getElement(2);
         /* fixed value of 0x7f */

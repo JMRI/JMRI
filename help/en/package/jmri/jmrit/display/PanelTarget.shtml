@@ -1,145 +1,102 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Panel Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Panel">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Panel"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Panel</h1>
 
-      <p>A Panel is a set of icons representing various components
-      of a layout. Some of the icons available in JMRI&copy; include
-      Turnouts, Sensors and Signals Masts. You can also include a
+      <p>A Panel is a set of icons representing various components of a layout. Some of the icons
+      available in JMRI© include Turnouts, Sensors and Signals Masts. You can also include a
       background icon to represent your layout on your Panel.</p>
 
-      <p>The Panel Editor which you use to create a Panel is
-      described on the <a href="PanelEditor.shtml">Panel Editor
-      Help page</a>.</p>
+      <p>The Panel Editor which you use to create a Panel is described on the <a href=
+      "PanelEditor.shtml">Panel Editor Help page</a>.</p>
 
       <h2>Panel operation</h2>
 
-      <p>Clicking on a Turnout symbol flips it from Closed to
-      Thrown and vice-versa. A Turnout also has "Unknown" and
-      "Inconsistent" states, represented by an icon with a question
-      mark and X respectively. These represent a state where no
-      information has been received, and where the information is
-      internally inconsistent (e.g. both Closed and Thrown at the
-      same time).</p>
+      <p>Clicking on a Turnout symbol flips it from Closed to Thrown and vice-versa. A Turnout also
+      has "Unknown" and "Inconsistent" states, represented by an icon with a question mark and X
+      respectively. These represent a state where no information has been received, and where the
+      information is internally inconsistent (e.g. both Closed and Thrown at the same time).</p>
 
-      <p>This control can be used in various ways. For example, you
-      could have a Turnout Icon covering a Turnout on a schematic
-      diagram. When you click on it, the Turnout on the layout
-      would be commanded to change, and the track diagram would
-      show which way a Train would be routed. Or you could use
-      icons that show a lever to the right or left, and create a
-      Panel that looks like a traditional US&amp;S Panel.</p>
+      <p>This control can be used in various ways. For example, you could have a Turnout Icon
+      covering a Turnout on a schematic diagram. When you click on it, the Turnout on the layout
+      would be commanded to change, and the track diagram would show which way a Train would be
+      routed. Or you could use icons that show a lever to the right or left, and create a Panel
+      that looks like a traditional US&amp;S Panel.</p>
 
-      <p>"Sensors" can be used to represent occupancy indicators or
-      other inputs. The default icon is a small circle, with color
-      used to represent the state of the Sensor. These respond to
-      changes on the layout automatically. Clicking on a Sensor
-      Icon causes the Sensor to alternate between "Active" and
-      "Inactive" states. With the default icons, Active is a green
-      circle and Inactive is an empty circle. These are meant to
-      represent a lit/dark Panel indicator. A red circle represents
-      the "Unknown" state, used when no information has yet been
-      received from the layout.</p>
+      <p>"Sensors" can be used to represent occupancy indicators or other inputs. The default icon
+      is a small circle, with color used to represent the state of the Sensor. These respond to
+      changes on the layout automatically. Clicking on a Sensor Icon causes the Sensor to alternate
+      between "Active" and "Inactive" states. With the default icons, Active is a green circle and
+      Inactive is an empty circle. These are meant to represent a lit/dark Panel indicator. A red
+      circle represents the "Unknown" state, used when no information has yet been received from
+      the layout.</p>
 
       <h2>Creating a Panel</h2>
-      <p>Panels are created with the <a href=
-      "PanelEditor.shtml">Panel Editor</a>, which allows you to
-      place images to represent Turnouts, Sensors (on some systems)
-      and trackwork.</p>
+
+      <p>Panels are created with the <a href="PanelEditor.shtml">Panel Editor</a>, which allows you
+      to place images to represent Turnouts, Sensors (on some systems) and trackwork.</p>
 
       <h2>Popup menus</h2>
 
-      <p>If the "Panel items popup menu active" box is checked in
-      the Panel Editor, a small popup menu will appear when you
-      right click an icon. Most icons allow you to Rotate and
-      Remove the icon. There are other options depending on the
-      type of icon, for example, you can disable a Turnout Icon so
-      it doesn't actually control anything.</p>
+      <p>If the "Panel items popup menu active" box is checked in the Panel Editor, a small popup
+      menu will appear when you right click an icon. Most icons allow you to Rotate and Remove the
+      icon. There are other options depending on the type of icon, for example, you can disable a
+      Turnout Icon so it doesn't actually control anything.</p>
 
-      <p>If enabled via the checkboxes on the <a href=
-      "PanelEditor.shtml">Panel Editor</a>, you can move an icon by
-      dragging it around the Panel. For more precise positioning,
-      many icons can access the <a href=
-      "CoordinateEdit.shtml">Coordinate Editor</a> to move the icon
-      by a specific number of pixels or set it to an absolute
-      location.</p>
+      <p>If enabled via the checkboxes on the <a href="PanelEditor.shtml">Panel Editor</a>, you can
+      move an icon by dragging it around the Panel. For more precise positioning, many icons can
+      access the <a href="CoordinateEdit.shtml">Coordinate Editor</a> to move the icon by a
+      specific number of pixels or set it to an absolute location.</p>
 
-      <p>When the checkboxes in the Panel Editor permit it, the
-      popup menu may include items to recall the Icon Editor to
-      change the icons or the entity it represents. Other items
-      likely to be available are: rotations, scaling, font sizes,
-      colors etc.</p>
+      <p>When the checkboxes in the Panel Editor permit it, the popup menu may include items to
+      recall the Icon Editor to change the icons or the entity it represents. Other items likely to
+      be available are: rotations, scaling, font sizes, colors etc.</p>
 
-      <p>The popup menu may also change if the configuration of an
-      item is changed. For example, if you add Feedback to a
-      Turnout, the popup menu includes a new item choice called
-      "Tristate". Tristate allows you to use the "Inconsistent"
-      icon, which is one of the four possible icons available for a
-      Turnout. Normally when you first click on a Turnout Icon it
-      commands the layout to change the state of the physical
-      turnout. If you use Feedback for a particular Turnout, the
-      icon display will wait to hear from the layout before
-      modifying the Turnout Icon to the Closed or Thrown icon. By
-      using "Tristate", the icon will change immediately to the
-      "Inconsistent" icon when the Turnout Icon is clicked.
-      Inconsistent in this case means that I've commanded the
-      Turnout to change and now we're waiting to hear if it
-      actually happened. If and when the layout returns the actual
-      or "known state" of the Turnout, the icon will change to that
-      state. If you don't use "Tristate", when you click on the
-      icon, it may take some time (milliseconds to seconds
-      depending on the hardware system) before the Turnout Icon
+      <p>The popup menu may also change if the configuration of an item is changed. For example, if
+      you add Feedback to a Turnout, the popup menu includes a new item choice called "Tristate".
+      Tristate allows you to use the "Inconsistent" icon, which is one of the four possible icons
+      available for a Turnout. Normally when you first click on a Turnout Icon it commands the
+      layout to change the state of the physical turnout. If you use Feedback for a particular
+      Turnout, the icon display will wait to hear from the layout before modifying the Turnout Icon
+      to the Closed or Thrown icon. By using "Tristate", the icon will change immediately to the
+      "Inconsistent" icon when the Turnout Icon is clicked. Inconsistent in this case means that
+      I've commanded the Turnout to change and now we're waiting to hear if it actually happened.
+      If and when the layout returns the actual or "known state" of the Turnout, the icon will
+      change to that state. If you don't use "Tristate", when you click on the icon, it may take
+      some time (milliseconds to seconds depending on the hardware system) before the Turnout Icon
       responds with the known state of the physical turnout.</p>
 
       <h2>Marker</h2>
 
-      <p>The Panel pane menu includes an item called "Marker". You
-      can use a Marker to represent a Locomotive or other device on
-      your Panel. You can move the Marker around the Panel to show
-      the Locomotive's current position. Markers are always
-      moveable, and their popup menus are always active. To create
-      a Marker, select "Add loco" or "Add loco from roster" from
-      the "Marker" menu. The "Add loco from roster" option will use
-      the Road Number from your Roster file as the label; if the
-      Road Number wasn't entered when you created your Roster,
-      PanelPro will display the DCC address of the Locomotive. To
-      remove Markers from your Panel, use the "Remove markers" menu
-      item.</p>
+      <p>The Panel pane menu includes an item called "Marker". You can use a Marker to represent a
+      Locomotive or other device on your Panel. You can move the Marker around the Panel to show
+      the Locomotive's current position. Markers are always moveable, and their popup menus are
+      always active. To create a Marker, select "Add loco" or "Add loco from roster" from the
+      "Marker" menu. The "Add loco from roster" option will use the Road Number from your Roster
+      file as the label; if the Road Number wasn't entered when you created your Roster, PanelPro
+      will display the DCC address of the Locomotive. To remove Markers from your Panel, use the
+      "Remove markers" menu item.</p>
 
-      <p>The Marker's popup menu allows you to change the Marker's
-      color, font size and style. The menu also allows you to
-      remove the Marker from the Panel.</p>
+      <p>The Marker's popup menu allows you to change the Marker's color, font size and style. The
+      menu also allows you to remove the Marker from the Panel.</p>
 
-      <p>If you want to keep your Markers between operating
-      sessions, you can store the Panel and the Markers will be
-      stored in your Panel xml file.</p>
+      <p>If you want to keep your Markers between operating sessions, you can store the Panel and
+      the Markers will be stored in your PanelPro xml data file.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

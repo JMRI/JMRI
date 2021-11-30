@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +80,7 @@ public class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String getStatus(OBlock block, int state) {
+    synchronized protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -115,7 +117,9 @@ public class IndicatorTrackPaths {
         }
     }
 
-    protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
+    @jmri.InvokeOnLayoutThread
+    // LocoLabel ctor causes editor to draw a graphic. Must be done on GUI
+    synchronized protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
             removeLocoIcon();
             return;
@@ -148,7 +152,12 @@ public class IndicatorTrackPaths {
         pt.x = pt.x + (size.width - _loco.maxWidth()) / 2;
         pt.y = pt.y + (size.height - _loco.maxHeight()) / 2;
         _loco.setLocation(pt);
-        ed.putItem(_loco);
+        try {
+            ed.putItem(_loco);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /*

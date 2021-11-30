@@ -29,7 +29,7 @@ public class SignalSystemTest {
     @Test
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/valid/SimplePanel_OBlocks-DB1969.xml"));
@@ -94,6 +94,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("DB1969 Control Panel Editor");
         efo.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
 
     }
 
@@ -160,7 +161,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("AA1UPtest Layout");
         efo.closeFrameWithConfirmations();
-
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     void checkAspect(String mastName, String aspect) {
@@ -191,7 +192,8 @@ public class SignalSystemTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

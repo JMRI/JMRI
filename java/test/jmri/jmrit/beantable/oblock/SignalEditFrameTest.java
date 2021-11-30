@@ -4,11 +4,7 @@ import jmri.implementation.VirtualSignalMast;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
@@ -21,18 +17,18 @@ public class SignalEditFrameTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         SignalEditFrame sef = new SignalEditFrame(
                 "Edit Signal-1",
                 null,
                 null,
                 null);
-        Assert.assertNotNull("New SEF exists", sef);
+        Assertions.assertNotNull(sef, "New SEF exists");
     }
 
     @Test
     public void testCTorSignal() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalMast m = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast1");
         TableFrames tf = new TableFrames();
         SignalTableModel model = new SignalTableModel(tf);
@@ -42,7 +38,7 @@ public class SignalEditFrameTest {
         SignalTableModel.SignalRow sr = new SignalTableModel.SignalRow(m, b1, p1, b2, 0.0f, false);
 
         SignalEditFrame sef = new SignalEditFrame("Edit mast1", m, sr, model);
-        Assert.assertNotNull("Mast SEF exists", sef);
+        Assertions.assertNotNull(sef, "Mast SEF exists");
     }
 
     @BeforeEach

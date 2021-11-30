@@ -4,8 +4,9 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -47,6 +48,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("Test Train Name");
+        Assert.assertNotNull("train exists", train);
 
         // test defaults
         Assert.assertEquals("train name", "Test Train Name", train.getName());
@@ -65,10 +67,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         });
         // shouldn't change until Save
         Assert.assertEquals("train departure time", "00:00", train.getDepartureTime());
-        JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
 
-        // clear no route dialogue box
+        // clear no route dialog box
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
 
         Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
 
@@ -155,12 +158,12 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // test delete button
         // the delete opens a dialog window to confirm the delete
-        JemmyUtil.enterClickAndLeave(trainEditFrame.deleteTrainButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.deleteTrainButton);
         // don't delete, we need this train for the next two tests
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(trainEditFrame);
+        
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(ref);
             JUnitUtil.dispose(trainEditFrame);
@@ -178,8 +181,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         f.setTitle("Test Edit Train Frame");
 
         Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
-        Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField
-                .getText());
+        Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField.getText());
         Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
         Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
         Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
@@ -207,11 +209,12 @@ public class TrainEditFrameTest extends OperationsTestCase {
         trainEditFrame.trainNameTextField.setText("Test Add Train Name");
         trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
         trainEditFrame.commentTextArea.setText("Test Train Comment");
-        
+
         JemmyUtil.enterClickAndLeave(trainEditFrame.addTrainButton);
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("Test Add Train Name");
+        Assert.assertNotNull("train exists", train);
 
         // test defaults
         Assert.assertEquals("train name", "Test Add Train Name", train.getName());
@@ -230,15 +233,87 @@ public class TrainEditFrameTest extends OperationsTestCase {
         trainEditFrame.setTitle("Test Edit Train Frame");
         // fill in name and description fields
         trainEditFrame.trainNameTextField.setText("Test Add Train Name");
-        JemmyUtil.enterClickAndLeave(trainEditFrame.addTrainButton);
-
-        // clear can not add train dialogue box
-        JemmyUtil.pressDialogButton(trainEditFrame, MessageFormat.format(Bundle
-                .getMessage("CanNot"),
-                new Object[]{Bundle
-                        .getMessage("add")}),
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.addTrainButton);
+        // clear can not add train dialog box
+        JemmyUtil.pressDialogButton(trainEditFrame,
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("add") }),
                 Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
+        JUnitUtil.dispose(trainEditFrame);
+    }
+    
+    @Test
+    public void testTrainEditFrameAddButtonTrainNameTooLong() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainEditFrame trainEditFrame = new TrainEditFrame(null);
+        trainEditFrame.setTitle("Test Add Button Train Frame");
+        // fill in name and description fields
+        trainEditFrame.trainNameTextField.setText("Test Add Train Name Too Long More Than 25 Characters");
 
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.addTrainButton);
+
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("Test Add Train Name Too Long More Than 25 Characters");
+        Assert.assertNull("train does not exist", train);
+
+        // clear can not add train dialog box
+        JemmyUtil.pressDialogButton(trainEditFrame,
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("add") }),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
+        JUnitUtil.dispose(trainEditFrame);
+    }
+    
+    @Test
+    public void testTrainEditFrameAddButtonTrainNameSpecialCharacter() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainEditFrame trainEditFrame = new TrainEditFrame(null);
+        trainEditFrame.setTitle("Test Add Button Train Frame");
+        // fill in name and description fields
+        trainEditFrame.trainNameTextField.setText("Not this character :");
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.addTrainButton);
+
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("Not this character :");
+        Assert.assertNull("train does not exist", train);
+
+        // clear can not add train dialog box
+        JemmyUtil.pressDialogButton(trainEditFrame,
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("add") }),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
+        jmri.util.JUnitAppender.assertErrorMessage("Train name must not contain reserved characters");
+
+        JUnitUtil.dispose(trainEditFrame);
+    }
+
+
+    /**
+     * Test that you can't save using an existing train's name
+     */
+    @Test
+    public void testTrainEditFrameSaveExistingTrain() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("Test_Train 1");
+        Assert.assertNotNull(train);
+
+        Train train2 = tmanager.getTrainByName("Test_Train 2");
+        Assert.assertNotNull(train2);
+
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        trainEditFrame.setTitle("Test Save Train Frame");
+        trainEditFrame.trainNameTextField.setText("Test_Train 2");
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
+
+        // And now press the confirmation button
+        JemmyUtil.pressDialogButton(trainEditFrame,
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("save") }),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
         JUnitUtil.dispose(trainEditFrame);
     }
 
@@ -268,8 +343,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         Assert.assertEquals("train name", "Test Train Save Button", trainEditFrame.trainNameTextField.getText());
         Assert.assertEquals("train description", "Test Train Save Button Description",
-                trainEditFrame.trainDescriptionTextField
-                        .getText());
+                trainEditFrame.trainDescriptionTextField.getText());
         Assert.assertEquals("train comment", "Test Train Save Button Comment",
                 trainEditFrame.commentTextArea.getText());
         Assert.assertEquals("train depart hour", "00", trainEditFrame.hourBox.getSelectedItem());
@@ -285,10 +359,10 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("FRED selected", trainEditFrame.fredRadioButton.isSelected());
 
         // test departure time fields
-        //        ThreadingUtil.runOnGUI(() -> {
+        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.hourBox.setSelectedItem("15");
         trainEditFrame.minuteBox.setSelectedItem("45");
-        //        });
+        // });
         // shouldn't change until Save
         Assert.assertEquals("train departure time", "00:00", train.getDepartureTime());
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
@@ -297,9 +371,9 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // test route field, 5 routes and a blank
         Assert.assertEquals("Route Combobox item count", 6, trainEditFrame.routeBox.getItemCount());
-        //        ThreadingUtil.runOnGUI(() -> {
+        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
-        //        });
+        // });
         Assert.assertEquals("train route", "Test Route C", train.getRoute().getName());
         // test route edit button
         JemmyUtil.enterClickAndLeave(trainEditFrame.editButton);
@@ -309,10 +383,10 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("route add frame", ref);
 
         // increase screen size so clear and set buttons are shown
-        //        ThreadingUtil.runOnGUI(() -> {
+        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.setLocation(10, 0);
         trainEditFrame.setSize(trainEditFrame.getWidth(), trainEditFrame.getHeight() + 200);
-        //        });
+        // });
 
         // test car types using the clear and set buttons
         JemmyUtil.enterClickAndLeave(trainEditFrame.clearButton);
@@ -322,11 +396,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
 
         // now change them
-        //        ThreadingUtil.runOnGUI(() -> {
+        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.numEnginesBox.setSelectedItem("3");
         trainEditFrame.modelEngineBox.setSelectedItem("FT");
         trainEditFrame.roadEngineBox.setSelectedItem("UP");
-        //        });
+        // });
         // shouldn't change until Save
         Assert.assertEquals("number of engines 1", "2", train.getNumberEngines());
         Assert.assertEquals("engine model 1", "GP40", train.getEngineModel());
@@ -353,9 +427,9 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("caboose road 1", "", train.getCabooseRoad());
         // shouldn't change until Save
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        //        ThreadingUtil.runOnGUI(() -> {
+        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
-        //        });
+        // });
         Assert.assertEquals("caboose road", "", train.getCabooseRoad());
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
         Assert.assertEquals("caboose road new", roadNames[2], train.getCabooseRoad());
@@ -367,18 +441,16 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // test delete button
         // the delete opens a dialog window to confirm the delete
-        JemmyUtil.enterClickAndLeave(trainEditFrame.deleteTrainButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.deleteTrainButton);
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(trainEditFrame);
+        
         // confirm that train wasn't deleted
         Train t2 = tmanager.getTrainByName("Test Train Save Button");
         Assert.assertNotNull(t2);
 
-        //        ThreadingUtil.runOnGUI(() -> {
         JUnitUtil.dispose(ref);
         JUnitUtil.dispose(trainEditFrame);
-        //        });
     }
 
     @Test
@@ -390,13 +462,12 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(train);
 
         TrainEditFrame trainEditFrame = new TrainEditFrame(train);
-        trainEditFrame.setTitle("Test Edit Train Frame");
+        JemmyUtil.waitFor(trainEditFrame);
 
-        JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
-
-        // clear no route dialogue box
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
+        // clear no route dialog box
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(trainEditFrame);
         JUnitUtil.dispose(trainEditFrame);
     }
 
@@ -418,15 +489,12 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         trainEditFrame.trainNameTextField.setText("");
 
-        JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
         // clear can not save train
-        JemmyUtil.pressDialogButton(trainEditFrame, MessageFormat.format(Bundle
-                .getMessage("CanNot"),
-                new Object[]{Bundle
-                        .getMessage("save")}),
+        JemmyUtil.pressDialogButton(trainEditFrame,
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("save") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(trainEditFrame);
         JUnitUtil.dispose(trainEditFrame);
     }
 
@@ -443,11 +511,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         TrainEditFrame trainEditFrame = new TrainEditFrame(train);
         trainEditFrame.setTitle("Test Delete Train Frame");
 
-        JemmyUtil.enterClickAndLeave(trainEditFrame.deleteTrainButton);
-
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.deleteTrainButton);
         // And now press the confirmation button
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(trainEditFrame);
+        
         train = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", train);
 
@@ -487,12 +555,12 @@ public class TrainEditFrameTest extends OperationsTestCase {
         train1.move();
 
         // should fail
-        JemmyUtil.enterClickAndLeave(trainEditFrame.resetButton);
-
-        // clear the error dialogue
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.resetButton);
+        // clear the error dialog
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotResetTrain"),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(trainEditFrame);
+        
         Assert.assertTrue("Train status", train1.isBuilt());
 
         JUnitUtil.dispose(trainEditFrame);
@@ -507,5 +575,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.loadTrains();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainEditFrameTest.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(TrainEditFrameTest.class);
 }

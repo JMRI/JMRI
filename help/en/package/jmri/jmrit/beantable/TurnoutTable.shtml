@@ -1,347 +1,306 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Turnout Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Turnout Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Turnout Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Turnout Table</h1>
 
-      <p>This table contains a list of all Turnouts that exist for
-      this Panel. From this table you can change the state of a
-      Turnout, change the feedback mode, enter Sensors for
-      feedback, invert, lock, and delete it. <a name="columns" id=
-      "columns"></a></p>
+      <p>This table contains a list of all Turnouts that exist for this Panel. From this table you
+      can change the state of a Turnout, change the feedback mode, enter Sensors for feedback,
+      invert, lock, and delete it.</p>
 
-      <h2>Turnout Table Columns</h2>
-      <p class="im">
-      <img src="images/TurnoutTableColumnList.jpg" alt="Turnout Table Columns (Rel 4.20)" align="right" height="438" width="150">
-      Contents of the Turnout Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>.
-      As with all JMRI tool tables, you can add or remove columns from the display by right-clicking anywhere
-      in the column header and selecting or deselecting the desired columns from the menu that appears (see picture at right).
-      You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
-      between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
-      </p>
-            
+      <h2 id="columns">Turnout Table Columns</h2>
+
+      <p class="im"><img src="images/TurnoutTableColumnList.jpg" alt=
+      "Turnout Table Columns (Rel 4.20)" style="float:right" height="438" width="150"> Contents of
+      the Turnout Table are displayed by selecting it under <strong>Tools⇒Tables</strong>. As with
+      all JMRI tool tables, you can add or remove columns from the display by right-clicking
+      anywhere in the column header and selecting or deselecting the desired columns from the menu
+      that appears (see picture at right). You can change the order of the columns by dragging
+      their titles, change the width of columns by dragging the vertical line between columns, and
+      sort the rows by clicking the column title (a triangle will appear indicating the direction
+      of the sort).</p>
+
       <dl>
-        <dt><strong>System Name</strong></dt>
-
-        <dd>The System Name cannot be changed once entered into the
-        table. The <a href="TurnoutAddEdit.shtml">"Add..."</a>
-        button located in the lower left corner
-        of the pane allows you to add a new Turnout to the table.
-        The System Name is automatically generated when using the
-        "Add..." button.<br>
-        See <a href=
-        "../../../../html/doc/Technical/Names.shtml">Names</a> for
-        more info about the format.</dd>
-
-        <dt><strong>User Name</strong></dt>
-
-        <dd>You can directly enter or change the "User Name" for an
-        existing Turnout (double click in the cell). This can be
-        pretty much anything you wish to describe the Turnout.</dd>
-
-        <dt><strong>State</strong></dt>
-        <dd>
-        Pushing one of the buttons/icons in the "State" column
-        will change the state of that particular Turnout.<br>
-        Choose between textual and graphic display of the Turnout state
-        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display
-        preferences</a>.<br>
-        <img src="images/TurnoutTableText.png" height="140" width="406"
-        align="center" alt="Textual Turnout state column">
-       <img src="images/TurnoutTableGraphic.png" height="96" width="399"
-        align="center" alt="Graphic Turnout state column">
-        </dd>
- 
-        <dt><strong>Delete</strong></dt>
+        <dt><strong>System Name</strong>
+        </dt>
 
         <dd>
-          Pushing the "Delete" button will remove that Turnout from
-          the table.
-
-          <p>Note that this doesn't remove the Turnout from any
-          files you've saved that contain it. If you load one of
-          those files, perhaps when you restart the program, the
-          Turnout will reappear. You should use one of the "Store
-          to file" options in the "File" menu to save new versions
-          of any files that contain this Turnout.</p>
+          The System Name cannot be changed once entered into the table. The <a href=
+          "TurnoutAddEdit.shtml">"Add..."</a> button located in the lower left corner of the pane
+          allows you to add a new Turnout to the table. The System Name is automatically generated
+          when using the "Add..." button.<br>
+          See <a href="../../../../html/doc/Technical/Names.shtml">Names</a> for more info about
+          the format.
         </dd>
 
-        <dt><strong>Inverted</strong></dt>
+        <dt><strong>User Name</strong>
+        </dt>
 
-        <dd>When checked, the Turnout command and status to and
-        from the layout is inverted. For example, an inverted
-        Turnout means that when JMRI sends a "CLOSE" turnout
-        command, it becomes a "THROW" to the layout. Turnouts that
-        can not be inverted have grayed out boxes and can not be
-        checked.</dd>
+        <dd>You can directly enter or change the "User Name" for an existing Turnout (double click
+        in the cell). This can be pretty much anything you wish to describe the Turnout.</dd>
 
-        <dt><strong>Locked</strong></dt>
-
-        <dd>When checked, the Turnout is locked. There are two
-        types of locks supported by JMRI: Cab lockout and
-        Pushbutton lockout. When a Turnout is locked, only Turnout
-        commands from JMRI will move the Turnout. Cabs and/or
-        pushbuttons on the layout are disabled. You can decide for
-        each Turnout if you want "Both" cabs and pushbuttons
-        locked, "Cabs only", or "Pushbuttons only". Click the "Show
-        Lock information" box on the lower edge of the pane to see
-        the lock options. Not all stationary decoders support
-        pushbutton lockout, and not all systems support cab
-        lockout. Turnouts that can not be locked have grayed out
-        boxes and can not be checked. See <a href=
-        "#Turnout_lock_feature">Turnout Lock feature</a>
-        below.</dd>
-
-        <dt><strong>Edit</strong></dt>
-
-        <dd>Click this button to inspect and set Basic settings,
-        Feedback, Lock, Speed, Usage and (custom) Properties of a
-        particular Turnout in a tabbed pane.</dd>
-
-        <dt><strong>Feedback</strong></dt>
-
-        <dd>This shows the known state of a turnout on the layout,
-        which may differ from the last Cmd sent.</dd>
-
-        <dt><strong>Mode</strong></dt>
-
-        <dd>The pull down boxes allow you to select the method of
-        operation for a Turnout. See <a href=
-        "#Turnout_Feedback">Turnout Feedback</a> below.</dd>
-
-        <dt><strong>Sensor 1</strong></dt>
-
-        <dd>Shows the System Name of the optional Sensor that
-        provides the feedback for a Turnout. You can also directly
-        enter or change the System Name of Sensor 1 for a
-        Turnout.</dd>
-
-        <dt><strong>Sensor 2</strong></dt>
-
-        <dd>Shows the System Name of the optional Sensor that
-        provides the feedback for a Turnout. You can also directly
-        enter or change the System Name of Sensor 2 for a
-        Turnout.</dd>
-
-        <dt><strong>Automation</strong></dt>
-
-        <dd>Shows what specific retry method has been configured
-        for this Turnout. See the section on <a href=
-        "#automation">Turnout Automation</a> below.</dd>
-
-        <dt><strong>Edit Auto</strong></dt>
-
-        <dd>Click this button to set custom retry values for a
-        specific turnout. This button is inactive when Automate is
-        set to Off or Use Global.</dd>
-
-        <dt><a name="Lock_Mode" id="Lock_Mode"><strong>Lock Mode</strong></a></dt>
-
-        <dd>Shows which lockouts, if any, are active for this
-        Turnout. "Both" means that cabs and pushbuttons will be
-        locked out if the Lock is active. "Cabs only" means that
-        cabs will be locked out, but pushbuttons will continue to
-        work when the Lock is active. And "Pushbuttons only" means
-        that pushbuttons will be locked out, but cabs will continue
-        to work when the Lock is active. Note, when JMRI locks a
-        Turnout's pushbutton, it does so by sending a Lock command
-        to the Turnout decoder's lock control CV register. You must
-        unlock the Turnout before shutting down the JMRI program if
-        you want to restore the operation of the pushbuttons. Cab
-        lockout automatically terminates when the JMRI program is
-        shut down. For more information on this, see <a href=
-        "#Turnout_lock_feature">Turnout Lock</a> below.</dd>
-
-        <dt><a name="decodercol" id="decodercol"><strong>Decoder</strong></a></dt>
+        <dt><strong>State</strong>
+        </dt>
 
         <dd>
-          When you're using the lock feature, the program needs to
-          know what type of DCC decoder is in use so it can handle
-          it properly. If you're not using the lock feature, don't
-          bother with this field; JMRI is capable of commanding any
-          type of accessory decoder to move back and forth.
-
-          <p>Currently the program only supports lock mode for NCE
-          revision C and CVP accessory decoders. CVP decoders
-          support one or two pushbutton operation. Select the
-          number of pushbuttons used to operate that specific
-          turnout. <code>CVP_AD4_1B</code> means one button, and
-          <code>CVP_AD4_2B</code> means two buttons. We recommend
-          that you enter all four CVP Turnouts per decoder into the
-          Turnout Table, even if you're only locking one. You do
-          not need to specify the number of pushbuttons for NCE.
-          Unfortunately, NCE revisions A and B accessory decoders
-          do not support pushbutton lockout.</p>
+          Pushing one of the buttons/icons in the "State" column will change the state of that
+          particular Turnout.<br>
+          Choose between textual and graphic display of the Turnout state in the <a href=
+          "../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.<br>
+          <img src="images/TurnoutTableText.png" height="140" width="406" alt=
+          "Textual Turnout state column"> <img src="images/TurnoutTableGraphic.png" height="96"
+          width="399" alt="Graphic Turnout state column">
         </dd>
 
-        <dt><a name="speeds" id="speeds"><strong>Closed and Thrown
-        Speed</strong></a></dt>
+        <dt><strong>Delete</strong>
+        </dt>
 
         <dd>
-          The closed and thrown speed is used with certain
-          automation tools and logic, to help determine the speed
-          at which a Train can be set through the Turnout when it
-          is set to different states. It is also used by the Signal
-          Mast Logic for determining which aspect should be
-          displayed on a Signal Mast.
+          Pushing the "Delete" button will remove that Turnout from the table.
+          <p>Note that this doesn't remove the Turnout from any files you've saved that contain it.
+          If you load one of those files, perhaps when you restart the program, the Turnout will
+          reappear. You should use one of the "Store to file" options in the "File" menu to save
+          new versions of any files that contain this Turnout.</p>
+        </dd>
 
-          <p>In the drop down list, you are presented a set of
-          named fixed speeds that have been predefined in the
-          <code>signalSpeed.xml</code> file, in addition to a
-          global and use block speed options.<br>
-          In addition it is also possible to enter a numerical
-          value to represent a speed.</p>
+        <dt><strong>Inverted</strong>
+        </dt>
 
-          <p>The global value is set via the <b>Speeds</b> menu
-          option.</p>
+        <dd>When checked, the Turnout command and status to and from the layout is inverted. For
+        example, an inverted Turnout means that when JMRI sends a "CLOSE" turnout command, it
+        becomes a "THROW" to the layout. Turnouts that can not be inverted have grayed out boxes
+        and can not be checked.</dd>
 
-          <p>When "Use Block Speed" is selected this in effect
-          tells any automation tool to ignore the speed setting
-          through this Turnout; the tool should then only consider
-          speeds that are set on <a href=
-          "BlockTable.shtml#BlockSpeed">Blocks</a>.</p>
+        <dt><strong>Locked</strong>
+        </dt>
+
+        <dd>
+          When checked, the Turnout is locked. There are two types of locks supported by JMRI: Cab
+          lockout and Pushbutton lockout. When a Turnout is locked, only Turnout commands from JMRI
+          will move the Turnout. Cabs and/or pushbuttons on the layout are disabled. You can decide
+          for each Turnout if you want "Both" cabs and pushbuttons locked, "Cabs only", or
+          "Pushbuttons only". Click the "Show Lock information" box on the lower edge of the pane
+          to see the lock options. Not all stationary decoders support pushbutton lockout, and not
+          all systems support cab lockout. Turnouts that can not be locked have grayed out boxes
+          and can not be checked. See <a href="#Turnout_lock_feature">Turnout Lock feature</a>
+          below.
+        </dd>
+
+        <dt><strong>Edit</strong>
+        </dt>
+
+        <dd>Click this button to inspect and set Basic settings, Feedback, Lock, Speed, Usage and
+        (custom) Properties of a particular Turnout in a tabbed pane.</dd>
+
+        <dt><strong>Feedback</strong>
+        </dt>
+
+        <dd>This shows the known state of a turnout on the layout, which may differ from the last
+        Cmd sent.</dd>
+
+        <dt><strong>Mode</strong>
+        </dt>
+
+        <dd>
+          The pull down boxes allow you to select the method of operation for a Turnout. See
+          <a href="#Turnout_Feedback">Turnout Feedback</a> below.
+        </dd>
+
+        <dt><strong>Sensor 1</strong>
+        </dt>
+
+        <dd>Shows the System Name of the optional Sensor that provides the feedback for a Turnout.
+        You can also directly enter or change the System Name of Sensor 1 for a Turnout.</dd>
+
+        <dt><strong>Sensor 2</strong>
+        </dt>
+
+        <dd>Shows the System Name of the optional Sensor that provides the feedback for a Turnout.
+        You can also directly enter or change the System Name of Sensor 2 for a Turnout.</dd>
+
+        <dt><strong>Automation</strong>
+        </dt>
+
+        <dd>
+          Shows what specific retry method has been configured for this Turnout. See the section on
+          <a href="#automation">Turnout Automation</a> below.
+        </dd>
+
+        <dt><strong>Edit Auto</strong>
+        </dt>
+
+        <dd>Click this button to set custom retry values for a specific turnout. This button is
+        inactive when Automate is set to Off or Use Global.</dd>
+
+        <dt id="Lock_Mode"><strong>Lock Mode</strong>
+        </dt>
+
+        <dd>
+          Shows which lockouts, if any, are active for this Turnout. "Both" means that cabs and
+          pushbuttons will be locked out if the Lock is active. "Cabs only" means that cabs will be
+          locked out, but pushbuttons will continue to work when the Lock is active. And
+          "Pushbuttons only" means that pushbuttons will be locked out, but cabs will continue to
+          work when the Lock is active. Note, when JMRI locks a Turnout's pushbutton, it does so by
+          sending a Lock command to the Turnout decoder's lock control CV register. You must unlock
+          the Turnout before shutting down the JMRI program if you want to restore the operation of
+          the pushbuttons. Cab lockout automatically terminates when the JMRI program is shut down.
+          For more information on this, see <a href="#Turnout_lock_feature">Turnout Lock</a> below.
+        </dd>
+
+        <dt id="decodercol"><strong>Decoder</strong>
+        </dt>
+
+        <dd>
+          When you're using the lock feature, the program needs to know what type of DCC decoder is
+          in use so it can handle it properly. If you're not using the lock feature, don't bother
+          with this field; JMRI is capable of commanding any type of accessory decoder to move back
+          and forth.
+          <p>Currently the program only supports lock mode for NCE revision C and CVP accessory
+          decoders. CVP decoders support one or two pushbutton operation. Select the number of
+          pushbuttons used to operate that specific turnout. <code>CVP_AD4_1B</code> means one
+          button, and <code>CVP_AD4_2B</code> means two buttons. We recommend that you enter all
+          four CVP Turnouts per decoder into the Turnout Table, even if you're only locking one.
+          You do not need to specify the number of pushbuttons for NCE. Unfortunately, NCE
+          revisions A and B accessory decoders do not support pushbutton lockout.</p>
+        </dd>
+
+        <dt id="speeds"><strong>Closed and Thrown Speed</strong>
+        </dt>
+
+        <dd>
+          The closed and thrown speed is used with certain automation tools and logic, to help
+          determine the speed at which a Train can be set through the Turnout when it is set to
+          different states. It is also used by the Signal Mast Logic for determining which aspect
+          should be displayed on a Signal Mast.
+          <p>In the drop down list, you are presented a set of named fixed speeds that have been
+          predefined in the <code>signalSpeed.xml</code> file, in addition to a global and use
+          block speed options.<br>
+          In addition it is also possible to enter a numerical value to represent a speed.</p>
+
+          <p>The global value is set via the <strong>Speeds</strong> menu option.</p>
+
+          <p>When "Use Block Speed" is selected this in effect tells any automation tool to ignore
+          the speed setting through this Turnout; the tool should then only consider speeds that
+          are set on <a href="BlockTable.shtml#BlockSpeed">Blocks</a>.</p>
         </dd>
       </dl>
-      
-      <a name="controls" id="controls"></a>
 
-      <h2>Turnout Table Controls</h2>
-      <p>Along the bottom of the Turnout Table pane are buttons and
-      checkboxes that control its operation.</p>
+      <h2 id="controls">Turnout Table Controls</h2>
+
+      <p>Along the bottom of the Turnout Table pane are buttons and checkboxes that control its
+      operation.</p>
 
       <dl>
         <dt>Add...</dt>
 
-        <dd>Pressing this button opens a pane where you can
-        <a href="TurnoutAddEdit.shtml">add a new Turnout</a>.</dd>
+        <dd>
+          Pressing this button opens a pane where you can <a href="TurnoutAddEdit.shtml">add a new
+          Turnout</a>.
+        </dd>
 
         <dt>Automatic retry</dt>
 
-        <dd>When checked, enables the Automate - Global Default
-        setting for <em>all</em> Turnouts. Currently the Global
-        Default does not cause retries for Turnouts. See the
-        section on <a href="#automation">Turnout Automation</a>
-        below for more information i.e. to set Automate properties
-        for an individual Turnout.</dd>
+        <dd>
+          When checked, enables the Automate - Global Default setting for <em>all</em> Turnouts.
+          Currently the Global Default does not cause retries for Turnouts. See the section on
+          <a href="#automation">Turnout Automation</a> below for more information i.e. to set
+          Automate properties for an individual Turnout.
+        </dd>
 
         <dt>Show feedback information</dt>
 
-        <dd>When checked, the optional <a href=
-        "#Turnout_Feedback">Feedback</a> columns are shown.</dd>
+        <dd>
+          When checked, the optional <a href="#Turnout_Feedback">Feedback</a> columns are shown.
+        </dd>
 
         <dt>Show Lock information</dt>
 
-        <dd>When checked, the optional <a href=
-        "#Turnout_lock_feature">Lock</a> columns are
-        shown.</dd>
+        <dd>
+          When checked, the optional <a href="#Turnout_lock_feature">Lock</a> columns are shown.
+        </dd>
 
         <dt>Show Turnout Speed information</dt>
 
-        <dd>When checked, lets you set the Thrown and Closed speeds
-        for each Turnout. Choose either Use Block Speed or one of
-        the speed values from the list.</dd>
+        <dd>When checked, lets you set the Thrown and Closed speeds for each Turnout. Choose either
+        Use Block Speed or one of the speed values from the list.</dd>
 
         <dt>Show State Query actions</dt>
 
-        <dd>When checked, the optional Sensor State Query and State Forget
-          columns are shown.</dd>
+        <dd>When checked, the optional Sensor State Query and State Forget columns are shown.</dd>
 
         <dt>Automation menu</dt>
 
-        <dd>To read or set global (system wide) turnout retry
-        settings, choose the Automation -&gt; Edit... menu. Change
-        the number of retries and the interval between them.</dd>
+        <dd>To read or set global (system wide) turnout retry settings, choose the Automation -&gt;
+        Edit... menu. Change the number of retries and the interval between them.</dd>
 
         <dt>Speeds menu</dt>
 
-        <dd>To read or set global (system wide) turnout <a href=
-        "#speeds">speeds</a>, choose the Speeds -&gt; Defaults...
-        menu.</dd>
+        <dd>
+          To read or set global (system wide) turnout <a href="#speeds">speeds</a>, choose the
+          Speeds -&gt; Defaults... menu.
+        </dd>
       </dl>
 
-      <a name="Turnout_Feedback" id="Turnout_Feedback"></a>
-      <h2>Turnout Feedback</h2>
+      <h2 id="Turnout_Feedback">Turnout Feedback</h2>
 
-      <p>Model railroaders want different things when it comes to
-      knowing the status of the turnouts on their layout. Some are
-      quite happy to say "I told it to move, that's good enough for
-      me". These people don't worry about whether a turnout on
-      their layout actually moved when they told it to. Those
-      people can just ignore this page, and leave the JMRI settings
-      at their default.</p>
+      <p>Model railroaders want different things when it comes to knowing the status of the
+      turnouts on their layout. Some are quite happy to say "I told it to move, that's good enough
+      for me". These people don't worry about whether a turnout on their layout actually moved when
+      they told it to. Those people can just ignore this page, and leave the JMRI settings at their
+      default.</p>
 
-      <p>But some modelers want to have better information about
-      the status of the turnouts on their layout, and so use some
-      form of "feedback" to indicate turnout position. This could
-      be as complicated as two microswitches, adjusted to only
-      close when the turnout is properly seated in either position.
-      Or it could be something simpler.</p>
+      <p>But some modelers want to have better information about the status of the turnouts on
+      their layout, and so use some form of "feedback" to indicate turnout position. This could be
+      as complicated as two microswitches, adjusted to only close when the turnout is properly
+      seated in either position. Or it could be something simpler.</p>
 
-      <p>In the JMRI program, Turnout objects actually know about
-      two different states: "Commanded" state and "Known" state.
-      The commanded state is "This is what was asked for last". The
-      known state is "This is what's happening on the layout as far
-      as I know".</p>
+      <p>In the JMRI program, Turnout objects actually know about two different states: "Commanded"
+      state and "Known" state. The commanded state is "This is what was asked for last". The known
+      state is "This is what's happening on the layout as far as I know".</p>
 
-      <p>Built into NCE, LocoNet and XPressNet systems are limited
-      abilities to monitor what is happening on their networks.
-      This allows JMRI to capture messages or poll the system
-      concerning Turnout state changes. All the other protocols
-      normally use a "you told it to change, so it did" logic. In
-      other words, when something in the code (the Turnout Control
-      Tool or a script) commands a state change from closed to
-      thrown, the default is for both both the commanded state and
-      the known state to change to "Thrown".</p>
+      <p>Built into NCE, LocoNet and XPressNet systems are limited abilities to monitor what is
+      happening on their networks. This allows JMRI to capture messages or poll the system
+      concerning Turnout state changes. All the other protocols normally use a "you told it to
+      change, so it did" logic. In other words, when something in the code (the Turnout Control
+      Tool or a script) commands a state change from closed to thrown, the default is for both both
+      the commanded state and the known state to change to "Thrown".</p>
 
-      <p>But it is also possible to control this in more detail if
-      you have wired your layout to allow it.</p>
+      <p>But it is also possible to control this in more detail if you have wired your layout to
+      allow it.</p>
 
-      <p>The whole question of Turnout feedback is then "How do we
-      configure the program to understand the known state properly,
-      given my layout hardware?"</p>
+      <p>The whole question of Turnout feedback is then "How do we configure the program to
+      understand the known state properly, given my layout hardware?"</p>
 
-      <p>In the Turnouts pane (Tools -&gt; Tables -&gt; Turnouts)
-      click on the box near the bottom that is labeled "Show
-      feedback information". To the right of the Turnouts pane
-      you'll find four extra columns associated with feedback:</p>
+      <p>In the Turnouts pane (Tools -&gt; Tables -&gt; Turnouts) click on the box near the bottom
+      that is labeled "Show feedback information". To the right of the Turnouts pane you'll find
+      four extra columns associated with feedback:</p>
 
       <dl>
         <dt>"Feedback"</dt>
 
-        <dd>This is the "known state". You can't change it, but
-        this column will show you what the program thinks it
-        is.</dd>
+        <dd>This is the "known state". You can't change it, but this column will show you what the
+        program thinks it is.</dd>
 
         <dt>"Mode"</dt>
 
-        <dd>This is the feedback method used by this Turnout. (You
-        can change it for each Turnout individually, but note the
-        change doesn't take effect until you click somewhere else,
-        and you might need to add some Sensor names in the next
-        column(s))</dd>
+        <dd>This is the feedback method used by this Turnout. (You can change it for each Turnout
+        individually, but note the change doesn't take effect until you click somewhere else, and
+        you might need to add some Sensor names in the next column(s))</dd>
 
         <dt>"Sensor 1", "Sensor 2"</dt>
 
-        <dd>These define the Sensors needed by certain types of
-        feedback. You can type a Sensor number, System Name or User
-        Name here; the program will change it to the System Name
-        that it needs.</dd>
+        <dd>These define the Sensors needed by certain types of feedback. You can type a Sensor
+        number, System Name or User Name here; the program will change it to the System Name that
+        it needs.</dd>
       </dl>
 
       <p>Available Feedback modes are:</p>
@@ -349,159 +308,274 @@
       <dl>
         <dt>DIRECT</dt>
 
-        <dd>The default in many cases. When something tells the
-        Turnout to change, it's just immediately assumed that it
-        actually did it.</dd>
+        <dd>The default in many cases. When something tells the Turnout to change, it's just
+        immediately assumed that it actually did it.</dd>
 
         <dt>ONESENSOR</dt>
 
-        <dd>The Turnout watches the Sensor defined by the "Sensor
-        1" column, which is probably hooked to a microswitch on the
-        turnout or similar. When the Sensor is "Active", the
-        turnout is known to be in the "Thrown" position. When it's
-        "Inactive", the turnout is known to be in the "Closed"
-        position.</dd>
+        <dd>
+          The Turnout monitors the Sensor defined by the "Sensor 1" column, which could be the
+          input from a microswitch on the turnout or similar.<br>
+          When the Sensor is "Active", the turnout is known to be in the "Thrown" position. When
+          it's "Inactive", the turnout is known to be in the "Closed" position.
+          <table style="border: 1px solid gray;">
+            <thead>
+              <tr>
+                <th>Sensor 1</th>
+                <th>Feedback (known) State</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Active</td>
+                <td>Thrown</td>
+              </tr>
+
+              <tr>
+                <td>Inactive</td>
+                <td>Closed</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>Inconsistent <span class="since">since 4.21.5</span></td>
+              </tr>
+
+              <tr>
+                <td>Inconsistent</td>
+                <td>Inconsistent <span class="since">since 4.21.5</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
 
         <dt>TWOSENSOR</dt>
 
-        <dd>The Turnout watches two Sensors defined by the "Sensor
-        1" and "Sensor 2" columns, which are probably hooked to
-        microswitches at either end of the turnout's throw bar.
-        When Sensor 1 is "Active", the turnout is known to be
-        "Thrown". When Sensor 2 is "Active", the turnout is known
-        to be "Closed" (normal).</dd>
+        <dd>
+          The Turnout monitors two Sensors defined by the "Sensor 1" and "Sensor 2" columns, which
+          could be inputs from microswitches at either end of the turnout's throw bar or from servo
+          travel events.<br>
+          The Turnout feedback state is determined by both Sensors: &lt;-- Table in same order as 2
+          Sensor Feedback Unit Tests within AbstractTurnoutTestBase --&gt;
+          <table style="border: 1px solid gray;">
+            <thead>
+              <tr>
+                <th>Sensor 1</th>
+                <th>Sensor 2</th>
+                <th>Feedback (known) State</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Active</td>
+                <td>Inactive</td>
+                <td>Thrown</td>
+              </tr>
+
+              <tr>
+                <td>Inactive</td>
+                <td>Active</td>
+                <td>Closed</td>
+              </tr>
+
+              <tr>
+                <td>Inactive</td>
+                <td>Inactive</td>
+                <td>Inconsistent</td>
+                <td>Typical condition for a Turnout mid-throw</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>Unknown</td>
+                <td>Unknown</td>
+                <td>Typical startup condition</td>
+              </tr>
+
+              <tr>
+                <td>Active</td>
+                <td>Active</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Active</td>
+                <td>Inconsistent</td>
+                <td>Inconsistent</td>
+                <td>Changed from Unknown &gt; Inconsistent 4.21.5</td>
+              </tr>
+
+              <tr>
+                <td>Inactive</td>
+                <td>Inconsistent</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Inconsistent</td>
+                <td>Active</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Inconsistent</td>
+                <td>Inactive</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>Active</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>Inactive</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Unknown</td>
+                <td>Inconsistent</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Inconsistent</td>
+                <td>Unknown</td>
+                <td>Inconsistent</td>
+                <td>Changed from Unknown &gt; Inconsistent 4.21.5</td>
+              </tr>
+
+              <tr>
+                <td>Active</td>
+                <td>Unknown</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Inactive</td>
+                <td>Unknown</td>
+                <td>Inconsistent</td>
+              </tr>
+
+              <tr>
+                <td>Inconsistent</td>
+                <td>Inconsistent</td>
+                <td>Inconsistent</td>
+                <td>Changed from Unknown &gt; Inconsistent 4.21.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
 
         <dt>DELAYED</dt>
 
-        <dd>When something tells the Turnout to change, 
-        it immediately starts the operation and goes to
-        the INCONSISTENT state to reflect that the points
-        are moving.  After a few seconds delay, the
-        operation completes and the final state is reported.</dd>
+        <dd>When something tells the Turnout to change, it immediately starts the operation and
+        goes to the INCONSISTENT state to reflect that the points are moving. After a few seconds
+        delay, the operation completes and the final state is reported.</dd>
 
         <dt>MONITORING</dt>
 
-        <dd>Default for LocoNet Turnouts (and probably XpressNet
-        soon), and available for NCE. When selected, the network is
-        monitored for messages about the status of the Turnout.
-        This mode is only available for certain systems, i.e. some
-        systems can't do the monitoring properly, and don't have
-        this choice.</dd>
+        <dd>Default for LocoNet Turnouts (and probably XpressNet soon), and available for NCE. When
+        selected, the network is monitored for messages about the status of the Turnout. This mode
+        is only available for certain systems, i.e. some systems can't do the monitoring properly,
+        and don't have this choice.</dd>
 
         <dt>INDIRECT</dt>
 
-        <dd>Currently only available for LocoNet Turnouts, this
-        informs the program that the turnout is being driven by a
-        Digitrax DS54 with a microswitch attached to the switch
-        lead. For more information, see the <a href=
-        "../../../../html/hardware/loconet/DS54.shtml">DS54</a>
-        examples page.</dd>
+        <dd>
+          Currently only available for LocoNet Turnouts, this informs the program that the turnout
+          is being driven by a Digitrax DS54 with a microswitch attached to the switch lead. For
+          more information, see the <a href="../../../../html/hardware/loconet/DS54.shtml">DS54</a>
+          examples page.
+        </dd>
 
         <dt>EXACT</dt>
 
-        <dd>Currently only available for LocoNet Turnouts, this
-        informs the program that the turnout is being driven by a
-        Digitrax DS54 with two microswitches attached to the switch
-        and aux leads. For more information, see the <a href=
-        "../../../../html/hardware/loconet/DS54.shtml">DS54</a>
-        examples page on the JMRI website.</dd>
+        <dd>
+          Currently only available for LocoNet Turnouts, this informs the program that the turnout
+          is being driven by a Digitrax DS54 with two microswitches attached to the switch and aux
+          leads. For more information, see the <a href=
+          "../../../../html/hardware/loconet/DS54.shtml">DS54</a> examples page on the JMRI
+          website.
+        </dd>
       </dl>
 
-      <a name="automation" id="automation"></a><h2>Turnout
-      Automation</h2>
+      <h2 id="automation">Turnout Automation</h2>
 
-      <p>JMRI can watch a Turnout and automate certain operations
-      on it. This was originally added to handle the case of "I
-      usually have to click that turnout a couple times to get it
-      to throw over", but it can be used for other things too.</p>
+      <p>JMRI can watch a Turnout and automate certain operations on it. This was originally added
+      to handle the case of "I usually have to click that turnout a couple times to get it to throw
+      over", but it can be used for other things too.</p>
 
       <p>The three forms are:</p>
 
       <dl>
         <dt>No Feedback</dt>
 
-        <dd>This just repeats the messages a fixed number of times,
-        with a delay in between.</dd>
+        <dd>This just repeats the messages a fixed number of times, with a delay in between.</dd>
 
         <dt>Sensor</dt>
 
-        <dd>This repeats the messages, with a delay in between,
-        until either the Sensor feedback indicates the turnout has
-        moved or a limit on the number of attempts is reached.</dd>
+        <dd>This repeats the messages, with a delay in between, until either the Sensor feedback
+        indicates the turnout has moved or a limit on the number of attempts is reached.</dd>
 
         <dt>Raw</dt>
 
-        <dd>This sends raw DCC packets to command the turnout to
-        move over, instead of working through the usual mechanisms
-        for the specific system. This mode is intended as a way of
-        getting around certain kinds of incompatibility between DCC
-        components.<br>
-        (Note: Raw is not available with MONITORING feedback,
-        because that relies on system-specific messages that aren't
-        used in this mode. It's also not available for systems that
-        don't have a DCC command station present to send the raw
-        messages)</dd>
+        <dd>This sends raw DCC packets to command the turnout to move over, instead of working
+        through the usual mechanisms for the specific system. This mode is intended as a way of
+        getting around certain kinds of incompatibility between DCC components.<br>
+        (Note: Raw is not available with MONITORING feedback, because that relies on
+        system-specific messages that aren't used in this mode. It's also not available for systems
+        that don't have a DCC command station present to send the raw messages)</dd>
       </dl>
 
-      <p>Normally, turnouts are only thrown once, which is the
-      "Off" setting under "Automation". You can set a Turnout to
-      use "No Feedback" automation by selecting it in the
-      Automation column for the individual Turnout. If there are
-      feedback Sensors defined, you can also select the "Sensor"
-      method there.</p>
+      <p>Normally, turnouts are only thrown once, which is the "Off" setting under "Automation".
+      You can set a Turnout to use "No Feedback" automation by selecting it in the Automation
+      column for the individual Turnout. If there are feedback Sensors defined, you can also select
+      the "Sensor" method there.</p>
 
-      <p>You can customize the automation by clicking "Edit Auto"
-      for an individual Turnout.</p>
+      <p>You can customize the automation by clicking "Edit Auto" for an individual Turnout.</p>
 
-      <p>It's also possible to set global Automation defaults, and
-      some Turnouts use those. Use the Automation -&gt; Edit...
-      menu to access those defaults.</p>
+      <p>It's also possible to set global Automation defaults, and some Turnouts use those. Use the
+      Automation -&gt; Edit... menu to access those defaults.</p>
 
-      <h2><a name="Turnout_lock_feature"></a>Turnout Lock
-      feature</h2>
+      <h2 id="Turnout_lock_feature">Turnout Lock feature</h2>
 
-      <p>The Turnout Lock feature allows you to selectively disable
-      accessory (Turnout) commands from cabs and/or locally-wired
-      pushbuttons. The Lock can be set (Locked) or unset (Unlocked)
-      from a checkbox in the Turnout Table, from a <a href=
-      "RouteAddEdit.shtml#lock">Route</a> or Logix, or from
-      scripts.</p>
+      <p>The Turnout Lock feature allows you to selectively disable accessory (Turnout) commands
+      from cabs and/or locally-wired pushbuttons. The Lock can be set (Locked) or unset (Unlocked)
+      from a checkbox in the Turnout Table, from a <a href="RouteAddEdit.shtml#lock">Route</a> or
+      Logix, or from scripts.</p>
 
       <h4>Cab Lockout</h4>
-      To do the Cab Lockout, JMRI works with
-      the DCC system to prevent people from changing the position
-      of a locked Turnout. JMRI can only do this with some DCC
-      systems. To do it, the JMRI program monitors the Turnout's
-      accessory address and if it detects a change command from a
-      Cab, will cancel the command by immediately sending out the
-      opposite command to the Turnout.
-
-      <p>To use this feature with an NCE command station, you must
-      select MONITORING as the feedback mode for the Turnout and
-      the NCE command station must have the 2007 or newer
+      To do the Cab Lockout, JMRI works with the DCC system to prevent people from changing the
+      position of a locked Turnout. JMRI can only do this with some DCC systems. To do it, the JMRI
+      program monitors the Turnout's accessory address and if it detects a change command from a
+      Cab, will cancel the command by immediately sending out the opposite command to the Turnout.
+      <p>To use this feature with an NCE command station, you must select MONITORING as the
+      feedback mode for the Turnout and the NCE command station must have the 2007 or newer
       EPROM.</p>
 
       <h4>Pushbutton Lockout</h4>
-      JMRI can also work with certain
-      types of DCC accessory decoders to lock out their
-      locally-wired pushbuttons. To do this, JMRI sends DCC
-      commands to the decoder. These commands are decoder-type
-      specific, so the program needs to know what type of accessory
-      decoder operates each lockable Turnout. (There is no industry
-      standard for the "Lock" messages, unlike for the messages to
-      move the turnout back and forth, so we have to create the
-      right custom ones for each type.) The various types are
-      selected in the <a href="#decodercol">"Decoder" column</a> of
-      the Turnout Table.
-
+      JMRI can also work with certain types of DCC accessory decoders to lock out their
+      locally-wired pushbuttons. To do this, JMRI sends DCC commands to the decoder. These commands
+      are decoder-type specific, so the program needs to know what type of accessory decoder
+      operates each lockable Turnout. (There is no industry standard for the "Lock" messages,
+      unlike for the messages to move the turnout back and forth, so we have to create the right
+      custom ones for each type.) The various types are selected in the <a href=
+      "#decodercol">"Decoder" column</a> of the Turnout Table.
       <h4>Locking Routes</h4>
-      To help you select a set of Turnouts
-      to lock, a Route can also be locked. All Turnouts that are
-      being monitored by the JMRI program and are included in the
-      Route will be locked. See the <a href=
-      "RouteTable.shtml">Routes help page</a> for more information.
+      To help you select a set of Turnouts to lock, a Route can also be locked. All Turnouts that
+      are being monitored by the JMRI program and are included in the Route will be locked. See the
+      <a href="RouteTable.shtml">Routes help page</a> for more information. 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -466,7 +466,7 @@
           <xs:attribute name="productID" type="xs:string" >
             <xs:annotation><xs:documentation>
                 For a decoder definition which
-                describes a device implementing the LocoNet SV2 messaging protocol,
+                describes a device implementing the LocoNet SV2 or LNCV messaging protocol,
                 this value is used to match a "discovered" device
                 to an appropriate decoder definition
             </xs:documentation></xs:annotation>
@@ -918,7 +918,7 @@
             <xs:attribute name="writeOnly" type="yesNoType" default="no" />
             <xs:attribute name="default" type="xs:string"/>
             <xs:attribute name="comment" type="xs:string"/>
-            <xs:attribute name="item" type="xs:string"/><!-- TODO should be use="required" !!! -->
+            <xs:attribute name="item" type="xs:string" use="required"/><!-- required since 4.23.3 -->
             <xs:attribute name="minFn" type="xs:int">
               <xs:annotation><xs:documentation>Only present if the decoder has at least minFn functions defined in numFn</xs:documentation></xs:annotation>
             </xs:attribute>
@@ -1230,6 +1230,7 @@
       <xs:enumeration value="LOCONETOPSBOARD"/>
       <xs:enumeration value="LOCONETSV1MODE"/>
       <xs:enumeration value="LOCONETSV2MODE"/>
+      <xs:enumeration value="LOCONETLNCVMODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>

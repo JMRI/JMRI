@@ -1,52 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: SPROG CBUS&trade; SPROG 3 plus Mode Switcher Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: SPROG CBUS® SPROG 3 plus Mode Switcher Tool</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-      <h1>JMRI : CBUS&trade; SPROG 3 Plus Mode Switcher Tool</h1>
-    
-      <p>The mode switcher controls the programming modes that are available for
-        the connected command station. Not all CBUS command stations support
-        the mode switcher.</p>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI : CBUS SPROG 3 Plus Mode Switcher Tool</h1>
 
-      <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br><br></p>
+      <p>The mode switcher controls the programming modes that are available for the connected
+      command station. Not all CBUS command stations support the mode switcher.</p>
 
-      <img src="images/ModeSwitcherMenu.png" alt="Mode switcher menu entry">
-    
-      <p></p>
-
-      <p>Select the desired mode by clicking one of the radio buttons.<br><br></p>
-
-      <img src="images/Sprog3PlusModeSwitcher.png" alt="SPROG 3 Plus mode switcher">
-    
-      <p></p>
-
-      <p>The Decoder Pro main window status bar shows the currently available 
-        programmers.<br><br></p>
-
-      <img src="images/StatusBar.png" alt="DP3 status bar">
-    
-      <p></p>
-
-      <h2></h2>
-      <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
-      
-    <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Open the Mode Switcher (if available) from the SPROG Generation 5 menu.<br>
+      <br></p>
+      <img src="images/ModeSwitcherMenu.PNG" alt="Mode switcher menu entry">
+      <p>Select the desired mode by clicking one of the radio buttons.<br>
+      <br></p>
+      <img src="images/Sprog3PlusModeSwitcher.PNG" alt="SPROG 3 Plus mode switcher">
+      <p>The Decoder Pro main window status bar shows the currently available programmers.<br>
+      <br></p>
+      <img src="images/StatusBar.PNG" alt="DP3 status bar">
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

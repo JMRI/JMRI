@@ -2,8 +2,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
 
-import javax.swing.JComboBox;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -516,7 +514,7 @@ public class CarManagerTest extends OperationsTestCase {
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
 
-        Kernel k = manager.newKernel("specialK");
+        Kernel k = InstanceManager.getDefault(KernelManager.class).newKernel("specialK");
 
         c4.setKernel(k); // make caboose lead car
         c2.setKernel(k);
@@ -757,7 +755,7 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l3);
 
         // make last staging
-        l3.setLocationOps(Location.STAGING);
+        l3.changeTrackType(Track.STAGING);
 
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
@@ -791,18 +789,21 @@ public class CarManagerTest extends OperationsTestCase {
         c1.setTrain(t1);
         c2.setTrain(t1);
         c3.setTrain(t1); // load name = "Tools"
-        c4.setTrain(t1);
+        c4.setTrain(t1); // load name = "Fuel"
         c5.setTrain(t1);
         c6.setTrain(t1);
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Tools");
         cl.setPriority("Boxcar", "Tools", CarLoad.PRIORITY_HIGH);
+        cl.addName("Boxcar", "Fuel");
+        cl.setPriority("Boxcar", "Fuel", CarLoad.PRIORITY_MEDIUM);
 
         // 1st car in list should be the car with the high priority load
         List<Car> carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
         Assert.assertEquals("1st car in list available for t1", c3, carList.get(0));
+        Assert.assertEquals("2nd car in list available for t1", c4, carList.get(1));
     }
 
     @Test
@@ -1072,6 +1073,7 @@ public class CarManagerTest extends OperationsTestCase {
         c2.setTypeName("boxcar"); // don't change this car's load
 
         c4.setReturnWhenEmptyLoadName("Tools");
+        c6.setReturnWhenLoadedLoadName("Tools");
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         manager.replaceLoad("Boxcar", "Tools", "Nuts");
@@ -1084,6 +1086,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("Nuts", c4.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("Nuts", c6.getReturnWhenLoadedLoadName());
 
         // now change load to default empty
         manager.replaceLoad("Boxcar", "Nuts", null);
@@ -1096,52 +1099,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("E", c4.getReturnWhenEmptyLoadName());
-    }
-
-    @Test
-    public void testKernel() {
-        CarManager manager = InstanceManager.getDefault(CarManager.class);
-        Kernel k = manager.newKernel(CarManager.NONE);
-        Assert.assertNull(k);
-
-        k = manager.newKernel("A");
-        Assert.assertNotNull(k);
-
-        Kernel kt = manager.newKernel("A");
-        Assert.assertNotNull(kt);
-        Assert.assertEquals("Same kernel", k, kt);
-
-        manager.replaceKernelName("A", "B");
-        kt = manager.getKernelByName("B");
-        Assert.assertNotNull(kt);
-        // Replace when test was created doesn't delete the old kernel
-        // GUI does a replace followed by a delete
-        k = manager.getKernelByName("A");
-        Assert.assertNotNull(k);
-
-        manager.deleteKernel("B");
-        kt = manager.getKernelByName("B");
-        Assert.assertNull(kt);
-    }
-
-    @Test
-    public void testKernelComboBox() {
-        CarManager manager = InstanceManager.getDefault(CarManager.class);
-        JComboBox<String> cb = manager.getKernelComboBox();
-        Assert.assertEquals("Number of items", 1, cb.getItemCount());
-        Assert.assertEquals("Empty", CarManager.NONE, cb.getSelectedItem());
-
-        manager.newKernel("C");
-        manager.newKernel("B");
-        manager.newKernel("A");
-        cb = manager.getKernelComboBox();
-
-        Assert.assertEquals("Number of items", 4, cb.getItemCount());
-        Assert.assertEquals("Empty", CarManager.NONE, cb.getSelectedItem());
-
-        Assert.assertEquals("1st item", "A", cb.getItemAt(1));
-        Assert.assertEquals("1st item", "B", cb.getItemAt(2));
-        Assert.assertEquals("1st item", "C", cb.getItemAt(3));
+        Assert.assertEquals("L", c6.getReturnWhenLoadedLoadName());
     }
 
     @Test

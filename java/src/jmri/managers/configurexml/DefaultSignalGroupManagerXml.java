@@ -140,8 +140,8 @@ public class DefaultSignalGroupManagerXml
             SignalGroup sg;
             String primary;
             String yesno;
-            boolean inverse = false;
-            int state = 0x00;
+            boolean inverse;
+            int state;
 
             String sys = getSystemName(e);
 
@@ -172,7 +172,7 @@ public class DefaultSignalGroupManagerXml
                 sg.addSignalHead(sigHead);
                 yesno = sh.getAttribute("sensorTurnoutLogic").getValue();
                 inverse = false;
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("AND")) {
                         inverse = true;
                     // } else if (yesno.equals("OR")) {

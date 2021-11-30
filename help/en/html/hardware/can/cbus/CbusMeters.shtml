@@ -1,47 +1,43 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="keywords" content="JMRI CBUS setup voltage current meter">
-        <title>JMRI Hardware Support - CBUS&trade; Voltage / Current Meters</title>
-        <meta name="author" content="Andrew Crosland">
-        <!--#include virtual="/Style.shtml" -->
-    </head>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta name="keywords" content="JMRI CBUS setup voltage current meter">
+  <title>JMRI Hardware Support - CBUS® Voltage / Current Meters</title>
+  <meta name="author" content="Andrew Crosland"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
 
-    <body>
-        <!--#include virtual="/Header.shtml" -->
-        <div id="mBody">
-            <!--#include virtual="Sidebar.shtml" -->
-            <div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-                <h1>Hardware Support: CBUS&trade; - Voltage/Current Meters</h1>
-                <p>The CBUS voltage and current meters may be used to display track voltage and current on
-                    the layout, if suitable hardware is being used. Availability of meters
-                    will depend on the hardware connection.</p>
+    <div id="mainContent">
+      <h1>Hardware Support: CBUS - Voltage/Current Meters</h1>
 
-                <p>The Cbus meters listens for a fixed messages with ACON2 opcodes from node 65534.
-                    An Event number (EN) of 1 indicates a current reading whilst and EN of 2 indicates a 
-                    voltage reading. This may change to being user configurable in future. </p>
-                
-                <p>Depending on the hardware connection it may be neccessary to use a Node Variable (NV) or some
-                    other mechanism to configure the hardware to send the current and/or voltage readings on the 
-                    CBUS network. The frequency (update rate) of the readings is hardware dependent and not 
-                    mandated by JMRI or the CBUS specificiation.</p>
-                
-                <p>In PanelPro meters may be added from the tools menu or from the CBUS tools menu.
-                    In DecoderPro3 the meters are currently only available from the CBUS tools menu.
-                
-                <p></p>
+      <p>The CBUS voltage and current meters may be used to display track voltage and current on
+      the layout, if suitable hardware is being used. Availability of meters will depend on the
+      hardware connection.</p>
 
-                <img src="images/meter.png" alt="CBUS Meter " >
+      <p>The Cbus meters listen for a fixed messages with ACON2 opcodes from node 65534. An Event
+      number (EN) of 1 indicates a current reading whilst and EN of 2 indicates a voltage reading.
+      This may change to being user configurable in future.</p>
 
-                <h2></h2>
-                <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
-                <p></p>
+      <p>Depending on the hardware connection it may be neccessary to use a Node Variable (NV) or
+      some other mechanism to configure the hardware to send the current and/or voltage readings on
+      the CBUS network. The frequency (update rate) of the readings is hardware dependent and not
+      mandated by JMRI or the CBUS specification.</p>
 
-                <!--#include virtual="/Footer.shtml" -->
-            </div><!-- closes #mainContent-->
-        </div><!-- closes #mBody-->
-    </body>
+      <p>In PanelPro meters may be added from the tools menu or from the CBUS tools menu. In
+      DecoderPro3 the meters are currently only available from the CBUS tools menu. <img src=
+      "images/meter.png" alt="CBUS Meter "></p>
+
+      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
 </html>

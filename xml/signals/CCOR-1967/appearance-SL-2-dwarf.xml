@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Mark</firstname><surname>Ziebell</surname></personname>
+        <email>cpunclejoe@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2020-06-11</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>Revised diverging aspect mappings</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2020-07-04</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>revised Stop aspect mappings</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.3.1</revnumber>
+        <date>2020-07-04</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Flashing Stop and Proceed Div to Clear aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.3.2</revnumber>
+        <date>2020-07-04</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Flashing Stop and Proceed Div to Approach aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.3.e</revnumber>
+        <date>2020-07-04</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>added Flashing Stop and Proceed Div to Flashing Stop and Proceed aspectMapping</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2021-05-31</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink directory</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>CCOR-1967</aspecttable>
+  <name>Double head dwarf signal</name>
+  <reference>As described in the Consolidated Code of Operating Rules, Edition of 1967. Pages 53-55</reference>
+  <description>Appearances for a two-head dwarf signal without other badging</description>
+
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 53</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240E.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Page 54, RULE 240F Fig.5</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240F.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 54, RULE 240G Fig.4</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240G.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 54, RULE 240M Fig.3</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240M.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Advance Approach</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Page 54, RULE 240K Fig.3</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240K.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 54</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240L.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 53</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240D.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting Lunar</aspectname>
+      <show>lunar</show>
+      <show>red</show>
+      <reference>Page 55, Rule 240N Fig.6</reference>
+      <comment>Lunar aspect for upper head in route-signal system</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunar.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting Lunar Div</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 55, Rule 240N Fig.5</reference>
+      <comment>Lunar aspect for lower head in route-signal system</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240N-lunarDiv.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Flashing Stop and Proceed</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Page 53, Rule 240C</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Flashing Stop and Proceed Div</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Page 53, Rule 240C</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240C.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 53, Rule 240A Fig.5</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+	<aspect>Flashing Stop and Proceed</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-2-dwarf/rule-240A-held.gif</imagelink>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Flashing Stop and Proceed Div</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear Alt</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Advance Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Advance Approach</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Diverging Advance Approach</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Flashing Stop and Proceed Div</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting Lunar Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Flashing Stop and Proceed Div</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Flashing Stop and Proceed Div</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Flashing Stop and Proceed</ourAspect>
+      <ourAspect>Flashing Stop and Proceed Div</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+</appearancetable>

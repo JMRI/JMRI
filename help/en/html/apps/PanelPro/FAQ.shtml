@@ -1,310 +1,244 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: PanelPro Frequently Asked Questions</title>
-  <!--#include virtual="/Style.shtml" -->
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: PanelPro Frequently Asked Questions</title><!--#include virtual="/Style.shtml" -->
   <!-- FAQ-Head -->
-    <script type="text/javascript">
+
+  <script type="text/javascript">
     /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
-    <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
-          media="screen">
-  <!-- /FAQ-Head -->
-
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: PanelPro Frequently Asked Questions</h1>
-      
-      <p>
-      This is the JMRI PanelPro "frequently asked
-      questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else. 
-      <br>See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
-      </p>
-      
+
+      <p>This is the JMRI PanelPro "frequently asked questions" list. Items get listed here if
+      they're asked a lot, even if they're also available somewhere else.<br>
+      See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a></p>
+
       <dl class="faq">
-      <dt id="context" class="on">How does
-          JMRI tie into the rest of my layout?</dt>
-        <dd class="first"><!-- by Jim Betz -->
-      <ul>
-        <li>JMRI works like a throttle - it sends and listens to
-        the messages on the "command bus". Nothing more, nothing
-        less. And that is actually - A LOT - and is the true beauty
-        of JMRI. In the case of DecoderPro the commands that are
-        being used and monitored are those related to programming a
-        loco. In the case of PanelPro the messages/commands that
-        are being used are those pertinent to block occupancy,
-        turnouts, etc.</li>
+        <dt id="context" class="on">How does JMRI tie into the rest of my layout?</dt>
 
-        <li>Each system has its own "command bus" or "computer
-        interface" - i.e. its own set of commands (think 'command
-        format') that it uses. This is why you can't use a Digitrax
-        throttle on an NCE system. Many people refer to the command
-        bus as a "throttle net" - to distinguish it from the track
-        bus. And it is important to note that the messages on the
-        two are not identical in all cases. Some systems are
-        similar enough to each other in order to make it possible
-        to use a throttle from one on another ... but this is
-        relatively rare (very few layouts actually make use of it).
-        Another solution is CMRI - which has its own command set.
-        JMRI also is smart enough to "speak CMRI" (as well as the
-        ability to "speak" Digitrax and NCE and Lenz ... etc.) The
-        difference being is that CMRI is a command set and hardware
-        that is focused only on the RR support systems (signals,
-        turnouts, etc.) and does not have the ability to control or
-        program trains. And, in point of fact, does not "know"
-        whether the layout is DC or DCC. Most of the layouts that
-        have implemented CMRI recently have used the CMRI hardware
-        and JMRI (PanelPro) for the human interface.</li>
+        <dd class="first">
+          <!-- by Jim Betz -->
 
-        <li>On DCC layouts the command station is the interface
-        between the track and the throttle/command bus. You use the
-        throttle bus to acquire a loco ... and to send control
-        messages to the command station - which 'forwards' your
-        throttle changes to the locos ... and to the stationary
-        decoders ... via either the track -or- command bus (or
-        both).</li>
+          <ul>
+            <li>JMRI works like a throttle - it sends and listens to the messages on the "command
+            bus". Nothing more, nothing less. And that is actually - A LOT - and is the true beauty
+            of JMRI. In the case of DecoderPro the commands that are being used and monitored are
+            those related to programming a loco. In the case of PanelPro the messages/commands that
+            are being used are those pertinent to block occupancy, turnouts, etc.</li>
 
-        <li>It is possible - some will even say desirable - to
-        separate your train support (track bus) from your layout
-        control support. Although it may not be intuitive - you
-        don't have to use the same system that you use to control
-        trains to control the turnouts and signals - simply because
-        messages don't need to cross that boundary. This is why
-        some have recommended you consider an environment such as
-        NCE for the trains and CMRI or Digitrax for the layout
-        support (PanelPro).</li>
+            <li>Each system has its own "command bus" or "computer interface" - i.e. its own set of
+            commands (think 'command format') that it uses. This is why you can't use a Digitrax
+            throttle on an NCE system. Many people refer to the command bus as a "throttle net" -
+            to distinguish it from the track bus. And it is important to note that the messages on
+            the two are not identical in all cases. Some systems are similar enough to each other
+            in order to make it possible to use a throttle from one on another ... but this is
+            relatively rare (very few layouts actually make use of it). Another solution is CMRI -
+            which has its own command set. JMRI also is smart enough to "speak CMRI" (as well as
+            the ability to "speak" Digitrax and NCE and Lenz ... etc.) The difference being is that
+            CMRI is a command set and hardware that is focused only on the RR support systems
+            (signals, turnouts, etc.) and does not have the ability to control or program trains.
+            And, in point of fact, does not "know" whether the layout is DC or DCC. Most of the
+            layouts that have implemented CMRI recently have used the CMRI hardware and JMRI
+            (PanelPro) for the human interface.</li>
 
-        <li>Because Digitrax and CMRI have published their
-        interfaces there are more products available for layout
-        control for those two systems than for NCE. Both RR-CirKits
-        and Team Digital have excellent products out that work for
-        Digitrax (for instance). As far as I know there are no such
-        products for NCE. I do not know what is/isn't available for
-        Lenz.</li>
+            <li>On DCC layouts the command station is the interface between the track and the
+            throttle/command bus. You use the throttle bus to acquire a loco ... and to send
+            control messages to the command station - which 'forwards' your throttle changes to the
+            locos ... and to the stationary decoders ... via either the track -or- command bus (or
+            both).</li>
 
-        <li>PanelPro is still developing at a rapid rate. Many
-        layouts are already up and running using PanelPro - but the
-        most recent developments that have just recently been made
-        available in PanelPro make using it a -lot- easier than it
-        used to be. Actually, if you are talking just turnouts and
-        block occupancy then PanelPro has been usable for some
-        time. Signaling is getting better all the time.</li>
+            <li>It is possible - some will even say desirable - to separate your train support
+            (track bus) from your layout control support. Although it may not be intuitive - you
+            don't have to use the same system that you use to control trains to control the
+            turnouts and signals - simply because messages don't need to cross that boundary. This
+            is why some have recommended you consider an environment such as NCE for the trains and
+            CMRI or Digitrax for the layout support (PanelPro).</li>
 
-        <li>When you start doing signaling then "everything
-        changes". Because signaling requires that the block
-        occupancy and turnout status be used in the decision
-        process of "what aspect should be displayed on which
-        signals at this point in time". This requires layout
-        specific code/logic. I'm assuming that you want a computer
-        to make these decisions. It is possible to implement a
-        system where a human being, usually the dispatcher, does
-        all of the decisions ... the more complex the
-        layout/signaling system the more errors the dispatcher will
-        make. And there is also the "workload" issue(s)... but a
-        computer running PanelPro is usually loafing and has more
-        than enough power to keep ahead of the needs of the layout.
-        <br><br>
-        Implementing layout control (turnouts, block
-        occupancy, signals, etc.) is not an "easy deal". And, in
-        my opinion, it is not something you should attempt to
-        teach yourself - or to do it alone with just the
-        help/guidance of online lists such as this one. I am not
-        saying "don't use online" ... I'm saying that if you want
-        to do this as easily as possible then you should seek out
-        those who have gone before and enlist their face-to-face
-        support/guidance. Yes, you can do it your self - no,
-        that's not the best way to do this and you will find you
-        make -many- mistakes that will cause considerable delays
-        and rework. Many layout automation projects have gotten
-        stalled for just this very reason.
-        <br><br>
-        And just so this gets mentioned ... adding
-        capabilities such as block occupancy detection, computer
-        controlled turnouts, and signals is not inexpensive and
-        needs to be budgeted/spec'd out. And you may find that
-        you will need to re-wire some or even major portions of
-        your layout in order to support them correctly/at all.
-        </li>
-      </ul>
-      </dd>
+            <li>Because Digitrax and CMRI have published their interfaces there are more products
+            available for layout control for those two systems than for NCE. Both RR-CirKits and
+            Team Digital have excellent products out that work for Digitrax (for instance). As far
+            as I know there are no such products for NCE. I do not know what is/isn't available for
+            Lenz.</li>
 
-      <dt id="store">How do I save my work?</dt>
-      <dd>There are several ways to save
-      your panel. This is because the program has to store both
-      configuration (turnouts, sensors, etc) and layout (the
-      details of your specific panel) information.<br><br>
+            <li>PanelPro is still developing at a rapid rate. Many layouts are already up and
+            running using PanelPro - but the most recent developments that have just recently been
+            made available in PanelPro make using it a -lot- easier than it used to be. Actually,
+            if you are talking just turnouts and block occupancy then PanelPro has been usable for
+            some time. Signaling is getting better all the time.</li>
 
-      Usually, the easiest way is to use just one file to
-      contain everything. For example, you can store your panel(s)
-      in a file called "MainPanel.xml" (or something like that),
-      and set the preferences to load that file. Then, all you have
-      to do is save that file again whenever you change something.
-      One caution: Make sure that you still have the panel open
-      when you save the file! If you close it, then save the file,
-      it will of course write a version of the file that doesn't
-      show the panel. And save this file from the "Panels" menu,
-      using the "Store Panels..." item.<br><br>
-
-      This works because panels are stored with all the
-      configuration information at that same time (which guarantees
-        they'll work when reloaded)
-        <br><br>
-        
-      For more information on storing all your work in JMRI, <a href="../StoringYourWork.shtml">click here.</a>
+            <li>When you start doing signaling then "everything changes". Because signaling
+            requires that the block occupancy and turnout status be used in the decision process of
+            "what aspect should be displayed on which signals at this point in time". This requires
+            layout specific code/logic. I'm assuming that you want a computer to make these
+            decisions. It is possible to implement a system where a human being, usually the
+            dispatcher, does all of the decisions ... the more complex the layout/signaling system
+            the more errors the dispatcher will make. And there is also the "workload" issue(s)...
+            but a computer running PanelPro is usually loafing and has more than enough power to
+            keep ahead of the needs of the layout.<br>
+            <br>
+            Implementing layout control (turnouts, block occupancy, signals, etc.) is not an "easy
+            deal". And, in my opinion, it is not something you should attempt to teach yourself -
+            or to do it alone with just the help/guidance of online lists such as this one. I am
+            not saying "don't use online" ... I'm saying that if you want to do this as easily as
+            possible then you should seek out those who have gone before and enlist their
+            face-to-face support/guidance. Yes, you can do it your self - no, that's not the best
+            way to do this and you will find you make -many- mistakes that will cause considerable
+            delays and rework. Many layout automation projects have gotten stalled for just this
+            very reason.<br>
+            <br>
+            And just so this gets mentioned ... adding capabilities such as block occupancy
+            detection, computer controlled turnouts, and signals is not inexpensive and needs to be
+            budgeted/spec'd out. And you may find that you will need to re-wire some or even major
+            portions of your layout in order to support them correctly/at all.</li>
+          </ul>
         </dd>
 
-      <dt id="multifile">Can I store just the
-      configuration information?</dt>
-      <dd>You
-      can store just the "configuration" information in a file,
-      which you can save without worrying about whether your
-      panel(s) are open, etc. If you do this, you can also save
-      your panels to their own, separate files.<br><br>
-        To do this:
+        <dt id="store">How do I save my work?</dt>
 
-      <ul>
-        <li>Go to one of the table tools (e.g. Route Table) and
-        pick "Store configuration..." from the "File" menu.</li>
+        <dd>
+          There are several ways to save your panel. This is because the program has to store both
+          configuration (turnouts, sensors, etc) and layout (the details of your specific panel)
+          information.<br>
+          <br>
+          Usually, the easiest way is to use just one file to contain everything. For example, you
+          can store your panel(s) in a file called "MainPanel.xml" (or something like that), and
+          set the preferences to load that file. Then, all you have to do is save that file again
+          whenever you change something.<br>
+          <br>
+          This works because panels are stored with all the configuration information at that same
+          time (which guarantees they'll work when reloaded)<br>
+          <br>
+          For more information on storing all your work in JMRI, <a href=
+          "../LoadStoreWork.shtml">click here.</a>
+        </dd>
 
-        <li>This will let you select a file name; make sure it is
-        _NOT_ the same as the panel file name. (e.g. use
-        "MyConfig.xml" instead of "MyPanel.xml")</li>
+        <dt id="multifile">Can I store just the configuration information?</dt>
 
-        <li>Remember that name and location, then store.</li>
-      </ul>
-      This puts config info like Turnouts, Sensors etc, but
-      not panels, in the file. If you also want to save your
-      currently loaded panels, select "Store Panels and
-      Configuration..." instead.
-      </dd>
+        <dd>
+          You can store just the "configuration" information in a file. See <a href=
+          "../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>. Look at the options
+          for <strong>PanelPro ⇒ Tables</strong>.<br>
+          <br>
+          The alternate store options can be accessed from the File menu for any of the tables.
+          Make sure to use a different file name since the resulting file will not have any
+          panels.<br>
+          <br>
+          Individual panels CANNOT be stored. The normal store process includes all panels and all
+          tables.
+        </dd>
 
-      <dt id="showfile">How can I see my saved
-      configuration, including Turnouts etc and panels?</dt>
-        <dd>JMRI does not remember the Turnout, Sensor
-        or Reporter table entries from
-        a previous JMRI session unless you take specific action to save your
-        information, and unless you take specific action to instruct JMRI to read
-        the saved configuration.  (This is generally also true of the information
-        in the other Tables.)<br><br>
-        Once you close and reopen a JMRI application, you have
-        to load your configuration information xml file to see
-        your Turnouts, Sensors etc. This allows to use JMRI with
-        different configurations, or go back to an older version
-        of the configuration when an error was made in your
-        latest saved version.<br><br>
-        To automatically load the file when the program starts:
+        <dt id="showfile">How can I see my saved configuration, including Turnouts etc and
+        panels?</dt>
 
-        <ul>
+        <dd>
+          JMRI does not remember the Turnout, Sensor or Reporter table entries from a previous JMRI
+          session unless you take specific action to save your information, and unless you take
+          specific action to instruct JMRI to read the saved configuration. (This is generally also
+          true of the information in the other Tables.)<br>
+          <br>
+          Once you close and reopen a JMRI application, you have to load your configuration
+          information xml file to see your Turnouts, Sensors etc. This allows to use JMRI with
+          different configurations, or go back to an older version of the configuration when an
+          error was made in your latest saved version.<br>
+          <br>
+          To automatically load the file when the program starts:
+          <ul>
             <li>Open the Preferences panel.</li>
+
             <li>Select the Start-up tab.</li>
-            <li>From the drop down list at bottom left, select
-            "Add", then "Open File..."</li>
-            <li>In the dialog box that opens, select the file in
-            which you have stored the configuration/panels.<br>
+
+            <li>From the drop down list at bottom left, select "Add", then "Open File..."</li>
+
+            <li>In the dialog box that opens, select the file in which you have stored the
+            configuration/panels.<br>
             A new line with this action is added to the list.</li>
-            <li>Click "Save" on the Preferences pane to make sure
-            this is stored.</li>
+
+            <li>Click "Save" on the Preferences pane to make sure this is stored.</li>
+
             <li>Quit the program and restart it to test.</li>
-        </ul>
+          </ul>
+          On subsequent JMRI invocations, all start-up actions are invoked, including any
+          "start-up" actions you have defined to "Load" a "PanelPro data file".<br>
+          <br>
+          If automatic reloading of the table entries is not desired, it is possible to manually
+          read a panel file. Under the JMRI "Panels" menu item, select "Open Panel..." and then
+          locate and select one or more panel files containing the appropriate information. Select
+          the "Open Panels" button to read those files into JMRI.
+        </dd>
 
-        On subsequent JMRI invocations, all start-up actions are invoked,
-        including any "start-up" actions you have defined to "Load" a "Panel File".<br><br>
+        <dt id="location">Where should I put my custom icons and other files?</dt>
 
-        If automatic reloading of the table entries is not desired, it is possible
-        to manually read a panel file.  Under the JMRI "Panels" menu item, select
-        "Open Panel..." and then locate and select one or more panel files
-        containing the appropriate information.  Select the "Open Panels" button
-        to read those files into JMRI.</dd>
+        <dd>
+          The best place to put your own files is in the JMRI Preferences directory (all JMRI apps
+          use <a href="../../setup/Files.shtml#location">the same directory</a>). You should put
+          any locally-modified versions of files here so they don't get overwritten by a new
+          version of the program. Any files that the program writes to contain local information,
+          e.g. roster entries, are also written here.<br>
+          <br>
+          The location of this varies by computer type: <img src="../../../images/IconFileTree.gif"
+          alt="Screen shot of file tree" class="floatRight" width="288" height="327">
+          <ul>
+            <li>On a Linux machine, look for a <code>.jmri</code> directory in your home
+            directory.</li>
 
-      <dt id="location">Where should I put my custom icons and other
-      files?</dt>
-      <dd>The best place to put your own files is in the
-      JMRI Preferences directory (all JMRI apps use <a href=
-      "../../setup/Files.shtml#location">the same directory</a>).
-      You should put any locally-modified versions of files here so
-      they don't get overwritten by a new version of the program.
-      Any files that the program writes to contain local
-      information, e.g. roster entries, are also written here.<br><br>
-      The location of this varies by computer type:
-      <img src="../../../images/IconFileTree.gif" alt=
-      "Screen shot of file tree" align="right" width="288" height=
-      "327" hspace="5" vspace="0">
+            <li>On a Macintosh, look in the Preferences folder of the current System Folder if
+            running MacOS 8 or 9, or the Library/Preferences folder in your user directory on Mac
+            OS X.</li>
 
-      <ul>
-        <li>On a Linux machine, look for a <code>.jmri</code>
-        directory in your home directory.</li>
-
-        <li>On a Macintosh, look in the Preferences folder of the
-        current System Folder if running MacOS 8 or 9, or the
-        Library/Preferences folder in your user directory on Mac OS
-        X.</li>
-
-        <li>On Windows, this can be in a number of places depending
-        on which Windows version you're running and whether you
-        have multiple users configured; Search for a "JMRI"
-        directory to find it.</li>
-      </ul>
-      The easiest way to find the preferences location is to start
-      a JMRI program, e.g. DecoderPro or PanelPro, select
-      "Locations..." from the "Help" menu and click on [User Files
-      Location].<br><br>
-      A special treat for Windows users: if you go to the Windows Start
-      Menu, in the JMRI section, you can select
-      "Preferences" to have it open that directory for
-      you.<br><br>
-
-      Make sure you go to the preferences, and <em>not</em> the
-      original application package. They are kept separate to
-      simplify updating the program version. You'll know you've
-      found the right place if you see the preferences files that
-      store your applications settings:<br><br>
-      <code>PanelProConfig2.xml</code>.<br><br>
-      You can also search for this file to find this directory:
-      <br><br>
-      If you have created icons that
-      you want to be able from the panel editor, put them in a
-      directory called "resources" in the Preferences directory.
-      They'll then show up in the "files" part of the selection box
-      when you press a "Change icon..." button on the panel
-      editor.<br><br>
-
-      For example, if the Preferences directory contains the
-      files shown below, you'll get the file display shown at the
-      right.
-      <code>&gt; ls resources/ decoderpro.gif green.gif
-      icons red.gif tester.gif &gt; ls resources/icons/ something
-      tester.gif &gt; ls resources/icons/something/
-      tester.gif</code>
-
-      It's also possible to put your files in the
-      <code>resources</code> directory within the JMRI distribution
-      directory that you get when you install the program. This is
-      <em>not</em> recommended, because files there will likely be
-      overwritten when you install a future version (a newer
-      version of a file, perhaps to fix a problem, will overwrite
-      your copy; the replacement is based on the file's date).<br><br>
-      See
-      <a href="../../setup/Files.shtml">JMRI Configuration Files</a>
-      </dd>
-    </dl>
+            <li>On Windows, this can be in a number of places depending on which Windows version
+            you're running and whether you have multiple users configured; Search for a "JMRI"
+            directory to find it.</li>
+          </ul>
+          The easiest way to find the preferences location is to start a JMRI program, e.g.
+          DecoderPro or PanelPro, select "Locations..." from the "Help" menu and click on [User
+          Files Location].<br>
+          <br>
+          A special treat for Windows users: if you go to the Windows Start Menu, in the JMRI
+          section, you can select "Preferences" to have it open that directory for you.<br>
+          <br>
+          Make sure you go to the preferences, and <em>not</em> the original application package.
+          They are kept separate to simplify updating the program version. You'll know you've found
+          the right place if you see the preferences files that store your applications
+          settings:<br>
+          <br>
+          <code>PanelProConfig2.xml</code>.<br>
+          <br>
+          You can also search for this file to find this directory:<br>
+          <br>
+          If you have created icons that you want to be able from the panel editor, put them in a
+          directory called "resources" in the Preferences directory. They'll then show up in the
+          "files" part of the selection box when you press a "Change icon..." button on the panel
+          editor.<br>
+          <br>
+          For example, if the Preferences directory contains the files shown below, you'll get the
+          file display shown at the right. <code>&gt; ls resources/ decoderpro.gif green.gif icons
+          red.gif tester.gif &gt; ls resources/icons/ something tester.gif &gt; ls
+          resources/icons/something/ tester.gif</code> It's also possible to put your files in the
+          <code>resources</code> directory within the JMRI distribution directory that you get when
+          you install the program. This is <em>not</em> recommended, because files there will
+          likely be overwritten when you install a future version (a newer version of a file,
+          perhaps to fix a problem, will overwrite your copy; the replacement is based on the
+          file's date).<br>
+          <br>
+          See <a href="../../setup/Files.shtml">JMRI Configuration Files</a>
+        </dd>
+      </dl>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <!-- FAQ-Tail -->
-  <script type="text/javascript" src="/web/js/faq.js">
-  </script><!-- /FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
 </body>
 </html>

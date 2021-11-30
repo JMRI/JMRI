@@ -1,51 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI OperationsPro - Importing Locomotives from file</title>
+  <!--#include virtual="/Style.shtml" -->
+  <!-- OperationsPro Styles -->
 
-  <title>JMRI OperationsPro - Importing Locomotives from
-  file</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <style>
+    .ops-center {text-align: center;}
+    .ops-right {text-align: right;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    <div id="mainContent">
+      <h1 id="Top">Using JMRI® to Operate Trains</h1>
 
       <h2>OperationsPro: Import Locomotives from a File</h2>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div class="ops-right">
+        <p><a href="Ops_Engines_menu.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
       <h3>Import locomotives from file</h3>
 
-      <p>Choosing <strong>Import locomotives from file</strong>
-      from the <strong>Locomotives -&gt; Tools</strong> menu opens
-      a system <strong>Open</strong> dialog box to allow you to
-      select the file of your choice. It requires an ASCII text
-      file, with one line for each Locomotive (Engine). The import
-      order is:</p>
+      <p>Choosing <strong>Import locomotives from file</strong> from the <strong>Locomotives -&gt;
+      Tools</strong> menu opens a system <strong>Open</strong> dialog box to allow you to select
+      the file of your choice. It requires an ASCII text file, with one line for each Locomotive
+      (Engine). The import order is:</p>
 
       <ol>
         <li>Locomotive Number</li>
@@ -57,13 +49,11 @@
         <li>Locomotive Length</li>
       </ol>
 
-      <p>The following shows two examples of the correct
-      format:</p><code>236 UP RS4 40<br>
+      <p>The following shows two examples of the correct format:</p>
+      <code>236 UP RS4 40<br>
       5578 SP SW1200 42</code>
-
-      <p>Each line can start with a space and multiple spaces
-      between fields is okay. Optionally you can include additional
-      information in the following order:</p>
+      <p>Each line can start with a space and multiple spaces between fields is okay. Optionally
+      you can include additional information in the following order:</p>
 
       <ol>
         <li>Owner Name</li>
@@ -73,60 +63,52 @@
         <li>Location</li>
       </ol>
 
-      <p>The Location can have two fields: the Location Name
-      followed by the Location's Track Name, separated by a hyphen
-      "-". The following shows two example records in the correct
-      format:</p><code>236 UP RS4 40 AT 1930 Home Town USA -
-      locomotive Terminal<br>
+      <p>The Location can have two fields: the Location Name followed by the Location's Track Name,
+      separated by a hyphen "-". The following shows two example records in the correct format:</p>
+      <code>236 UP RS4 40 AT 1930 Home Town USA - locomotive Terminal<br>
       5578 SP SW1200 42 DB 1934 York - York locomotive Yard</code>
+      <p>If you prefer to use comma delimiters instead of spaces, place the word "comma" at the
+      start of your import file and use commas instead of spaces. The following are two examples of
+      records to import using comma as delimiters.</p>
+      <code>comma<br>
+      236,UP,RS 4,40,AT,1930,Home Town USA,-,locomotive Terminal<br>
+      5578,SP,SW 1200,42,DB,1934,Town of York,-,York locomotive Yard</code>
+      <p>You need to be very careful with spaces when importing a comma delimited file. The program
+      will include leading and trailing spaces if they exist between the commas.</p>
 
-      <p>If you prefer to use comma delimiters instead of spaces,
-      place the word "comma" at the start of your import file and
-      use commas instead of spaces. The following are two examples
-      of records to import using comma as
-      delimiters.</p><code>comma<br>
-      236,UP,RS 4,40,AT,1930,Home Town USA,-,locomotive
-      Terminal<br>
-      5578,SP,SW 1200,42,DB,1934,Town of York,-,York locomotive
-      Yard</code>
+      <p>Note that the program will only add Locomotives that don't exist in the program's
+      Locomotive Roster. If a Locomotive already exists, the import of that record will be skipped
+      by the program.</p>
 
-      <p>You need to be very careful with spaces when importing a
-      comma delimited file. The program will include leading and
-      trailing spaces if they exist between the commas.</p>
+      <p>After importing your Locomotives, you must save them if you want to keep them as part of
+      your Roster then edit them to add missing attributes.</p>
 
-      <p>Note that the program will only add Locomotives that don't
-      exist in the program's Locomotive Roster. If a Locomotive
-      already exists, the import of that record will be skipped by
-      the program.</p>
+      <p><img style="width: 799px; height: 256px;" alt="engine roster" src=
+      "images/Ops_EngineRoster.png">
+      </p>
 
-      <p>After importing your Locomotives, you must save them if
-      you want to keep them as part of your Roster then edit them
-      to add missing attributes.</p>
-
-      <p><img style="width: 799px; height: 256px;" alt=
-      "engine roster" src="images/Ops_EngineRoster.png"></p>
-
-      <p>These Locomotives were imported from your file, so now we
-      will need to edit them to set missing attributes that are
-      required in OperationsPro: Length, Consist, Location as
-      required. The <a href=
-      "Ops_EditEngines.shtml"><strong>Edit</strong></a> button in
-      the Edit column will open the <strong>Edit
-      Locomotive</strong> window and allow you to edit Locomotive
+      <p>These Locomotives were imported from your file, so now we will need to edit them to set
+      missing attributes that are required in OperationsPro: Length, Consist, Location as required.
+      The <a href="Ops_EditEngines.shtml"><strong>Edit</strong></a> button in the Edit column will
+      open the <strong>Edit Locomotive</strong> window and allow you to edit Locomotive
       attributes.</p>
 
-      <p>The <a style="font-weight: bold;" href=
-      "Ops_SetEngines.shtml">Set</a> button in the
-      <strong>Set</strong> column for each Locomotive in the Roster
-      allows you to set the Location.</p>
-      <hr>
+      <p>The <a style="font-weight: bold;" href="Ops_SetEngines.shtml">Set</a> button in the
+      <strong>Set</strong> column for each Locomotive in the Roster allows you to set the
+      Location.</p>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <hr>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
+      <div class="ops-right">
+        <p><a href="Ops_Engines_menu.shtml">Back</a>
+        </p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -1,218 +1,183 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Roco z21/Z21</title>
   <meta name="author" content="Paul Bender, Egbert Broerse">
-  <meta name="keywords" content=
-  "Fleischmann Roco z21/Z21 java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="Fleischmann Roco z21/Z21 java model railroad JMRI install">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Fleischmann/Roco z21/Z21</h1>
 
-      <p>The Roco z21/Z21 is a command station with support for
-      LocoNet, R-Bus and XPressNet devices and it includes a built
-      in Ethernet port. The Z21 device is also sold under the
+      <p>The Roco z21/Z21 is a command station with support for LocoNet, R-Bus and XPressNet
+      devices and it includes a built in Ethernet port. The Z21 device is also sold under the
       Fleischmann name.</p>
 
-      <p>For connecting to the device via the LocoNet or XPressNet
-      interface, please see the <a href=
-      "../../loconet/Digitrax.shtml">LocoNet</a> and <a href=
-      "../../XPressNet/index.shtml">XPressNet</a> connection
-      pages.</p>
+      <p>For connecting to the device via the LocoNet or XPressNet interface, please see the
+      <a href="../../loconet/Digitrax.shtml">LocoNet</a> and <a href=
+      "../../XPressNet/index.shtml">XPressNet</a> connection pages.</p>
 
-      <p>This page specifies connecting to the z21/Z21 via the
-      Ethernet port as documented on the <a href=
-      "https://www.z21.eu/en/">Z21 website</a>.</p>
+      <p>This page specifies connecting to the z21/Z21 via the Ethernet port as documented on the
+      <a href="https://www.z21.eu/en/">Z21 website</a>.</p>
 
       <ul>
         <!-- TOC -->
 
-        <li><a href="#hardware">Hardware</a></li>
+        <li>
+          <a href="#hardware">Hardware</a>
+        </li>
 
-        <li><a href="#limitations">Limitations</a></li>
+        <li>
+          <a href="#limitations">Limitations</a>
+        </li>
 
         <li>
           <a href="#connecting">Connecting with:</a>
-
           <ul>
-            <li><a href="#RocoZ21Ethernet">Roco Z21 via
-            Ethernet</a></li>
+            <li>
+              <a href="#RocoZ21Ethernet">Roco Z21 via Ethernet</a>
+            </li>
 
-            <li><a href="#RocoZ21Simulator">The Z21
-            Simulator</a></li>
+            <li>
+              <a href="#RocoZ21Simulator">The Z21 Simulator</a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="#tools">JMRI Z21 Tools</a></li>
+        <li>
+          <a href="#tools">JMRI Z21 Tools</a>
+        </li>
 
-        <li><a href="#documentation">Documentation</a></li>
+        <li>
+          <a href="#documentation">Documentation</a>
+        </li>
       </ul>
 
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
-      <p>Roco has two devices it sells as the White Z21 and
-      the Black Z21. The White Z21 is also sometimes referred to as
-      the z21. Both devices support connections via the Ethernet
-      Port, to R-Bus Devices, and to XPressNet devices. The Black
-      Z21 also supports connections via LocoNet and Zimo's CAN
-      bus.</p>
+      <p>Roco has two devices it sells as the White Z21 and the Black Z21. The White Z21 is also
+      sometimes referred to as the z21. Both devices support connections via the Ethernet Port, to
+      R-Bus Devices, and to XPressNet devices. The Black Z21 also supports connections via LocoNet
+      and Zimo's CAN bus.</p>
 
-      <a name="Limitations" id="Limitations"></a>
-      <h2>Limitations</h2>
+      <h2 id="Limitations">Limitations</h2>
 
       <div class="list">
         <dl>
           <dt class="left">JMRI</dt>
 
           <dd class="first">
-            <p>JMRI Currently supports the Z21 XPressNet over
-            Ethernet implementation. JMRI also provides support for
-            configuring connection flags and the Z21 RailCom
-            interface.</p>
+            <p>JMRI Currently supports the Z21 XPressNet over Ethernet implementation. JMRI also
+            provides support for configuring connection flags and the Z21 RailCom interface.</p>
           </dd>
 
           <dt class="left">White Z21</dt>
 
           <dd>
-            <p>The White z21 does not provide access to the LocoNet
-            interface.</p>
+            <p>The White z21 does not provide access to the LocoNet interface.</p>
 
-            <p>The White z21 does not include a seperate
-            programming track output. It is unclear as to whether
-            or not reading decoder values in service mode is
-            possible.</p>
+            <p>The White z21 does not include a seperate programming track output. It is unclear as
+            to whether or not reading decoder values in service mode is possible.</p>
           </dd>
 
           <dt class="left">Black Z21</dt>
 
           <dd>
-            <p>There are no known limitations of the Black Z21 at
-            this time.</p>
+            <p>There are no known limitations of the Black Z21 at this time.</p>
           </dd>
         </dl>
       </div>
 
-      <a name="connecting" id="connecting"></a>
-      <h2>Connecting</h2><a name="RocoZ21Ethernet" id=
-      "RocoZ21Ethernet"></a>
+      <h2 id="connecting">Connecting</h2>
 
-      <h3>Connecting to the Roco z21 or Z21 via the Ethernet
-      connection</h3>
-      <p>Note: The first JMRI release supporting the
-      Lenz LIUSB Ethernet connection was v 3.11.7.</p>
+      <h3 id="RocoZ21Ethernet">Connecting to the Roco z21 or Z21 via the Ethernet connection</h3>
+
+      <p>Note: The first JMRI release supporting the Lenz LIUSB Ethernet connection was v
+      3.11.7.</p>
 
       <ol>
-        <li>To connect your computer to either the z21 or Z21 via
-        Ethernet port, connect your z21/Z21 to your computer
-        Network using the supplied Ethernet cable.<br></li>
+        <li>To connect your computer to either the z21 or Z21 via Ethernet port, connect your
+        z21/Z21 to your computer Network using the supplied Ethernet cable.<br></li>
 
-        <li>Once the device is connected, refer to the device
-        documentation for information on setting the IP address.
-        The default IP address is 192.168.0.111. Make note of the
-        IP address for use when configuring the device.</li>
+        <li>Once the device is connected, refer to the device documentation for information on
+        setting the IP address. The default IP address is 192.168.0.111. Make note of the IP
+        address for use when configuring the device.</li>
 
-        <li>Start one of the JMRI-based programs, Then go to the
-        preferences panel. This opens automatically the first time
-        a program is run, or you can select it from the "Edit"
+        <li>Start one of the JMRI-based programs, Then go to the preferences panel. This opens
+        automatically the first time a program is run, or you can select it from the "Edit"
         menu.</li>
 
-        <li>Select "Roco" from the system manufacturer selection
-        box and "Roco Z21" from the top selection box. There are
-        two configuration options available for the
-        LIUSB-Ethernet.</li>
+        <li>Select "Roco" from the system manufacturer selection box and "Roco Z21" from the top
+        selection box. There are two configuration options available for the LIUSB-Ethernet.</li>
 
-        <li>Enter the IP address you saved earlier into the box
-        labeled "IP Address/Host Name"</li>
+        <li>Enter the IP address you saved earlier into the box labeled "IP Address/Host Name"</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <a name="RocoZ21Simulator" id="RocoZ21Simulator"></a>
-      <h3>Connecting to the Roco Z21 Simulator</h3>
+      <h3 id="RocoZ21Simulator">Connecting to the Roco Z21 Simulator</h3>
 
       <ol>
-        <li>Start one of the JMRI-based programs, Then go to the
-        preferences panel. This opens automatically the first time
-        a program is run, or you can select it from the "Edit"
+        <li>Start one of the JMRI-based programs, Then go to the preferences panel. This opens
+        automatically the first time a program is run, or you can select it from the "Edit"
         menu.</li>
 
-        <li>Select "Roco" from the system manufacturer selection
-        box and "Z21 Simulator" from the system connection
-        selection box. There are no additional configuration steps
-        required to use the Z21 Simulator.</li>
+        <li>Select "Roco" from the system manufacturer selection box and "Z21 Simulator" from the
+        system connection selection box. There are no additional configuration steps required to
+        use the Z21 Simulator.</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI z21/Z21 Tools</h2>
+      <h2 id="tools">JMRI z21/Z21 Tools</h2>
 
-      <p>The following tools are available from the menu when this
-      connection is active:</p>
+      <p>The following tools are available from the menu when this connection is active:</p>
 
       <ul>
-        <li>Open Z21 Monitor - This tool allows you to monitor
-        traffic to and from the Z21.</li>
+        <li>Open Z21 Monitor - This tool allows you to monitor traffic to and from the Z21.</li>
 
         <li>Send Z21 Command</li>
 
-        <li>Z21 Configuration tool - This tool allows you to check
-        and set the Z21 flags related to this connection. Flags are
-        set automatically by certain services JMRI starts, such as
-        the Z21 XPressNet connection.</li>
+        <li>Z21 Configuration tool - This tool allows you to check and set the Z21 flags related to
+        this connection. Flags are set automatically by certain services JMRI starts, such as the
+        Z21 XPressNet connection.</li>
       </ul>
 
-      <p>In addition to the Z21 specific menu, you will also find
-      the Z21XPressNet menu, which contains the same XPressNet
-      tools found on any XPressNet system.</p>
+      <p>In addition to the Z21 specific menu, you will also find the Z21XPressNet menu, which
+      contains the same XPressNet tools found on any XPressNet system.</p>
 
-      <a name="documentation" id="documentation"></a>
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <h3>Third Party info</h3>
 
       <ul>
-        <li><a href="https://www.z21.eu/en">The Z21 Website</a> has
-        a wealth of information about the Z21.</li>
+        <li>
+          <a href="https://www.z21.eu/en">The Z21 Website</a> has a wealth of information about the
+          Z21.
+        </li>
       </ul>
 
       <h3>Credits</h3>
 
-      <p>Thanks to Paul Bender and others for implementing Z21
-      Support in JMRI.</p>
-
+      <p>Thanks to Paul Bender and others for implementing Z21 Support in JMRI.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

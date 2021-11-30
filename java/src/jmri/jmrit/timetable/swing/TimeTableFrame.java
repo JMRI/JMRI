@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -387,7 +389,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         JMenuItem impcsv = new JMenuItem(Bundle.getMessage("MenuImportCsv"));  // NOI18N
         impcsv.addActionListener((ActionEvent event) -> importCsvPressed());
-        
+
         JMenuItem impopr = new JMenuItem(Bundle.getMessage("MenuImportOperations"));  // NOI18N
         impopr.addActionListener((ActionEvent event) -> importFromOperationsPressed());
 
@@ -661,7 +663,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         c.gridy = 0;
         c.gridx = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
-        JLabel rowLabel = new JLabel("This page is intentionally blank");  // NOI18N
+        JLabel rowLabel = new JLabel(Bundle.getMessage("LabelBlank"));  // NOI18N
         _gridPanel.add(rowLabel, c);
     }
 
@@ -970,6 +972,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     void addTrain() {
         Train newTrain = new Train(_curNodeId);
+        newTrain.setStartTime(_dataMgr.getSchedule(_curNodeId).getStartHour() * 60);
         setShowReminder(true);
 
         // Build tree components
@@ -1087,7 +1090,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void editStation() {
         Station station = _dataMgr.getStation(_curNodeId);
         _editStationName.setText(station.getStationName());
-        _editDistance.setText(Double.toString(station.getDistance()));
+        _editDistance.setText(NumberFormat.getNumberInstance().format(station.getDistance()));
         _editDoubleTrack.setSelected(station.getDoubleTrack());
         _editSidings.setValue(station.getSidings());
         _editStaging.setValue(station.getStaging());
@@ -1365,8 +1368,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         String newName = _editStationName.getText().trim();
         double newDistance;
         try {
-            newDistance = Double.parseDouble(_editDistance.getText());
-        } catch (NumberFormatException ex) {
+            newDistance = NumberFormat.getNumberInstance().parse(_editDistance.getText()).floatValue();
+        } catch (NumberFormatException | ParseException ex) {
             log.warn("'{}' is not a valid number for {}", _editDistance.getText(), "station distance");  // NOI18N
             JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("NumberFormatError", _editDistance.getText(), "station distance"),  // NOI18N
@@ -2263,7 +2266,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             completeImport(file);
         }
     }
-        
+
     void completeImport(File file) {
         try {
             feedbackList = new TimeTableCsvImport().importCsv(file);
@@ -2292,7 +2295,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 Bundle.getMessage("MessageTitle"), // NOI18N
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     void importFromOperationsPressed() {
         ExportTimetable ex = new ExportTimetable();
         new ExportTimetable().writeOperationsTimetableFile();

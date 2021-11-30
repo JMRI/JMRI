@@ -7,13 +7,15 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * SRCPThrottleTest.java
- *
  * Test for the jmri.jmrix.srcp.SRCPThrottle class
  *
  * @author Bob Jacobsen
  */
 public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+
+    SRCPBusConnectionMemo memo;
+    SRCPTrafficController tc;
+    SRCPThrottleManager tm;
 
     @Test
     public void testCtor() {
@@ -388,19 +390,30 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+        tc = new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
-        }, "TEST", 1);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new SRCPThrottleManager(sm));
-        instance = new SRCPThrottle(sm, new jmri.DccLocoAddress(1, true));
+        };
+        memo = new SRCPBusConnectionMemo(tc, "TEST", 1);
+        tm = new SRCPThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        instance = new SRCPThrottle(memo, new jmri.DccLocoAddress(1, true));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        if (tm != null) {
+            tm.dispose();
+        }
+        tc.terminateThreads();
+        tc.removeSRCPListener(memo);
+        memo.dispose();
+        memo = null;
+        tc = null;
         JUnitUtil.tearDown();
     }
+
 }

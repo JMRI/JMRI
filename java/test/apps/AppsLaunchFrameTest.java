@@ -36,6 +36,8 @@ public class AppsLaunchFrameTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

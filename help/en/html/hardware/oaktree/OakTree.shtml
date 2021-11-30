@@ -1,50 +1,43 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Oak Tree Systems Railroad Control
-  Interface (RCI)</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Oak Tree Systems Railroad Control Interface (RCI)</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
-    <div id="mainContent">
 
-      <h1>Hardware Support: Oak Tree Systems Railroad Control
-      Interface (RCI)</h1>
+    <div id="mainContent">
+      <h1>Hardware Support: Oak Tree Systems Railroad Control Interface (RCI)</h1>
 
       <ul class="snav">
         <!-- TOC -->
 
-        <li><a href="#hardware">Hardware</a></li>
+        <li>
+          <a href="#hardware">Hardware</a>
+        </li>
 
-        <li><a href="#limitations">Limitations</a></li>
+        <li>
+          <a href="#limitations">Limitations</a>
+        </li>
 
-        <li><a href="#connecting">Connecting</a></li>
+        <li>
+          <a href="#connecting">Connecting</a>
+        </li>
 
-        <li><a href="#documentation">Documentation</a></li>
-      </ul><a name="hardware" id="hardware"></a>
+        <li>
+          <a href="#documentation">Documentation</a>
+        </li>
+      </ul>
 
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Computer Interfaces</h3>
 
@@ -54,20 +47,16 @@
         <li>IO-48</li>
 
         <li>O-48</li>
-      </ul><a name="limitations" id="limitations"></a>
+      </ul>
 
-      <h2>Limitations</h2>
+      <h2 id="limitations">Limitations</h2>
 
-      <p>The JMRI libraries have built-in support for Oak Tree
-      Systems serial hardware using the "RSC" bus protocol. inputs
-      can be used as sensors, and outputs can be driven as
-      turnouts.</p>
+      <p>The JMRI libraries have built-in support for Oak Tree Systems serial hardware using the
+      "RSC" bus protocol. inputs can be used as sensors, and outputs can be driven as turnouts.</p>
 
-      <p>At this time, the RSI serial bus protocol for the HH-2
-      throttle is not yet supported.</p><a name="connecting" id=
-      "connecting"></a>
+      <p>At this time, the RSI serial bus protocol for the HH-2 throttle is not yet supported.</p>
 
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Settings</h3>
 
@@ -78,27 +67,20 @@
           <ol>
             <li>Start the program (usually PanelPro)</li>
 
-            <li>From the Edit menu, select Preferences and
-            configure the Connections tab:
-
+            <li>From the Edit menu, select Preferences and configure the Connections tab:
               <ul>
                 <li>System Manufacturer: "Oak Tree Systems"</li>
 
-                <li>System Connection: For serial port, select the
-                one your hardware is attached to.</li>
+                <li>System Connection: For serial port, select the one your hardware is attached
+                to.</li>
 
-                <li>Select the baud rate configured into your
-                boards</li>
+                <li>Select the baud rate configured into your boards</li>
 
-                <li>Click the "Configure nodes" button. On the new
-                panel that opens:
-
+                <li>Click the "Configure nodes" button. On the new panel that opens:
                   <ul>
-                    <li>Enter a node address (0 is typically used
-                    for the first card)</li>
+                    <li>Enter a node address (0 is typically used for the first card)</li>
 
-                    <li>Select the board type from the
-                    initialization box</li>
+                    <li>Select the board type from the initialization box</li>
 
                     <li>Click "Add Node"</li>
 
@@ -106,20 +88,17 @@
                   </ul>
                 </li>
 
-                <li>Back on the "Preferences..." panel, click
-                "Save", and say yes when it asks if you want to
-                quit.</li>
+                <li>Back on the "Preferences..." panel, click "Save", and say yes when it asks if
+                you want to quit.</li>
 
-                <li>Restart the program. Your board's LEDs should
-                now be flashing, indicating that the computer and
-                board are talking.</li>
+                <li>Restart the program. Your board's LEDs should now be flashing, indicating that
+                the computer and board are talking.</li>
 
-                <li>To check that everything is working, select
-                "Turnout Control" from the tools menu. This will
-                open a small window in which you can select a
-                turnout number (<a href="#numbers">see below</a>),
-                then click closed/thrown to change the state of
-                that output.</li>
+                <li>To check that everything is working, select "Turnout Control" from the tools
+                menu. This will open a small window in which you can select a turnout number
+                (<a href="#numbers">see below</a>), then click closed/thrown to change the state of
+                that output.
+                </li>
               </ul>
             </li>
           </ol>
@@ -128,35 +107,31 @@
         <dt class="left">Use with multiple boards</dt>
 
         <dd>
-          <p>If you have multiple boards connected to the Oak Tree
-          Systems serial bus, just go back to the "Configure Nodes"
-          window and enter them individually. Don't forget to save
-          the preferences and restart the program.</p>
+          <p>If you have multiple boards connected to the Oak Tree Systems serial bus, just go back
+          to the "Configure Nodes" window and enter them individually. Don't forget to save the
+          preferences and restart the program.</p>
         </dd>
 
-        <dt class="left"><a name="numbers" id=
-        "numbers">Numbering</a></dt>
+        <dt class="left">
+          <a id="numbers">Numbering</a>
+        </dt>
 
         <dd>
-          <p>Oak Tree system names start with "O". For example,
-          "OS24" is a "S"ensor, the 24th input line on the Oak Tree
-          Systems card with board address zero.</p>
+          <p>Oak Tree system names start with "O". For example, "OS24" is a "S"ensor, the 24th
+          input line on the Oak Tree Systems card with board address zero.</p>
 
-          <p>Inputs and outputs are numbered sequentially from 1,
-          without worrying about the types of cards, etc.</p>
+          <p>Inputs and outputs are numbered sequentially from 1, without worrying about the types
+          of cards, etc.</p>
 
-          <p>Each board is called a "node". Sensors and turnouts on
-          the first node are numbered from 1 to 999; sensors and
-          turnouts on the second node are numbered 1001 to 1999;
+          <p>Each board is called a "node". Sensors and turnouts on the first node are numbered
+          from 1 to 999; sensors and turnouts on the second node are numbered 1001 to 1999;
           etc.</p>
 
           <p>For example:</p>
 
           <ul>
-            <li>Say you have a IO-48 with it's address switches set
-            to "2". All of the inputs and outputs on that node will
-            be numbered starting with 2001.
-
+            <li>Say you have a IO-48 with it's address switches set to "2". All of the inputs and
+            outputs on that node will be numbered starting with 2001.
               <ul>
                 <li>CT2001 is the first output pin</li>
 
@@ -169,21 +144,23 @@
             </li>
           </ul>
 
-          <p>To summarize, input and output pins are labelled
-          sequentially within each node. The numbers go up by 1000
-          from node to node. Node numbers can go as high as the
-          hardware allows.</p>
+          <p>To summarize, input and output pins are labelled sequentially within each node. The
+          numbers go up by 1000 from node to node. Node numbers can go as high as the hardware
+          allows.</p>
         </dd>
-      </dl><a name="documentation" id="documentation"></a>
+      </dl>
 
-      <h2>Documentation</h2>
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
-      <p>For more information on Oak Tree Systems hardware, please
-      see their <a href="http://www.oaktreesystems.com">web
-      site</a>.</p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>For more information on Oak Tree Systems hardware, please see their <a href=
+      "http://www.oaktreesystems.com">web site</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

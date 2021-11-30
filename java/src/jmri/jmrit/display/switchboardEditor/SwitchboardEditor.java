@@ -4,43 +4,20 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.WindowConstants;
+import javax.annotation.Nonnull;
+//import javax.annotation.concurrent.GuardedBy;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
+//import com.alexandriasoftware.swing.Validation;
+import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
-import jmri.jmrit.display.ToolTip;
+import jmri.jmrix.SystemConnectionMemoManager;
+import jmri.swing.ManagerComboBox;
+//import jmri.swing.SystemNameValidator;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
@@ -61,20 +38,23 @@ import static jmri.util.ColorUtil.contrast;
  * <p>
  * The "switchesOnBoard" LinkedHashMap keeps track of all the objects added to the target
  * frame for later manipulation. May be used in an update to store mixed
- * switchboards with more than 1 connection and more than 1 bean type/range.
+ * switchboards with more than 1 connection and more than 1 bean type/range.<br>
+ * The 'ready' flag protects the map during regeneration.
  * <p>
  * No DnD as panels will be automatically populated in order of the DCC address.
  * New beans may be created from the Switchboard by right clicking an
  * unconnected switch.
+ * TODO allow user entry of connection specific starting name, validated in manager
+ * using hardwareAddressValidator
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
- * @author Egbert Broerse Copyright (c) 2017, 2018
+ * @author Egbert Broerse Copyright (c) 2017, 2018, 2021
  */
 public class SwitchboardEditor extends Editor {
 
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
-    protected JMenu _editMenu;
+    //protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
     private transient boolean panelChanged = false;
@@ -95,36 +75,54 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
     private JButton allOffButton;
     private JButton allOnButton;
-    private TargetPane switchboardLayeredPane; // JLayeredPane
+    private TargetPane switchboardLayeredPane; // is a JLayeredPane
     static final String TURNOUT = Bundle.getMessage("Turnouts");
     static final String SENSOR = Bundle.getMessage("Sensors");
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox<String> beanTypeList;
+    private String _type = TURNOUT;
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
         Bundle.getMessage("Keys"),
         Bundle.getMessage("Symbols")
     };
-    private JComboBox<String> switchShapeList;
-    private final List<String> beanManuPrefixes = new ArrayList<>();
-    private JComboBox<String> beanManuNames;
+    private JComboBox<String> shapeList;
+    final static int BUTTON = 0;
+    final static int SLIDER = 1;
+    final static int KEY = 2;
+    final static int SYMBOL = 3;
+    //final static int ICON = 4;
+    private final ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
+    private final ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
+    protected TurnoutManager turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+    protected SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
+    protected LightManager lightManager = InstanceManager.getDefault(LightManager.class);
+    private SystemConnectionMemo memo;
+    private int shape = BUTTON; // for: button
+    //SystemNameValidator hardwareAddressValidator;
+    JTextField addressTextField = new JTextField(10);
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
     private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
 
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
-    private final Color defaultActiveColor = Color.RED;
-    private final Color defaultInactiveColor = Color.GREEN;
-    private final Color defaultUnknownColor = Color.WHITE;
+    private Color defaultActiveColor = Color.RED; // user configurable since 4.21.3
+    protected final static Color darkActiveColor = new Color(180, 50, 50);
+    private Color defaultInactiveColor = Color.GREEN; // user configurable since 4.21.3
+    protected final static Color darkInactiveColor = new Color(40, 150, 30);
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private int rows = 4; // matches initial autoRows pref for default pane size
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
-    private JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    private int _iconSquare = 75;
+    // tmp @GuardedBy("this")
+    private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     // number of rows displayed on switchboard, disabled when autoRows is on
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
@@ -133,24 +131,33 @@ public class SwitchboardEditor extends Editor {
     private transient boolean savedControlLayout = true; // menu option to turn this off
     private final int height = 455;
     private final int width = 544;
+    private int verticalMargin = 55; // for Nimbus and CDE/Motif
 
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBoxMenuItem autoItemRangeBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoItemRange"));
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    //tmp @GuardedBy("this")
     private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
     private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
+    private final JRadioButtonMenuItem sizeSmall = new JRadioButtonMenuItem(Bundle.getMessage("optionSmaller"));
+    private final JRadioButtonMenuItem sizeDefault = new JRadioButtonMenuItem(Bundle.getMessage("optionDefault"));
+    private final JRadioButtonMenuItem sizeLarge = new JRadioButtonMenuItem(Bundle.getMessage("optionLarger"));
+    final static int SIZE_MIN = 50;
+    final static int SIZE_INIT = 100;
+    final static int SIZE_MAX = 150;
 
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
      * until the GridLayout is configured, used to determine the total number of items to be placed.
-     * Accounts for "hide unconnected" setting, so it can be empty.
+     * Accounts for "hide unconnected" setting, so it can be empty. Not synchronized for risk of locking up.
      */
     private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
+    private volatile boolean ready = true;
 
     /**
      * Ctor
@@ -173,9 +180,11 @@ public class SwitchboardEditor extends Editor {
      *
      * @param name the title of the switchboard content frame
      */
-    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     @Override
-    protected void init(String name) {
+    protected final void init(String name) {
+        //memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
+        // always available (?) and supports all types, not required now, will be set by listener
+
         Container contentPane = getContentPane(); // the actual Editor configuration pane
         setVisible(false);      // start with Editor window hidden
         setUseGlobalFlag(true); // always true for a Switchboard
@@ -196,7 +205,14 @@ public class SwitchboardEditor extends Editor {
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
-
+        // set GUI dependant margin if not Nimbus, CDE/Motif (or undefined)
+        if (UIManager.getLookAndFeel() != null) {
+            if (UIManager.getLookAndFeel().getName().equals("Metal")) {
+                verticalMargin = 47;
+            } else if (UIManager.getLookAndFeel().getName().equals("Mac OS X")) {
+                verticalMargin = 25;
+            }
+        }
         switchboardLayeredPane = new TargetPane(); // extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(width, height));
         border = BorderFactory.createTitledBorder(
@@ -217,8 +233,12 @@ public class SwitchboardEditor extends Editor {
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
         beanTypeList = new JComboBox<>(beanTypeStrings);
-        beanTypeList.setSelectedIndex(0); // select bean type in comboBox
+        beanTypeList.setSelectedIndex(0); // select bean type T in comboBox
         beanTypeList.addActionListener((ActionEvent event) -> {
+            String typeChoice = (String) beanTypeList.getSelectedItem();
+            if (typeChoice != null) {
+                displayManagerComboBoxes(typeChoice); // so these boxes should already be instantiated by now
+            }
             updatePressed();
             setDirty();
         });
@@ -229,30 +249,32 @@ public class SwitchboardEditor extends Editor {
         log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
-        beanManuNames = new JComboBox<>();
-        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
-            jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
-            List<jmri.Manager<?>> managerList = proxy.getManagerList(); // picks up all managers to fetch
-            for (int x = 0; x < managerList.size(); x++) {
-                String manuPrefix = managerList.get(x).getSystemPrefix();
-                log.debug("Prefix{} = [{}]", x, manuPrefix);
-                String manuName = managerList.get(x).getMemo().getUserName();
-                log.debug("Connection name {} = [{}]", x, manuName);
-                beanManuNames.addItem(manuName);  // add to comboBox
-                beanManuPrefixes.add(manuPrefix); // add to list
-            }
-        } else {
-            String manuPrefix = getManager(beanTypeChar).getSystemPrefix();
-            String manuName = getManager(beanTypeChar).getMemo().getUserName();
-            beanManuNames.addItem(manuName);
-            beanManuPrefixes.add(manuPrefix); // add to list (as only item)
-        }
-        beanManuNames.setSelectedIndex(0); // defaults to Internal on init()
-        beanManuNames.addActionListener((ActionEvent event) -> {
-            updatePressed();
-            setDirty();
-        });
-        beanSetupPane.add(beanManuNames);
+
+        beanSetupPane.add(turnoutManComboBox);
+        beanSetupPane.add(sensorManComboBox);
+        beanSetupPane.add(lightManComboBox);
+
+        turnoutManComboBox.setToolTipText(Bundle.getMessage("ManComboBoxTip", Bundle.getMessage("BeanNameTurnout")));
+        sensorManComboBox.setToolTipText(Bundle.getMessage("ManComboBoxTip", Bundle.getMessage("BeanNameSensor")));
+        lightManComboBox.setToolTipText(Bundle.getMessage("ManComboBoxTip", Bundle.getMessage("BeanNameLight")));
+
+        configureManagerComboBoxes(); // fill the combos
+        displayManagerComboBoxes(TURNOUT); // show TurnoutManagerBox (matches the beanType combo
+
+//        hardwareAddressValidator = new SystemNameValidator(addressTextField,
+//                turnoutManComboBox.getItemAt(0),
+//                false); // initial system (for type Turnout)
+//        addressTextField.setInputVerifier(hardwareAddressValidator);
+
+//        hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+//            Validation validation = hardwareAddressValidator.getValidation();
+//            Validation.Type valid = validation.getType();
+//            updateButton.setEnabled(valid != Validation.Type.WARNING && valid != Validation.Type.DANGER);
+//            help2.setText(validation.getMessage());
+//        });
+//        hardwareAddressValidator.setManager(turnoutManComboBox.getItemAt(0)); // initial system (for type Turnout)
+//        hardwareAddressValidator.verify(addressTextField);
+
         add(beanSetupPane);
 
         // add shape combobox
@@ -260,26 +282,26 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel switchShapeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SwitchShape")));
         switchShapePane.add(switchShapeTitle);
-        switchShapeList = new JComboBox<>(switchShapeStrings);
-        switchShapeList.setSelectedIndex(0); // select Button choice in comboBox
-        switchShapeList.addActionListener((ActionEvent event) -> {
+        shapeList = new JComboBox<>(switchShapeStrings);
+        shapeList.setSelectedIndex(0); // select Button choice in comboBox
+        shapeList.addActionListener((ActionEvent event) -> {
+            shape = (Math.max(shapeList.getSelectedIndex(), 0)); // picks 1st item when no selection
             updatePressed();
             setDirty();
         });
-        switchShapePane.add(switchShapeList);
+        switchShapePane.add(shapeList);
         // add column spinner
         JLabel rowsLabel = new JLabel(Bundle.getMessage("NumberOfRows"));
         switchShapePane.add(rowsLabel);
         rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
-        rowsSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
+        rowsSpinner.addChangeListener(e -> {
+            //tmp synchronized (this) {
                 if (!autoRowsBox.isSelected()) { // spinner is disabled when autoRows is on, but just in case
                     rows = (Integer) rowsSpinner.getValue();
                     updatePressed();
                     setDirty();
                 }
-            }
+            //tmp }
         });
         switchShapePane.add(rowsSpinner);
         rowsSpinner.setEnabled(false);
@@ -303,7 +325,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -323,39 +345,78 @@ public class SwitchboardEditor extends Editor {
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
         scrollNone.setSelected(true);
-//        super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
-//                Color.black, new Color(255, 250, 210), Color.black)); // TODO remove if not missed
+        // set icon size initial state
+        _iconSquare = SIZE_INIT;
+        sizeDefault.setSelected(true);
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(this);
         }
 
+        //add(addressTextField);
         add(createControlPanel());
 
-        JPanel updatePanel = new JPanel();
-        JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener((ActionEvent event) -> {
             updatePressed();
             setDirty();
         });
-        allOffButton = new JButton(Bundle.getMessage("AllOff"));
-        allOffButton.addActionListener((ActionEvent event) -> {
-            switchAllLights(jmri.Light.OFF);
-        });
         allOnButton = new JButton(Bundle.getMessage("AllOn"));
-        allOnButton.addActionListener((ActionEvent event) -> {
-            switchAllLights(jmri.Light.ON);
-        });
+        allOnButton.addActionListener((ActionEvent event) -> switchAllLights(Light.ON));
+        allOffButton = new JButton(Bundle.getMessage("AllOff"));
+        allOffButton.addActionListener((ActionEvent event) -> switchAllLights(Light.OFF));
+        JPanel allPane = new JPanel();
+        allPane.setLayout(new BoxLayout(allPane, BoxLayout.PAGE_AXIS));
+        allPane.add(allOnButton);
+        allPane.add(allOffButton);
+
+        JPanel updatePanel = new JPanel();
         updatePanel.add(updateButton);
-        updatePanel.add(allOnButton);
-        updatePanel.add(allOffButton);
+        updatePanel.add(allPane);
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.add(updatePanel);
-
         setupEditorPane(); // re-layout all the toolbar items
-        updatePressed();   // refresh default Switchboard, rebuilds and resizes all switches
+
+        lightManComboBox.addActionListener((ActionEvent event) -> {
+            Manager<Light> manager = lightManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+                addressTextField.setText("");     // Reset input before switching managers
+                //hardwareAddressValidator.setManager(manager);
+                log.debug("Lbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
+            }
+        });
+        sensorManComboBox.addActionListener((ActionEvent event) -> {
+            Manager<Sensor> manager = sensorManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+                addressTextField.setText("");     // Reset input before switching managers
+                //hardwareAddressValidator.setManager(manager);
+                log.debug("Sbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
+            }
+        });
+        turnoutManComboBox.addActionListener((ActionEvent event) -> {
+            Manager<Turnout> manager = turnoutManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+                addressTextField.setText("");     // Reset input before switching managers
+                //hardwareAddressValidator.setManager(manager);
+                log.debug("Tbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
+            }
+        });
+        turnoutManComboBox.setSelectedItem("Internal"); // order of items in combo may vary on init() wait till now for init completed
+        lightManComboBox.setSelectedItem("Internal"); // NOI18N
+        sensorManComboBox.setSelectedItem("Internal"); // NOI18N
+        log.debug("boxes are set to Internal, attaching listeners");
+
+        updatePressed(); // refresh default Switchboard, rebuilds and resizes all switches, required for tests
 
         // component listener handles frame resizing event
         super.getTargetFrame().addComponentListener(new ComponentAdapter() {
@@ -372,17 +433,20 @@ public class SwitchboardEditor extends Editor {
      * Fired on componentResized(e) event.
      */
     private void resizeInFrame() {
-        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
-        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
+        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, var px for footer, autoRows(int)
+        // some GUIs include (wide) menu bar inside frame
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
         switchboardLayeredPane.repaint();
-        if (autoRowsBox.isSelected()) { // check if autoRows is active
-            int oldRows = rows;
-            rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
-            if (rows != oldRows) {
-                //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in  display, but will not propagate when disabled
-                updatePressed(); // redraw if rows value changed
+        //tmp synchronized (this) {
+            if (autoRowsBox.isSelected()) { // check if autoRows is active
+                int oldRows = rows;
+                rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
+                if (rows != oldRows) {
+                    rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but spinner will not propagate when disabled
+                    updatePressed(); // redraw if rows value changed
+                }
             }
-        }
+        //tmp }
     }
 
     /**
@@ -395,7 +459,7 @@ public class SwitchboardEditor extends Editor {
     public void updatePressed() {
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
-        if (_autoItemRange && !autoItemRange.isSelected()){
+        if (_autoItemRange && !autoItemRange.isSelected()) {
             autoItemRange.setSelected(true);
         }
         setVisible(_editable); // show/hide editor
@@ -421,8 +485,14 @@ public class SwitchboardEditor extends Editor {
                 return;
             }
         }
+        ready = false; // set flag for updating
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
+            //            if (i >= switchboardLayeredPane.getComponentCount()) { // turn off this check for now
+            //                continue;
+            //            }
+            // remove listeners before removing switches from JLayeredPane
+            ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
@@ -430,14 +500,20 @@ public class SwitchboardEditor extends Editor {
         log.debug("switchesOnBoard cleared, size is now: 0"); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
-        log.debug("creating range for manu index {}", beanManuNames.getSelectedIndex());
+        String memoName = (memo != null ? memo.getUserName() : "UNKNOWN");
+        log.debug("creating range for manu index {}", memoName);
 
-        // fill switchesOnBoard LinkedHashMap
+//        Validation.Type valid = hardwareAddressValidator.getValidation().getType();
+        String startAddress = "";
+//        if (addressTextField.getText() != null && valid != Validation.Type.WARNING && valid != Validation.Type.DANGER) {
+//            startAddress = addressTextField.getText();
+//        }
+        // fill switchesOnBoard LinkedHashMap, uses memo/manager already set
         createSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
-                beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
-                switchShapeList.getSelectedIndex());
+                shapeList.getSelectedIndex(),
+                startAddress);
 
         if (autoRowsBox.isSelected()) {
             rows = autoRows(cellProportion); // TODO: use specific proportion value per Type/Shape choice?
@@ -446,29 +522,27 @@ public class SwitchboardEditor extends Editor {
         }
         // disable the Rows spinner & Update button on the Switchboard Editor pane
         // param: GridLayout(vertical, horizontal), at least 1x1
-        switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));//(getTotal() + rows - 1) / rows));
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));
 
         // add switches to LayeredPane
         for (BeanSwitch bs : switchesOnBoard.values()) {
             switchboardLayeredPane.add(bs);
         }
-
+        ready = true; // reset flag
+        help3.setVisible(switchesOnBoard.isEmpty()); // show/hide help3 warning
+        help2.setVisible(!switchesOnBoard.isEmpty()); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         // update the title at the bottom of the switchboard to match (no) layout control
-        if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
-            border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
-                    beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
+        if (beanTypeList.getSelectedIndex() >= 0) {
+            border.setTitle(memoName + " " +
+                    beanTypeList.getSelectedItem() + " - " + (allControlling() ? interact : noInteract));
         }
-        help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
-        help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
-        pack();
-        switchboardLayeredPane.repaint();
         // hide AllOn/Off buttons unless type is Light and control is allowed
         allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
         allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
-
+        pack();
         // must repaint again to fit inside frame
-        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
-        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
+        Dimension frSize = super.getTargetFrame().getSize(); // 2x3 px for border, var px for footer + optional UI menubar, autoRows(int)
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
         switchboardLayeredPane.repaint();
 
         log.debug("updatePressed END _tileSize = {}", _tileSize);
@@ -484,44 +558,62 @@ public class SwitchboardEditor extends Editor {
      * @param max         highest ordinal of Switch address range
      * @param beanType    index of selected item in Type comboBox, either T, S
      *                    or L
-     * @param manuPrefix  selected item in Connection comboBox, filled from
-     *                    active connections
-     * @param switchShape index of selected visual presentation of Switch shape
+     * @param shapeChoice index of selected visual presentation of Switch shape
      *                    selected in Type comboBox, choose either a JButton
      *                    showing the name or (to do) a graphic image
      */
-    private void createSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
-        log.debug("_hideUnconnected = {}", _hideUnconnected);
+    private void createSwitchRange(int min, int max, int beanType, int shapeChoice, @Nonnull String startAddress) {
+        log.debug("createSwitchRange - _hideUnconnected = {}", _hideUnconnected);
         String name;
         BeanSwitch _switch;
         NamedBean nb;
-        log.debug("_manu = {}", manuPrefix);
-        String _insert = "";
-        if (manuPrefix.startsWith("M")) {
-            _insert = "+"; // for CANbus.MERG On event
+        if (memo == null) {
+            log.error("createSwitchRange - null memo, can't create range");
+            return;
         }
+        String prefix = memo.getSystemPrefix();
+        // TODO handling of non-numeric system names such as MERG, C/MRI using validator textField
+        // if (!startAddress.equals("")) { // use as start address, spinners are only for the number of items
+        log.debug("createSwitchRange - _manuprefix={} beanType={}", prefix, beanType);
+        // use validated bean names
         for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
-                    name = manuPrefix + "T" + _insert + i;
-                    nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
+                    try {
+                        name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
+                    } catch (JmriException ex) {
+                        log.error("Error creating range at turnout {}", i);
+                        return;
+                    }
+                    nb = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
-                    name = manuPrefix + "S" + _insert + i;
-                    nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
+                    try { // was: InstanceManager.getDefault(SensorManager.class)
+                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
+                    } catch (JmriException | NullPointerException ex) {
+                        log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
+                        return;
+                    }
+                    nb = InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
                 case 2:
-                    name = manuPrefix + "L" + _insert + i;
-                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
+                    try {
+                        name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
+                    } catch (JmriException ex) {
+                        log.error("Error creating range at light {}", i);
+                        return;
+                    }
+                    nb = InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
-                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
+                    log.error("addSwitchRange: cannot parse bean name. Prefix = {}; i = {}; type={}", prefix, i, beanType);
                     return;
             }
             if (nb == null && _hideUnconnected) {
-                continue; // skip i
+                continue; // skip bean i
             }
-            _switch = new BeanSwitch(i, nb, name, switchShape, this); // add button instance i
+            log.debug("Creating Switch for {}", name);
+            _switch = new BeanSwitch(i, nb, name, shapeChoice, this); // add button instance i
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
             } else {
@@ -625,21 +717,21 @@ public class SwitchboardEditor extends Editor {
         return controls;
     }
 
-    private int getMinSpinner() {
+    private int getMinSpinner() { //tmp
         return (Integer) minSpinner.getValue();
     }
 
-    private int getMaxSpinner() {
+    private int getMaxSpinner() { //tmp synchronized
         return (Integer) maxSpinner.getValue();
     }
 
-    private void setMinSpinner(int value) {
+    protected void setMinSpinner(int value) { //tmp synchronized
         if (value >= rangeBottom && value < rangeTop) { // allows to set above MaxSpinner temporarily
             minSpinner.setValue(value);
         }
     }
 
-    private void setMaxSpinner(int value) {
+    protected void setMaxSpinner(int value) { //tmp synchronized
         if (value > rangeBottom && value <= rangeTop) { // allows to set above MinSpinner temporarily
             maxSpinner.setValue(value);
         }
@@ -675,8 +767,8 @@ public class SwitchboardEditor extends Editor {
         controllingBox.addActionListener((ActionEvent event) -> {
             setAllControlling(controllingBox.isSelected());
             // update the title on the switchboard to match (no) layout control
-            if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
-                border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
+            if (beanTypeList.getSelectedItem() != null) {
+                border.setTitle(memo.getUserName() + " " +
                         beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
             }
             allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
@@ -698,31 +790,35 @@ public class SwitchboardEditor extends Editor {
 
         // auto rows item
         _optionMenu.add(autoRowsBox);
-        autoRowsBox.setSelected(true); // default on
+        //tmp synchronized (this) {
+            autoRowsBox.setSelected(true); // default on
+        //tmp }
         autoRowsBox.addActionListener((ActionEvent event) -> {
-            if (autoRowsBox.isSelected()) {
-                log.debug("autoRows was turned ON");
-                int oldRows = rows;
-                rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
-                // sets _tileSize TODO: specific proportion value per Type/Shape choice?
-                rowsSpinner.setEnabled(false);
-                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
-                // hide rowsSpinner + rowsLabel?
-                if (rows != oldRows) {
-                    //rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
-                    updatePressed(); // redraw if rows value changed
+            //tmp synchronized (this) {
+                if (autoRowsBox.isSelected()) {
+                    log.debug("autoRows was turned ON");
+                    int oldRows = rows;
+                    rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
+                    // sets _tileSize TODO: specific proportion value per Type/Shape choice?
+                    rowsSpinner.setEnabled(false);
+                    rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
+                    // hide rowsSpinner + rowsLabel?
+                    if (rows != oldRows) {
+                        // rowsSpinner will be recalculated by auto so we don't copy the old value
+                        updatePressed(); // redraw if rows value changed
+                    }
+                } else {
+                    log.debug("autoRows was turned OFF");
+                    rowsSpinner.setValue(rows); // autoRows turned off, copy current auto value to spinner
+                    rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
+                    rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
+                    // calculate tile size
+                    int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / Math.max(rows, 1);
+                    int maxW = (super.getTargetFrame().getWidth() - 10) / colNum; // int division, subtract 2x3px for border
+                    int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / Math.max(rows, 1); // for footer
+                    _tileSize = Math.min(maxW, maxH); // store for tile graphics
                 }
-            } else {
-                log.debug("autoRows was turned OFF");
-                rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
-                rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
-                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
-                // calculate tile size
-                int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
-                int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, subtract 2x3px for border
-                int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // -25px for footer
-                _tileSize = Math.min(maxW, maxH); // store for tile graphics
-            }
+            //tmp }
         });
         // show tooltip item
         _optionMenu.add(showToolTipBox);
@@ -730,9 +826,7 @@ public class SwitchboardEditor extends Editor {
         showToolTipBox.setSelected(showToolTip());
         // show user name on switches item
         _optionMenu.add(showUserNameBox);
-        showUserNameBox.addActionListener((ActionEvent e) -> {
-            updatePressed();
-        });
+        showUserNameBox.addActionListener((ActionEvent e) -> updatePressed());
         showUserNameBox.setSelected(true); // default on
 
         // hideUnconnected item
@@ -741,7 +835,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!_hideUnconnected && (!switchesOnBoard.isEmpty())); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -763,9 +857,22 @@ public class SwitchboardEditor extends Editor {
         scrollMenu.add(scrollVertical);
         scrollVertical.addActionListener((ActionEvent event) -> setScroll(SCROLL_VERTICAL));
 
+        // add beanswitch size menu item
+        JMenu iconSizeMenu = new JMenu(Bundle.getMessage("MenuIconSize"));
+        _optionMenu.add(iconSizeMenu);
+        ButtonGroup sizeGroup = new ButtonGroup();
+        sizeGroup.add(sizeSmall);
+        iconSizeMenu.add(sizeSmall);
+        sizeSmall.addActionListener((ActionEvent event) -> setIconScale(SIZE_MIN));
+        sizeGroup.add(sizeDefault);
+        iconSizeMenu.add(sizeDefault);
+        sizeDefault.addActionListener((ActionEvent event) -> setIconScale(SIZE_INIT));
+        sizeGroup.add(sizeLarge);
+        iconSizeMenu.add(sizeLarge);
+        sizeLarge.addActionListener((ActionEvent event) -> setIconScale(SIZE_MAX));
+
         JMenu colorMenu = new JMenu(Bundle.getMessage("Colors"));
         _optionMenu.add(colorMenu);
-
         // add text color menu item
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         colorMenu.add(textColorMenuItem);
@@ -786,12 +893,12 @@ public class SwitchboardEditor extends Editor {
                     }
                 }
                 defaultTextColor = desiredColor;
+                border.setTitleColor(desiredColor);
                 setDirty(true);
                 JmriColorChooser.addRecentColor(desiredColor);
                 updatePressed();
             }
         });
-
         // add background color menu item
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         colorMenu.add(backgroundColorMenuItem);
@@ -807,6 +914,7 @@ public class SwitchboardEditor extends Editor {
                             new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
                     if (retval == 1) { // invert the other color
                         defaultTextColor = contrast(defaultTextColor);
+                        border.setTitleColor(defaultTextColor);
                     } else if (retval != 0) {
                         return; // cancel
                     }
@@ -818,7 +926,56 @@ public class SwitchboardEditor extends Editor {
                 updatePressed();
             }
         });
-
+        // add ActiveColor menu item
+        JMenuItem activeColorMenuItem = new JMenuItem(Bundle.getMessage("SetActiveColor", "..."));
+        colorMenu.add(activeColorMenuItem);
+        activeColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetActiveColor", ""),
+                    defaultActiveColor);
+            if (desiredColor != null && !defaultActiveColor.equals(desiredColor)) {
+                // if new ActiveColor matches InactiveColor, ask user as state will become unreadable
+                if (desiredColor.equals(defaultInactiveColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        setDefaultInactiveColor(contrast(defaultInactiveColor));
+                    } else if (retval != 0) {
+                        return; // cancel
+                    }
+                }
+                defaultActiveColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
+            }
+        });
+        // add InctiveColor menu item
+        JMenuItem inactiveColorMenuItem = new JMenuItem(Bundle.getMessage("SetInactiveColor", "..."));
+        colorMenu.add(inactiveColorMenuItem);
+        inactiveColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetInactiveColor", ""),
+                    defaultInactiveColor);
+            if (desiredColor != null && !defaultInactiveColor.equals(desiredColor)) {
+                // if new InactiveColor matches ActiveColor, ask user as state will become unreadable
+                if (desiredColor.equals(defaultInactiveColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        setDefaultActiveColor(contrast(defaultActiveColor));
+                    } else if (retval != 0) {
+                        return; // cancel
+                    }
+                }
+                defaultInactiveColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
+            }
+        });
     }
 
     private void makeFileMenu() {
@@ -826,7 +983,7 @@ public class SwitchboardEditor extends Editor {
         _menuBar.add(_fileMenu, 0);
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
         PositionableJComponent z = new PositionableJComponent(this);
@@ -840,6 +997,7 @@ public class SwitchboardEditor extends Editor {
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
+                getTargetFrame().dispose();
                 dispose();
             }
         });
@@ -855,6 +1013,7 @@ public class SwitchboardEditor extends Editor {
 
     public void setDefaultTextColor(Color color) {
         defaultTextColor = color;
+        border.setTitleColor(color);
     }
 
     /**
@@ -877,13 +1036,21 @@ public class SwitchboardEditor extends Editor {
     public String getActiveSwitchColor() {
         return ColorUtil.colorToColorName(defaultActiveColor);
     }
+    public Color getActiveColorAsColor() {
+        return defaultActiveColor;
+    }
+    public void setDefaultActiveColor(Color color) {
+        defaultActiveColor = color;
+    }
 
     public String getInactiveSwitchColor() {
         return ColorUtil.colorToColorName(defaultInactiveColor);
     }
-
-    public String getUnknownSwitchColor() {
-        return ColorUtil.colorToColorName(defaultUnknownColor);
+    public Color getInactiveColorAsColor() {
+        return defaultInactiveColor;
+    }
+    public void setDefaultInactiveColor(Color color) {
+        defaultInactiveColor = color;
     }
 
     /**
@@ -909,7 +1076,7 @@ public class SwitchboardEditor extends Editor {
 
     @Override
     public void setAllEditable(boolean edit) {
-        log.debug("_editable set to {}", edit);
+        log.debug("_editable set to {} in super", edit);
         if (edit) {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
@@ -1004,9 +1171,9 @@ public class SwitchboardEditor extends Editor {
      */
     private int autoRows(float cellProp) {
         // find cell matrix that allows largest size icons
-        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp); // -2x3px for border
+        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ Math.max(cellProp, 0.1f)); // -2x3px for border
         //log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
-        double paneHeight = super.getTargetFrame().getHeight() - 25; // -25px for footer
+        double paneHeight = super.getTargetFrame().getHeight() - verticalMargin; // for footer
         int columnsNum = 1;
         int rowsNum = 1;
         float tileSize = 0.1f; // start value
@@ -1018,27 +1185,27 @@ public class SwitchboardEditor extends Editor {
         }
 
         while (tileSize > tileSizeOld) {
-            rowsNum = (totalDisplayed + columnsNum - 1) / columnsNum; // int roundup
+            rowsNum = (totalDisplayed + columnsNum - 1) / Math.max(columnsNum, 1); // int roundup
             tileSizeOld = tileSize; // store for comparison
-            tileSize = (float) Math.min(paneEffectiveWidth / columnsNum, paneHeight / rowsNum);
+            tileSize = (float) Math.min(paneEffectiveWidth / Math.max(columnsNum, 1), paneHeight / Math.max(rowsNum, 1));
             //log.debug("C>R Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize),
             //        String.format("%.2f", tileSizeOld));
             if (tileSize < tileSizeOld) {
-                rowsNum = (totalDisplayed + columnsNum - 2) / (columnsNum - 1);
+                rowsNum = (totalDisplayed + columnsNum - 2) / Math.max((columnsNum - 1), 1);
                 break;
             }
             columnsNum++;
         }
 
         // start over stepping columns instead of rows
-        int columnsNumC = 1;
+        int columnsNumC;
         int rowsNumC = 1;
         float tileSizeC = 0.1f;
         float tileSizeCOld = 0.0f;
         while (tileSizeC > tileSizeCOld) {
-            columnsNumC = (totalDisplayed + rowsNumC - 1) / rowsNumC; // int roundup
+            columnsNumC = (totalDisplayed + rowsNumC - 1) / Math.max(rowsNumC, 1); // int roundup
             tileSizeCOld = tileSizeC; // store for comparison
-            tileSizeC = (float) Math.min(paneEffectiveWidth / columnsNumC, paneHeight / rowsNumC);
+            tileSizeC = (float) Math.min(paneEffectiveWidth / Math.max(columnsNumC, 1), paneHeight / Math.max(rowsNumC, 1));
             //log.debug("R>C Cols {} x Rows {}, tileSizeC {} was {}", columnsNumC, rowsNumC, String.format("%.2f", tileSizeC),
             //        String.format("%.2f", tileSizeCOld));
             if (tileSizeC < tileSizeCOld) {
@@ -1057,7 +1224,7 @@ public class SwitchboardEditor extends Editor {
         // similar calculations repeated in panel.js for web display
         //log.debug("CELL SIZE optimum found: CxR = {}x{}, tileSize = {}", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, tileSize);
 
-        _tileSize = Math.round((float) paneHeight / rowsNum); // recalculate tileSize from rowNum, store for tile graphics
+        _tileSize = Math.round((float) paneHeight / Math.max(rowsNum, 1)); // recalculate tileSize from rowNum, store for tile graphics
         return rowsNum;
     }
 
@@ -1127,28 +1294,26 @@ public class SwitchboardEditor extends Editor {
         return (int) maxSpinner.getValue();
     }
 
-    private String typePrefix;
-    private String type;
-
     // ***************** Store & Load xml ********************
     /**
      * Store bean type.
      *
-     * @return bean type prefix
+     * @return bean type prefix as set for Switchboard
      */
     public String getSwitchType() {
+        String typePref;
         String switchType = "";
         if (beanTypeList.getSelectedItem() != null) {
             switchType = beanTypeList.getSelectedItem().toString();
         }
         if (switchType.equals(LIGHT)) { // switch-case doesn't work here
-            typePrefix = "L";
+            typePref = "L";
         } else if (switchType.equals(SENSOR)) {
-            typePrefix = "S";
+            typePref = "S";
         } else { // Turnout
-            typePrefix = "T";
+            typePref = "T";
         }
-        return typePrefix;
+        return typePref;
     }
 
     /**
@@ -1157,41 +1322,40 @@ public class SwitchboardEditor extends Editor {
      * @return bean type name
      */
     public String getSwitchTypeName() {
-        return type;
+        return _type;
     }
 
     /**
-     * Load bean type.
+     * Load bean type from xml.
      *
      * @param prefix the bean type prefix
      */
     public void setSwitchType(String prefix) {
-        typePrefix = prefix;
-        switch (typePrefix) {
+        switch (prefix) {
             case "L":
-                type = LIGHT;
+                _type = LIGHT;
                 break;
             case "S":
-                type = SENSOR;
+                _type = SENSOR;
                 break;
-            case "T": // Turnouts
+            case "T":
             default:
-                type = TURNOUT;
+                _type = TURNOUT;
         }
         try {
-            beanTypeList.setSelectedItem(type);
+            beanTypeList.setSelectedItem(_type);
         } catch (IllegalArgumentException e) {
-            log.error("invalid bean type [{}] in Switchboard", typePrefix);
+            log.error("invalid bean type [{}] in Switchboard", prefix);
         }
     }
 
     /**
      * Store connection type.
      *
-     * @return bean connection prefix
+     * @return active bean connection prefix
      */
     public String getSwitchManu() {
-        return this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+        return memo.getSystemPrefix();
     }
 
     /**
@@ -1200,18 +1364,25 @@ public class SwitchboardEditor extends Editor {
      * @param manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
-        int choice = 0;
-        for (int i = 0; i < beanManuPrefixes.size(); i++) {
-            if (beanManuPrefixes.get(i).equals(manuPrefix)) {
-                choice = i;
-                break;
-            }
-        }
         try {
-            beanManuNames.setSelectedIndex(choice);
-            log.debug("beanManuNames combo set to {} for {}", choice, manuPrefix);
+            memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(manuPrefix);
+            if (memo.get(TurnoutManager.class) != null) { // just for initial view
+                turnoutManComboBox.setSelectedItem(memo.get(TurnoutManager.class));
+                log.debug("turnoutManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
+            }
+            if (memo.get(SensorManager.class) != null) { // we expect the user has same preference for the other types
+                sensorManComboBox.setSelectedItem(memo.get(SensorManager.class));
+                // TODO LocoNet does not provide a sensormanager via the memo
+                log.debug("sensorManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
+            }
+            if (memo.get(LightManager.class) != null) { // so we set them the same (only 1 value stored as set on store)
+                lightManComboBox.setSelectedItem(memo.get(LightManager.class));
+                log.debug("lightManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
+            }
         } catch (IllegalArgumentException e) {
-            log.error("invalid connection [{}] in Switchboard", manuPrefix);
+            log.error("invalid connection [{}] in Switchboard, {}", manuPrefix, e.getMessage());
+        } catch (NullPointerException e) {
+            log.error("NPE setting prefix to [{}] in Switchboard", manuPrefix);
         }
     }
 
@@ -1221,27 +1392,22 @@ public class SwitchboardEditor extends Editor {
      * @return bean shape prefix
      */
     public String getSwitchShape() {
-        String shape;
-        int shapeChoice = 0;
-        if (switchShapeList.getSelectedIndex() > 0) {
-            shapeChoice = switchShapeList.getSelectedIndex();
+        String shapeAsString;
+        switch (shape) {
+            case SLIDER:
+                shapeAsString = "icon";
+                break;
+            case KEY:
+                shapeAsString = "drawing";
+                break;
+            case SYMBOL:
+                shapeAsString = "symbol";
+                break;
+            case (BUTTON):
+            default: // 0 = basic labelled button
+                shapeAsString = "button";
         }
-        switch (shapeChoice) {
-            case 1:
-                shape = "icon";
-                break;
-            case 2:
-                shape = "drawing";
-                break;
-            case 3:
-                shape = "symbol";
-                break;
-            default:
-                // 0 = basic labelled button
-                shape = "button";
-                break;
-        }
-        return shape;
+        return shapeAsString;
     }
 
     /**
@@ -1250,37 +1416,32 @@ public class SwitchboardEditor extends Editor {
      * @param switchShape name of switch shape
      */
     public void setSwitchShape(String switchShape) {
-        int shape;
         switch (switchShape) {
             case "icon":
-                shape = 1;
+                shape = SLIDER;
                 break;
             case "drawing":
-                shape = 2;
+                shape = KEY;
                 break;
             case "symbol":
-                shape = 3;
+                shape = SYMBOL;
                 break;
             default: // button
-                shape = 0;
+                shape = BUTTON;
         }
         try {
-            switchShapeList.setSelectedIndex(shape);
+            shapeList.setSelectedIndex(shape);
         } catch (IllegalArgumentException e) {
             log.error("invalid switch shape [{}] in Switchboard", shape);
         }
     }
 
-    public void setBoardToolTip(ToolTip tip) {
-        setToolTip(tip);
-    }
-
     /**
-     * Store Switchboard rowsnum spinner or turn on autoRows option.
+     * Store Switchboard rowsNum JSpinner or turn on autoRows option.
      *
      * @return the number of switches to display per row or 0 if autoRowsBox (menu-setting) is selected
      */
-    public int getRows() {
+    public int getRows() { //tmp synchronized
         if (autoRowsBox.isSelected()) {
             return 0;
         } else {
@@ -1289,11 +1450,11 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Load Switchboard rowsnum spinner.
+     * Load Switchboard rowsNum JSpinner.
      *
      * @param rws the number of switches displayed per row (as text) or 0 te activate autoRowsBox setting
      */
-    public void setRows(int rws) {
+    public void setRows(int rws) { //tmp synchronized
         autoRowsBox.setSelected(rws == 0);
         if (rws > 0) {
             rowsSpinner.setValue(rws); // rows is set via rowsSpinner
@@ -1373,14 +1534,32 @@ public class SwitchboardEditor extends Editor {
     protected Manager<?> getManager(char typeChar) {
         switch (typeChar) {
             case 'T': // Turnout
-                return InstanceManager.turnoutManagerInstance();
+                return InstanceManager.getNullableDefault(TurnoutManager.class);
             case 'S': // Sensor
-                return InstanceManager.sensorManagerInstance();
+                return InstanceManager.getNullableDefault(SensorManager.class);
             case 'L': // Light
-                return InstanceManager.lightManagerInstance();
+                return InstanceManager.getNullableDefault(LightManager.class);
             default:
                 log.error("Unsupported bean type character \"{}\" found.", typeChar);
                 return null;
+        }
+    }
+
+    /**
+     * Get the currently active manager.
+     *
+     * @return manager in use for the currently selected bean type and connection
+     */
+    protected Manager<?> getManager() {
+        if (_type.equals(TURNOUT)) {
+            return turnoutManComboBox.getSelectedItem();
+        } else if (_type.equals(SENSOR)) {
+                return sensorManComboBox.getSelectedItem();
+        } else if (_type.equals(LIGHT)) {
+            return lightManComboBox.getSelectedItem();
+        } else {
+            log.error("Unsupported bean type character \"{}\" found.", _type);
+            return null;
         }
     }
 
@@ -1460,7 +1639,17 @@ public class SwitchboardEditor extends Editor {
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
         boolean save = (isDirty() || (savedEditMode != isEditable())
                 || (savedControlLayout != allControlling()));
-        targetWindowClosing(save);
+        log.trace("Temp fix to disable CI errors: save = {}", save);
+        targetWindowClosing();
+    }
+
+    /**
+     * changeView is not supported by SwitchBoards.
+     * {@inheritDoc}
+     */
+    @Override
+    protected Editor changeView(String className) {
+        return null;
     }
 
     /**
@@ -1505,10 +1694,10 @@ public class SwitchboardEditor extends Editor {
      * @return BeanSwitch switch object with the given name
      */
     protected BeanSwitch getSwitch(String sName) {
-        if (switchesOnBoard.containsKey(sName)) {
+        if (ready && switchesOnBoard.containsKey(sName)) {
             return switchesOnBoard.get(sName);
         }
-        log.warn("switch {} not found on panel", sName);
+        log.warn("Switch {} not found on panel. Number of switches displayed: {}", sName, switchesOnBoard.size());
         return null;
     }
 
@@ -1521,8 +1710,10 @@ public class SwitchboardEditor extends Editor {
     public List<BeanSwitch> getSwitches() {
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
         log.debug("N = {}", switchesOnBoard.size());
-        for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
-            _switches.add(bs.getValue());
+        if (ready) {
+            for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
+                _switches.add(bs.getValue());
+            }
         }
         return _switches;
     }
@@ -1550,9 +1741,6 @@ public class SwitchboardEditor extends Editor {
     /**
      * Create popup for a Positionable object.
      * <p>
-     * Popup items common to all positionable objects are done before and after
-     * the items that pertain only to specific Positionable types.
-     * <p>
      * Not used on switchboards but has to override Editor.
      *
      * @param p     the item on the Panel
@@ -1579,7 +1767,7 @@ public class SwitchboardEditor extends Editor {
         return report;
     }
 
-    public int getTileSize() {
+    public int getTileSize() { //tmp synchronized
         return _tileSize; // initially 100
     }
 
@@ -1589,9 +1777,95 @@ public class SwitchboardEditor extends Editor {
      * @param on state to set Light.ON or Light.OFF
      */
     public void switchAllLights(int on) {
-        for (BeanSwitch bs : switchesOnBoard.values()) {
+        if (ready) {
+            for (BeanSwitch bs : switchesOnBoard.values()) {
                 bs.switchLight(on);
             }
+        }
+    }
+
+    /**
+     * Configure the combo box listing managers.
+     * Adapted from AbstractTableAction.
+     */
+    protected void configureManagerComboBoxes() {
+        LightManager defaultManagerL = InstanceManager.getDefault(LightManager.class);
+        if (defaultManagerL instanceof ProxyManager) {
+            lightManComboBox.setManagers(defaultManagerL);
+        } else {
+            lightManComboBox.setManagers(lightManager);
+        }
+
+        SensorManager defaultManagerS = InstanceManager.getDefault(SensorManager.class);
+        if (defaultManagerS instanceof ProxyManager) {
+            sensorManComboBox.setManagers(defaultManagerS);
+            log.debug("using PROXYmanager for Sensors");
+        } else {
+            sensorManComboBox.setManagers(sensorManager);
+        }
+
+        TurnoutManager defaultManagerT = InstanceManager.getDefault(TurnoutManager.class);
+        if (defaultManagerT instanceof ProxyManager) {
+            turnoutManComboBox.setManagers(defaultManagerT);
+            log.debug("using PROXYmanager for Turnouts");
+        } else {
+            turnoutManComboBox.setManagers(turnoutManager);
+        }
+    }
+        // TODO store current selection in prefman
+
+    /**
+     * Show only one of the manuf (manager) combo boxes.
+     *
+     * @param type one of the three NamedBean types as String
+     */
+    protected void displayManagerComboBoxes(String type) {
+        _type = type;
+        if (type.equals(LIGHT)) {
+            Manager<Light> manager = lightManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
+            turnoutManComboBox.setVisible(false);
+            sensorManComboBox.setVisible(false);
+            lightManComboBox.setVisible(true);
+            log.debug("BOX for LightManager set. LightManComboVisible={}", lightManComboBox.isVisible());
+        } else if (type.equals(SENSOR)) {
+            Manager<Sensor> manager = sensorManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
+            turnoutManComboBox.setVisible(false);
+            sensorManComboBox.setVisible(true);
+            lightManComboBox.setVisible(false);
+            log.debug("BOX for SensorManager set. SensorManComboVisible={}", sensorManComboBox.isVisible());
+        } else { // TURNOUT
+            Manager<Turnout> manager = turnoutManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
+            turnoutManComboBox.setVisible(true);
+            sensorManComboBox.setVisible(false);
+            lightManComboBox.setVisible(false);
+            log.debug("BOX for TurnoutManager set. TurnoutManComboVisible={}", turnoutManComboBox.isVisible());
+        }
+    }
+
+    public void setIconScale(int size) {
+        _iconSquare = size;
+        // also set the scale radio menu items, all 3 are in sizeGroup so will auto deselect
+        if (size < 100) {
+            sizeSmall.setSelected(true);
+        } else if (size > 100) {
+            sizeLarge.setSelected(true);
+        } else {
+            sizeDefault.setSelected(true);
+        }
+        updatePressed();
+    }
+
+    public int getIconScale() {
+    return _iconSquare;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);

@@ -1,103 +1,121 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - SPROG Generation 5 Hardware Support</title>
   <meta name="author" content="Andrew Crosland">
-  <meta name="keywords" content=
-  "SPROG java model railroad JMRI install windows linux mac osx">
+  <meta name="keywords" content="SPROG java model railroad JMRI install windows linux mac osx">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
-
       <h1>Hardware Support: SPROG Generation 5 Hardware</h1>
+
       <ul class="snav">
-        <li><a href="#pisprog3">Pi-SPROG 3</a></li>
-        <li><a href="#sprog3plus">SPROG 3 plus</a></li>
-        <li><a href="#sprog3plus">Pi-SPROG 3 plus</a></li>
-        <li><a href="#canisb">CANISB</a></li>
-        <li><a href="#setup">Hardware Setup with JMRI</a></li>
-        <li><a href="index.shtml#documentation">Documentation</a></li>
-        <li><a href="index.shtml#support">Support</a></li>
+        <li>
+          <a href="#pisprog3">Pi-SPROG 3</a>
+        </li>
+
+        <li>
+          <a href="#sprog3plus">SPROG 3 plus</a>
+        </li>
+
+        <li>
+          <a href="#sprog3plus">Pi-SPROG 3 plus</a>
+        </li>
+
+        <li>
+          <a href="#canisb">CANISB</a>
+        </li>
+
+        <li>
+          <a href="#setup">Hardware Setup with JMRI</a>
+        </li>
+
+        <li>
+          <a href="index.shtml#documentation">Documentation</a>
+        </li>
+
+        <li>
+          <a href="index.shtml#support">Support</a>
+        </li>
       </ul>
 
-      <h2><a name="pisprog3" id="pisprog3">Pi-SPROG 3</a></h2>
-      
-      <p>Available as a firmware upgrade to the original Pi-SPROG One, the 
-          Pi-SPROG 3 turns a Raspberry Pi module into a fully fledged 
-          stand-alone DCC programmer and command station.</p>
-      
-      <h2><a name="sprog3plus" id="sprog3plus">SPROG 3 Plus and Pi-SPROG Plus</a></h2>
-      
-      <p>DCC command stations and programmers with integrated CBUS&trade; adapters (no 
-          need for a separate USB - CAN adapter) and dual track outputs.</p>
-      
+      <h2 id="pisprog3">Pi-SPROG 3</h2>
+
+      <p>Available as a firmware upgrade to the original Pi-SPROG One, the Pi-SPROG 3 turns a
+      Raspberry Pi module into a fully fledged stand-alone DCC programmer and command station.</p>
+
+      <h2 id="sprog3plus">SPROG 3 Plus and Pi-SPROG Plus</h2>
+
+      <p>DCC command stations and programmers with integrated CBUS® adapters (no need for a
+      separate USB - CAN adapter) and dual track outputs.</p>
+
       <p>Features</p>
-      
+
       <ul>
-          <li>Two track outputs allow simultaneous running  and programming.</li>
-          <li>Main track output up to 2.5 Amps</li>
-          <li>Flexible second track output features:
-            <ul>
-                <li>Up to 2.5 Amp output</li>
-                <li>Can be disabled when not programming</li>
-                <li>Can follow main track output when not programming allowing
-                    locos to be driven onto an isolated programming track.</li>
-                <li>Can be used as an auto-reverse power district output (no
-                    service mode programming available in this mode.</li>
-            </ul>
-          </li>
-          <li>CAN interface (to be enabled in a future firmware release) for 
-              full CBUS connectivity.</li>
+        <li>Two track outputs allow simultaneous running and programming.</li>
+
+        <li>Main track output up to 2.5 Amps</li>
+
+        <li>Flexible second track output features:
+          <ul>
+            <li>Up to 2.5 Amp output</li>
+
+            <li>Can be disabled when not programming</li>
+
+            <li>Can follow main track output when not programming allowing locos to be driven onto
+            an isolated programming track.</li>
+
+            <li>Can be used as an auto-reverse power district output (no service mode programming
+            available in this mode.</li>
+          </ul>
+        </li>
+
+        <li>CAN interface (to be enabled in a future firmware release) for full CBUS
+        connectivity.</li>
       </ul>
-      
-      <h2><a name="canisb" id="canisb">CANISB Isolated USB CAN adapter</a></h2>
-      
-      <p>A electrically isolated USB CAN adapter that removes any electrical
-          connection between the host computer's USB interface and the CBUS
-          network.</p>
-      
-      <h2><a name="setup" id="setup">Hardware Setup with JMRI</a></h2>
-      
-      <p>Create a new profile. The example shown is for Pi-PSROG 3 hardware.
-          Enter the name and click OK.<br><br></p>
-      <img src="images/setup/NewProfile1.png" alt="JMRI new profile 1">
-      <p></p>
 
-      <p>Select the New Profile and click OK<br><br></p>
-      <img src="images/setup/NewProfile2.png" alt="JMRI new profile 2">
-      <p></p>
-      
-      <p>Click Next when the Wizard appears.<br><br></p>      
-      <img src="images/setup/NewProfile3.png" alt="JMRI new profile 3">
-      <p></p>
+      <h2 id="canisb">CANISB Isolated USB CAN adapter</h2>
 
-      Make the following selections:
+      <p>A electrically isolated USB CAN adapter that removes any electrical connection between the
+      host computer's USB interface and the CBUS network.</p>
+
+      <h2 id="setup">Hardware Setup with JMRI</h2>
+
+      <p>Create a new profile. The example shown is for Pi-PSROG 3 hardware. Enter the name and
+      click OK.<br>
+      <br></p>
+      <img src="images/Setup/NewProfile1.png" alt="JMRI new profile 1">
+      <p>Select the New Profile and click OK<br>
+      <br></p>
+      <img src="images/Setup/NewProfile2.png" alt="JMRI new profile 2">
+      <p>Click Next when the Wizard appears.<br>
+      <br></p>
+      <img src="images/Setup/NewProfile3.png" alt="JMRI new profile 3"> Make the following
+      selections:
       <ul>
-          <li>System Manufacturer: SPROG DCC Generation 5</li>
-          <li>System Connection: Select your hardware, e.g., showing Pi-SPROG 3<li>
-          <li>Serial Port: Selection will depend on host computer and operating system</li>
+        <li>System Manufacturer: SPROG DCC Generation 5</li>
+
+        <li>System Connection: Select your hardware, e.g., showing Pi-SPROG 3</li>
+
+        <li>Serial Port: Selection will depend on host computer and operating system</li>
       </ul>
       <br>
-      <img src="images/setup/NewProfile4.png" alt="JMRI new profile 41">
-      <p></p>
-      
+      <img src="images/Setup/NewProfile4.png" alt="JMRI new profile 41">
       <p>Click Next to complete the setup.</p>
-      
-      <h2></h2>
+
       <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
-      
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

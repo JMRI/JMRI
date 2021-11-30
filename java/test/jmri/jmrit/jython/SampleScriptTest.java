@@ -60,9 +60,9 @@ public class SampleScriptTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
-        // it's not really understood why, but doing these inside of the 
+        // it's not really understood why, but doing these inside of the
         // sample Python script doesn't always work; it's as if that
-        // is working with a different InstanceManager. So we 
+        // is working with a different InstanceManager. So we
         // include a comprehensive set here.
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -76,8 +76,13 @@ public class SampleScriptTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.clearBlockBossLogicThreads();
+
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

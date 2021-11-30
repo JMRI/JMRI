@@ -1,15 +1,17 @@
 <!-- SidebarApplications.shtml -->
 <!-- This is a sidebar page, originally made from help/en/html/apps/Sidebar.shtml -->
-	<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
+	<dt><a href="/help/en/html/apps/">Applications</a></dt>
 	<dd>By the community of JMRI.org:
 		  <ul>
 	             <li><a href="/help/en/html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
 	             <li><a href="/help/en/html/apps/PanelPro/index.shtml">PanelPro&trade;</a></li>
 	             <li><a href="/help/en/html/apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
-	             <li><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+	             <li><a href="/help/en/html/apps/OperationsPro/index.shtml">OperationsPro&trade;</a></li>
 	             <li><a href="/help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
 	             <li><i><a href="/community/connections/CommunityConnectionsIndex.shtml">Apps with JMRI connections...</a></i></li>
-                     <li><a href="/help/en/html/FAQ.shtml">FAQ</a></li>		     
+	             <li><i><a href="/help/en/html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI...</a></i></li>
+                 <li><a href="/help/en/html/FAQ.shtml">FAQ</a></li>
+
 		  </ul>
           </dd>
 <!-- /SidebarApplications.shtml -->

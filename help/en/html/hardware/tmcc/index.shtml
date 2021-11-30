@@ -1,86 +1,62 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - Lionel TMCC</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - Lionel TMCC</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: Lionel TMCC</h1>
 
-      <h1>Hardware Support: Lionel TMCC</h1><a name="hardware" id=
-      "hardware"></a>
-
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
-      <p>Lionel TMCC or Lionel Legacy thru the serial port on the
-      Command Base. <a name="limitations" id="limitations"></a></p>
+      <p>Lionel TMCC or Lionel Legacy thru the serial port on the Command Base.</p>
 
-      <h2>Limitations</h2>
+      <h2 id="limitations">Limitations</h2>
 
-      <p>As of JMRI v 2.11.8, Lionel TMCC Train commands are not
-      yet available.</p>
+      <p>As of JMRI v 2.11.8, Lionel TMCC Train commands are not yet available.</p>
 
-      <p>There is no Lionel TMCC model under the DecoderPro Roster
-      Entry tabs, but you can set up TMCC decoder equipped
-      Locomotives using the NMRA standard decoder near the top of
-      the list.</p><a name="connecting" id="connecting"></a>
+      <p>There is no Lionel TMCC model under the DecoderPro Roster Entry tabs, but you can set up
+      TMCC decoder equipped Locomotives using the NMRA standard decoder near the top of the
+      list.</p>
 
-      <h2>Connecting</h2>
+      <h2 id="connecting">Connecting</h2>
 
       <h3>Wiring</h3>
 
-      <p>First, connect your computer's serial port to the TMCC
-      command station using a serial cable. This should be a
-      "straight-through" or "modem" cable, <i>not</i>a "crossover"
-      or "null-modem" cable. if your computer doesn't have a
-      built-in serial port, you can use a USB-serial adapter, but
-      make sure you install the correct drivers.</p>
+      <p>First, connect your computer's serial port to the TMCC command station using a serial
+      cable. This should be a "straight-through" or "modem" cable, <em>not</em>a "crossover" or
+      "null-modem" cable. if your computer doesn't have a built-in serial port, you can use a
+      USB-serial adapter, but make sure you install the correct drivers if needed. Recent Mac OS
+      distributions have the drivers already there for some adaptors.</p>
 
       <h3>Settings</h3>
 
       <p>Next, configure the program:</p>
 
       <ul>
-        <li>Start your JMRI-based program (DecoderPro, PanelPro,
-        etc).</li>
+        <li>Start your JMRI-based program (DecoderPro, PanelPro, etc).</li>
 
-        <li>Go to the Connections tab of the Preferences pane. This
-        opens automatically the first time a program is run, or you
-        can select it from the "Edit" menu.</li>
+        <li>Go to the Connections tab of the Preferences pane. This opens automatically the first
+        time a program is run, or you can select it from the "Edit" menu.</li>
 
         <li>Click the + tab and Select "TMCC (Lionel)" as the System Manufacturer.</li>
 
         <li>Under Connections, choose from Serial and Simulator.<br>
-        Enter a Prefix and Connection Name to identify this connection.
-        </li>
+        Enter a Prefix and Connection Name to identify this connection.</li>
 
-        <li>When using Serial, pick the name of the serial port that
-        you have connected to the TMCC system.<br>
-        If the baud rate doesn't show a fixed value, set it to
-        9,600 baud.</li>
+        <li>When using Serial, pick the name of the serial port that you have connected to the TMCC
+        system.<br>
+        If the baud rate doesn't show a fixed value, set it to 9,600 baud.</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the
-        program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
       </ul>
@@ -89,19 +65,21 @@
 
       <p>(Not yet complete)</p>
 
-      <p>With JMRI 2.11.8, Lionel TMCC operation for engines and
-      accessory decoders is available. Train commands are not yet
-      available.</p>
+      <p>With JMRI 2.11.8, Lionel TMCC operation for engines and accessory decoders is available.
+      Train commands are not yet available.</p>
 
-      <p>You will still need to turn your CAB on to use the Set
-      features like setting an Locomotive ID. Once set up, however,
-      you can perform most functions from the WiThrottles.</p>
+      <p>The functions below will take care of all Engine Controls on TMCC and the basic commands
+      on Legacy. The Accessory and Route and Train ( multi Lash Ups ) are not implimented. The
+      Switch commands should also work even if you are using CMRI to control the switches.</p>
 
-      <p>Listed are the common actions for Railsounds 4, ERR
-      conversion boards, and TAS boards.</p>
+      <p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards. Any
+      Accessory that uses Engine ID commands will also work however the function buttons will have
+      different meanings. Consult the manual that came with the Accessor ( Crane Car, etc. ) to
+      determine what the aux 1 buttons do for that item and label the Function Burrons
+      accordingly.</p>
 
-      <p>When using a JMRI Throttle to run a Locomotive, the
-      function buttons are allocated as follows:</p>
+      <p>When using a JMRI Throttle to run a Locomotive, the function buttons are allocated as
+      follows:</p>
 
       <dl>
         <dt>F0</dt>
@@ -191,47 +169,64 @@
         <dt>F21</dt>
 
         <dd>Brake</dd>
+
+        <dt>F22</dt>
+
+        <dd>Increse Speed 2 Steps</dd>
+
+        <dt>F23</dt>
+
+        <dd>Decrease Speed 2 Steps</dd>
+
+        <dt>F24</dt>
+
+        <dd>Momentum Low</dd>
+
+        <dt>F25</dt>
+
+        <dd>Momentum Medium</dd>
+
+        <dt>F26</dt>
+
+        <dd>Momentum High</dd>
+
+        <dt>F27</dt>
+
+        <dd>Set</dd>
       </dl>
 
-      <a name="tools" id="tools"></a>
-      <h2>JMRI TMCC Tools</h2>
+      <h2 id="tools">JMRI TMCC Tools</h2>
 
-      <ul>
-        <li>TMCC network traffic can be viewed with <a href=
-        "../../../package/jmri/jmrix/tmcc/serialmon/SerialMonFrame.shtml">
-        Acela Monitor</a></li>
+      <h3 id="documentation">TMCC New Entry Format Summary</h3>
 
-        <li>Messages can be sent to TMCC devices with <a href=
-        "../../../package/jmri/jmrix/tmcc/packetgen/SerialPacketGenFrame.shtml">
-        Send Acela Packets</a></li>
-
-      </ul>
-
-      <a name="documentation" id="documentation"></a>
-      <h3>TMCC New Entry Format Summary</h3>
       <p>Here's a summary on how to enter the address for a new item (eg. Turnouts):</p>
 
       <table>
-        <tbody><tr>
-          <th>In/Out</th>
-          <th>Entry</th>
-          <th>Meaning</th>
-          <th>makes System Name</th>
-          <th>Mask</th>
-          <th>Equivalent</th>
-          <th>Minimum</th>
-          <th>Maximum</th>
-        </tr>
-        <tr>
-          <td>o</td>
-          <td>3</td>
-          <td>Turnout 3</td>
-          <td>TT3</td>
-          <td> </td>
-          <td> </td>
-          <td>1</td>
-          <td>99</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>In/Out</th>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Equivalent</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+          </tr>
+
+          <tr>
+            <td>o</td>
+            <td>3</td>
+            <td>Turnout 3</td>
+            <td>TT3</td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>1</td>
+            <td>99</td>
+          </tr>
+        </tbody>
       </table>
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
@@ -240,12 +235,11 @@
       <h2>Documentation</h2>
 
       <h3>Third Party info</h3>
-
-      <p>The <a href=
-      "http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
-      Lionel Legacy</a> website.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

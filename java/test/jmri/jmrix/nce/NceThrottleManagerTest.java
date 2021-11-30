@@ -16,7 +16,7 @@ public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+        Assert.assertNotNull("exists", tm);
     }
 
     @BeforeEach
@@ -31,7 +31,12 @@ public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tm.dispose();
+        tm = null;
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
     }
 

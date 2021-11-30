@@ -1,52 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>Multi-Decoder Control</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>Multi-Decoder Control</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Main Window</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Main Window</h1>
 
       <h2>Multi-Decoder Control</h2>
 
-      <div align="right">
-        <p><a href="Main_Tool.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Tool.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Back to Index</a>
+        </p>
       </div>
+
       <hr>
 
-      <p>The <strong>Multi-Programmer Control</strong> provides a
-      convenient way to program CV's when you have more than one
-      decoder installed in a locomotive. For example, if you have
-      separate decoders to control the motor and provide sound, and
-      they both use the same CV locations, programming one decoder
-      would change the settings on the other, usually an undesired
-      feature.</p>
+      <p>The <strong>Multi-Programmer Control</strong> provides a convenient way to program CV's
+      when you have more than one decoder installed in a locomotive. For example, if you have
+      separate decoders to control the motor and provide sound, and they both use the same CV
+      locations, programming one decoder would change the settings on the other, usually an
+      undesired feature.</p>
 
-      <p>This control uses CV15 and CV16 to control writing and
-      reading CV values. Prior to installation of the decoders into
-      the locomotive, each one would have a separate and specific
+      <p>This control uses CV15 and CV16 to control writing and reading CV values. Prior to
+      installation of the decoders into the locomotive, each one would have a separate and specific
       value programmed into CV16</p>
 
       <p>Recommended values:</p>
@@ -61,104 +59,86 @@
         <li>other uses values of 4 thru 7</li>
       </ul>
 
-      <p>Decoders should ship with the value of 0 in both CV15 and
-      CV16, You can only perform a read or write operation on the
-      decoder if CV15 and CV16 are the same value. In effect, CV16
-      is a lock and CV15 is the key. Once the decoder is locked in
-      this way, the ONLY CV that can be programmed is CV15 (you do
-      need to be able to unlock it).</p>
+      <p>Decoders should ship with the value of 0 in both CV15 and CV16, You can only perform a
+      read or write operation on the decoder if CV15 and CV16 are the same value. In effect, CV16
+      is a lock and CV15 is the key. Once the decoder is locked in this way, the ONLY CV that can
+      be programmed is CV15 (you do need to be able to unlock it).</p>
 
       <p><br>
-      So now you have two decoders with the same address (both of
-      them locked) and you want to unlock one of them. The Multi
-      Decoder Control is the tool for that.</p>
+      So now you have two decoders with the same address (both of them locked) and you want to
+      unlock one of them. The Multi Decoder Control is the tool for that.</p>
 
-      <table width="90%" border="1" cellspacing="1" cellpadding=
-      "1">
+      <table>
         <tr>
-          <td width="41%" align="center" valign="middle"><img src=
-          "images/Main_Multi-Decoder_Control.png" alt=
-          "Multi-Prorammer" width="260" height="600" border=
-          "4"></td>
+          <td style="width: 40%" class="dp-center dp-middle"><img src=
+          "images/Main_Multi-Decoder_Control.png" alt="Multi-Prorammer" width="260" height="600">
+          </td>
+          <td>
+            <p>If you followed the recommended values we talked about above, then you know what the
+            un-lock number is. The <strong>ID number</strong> buttons numbered 0 thru 6 let you
+            select the value to be entered into CV15 that will unlock the decoder with the
+            corresponding number in its lock (CV16).</p>
 
-          <td width="59%" align="left" valign="top">
-            <p>If you followed the recommended values we talked
-            about above, then you know what the un-lock number is.
-            The <strong>ID number</strong> buttons numbered 0 thru
-            6 let you select the value to be entered into CV15 that
-            will unlock the decoder with the corresponding number
-            in its lock (CV16).</p>
+            <p>DecoderPro then reads back the value in CV16 to confirm that the decoder has
+            successfully unlocked.</p>
 
-            <p>DecoderPro then reads back the value in CV16 to
-            confirm that the decoder has successfully unlocked.</p>
+            <p>Once you are done with your programming the tool can again be used to insert a zero
+            into CV15, thereby locking this decoder.</p>
 
-            <p>Once you are done with your programming the tool can
-            again be used to insert a zero into CV15, thereby
-            locking this decoder.</p>
+            <p>The <strong>Legacy</strong> button writes a 7 to CV15, which is a special case. Many
+            decoders, especially older models, do not have this locking mechanism present. In some
+            cases, specifically a Digitrax FX3 or later decoder and an early SoundTraxx decoder,
+            it's possible to emulate the lock using sequential writing of the CVs. Clicking the
+            <strong>Legacy</strong> button activates this procedure. Unfortunately, it's not an
+            entirely reliable method.</p>
 
-            <p>The <strong>Legacy</strong> button writes a 7 to
-            CV15, which is a special case. Many decoders,
-            especially older models, do not have this locking
-            mechanism present. In some cases, specifically a
-            Digitrax FX3 or later decoder and an early SoundTraxx
-            decoder, it's possible to emulate the lock using
-            sequential writing of the CVs. Clicking the
-            <strong>Legacy</strong> button activates this
-            procedure. Unfortunately, it's not an entirely reliable
-            method.</p>
+            <p>But, what if you didn't follow the recommendations? The <strong>Search</strong>
+            button sequentially works through the possible values and marks values found to be
+            present. If you're dealing with a single decoder to unlock, than you're home free. If
+            we're talking about multiple decoders with the same address we're probably going to get
+            more than one value marked. It's up to you to figure which is which. One way is by
+            changing the address of one and then testing to see what action changed with the new
+            address.</p>
 
-            <p>But, what if you didn't follow the recommendations?
-            The <strong>Search</strong> button sequentially works
-            through the possible values and marks values found to
-            be present. If you're dealing with a single decoder to
-            unlock, than you're home free. If we're talking about
-            multiple decoders with the same address we're probably
-            going to get more than one value marked. It's up to you
-            to figure which is which. One way is by changing the
-            address of one and then testing to see what action
-            changed with the new address.</p>
+            <p><strong>Search</strong> button sequentially works through the possible addresses and
+            marking those decoder addresses that are found to be present.</p>
 
-            <p><strong>Search</strong> button sequentially works
-            through the possible addresses and marking those
-            decoder addresses that are found to be present.</p>
+            <p><strong>Reset</strong> button looks for possible combinations to unlock a decoder
+            that has been inadvertently locked. <span class="ACCENT">Only use this option if you
+            have just one decoder in the locomotive. If you have more than one , it will unlock all
+            of them, which may cause confusion later.</span></p>
 
-            <p><strong>Reset</strong> button looks for possible
-            combinations to unlock a decoder that has been
-            inadvertently locked. <span class="ACCENT">Only use
-            this option if you have just one decoder in the
-            locomotive. If you have more than one , it will unlock
-            all of them, which may cause confusion
-            later.</span></p>
+            <p><strong>Init DH163 + SoundTraxx</strong> button configures the
+            <strong>Legacy</strong> mode discussed above.</p>
 
-            <p><strong>Init DH163 + SoundTraxx</strong> button
-            configures the <strong>Legacy</strong> mode discussed
-            above.</p>
+            <p>Status message are displayed below the buttons, shows <strong>idle</strong> when no
+            action is occurring.</p>
 
-            <p>Status message are displayed below the buttons,
-            shows <strong>idle</strong> when no action is
-            occurring.</p>
+            <p>At the bottom of the window you can select the Programming Mode. Any mode not
+            supported by your command station will be grayed out.</p>
 
-            <p>At the bottom of the window you can select the
-            Programming Mode. Any mode not supported by your
-            command station will be grayed out.</p>
-
-            <p>If you select the <strong>Ops</strong> mode, which
-            programs on the main track, you need to enter the
-            address of the decoder (locomotive) that you are
-            programming. Your DCC system may require you to check
-            the <strong>Long address</strong> check box if the
+            <p>If you select the <strong>Ops</strong> mode, which programs on the main track, you
+            need to enter the address of the decoder (locomotive) that you are programming. Your
+            DCC system may require you to check the <strong>Long address</strong> check box if the
             address is a long address.</p>
           </td>
         </tr>
       </table>
+
       <hr>
 
-      <div align="right">
-        <p><a href="Main_Tool.shtml">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Tool.shtml">Back</a>
+        </p>
 
-        <p><a href="index.shtml#Mzin">Back to Index</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <p><a href="index.shtml#Mzin">Back to Index</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

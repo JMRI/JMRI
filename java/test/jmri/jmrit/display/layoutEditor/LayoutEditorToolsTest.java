@@ -13,7 +13,12 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.*;
@@ -61,7 +66,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -76,29 +81,29 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         //create a new Layout Turnout
         layoutTurnout = new LayoutRHTurnout("Right Hand",
                 // new Point2D.Double(150.0, 100.0),
-                // 33.0, 1.1, 1.2, 
+                // 33.0, 1.1, 1.2,
                 layoutEditor);
         LayoutTurnoutView ltv = new LayoutTurnoutView(layoutTurnout,
                 new Point2D.Double(150.0, 100.0),
-                33.0, 1.1, 1.2, 
+                33.0, 1.1, 1.2,
                 layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         layoutEditor.addLayoutTrack(layoutTurnout, ltv);
 
-        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(250.0, 100.0), 
-        PositionablePointView pp1v = new PositionablePointView(positionablePoint1, new Point2D.Double(250.0, 100.0), layoutEditor); 
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(250.0, 100.0),
+        PositionablePointView pp1v = new PositionablePointView(positionablePoint1, new Point2D.Double(250.0, 100.0), layoutEditor);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
         layoutEditor.addLayoutTrack(positionablePoint1, pp1v);
 
-        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(50.0, 100.0), 
-        PositionablePointView pp2v = new PositionablePointView(positionablePoint2, new Point2D.Double(250.0, 100.0), layoutEditor); 
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(50.0, 100.0),
+        PositionablePointView pp2v = new PositionablePointView(positionablePoint2, new Point2D.Double(250.0, 100.0), layoutEditor);
         layoutEditor.addLayoutTrack(positionablePoint2, pp2v);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
@@ -402,7 +407,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -424,7 +429,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -439,14 +444,14 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             // Point2D point = new Point2D.Double(150.0, 100.0);
             LevelXing lx = new LevelXing("LevelCrossing", layoutEditor);
             // LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
-            
+
             lx.setLayoutBlockAC(layoutBlocks.get(0));
             lx.setLayoutBlockBD(layoutBlocks.get(1));
 
@@ -479,7 +484,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testRemoveSignalHeadFromPanelNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
@@ -501,7 +506,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Disabled("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -518,7 +523,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Disabled("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -536,7 +541,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Disabled("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -553,7 +558,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
@@ -579,7 +584,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    @Disabled("causes error on jenkins; exhausts failure retries")
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Signal head block boss logic started", let.initializeBlockBossLogic("IH1"));
@@ -596,7 +601,7 @@ public class LayoutEditorToolsTest {
     }
 
     //from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -622,7 +627,7 @@ public class LayoutEditorToolsTest {
 
             for (int i = 0; i < 5; i++) {
                 String toName = "IT" + i;
-                InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
+                InstanceManager.getDefault(TurnoutManager.class).provideTurnout(toName);
             }
             turnouts = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
@@ -643,7 +648,7 @@ public class LayoutEditorToolsTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             layoutBlocks.stream().forEach(LayoutBlock::dispose);
@@ -653,7 +658,14 @@ public class LayoutEditorToolsTest {
             EditorFrameOperator operator = new EditorFrameOperator(layoutEditor);
             operator.closeFrameWithConfirmations();
             JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator.clearEditorFrameOperatorThreads();
         }
+
+        InstanceManager.getDefault(LayoutBlockManager.class).dispose();
+        InstanceManager.getDefault(SignalHeadManager.class).dispose();
+        InstanceManager.getDefault(TurnoutManager.class).dispose();
+        InstanceManager.getDefault(SensorManager.class).dispose();
+
         let = null;
         layoutEditor = null;
         layoutBlocks = null;
@@ -661,6 +673,7 @@ public class LayoutEditorToolsTest {
         signalHeads = null;
         sensors = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

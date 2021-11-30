@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Box;
@@ -20,7 +21,7 @@ import jmri.util.JmriJFrame;
 /**
  * Basis for ConditionalEditFrame and ConditionalCopyFrame.
  * Holds the common features.
- * 
+ *
  * @author Pete Cressman Copyright (C) 2020
  */
 public class ConditionalFrame extends JmriJFrame {
@@ -32,7 +33,7 @@ public class ConditionalFrame extends JmriJFrame {
     List<ConditionalAction> _actionList;
 
     Conditional.AntecedentOperator _logicType = Conditional.AntecedentOperator.ALL_AND;
-    String _antecedent = null;
+    String _antecedent;
     boolean _trigger;
     boolean _referenceByMemory;
 
@@ -42,7 +43,7 @@ public class ConditionalFrame extends JmriJFrame {
     static final int STRUT = 10;
 
     // ------------------------------------------------------------------
-    
+
     ConditionalFrame(String title, Conditional conditional, ConditionalList parent) {
         super(title, false, false);
         _parent = parent;
@@ -56,21 +57,22 @@ public class ConditionalFrame extends JmriJFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel panel1 = new JPanel();
-        panel1.add(new JLabel(Bundle.getMessage("ColumnSystemName") + ":"));  // NOI18N
+        panel1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnSystemName"))));
         JTextField systemName =  new JTextField(30);
         systemName.setText(conditional.getSystemName());
         systemName.setEditable(false);
         panel1.add(systemName);
         panel.add(panel1);
         JPanel panel2 = new JPanel();
-        panel2.add(new JLabel(Bundle.getMessage("ColumnUserName") + ":"));  // NOI18N
+        panel2.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnUserName"))));
         _conditionalUserName = new JTextField(30);
         panel2.add(_conditionalUserName);
         _conditionalUserName.setText(conditional.getUserName());
-        _conditionalUserName.setToolTipText(Bundle.getMessage("ConditionalUserNameHint"));  // NOI18N
+        _conditionalUserName.setToolTipText(Bundle.getMessage("ConditionalUserNameHint"));
         panel.add(panel2);
         return panel;
     }
+
     /**
      * Create Variable and Action editing pane center part. (Utility)
      *
@@ -102,16 +104,12 @@ public class ConditionalFrame extends JmriJFrame {
      */
     boolean updateConditionalPressed(ActionEvent e) {
         log.debug("updateConditionalPressed");
-        for (int i = 0; i < _variableList.size(); i++) {
-            if (_variableList.get(i).getType() == Conditional.Type.NONE) {
-                _variableList.remove(i);
-            }
-        }
-        for (int i = 0; i < _actionList.size(); i++) {
-            if (_actionList.get(i).getType() == Conditional.Action.NONE) {
-                _actionList.remove(i);
-            }
-        }
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
+        // The IX:RTXINITIALIZER keyword has a type of NONE
+        // Safely remove elements from the list  (or use array.remove) if more than 1
+        _variableList.removeIf(cvar -> (cvar.getType() == Conditional.Type.NONE && !cvar.getName().equals(pref + "X:RTXINITIALIZER")));
+        // and actions
+        _actionList.removeIf(cact -> cact.getType() == Conditional.Action.NONE);
         if (_parent.updateConditional(_conditionalUserName.getText(), _logicType, _trigger, _antecedent)) {
             if (_dataChanged) {
                 _parent._showReminder = true;
@@ -166,7 +164,7 @@ public class ConditionalFrame extends JmriJFrame {
                 } else {
                     NamedBean bean  = action.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         actionName = action.getDeviceName();
                    }
@@ -196,7 +194,7 @@ public class ConditionalFrame extends JmriJFrame {
                 } else {
                     NamedBean bean  = var.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         varName = var.getName();
                    }
@@ -210,4 +208,5 @@ public class ConditionalFrame extends JmriJFrame {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalFrame.class);
+
 }

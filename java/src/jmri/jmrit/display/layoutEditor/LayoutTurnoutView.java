@@ -1469,6 +1469,28 @@ public class LayoutTurnoutView extends LayoutTrackView {
         pointD = rotatePoint(pointD, sineRot, cosineRot);
     }
 
+    public double getRotationDEG() {
+        double result = 0;
+        switch (getTurnoutType()) {
+            case RH_TURNOUT:
+            case LH_TURNOUT:
+            case WYE_TURNOUT: {
+                result = 90 - MathUtil.computeAngleDEG(getCoordsA(), getCoordsCenter());
+                break;
+            }
+            case DOUBLE_XOVER:
+            case RH_XOVER:
+            case LH_XOVER: {
+                result = 90 - MathUtil.computeAngleDEG(getCoordsA(), getCoordsB());
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return result;
+    }
+
     /**
      * Toggle turnout if clicked on, physical turnout exists, and not disabled.
      */
@@ -1697,10 +1719,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
             });
 
             // Rotate if there are no track connections
-            if ((getConnectA() == null) && (getConnectB() == null)
-                    && (getConnectC() == null)
-                    && (getConnectD() == null)) {
-                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
+//            if ((getConnectA() == null) && (getConnectB() == null)
+//                    && (getConnectC() == null)
+//                    && (getConnectD() == null)) 
+            {
+                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate_",
+                        String.format("%.1f", getRotationDEG())) + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener((ActionEvent event) -> {
                     boolean entering = true;
@@ -1740,6 +1764,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     setUpDefaultSize();
                 }
             });
+
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {

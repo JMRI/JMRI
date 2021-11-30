@@ -1,208 +1,151 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Maple Node Configuration</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Maple Node Configuration</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h2>JMRI: Maple Node Configuration</h2>
 
       <h3>Background Information:</h3>
 
-      <p>Maple Systems makes touch screen HMI (Human Machine
-      Interface) panels that can have application to model
-      railroading. In particular, these touch screen HMI panels can
-      serve as hi-tech substitutes for fascia panels on a model
-      railroad layout. This Maple-to-JMRI implementation supports
-      multiple identical HMI panels that can be plugged in at
-      various locations around the layout and used to control and
-      display items related to that location. Each HMI panel has a
-      built-in microcomputer that can be programmed (using a
-      programming package supplied by Maple Systems) to display any
-      number of user selectable displays. It is envisioned that
-      after plugging in his/her panel, the model railroader will
-      select that display appropriate to his/her current location,
-      allowing the panel to serve as a communication device
-      directly into JMRI. After completing tasks at a location, the
-      model railroader will unplug the panel and move with it to
-      another location, etc. Multiple HMI panels operating
-      simultaneously are supported.</p>
+      <p>Maple Systems makes touch screen HMI (Human Machine Interface) panels that can have
+      application to model railroading. In particular, these touch screen HMI panels can serve as
+      hi-tech substitutes for fascia panels on a model railroad layout. This Maple-to-JMRI
+      implementation supports multiple identical HMI panels that can be plugged in at various
+      locations around the layout and used to control and display items related to that location.
+      Each HMI panel has a built-in microcomputer that can be programmed (using a programming
+      package supplied by Maple Systems) to display any number of user selectable displays. It is
+      envisioned that after plugging in his/her panel, the model railroader will select that
+      display appropriate to his/her current location, allowing the panel to serve as a
+      communication device directly into JMRI. After completing tasks at a location, the model
+      railroader will unplug the panel and move with it to another location, etc. Multiple HMI
+      panels operating simultaneously are supported.</p>
 
-      <p>The "coil bits" in the Maple HMI panels are used to
-      communicate with JMRI. In this Maple-to-JMRI implementation,
-      all panels use the same address space and have exactly the
-      same input and output bit assignments. The first 1000 coil
-      bits are reserved for configuration as Sensors. Sensors are
-      referred to as "Input Bits" and are used to set JMRI Sensors
-      according to status bits (coil bits) in your Maple HMI
-      panels. Therefore, Sensors pass information from configured
-      HMI panels to JMRI. The next 8000 bits are reserved for
-      assignment as "Output Bits" and are used to send the current
-      settings of Turnouts and Lights to the Maple Panels.</p>
+      <p>The "coil bits" in the Maple HMI panels are used to communicate with JMRI. In this
+      Maple-to-JMRI implementation, all panels use the same address space and have exactly the same
+      input and output bit assignments. The first 1000 coil bits are reserved for configuration as
+      Sensors. Sensors are referred to as "Input Bits" and are used to set JMRI Sensors according
+      to status bits (coil bits) in your Maple HMI panels. Therefore, Sensors pass information from
+      configured HMI panels to JMRI. The next 8000 bits are reserved for assignment as "Output
+      Bits" and are used to send the current settings of Turnouts and Lights to the Maple
+      Panels.</p>
 
       <h3>Communication between JMRI and Maple HMI Panels</h3>
 
-      <p>Maple communications work by polling. Each panel is polled
-      separately, and the results of the polls are ORed together to
-      set Sensors. Therefore if a Sensor is ACTIVE (Maple "1") in
-      any panel, it is set ACTIVE in JMRI. If a Sensor is INACTIVE
-      (Maple "0") in all configured panels, then it is set INACTIVE
-      in JMRI. Panels are polled in the order that they are
-      configured. <b>Note:</b> The Maple poll command allows a
-      maximum of 99 bits to be requested with each poll command, so
-      if more than 99 input bits are configured, multiple poll
+      <p>Maple communications work by polling. Each panel is polled separately, and the results of
+      the polls are ORed together to set Sensors. Therefore if a Sensor is ACTIVE (Maple "1") in
+      any panel, it is set ACTIVE in JMRI. If a Sensor is INACTIVE (Maple "0") in all configured
+      panels, then it is set INACTIVE in JMRI. Panels are polled in the order that they are
+      configured. <strong>Note:</strong> The Maple poll command allows a maximum of 99 bits to be
+      requested with each poll command, so if more than 99 input bits are configured, multiple poll
       commands will be needed for each panel.</p>
 
-      <p>After all panels have been polled, the status of output
-      bits is sent to the panels. Output bits are sent in
-      "Broadcast Mode" so all panels can receive the bits at the
-      same time. Broadcast Mode is indicated by an HMI Station
-      Address of "0". Output bits begin with an HMI coil bit
-      address of "1001". All configured output bits are sent,
-      regardless of if the bit is assigned or not. <b>Note:</b> The
-      Maple write command allows a maximum of 99 bits to be written
-      with each transmit command, so if more than 99 output bits
-      are configured, multiple transmit commands will be needed.
-      Keeping the number of configured output bits as low as
-      reasonable will reduce the number of transmit commands that
-      must be sent.</p>
+      <p>After all panels have been polled, the status of output bits is sent to the panels. Output
+      bits are sent in "Broadcast Mode" so all panels can receive the bits at the same time.
+      Broadcast Mode is indicated by an HMI Station Address of "0". Output bits begin with an HMI
+      coil bit address of "1001". All configured output bits are sent, regardless of if the bit is
+      assigned or not. <strong>Note:</strong> The Maple write command allows a maximum of 99 bits
+      to be written with each transmit command, so if more than 99 output bits are configured,
+      multiple transmit commands will be needed. Keeping the number of configured output bits as
+      low as reasonable will reduce the number of transmit commands that must be sent.</p>
 
       <h3>Configuring a new Maple Panel</h3>
 
-      <p>A new Maple Panel (a "Maple Node") is configured by
-      specifying its HMI Station Address, specifying timeout times
-      for polls and sends, entering the number of input and output
-      bits, and clicking the <b>Add Panel</b> button. HMI Station
-      Address is unique to each HMI panel, the other items are the
-      same for all panels. Each item is described below:</p>
+      <p>A new Maple Panel (a "Maple Node") is configured by specifying its HMI Station Address,
+      specifying timeout times for polls and sends, entering the number of input and output bits,
+      and clicking the <strong>Add Panel</strong> button. HMI Station Address is unique to each HMI
+      panel, the other items are the same for all panels. Each item is described below:</p>
 
       <ul>
-        <li><b>HMI Station Address</b> - This is the address used
-        by JMRI to poll the panel. Each panel must have a different
-        HMI Station Address. Addresses of 1 through 99 are allowed.
-        The addresses need not be consecutive. Panels need not be
-        configured in numerical order.</li>
+        <li><strong>HMI Station Address</strong> - This is the address used by JMRI to poll the
+        panel. Each panel must have a different HMI Station Address. Addresses of 1 through 99 are
+        allowed. The addresses need not be consecutive. Panels need not be configured in numerical
+        order.</li>
 
-        <li><b>Poll Reply Timeout Time</b> - This is the time
-        (milliseconds) to wait for a response after issuing a poll
-        command before going on to the next command in the
-        communication process. The value displayed is the current
-        timeout time, or, if this is the first panel to be
-        configured, the default timeout time. Changing it will
-        change the timeout time for all panels. This time should be
-        set to the smallest number that gives reliable
-        communications between the computer and JMRI. <b>Note:</b>
-        When a panel is configured, but not plugged in (not
-        communicating), it will timeout. This is the expected
-        behavior when a user is moving a panel between
-        locations.</li>
+        <li><strong>Poll Reply Timeout Time</strong> - This is the time (milliseconds) to wait for
+        a response after issuing a poll command before going on to the next command in the
+        communication process. The value displayed is the current timeout time, or, if this is the
+        first panel to be configured, the default timeout time. Changing it will change the timeout
+        time for all panels. This time should be set to the smallest number that gives reliable
+        communications between the computer and JMRI. <strong>Note:</strong> When a panel is
+        configured, but not plugged in (not communicating), it will timeout. This is the expected
+        behavior when a user is moving a panel between locations.</li>
 
-        <li><b>Send Delay Time</b> - This is the time
-        (milliseconds) to wait after issuing a broadcast write
-        command before going on to the next command in the
-        communication process. The value displayed is the current
-        send delay time, or, if this is the first panel to be
-        configured, the default send delay time. Changing it will
-        change the send delay time for all panels.</li>
+        <li><strong>Send Delay Time</strong> - This is the time (milliseconds) to wait after
+        issuing a broadcast write command before going on to the next command in the communication
+        process. The value displayed is the current send delay time, or, if this is the first panel
+        to be configured, the default send delay time. Changing it will change the send delay time
+        for all panels.</li>
 
-        <li><b>Number of Input Bits</b> - This is the number of
-        input bits that will be polled when each HMI panel is
-        polled. Values of 1 through 1000 are allowed. The number of
-        input bits is forced to be the same for each panel, so if
-        this number is changed when adding or editing any panel, it
-        is changed for all panels. Because of the 99 bit limit in
-        Maple polling requests, multiple poll commands will be
-        required if this number is greater than 99. So keeping this
-        number to the lowest reasonable value will result in faster
+        <li><strong>Number of Input Bits</strong> - This is the number of input bits that will be
+        polled when each HMI panel is polled. Values of 1 through 1000 are allowed. The number of
+        input bits is forced to be the same for each panel, so if this number is changed when
+        adding or editing any panel, it is changed for all panels. Because of the 99 bit limit in
+        Maple polling requests, multiple poll commands will be required if this number is greater
+        than 99. So keeping this number to the lowest reasonable value will result in faster
         communications.</li>
 
-        <li><b>Number of Output Bits</b> - This is the number of
-        output bits that will be sent in broadcast mode at the end
-        of each polling cycle. Values of 1 through 8000 are
-        allowed. The number of output bits is forced to be the same
-        for each panel, so if this number is changed when adding or
-        editing any panel, it is changed for all panels. Because of
-        the 99 bit limit in Maple write commands, multiple write
-        commands will be required if this number is greater than
-        99. So keeping this number to the lowest reasonable value
-        will result in faster communications.</li>
+        <li><strong>Number of Output Bits</strong> - This is the number of output bits that will be
+        sent in broadcast mode at the end of each polling cycle. Values of 1 through 8000 are
+        allowed. The number of output bits is forced to be the same for each panel, so if this
+        number is changed when adding or editing any panel, it is changed for all panels. Because
+        of the 99 bit limit in Maple write commands, multiple write commands will be required if
+        this number is greater than 99. So keeping this number to the lowest reasonable value will
+        result in faster communications.</li>
       </ul>
 
-      <p><b>Important:</b> Always check the messages in the
-      <b>Notes</b> box after each operation! That's where success
-      or errors will be reported.</p>
+      <p><strong>Important:</strong> Always check the messages in the <strong>Notes</strong> box
+      after each operation! That's where success or errors will be reported.</p>
 
-      <p><b>Very Important:</b> Remember to save your Maple Panel
-      Node configuration information to disk after making changes.
-      Use the <b>Save</b> button at the bottom of the Preferences
-      window.</p>
+      <p><strong>Very Important:</strong> Remember to save your Maple Panel Node configuration
+      information to disk after making changes. Use the <strong>Save</strong> button at the bottom
+      of the Preferences window.</p>
 
       <h3>Other Operations</h3>
 
-      <p>To change any of the four common parameters (poll reply
-      timeout time, send delay time, number of input bits, and/or
-      number of output bits), enter the HMI Station Address of any
-      configured panel, click Edit Panel, make the desired
-      parameter changes, and click <b>Update Panel</b>. This
-      changes the parameter(s) in all configured panels.</p>
+      <p>To change any of the four common parameters (poll reply timeout time, send delay time,
+      number of input bits, and/or number of output bits), enter the HMI Station Address of any
+      configured panel, click Edit Panel, make the desired parameter changes, and click
+      <strong>Update Panel</strong>. This changes the parameter(s) in all configured panels.</p>
 
-      <p>To see a list of the HMI Station Addresses of all
-      configured panels, select <b>List Assignments</b> in the
-      <b>Maple</b> menu, and pull down the <b>Nodes</b> popup
-      menu.</p>
+      <p>To see a list of the HMI Station Addresses of all configured panels, select <strong>List
+      Assignments</strong> in the <strong>Maple</strong> menu, and pull down the
+      <strong>Nodes</strong> popup menu.</p>
 
-      <p>To change the HMI Station Address of a previously
-      configured panel, enter the HMI Station Address of the panel,
-      click <b>Delete Panel</b>, confirm the deletion, enter the
-      new HMI Station Address, and click <b>Add Panel</b>. HMI
-      Station Addresses cannot be changed via Edit.</p>
+      <p>To change the HMI Station Address of a previously configured panel, enter the HMI Station
+      Address of the panel, click <strong>Delete Panel</strong>, confirm the deletion, enter the
+      new HMI Station Address, and click <strong>Add Panel</strong>. HMI Station Addresses cannot
+      be changed via Edit.</p>
 
-      <p>If you add a Sensor with a system name that addresses a
-      coil bit beyond the configured number of input bits, the
-      Sensor will be added, and a <b>Configuration Warning</b>
-      message will be issued. There is no way to access a Sensor
-      that corresponds to an HMI coil bit outside the range of
-      configured bits. So if you get a <b>Configuration Warning</b>
-      message, you should either change your configuration's
-      <b>Number of Input Bits</b> or delete the Sensor.</p>
+      <p>If you add a Sensor with a system name that addresses a coil bit beyond the configured
+      number of input bits, the Sensor will be added, and a <strong>Configuration Warning</strong>
+      message will be issued. There is no way to access a Sensor that corresponds to an HMI coil
+      bit outside the range of configured bits. So if you get a <strong>Configuration
+      Warning</strong> message, you should either change your configuration's <strong>Number of
+      Input Bits</strong> or delete the Sensor.</p>
 
-      <p>If you add a Turnout with a system name that addresses a
-      coil bit outside the configured range of output bits, the
-      Turnout will be added, and a <b>Configuration Warning</b>
-      message will be issued. The configured range of HMI bit
-      addresses is 1001 through 1000 + the number of output bits,
-      corresponding to JMRI addresses of 1 through the number of
-      output bits. There is no way to write to a Turnout that
-      corresponds to an HMI coil bit outside the range of
-      configured bits. So if you get a <b>Configuration Warning</b>
-      message, you should either change your configuration's
-      <b>Number of Output Bits</b> or delete the Turnout.</p>
+      <p>If you add a Turnout with a system name that addresses a coil bit outside the configured
+      range of output bits, the Turnout will be added, and a <strong>Configuration Warning</strong>
+      message will be issued. The configured range of HMI bit addresses is 1001 through 1000 + the
+      number of output bits, corresponding to JMRI addresses of 1 through the number of output
+      bits. There is no way to write to a Turnout that corresponds to an HMI coil bit outside the
+      range of configured bits. So if you get a <strong>Configuration Warning</strong> message, you
+      should either change your configuration's <strong>Number of Output Bits</strong> or delete
+      the Turnout.</p>
 
-      <p>JMRI will refuse to create a Light if it doesn't
-      correspond to the configured address range for output bits
-      (see above).</p>
+      <p>JMRI will refuse to create a Light if it doesn't correspond to the configured address
+      range for output bits (see above).</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

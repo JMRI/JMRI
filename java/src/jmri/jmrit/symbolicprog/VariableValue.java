@@ -140,14 +140,18 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * need a universally-usable method for setting values, such as default
      * values in decoder definitions.
      * <p>
-     * We don't want to have this method failing silently. Subclasses that need
-     * silent failure will need to override this method.
+     * In the long term we don't want to have this method failing silently.
+     * Subclasses that need silent failure should override this method.
      *
      * @param value the String value to set
      */
     public void setValue(String value) {
-        int val = Integer.parseInt(value);
-        setIntValue(val);
+        try {
+            int val = Integer.parseInt(value);
+            setIntValue(val);
+        } catch (NumberFormatException e) {
+            log.warn("skipping set of non-integer value \"{}\"", value);
+        }
     }
 
     /**

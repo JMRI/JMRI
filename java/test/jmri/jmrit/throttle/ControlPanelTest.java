@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 
 import jmri.util.JUnitUtil;
 import jmri.DccThrottle;
@@ -37,12 +36,12 @@ public class ControlPanelTest {
     private void setupControlPanel() {
         panel = new ControlPanel();
         Assert.assertNotNull("exists", panel);
-        
+
         frame = new JFrame("ControlPanelTest");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(200, 400);
-        
+
         JPanel mainPanel = new JPanel();
         mainPanel.setOpaque(true);
         mainPanel.add(new JDesktopPane());
@@ -79,7 +78,7 @@ public class ControlPanelTest {
                     }
                     Assert.assertFalse(r1.intersects(r2));
                 }
-                
+
                 if (c1 instanceof Container) {
                     checkFrameOverlap((Container)c1);
                 }
@@ -93,12 +92,14 @@ public class ControlPanelTest {
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
+        Assert.assertTrue(panel.getSpeedSlider() != null);
+
     }
 
     @Test
     public void testExtendedThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(false);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(false);
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
@@ -117,7 +118,7 @@ public class ControlPanelTest {
     public void testIconThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.throttleManagerInstance().supportedSpeedModes();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
@@ -136,7 +137,7 @@ public class ControlPanelTest {
     @EnumSource(SpeedStepMode.class)
     public void testSpeedStepModes(SpeedStepMode mode) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
         throttle = null;
         InstanceManager.throttleManagerInstance().requestThrottle(3,
@@ -162,30 +163,6 @@ public class ControlPanelTest {
         Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
         Assert.assertEquals(throttle.getSpeedStepMode(), mode);
 
-        // Set the speed controller mode to slider.
-        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        JSlider speedSlider = panel.getSpeedSlider();
-
-        // Test that the throttle speed defaults to 0, the maximum is
-        // greater than zero and the minimum is zero.
-        panel.setSpeedStepsMode(mode);
-        Assert.assertEquals(speedSlider.getValue(), 0);
-        Assert.assertTrue(speedSlider.getMaximum() > 0);
-        Assert.assertEquals(speedSlider.getMinimum(), 0);
-        Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
-
-        // Set the speed controller mode to shunting slider.
-        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        JSlider speedSliderContinuous = panel.getSpeedSliderContinuous();
-
-        // Test that the throttle speed defaults to 0, the maximum is
-        // greater than zero and the minimum is zero.
-        Assert.assertEquals(speedSliderContinuous.getValue(), 0);
-        Assert.assertTrue(speedSliderContinuous.getMaximum() > 0);
-        Assert.assertTrue(speedSliderContinuous.getMinimum() < 0);
-        Assert.assertTrue(speedSliderContinuous.getMaximum() ==
-            -speedSliderContinuous.getMinimum());
-        Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
     }
 
     @BeforeEach
@@ -194,7 +171,10 @@ public class ControlPanelTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUseExThrottle(true);
+            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+                jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+            }
+            InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
         }
     }
 

@@ -132,14 +132,14 @@ public class BackgroundItemPanel extends IconItemPanel {
         JPanel panel = new JPanel();
         JButton button = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
         button.addActionListener(a -> setColor());
-        button.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        button.setToolTipText(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor")));
         panel.add(button);
 
         button = new JButton(Bundle.getMessage("ButtonCancel"));
         button.addActionListener(a -> hideColorPanel());
-        button.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        button.setToolTipText(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor")));
         panel.add(button);
-        panel.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        panel.setToolTipText(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor")));
         return panel;
     }
  
@@ -150,11 +150,11 @@ public class BackgroundItemPanel extends IconItemPanel {
         _chooser.setPreviewPanel(new JPanel());
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> colorChange());
         _chooser.setColor(_frame.getCurrentColor());
-        _chooser = JmriColorChooser.extendColorChooser(_chooser);
+        JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);
 
         panel.add(makeColorButtonPanel());
-        panel.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        panel.setToolTipText(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor")));
         panel.setVisible(false);
         return panel;
     }

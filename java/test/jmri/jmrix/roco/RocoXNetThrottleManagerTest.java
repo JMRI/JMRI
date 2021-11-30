@@ -34,7 +34,6 @@ public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
     public void tearDown() {
         tm = null;
         JUnitUtil.tearDown();
-
     }
 
 }

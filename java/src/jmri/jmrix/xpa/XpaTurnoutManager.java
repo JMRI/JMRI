@@ -27,10 +27,18 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return (XpaSystemConnectionMemo) memo;
     }
 
-    // Xpa-specific methods
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
+        }
         Turnout t = new XpaTurnout(addr, getMemo());
         t.setUserName(userName);
         return t;

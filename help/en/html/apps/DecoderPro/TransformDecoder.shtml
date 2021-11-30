@@ -1,506 +1,501 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders
-  File</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-    <h1>JMRI: DecoderPro User Guide</h1>
+    <div id="mainContent">
+      <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Use XSLT Transformation for complex decoders</h2>
 
-      <p>
-          Some decoders contain <b>repeated blocks</b> of CVs, for example to
-          define behaviour of several accessories, each controlled by multiple
-          CVs. An advanced turnout decoder may for example define multiple paths,
-          each containing several turnouts and their desired position to form
-          the travel path on the layout.
-      </p>
-      <p>
-          Although the decoder file must define dozens or even hundreds of CVs
-          and their appearance on panes in total, only a fraction of the CVs or
-          displays are actually unique: the rest can be <b>generated from a template</b>.
-          While creating template, and the transformation recipe is <b>a lot more complex</b>
-          than copy-pasting CV definitions, the benefit is <b>a lot easier maintenance</b>
-          once the hard part is done: each change propagates consistently to
-          all generated parts.
-      </p>
-      <p>
-          To give some example of simplification possible - let's take the decoder file
-          <code>Public_Domain_dccdoma_ARD_SCOM_MX.xm</code>. It configures a decoder, capable
-          of displaying signal aspects on several signal masts. The configuration contains
-          over 500 of CVs - yet the basic idea behind the configuration is dead simple:
-     </p>
-          <ul>
-            <li>a default aspect for each signal mast</li>
-            <li>for each signal mast AND for each one of 32 possible aspects, the number of signal to be displayed, 
-                interpreted by the decoder itself</li>
-          </ul>
-     <p>
-          A few statistics:
-     </p>
-          <ul>
-              <li>original decoder's definition: <b>870 kByte</b> 20608 lines.</li>
-              <li>stylesheet file: <b>12 kByte</b>, 257 lines.</li>
-              <li>decoder file template: <b>18 kByte</b>, 390 lines.</li>
-          </ul>
-     <p>
-          For JMRI itself or the speed of DecoderPro operation, these two approaches are the same: the file template
-          is internally transformed (expanded) to the decode definition XML and processed as if it was written
-          entirely by hand. For <b>maintenance</b>, it is a way easier to maintain ~600 lines of XML than 20600.
-     </p>
-     <p>
-          JMRI provides an option to apply a <b>XSLT stylesheet</b> to a decoder file,
-          <b>before</b> the file is loaded into DecoderPro and before it is interpreted
-          as CV variables and panels. This allows to hand-write unique CV definitions
-          and their panes, and <b>add generated</b> content where appropriate. 
-      </p>
-      <h2>
-          Example files
-      </h2>
-      <p>
-          To illustrate the techniques described here, a few example files are provided; all the files are licensed under
-          GNU GPL.
-      </p>
-      <ul>
-          <li><b><a href="resources/decoder-template.xml">decoder-template.xml</a></b> - the decoder definition <b>template</b> 
-          <li><b><a href="resources/scom.xsl">scom.xsl</a></b> - the stylesheet</li>
-      </ul>
-      <p>
-          The decoder template should be placed into the <b>xml/decoders</b> folder of the JMRI installation. It is <b>based on Petr Sidlo's
-          dccdoma.cz - ARD-SCOM-MX decoder</b> - generates the same decoder panels as the original one (as of 12/2019). The stylesheet
-          (<b>scom.xsl</b>) should be placed also into <b><code>xml/decoder</code></b> folder of the JMRI installation.
-      </p>
-      <p>
-          The template can be processed from the commandline to generate the decoder XML, so you can inspect effects of changing the
-          stylesheet and/or data embedded in the decoder template. The commandline for Linux:
-      </p>
-      <pre>
-xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
-      </pre>
-      <p>
-          Remember to replace the files with their actual names or locations; for experimenting from the commandline, 
-          the best is to place the decoder file template AND its stylesheet to some directory and work in there.
-          Later, move the stylesheet and the template to the folders as described above.
-      </p>
-      <h2>
-          Apply stylesheet to the decoder file.
-      </h2>
-      <p>
-          An <b>instruction to process the file as a template</b> must be present in the file, in order to act like a template. Otherwise
-          JMRI would pick it as just "ordinary" decoder definition - all the display items (see below) "misused" to hold data for template processing
-          would appear in the UI !
-      </p>
-      <p>
-          The processing instruction must appear at the start of the decoder definition:
-      </p>
-      <pre>
-&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
-      </pre>
-      <p>
-          So the decoder template's header would look like:
-      </p>
-      <pre>
-&lt;?xml version="1.0" encoding="utf-8"?>
-&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
-&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+      <p>Some decoders contain <strong>repeated blocks</strong> of CVs, for example to define
+      behaviour of several accessories, each controlled by multiple CVs. An advanced turnout
+      decoder may for example define multiple paths, each containing several turnouts and their
+      desired position to form the travel path on the layout.</p>
 
-    &lt;decoder>
+      <p>Although the decoder file must define dozens or even hundreds of CVs and their appearance
+      on panes in total, only a fraction of the CVs or displays are actually unique: the rest can
+      be <strong>generated from a template</strong>. While creating template, and the
+      transformation recipe is <strong>a lot more complex</strong> than copy-pasting CV
+      definitions, the benefit is <strong>a lot easier maintenance</strong> once the hard part is
+      done: each change propagates consistently to all generated parts.</p>
+
+      <p>To give some example of simplification possible - let's take the decoder file
+      <code>Public_Domain_dccdoma_ARD_SCOM_MX.xm</code>. It configures a decoder, capable of
+      displaying signal aspects on several signal masts. The configuration contains over 500 of CVs
+      - yet the basic idea behind the configuration is dead simple:</p>
+
+      <ul>
+        <li>a default aspect for each signal mast</li>
+
+        <li>for each signal mast AND for each one of 32 possible aspects, the number of signal to
+        be displayed, interpreted by the decoder itself</li>
+      </ul>
+
+      <p>A few statistics:</p>
+
+      <ul>
+        <li>original decoder's definition: <strong>870 kByte</strong> 20608 lines.</li>
+
+        <li>stylesheet file: <strong>12 kByte</strong>, 257 lines.</li>
+
+        <li>decoder file template: <strong>18 kByte</strong>, 390 lines.</li>
+      </ul>
+
+      <p>For JMRI itself or the speed of DecoderPro operation, these two approaches are the same:
+      the file template is internally transformed (expanded) to the decode definition XML and
+      processed as if it was written entirely by hand. For <strong>maintenance</strong>, it is a
+      way easier to maintain ~600 lines of XML than 20600.</p>
+
+      <p>JMRI provides an option to apply a <strong>XSLT stylesheet</strong> to a decoder file,
+      <strong>before</strong> the file is loaded into DecoderPro and before it is interpreted as CV
+      variables and panels. This allows to hand-write unique CV definitions and their panes, and
+      <strong>add generated</strong> content where appropriate.</p>
+
+      <h2>Example files</h2>
+
+      <p>To illustrate the techniques described here, a few example files are provided; all the
+      files are licensed under GNU GPL.</p>
+
+      <ul>
+        <li><strong><a href="resources/decoder-template.xml">decoder-template.xml</a></strong> -
+        the decoder definition <strong>template</strong></li>
+
+        <li><strong><a href="resources/scom.xsl">scom.xsl</a></strong> - the stylesheet</li>
+      </ul>
+
+      <p>The decoder template should be placed into the <strong>xml/decoders</strong> folder of the
+      JMRI installation. It is <strong>based on Petr Sidlo's dccdoma.cz - ARD-SCOM-MX
+      decoder</strong> - generates the same decoder panels as the original one (as of 12/2019). The
+      stylesheet (<strong>scom.xsl</strong>) should be placed also into
+      <strong><code>xml/decoder</code></strong> folder of the JMRI installation.</p>
+
+      <p>The template can be processed from the commandline to generate the decoder XML, so you can
+      inspect effects of changing the stylesheet and/or data embedded in the decoder template. The
+      commandline for Linux:</p>
+
+      <pre>
+xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
+      </pre>
+      <p>Remember to replace the files with their actual names or locations; for experimenting from
+      the commandline, the best is to place the decoder file template AND its stylesheet to some
+      directory and work in there. Later, move the stylesheet and the template to the folders as
+      described above.</p>
+
+      <h2>Apply stylesheet to the decoder file.</h2>
+
+      <p>An <strong>instruction to process the file as a template</strong> must be present in the
+      file, in order to act like a template. Otherwise JMRI would pick it as just "ordinary"
+      decoder definition - all the display items (see below) "misused" to hold data for template
+      processing would appear in the UI !</p>
+
+      <p>The processing instruction must appear at the start of the decoder definition:</p>
+
+      <pre>
+&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?&gt;
+      </pre>
+      <p>So the decoder template's header would look like:</p>
+
+      <pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?&gt;
+&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" &gt;
+
+    &lt;decoder&gt;
 ...
       </pre>
-      <h2>
-          Provide metadata to the stylesheet
-      </h2>
-      <p>
-          One of the critical points is how to generate CV numbers or other variable
-          parts: XSLT language provides simple numeric computation, but more sophisticated
-          functions are typically not accessible (by default). Some generated content is
-          composed from a list of strings (i.e. signal aspect names are repeated for
-          each signal masts), and we have to provide such input to the stylesheet. 
-          The decoder file is <b>the only input</b> provided for the stylesheet by the
-          JMRI framework.
-      </p>
-      <p>
-          The decoder template file is <b>still interpreted as a decoder definition</b> and must
-          adhere strictly to the <code>decoder.xsd</code> XML schema. For parts that we want 
-          to generate from the template, the prescribed elements have to be <b>carefully misused</b> to provide
-      </p>
-        <ul>
-            <li>anchor points, where the generated content will be inserted</li>
-            <li>input data for the stylesheet</li>
-        </ul>
-      <p>
-        There is a number of ways how to approach the problem, I will present a way I see as more or less clean
-        (although it misuses elements to provide data different than they formally should !). The guide should
-        be seen as a recommendation to keep the generated decoders somewhat consistent. Please <b>do not hesitate
-        to contribute and provide simpler approaches</b>.
-      </p>
+      <h2>Provide metadata to the stylesheet</h2>
+
+      <p>One of the critical points is how to generate CV numbers or other variable parts: XSLT
+      language provides simple numeric computation, but more sophisticated functions are typically
+      not accessible (by default). Some generated content is composed from a list of strings (i.e.
+      signal aspect names are repeated for each signal masts), and we have to provide such input to
+      the stylesheet. The decoder file is <strong>the only input</strong> provided for the
+      stylesheet by the JMRI framework.</p>
+
+      <p>The decoder template file is <strong>still interpreted as a decoder definition</strong>
+      and must adhere strictly to the <code>decoder.xsd</code> XML schema. For parts that we want
+      to generate from the template, the prescribed elements have to be <strong>carefully
+      misused</strong> to provide</p>
+
+      <ul>
+        <li>anchor points, where the generated content will be inserted</li>
+
+        <li>input data for the stylesheet</li>
+      </ul>
+
+      <p>There is a number of ways how to approach the problem, I will present a way I see as more
+      or less clean (although it misuses elements to provide data different than they formally
+      should !). The guide should be seen as a recommendation to keep the generated decoders
+      somewhat consistent. Please <strong>do not hesitate to contribute and provide simpler
+      approaches</strong>.</p>
+
       <h3>Adding Variables</h3>
-      <p>
-        Just adding variables is simple, and requires <b>no extra placeholder</b> in the decoder file. However, the
-        <b><code>&lt;variables></code></b> element must be present, so the technique described below for generating variables works.
-        The element could look like this example:
-      </p>
+
+      <p>Just adding variables is simple, and requires <strong>no extra placeholder</strong> in the
+      decoder file. However, the <strong><code>&lt;variables&gt;</code></strong> element must be
+      present, so the technique described below for generating variables works. The element could
+      look like this example:</p>
+
       <pre>
-        &lt;variables>
-          &lt;variable CV="1" item="Short Address" default="100" >
-            &lt;splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" />
-            &lt;label>Decoder Address:&lt;/label>
-            &lt;tooltip>Accessory decoder address. CV1 - LSB. CV9 - MSB.&lt;/tooltip>
-          &lt;/variable>
-        &lt;/variables>
+        &lt;variables&gt;
+          &lt;variable CV="1" item="Short Address" default="100" &gt;
+            &lt;splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" /&gt;
+            &lt;label&gt;Decoder Address:&lt;/label&gt;
+            &lt;tooltip&gt;Accessory decoder address. CV1 - LSB. CV9 - MSB.&lt;/tooltip&gt;
+          &lt;/variable&gt;
+        &lt;/variables&gt;
       </pre>
-      <p>
-          Additional generated content will be <b>appended</b> inside that element. 
-      </p>
+      <p>Additional generated content will be <strong>appended</strong> inside that element.</p>
+
       <h3>Data holder pane</h3>
-      <p>
-          While <b><code>variable</code></b> element's definition is rather strict, UI definitions seems most relaxed, so we 
-          abuse them. The following section describes some typical kind of data, how they can be <b>represented</b> in decoder 
-          template file, so the text conforms to the mandatory <code>decoder.xsd</code> rules. And finally how they can be
-          <b>accessed</b> from the stylesheet.
-      </p>
-      <p>
-          <b>All the data</b> (not UI panel definitions) will be placed in a <b>single &lt;pane> element</b>. All panes must be named -
-          the name can be arbitrary, but should be <b>unique</b> so a system-defined pane or a custom <b>real</b> pane is not replaced
-          accidentally. In our example, <b>__Aspects</b> name is used. I recommend to prefix the panel name with two underscores. The
-          pane's name <b>must be used</b> in selectors - so if you invent your own name, replace the text in examples with whatever
-          name you choose.
-      </p>
-      <h4>
-          Passing root of the data
-      </h4>
-      <p>
-          Each time, a value needs to be read by the stylesheet, it must be <b>selected</b> by an XPath expression. For example:          
-      </p>
+
+      <p>While <strong><code>variable</code></strong> element's definition is rather strict, UI
+      definitions seems most relaxed, so we abuse them. The following section describes some
+      typical kind of data, how they can be <strong>represented</strong> in decoder template file,
+      so the text conforms to the mandatory <code>decoder.xsd</code> rules. And finally how they
+      can be <strong>accessed</strong> from the stylesheet.</p>
+
+      <p><strong>All the data</strong> (not UI panel definitions) will be placed in a
+      <strong>single &lt;pane&gt; element</strong>. All panes must be named - the name can be
+      arbitrary, but should be <strong>unique</strong> so a system-defined pane or a custom
+      <strong>real</strong> pane is not replaced accidentally. In our example,
+      <strong>__Aspects</strong> name is used. I recommend to prefix the panel name with two
+      underscores. The pane's name <strong>must be used</strong> in selectors - so if you invent
+      your own name, replace the text in examples with whatever name you choose.</p>
+
+      <h4>Passing root of the data</h4>
+
+      <p>Each time, a value needs to be read by the stylesheet, it must be
+      <strong>selected</strong> by an XPath expression. For example:</p>
+
       <pre>
-&lt;xsl:template name="generate-masts">
-      &lt;xsl:variable name="cvStart" select="string(//pane[name/text() ='__Aspects']/display[@item='mastcount']/@tooltip)"/>
-      &lt;xsl:variable name="outputs" select="string(//pane[name/text() ='__Aspects']/display[@item='outputs']/@label)"/>
-      &lt;xsl:for-each select="//pane[name/text() ='__Aspects']/display[@item='masts']/label">
+&lt;xsl:template name="generate-masts"&gt;
+      &lt;xsl:variable name="cvStart" select="string(//pane[name/text() ='__Aspects']/display[@item='mastcount']/@tooltip)"/&gt;
+      &lt;xsl:variable name="outputs" select="string(//pane[name/text() ='__Aspects']/display[@item='outputs']/@label)"/&gt;
+      &lt;xsl:for-each select="//pane[name/text() ='__Aspects']/display[@item='masts']/label"&gt;
           ...
-      &lt;/xsl:for-each>
-&lt;/xsl:template>
+      &lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;
       </pre>
-      <p>
-          The selector always contains the common prefix part, which finds the "data holder" pane within the decoder template file.
-          We can save the typing by passing that element as a <b>parameter</b>:
-      </p>
+      <p>The selector always contains the common prefix part, which finds the "data holder" pane
+      within the decoder template file. We can save the typing by passing that element as a
+      <strong>parameter</strong>:</p>
+
       <pre>
-&lt;xsl:template name="generate-masts">
-      &lt;xsl:param name="root"/>
-      &lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/>
-      &lt;xsl:variable name="outputs" select="string($root/display[@item='outputs']/@label)"/>
-      &lt;xsl:for-each select="$root/display[@item='masts']/label">
+&lt;xsl:template name="generate-masts"&gt;
+      &lt;xsl:param name="root"/&gt;
+      &lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;
+      &lt;xsl:variable name="outputs" select="string($root/display[@item='outputs']/@label)"/&gt;
+      &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
           ...
-      &lt;/xsl:for-each>
-&lt;/xsl:template>
+      &lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;
       </pre>
-      <p>
-          The invocation of such a generating template <b>must pass the parameter</b>:
-      </p>
+      <p>The invocation of such a generating template <strong>must pass the parameter</strong>:</p>
+
       <pre>
-&lt;xsl:call-template name="generate-masts">
-      &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/>
-&lt;/xsl:call-template> 
+&lt;xsl:call-template name="generate-masts"&gt;
+      &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
+&lt;/xsl:call-template&gt; 
       </pre>
-      <p>
-      Note the strange suffix. This is because the display items can not be nested directly in the <b>pane</b> element, they have
-      to be in some kind of column, row, group etc. The strange selector at the end will find <b>first nested display element</b> and
-      will take its <b>parent element</b> as the data root.
-      </p>
-      <p>
-          A <b>global variable</b> can be defined in a similar way - place this element directly as top-level element in the
-          stylesheet:
-      </p>
+      <p>Note the strange suffix. This is because the display items can not be nested directly in
+      the <strong>pane</strong> element, they have to be in some kind of column, row, group etc.
+      The strange selector at the end will find <strong>first nested display element</strong> and
+      will take its <strong>parent element</strong> as the data root.</p>
+
+      <p>A <strong>global variable</strong> can be defined in a similar way - place this element
+      directly as top-level element in the stylesheet:</p>
+
       <pre>
-&lt;xsl:variable name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/>          
+&lt;xsl:variable name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;          
       </pre>
-      <p>
-          The templates can now reference the root of data by just <b>$root</b> expression.
-      </p>
-      <h4>
-          Constants, max/min values, single values
-      </h4>
-      <p>
-        A constant can be used, e.g. as a maximum count of items, specific CV number, ... I recommend to use <b>display</b> element
-        to define a constant. That element has two free-form attributes: <b>label</b> and <b>tooltip</b>. So we can define actually
-        two constants in a single element ! This can be useful, if there are values closely tied together, for example. Constants, that
-        define maximum number of aspects handled by the UI and starting CV can be written as:
-      </p>
+      <p>The templates can now reference the root of data by just <strong>$root</strong>
+      expression.</p>
+
+      <h4>Constants, max/min values, single values</h4>
+
+      <p>A constant can be used, e.g. as a maximum count of items, specific CV number, ... I
+      recommend to use <strong>display</strong> element to define a constant. That element has two
+      free-form attributes: <strong>label</strong> and <strong>tooltip</strong>. So we can define
+      actually two constants in a single element ! This can be useful, if there are values closely
+      tied together, for example. Constants, that define maximum number of aspects handled by the
+      UI and starting CV can be written as:</p>
+
       <pre>
-&lt;display item="mastcount" label="15" tooltip="128"/>
+&lt;display item="mastcount" label="15" tooltip="128"/&gt;
       </pre>
-      <p>
-          The "<b>mastcount</b>" is an arbitrary (but unique) name. Name it so after the value's meaning to your decoder.
-          It will be used in <i>selectors</i> to access the value like this:
-      </p>
+      <p>The "<strong>mastcount</strong>" is an arbitrary (but unique) name. Name it so after the
+      value's meaning to your decoder. It will be used in <em>selectors</em> to access the value
+      like this:</p>
+
       <pre>
-&lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/>          
+&lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;          
       </pre>
       <ul>
-          <li><b>$root</b> is the parameter / variable that contains root of the data.</li>
-          <li><b>mastcount</b> is the name of the <b>display</b> element - your value.</li>
-          <li><b>@tooltip</b> means that the selector will read the <b>tooltip</b> attribute. You may use @label to access the othe one.
+        <li><strong>$root</strong> is the parameter / variable that contains root of the data.</li>
+
+        <li><strong>mastcount</strong> is the name of the <strong>display</strong> element - your
+        value.</li>
+
+        <li><strong>@tooltip</strong> means that the selector will read the
+        <strong>tooltip</strong> attribute. You may use @label to access the othe one.</li>
       </ul>
-      
-      <h4>
-          Enumerations, sequences, lists
-      </h4>
-      <p>
-          Sometimes a CV (variable, display item) should be generated for e.g. each output idenfied by a name, or number. The list can be coded
-          as a series of <b>&lt;label></b> sub-elements of a <b>&lt;display></b> element:
-      </p>
-      <pre>
-&lt;display item="masts" tooltip="512">
-    &lt;label>0&lt;/label>&lt;label>1&lt;/label>&lt;label>2&lt;/label>&lt;label>3&lt;/label>&lt;label>4&lt;/label>&lt;label>5&lt;/label>&lt;label>6&lt;/label>&lt;label>7&lt;/label>
-    &lt;label>8&lt;/label>&lt;label>9&lt;/label>&lt;label>10&lt;/label>&lt;label>11&lt;/label>&lt;label>12&lt;/label>&lt;label>13&lt;/label>&lt;label>14&lt;/label>&lt;label>15&lt;/label>
-&lt;/display>
-      </pre>
-      <p>
-          We then may either iterate those items one by one, or access them by index/position as needed. The following examples selects the
-          <b>masts</b> data item under the data root (see above for data root). For <b>each of the items</b> it calls another template 
-          (not shown here), and passes the item's value (encoded into the label element content) to the template as <b>mast</b> parameter:
-      </p>
-      <pre>
-&lt;xsl:template name="generate-panes">
-    &lt;xsl:param name="root"/>
 
-    &lt;xsl:for-each select="$root/display[@item='masts']/label">
-        &lt;xsl:variable name="mast" select="string(./text())"/>
-        &lt;xsl:call-template name="mast-pane">
-            &lt;xsl:with-param name="root" select="$root"/>
-            &lt;xsl:with-param name="mast" select="$mast"/>
-        &lt;/xsl:call-template>
-    &lt;/xsl:for-each>
-&lt;/xsl:template>    
-      </pre>
-      <p>
-          Note, that element <b>content</b> is used as a value here - this allows to use all awkward characters like quotes, doublequotes,
-          ">" and other chars not permitted in attributes.
-      </p>
-      <p>
-          Individual items may be accessed by their index (which is passed as a parameter):
-      </p>
-      <pre>
-&lt;xsl:template name="generate-one-panes">
-    &lt;xsl:param name="root"/>
-    &lt;xsl:param name="index"/>
+      <h4>Enumerations, sequences, lists</h4>
 
-    &lt;xsl:variable name="mast" select="string($root/display[@item='masts']/label[position() = $index]/text())"/>
-    &lt;xsl:call-template name="mast-pane">
-        &lt;xsl:with-param name="root" select="$root"/>
-        &lt;xsl:with-param name="mast" select="$mast"/>
-    &lt;/xsl:call-template>
-&lt;/xsl:template>    
-      </pre>
-      <p>
-          You can easily use the above label list to make a loop from 1 to 15, which directly not possible in XSLT. Instead of controlling the
-          loop by a <i>control index variable</i>, we control the loop by <i>the data that should apply in individual cycle iterations</i> and
-          derive the index variable from them. Here's the modified example:
-      </p>
+      <p>Sometimes a CV (variable, display item) should be generated for e.g. each output idenfied
+      by a name, or number. The list can be coded as a series of <strong>&lt;label&gt;</strong>
+      sub-elements of a <strong>&lt;display&gt;</strong> element:</p>
+
       <pre>
-&lt;xsl:template name="generate-panes">
-    &lt;xsl:param name="root"/>
-    <b>&lt;-- The loop count is controlled by the number of <i>label</i> variables --></b>
-    &lt;xsl:for-each select="$root/display[@item='masts']/label">
-        &lt;xsl:variable name="mast" select="string(./text())"/>
-        &lt;xsl:call-template name="mast-pane">
-            &lt;xsl:with-param name="root" select="$root"/>
-            &lt;xsl:with-param name="mast" select="$mast"/>
-            <b>&lt;-- We use the current label's element <i>position</i> to derive the
-               "loop control variable" value --></b>
-            &lt;xsl:with-param name="index" select="./position()"/>
-        &lt;/xsl:call-template>
-    &lt;/xsl:for-each>
-&lt;/xsl:template>    
+&lt;display item="masts" tooltip="512"&gt;
+    &lt;label&gt;0&lt;/label&gt;&lt;label&gt;1&lt;/label&gt;&lt;label&gt;2&lt;/label&gt;&lt;label&gt;3&lt;/label&gt;&lt;label&gt;4&lt;/label&gt;&lt;label&gt;5&lt;/label&gt;&lt;label&gt;6&lt;/label&gt;&lt;label&gt;7&lt;/label&gt;
+    &lt;label&gt;8&lt;/label&gt;&lt;label&gt;9&lt;/label&gt;&lt;label&gt;10&lt;/label&gt;&lt;label&gt;11&lt;/label&gt;&lt;label&gt;12&lt;/label&gt;&lt;label&gt;13&lt;/label&gt;&lt;label&gt;14&lt;/label&gt;&lt;label&gt;15&lt;/label&gt;
+&lt;/display&gt;
       </pre>
-      <h3>
-          Cycles and loops
-      </h3>
-      <p>
-          XSLT language is a declarative one, and variables, once assigned, cannot be changed - so it does not have a <b>loop construct</b> as
-          most programmig languages do. Sometimes, a cycle can be more illustratively replaced by iteration over the content. Sometimes it is
-          not possible: truly some fixed number of iterations need to be done, such as <b>generating sequential CVs</b> with the same structure -
-          just the sequence number and the represented function index will differ.
-      </p>
-      <p>
-          This can be done by <b>tail recursion</b>, which replaces loops by invoking a template from that template itself. The only caveat is 
-          that the number of iterations is <b>limited</b> to about 100 (?), before the stack space is exhausted. The example can be found in
-          <code><a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>, 
-          look for template <code>AllLEDGroups</code>:
-      </p>
+      <p>We then may either iterate those items one by one, or access them by index/position as
+      needed. The following examples selects the <strong>masts</strong> data item under the data
+      root (see above for data root). For <strong>each of the items</strong> it calls another
+      template (not shown here), and passes the item's value (encoded into the label element
+      content) to the template as <strong>mast</strong> parameter:</p>
+
       <pre>
-&lt;xsl:template name="AllLEDGroups">
-  <b>&lt;-- Use <i>select=""</i> attribute to pick an initial value for the cycle.
-      Applies if the template does not get parameter on (first) invocation --></b>
-  &lt;xsl:param name="CV1" select="633"/>
-  &lt;xsl:param name="CV2" select="513"/>
-  &lt;xsl:param name="CV3" select="537"/>
-  <b>&lt;-- This is the loop's control variable --></b>
-  &lt;xsl:param name="index" select="1"/>
-  <b>&lt;!-- next line controls count --></b>
-  &lt;xsl:if test="24 >= $index">
-    &lt;xsl:call-template name="OneLEDGroup">
-      &lt;xsl:with-param name="CV1" select="$CV1"/>
-      &lt;xsl:with-param name="CV2" select="$CV2"/>
-      &lt;xsl:with-param name="CV3" select="$CV3"/>
-      &lt;xsl:with-param name="index" select="$index"/>
-    &lt;/xsl:call-template>
-    &lt;!-- iterate until done -->
-    <b>&lt;-- The <i>if</i> a few lines above makes sure, this <i>call-template</i>
-        will not be executed for i > 24 --></b>
-    &lt;xsl:call-template name="AllLEDGroups">
-      &lt;xsl:with-param name="CV1" select="$CV1 +1"/>
-      &lt;xsl:with-param name="CV2" select="$CV2 +1"/>
-      &lt;xsl:with-param name="CV3" select="$CV3 +2"/>
-      <b>&lt;-- Call itself, but with control variable one higher, therefore counting
-          the number of cycles--></b>
-      &lt;xsl:with-param name="index" select="$index+1"/>
-    &lt;/xsl:call-template>
-  &lt;/xsl:if>
-&lt;/xsl:template>
+&lt;xsl:template name="generate-panes"&gt;
+    &lt;xsl:param name="root"/&gt;
+
+    &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
+        &lt;xsl:variable name="mast" select="string(./text())"/&gt;
+        &lt;xsl:call-template name="mast-pane"&gt;
+            &lt;xsl:with-param name="root" select="$root"/&gt;
+            &lt;xsl:with-param name="mast" select="$mast"/&gt;
+        &lt;/xsl:call-template&gt;
+    &lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;    
       </pre>
-      <h2>
-          Creating the stylesheet
-      </h2>
-      <h3>
-          A boilerplate
-      </h3>
-      <p>
-          The template is likely to have some boilerplate instructions. The following declarations should be at the top,
-          defining how output will be generated:
-      </p>
+      <p>Note, that element <strong>content</strong> is used as a value here - this allows to use
+      all awkward characters like quotes, doublequotes, "&gt;" and other chars not permitted in
+      attributes.</p>
+
+      <p>Individual items may be accessed by their index (which is passed as a parameter):</p>
+
       <pre>
-&lt;?xml version="1.0" encoding="utf-8"?>
-&lt;xsl:stylesheet	version="1.0" 
+&lt;xsl:template name="generate-one-panes"&gt;
+    &lt;xsl:param name="root"/&gt;
+    &lt;xsl:param name="index"/&gt;
+
+    &lt;xsl:variable name="mast" select="string($root/display[@item='masts']/label[position() = $index]/text())"/&gt;
+    &lt;xsl:call-template name="mast-pane"&gt;
+        &lt;xsl:with-param name="root" select="$root"/&gt;
+        &lt;xsl:with-param name="mast" select="$mast"/&gt;
+    &lt;/xsl:call-template&gt;
+&lt;/xsl:template&gt;    
+      </pre>
+      <p>You can easily use the above label list to make a loop from 1 to 15, which directly not
+      possible in XSLT. Instead of controlling the loop by a <em>control index variable</em>, we
+      control the loop by <em>the data that should apply in individual cycle iterations</em> and
+      derive the index variable from them. Here's the modified example:</p>
+
+      <pre>
+&lt;xsl:template name="generate-panes"&gt;
+    &lt;xsl:param name="root"/&gt;
+    <strong>&lt;-- The loop count is controlled by the number of <em>label</em> variables --&gt;</strong>
+    &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
+        &lt;xsl:variable name="mast" select="string(./text())"/&gt;
+        &lt;xsl:call-template name="mast-pane"&gt;
+            &lt;xsl:with-param name="root" select="$root"/&gt;
+            &lt;xsl:with-param name="mast" select="$mast"/&gt;
+            <strong>&lt;-- We use the current label's element <em>position</em> to derive the
+               "loop control variable" value --&gt;</strong>
+            &lt;xsl:with-param name="index" select="./position()"/&gt;
+        &lt;/xsl:call-template&gt;
+    &lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;    
+      </pre>
+      <h3>Cycles and loops</h3>
+
+      <p>XSLT language is a declarative one, and variables, once assigned, cannot be changed - so
+      it does not have a <strong>loop construct</strong> as most programmig languages do.
+      Sometimes, a cycle can be more illustratively replaced by iteration over the content.
+      Sometimes it is not possible: truly some fixed number of iterations need to be done, such as
+      <strong>generating sequential CVs</strong> with the same structure - just the sequence number
+      and the represented function index will differ.</p>
+
+      <p>This can be done by <strong>tail recursion</strong>, which replaces loops by invoking a
+      template from that template itself. The only caveat is that the number of iterations is
+      <strong>limited</strong> to about 100 (?), before the stack space is exhausted. The example
+      can be found in <code><a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>,
+      look for template <code>AllLEDGroups</code>:</p>
+
+      <pre>
+&lt;xsl:template name="AllLEDGroups"&gt;
+  <strong>&lt;-- Use <em>select=""</em> attribute to pick an initial value for the cycle.
+      Applies if the template does not get parameter on (first) invocation --&gt;</strong>
+  &lt;xsl:param name="CV1" select="633"/&gt;
+  &lt;xsl:param name="CV2" select="513"/&gt;
+  &lt;xsl:param name="CV3" select="537"/&gt;
+  <strong>&lt;-- This is the loop's control variable --&gt;</strong>
+  &lt;xsl:param name="index" select="1"/&gt;
+  <strong>&lt;!-- next line controls count --&gt;</strong>
+  &lt;xsl:if test="24 &gt;= $index"&gt;
+    &lt;xsl:call-template name="OneLEDGroup"&gt;
+      &lt;xsl:with-param name="CV1" select="$CV1"/&gt;
+      &lt;xsl:with-param name="CV2" select="$CV2"/&gt;
+      &lt;xsl:with-param name="CV3" select="$CV3"/&gt;
+      &lt;xsl:with-param name="index" select="$index"/&gt;
+    &lt;/xsl:call-template&gt;
+    &lt;!-- iterate until done --&gt;
+    <strong>&lt;-- The <em>if</em> a few lines above makes sure, this <em>call-template</em>
+        will not be executed for i &gt; 24 --&gt;</strong>
+    &lt;xsl:call-template name="AllLEDGroups"&gt;
+      &lt;xsl:with-param name="CV1" select="$CV1 +1"/&gt;
+      &lt;xsl:with-param name="CV2" select="$CV2 +1"/&gt;
+      &lt;xsl:with-param name="CV3" select="$CV3 +2"/&gt;
+      <strong>&lt;-- Call itself, but with control variable one higher, therefore counting
+          the number of cycles--&gt;</strong>
+      &lt;xsl:with-param name="index" select="$index+1"/&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:if&gt;
+&lt;/xsl:template&gt;
+      </pre>
+      <h2>Creating the stylesheet</h2>
+
+      <h3>A boilerplate</h3>
+
+      <p>The template is likely to have some boilerplate instructions. The following declarations
+      should be at the top, defining how output will be generated:</p>
+
+      <pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;xsl:stylesheet      version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
 
-    exclude-result-prefixes="db">
+    exclude-result-prefixes="db"&gt;
 
 
-    &lt;xsl:output method="xml" encoding="utf-8" indent="yes"/>
-    &lt;xsl:strip-space elements=""/>
-    &lt;xsl:preserve-space elements="text"/>
-&lt;/xsl:stylesheet>
+    &lt;xsl:output method="xml" encoding="utf-8" indent="yes"/&gt;
+    &lt;xsl:strip-space elements=""/&gt;
+    &lt;xsl:preserve-space elements="text"/&gt;
+&lt;/xsl:stylesheet&gt;
       </pre>
-      <p>
-          The following will <b>copy elements, and
-          their attributes</b> to the output:
-      </p>
+      <p>The following will <strong>copy elements, and their attributes</strong> to the output:</p>
+
       <pre>
-&lt;xsl:template match="@*|node()">
-    &lt;xsl:copy>
-        &lt;xsl:apply-templates select="@*|node()"/>
-    &lt;/xsl:copy>
-&lt;/xsl:template>
+&lt;xsl:template match="@*|node()"&gt;
+    &lt;xsl:copy&gt;
+        &lt;xsl:apply-templates select="@*|node()"/&gt;
+    &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
       </pre>
       <h3>Generating content to the insertion points</h3>
-      <p>
-          Variable definitions are usually generated by the stylesheet. Basic and fixed variables should be provided, as usual,
-          in the <code>&lt;variables></code> element. The stylesheet can then <b>append generated variables</b> at the end:
-      </p>
-      <pre>
-&lt;xsl:template match="variables">
-    &lt;variables>
-      &lt;xsl:copy-of select="node()"/>
-      &lt;!-- call-template instructions, that generate the content; example follows -->
-      &lt;xsl:call-template name="generate-masts">
-            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/>
-      &lt;/xsl:call-template> 
 
-      &lt;xsl:call-template name="generate-aspects">
-            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/>
-      &lt;/xsl:call-template> 
-    &lt;/variables>
-&lt;/xsl:template>
+      <p>Variable definitions are usually generated by the stylesheet. Basic and fixed variables
+      should be provided, as usual, in the <code>&lt;variables&gt;</code> element. The stylesheet
+      can then <strong>append generated variables</strong> at the end:</p>
+
+      <pre>
+&lt;xsl:template match="variables"&gt;
+    &lt;variables&gt;
+      &lt;xsl:copy-of select="node()"/&gt;
+      &lt;!-- call-template instructions, that generate the content; example follows --&gt;
+      &lt;xsl:call-template name="generate-masts"&gt;
+            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
+      &lt;/xsl:call-template&gt; 
+
+      &lt;xsl:call-template name="generate-aspects"&gt;
+            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
+      &lt;/xsl:call-template&gt; 
+    &lt;/variables&gt;
+&lt;/xsl:template&gt;
       </pre>
-      <p>
-          Note that, in this example, the <code>pane</code> element with a special name (<code>__Aspects</code>) is used as a
-          holder for input data for generation. While <code>//pane[name/text() == '__Aspects']</code> selects the data holder, the
-          <code>//display[position() = 1]/..</code> selects an element <b>within</b> the holder pane XML element. <b>Pay attention to 
-          typos</b> in the strings, otherwise the select clauses select empty data, and nothing - or invalid content - will be generated.
-      </p>
-      <p>
-          For <b>UI Panels</b> I recommend to <b>replace</b> the data holder with the sequence of generated panels. In my example,
-          data is provided from panel named <b>__Aspects</b>, which we definitely <b>do not want</b> to be displayed in DecoderPro as
-          it ... isn't any UI panel, after all. The following will <b>replace</b> the data holder (a top-level Pane) with panels 
-          generated by the stylesheet:
-      </p>
-          <pre>
-&lt;xsl:template match="pane[name='__Aspects']" priority="100">
-    &lt;!-- call-template instructions for individual groups of panels to be generated; example follows -->
-    &lt;xsl:call-template name="generate-panes">
-            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/>
-    &lt;/xsl:call-template> 
-&lt;/xsl:template>
+      <p>Note that, in this example, the <code>pane</code> element with a special name
+      (<code>__Aspects</code>) is used as a holder for input data for generation. While
+      <code>//pane[name/text() == '__Aspects']</code> selects the data holder, the
+      <code>//display[position() = 1]/..</code> selects an element <strong>within</strong> the
+      holder pane XML element. <strong>Pay attention to typos</strong> in the strings, otherwise
+      the select clauses select empty data, and nothing - or invalid content - will be
+      generated.</p>
+
+      <p>For <strong>UI Panels</strong> I recommend to <strong>replace</strong> the data holder
+      with the sequence of generated panels. In my example, data is provided from panel named
+      <strong>__Aspects</strong>, which we definitely <strong>do not want</strong> to be displayed
+      in DecoderPro as it ... isn't any UI panel, after all. The following will
+      <strong>replace</strong> the data holder (a top-level Pane) with panels generated by the
+      stylesheet:</p>
+
+      <pre>
+&lt;xsl:template match="pane[name='__Aspects']" priority="100"&gt;
+    &lt;!-- call-template instructions for individual groups of panels to be generated; example follows --&gt;
+    &lt;xsl:call-template name="generate-panes"&gt;
+            &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
+    &lt;/xsl:call-template&gt; 
+&lt;/xsl:template&gt;
           </pre>
-      <p>
-          The <code>match</code> clause will react on the <code>__Aspect</code> data holder pane element, but unlike the variables
-          insertion point, <b>no copy instruction is present</b>. So the old content will be thrown away (entire <code>&lt;pane></code> element!), 
-          replaced by whatever elements the <code>call-template</code> instructions generate.
-      </p>
-      <h2>
-          Using XML fragments
-      </h2>
-      <p>
-          If part of the generated content <b>does not change</b> from place to place, it is possible to prepare it as a <b>XML fragment</b> to
-          be included: it won't be a part of XSL stylesheet with all those strange <i>xsl:xxx</i> instructions, but will stored as a separate,
-          small and clean bit of XML. This can be useful for <b>choice values</b>, or even repeated <b>UI panels</b> without variable content.
-          An example of the usage is again in <code><a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
-          (LedPaneHeader) 
-      </p>
-      <p>
-          Individual variables are generates using <i>xsl:template</i>, but the value part, mostly a <i>choice</i> is included from a separate file. Note
-          that the <i>xi:include</i> will be generated into the resulting XML, so it is the DecoderPro  panel reader, who does the content inclusion,
-          not the generator. The template subsitutes the variable parts of the definition:
-      </p>
+      <p>The <code>match</code> clause will react on the <code>__Aspect</code> data holder pane
+      element, but unlike the variables insertion point, <strong>no copy instruction is
+      present</strong>. So the old content will be thrown away (entire <code>&lt;pane&gt;</code>
+      element!), replaced by whatever elements the <code>call-template</code> instructions
+      generate.</p>
+
+      <h2>Using XML fragments</h2>
+
+      <p>If part of the generated content <strong>does not change</strong> from place to place, it
+      is possible to prepare it as a <strong>XML fragment</strong> to be included: it won't be a
+      part of XSL stylesheet with all those strange <em>xsl:xxx</em> instructions, but will stored
+      as a separate, small and clean bit of XML. This can be useful for <strong>choice
+      values</strong>, or even repeated <strong>UI panels</strong> without variable content. An
+      example of the usage is again in <code><a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
+      (LedPaneHeader)</p>
+
+      <p>Individual variables are generates using <em>xsl:template</em>, but the value part, mostly
+      a <em>choice</em> is included from a separate file. Note that the <em>xi:include</em> will be
+      generated into the resulting XML, so it is the DecoderPro panel reader, who does the content
+      inclusion, not the generator. The template subsitutes the variable parts of the
+      definition:</p>
+
       <pre>
-&lt;variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
-    &lt;xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
-&lt;/variable>
+&lt;variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0"&gt;
+    &lt;xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/&gt;
+&lt;/variable&gt;
       </pre>
-      <p>
-          There are two important things. When using <i>xi:</i> prefix, that <b>prefix must be declared</b> at the top of the document (may be in any parent element,
-          but conventionally prefixes are collected at the start). Use exactly the same URL (attribute value), otherwise the instruction won't be recognized.
-      </p>
+      <p>There are two important things. When using <em>xi:</em> prefix, that <strong>prefix must
+      be declared</strong> at the top of the document (may be in any parent element, but
+      conventionally prefixes are collected at the start). Use exactly the same URL (attribute
+      value), otherwise the instruction won't be recognized.</p>
+
       <pre>
-&lt;xsl:stylesheet	version="1.0" 
+&lt;xsl:stylesheet      version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"      <b>-- this is the prefix declaration</b>
-    >
+    xmlns:xi="http://www.w3.org/2001/XInclude"      <strong>-- this is the prefix declaration</strong>
+    &gt;
       </pre>
-      <p>
-          The second issue is that the <i>xi:include</i> must use URLs that JMRI is able to <b>resolve locally</b>. Otherwise, the DecoderPro would attempt to download
-          parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>http://jmri.org/xml</b> is guaranteed to resolve
-          to the <b>xml</b> directory of your local JMRI installation. For more mapping, please see other JMRI documentation.
-      </p>
+      <p>The second issue is that the <em>xi:include</em> must use URLs that JMRI is able to
+      <strong>resolve locally</strong>. Otherwise, the DecoderPro would attempt to download parts
+      of the definition from the Internet, which requires an online connection - and is slow. The
+      prefix <strong>http://jmri.org/xml</strong> is guaranteed to resolve to the
+      <strong>xml</strong> directory of your local JMRI installation. For more mapping, please see
+      other JMRI documentation.</p>
       <!--#include virtual="/Footer.shtml" -->
-      </div><!-- close #mainContent -->
-    </div><!-- close #mBody -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

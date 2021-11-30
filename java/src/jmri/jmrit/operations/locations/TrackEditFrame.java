@@ -39,7 +39,7 @@ import jmri.swing.NamedBeanComboBox;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
-public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // Managers
     // LocationManagerXml managerXml = InstanceManager.getDefault(LocationManagerXml.class);
@@ -130,8 +130,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
 
-    public TrackEditFrame() {
-        super();
+    public TrackEditFrame(String title) {
+        super(title);
     }
 
     public void initComponents(Location location, Track track) {
@@ -643,13 +643,22 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
-        if (trackNameTextField.getText().trim().isEmpty()) {
+        String trackName = trackNameTextField.getText().trim();
+        if (trackName.isEmpty()) {
             log.debug("Must enter a track name");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
+        String[] check = trackName.split(TrainCommon.HYPHEN);
+        if (check.length == 0) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+                    MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }),
+                    JOptionPane.ERROR_MESSAGE);
+
+            return false;
+        }
+        if (TrainCommon.splitString(trackName).length() > MAX_NAME_LENGTH) {
             log.error("Track name must be less than {} charaters", Integer.toString(MAX_NAME_LENGTH + 1)); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),

@@ -2,6 +2,8 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
+
 import jmri.util.swing.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
@@ -49,10 +51,10 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
      * @param name the leafs to remove
      */
     public void deleteLeaves(String name) {
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
+        for (Iterator<CatalogTreeLeaf> iterator = _leafs.iterator(); iterator.hasNext();) {
+            CatalogTreeLeaf leaf = iterator.next();
             if (name.equals(leaf.getName())) {
-                _leafs.remove(i);
+                iterator.remove(); // Safely remove the current element from the iterator and the list
             }
         }
     }

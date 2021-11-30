@@ -1,77 +1,98 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <meta name="keywords" content="custom jmri script, jython, automation, combine java python,
-        user scripts, jython examples">
-  <title>JMRI: Scripting</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content=
+  "custom jmri script, jython, automation, combine java python, user scripts, jython examples">
+  <title>JMRI: Scripting</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h2>JMRI: Scripting</h2>
-      
+
+      <div class="noted">
+        <span class="since">since 4.23.3</span>
+        <p>Note: The PanelPro main menu is being changed. The four scripting related menu items
+        have moved from the <strong>Panels</strong> menu item to the new <strong>Scripting</strong>
+        menu item. The menu references in the scripting related documents show the new menu path
+        with the old value in braces.</p>
+      </div>
+
       <p>Writing and executing a "script" (program in Python/Jython or other language - see below)
-      is a way of telling JMRI to execute commands specific to your JMRI environment and to partially
-      or even fully automate your layout and train operations.  Scripts can be as simple as telling
-      JMRI to set a single sensor or as complex as setting up multiple objects and running multiple
-      trains based on feedback from your layout.  While there is no comprehensive JMRI scripting manual,
-      the examples provided in the pages linked below will be a primary source of information on how to
-      use scripting to great advantage with JMRI.
-      The "How To" and "What-Where" sections also provide many ideas and hints gleaned from the JMRI
-      community on scripting features and capabilities.</p>
-      
+      is a way of telling JMRI to execute commands specific to your JMRI environment and to
+      partially or even fully automate your layout and train operations. Scripts can be as simple
+      as telling JMRI to set a single sensor or as complex as setting up multiple objects and
+      running multiple trains based on feedback from your layout. While there is no comprehensive
+      JMRI scripting manual, the examples provided in the pages linked below will be a primary
+      source of information on how to use scripting to great advantage with JMRI. The "How To" and
+      "What-Where" sections also provide many ideas and hints gleaned from the JMRI community on
+      scripting features and capabilities.</p>
+
       <p>The following pages discuss scripting JMRI using the Jython version of Python:</p>
 
       <ul>
-        <li><a href="Start.shtml">Getting started with simple scripts</a></li>
+        <li>
+          <a href="Start.shtml">Getting started with simple scripts</a>
+        </li>
 
-        <li><a href="Python.shtml">The Python/Jython language</a></li>
+        <li>
+          <a href="Python.shtml">The Python/Jython language</a>
+        </li>
 
-        <li><a href="ex_set_turnouts.shtml">Example script: Setting the default state of turnouts</a></li>
+        <li>
+          <a href="ex_set_turnouts.shtml">Example script: Setting the default state of turnouts</a>
+        </li>
 
-		<li><a href="Examples.shtml">Many other example scripts (Links)</a></li>
-		
-		<li><a href="HowTo.shtml">Lots of "How To..." for JMRI scripting</a></li>
-            
-		<li><a href="WhatWhere.shtml">"What...Where" interesting tidbits about creating Jython scripts for use with JMRI</a></li>
-		
-        <li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a></li>
-        
-        <li><a href="AppleScript.shtml">Open Scripting Architecture (available for Mac)</a></li>
-		    
+        <li>
+          <a href="Examples.shtml">Many other example scripts (Links)</a>
+        </li>
+
+        <li>
+          <a href="HowTo.shtml">Lots of "How To..." for JMRI scripting</a>
+        </li>
+
+        <li>
+          <a href="WhatWhere.shtml">"What...Where" interesting tidbits about creating Jython
+          scripts for use with JMRI</a>
+        </li>
+
+        <li>
+          <a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a>
+        </li>
+
+        <li>
+          <a href="JythonApps.shtml">Jython Apps: complete apps that use JMRI jython</a>
+        </li>
+
+        <li>
+          <a href="AppleScript.shtml">Open Scripting Architecture (available for Mac)</a>
+        </li>
       </ul>
-       
-      <p>See also the help section on <a href="Python.shtml">Python and JMRI.</a></p> 
-       
-      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html" target="_blank">
-        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
-        however, only JavaScript and Python (Jython) are directly supported in the default installation.
-        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
-        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating system</a>
-        (different operating systems have different launchers that are configured differently).</p>
-      
+
+      <p>See also the help section on <a href="Python.shtml">Python and JMRI.</a></p>
+
+      <p>Any <a href=
+      "https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html"
+      target="_blank">Java Scripting API</a> (commonly refered to JSR-223) compliant scripting
+      language can be added to JMRI, however, only JavaScript and Python (Jython) are directly
+      supported in the default installation. If you want to add another scripting language, find a
+      JSR-223 compliant interpreter and add it to the JMRI classpath as <a href=
+      "../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating
+      system</a> (different operating systems have different launchers that are configured
+      differently).</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

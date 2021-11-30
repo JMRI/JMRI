@@ -92,7 +92,7 @@
         </programming>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-            <variable CV="7" readOnly="yes" default="000" item="Decoder Version">
+            <variable CV="7" item="Decoder Version" readOnly="yes" default="000">
                 <decVal/>
                 <label>Software Version Number</label>
                 <label xml:lang="it">Versione Decoder: </label>
@@ -256,208 +256,208 @@
                 <tooltip xml:lang="de">Periodendauer aller Blinkeffekte als vielfaches von 0,065 Sek.</tooltip>
             </variable>
             <!-- Function Outputs -->
-            <variable CV="113" default="1" item="ESU V4 Function Output HL-1 effect generated" mask="XXVVVXXX">
+            <variable CV="113" default="1" item="ESU FnOut HL-1 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Headlight Mode</label>
                 <label xml:lang="de">Spitzenlicht Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="113" default="7" item="ESU V4 Function Output HL-1 Slider 5" mask="XXXXXVVV">
+            <variable CV="113" default="7" item="ESU FnOut HL-1 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="113" default="0" item="ESU V4 Function Output HL-1 Check 1" mask="XVXXXXXX">
+            <variable CV="113" default="0" item="ESU FnOut HL-1 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="113" default="0" item="ESU V4 Function Output HL-1 Check 2" mask="VXXXXXXX">
+            <variable CV="113" default="0" item="ESU FnOut HL-1 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="114" default="1" item="ESU V4 Function Output RL-1 effect generated" mask="XXVVVXXX">
+            <variable CV="114" default="1" item="ESU FnOut RL-1 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Rearlight Mode</label>
                 <label xml:lang="de">Schlusslicht Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="114" default="7" item="ESU V4 Function Output RL-1 Slider 5" mask="XXXXXVVV">
+            <variable CV="114" default="7" item="ESU FnOut RL-1 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="114" default="0" item="ESU V4 Function Output RL-1 Check 1" mask="XVXXXXXX">
+            <variable CV="114" default="0" item="ESU FnOut RL-1 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="114" default="0" item="ESU V4 Function Output RL-1 Check 2" mask="VXXXXXXX">
+            <variable CV="114" default="0" item="ESU FnOut RL-1 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="115" default="1" item="ESU V4 Function Output A1-1 effect generated" mask="XXVVVXXX">
+            <variable CV="115" default="1" item="ESU FnOut A1-1 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>AUX1 Mode</label>
                 <label xml:lang="de">AUX1 Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="115" default="7" item="ESU V4 Function Output A1-1 Slider 5" mask="XXXXXVVV">
+            <variable CV="115" default="7" item="ESU FnOut A1-1 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="115" default="0" item="ESU V4 Function Output A1-1 Check 1" mask="XVXXXXXX">
+            <variable CV="115" default="0" item="ESU FnOut A1-1 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="115" default="0" item="ESU V4 Function Output A1-1 Check 2" mask="VXXXXXXX">
+            <variable CV="115" default="0" item="ESU FnOut A1-1 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="116" default="1" item="ESU V4 Function Output A2-1 effect generated" mask="XXVVVXXX">
+            <variable CV="116" default="1" item="ESU FnOut A2-1 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Group A (LEDs 1-3) Mode</label>
                 <label xml:lang="de">Gruppe A (LEDs 1-3) Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="116" default="7" item="ESU V4 Function Output A2-1 Slider 5" mask="XXXXXVVV">
+            <variable CV="116" default="7" item="ESU FnOut A2-1 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="116" default="0" item="ESU V4 Function Output A2-1 Check 1" mask="XVXXXXXX">
+            <variable CV="116" default="0" item="ESU FnOut A2-1 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="116" default="0" item="ESU V4 Function Output A2-1 Check 2" mask="VXXXXXXX">
+            <variable CV="116" default="0" item="ESU FnOut A2-1 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="117" default="1" item="ESU V4 Function Output A3 effect generated" mask="XXVVVXXX">
+            <variable CV="117" default="1" item="ESU FnOut A3 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Group B (LEDs 4-5) Mode</label>
                 <label xml:lang="de">Gruppe B (LEDs 4-5) Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="117" default="7" item="ESU V4 Function Output A3 Slider 5" mask="XXXXXVVV">
+            <variable CV="117" default="7" item="ESU FnOut A3 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="117" default="0" item="ESU V4 Function Output A3 Check 1" mask="XVXXXXXX">
+            <variable CV="117" default="0" item="ESU FnOut A3 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="117" default="0" item="ESU V4 Function Output A3 Check 2" mask="VXXXXXXX">
+            <variable CV="117" default="0" item="ESU FnOut A3 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="118" default="1" item="ESU V4 Function Output A4 effect generated" mask="XXVVVXXX">
+            <variable CV="118" default="1" item="ESU FnOut A4 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Group C (LEDs 6-7) Mode</label>
                 <label xml:lang="de">Gruppe C (LEDs 6-7) Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="118" default="7" item="ESU V4 Function Output A4 Slider 5" mask="XXXXXVVV">
+            <variable CV="118" default="7" item="ESU FnOut A4 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="118" default="0" item="ESU V4 Function Output A4 Check 1" mask="XVXXXXXX">
+            <variable CV="118" default="0" item="ESU FnOut A4 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="118" default="0" item="ESU V4 Function Output A4 Check 2" mask="VXXXXXXX">
+            <variable CV="118" default="0" item="ESU FnOut A4 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="119" default="1" item="ESU V4 Function Output A5 effect generated" mask="XXVVVXXX">
+            <variable CV="119" default="1" item="ESU FnOut A5 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Group D (LEDs 8-9) Mode</label>
                 <label xml:lang="de">Gruppe D (LEDs 8-9) Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="119" default="7" item="ESU V4 Function Output A5 Slider 5" mask="XXXXXVVV">
+            <variable CV="119" default="7" item="ESU FnOut A5 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="119" default="0" item="ESU V4 Function Output A5 Check 1" mask="XVXXXXXX">
+            <variable CV="119" default="0" item="ESU FnOut A5 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="119" default="0" item="ESU V4 Function Output A5 Check 2" mask="VXXXXXXX">
+            <variable CV="119" default="0" item="ESU FnOut A5 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="120" default="1" item="ESU V4 Function Output A6 effect generated" mask="XXVVVXXX">
+            <variable CV="120" default="1" item="ESU FnOut A6 Mode" mask="XXVVVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
                 <label>Group E (LEDs 10-11) Mode</label>
                 <label xml:lang="de">Gruppe E (LEDs 10-11) Modus</label>
                 <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Fade in-out (Zoom):   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;- Dimmbares Licht: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Ein- und Ausblenden (Zoom):   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="120" default="7" item="ESU V4 Function Output A6 Slider 5" mask="XXXXXVVV">
+            <variable CV="120" default="7" item="ESU FnOut A6 Slider 5" mask="XXXXXVVV">
                 <decVal max="7"/>
                 <label>Brightness</label>
                 <label xml:lang="de">Helligkeit</label>
             </variable>
-            <variable CV="120" default="0" item="ESU V4 Function Output A6 Check 1" mask="XVXXXXXX">
+            <variable CV="120" default="0" item="ESU FnOut A6 Check 1" mask="XVXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Delay power on</label>
                 <label xml:lang="de">Verzögert einschalten</label>
                 <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="120" default="0" item="ESU V4 Function Output A6 Check 2" mask="VXXXXXXX">
+            <variable CV="120" default="0" item="ESU FnOut A6 Check 2" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Switch randomly</label>
                 <label xml:lang="de">Zufällig  ein- und ausschalten</label>

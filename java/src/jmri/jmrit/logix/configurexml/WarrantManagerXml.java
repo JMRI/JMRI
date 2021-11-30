@@ -117,20 +117,24 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         Element elem = new Element(type);
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         String str = speedUtil.getRosterId();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+        }
         elem.setAttribute("trainId", str);
 
         DccLocoAddress addr = speedUtil.getDccAddress();
         if (addr != null) {
             elem.setAttribute("dccAddress", ""+addr.getNumber());
-            elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
+            elem.setAttribute("dccType", ""+addr.getProtocol().getShortName());
         }
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
         elem.setAttribute("shareRoute", warrant.getShareRoute()?"true":"false");
         elem.setAttribute("noRamp", warrant.getNoRamp()?"true":"false");
 
         str = warrant.getTrainName();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+        }
         elem.setAttribute("trainName", str);
         
         return elem;
@@ -209,6 +213,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         
         List<Element> warrantList = shared.getChildren("warrant");
         log.debug("Found {} Warrant objects", warrantList.size());
+        boolean previouslyLoaded = false;
         for (Element elem : warrantList) {
             if (elem.getAttribute("systemName") == null) {
                 log.warn("unexpected null for systemName in elem {}", elem);
@@ -246,8 +251,10 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             Warrant warrant = manager.createNewWarrant(sysName, userName, SCWa, timeToPlatform);
             if (warrant == null) {
                 log.info("Warrant \"{}\" (userName={}) previously loaded. This version not loaded.", sysName, userName);
+                previouslyLoaded = true;
                 continue;
             }
+            previouslyLoaded = false;
             if (SCWa && warrant instanceof SCWarrant) {
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
@@ -301,36 +308,39 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 loadTrain(train, warrant);
             }
         }
-
-        // A second pass through the warrant list done to load the commands. This is done so that
-        // references made to warrants in commands are fully specified. Due to ThrottleSetting
-        // Ctor using provideWarrant to establish the referenced warrant.
-        warrantList = shared.getChildren("warrant");
-        for (Element elem : warrantList) {
-            // boolean forward = true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
-            if (elem.getAttribute("systemName") == null) {
-                break;
-            }
-            if (elem.getAttribute("systemName") != null) {
-                String sysName = elem.getAttribute("systemName").getValue();
-                if (sysName != null) {
-                    Warrant warrant = manager.getBySystemName(sysName);
-                    List<Element> throttleCmds;
-                    if (warrant != null) {
-                        log.debug("warrant: {}", warrant.getDisplayName());
-                        throttleCmds = elem.getChildren("throttleCommand");
-                        if (throttleCmds != null) {
-                            log.debug("throttleCommand size= {}",throttleCmds.size());
-                            throttleCmds.forEach((e) -> {
-                                warrant.addThrottleCommand(loadThrottleCommand(e, warrant));
-                            });
-                        }
-                        throttleCmds = elem.getChildren("throttleSetting");
-                        if (throttleCmds != null) {
-                            log.debug("throttleSetting size= {}",throttleCmds.size());
-                            throttleCmds.forEach((e) -> {
-                                warrant.addThrottleCommand(loadThrottleSetting(e, warrant));
-                            });
+        if (!previouslyLoaded) {
+            // A second pass through the warrant list done to load the commands. This is done so that
+            // references made to warrants in commands are fully specified. Due to ThrottleSetting
+            // Ctor using provideWarrant to establish the referenced warrant.
+            warrantList = shared.getChildren("warrant");
+            for (Element elem : warrantList) {
+                // boolean forward = true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
+                if (elem.getAttribute("systemName") == null) {
+                    break;
+                }
+                if (elem.getAttribute("systemName") != null) {
+                    String sysName = elem.getAttribute("systemName").getValue();
+                    if (sysName != null) {
+                        Warrant warrant = manager.getBySystemName(sysName);
+                        List<Element> throttleCmds;
+                        if (warrant != null) {
+                            log.debug("warrant: {}", warrant.getDisplayName());
+                            throttleCmds = elem.getChildren("throttleCommand");
+                            if (throttleCmds != null && !throttleCmds.isEmpty()) {
+                                log.debug("throttleCommand size= {}",throttleCmds.size());
+                                throttleCmds.forEach((e) -> {
+                                    warrant.addThrottleCommand(loadThrottleCommand(e, warrant));
+                                });
+                                warrant.setTrackSpeeds();
+                            } else {
+                                throttleCmds = elem.getChildren("throttleSetting");
+                                if (throttleCmds != null) {
+                                    log.debug("throttleSetting size= {}",throttleCmds.size());
+                                    throttleCmds.forEach((e) -> {
+                                        warrant.addThrottleCommand(loadThrottleSetting(e, warrant));
+                                    });
+                                }
+                            }
                         }
                     }
                 }
@@ -341,18 +351,25 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     private static void loadTrain(Element elem, Warrant warrant) {
         SpeedUtil speedUtil = warrant.getSpeedUtil();
+        // if a RosterEntry exists "trainId" will be the Roster Id, otherwise a train name
         if (elem.getAttribute("trainId") != null) {
             speedUtil.setRosterId(elem.getAttribute("trainId").getValue());
         }
-        // if a RosterEntry exists "trainId" will be the Roster Id, otherwise a train name
-        // Possible redundant call to setDccAddress() is OK
-        if (elem.getAttribute("dccAddress") != null) {
-            try {
-               int address = elem.getAttribute("dccAddress").getIntValue();
-               String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
-               speedUtil.setDccAddress(addr);
-            } catch (org.jdom2.DataConversionException dce) {
-                log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
+        if (speedUtil.getRosterEntry() == null) {
+            if (elem.getAttribute("dccAddress") != null) {
+                try {
+                   int address = elem.getAttribute("dccAddress").getIntValue();
+                   String type = "L";
+                   if (elem.getAttribute("dccType") != null) {
+                       type = elem.getAttribute("dccType").getValue();
+                   }
+                   if (!speedUtil.setDccAddress(address, type)) {
+                       log.error("dccAddress {}, dccType {} in Warrant {}",
+                               address, type, warrant.getDisplayName());
+                   }
+                } catch (org.jdom2.DataConversionException dce) {
+                    log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
+                }
             }
         }
         if (elem.getAttribute("runBlind") != null) {
@@ -423,10 +440,10 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                     cmd = ThrottleSetting.getCommandTypeFromInt(Integer.parseInt(attr.getValue()));
                     ts.setCommand(cmd);
                 } catch (IllegalArgumentException iae) {
-                    log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
+                    log.error("{} for {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
                 }
             } else {
-                log.error("Command type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+                log.error("Command type is null for {} in warrant {}", ts.toString(), w.getDisplayName());
             }
             attr = elem.getAttribute("fKey");
             if (attr != null) {
@@ -447,7 +464,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                     log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
                 }
             } else {
-                log.error("Value type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+                log.error("Value type is null for {} in warrant {}", ts.toString(), w.getDisplayName());
             }
             attr = elem.getAttribute("speedMode");
             if (attr != null) {
@@ -469,7 +486,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         if (attr != null) {
             String errMsg = ts.setNamedBean(cmd, attr.getValue());
             if (errMsg != null) {
-                log.error("{} for throttleSetting {} in warrant {}", errMsg, ts.toString(), w.getDisplayName());
+                log.error("{} for {} in warrant {}", errMsg, ts.toString(), w.getDisplayName());
             }
         }
         return ts;

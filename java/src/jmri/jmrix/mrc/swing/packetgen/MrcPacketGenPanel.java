@@ -98,10 +98,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
-        MrcMessage m = new MrcMessage(packetTextField.getText().length());
-        for (int i = 0; i < packetTextField.getText().length(); i++) {
-            m.setElement(i, packetTextField.getText().charAt(i));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        MrcMessage m = new MrcMessage(input.length());
+        for (int i = 0; i < input.length(); i++) {
+            m.setElement(i, input.charAt(i));
         }
 
         tc.sendMrcMessage(m);

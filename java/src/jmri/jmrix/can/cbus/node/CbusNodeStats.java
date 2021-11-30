@@ -113,9 +113,9 @@ public class CbusNodeStats {
      * @return float min 0 max 1
      */
     public float floatPercentageRemaining(){
-        float remain = ( 1.0f * ( totalNodeBytes() - totalRemainingNodeBytes() ) ) / ( totalNodeBytes() );
-        if ( remain > 0 && remain < 1.000001 ) {
-            return remain;
+        float soFar = ( 1.0f * ( totalNodeBytes() - totalRemainingNodeBytes() ) ) / ( totalNodeBytes() );
+        if ( soFar > 0 && soFar < 1.000001 ) {
+            return soFar;
         }
         return 0.0f;
     }

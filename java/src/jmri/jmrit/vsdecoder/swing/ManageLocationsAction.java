@@ -2,7 +2,6 @@ package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import javax.swing.AbstractAction;

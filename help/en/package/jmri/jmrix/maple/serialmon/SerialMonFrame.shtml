@@ -1,78 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Monitor Maple Traffic</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help monitor maple traffic message packet">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help monitor maple traffic message packet">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h2>Monitor Maple Traffic</h2>
 
-      <p>This window allows you to monitor communication between your
-      Maple panels and your computer, so you can see what is happening
-      as JMRI sends information to and receives information from your
-      Maple System. You can save this information to a log file for
+      <p>This window allows you to monitor communication between your Maple panels and your
+      computer, so you can see what is happening as JMRI sends information to and receives
+      information from your Maple System. You can save this information to a log file for
       troubleshooting purposes.</p>
 
-      <p><b>Background Information:</b> On Maple, the coil bits in the
-      Maple HMI's are used to communicate with JMRI. In this
-      Maple-to-JMRI implementation, all panels use the same address
-      space and have exactly the same input and output bit assignments.
-      The first 1000 coil bits are reserved for configuration as
-      Sensors. Sensors are referred to as "Input Bits" and are used to
-      set JMRI Sensors according to status bits in your Maple HMI
-      panels. Therefore, Sensors pass information from configured HMI
-      panels to JMRI. The next 8000 bits are reserved for assignment as
-      "Output Bits" and are used to send the current settings of
-      Turnouts and Lights to the Maple Panels.</p>Maple communications
-      work by polling. Each panel is polled separately, and the results
-      of the polls are ORed together to set Sensors. Therefore if a
-      Sensor is ACTIVE (Maple "1") in any panel, it is set ACTIVE. If a
-      Sensor is INACTIVE (Maple "0") in all configured panels, then it
-      is set INACTIVE. The panels are polled in the order that they are
-      configured. <b>Note:</b> The Maple poll command only allows a
-      maximum of 99 bits to be read with each poll command, so if more
-      than 99 input bits are configured, you will see multiple poll
-      commands for each panel.
+      <p><strong>Background Information:</strong> On Maple, the coil bits in the Maple HMI's are
+      used to communicate with JMRI. In this Maple-to-JMRI implementation, all panels use the same
+      address space and have exactly the same input and output bit assignments. The first 1000 coil
+      bits are reserved for configuration as Sensors. Sensors are referred to as "Input Bits" and
+      are used to set JMRI Sensors according to status bits in your Maple HMI panels. Therefore,
+      Sensors pass information from configured HMI panels to JMRI. The next 8000 bits are reserved
+      for assignment as "Output Bits" and are used to send the current settings of Turnouts and
+      Lights to the Maple Panels.</p>
+      Maple communications work by polling. Each panel is polled separately, and the results of the
+      polls are ORed together to set Sensors. Therefore if a Sensor is ACTIVE (Maple "1") in any
+      panel, it is set ACTIVE. If a Sensor is INACTIVE (Maple "0") in all configured panels, then
+      it is set INACTIVE. The panels are polled in the order that they are configured.
+      <strong>Note:</strong> The Maple poll command only allows a maximum of 99 bits to be read
+      with each poll command, so if more than 99 input bits are configured, you will see multiple
+      poll commands for each panel.
+      <p>After all panels have been polled, the status of output bits is sent to the panels. Output
+      bits are sent in "Broadcast Mode" so all panels can receive the bits at the same time.
+      Broadcast Mode is indicated by an HMI Station Address of "0". Output bits begin with HMI coil
+      bit address of "1001". All configured output bits are sent, regardless of if the bit is
+      assigned or not. <strong>Note:</strong> The Maple write command only allows a maximum of 99
+      bits to be written with each transmit command, so if more than 99 output bits are configured,
+      you will see multiple transmit commands, with starting addresses increasing by 99 in
+      each.</p>
 
-      <p>After all panels have been polled, the status of output bits
-      is sent to the panels. Output bits are sent in "Broadcast Mode"
-      so all panels can receive the bits at the same time. Broadcast
-      Mode is indicated by an HMI Station Address of "0". Output bits
-      begin with HMI coil bit address of "1001". All configured output
-      bits are sent, regardless of if the bit is assigned or not.
-      <b>Note:</b> The Maple write command only allows a maximum of 99
-      bits to be written with each transmit command, so if more than 99
-      output bits are configured, you will see multiple transmit
-      commands, with starting addresses increasing by 99 in each.</p>
-
-      <p>For more information on the various controls and options at
-      the bottom of this window, please see the <a href=
-      "../../AbstractMonFrame.shtml">Communications Monitor Window
+      <p>For more information on the various controls and options at the bottom of this window,
+      please see the <a href="../../AbstractMonFrame.shtml">Communications Monitor Window
       page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

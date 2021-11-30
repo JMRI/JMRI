@@ -22,16 +22,15 @@ import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.implementation.AccessoryOpsModeProgrammerFacade;
 import jmri.jmrix.loconet.LnProgrammerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Provide a JPanel to configure the ops programming mode.
+ * Provide a JPanel to configure the ops programming (Adressed) mode.
  * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen      Copyright (C) 2001
+ * @author Daniel Bergqvist  Copyright (C) 2021
  */
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -59,6 +58,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean oldOpsSigMode = false;
     boolean lnSv2Mode = false;
     boolean oldLnSv2Mode = false;
+    boolean lncvMode = false;
+    boolean oldLncvMode = false;
     boolean oldoffsetAddrCheckBox = false;
     transient volatile AddressedProgrammer programmer = null;
     transient volatile AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
@@ -68,14 +69,15 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnSv2Mode={}, oldLnSv2Mode={}, oldoffsetAddrCheckBox={})",
-                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnSv2Mode, oldLnSv2Mode, oldoffsetAddrCheckBox);
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnSv2Mode={}, oldLnSv2Mode={}, lncvMode={}, oldLncvMode={}, oldoffsetAddrCheckBox={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnSv2Mode, oldLnSv2Mode, lncvMode, oldLncvMode, oldoffsetAddrCheckBox);
         if (longAddrButton.isSelected() == oldLongAddr
                 && mAddrField.getValue().equals(oldAddrValue)
                 && offsetAddrCheckBox.isSelected() == oldoffsetAddrCheckBox
                 && opsAccyMode == oldOpsAccyMode
                 && opsSigMode == oldOpsSigMode
-                && lnSv2Mode == oldLnSv2Mode) {
+                && lnSv2Mode == oldLnSv2Mode
+                && lncvMode == oldLncvMode) {
             log.debug("getProgrammer hasn't changed");
             // hasn't changed
             if (opsAccyMode || opsSigMode) {
@@ -92,6 +94,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         oldOpsAccyMode = opsAccyMode;
         oldOpsSigMode = opsSigMode;
         oldLnSv2Mode = lnSv2Mode;
+        oldLncvMode = lncvMode;
         oldoffsetAddrCheckBox = offsetAddrCheckBox.isSelected();
         setAddrParams();
 
@@ -168,26 +171,24 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
+        setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramOnMain")));
+
         // create the programmer display combo box
-        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<>();
+        java.util.List<AddressedProgrammerManager> v = new java.util.ArrayList<>();
         for (AddressedProgrammerManager pm : InstanceManager.getList(jmri.AddressedProgrammerManager.class)) {
             v.add(pm);
         }
-        add(progBox = new JComboBox<>(v));
+        add(progBox = new JComboBox<>(v.toArray(new AddressedProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             progBox.setVisible(false);
         }
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)); // set default
-        progBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected();
-            }
+        progBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected();
         });
 
-        add(new JLabel(Bundle.getMessage("TitleProgramOnMain")));
         add(new JLabel(" "));
         add(shortAddrButton);
         add(longAddrButton);
@@ -208,28 +209,19 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 //                programmerSelected(); // in case it has valid address now
 //            }
 //        });
-        shortAddrButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        shortAddrButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
-        longAddrButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        longAddrButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
-        offsetAddrCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // new programmer selection
-                programmerSelected(); // in case it has valid address now
-            }
+        offsetAddrCheckBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            // new programmer selection
+            programmerSelected(); // in case it has valid address now
         });
 
         shortAddrButton.setSelected(true);
@@ -261,7 +253,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         List<ProgrammingMode> modes = new ArrayList<>();
         if (getProgrammer() != null) {
             modes.addAll(programmer.getSupportedModes());
-        } else {
+        } else if (progBox.getSelectedItem() != null) {
             modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
         }
         // add OPSACCBYTEMODE & OPSACCEXTBYTEMODE if possible
@@ -318,19 +310,18 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                         opsAccyMode = true;
                         opsSigMode = false;
                         lnSv2Mode = false ;
+                        lncvMode = false ;
                     } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
                         log.debug("OPS SIG was selected in actionPerformed");
                         opsAccyMode = false;
                         opsSigMode = true;
                         lnSv2Mode = false ;
+                        lncvMode = false ;
                     } else {
                         opsAccyMode = false;
                         opsSigMode = false;
-                        if (mode == LnProgrammerManager.LOCONETSV2MODE) {
-                            lnSv2Mode = true ;
-                        } else {
-                            lnSv2Mode = false ;
-                        }
+                        lnSv2Mode = (mode == LnProgrammerManager.LOCONETSV2MODE);
+                        lncvMode = (mode == LnProgrammerManager.LOCONETLNCVMODE);
                         getProgrammer().setMode(mode);
                     }
                 }
@@ -345,28 +336,26 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      *
      * @param programmer The type of programmer (i.e. Byte Mode)
      */
-    void setProgrammerFromGui(Programmer programmer
-    ) {
+    void setProgrammerFromGui(Programmer programmer) {
         for (Map.Entry<ProgrammingMode, JRadioButton> entry : buttonMap.entrySet()) {
             if (entry.getValue().isSelected()) {
                 if (entry.getKey() == ProgrammingMode.OPSACCBYTEMODE) {
                     log.debug("OPS ACCY was selected in setProgrammerFromGui");
                     opsAccyMode = true;
                     opsSigMode = false;
-                    lnSv2Mode = false ;
+                    lnSv2Mode = false;
+                    lncvMode = false;
                 } else if (entry.getKey() == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
-                    lnSv2Mode = false ;
+                    lnSv2Mode = false;
+                    lncvMode = false;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
-                    if (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE) {
-                        lnSv2Mode = true ;
-                    } else {
-                        lnSv2Mode = false ;
-                    }
+                    lnSv2Mode = (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE);
+                    lncvMode = (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE);
                     getProgrammer().setMode(entry.getKey());
                 }
             }
@@ -450,6 +439,13 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             addressLabel.setText(Bundle.getMessage("NodeLabel"));
             lowAddrLimit = 0;
             highAddrLimit = 65535;
+        } else if (lncvMode) {
+            shortAddrButton.setVisible(false);
+            longAddrButton.setVisible(false);
+            offsetAddrCheckBox.setVisible(false);
+            addressLabel.setText(Bundle.getMessage("ModuleLabel"));
+            lowAddrLimit = 0;
+            highAddrLimit = 65535;
         } else {
             shortAddrButton.setText(Bundle.getMessage("ShortAddress"));
             shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipShortAddress"));
@@ -467,8 +463,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             }
         }
 
-        log.debug(
-                "Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
+        log.debug("Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
         model.setMinimum(lowAddrLimit);
 
         model.setMaximum(highAddrLimit);
@@ -492,7 +487,6 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class
-            .getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgOpsModePane.class.getName());
 
 }

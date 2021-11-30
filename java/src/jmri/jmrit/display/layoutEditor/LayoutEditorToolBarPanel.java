@@ -412,7 +412,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         // change the block name
         blockIDComboBox.addActionListener((ActionEvent event) -> {
             //use the "Extra" color to highlight the selected block
-            if (layoutEditor.highlightSelectedBlockFlag) {
+            if (layoutEditor.getHighlightSelectedBlock()) {
                 layoutEditor.highlightBlockInComboBox(blockIDComboBox);
             }
             String newName = blockIDComboBox.getSelectedItemDisplayName();
@@ -458,7 +458,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockContentsComboBox.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
         blockContentsComboBox.addActionListener((ActionEvent event) -> {
             // use the "Extra" color to highlight the selected block
-            if (layoutEditor.highlightSelectedBlockFlag) {
+            if (layoutEditor.getHighlightSelectedBlock()) {
                 layoutEditor.highlightBlockInComboBox(blockContentsComboBox);
             }
         });

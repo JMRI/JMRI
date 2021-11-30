@@ -17,8 +17,6 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
-//    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
-
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
@@ -187,14 +185,14 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         pAddHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpersAt")));
         pAddHelpersAt.add(addHelpersAtTextField);
         addHelpersAtTextField.setText(TrainManifestText.getStringAddHelpers());
-        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipAddHelpers"));
         pManifest.add(pAddHelpersAt);
 
         JPanel pRemoveHelpersAt = new JPanel();
         pRemoveHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("RemoveHelpersAt")));
         pRemoveHelpersAt.add(removeHelpersAtTextField);
         removeHelpersAtTextField.setText(TrainManifestText.getStringRemoveHelpers());
-        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipRemoveHelpers"));
         pManifest.add(pRemoveHelpersAt);
 
         JPanel pLocoChangeAt = new JPanel();
@@ -234,8 +232,6 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         // setup buttons
         addButtonAction(resetButton);
         addButtonAction(saveButton);
-
-        initMinimumSize();
     }
 
     // Save buttons

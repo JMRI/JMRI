@@ -62,6 +62,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     @Override
     public void dispose() {
+        super.dispose();
         InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 

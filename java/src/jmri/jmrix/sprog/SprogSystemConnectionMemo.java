@@ -128,6 +128,17 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         return slotThread;
     }
     
+    private int numSlots = SprogConstants.DEFAULT_MAX_SLOTS;
+    
+    /**
+     * Get the number of command station slots
+     * 
+     * @return The number fo slots
+     */
+    public int getNumSlots() {
+        return numSlots;
+    }
+
     /**
      * Configure the programming manager and "command station" objects.
      */
@@ -155,6 +166,11 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         }
     }
 
+    public void configureCommandStation(int slots) {
+        numSlots = slots;
+        this.configureCommandStation();
+    }
+    
     /**
      * Get the command station object associated with this connection.
      * 
@@ -251,8 +267,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        //No actions that can be loaded at startup
-        return null;
+        return ResourceBundle.getBundle("jmri.jmrix.sprog.SprogActionListBundle");
     }
 
     @Override

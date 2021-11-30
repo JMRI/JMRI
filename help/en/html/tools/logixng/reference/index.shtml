@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>LogixNG Reference</h1>
+
+      <p>The reference provides the detailed information for using LogixNG. For people familiar
+      with Logix, chapter 1 should provide a good introduction and make it possible to create a
+      simple LogixNG/ConditionalNG. The remaining chapters in the Standard Features list, except
+      for the clipboard, are similar to Logix documentation.</p>
+
+      <p>The Advanced Features list are new concepts that do not exist in Logix or are significant
+      enhancements to Logix capabilities (References).</p>
+
+      <h3>Standard Features</h3>
+
+      <ul>
+        <li>
+          <a href="chapter1.shtml">Chapter 1 - A simple LogixNG</a>
+        </li>
+
+        <li>
+          <a href="chapter2.shtml">Chapter 2 - The clipboard</a>
+        </li>
+
+        <li>
+          <a href="chapter3.shtml">Chapter 3 - Working with sockets</a>
+        </li>
+
+        <li>
+          <a href="chapter4.shtml">Chapter 4 - Actions and Expressions</a>
+        </li>
+
+        <li>
+          <a href="chapter5.shtml">Chapter 5 - Action Descriptions</a>
+        </li>
+
+        <li>
+          <a href="chapter6.shtml">Chapter 6 - Expression Descriptions</a>
+        </li>
+      </ul>
+
+      <h3>Advanced Features</h3>
+
+      <ul>
+        <li>
+          <a href="chapter7.shtml">Chapter 7 - References</a>
+        </li>
+
+        <li>
+          <a href="chapter8.shtml">Chapter 8 - Local Variables</a>
+        </li>
+
+        <li>
+          <a href="chapter9.shtml">Chapter 9 - Formula</a>
+        </li>
+
+        <li>
+          <a href="chapter10.shtml">Chapter 10 - Modules</a>
+        </li>
+
+        <li>
+          <a href="chapter11.shtml">Chapter 11 - Tables</a>
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

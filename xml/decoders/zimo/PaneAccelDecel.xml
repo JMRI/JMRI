@@ -2,69 +2,180 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german and czech translation and CVs from v37+ -->
+<!-- version 1.2 - 10 Mar 2021, Nigel Cliffe - New layout, to group related features, and bring all motor CVs into the pane  -->
+
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>Accel/Decel</name>
+  <name>Accel/Decel + Motor</name>
   <name xml:lang="cs">Zrychlení/Zpomalení</name>
   <name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
   <column>
     <row>
       <column>
-        <label>
-          <text> </text>
-        </label>
+
         <row>
           <column>
-            <display item="Acceleration"/>
-            <display item="Deceleration"/>
             <label>
-              <text> </text>
+              <text>Acceleration / Deceleration</text>
+              <text xml:lang="cs">Zrychlení / Zpomalení</text>
             </label>
-          </column>
-          <label>
-            <text>      </text>
-          </label>
-          <column>
-            <display item="Acceleration Trim"/>
+
+            <display item="Accel"/>   <!-- CV3 -->
+            <display item="Decel"/>   <!-- CV4 -->
+            <label> <text>    </text> </label>
+            <separator/>
+            <label> <text>    </text> </label>
+            <label>
+              <text>Trim adjusts acceleration for consists or temporary changes</text>
+              <text xml:lang="cs">Úprava oříznutí zrychlení pro soupravy nebo dočasné změny</text>
+            </label>
+
+            <display item="Acceleration Trim"/>     <!-- CV23 -->
             <display item="Acceleration Trim Sign"/>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <label>
-            <text>    </text>
-          </label>
-          <column>
-            <display item="Deceleration Trim"/>
+            <display item="Deceleration Trim"/>   <!-- CV24 -->
             <display item="Deceleration Trim Sign"/>
+            <label> <text>    </text> </label>
+            <separator/>
+            <label> <text>    </text> </label>
             <label>
-              <text> </text>
+              <text>Function Key to apply braking (key changes deceleration)</text>
+              <text xml:lang="cs">Funkční klávesa pro aplikaci brzdy (tlačítko změní zpomalení)</text>
             </label>
+
+            <display item="Brake key"/>   <!-- CV309 -->
+            <display item="Brake time" >   <!-- CV349 -->
+                <label>Brake Key Deceleration Rate</label>
+                <label xml:lang="cs">Doba brždění</label>
+            </display>
+            <label> <text>    </text> </label>
+          </column>
+          <column>
+            <label> <text>    </text> </label>
+          </column>
+          <separator/>
+          <column>
+            <label> <text>    </text> </label>
+          </column>
+          <column>   <!-- column for exponential and adaptive accel settings -->
+            <label>
+              <text>Exponential Acceleration and Deceleration</text>
+              <text xml:lang="cs">Exponenciální Zrychlení a Zpomalení</text>
+            </label>
+              <label>
+                <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
+                <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
+                <text xml:lang="cs">Doba zrychlení/zpomalení (hybnost) se může rozprostírat v rozmezí nížších rychlostí</text>
+                <text xml:lang="de">Beschleunigungs-/Bremsverhalten kann im Niedriggeschwindigkeitsbereich angepasst werden.</text>
+              </label>
+
+              <label>
+                <text>Tens digit = percentage of speed range to be included (0-9)</text>
+                <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
+                <text xml:lang="cs">Desítky = procentuální podíl rozsahu otáček, které mají být zahrnuty (0-9)</text>
+                <text xml:lang="de">Zehnerstelle: Prozentsatz (0 bis 90 %) des Geschwindigkeitsbereichs (0-9)</text>
+              </label>
+              <label>
+                <text>Ones digit = Exponential curve (0-9)</text>
+                <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
+                <text xml:lang="cs">Jednotky = exponenciální křivka (0-9)</text>
+                <text xml:lang="de">Einerstelle: Parameter für die Krümmung der Exponentialfunktion. (0-9)</text>
+              </label>
+              <label> <text> </text> </label>
+              <display item="Exponential Acceleration"/>   <!-- CV121 -->
+              <display item="Exponential Deceleration"/>   <!-- CV122 -->
+              <label> <text> </text> </label>
+              <separator/>
+              <label>
+               <text> </text>
+              </label>
+              <label>
+               <text>Adaptive Acceleration/Deceleration</text>
+               <text xml:lang="cs">Adaptivní Zrychlení/Zpomalení</text>
+              </label>              
+              <label>
+                <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep</text>
+                <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto </text>
+                <text xml:lang="cs">K zvyšování nebo snižování rychlosti na další interní krok dochází pouze </text>
+                <text xml:lang="de">Die Erhöhung bzw. Absenkung der Sollgeschwindigkeit soll erst nach einer </text>
+              </label>
+              <label>
+                <text>is nearly reached.The tolerance for reaching the preceding step is defined by this </text>
+                <text xml:lang="it">lo step precedente. La tolleranza per raggiungere lo step precedente è definita</text>
+                <text xml:lang="cs">pokud předchozí krok je téměř dosažen. Tolerance pro dosažení předchozího kroku je</text>
+                <text xml:lang="de">definierten Annäherung der Ist-Geschwindigkeit an die bisher vorgegebene Sollgeschwindigkeit</text>
+              </label>              
+              <label>
+                <text>CV (the smaller this value the smoother the acceleration/deceleration)</text>
+                <text xml:lang="it">da questa CV ( valori piccoli per accell./decell. più graduali)</text>
+                <text xml:lang="cs">definována tímto CV (menší hodnota pro hladké zrychlení/zpomalení)</text>
+                <text xml:lang="de">erfolgen. Die CV #123 enthält den Fahrstufenabstand, der erreicht werden muss.</text>
+              </label>                            
+
+                <label>
+                    <text>Tens digit = acceleration (1-9)</text>
+                    <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
+                    <text xml:lang="cs">Desítky = zrychlení (1-9)</text>
+                    <text xml:lang="de">Zehnerstelle: 0 - 9 für Beschleunigen (1 = starke Wirkung)</text>
+                  </label>
+                  <label>
+                    <text>Ones digit = deceleration (1-9)</text>
+                    <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
+                    <text xml:lang="cs">Jednotky = zpomalení (1-9)</text>
+                    <text xml:lang="de">Einerstelle: 0 - 9 für die Bremsung</text>
+                  </label>
+                  <label>
+                    <text>Value 0 = no adaptive acceleration/deceleration</text>
+                    <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
+                    <text xml:lang="cs">Hodnota 0 = bez přizpůsobeného zrychlení/zpomalení</text>
+                    <text xml:lang="de">0: kein adaptives Verfahren</text>
+                  </label>
+                <label>
+                  <text> </text>
+                </label>
+
+              <display item="Adaptive Acceleration/Deceleration"/>     <!-- CV123 -->
+                <label>
+                  <text> </text>
+                </label>              
           </column>
         </row>
       </column>
     </row>
-   <group exclude="226,228">
     <separator/>
-    <row>
+
+    <group exclude="226,228">  <!-- 226 and 228 are function only decoders --> 
+
+	<row>
       <column>
-        <display item="BEMF Intensity"/>
-      </column>
-      <column>
-        <display item="Brake key"/>
-        <label>
-          <text>   </text>
-        </label>
-        <display item="Brake time"/>
-      </column>
-      <separator/>
-      <column>
-        <display item="BEMF config"/>
-      </column>
-      <column>
-        <label>
+       <label>
           <text>     </text>
         </label>
+       <label>
+          <text>Motor Control Settings</text>
+          <text xml:lang="cs">Nastavení řízení motoru</text>
+       </label>
+       <label>
+          <text>     </text>
+        </label>
+       </column>
+    </row>
+
+    <row>
+      <column>
+        <display item="Dither frequency"/>   <!-- voltage reference, CV57 -->        
       </column>
+      <column> <label> <text>  </text> </label> </column>
+      <separator/>
+      <column> <label> <text>  </text> </label> </column>
+      <column>
+        <display item="BEMF Intensity"/>    <!--  CV58 --> 
+      </column>
+      <column> <label> <text>  </text> </label> </column>
+      <separator/>
+      <column> <label> <text>  </text> </label> </column>
+      <column>
+         <display item="BEMF config"/>    <!-- CV56 -->
+      </column>
+      <column> <label> <text>     </text> </label> </column>
       <column>
           <label>
            <text> </text>
@@ -101,7 +212,16 @@
     <separator/>
     <row>
       <column>
-        <display item="Motor Frequency and EMF sample Rate"/>
+        <display item="DC Brake Momentum" tooltip="PWM Freq"/>   <!-- PWM 20kHz/40kHz, CV112 bit 5 -->        
+      </column>
+      <column> <label> <text>  </text> </label> </column>
+      <separator/>
+      <column> <label> <text>  </text> </label> </column>
+    
+ 
+    
+      <column>
+        <display item="Motor Frequency and EMF sample Rate"/>   <!--  CV9 -->
       </column>
       <label>
         <text>    </text>
@@ -154,113 +274,46 @@
         </label>
       </column>
     </row>
-   </group>
-    <separator/>
+        <separator/>
     <row>
-      <label>
-        <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
-        <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
-        <text xml:lang="cs">Doba zrychlení/zpomalení (hybnost) se může rozprostírat v rozmezí nížších rychlostí</text>
-        <text xml:lang="de">Beschleunigungs-/Bremsverhalten kann im Niedriggeschwindigkeitsbereich angepasst werden.</text>
-      </label>
-    </row>
-    <row>
-      <column>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Exponential Acceleration"/>
-        <display item="Exponential Deceleration"/>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text>      </text>
-        </label>
-      </column>
-      <column>
-          <label>
-            <text> </text>
-          </label>
-          <label>
-            <text>Tens digit = percentage of speed range to be included (0-9)</text>
-            <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
-            <text xml:lang="cs">Desítky = procentuální podíl rozsahu otáček, které mají být zahrnuty (0-9)</text>
-            <text xml:lang="de">Zehnerstelle: Prozentsatz (0 bis 90 %) des Geschwindigkeitsbereichs (0-9)</text>
-          </label>
-          <label>
-            <text>Ones digit = Exponential curve (0-9)</text>
-            <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
-            <text xml:lang="cs">Jednotky = exponenciální křivka (0-9)</text>
-            <text xml:lang="de">Einerstelle: Parameter für die Krümmung der Exponentialfunktion. (0-9)</text>
-          </label>
-          <label>
-           <text> </text>
-          </label>
-      </column>
-    </row>
-   <group exclude="226,228">
-    <separator/>
-    <row>
-      <column>
-          <label>
-            <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
-            <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
-            <text xml:lang="cs">K zvyšování nebo snižování rychlosti na další interní krok dochází pouze pokud předchozí krok je téměř dosažen.</text>
-            <text xml:lang="de">Die Erhöhung bzw. Absenkung der Sollgeschwindigkeit soll erst nach einer definierten Annäherung der Ist-Geschwindigkeit</text>
-          </label>
-          <label>
-            <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
-            <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
-            <text xml:lang="cs">Tolerance pro dosažení předchozího kroku je definována tímto CV (menší hodnota pro hladké zrychlení/zpomalení)</text>
-            <text xml:lang="de">an die bisher vorgegebene Sollgeschwindigkeit erfolgen. Die CV #123 enthält den Fahrstufenabstand, der erreicht werden muss.</text>
-          </label>
-      </column>
-    </row>
-    <row>
-      <column>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Adaptive Acceleration/Deceleration"/>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text>     </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text> </text>
-        </label>
-        <label>
-            <text>Tens digit = acceleration (1-9)</text>
-            <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
-            <text xml:lang="cs">Desítky = zrychlení (1-9)</text>
-            <text xml:lang="de">Zehnerstelle: 0 - 9 für Beschleunigen (1 = starke Wirkung)</text>
-          </label>
-          <label>
-            <text>Ones digit = deceleration (1-9)</text>
-            <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
-            <text xml:lang="cs">Jednotky = zpomalení (1-9)</text>
-            <text xml:lang="de">Einerstelle: 0 - 9 für die Bremsung</text>
-          </label>
-          <label>
-            <text>Value 0 = no adaptive acceleration/deceleration</text>
-            <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
-            <text xml:lang="cs">Hodnota 0 = bez přizpůsobeného zrychlení/zpomalení</text>
-            <text xml:lang="de">0: kein adaptives Verfahren</text>
-          </label>
-        <label>
-          <text> </text>
-        </label>
-      </column>
+        <column>
+             <label>
+              <text> </text>
+            </label>
+            <display item="Load Control"/>   <!-- Motor Backlash Control, CV146 -->
+            <display item="Advanced Group 1 Option 1" />  <!-- Motor Brake CV151 -->
+             <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>Zimo "Seldom Used" Motor Controls</text>
+              <text xml:lang="cs">Řízení motoru Zimo "Zřídka kdy použito"</text>
+            </label>
+            <display item="EMF Droop Config"/>  <!-- CV10 -->
+            <display item="EMF Feedback Cutout"/>  <!-- CV113 -->
+            <display item="Kick Start"/>   <!-- motor types,  round low-impedance (Fleischmann) and C-Sinus motors  CV145 -->
+             <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>Zimo Experimental Motor Controls</text>
+              <text xml:lang="cs">Řízení motoru Zimo Experimentální</text>
+            </label>
+            <label>
+              <text>See Zimo Manuals, may be removed in future decoders</text>
+              <text xml:lang="cs">Viz Zimo Příručka, může být z budoucích dekodérů vyjmuto</text>
+            </label>
+            <display item="Total PWM Period"/>   <!--  EMF Extended Sample Time  CV147 -->
+            <display item="EMF Control Reference"/>  <!-- Differential value    CV148 -->
+            <display item="EMF Enable"/>   <!--   Adaptive proportional value   CV149 bit 0 -->
+            <display item="EMF Static Config"/>  <!--  Regulation at full speed    CV150 -->
+            <label>
+                <text> </text>
+            </label>
+        </column>
+
     </row>
    </group>
+
   </column>
 </pane>

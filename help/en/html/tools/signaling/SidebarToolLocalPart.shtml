@@ -1,15 +1,17 @@
 <!-- This is the local part of the sidebar for signaling -->
+<!-- Using absolute address link so this sidebar can also be referenced from interlock -->
 
-<dt><h3><a href="index.shtml">Signaling</a></h3></dt>
+<dt><a href="index.shtml">Signaling</a></dt>
 		<dd>Adding signals to your layout with JMRI.
 		    <ul>
-		    <li><a href="SignalingSetup.shtml">Signaling Quick Start</a>
-		    <li><a href="AspectSignaling.shtml">Aspect Signaling</a>
-		    <li><a href="SignalHeads.shtml">Signal Heads</a>
-		    <li><a href="SignalMasts.shtml">Signal Masts</a>
-		    <li><a href="SignalGroups.shtml">Signal Groups</a>
-		    <li><a href="SignalMastLogic.shtml">Signal Mast Logic</a>
-		    <li><a href="interlock/index.shtml">Entry Exit &amp; Interlocking</a>
-		    <li><a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling</a>
+		    <li><a href="/help/en/html/tools/signaling/SignalingSetup.shtml">Signaling Quick Start</a>
+		    <li><a href="/help/en/html/tools/signaling/AspectSignaling.shtml">Aspect Signaling</a>
+		    <li><a href="/help/en/html/tools/signaling/SignalHeads.shtml">Signal Heads</a>
+		    <li><a href="/help/en/html/tools/signaling/SignalMasts.shtml">Signal Masts</a>
+		    <li><a href="/help/en/html/tools/signaling/SignalGroups.shtml">Signal Groups</a>
+		    <li><a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
+		    <li><a href="../../../../../xml/signals/">Signal Mast Signaling Systems</a>
+		    <li><a href="/help/en/html/tools/signaling/interlock/index.shtml">Entry Exit &amp; Interlocking</a>
+		    <li><a href="/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling</a>
 		    </ul>
 		</dd>

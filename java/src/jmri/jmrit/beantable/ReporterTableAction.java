@@ -5,15 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.UserPreferencesManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a ReporterTable GUI.
@@ -39,7 +42,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
     }
 
-    protected ReporterManager reporterManager = InstanceManager.getDefault(jmri.ReporterManager.class);
+    protected ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
 
     /**
      * {@inheritDoc}
@@ -61,198 +64,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel<Reporter>() {
-            public static final int LASTREPORTCOL = NUMCOLUMN;
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String getValue(String name) {
-                Object value;
-                Reporter r = reporterManager.getBySystemName(name);
-                if (r == null) {
-                    return "";
-                }
-                value = r.getCurrentReport();
-                if (value == null) {
-                    return null;
-                } else if (value instanceof jmri.Reportable) {
-                    return ((jmri.Reportable) value).toReportString();
-                } else {
-                    return value.toString();
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public ReporterManager getManager() {
-                return reporterManager;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Reporter getBySystemName(String name) {
-                return reporterManager.getBySystemName(name);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Reporter getByUserName(String name) {
-                return reporterManager.getByUserName(name);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected String getMasterClassName() {
-                return getClassName();
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void clickOn(Reporter t) {
-                // don't do anything on click; not used in this class, because
-                // we override setValueAt
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void setValueAt(Object value, int row, int col) {
-                if (col == VALUECOL) {
-                    Reporter t = getBySystemName(sysNameList.get(row));
-                    t.setReport(value);
-                    fireTableRowsUpdated(row, row);
-                }
-                if (col == LASTREPORTCOL) {
-                    // do nothing
-                } else {
-                    super.setValueAt(value, row, col);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public int getColumnCount() {
-                return LASTREPORTCOL + getPropertyColumnCount() +1;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String getColumnName(int col) {
-                if (col == VALUECOL) {
-                    return Bundle.getMessage("LabelReport");
-                }
-                if (col == LASTREPORTCOL) {
-                    return Bundle.getMessage("LabelLastReport");
-                }
-                return super.getColumnName(col);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Class<?> getColumnClass(int col) {
-                if (col == VALUECOL) {
-                    return String.class;
-                }
-                if (col == LASTREPORTCOL) {
-                    return String.class;
-                }
-                return super.getColumnClass(col);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                if (col == LASTREPORTCOL) {
-                    return false;
-                }
-                return super.isCellEditable(row, col);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Object getValueAt(int row, int col) {
-                if (col == LASTREPORTCOL) {
-                    Reporter t = getBySystemName(sysNameList.get(row));
-                    Object value = t.getLastReport();
-                    if (value == null) {
-                        return null;
-                    } else if (value instanceof jmri.Reportable) {
-                        return ((jmri.Reportable) value).toReportString();
-                    } else {
-                        return value.toString();
-                    }
-                }
-                return super.getValueAt(row, col);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public int getPreferredWidth(int col) {
-                if (col == LASTREPORTCOL) {
-                    return super.getPreferredWidth(VALUECOL);
-                }
-                return super.getPreferredWidth(col);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void configValueColumn(JTable table) {
-                // value column isn't button, so config is null
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                return true;
-                // return (e.getPropertyName().indexOf("Report")>=0);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public JButton configureButton() {
-                log.error("configureButton should not have been called");
-                return null;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected String getBeanType() {
-                return Bundle.getMessage("BeanNameReporter");
-            }
-        };
+        m = new ReporterTableDataModel(reporterManager);
     }
 
     /**
@@ -283,7 +95,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     private final JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     private final String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     private Manager<Reporter> connectionChoice = null;
-    private jmri.UserPreferencesManager pref;
+    private UserPreferencesManager pref;
     private SystemNameValidator hardwareAddressValidator;
 
     /**
@@ -291,7 +103,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
      */
     @Override
     protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
@@ -303,7 +115,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            
+            if (hardwareAddressValidator==null){
+                hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, java.util.Objects.requireNonNull(prefixBox.getSelectedItem()), true);
+            } else {
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
+            }
+
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
@@ -316,7 +134,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
-
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(addButton);
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -363,7 +182,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             try {
@@ -384,11 +202,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 r = reporterManager.provideReporter(rName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(rName); // displays message dialog to the user
-                // add to statusBarLabel as well
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                handleCreateException(ex, rName); // displays message dialog to the user
                 return; // without creating
             }
 
@@ -455,11 +269,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String sysName) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        statusBarLabel.setForeground(Color.red);
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(ReporterManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -478,6 +294,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
+    // private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

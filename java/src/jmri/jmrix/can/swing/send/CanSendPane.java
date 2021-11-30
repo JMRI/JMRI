@@ -162,8 +162,10 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
         try {
-            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s", ""));
+            CanMessage m = createPacket(input.replaceAll("\\s", ""));
             if (cbusPriorityCheckbox.isSelected()) {
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             }

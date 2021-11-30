@@ -1,295 +1,260 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Introduction to JMRI Library Structure</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI technical code"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI Code: Introduction to JMRI Library Structure</h1>
-      
-      <p>This page is the top-level introduction to how the
-      JMRI software is organized.</p>
-      
-      <h2>Static Structure</h2>
-      
-        <p>At the highest level, we separate test source code from
-        distributed source code by putting both in separate directories
-        within the development directory: "java/test" and "java/src". This
-        makes it easy to compile a version without test code, to
-        apply different tools to the two types of code, etc.</p>
-        
-        <p>In addition to the source code, JMRI expects to find 
-        directories within the current directory:
-        <dl>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/help">help/</a></dt>
-            <dd>The <a href="Help.shtml">in-program help files</a></dd>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/jython">jython/</a></dt>
-            <dd>Various <a href="https://jmri.org/jython">sample</a> and 
-                <a href="https://jmri.org/jython/test">test</a> scripts.</dd>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/lib">lib/</a></dt>
-            <dd>Jar files and linkable libraries that JMRI relies on.</dd>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/resources">resources/</a></dt>
-            <dd>Image and sound resources used by the library, and available for 
-            user selection.  These can be 
-            <a href="https://jmri.org/resources">directly browsed</a>.</dd>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/web">web/</a></dt>
-            <dd>Files for JMRI's built-in web servers</dd>
-        <dt><a href="https://github.com/JMRI/JMRI/blob/master/xml">xml/</a></dt>
-            <dd>XML files for decoder and programmer definitions, 
-                <a href="../../tools/signaling/AspectSignaling.shtml">signal system definitions</a>,
-                <a href="XmlSchema.shtml">Schema</a> and DTDs used to validate JMRI's 
-                <a href="XmlPersistance.shtml">XML persistance</a>, 
-                and others.
-                </dd>
-        </dl>
-        plus specific files used by the 
-        <a href="Ant.shtml">build process</a>,
-        to <a href="Logging.shtml">control logging</a>,
-        and containing the 
-        <a href="/Copyright.shtml">JMRI license</a>.
 
+      <p>This page is the top-level introduction to how the JMRI software is organized.</p>
+
+      <h2>Static Structure</h2>
+
+      <p>At the highest level, we separate test source code from distributed source code by putting
+      both in separate directories within the development directory: "java/test" and "java/src".
+      This makes it easy to compile a version without test code, to apply different tools to the
+      two types of code, etc.</p>
+
+      <p>In addition to the source code, JMRI expects to find directories within the current
+      directory:</p>
+
+      <dl>
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/help">help/</a>
+        </dt>
+
+        <dd>
+          The <a href="Help.shtml">in-program help files</a>
+        </dd>
+
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/jython">jython/</a>
+        </dt>
+
+        <dd>
+          Various <a href="https://jmri.org/jython">sample</a> and <a href=
+          "https://jmri.org/jython/test">test</a> scripts.
+        </dd>
+
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/lib">lib/</a>
+        </dt>
+
+        <dd>Jar files and linkable libraries that JMRI relies on.</dd>
+
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/resources">resources/</a>
+        </dt>
+
+        <dd>
+          Image and sound resources used by the library, and available for user selection. These
+          can be <a href="https://jmri.org/resources">directly browsed</a>.
+        </dd>
+
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/web">web/</a>
+        </dt>
+
+        <dd>Files for JMRI's built-in web servers</dd>
+
+        <dt>
+          <a href="https://github.com/JMRI/JMRI/blob/master/xml">xml/</a>
+        </dt>
+
+        <dd>
+          XML files for decoder and programmer definitions, <a href=
+          "../../tools/signaling/AspectSignaling.shtml">signal system definitions</a>, <a href=
+          "XmlSchema.shtml">Schema</a> and DTDs used to validate JMRI's <a href=
+          "XmlPersistance.shtml">XML persistance</a>, and others.
+        </dd>
+      </dl>
+      plus specific files used by the <a href="Ant.shtml">build process</a>, to <a href=
+      "Logging.shtml">control logging</a>, and containing the <a href="/copyright.shtml">JMRI
+      license</a>.
       <h3>Static Package and Class Structure</h3>
 
-      <p>For interfaces in the
-      <code>jmri</code> package, which might be implemented by lots
-      of different layout hardware types, <code>jmri.InstanceManager</code>
-      satisfies these requests by providing access to 
-      hardware-specific <code>Managers</code>, from
-      which you can get the hardware-specific items 
-      that represent what you want to access on the layout.
-      </p>
-      <a href="images/OverallPackageStructure.png">
-        <img src="images/OverallPackageStructure.png" align="right" height="261" width="247" style="border:1px solid blue"/>
-      </a>
-      <p>Because
-      we have different hardware implementations in 
-      subpackages of the 
-      <code>jmrix</code> package, 
-      those are also accessed via the 
-      <code>ConnectionManager</code>classes,
-      which provide access to generally-defined objects.
-      <p>Other code should, in general, not reference
-      those specific implementations directly.</p>
+      <p>For interfaces in the <code>jmri</code> package, which might be implemented by lots of
+      different layout hardware types, <code>jmri.InstanceManager</code> satisfies these requests
+      by providing access to hardware-specific <code>Managers</code>, from which you can get the
+      hardware-specific items that represent what you want to access on the layout.</p>
+      <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png"
+      class="floatRight" height="261" width="247" style="border:1px solid blue" alt=
+      "package structure"></a>
+      <p>Because we have different hardware implementations in subpackages of the
+      <code>jmrix</code> package, those are also accessed via the
+      <code>ConnectionManager</code>classes, which provide access to generally-defined objects.</p>
 
-      <p>(The help/en/packages section of the in-program help files are also organized this way)</p>
-              
+      <p>Other code should, in general, not reference those specific implementations directly.</p>
+
+      <p>(The help/en/packages section of the in-program help files are also organized this
+      way)</p>
+
       <p>More specifically:</p>
 
       <dl>
         <dt>jmri</dt>
 
-        <dd>Contains interfaces and base class implementations for
-        the common JMRI objects. This is the basic interface to the
-        overall JMRI library and its capabilities.<br>
-        Code in the jmri package should depend on no other JMRI
-        code, though it may depend on externals (log4j, etc.)
-        There should be no AWT or Swing code here.</dd>
+        <dd>Contains interfaces and base class implementations for the common JMRI objects. This is
+        the basic interface to the overall JMRI library and its capabilities.<br>
+        Code in the jmri package should depend on no other JMRI code, though it may depend on
+        externals (log4j, etc.) There should be no AWT or Swing code here.</dd>
 
         <dt>jmrit</dt>
 
-        <dd>Contains commonly useful <strong>t</strong>ools and
-        extensions.<br>
-        It can depend on jmri.* and externals. It must not depend
-        on jmrix.*
-
-      <a href="images/OverallImplementationStructure.png">
-        <img src="images/OverallImplementationStructure.png" align="right" height="261" width="360"  style="border:1px solid blue" />
-      </a>
+        <dd>
+          Contains commonly useful <strong>t</strong>ools and extensions.<br>
+          It can depend on jmri.* and externals. It must not depend on jmrix.* <a href=
+          "images/OverallImplementationStructure.png"><img src=
+          "images/OverallImplementationStructure.png" class="floatRight" height="261" width="360"
+          style="border:1px solid blue" alt="implementation structure"></a>
         </dd>
 
         <dt>jmrix</dt>
 
-        <dd>Contains code that is specific to a particular
-        e<strong>x</strong>ternal system. This includes
-        implementations of jmri interfaces that are specific to a
-        system, plus system-specific tools (in the long run, those
-        could certainly be separated).<br>
+        <dd>Contains code that is specific to a particular e<strong>x</strong>ternal system. This
+        includes implementations of jmri interfaces that are specific to a system, plus
+        system-specific tools (in the long run, those could certainly be separated).<br>
         jmrix can depend on jmri and externals, but not jmrit.<br>
-        Only system-specific code should access within the 
-        jmrix subpackages.
-        </dd>
+        Only system-specific code should access within the jmrix subpackages.</dd>
 
         <dt>jmris</dt>
 
-        <dd>contains all the code for the server implementation for
-        the JMRI interfaces.</dd>
+        <dd>contains all the code for the server implementation for the JMRI interfaces.</dd>
 
         <dt>managers</dt>
 
-        <dd>Abstract and default implementations of the various
-        JMRI type managers, e.g. the concrete classes from the
-        InstanceManager. It's a historical accident that these have
-        a package of their own, rather than being rolled into
-        jmri.implementations. </dd>
+        <dd>Abstract and default implementations of the various JMRI type managers, e.g. the
+        concrete classes from the InstanceManager. It's a historical accident that these have a
+        package of their own, rather than being rolled into jmri.implementations.</dd>
 
         <dt>implementations</dt>
 
-        <dd>Abstract and default implementations of the jmri
-        objects; no system specific or Swing code allowed here.
-        These are in a separate package, rather than in jmri
-        itself, to make the jmri package simpler to understand for
-        people who just want to use the library.</dd>
+        <dd>Abstract and default implementations of the jmri objects; no system specific or Swing
+        code allowed here. These are in a separate package, rather than in jmri itself, to make the
+        jmri package simpler to understand for people who just want to use the library.</dd>
 
         <dt>util</dt>
 
-        <dd>General service classes that are <em>not</em> user level
-        tools. Should not
-        depend on jmri.jmrit or jmri.jmrix packages. The
-        jmri.util.swing subpackage provides Swing utilities.
-        <p>
-        This is an exception to the idea that packages should
-        not directly reference classes across the tree: these utility
-        classes are generally available for use.
-      <a href="images/OverallAppDependencies.png">
-        <img src="images/OverallAppDependencies.png" align="right" height="456" width="325"  style="border:1px solid blue" />
-      </a>
+        <dd>
+          General service classes that are <em>not</em> user level tools. Should not depend on
+          jmri.jmrit or jmri.jmrix packages. The jmri.util.swing subpackage provides Swing
+          utilities.
+          <p>This is an exception to the idea that packages should not directly reference classes
+          across the tree: these utility classes are generally available for use. <a href=
+          "images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png" class=
+          "floatRight" height="456" width="325" style="border:1px solid blue" alt=
+          "dependencies"></a></p>
         </dd>
-        
 
         <dt>apps</dt>
 
-        <dd>Separate from the jmri package tree, this contains application classes 
-        and base classes that can use jmri, jmrit,
-        and jmrix classes, along with anything else. By having this
-        here, we break the dependency between jmrix and jmrit
-        classes (somebody has to create the general and
-        system-specific tool objects for an application; that
-        dependency is from the apps package)</dd>
+        <dd>Separate from the jmri package tree, this contains application classes and base classes
+        that can use jmri, jmrit, and jmrix classes, along with anything else. By having this here,
+        we break the dependency between jmrix and jmrit classes (somebody has to create the general
+        and system-specific tool objects for an application; that dependency is from the apps
+        package)</dd>
+      </dl>
+      Although it's not always honored, the tree structure here is important: Packages should
+      <em>not</em> reference across the tree. Code in <code>jmri.jmrit</code> is welcome to
+      reference classes in the <code>jmri</code> package, but should not reference directly to
+      classes in <code>jmri.jmrix</code>. Classes should reference the interfaces in
+      <code>jmri</code>, not the specific details of classes in <code>jmri.managers</code> and
+      <code>jmri.implementations</code>. It can be tempting to violate this rule in the interest of
+      expediency, but in the long run it makes it much harder for JMRI to be maintained and
+      improved by a large group of people. We just can't allow lots of tiny little special cases to
+      make the code impossible to understand. We're developing <a href=
+      "https://www.archunit.org">ArchUnit</a> tests for this which can be run via
+      <code>./runtest.csh jmri.ArchitectureCheck</code> as part of <a href="JUnit.shtml">developer
+      unit testing</a> (there is also a PowerShell script available, see the <a href=
+      "JUnit.shtml">developer unit testing</a> page for more information). This will highlight many
+      existing structure violations in addition to new ones because we haven't yet cleaned up some
+      historical issues. There's also <code>jmri.ArchitectureTest</code> which is run as part of
+      our <a href="ContinuousIntegration.shtml">CI tests</a>, and catches new violations of a
+      subset of the constraints.
+      <p>Similarly, we have conventions for where to locate <a href="Swing.shtml">Swing GUI
+      code</a> and <a href="XmlPersistance.shtml">persistance (store/load) code</a> that limits how
+      embedded in them main code they become.</p>
 
-     </dl>
-
-     
-
-      Although it's not always honored, the tree structure here is important:
-      Packages should <em>not</em> reference across the tree.
-      Code in <code>jmri.jmrit</code> is welcome to reference classes
-      in the <code>jmri</code> package, but should not reference
-      directly to classes in <code>jmri.jmrix</code>. 
-      Classes should reference the interfaces in <code>jmri</code>,
-      not the specific details of classes in 
-      <code>jmri.managers</code> and <code>jmri.implementations</code>.
-      It can be tempting 
-      to violate this rule in the interest of expediency, but in the
-      long run it makes it much harder for JMRI to be maintained and 
-      improved by a large group of people.  We just can't allow lots of 
-      tiny little special cases to make the code impossible to understand.
-      We're developing
-      <a href="https://www.archunit.org">ArchUnit</a>
-      tests for this which can be
-      run via <code>./runtest.csh jmri.ArchitectureCheck</code>
-      as part of
-      <a href="JUnit.shtml">developer unit testing</a>
-        (there is also a PowerShell script available, see the
-        <a href="JUnit.shtml">developer unit testing</a> page for more information).
-      This will highlight many existing structure violations
-      in addition to new ones
-      because we haven't yet cleaned up some historical issues.
-      There's also <code>jmri.ArchitectureTest</code>
-      which is run as part of our
-      <a href="ContinuousIntegration.shtml">CI tests</a>,
-      and catches new violations of a subset of the constraints.
-      
-      <p>
-      Similarly, we have conventions for where to locate
-      <a href="Swing.shtml">Swing GUI code</a> and
-      <a href="XmlPersistance.shtml">persistance (store/load) code</a>
-      that limits how embedded in them main code they become.
-      
       <h3>Example: a Turnout</h3>
       Turnouts involve multiple classes:
-
       <ul>
-        <li>Turnout - the basic interface. This is what you should
-        expect to deal with when writing your layout automation
-        code; its what you get when you make a request from the
+        <li>Turnout - the basic interface. This is what you should expect to deal with when writing
+        your layout automation code; its what you get when you make a request from the
         TurnoutManager, etc.</li>
 
-        <li>AbstractTurnout - provided for convenience when
-        implementing the Turnout interface for specific hardware,
-        this provides the basic implementation.</li>
+        <li>AbstractTurnout - provided for convenience when implementing the Turnout interface for
+        specific hardware, this provides the basic implementation.</li>
 
-        <li>LnTurnout - a specific implementation for
-        LocoNet-connected turnouts. There are many other implementations
-        for different layout connections.</li>
+        <li>LnTurnout - a specific implementation for LocoNet-connected turnouts. There are many
+        other implementations for different layout connections.</li>
       </ul>
-      
+
       <h2>Dynamic (Object) Structure</h2>
 
-      <p>For many JMRI objects, once they have been created they can 
-      be accessed either by type, i.e. "The default configuration manager", or 
-      by name, i.e. "The East Yard Entrance turnout".
-      More information on how things (e.g. objects representing
-      items on the layout) are named
+      <p>For many JMRI objects, once they have been created they can be accessed either by type,
+      i.e. "The default configuration manager", or by name, i.e. "The East Yard Entrance turnout".
+      More information on how things (e.g. objects representing items on the layout) are named
       <a href="Names.shtml">is available on a separate page</a>.</p>
 
-      <p>The 
-      <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
-      as a key central point for this navigation.
-        <ul>
-            <li>It provides access to key objects, particularly the Managers
-                that mediate access to Turnouts, Sensors, etc.
-            <li>It automatically handles creation of many parts of JMRI via
-                several mechanisms:
-                <ul>
-                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
-                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
-                </ul>
-                and, when needed, provides for their
-                    <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
-            </li>
-            <li>It 
-                <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
-                of 
-                <a href="https://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
-                at the end of their lifespan when the InstanceManager (or a particular collection in it)
-                is cleared.</li>
-        </ul>
+      <p>The <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
+      as a key central point for this navigation.</p>
 
-      <p>Extensive use of Factory pattern via objects we call
-      "Manager" objects.</p>
+      <ul>
+        <li>It provides access to key objects, particularly the Managers that mediate access to
+        Turnouts, Sensors, etc.</li>
+
+        <li>It automatically handles creation of many parts of JMRI via several mechanisms:
+          <ul>
+            <li>
+              <a href=
+              "https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a>
+            </li>
+
+            <li>
+              <a href=
+              "https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+            </li>
+          </ul>
+          and, when needed, provides for their <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation
+          initialization</a>.
+        </li>
+
+        <li>It <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a>
+        of <a href="https://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a> at the
+        end of their lifespan when the InstanceManager (or a particular collection in it) is
+        cleared.
+        </li>
+      </ul>
+
+      <p>Extensive use of Factory pattern via objects we call "Manager" objects.</p>
 
       <h3>Example: a Turnout</h3>
 
-      <p>To get a specific Turnout instance that represents
-      something on the layout, you make a request of a
-      TurnoutManager. This is also an interface, with a similar
-      implementation pattern. In turn, you get that TurnoutManager
-      from the InstanceManager.
-      
-      <p>The role of the generic Manager&lt;T&gt; class
-      
-      <p>NamedBean and addressing as part of the Manager's role.
-      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.</p>
+      <p>To get a specific Turnout instance that represents something on the layout, you make a
+      request of a TurnoutManager. This is also an interface, with a similar implementation
+      pattern. In turn, you get that TurnoutManager from the InstanceManager.</p>
 
+      <p>The role of the generic Manager&lt;T&gt; class</p>
+
+      <p>NamedBean and addressing as part of the Manager's role.</p>
+
+      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

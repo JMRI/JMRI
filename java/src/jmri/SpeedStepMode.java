@@ -61,8 +61,8 @@ public enum SpeedStepMode {
      * @throws IllegalArgumentException if name does not correspond to a valid speed step mode.
      */
     static public SpeedStepMode getByName(String name) {
-        for(SpeedStepMode s : SpeedStepMode.values()) {
-            if(s.name.equals(name)) {
+        for (SpeedStepMode s : SpeedStepMode.values()) {
+            if (s.name.equals(name)) {
                 return s;
             }
         }
@@ -77,8 +77,8 @@ public enum SpeedStepMode {
      * @throws IllegalArgumentException if name does not correspond to a valid speed step mode.
      */
     static public SpeedStepMode getByDescription(String name) {
-        for(SpeedStepMode s : SpeedStepMode.values()) {
-            if(s.description.equals(name)) {
+        for (SpeedStepMode s : SpeedStepMode.values()) {
+            if (s.description.equals(name)) {
                 return s;
             }
         }

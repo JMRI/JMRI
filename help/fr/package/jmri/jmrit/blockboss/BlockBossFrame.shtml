@@ -1,423 +1,255 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Updated by Herv&#233; Blorec 2013-10-14-->
-
-  <title>JMRI: SSL Documentation</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Simple Signal Logic</title>
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20171115">
+  <meta name="keywords" content="JMRI help Simple Signal Logic"><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
+
+  <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI : La logique du signal simple</h1>
+      <a name="contents" id="contents"></a>
+      <h2>Contenu</h2>
 
-      <h1>JMRI: Documentation Logique Simple Signal</h1>
-
-      <h2><a name="contents" id="contents">Contenus</a></h2>
-
-      <p>La documentation ci-dessous d&eacute;crit la Signalisation
-      avec JMRI, et discute de la configuration des situations de
-      base des signaux. La documentation est divis&eacute;e en
-      sections; cliquez ci-dessous pour un acc&egrave;s facile
-      &agrave; une section cot&eacute;es. Si vous
-      pr&eacute;f&eacute;rez essayer avant de lire beaucoup, lire
-      l<a href="#intro">'introduction &agrave; SSL</a> , puis
-      cliquez sur <a href="#start">Mise en route</a> et suivez les
-      instructions. Retour ici pour lire &agrave; propos de ce que
-      vous faisiez.</p>
+      <p>La documentation ci-dessous décrit la signalisation avec JMRI. à l'aide d'un outil plus
+      ancien, SSL, et discute de la façon de configurer les situations de base de la signalisation
+      avec cet outil.</p>
 
       <ul>
-        <li><a href="#terms">Vocabulaire de base</a></li>
+        <li><a href="#intro">Introduction</a>
+        </li>
 
-        <li><a href="#intro">Introduction &agrave; SSL</a></li>
+        <li><a href="#start">Démarrer</a>
+        </li>
 
-        <li><a href="#SSL">SSL</a></li>
+        <li><a href="#more">Plus d'informations</a>
+        </li>
+      </ul>
+      <a name="intro" id="intro"></a>
+      <h2>Introduction</h2>
 
-        <li><a href="#start">Mise en route</a></li>
+      <p>La logique du signal simple (SSL) a fourni la première méthode permettant la mise en place
+      rapide d'une signalisation de base de style (BAL dans JMRI (cette logique est faite pour la
+      signalisation US). Pour des opérations plus complexes dépassant les capacités de SSL,
+      reportez-vous à la nouvelle méthode plus récente et préférée de Logique des Mâts de
+      Signalisation sur le site <a href="../../../../html/tools/signaling/index.shtml">page d'aide
+      Signalisation Principale</a> . Notez que SSL ne tient pas compte des objets Mâts de
+      Signalisation et ne pilote que les Signaux individuels.</p>
+
+      <p>.</p>
+
+      <p><strong>N'utilisez pas l'outil SSL lorsque vous avez déjà construit des Mâts de
+      Signalisation et la logique des Mâts de Signalisation plus avancée dans le même
+      Panneau/fichier de configuration.</strong>
+      </p>
+
+      <p>.</p>
+
+      <p>Une grande partie de la signalisation BAL de base peut être résumée à " un... Signal passe
+      au rouge lorsqu'un train ne peut pas entrer en toute sécurité dans le Canton qu'il protège.
+      protège ; il passe au jaune lorsque le Canton suivant protégé ne peut pas être pénétré. Bien
+      qu'il s'agisse d'une simplification, il peut servir de point de départ puissant pour
+      comprendre la logique de signalisation.</p>
+
+      <p>L'interface utilisateur SSL a été conçue pour être conviviale pour tous les utilisateurs
+      ayant une familiarité de base avec JMRI. SSL fournit un moyen de configurer des signaux de
+      base de manière intuitive, sans que l'utilisateur n'ait à se familiariser avec toute la
+      logique nécessaire pour tenir compte des différents aspects du signal. <a href=
+      "../../../../images/SslExample.png"><img src="..." align="right" width="452" height="287"
+      hspace="0" vspace="0" alt="Figure du panneau Simple Signal Logic"></a></p>
+      .
+      <p>L'outil de logique de signal simple vous permet de configurer JMRI pour utiliser une
+      logique de base de type BAL afin de définir l'apparence des Signaux de signal. Les champs
+      varient en fonction de l'option sélectionnée. . à l'aide de l'outil SSL, vous saisissez les
+      informations pour chaque Signal sur :</p>
+
+      <ul>
+        <li><strong>Pour le Signal:</strong> Le Signal étant piloté.</li>
+
+        <li><strong>Protège le(s) Capteur(s):</strong> Quels capteurs (détecteurs d'occupation
+        détecteurs) couvrent le Canton immédiatement après le signal. Lorsque l'un de ces capteurs
+        indique " actif ", le Signal sera mis au rouge.</li>
+
+        <li><strong>Rouge quand Aiguillage:</strong> Si le Canton contient un aiguillage,
+        choisissez ou saisissez le Nom Système de l'Aiguillage et utilisez les boutons de sélection
+        pour choisir si vous entrez sur la voie directe ou déviée. Le Signal sera réglé sur Rouge
+        chaque fois que l'aiguillage est placé contre cette voie.</li>
+
+        <li><strong>Protège le Signal :</strong> Le prochain Signal que le train atteindra ; ce
+        Signal sera mise sur Jaune si le Signal suivant est rouge.</li>
+
+        <li><strong>Avec Jaune Clignotant</strong> Si la case est cochée, le Signal sera mise en
+        jaune clignotant (JMRI va alternera entre éteint et jaune) si le prochain Signal protégée
+        protégée suivante est jaune, donnant ainsi une signalisation à quatre Cantons.li&gt;</li>
+
+        <li><strong>Vitesse Limitée</strong> Si cette case est cochée, ce Signal sera réglé sur le
+        jaune comme l'aspect le moins restrictif.</li>
+
+        <li><strong>Vitesse restreinte</strong> Si cette case est cochée, ce Signal sera réglé sur
+        rouge clignotant comme aspect le moins restrictif.</li>
+
+        <li><strong>Est un signal distant</strong> Si cette case est cochée, ce signal sera défini
+        comme l'aspect le plus restrictif de ce Signal, soit le prochain Signal protégé.</li>
+
+        <li><strong>Capteur de Signal d'Approche :</strong> Le capteur qui commande si ce Signal
+        est allumée ou non. Seule la Signal matériel réel sur le réseau s'éteindra. Les indicateurs
+        du panneau afficheront l'apparence normale du signal. Laissez cette entrée vide pour
+        toujours afficher Allumé.</li>
+
+        <li><strong>Aiguillage en Pointe</strong> La signal est situé sur le côté voie unique de
+        l'aiguillage, faisant face à un choix de deux voies ou plus dans le sens de la marche.</li>
+
+        <li><strong>Aiguillage en Talon</strong> Le Signal est située du côté de la double voie de
+        l'aiguillage, face à une seule voie dans le sens de la marche. .</li>
       </ul>
 
-      <h2><a name="terms" id="terms">Vocabulaire</a></h2>
+      <p>Le cas d'un aiguillage en pointe orientée qui conduit à deux " signaux protégés "
+      différents est également traité. Si un seul Signal est utilisé pour contrôler les deux
+      embranchements, choisissez " Aiguillage en Pointe ". Si un Signal différent contrôle chaque
+      voie, alors il suffit de choisir la branche "principale" ou "divergente" de l'aiguillage,
+      comme requis pour chacun d'eux.</p>
 
-      <p>Quelques termes de base:</p>
+      <p>Posez votre souris sur toute entrée ou élément dans le volet de création de SSL. pour
+      obtenir un bref rappel d'aide "tooltip".</p>
 
-      <dl>
-        <dt><b>Bras du Signal</b> ou <b>Signal</b></dt>
+      <p>Utilisez le bouton <strong>Appliquer</strong> pour créer une nouvelle définition SSL ou
+      mettre à jour une définition existante. Le bouton <strong>Supprimer</strong> supprimera la
+      définition SSL.</p>
 
-        <dd>Chaque unit&eacute; de signal individuel.</dd>
+      <p>Il est clair que le SSL ne couvrira pas les enclenchements compliqués. et ne couvrira pas
+      non plus la signalisation de vitesse vue sur certains prototypes. Cependant, lorsqu'il est
+      combiné avec les capacités logiques de JMRI <a href=
+      "../../../html/tools/Routes.shtml">Itinéraires</a> et <a href=
+      "../../../html/tools/Logix.shtml">Logix</a>, SSL peut être utilisé pour créer un panneau CTC,
+      comme le montre Bob Bucklew sur <a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">son
+      site web</a> .</p>
+      <a name="start" id="start"></a>
+      <h2>Démarrer</h2>
 
-        <dt><b>Aspect</b></dt>
-
-        <dd>La vitesse ou l'indication donn&eacute;e pour un
-        itin&eacute;raire par une ou plusieurs t&ecirc;tes de
-        signal ou bras.</dd>
-
-        <dt><b>Marqueur</b></dt>
-
-        <dd>Une t&ecirc;te de signal ou un bras qui ne change pas
-        de couleur ou de position.</dd>
-
-        <dt><b>Lumi&egrave;re</b></dt>
-
-        <dd>La lampe individuelle dans un signal. Une
-        lumi&egrave;re peut indiquer de multiples aspects si elle
-        change de couleur comme dans projecteur, ou elle peut
-        prendre plusieurs lumi&egrave;res pour indiquer un seul
-        aspect, par exemple en position de signaux lumineux.</dd>
-
-        <dt><b>M&acirc;t</b></dt>
-
-        <dd>Le poteau sur lequel sont mont&eacute;s un ou plusieurs
-        bras qui (normalement) contr&ocirc;le individuellement
-        chaque voie.</dd>
-
-        <dt><b>Signal Distant</b></dt>
-
-        <dd>Un signal &eacute;loign&eacute; montrant les
-        m&ecirc;mes aspects ou des aspect plus restrictif que le
-        prochain signal dans la direction et l'itin&eacute;raire du
-        voyage.</dd>
-      </dl>
-
-      <p>Quelques termes sp&eacute;cifiques &agrave; SSL et aux
-      Signaux JMRI :</p>
-
-      <dl>
-        <dt><b>Tableau T&ecirc;te Signal</b></dt>
-
-        <dd>la liste des signaux dans JMRI. Les signaux doivent
-        d'abord &ecirc;tre ajout&eacute; dans le Tableau T&ecirc;te
-        Signal avant qu'ils puissent &ecirc;tre inclus dans une
-        entr&eacute;e de SSL ou Logix.</dd>
-
-        <dt><b>Sortie Triple</b></dt>
-
-        <dd>Une t&ecirc;te signal dont chaque aspect est
-        directement entra&icirc;n&eacute; &agrave; partir d'une
-        ligne individuelle de sortie (appel&eacute; un aiguillage).
-        Chaque changement d'aspect n&eacute;cessite l'envoi de
-        trois commandes.</dd>
-
-        <dt><b>Sortie Double</b></dt>
-
-        <dd>Une t&ecirc;te signal qui utilise seulement deux lignes
-        de sortie pour indiquer 4 aspects de signal.
-        Habituellement, ces aspects seront Approche, Libre, Stop,
-        et Eteint. Le codage de sortie est tel qu'un aiguillage
-        d&eacute;vi&eacute; indique l'arr&ecirc;t et qu'un autre
-        d&eacute;vi&eacute; indique libre. Les deux sorties
-        d&eacute;vi&eacute;es indiquent l'approche, et les deux
-        directs sont sombres. Chaque changement d'aspect
-        n&eacute;cessite l'envoi de deux commandes.</dd>
-
-        <dt><b>SE8c</b></dt>
-
-        <dd>Un signal contr&ocirc;l&eacute; par un aiguillage
-        unique pour le changement d'aspect. Un changement de
-        commande d'aiguillage change entre arr&ecirc;ter et claire,
-        et la seconde commande aiguillage change entre approche et
-        &eacute;teint.</dd>
-
-        <dt><b>Virtuel</b></dt>
-
-        <dd>les signaux virtuels sont des signaux internes &agrave;
-        JMRI sans mat&eacute;riel r&eacute;el. Avant
-        l'av&egrave;nement de Logix, les Signaux Virtuels
-        &eacute;taient n&eacute;cessaires pour r&eacute;soudre des
-        op&eacute;rations plus complexes qui ne pouvaient pas
-        &ecirc;tre faites avec un simple SSL .</dd>
-
-        <dt><b>Capteur Prot&eacute;g&eacute;</b></dt>
-
-        <dd>Le prochain capteur du canton suivant le signal que
-        vous contr&ocirc;lez dans la direction et
-        l'itin&eacute;raire La "protection" est d'emp&ecirc;cher un
-        train d'entrer dans un canton occup&eacute; sans
-        avertissement.</dd>
-
-        <dt><b>Signal prot&eacute;g&eacute;</b></dt>
-
-        <dd>Le signal suivant celui que vous contr&ocirc;lez dans
-        la direction et l'itin&eacute;raire. La "protection" est
-        d'emp&ecirc;cher un train de s'adresser &agrave; un signal
-        d'arr&ecirc;t sans avertissement suffisant pour lui
-        permettre d'&ecirc;tre arr&ecirc;t&eacute; avant
-        d'atteindre le signal "prot&eacute;g&eacute;".</dd>
-
-        <dt><b>Nom Syst&egrave;me</b></dt>
-
-        <dd>La repr&eacute;sentation interne JMRI pour le
-        mat&eacute;riel r&eacute;el utilis&eacute; pour
-        contr&ocirc;ler le signal. Cela varie en fonction de votre
-        mat&eacute;riel, et doit correspondre &agrave; votre
-        syst&egrave;me.</dd>
-      </dl><a name="table" id="table"></a>
-
-      <h2>Tableau T&ecirc;te Signal</h2><a href=
-      "./images/SigTable.png"><img src="./images/SigTable.png"
-      align="right" width="588" height="332" hspace="0" vspace=
-      "0"></a>
-
-      <p>Tous les signaux que JMRI conna&icirc;t peuvent &ecirc;tre
-      r&eacute;f&eacute;renc&eacute;s en utilisant l'Outil "Tableau
-      T&ecirc;te Signal" dans le menu de la plupart des programmes
-      JMRI. Il y a huit colonnes dans la table:</p>
-
-      <ul>
-        <li>Le nom syst&egrave;me est attribu&eacute; au signal
-        quand il est cr&eacute;&eacute;, et ne peut pas &ecirc;tre
-        chang&eacute;.</li>
-
-        <li>Si vous vous voulez que vos signaux portent des noms
-        "lisibles" , vous pouvez cliquer dans la colonne "Nom
-        Utilisateur" et modifier ces informations, mettez ce que
-        vous voulez.</li>
-
-        <li>Quand un signal change, pour une raison quelconque,
-        l'apparence courante est montr&eacute;e dans le tableau
-        dans la colonne "Etat". Vous pouvez &eacute;galement
-        cliquer sur le bouton apparence pour faire d&eacute;filer
-        les apparences disponibles: rouge, jaune, vert, rouge
-        clignotant, clignotant jaune, vert clignotant, et
-        sombre.</li>
-
-        <li>La colonne "Commentaire" est pour votre usage pour
-        enregistrer tout commentaire que vous jugerez
-        peut-&ecirc;tre utile pour garder une trace de vos signaux.
-        Il est &agrave; titre d' information seulement.</li>
-
-        <li>Cliquez sur le bouton "Supprimer" dans une ligne
-        sp&eacute;cifique pour supprimer le signal. N'oubliez pas
-        d'enlever toutes les ic&ocirc;nes de signal associ&eacute;
-        &agrave; ce signal et toutes les r&eacute;f&eacute;rences
-        &agrave; ce signal. Utilisez cette touche avec
-        pr&eacute;caution!</li>
-
-        <li>La case &agrave; cocher dans "Allum&eacute;" vous
-        permet de contr&ocirc;ler si le signal sur le r&eacute;seau
-        est allum&eacute; (coch&eacute;) ou reste sombre (non
-        coch&eacute;).</li>
-
-        <li>La case &agrave; cocher dans la colonne "Tenu" indique
-        la propri&eacute;t&eacute; du "lieu" du signal, et vous
-        permet de le changer. Cette propri&eacute;t&eacute; est par
-        exemple utilis&eacute; par la logique de la machine CTC**
-        pour dire "Ne changez pas ce signal du rouge, m&ecirc;me
-        s'il serait prudent de le faire, parce que je veux
-        arr&ecirc;ter un train ici ".</li>
-
-        <li>Cliquez sur le bouton "&eacute;diter" dans une
-        rang&eacute;e pour afficher ou modifier les informations
-        facultatives pour un signal. Notes: Le nom syst&egrave;me
-        et le type ne peut pas &ecirc;tre chang&eacute;. Un seul
-        signal peut &ecirc;tre &eacute;dit&eacute; &agrave; la
-        fois.</li>
-      </ul><a href="./images/SigAdd.gif"><img src=
-      "./images/SigAdd.gif" align="right" width="181" height="218"
-      hspace="0" vspace="0" alt=
-      "panneau de figure simple logique signal"></a>
-
-      <p>Pour d&eacute;finir un nouveau signal, cliquez sur le
-      bouton <b>Ajouter ...</b>. Il vous sera demander le type de
-      signal (sortie triple; Double sortie; SE8c; etc), et toutes
-      les informations de configuration n&eacute;cessaire pour
-      votre choix.</p>
-
-      <p>Ces informations sont enregistr&eacute;es avec la
-      configuration dans un fichier XML, au cours de l'installation
-      du panneau de commande, Logix, itin&eacute;raires, et des
-      choses similaires. Pour plus d'informations sur la
-      cr&eacute;ation et l'affichage des panneaux, y compris la
-      fa&ccedil;on de montrer les signaux sur vos panneaux, s'il
-      vous pla&icirc;t voir les <a href=
-      "../../../../html/apps/PanelPro/Panels.shtml">pages
-      Panneaux</a>. <a name="intro" id="intro"></a></p>
-
-      <h2>Introduction &agrave; SSL</h2>
-
-      <p>SSL est un outil JMRI pour permettre l'installation rapide
-      de la signalisation de base ABS*. Pour les op&eacute;rations
-      plus complexes au-del&agrave; des capacit&eacute;s de SSL se
-      r&eacute;f&eacute;rer &agrave; la section sur Logix.
-      L'interface utilisateur de SSL est con&ccedil;u pour
-      &ecirc;tre convivial pour tous les utilisateurs avec une
-      familiarit&eacute; de base avec JMRI. SSL fournit un moyen
-      pour la mise en place de signaux de base de mani&egrave;re
-      intuitive, sans que l'utilisateur ait &agrave; se
-      familiariser avec l'ensemble de la logique n&eacute;cessaire
-      pour tenir compte des diff&eacute;rents aspects. <a name=
-      "SSL" id="SSL"></a> <a name="logic" id="logic"></a></p>
-
-      <h2>Logique Simple Signal</h2><a href=
-      "../../../images/SslExample.png"><img src="../../../images/SslExample.png" align=
-      "right" width="354" height="499" hspace="0" vspace="0" alt=
-      "figure panneau logique simple signaux "></a> Une grande
-      partie de la base de la signalisation ABS peut se
-      r&eacute;sumer &agrave; "un signal passe au rouge quand un
-      train ne peut pas p&eacute;n&eacute;trer en toute
-      s&eacute;curit&eacute; dans le bloc qu'il prot&egrave;ge, il
-      passe en jaune lorsque le bloc suivant le bloc
-      prot&eacute;g&eacute; est occup&eacute; ". Bien que ce soit
-      une simplification, il peut servir comme point de
-      d&eacute;part pour comprendre la puissante logique de
-      signalisation.
-
-      <p>L'outil simple logique signal vous permet de configurer
-      JMRI pour utiliser ce type de base de la logique ABS pour
-      d&eacute;finir l'apparence d'un signal. Utilisation du
-      panneau, vous entrez des informations sur:</p>
-
-      <ul>
-        <li><b>Nom du Signal</b> Le signal &eacute;tant
-        pilot&eacute;. Entrez le nom utilisateur ou syst&egrave;me
-        du signal que vous souhaitez contr&ocirc;ler, et cliquez la
-        touche retour ou entrer. Le reste des champs sera rempli
-        avec toutes les informations de commande qui sont
-        d&eacute;j&agrave; pr&eacute;sentes.</li>
-
-        <li><b>Capteur/s de Protection</b> Quels capteurs
-        (d&eacute;tecteurs d'occupation) couvrent le canton
-        imm&eacute;diatement apr&egrave;s le signal. Lorsque l'un
-        de ces capteurs se montre "actif" le signal sera mis au
-        rouge.</li>
-
-        <li><b>Rouge Quand Aiguillage</b> Si le Canton contient un
-        aiguillage, configurer le nom de l'aiguillage et utiliser
-        le bouton de s&eacute;lection pour choisir si vous entrez
-        sur la branche directe ou d&eacute;vi&eacute;e. Le signal
-        sera mis au rouge lorsqurigthe l'aiguillage est
-        bascul&eacute; sur l'autre voie.</li>
-
-        <li><b>Signal Prot&eacute;g&eacute;</b> Le prochain signal
-        auquel le train va arriver; ce signal sera mis en jaune si
-        le prochain signal est rouge.</li>
-
-        <li><b>Avec Clignotant Jaune</b> Si la case est
-        coch&eacute;e, le signal sera fix&eacute; jaune clignotant
-        (JMRI alterne entre &eacute;teint et jaune) si le
-        prochaines signal prot&eacute;g&eacute; est jaune, ce qui
-        donne quatre cantons de signalisation.</li>
-
-        <li><b>Vitesse Limit&eacute;e</b> Si la case est
-        coch&eacute;e, ce signal sera fix&eacute; au jaune qui est
-        l'aspect le moins restrictif.</li>
-
-        <li><b>Est Signal Distant</b> Si la case est coch&eacute;e,
-        ce signal sera fix&eacute; &agrave; l'aspect le plus
-        restrictif de ce signal ou le signal suivant
-        prot&eacute;g&eacute;.</li>
-
-        <li><b>Capteur &eacute;clairage d'approche</b> Le capteur
-        qui contr&ocirc;le l'allumage de ce signal. Seuls les
-        signaux de mat&eacute;riel r&eacute;el s'&eacute;teignent.
-        Les indicateurs du panneau montreront l'aspect du signal
-        normal. Laissez ce champ d'entr&eacute;e vide pour toujours
-        afficher allum&eacute;.</li>
-
-        <li><b>Aiguillage en Pointe</b> Le signal situ&eacute; sur
-        la ligne &agrave; voie unique, face &agrave; un choix de
-        deux ou plusieurs voies dans le sens du
-        d&eacute;placement.</li>
-
-        <li><b>Aiguillage en Talon</b> Les signaux situ&eacute;s
-        sur la ligne &agrave; double voie, face &agrave; une seule
-        voie dans le sens du d&eacute;placement.</li>
-      </ul>
-
-      <p>Le cas d'un aiguillage en pointe qui conduit &agrave; deux
-      "Signaux prot&eacute;g&eacute;es" est &eacute;galement
-      couvert bien que le listing ci-dessus ne le montre pas. Si un
-      seul signal est utilis&eacute; pour contr&ocirc;ler les deux
-      branches, alors choisissez "Aiguillage en Pointe ". Si un
-      signal va contr&ocirc;ler chaque itin&eacute;raire, alors
-      s&eacute;lectionnez simplement la branche" Principale" ou
-      "Divergente" de l'aiguillage, tel que requis pour chacun
-      d'eux.</p>
-
-      <p>Posez votre souris sur n'importe quelle entr&eacute;e ou
-      &eacute;l&eacute;ment dans la fen&ecirc;tre de
-      cr&eacute;ation de SSL pour une br&egrave;ve "bulle d'aide"
-      .</p>
-
-      <p>Il est clair que ce ne seront pas couverts les
-      enclenchements compliqu&eacute;s ni les vitesses de
-      signalisation vu sur certains prototypes. Pour ces situations
-      utiliser un combinaison de Logix et Itin&eacute;raires. Logix
-      couvrira les conditions et les Itin&eacute;raires
-      contr&ocirc;leront les actions &agrave; prendre.</p><a name=
-      "start" id="start"></a>
-
-      <h2>D&eacute;marrage</h2>
-
-      <p>Suivez les &eacute;tapes suivantes pour cr&eacute;er un
-      signal et se familiariser avec la fa&ccedil;on dont
-      l'interface utilisateur SSL fonctionne. Cet exemple
-      d&eacute;finit un signal "virtuel" qui n'existe pas vraiment
-      sur le r&eacute;seau, de sorte qu'il peut fonctionner avec
-      n'importe quel type de mat&eacute;riel r&eacute;seau. Voir la
-      page sur <a href=
-      "../../../../html/tools/signaling/index.shtml#table">les
-      signaux</a> pour plus d'informations sur la fa&ccedil;on de
-      configurer votre signal r&eacute;el.</p>
+      <p>Suivez ces étapes pour créer votre premier signal JMRI et vous familiariser avec
+      l'interface utilisateur SSL. Pour commencer, cet exemple ne définit qu'un seul Signal "
+      virtuel " qui n'existe pas vraiment sur le réseau, et qui peut donc fonctionner avec
+      n'importe quel type de matériel de réseau. Voir la page d'aide <a href=
+      "../../../../html/tools/signaling/index.shtml">Signalisation Principale</a> pour obtenir des
+      informations sur la façon de configurer vos propres signaux.</p>
 
       <ol>
-        <li>S&eacute;lectionnez <b>Tableau T&ecirc;te Signal</b>
-        dans les <b>Outils</b>.</li>
+        <li>Sélectionnez <strong>Signaux de Signalisation</strong> dans le menu PanelPro.
+        <strong>Outils &gt; Tableaux &gt; Signaux</strong> menu.</li>
 
-        <li>Dans la fen&ecirc;tre Tableau T&ecirc;te Signal qui
-        appara&icirc;t, cliquez sur <b>Ajouter</b> pour commencer
-        &agrave; d&eacute;finir un nouveau signal.</li>
+        <li>Dans la fenêtre du tableau des Signaux qui apparaît, cliquez sur le bouton
+        <strong>Ajouter...</strong> pour commencer à définir un nouveau Signal.</li>
 
-        <li>Dans la fen&ecirc;tre Ajouter Nouveau Signal qui
-        appara&icirc;t choisissez le type du "signal virtuel".</li>
+        <li>Dans le volet Ajouter un nouveau Signal qui s'affiche, choisissez le type
+        "Virtuel".</li>
 
-        <li>Entrez un nom de syst&egrave;me tels que IH1000.</li>
+        <li>Entrez un Nom Système tel que "IH1000".</li>
 
-        <li>Cliquez <b>OK</b> pour entrer signal dans la Table
-        T&ecirc;te Signal.</li>
+        <li>Cliquez sur <strong>Créer</strong> pour entrer ce Signal dans le Tableau des
+        Signaux.</li>
 
-        <li>Entrez tous les signaux que vous allez utiliser pour ce
-        test, en utilisant des noms diff&eacute;rents. Le nom
-        r&eacute;el n'est pas grave, ils ont juste &agrave;
-        &ecirc;tre diff&eacute;rents. Maintenant,
-        s&eacute;lectionnez</li>
+        <li>Entrez tous les Signaux que vous utiliserez pour ce test, en utilisant des noms
+        différents. Le nom réel n'a pas important, ils doivent juste être différents.</li>
 
-        <li><b>Logique Simple Signal</b> dans le menu
-        <b>Outils</b>.</li>
+        <li>Maintenant, sélectionnez <strong>Logique Simple Signal...</strong> dans le menu
+        contextuel <strong>Outils</strong>.</li>
 
-        <li>Remplissez les diff&eacute;rentes rubriques pour
-        r&eacute;pondre &agrave; vos exigences de signaux
-        d&eacute;j&agrave; montr&eacute; dans la section <a href=
-        "#SSL">SSL</a>.</li>
+        <li>Remplir les différentes entrées pour correspondre aux exigences de votre signal. comme
+        indiqué précédemment.</li>
 
-        <li>Cliquez <b>Appliquer</b> pour rendre cette
-        entr&eacute;e active.</li>
+        <li>Cliquez sur <strong>Appliquer</strong> pour rendre cette entrée active.</li>
 
-        <li>N'oubliez pas de sauvegarder votre travail.</li>
+        <li>Veillez à sauvegarder votre travail.</li>
       </ol>
 
-      <p>Vous venez de cr&eacute;er une entr&eacute;e de
-      contr&ocirc;le SSL pour un signal. C'est aussi simple que
-      cela. Il vous a fallu plus de temps pour lire ce tutoriel que
-      pour cr&eacute;er l'entr&eacute;e SSL.</p>
+      <p>Vous venez de créer une entrée SSL pour commander un signal. . C'est aussi simple que
+      cela. Il vous a fallu plus de temps pour lire ce tutoriel que pour créer votre première
+      entrée SSL.<br>
+      L'exemple suivant vous permettrait de construire une véritable Logique Simple Signal pour les
+      signaux connectés à un type spécifique de système DCC :</p>
 
-      <p>*ABS: Bloc automatique<br>
-      **CTC: commande manuelle des signaux et aiguillages</p>
+      <ol>
+        <li>Sélectionnez <strong>Tableaux &gt; Aiguillages</strong> dans le <strong>Menu
+        Outils</strong>.</li>
+
+        <li>Vérifiez pour être sûr que les sorties (adresses des Aiguillages) qui contrôleront vos
+        signaux sont dans le Tableau d'Aiguillages'. Si ce n'est pas le cas, cliquez sur le bouton
+        <strong>Ajouter...</strong> en bas de la table des Aiguillages.</li>
+
+        <li>Dans la fenêtre Ajouter un Nouvel Aiguillage qui apparaît, saisissez un Nom Système,
+        (par exemple "LT1") et "test" pour le Nom Utilisateur, puis cliquez sur
+        <strong>Créer</strong>.<br>
+        <em>Note:</em> Tous les Noms Système des objets JMRI doivent respecter les règles de
+        nommage JMRI, en commençant par un préfixe en majuscule pour le le type de connexion DCC
+        (par exemple, "L" pour LocoNet) suivi d'un T majuscule dans le cas des aiguillages et
+        l'adresse matérielle réelle de l'aiguillage.</li>
+
+        <li>Cliquer sur les <strong>Direct/Dévié</strong> correspondants dans le tableau des
+        aiguillages devrait maintenant faire en sorte que votre Signal change d'état.</li>
+
+        <li>Sélectionnez <strong>Signal</strong> dans le menu <strong>Outils &gt; Tableaux. &gt;
+        Signaux</strong> .</li>
+
+        <li>Dans la fenêtre du tableau des signaux qui apparaît, cliquez sur.
+        <strong>Ajouter...</strong> pour commencer à définir un nouveau signal.</li>
+
+        <li>Dans la fenêtre Ajouter un nouveau signal qui apparaît, choisissez le type de signal
+        correct pour correspondre à votre matériel. Les cases d'éléments requis apparaîtront.</li>
+
+        <li>Entrez un Nom Système, par exemple " LH152 ". <em>Note:</em> Les Noms Système Signaaux
+        doivent commencer par le préfixe de connexion plus "H" pour Head (c'est-à-dire CH, IH, LH,
+        NH, XH, etc.) et être suivis de l'adresse matérielle ("numéro") du signal.</li>
+
+        <li>SEnsuite choisissez ou créez un ou plusieurs aiguillages qui vont commander ce signal.
+        <em>Note:</em> Dans le cas de signaux connectés SE8C, entrez simplement le premier numéro
+        d'Aiguillage de chaque paire. Le deuxième numéro d'Aiguillage est automatiquement
+        connu.</li>
+
+        <li>Cliquez sur <strong>Créer</strong> pour entrer ce signal dans le tableau des
+        Signaux.li&gt;Entrez toutes les signaux que vous allez utiliser.</li>
+
+        <li>Maintenant, sélectionnez <strong>Logique Simple Signal...</strong> dans le menu
+        <strong>Outils</strong> de PanelPro.</li>
+
+        <li>Remplir les différentes entrées pour correspondre aux exigences de votre premier signal
+        comme indiqué précédemment.</li>
+
+        <li>Cliquez sur <strong>Appliquer</strong> pour rendre cette entrée active.</li>
+
+        <li>Répétez les étapes 13-14 pour chacune de vos signaux.</li>
+
+        <li>Veillez à sauvegarder votre travail. Voir <a href=
+        "../../../../html/apps/LoadStoreWork.shtml">. Chargement et stockage de votre
+        travail</a>.</li>
+      </ol>
+      <a name="more" id="more"></a>
+      <h2>Plus d'infos sur SSL</h2>
+
+      <ul>
+        <li>Consultez l' <a href=".">Exemple de logique de signal simple</a>.</li>
+
+        <li><a href="../../../../html/tools/signal/Logic.shtml">Fonds d'écran sur SSL</a>
+        </li>
+
+        <li style="list-style: none; display: inline">
+          <p>Traduction 2021-03-27</p>
+        </li>
+      </ul>
       <!--#include virtual="/Footer.shtml" -->
     </div>
+    <!-- closes #mainContent-->
   </div>
+  <!-- closes #mBody-->
 </body>
 </html>

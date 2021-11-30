@@ -5,7 +5,7 @@ package jmri.jmrix.can.cbus;
  *
  * Constants to represent CBUS protocol
  *
- * @author Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public final class CbusConstants {
 
@@ -17,6 +17,28 @@ public final class CbusConstants {
     public static final int DEFAULT_STANDARD_ID = 0x7a;
     public static final int DEFAULT_EXTENDED_ID = 0x7a;
 
+    /**
+     * CBUS Manufacturer definitions
+     * Where the manufacturer already has an NMRA code, this is used
+     */
+    public static final int SPROG_DCC = 44;         // http://www.merg.co.uk
+    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
+    public static final int MANU_ROCRAIL = 70;      // http://www.rocrail.net
+    public static final int MANU_SPECTRUM = 80;     // http://animatedmodeler.com  (Spectrum Engineering)
+
+    /**
+     * SPROG DCC module types
+     */
+    public static final int MTYP_CANPiSPRG3 = 1;
+    public static final int MTYP_CANSPROG3P = 2;
+    public static final int MTYP_CANSPROG = 3;
+    public static final int MTYP_SBOOST = 4;
+    //public static final int Unsupported = 5;
+    public static final int MTYP_CANISB = 6;
+    public static final int MTYP_CANCBUSIO = 7;
+    public static final int MTYP_CANSERVOIO = 8;
+    public static final int MTYP_CANSOLIO = 9;
+    
     /**
      * CBUS Opcodes
      */
@@ -122,6 +144,7 @@ public final class CbusConstants {
     // OPcodes with 5 data
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
+    public static final int CBUS_VCVS = 0xA4;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;

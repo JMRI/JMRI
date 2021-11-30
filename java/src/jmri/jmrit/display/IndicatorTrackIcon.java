@@ -14,6 +14,8 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -210,7 +212,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     @Override
     public void setStatus(int state) {
         _status = _pathUtil.getStatus(state);
-    }
+     }
 
     /*
      * Place icon by its bean state name
@@ -229,6 +231,9 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     @Override
     public int maxHeight() {
+        if (_iconMap == null) {
+            return 0;
+        }
         int max = 0;
         for (NamedIcon namedIcon : _iconMap.values()) {
             max = Math.max(namedIcon.getIconHeight(), max);
@@ -238,6 +243,9 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     @Override
     public int maxWidth() {
+        if (_iconMap == null) {
+            return 0;
+        }
         int max = 0;
         for (NamedIcon namedIcon : _iconMap.values()) {
             max = Math.max(namedIcon.getIconWidth(), max);
@@ -276,15 +284,12 @@ public class IndicatorTrackIcon extends PositionableIcon
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
-            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
-            try {
+            // _pathUtil.setLocoIcon must run on GUI. LocoLabel ctor causes editor to draw a graphic
+            ThreadingUtil.runOnLayoutEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
-            } catch (Exception e) {
-                log.error("setStatus on indicator track icon failed in thread {} {}: ",
-                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
-            }
+                repaint();
+            });
         }
-        repaint();
         if ((block.getState() & OBlock.OUT_OF_SERVICE) != 0) {
             setControlling(false);
         } else {

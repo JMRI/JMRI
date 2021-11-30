@@ -1,35 +1,22 @@
 package jmri.jmrit.logix;
 
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.Point;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.SpeedStepMode;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.powerpanel.PowerPane;
 import jmri.jmrit.throttle.FunctionButton;
-import jmri.jmrit.throttle.KeyListenerInstaller;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,42 +31,15 @@ import org.slf4j.LoggerFactory;
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
  *
- * @author Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009, 2020
  */
-public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
+public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.PropertyChangeListener {
 
-    public static final String POWER_UNKNOWN = "PowerUnknown";
-    static int STRUT_SIZE = 10;
-
-    private static final int accelerateKey = 107; // numpad +
-    private static final int decelerateKey = 109; // numpad -
-    private static final int accelerateKey1 = KeyEvent.VK_LEFT; // Left Arrow
-    private static final int decelerateKey1 = KeyEvent.VK_RIGHT; // Left Arrow
-    private static final int accelerateKey2 = KeyEvent.VK_PAGE_UP; // Left Arrow
-    private static final int decelerateKey2 = KeyEvent.VK_PAGE_DOWN; // Left Arrow
-    private static final int reverseKey = KeyEvent.VK_DOWN;
-    private static final int forwardKey = KeyEvent.VK_UP;
-    private static final int stopKey = 111; // numpad /
-
-    private ControlPanel _controlPanel;
-    private FunctionPanel _functionPanel;
-    private ButtonFrame _buttonPanel;
     private WarrantFrame _warrantFrame;
-    private float _currentSpeed;
-
-    private DccThrottle _throttle;
-
-    PowerPane powerControl = new PowerPane();
-    PowerManager powerMgr = null;
-    JButton powerLight;
-    // Load the power lights as icons to be placed in an invisible JButton so the light 
-    // can be clicked to change the power status
-    NamedIcon powerOnIcon = new NamedIcon("resources/icons/throttles/GreenPowerLED.gif", "GreenPowerLED");
-    NamedIcon powerOffIcon = new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "RedPowerLED");
-    NamedIcon powerXIcon = new NamedIcon("resources/icons/throttles/YellowPowerLED.gif", "YellowPowerLED");
-    NamedIcon directionOnIcon = new NamedIcon("resources/icons/USS/sensor/amber-on.gif", "amber-on");
-    NamedIcon directionOffIcon = new NamedIcon("resources/icons/USS/sensor/amber-off.gif", "amber-off");
-    NamedIcon stopIcon = new NamedIcon("resources/icons/USS/sensor/red-on.gif", "red-on");
+    private PowerManager powerMgr = null;
+    private LearnControlPanel _controlPanel;
+    private LearnFunctionPanel _functionPanel;
+    private LearnSpeedPanel _speedPanel;
 
     /**
      * Default constructor
@@ -91,8 +51,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         powerMgr = InstanceManager.getNullableDefault(jmri.PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
-        } else {
-            powerMgr.addPropertyChangeListener(this);
         }
         initGUI();
         setVisible(true);
@@ -107,13 +65,23 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         if (log.isDebugEnabled()) {
             log.debug("notifyThrottleFound address= {} class= {}",t.getLocoAddress(),t.getClass().getName());
         }
-        _throttle = t;
-        _controlPanel.notifyThrottleFound(t);
-        _functionPanel.notifyThrottleFound(t);
+        _controlPanel.notifyAddressThrottleFound(t);
+        _functionPanel.notifyAddressThrottleFound(t);
+        _speedPanel.notifyAddressThrottleFound(t);
         setSpeedSetting(0.0f);      // be sure loco is stopped.
         setButtonForward(t.getIsForward());
         String name = _warrantFrame.getTrainName();
-        setTitle(name + " (" + t.getLocoAddress().toString() + ")");
+        if (name == null || name.isEmpty()) {
+            jmri.jmrit.roster.RosterEntry re = _warrantFrame._speedUtil.getRosterEntry();
+            if (re != null) {
+                name = re.getId();
+            } else {
+                name = t.getLocoAddress().toString();
+            }
+        } else {
+            name =name +" - " + t.getLocoAddress().toString();
+        }
+        setTitle(name);
     }
 
     private void initGUI() {
@@ -126,46 +94,42 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             }
         });
         initializeMenu();
-        _functionPanel = new FunctionPanel(_warrantFrame._speedUtil.getRosterEntry(), this);
-        // assumes button width of 54, height of 30 (set in class FunctionButton) with
-        // horiz and vert gaps of 5 each (set in FunctionPanel class)
-        // with 3 buttons across and 6 rows high
+
+        _controlPanel = new LearnControlPanel(this);
+        _controlPanel.setVisible(true);
+        _controlPanel.setEnabled(false);
+        _controlPanel.setTitle(Bundle.getMessage("speed"));
+        _controlPanel.setSize(_controlPanel.getPreferredSize());
+
         int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 11;   // = 192
-        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45
-//        int height = 6 * 45 + 2 * 6 * 5 + 20;
+        int height = 9 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45        
+        _functionPanel = new LearnFunctionPanel(this);
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
         _functionPanel.setEnabled(false);
+        _functionPanel.setTitle(Bundle.getMessage("setFunction"));
 
-        _controlPanel = new ControlPanel(this);
-        _controlPanel.setVisible(true);
-        _controlPanel.setEnabled(false);
-        _controlPanel.setSize(_controlPanel.getPreferredSize().width, height);
+        _speedPanel = new LearnSpeedPanel(_warrantFrame.getWarrant());
+        _speedPanel.setSize(_functionPanel.getWidth(), _controlPanel.getHeight() - _functionPanel.getHeight());
+        _speedPanel.setVisible(true);
+        _speedPanel.setClosable(true);
+        _speedPanel.setTitle(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("ThrottleMenuViewSpeedPanel"));
 
-        _buttonPanel = new ButtonFrame();
-        _buttonPanel.setVisible(true);
-        _buttonPanel.setEnabled(false);
-        _buttonPanel.setSize(_controlPanel.getWidth() + _functionPanel.getWidth(), _buttonPanel.getPreferredSize().height);
+        _controlPanel.setLocation(0, 0);
+        _functionPanel.setLocation(_controlPanel.getWidth(), 0);
+        _speedPanel.setLocation(_controlPanel.getWidth(), _functionPanel.getHeight());
 
-        _buttonPanel.setLocation(0, 0);
-        _controlPanel.setLocation(0, _buttonPanel.getHeight());
-        _functionPanel.setLocation(_controlPanel.getWidth(), _buttonPanel.getHeight());
-
-        getContentPane().add(_buttonPanel);
         JDesktopPane desktop = new JDesktopPane();
         getContentPane().add(desktop);
         desktop.add(_controlPanel);
         desktop.add(_functionPanel);
+        desktop.add(_speedPanel);
 
         desktop.setPreferredSize(new Dimension(
-                Math.max(_controlPanel.getWidth() + _functionPanel.getWidth(), _buttonPanel.getWidth()),
-                Math.max(_functionPanel.getHeight(), _controlPanel.getHeight()) + _buttonPanel.getHeight()));
+                _controlPanel.getWidth() + _functionPanel.getWidth(), _controlPanel.getHeight()));
 
-        // Install the Key bindings on all Components
-        KeyListenerInstaller.installKeyListenerOnAllComponents(new ControlPadKeyListener(), this);
         setResizable(false);
-        Point loc = _warrantFrame.getLocation();
-        setLocation(loc.x + _warrantFrame.getWidth() - this.getWidth(), loc.y);
+        jmri.util.PlaceWindow.getDefault().nextTo(_warrantFrame, null, this);
         pack();
     }
 
@@ -176,31 +140,48 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         JMenu speedControl = new JMenu(Bundle.getMessage("SpeedControl"));
         ButtonGroup buttonGroup = new ButtonGroup();
         JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
-        displaySlider.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(true));
+        displaySlider.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.SLIDERDISPLAYCONTINUOUS));
         displaySlider.setSelected(true);
         buttonGroup.add(displaySlider);
         speedControl.add(displaySlider);
         JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
-        displaySteps.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(false));
+        displaySteps.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.STEPDISPLAY));
         buttonGroup.add(displaySteps);
         speedControl.add(displaySteps);
         this.setJMenuBar(new JMenuBar());
         this.getJMenuBar().add(speedControl);
 
-        if (powerMgr != null) {
+       if (powerMgr != null) {
             JMenu powerMenu = new JMenu(Bundle.getMessage("ThrottleMenuPower"));
             JMenuItem powerOn = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOn"));
             powerMenu.add(powerOn);
-            powerOn.addActionListener((ActionEvent e)-> powerControl.onButtonPushed());
+            powerOn.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        powerMgr.setPower(PowerManager.ON);
+                    } catch (JmriException e1) {
+                        log.error("Error when setting power {}", e1);
+                    }
+                }
+            });
 
             JMenuItem powerOff = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOff"));
             powerMenu.add(powerOff);
-            powerOff.addActionListener((ActionEvent e) -> powerControl.offButtonPushed());
+            powerOff.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        powerMgr.setPower(PowerManager.OFF);
+                    } catch (JmriException e1) {
+                        log.error("Error when setting power {}", e1);
+                    }
+                }
+            });
 
             this.getJMenuBar().add(powerMenu);
-            powerLight = new JButton();
-            setPowerIcons();
-            this.getJMenuBar().add(powerLight);
         }
         // add help selection
         addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
@@ -208,248 +189,34 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 
     @Override
     public void dispose() {
-        if (_throttle!=null) {
-            // if last block is dark and previous block has not been exited, we must assume train
-            // has entered the last block now that the user is terminating the recording.
-            if (_currentSpeed > 0.0) {
-                setSpeedSetting(-0.5F);
-                setSpeedSetting(0.0F);
-            }
-            _warrantFrame.getWarrant().releaseThrottle(_throttle);            
-        }
-        if (powerMgr != null) {
-            powerMgr.removePropertyChangeListener(this);
-        }
+        _controlPanel.destroy();
+        _functionPanel.destroy();
+        _speedPanel.destroy();
         _controlPanel.dispose();
         _functionPanel.dispose();
         super.dispose();
-    }
-
-    /**
-     * implement a property change listener for power and throttle Set the GUI's
-     * to correspond to the throttle settings
-     */
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        if (log.isDebugEnabled()) {
-            log.debug("propertyChange {} = {}",evt.getPropertyName(),evt.getNewValue());
-        }
-        if (evt.getPropertyName().equals(PowerManager.POWER)) {
-            setPowerIcons();
-        }
     }
 
     /* Record throttle commands that have been sent to the throttle from ControlPanel */
 
     protected void setSpeedSetting(float speed) {
         _warrantFrame.setSpeedCommand(speed);
-        _currentSpeed = speed;
     }
-    /* from ControlPanel */
 
     protected void setSpeedStepMode(SpeedStepMode speedStep) {
         _warrantFrame.setThrottleCommand("SpeedStep", speedStep.name);
     }
-    /* from FunctionPanel */
-
-    protected void setFunctionState(int num, boolean isSet) {
-        _warrantFrame.setThrottleCommand("F" + num, Boolean.toString(isSet));
-    }
-    /* from FunctionPanel */
 
     protected void setFunctionState(String FNum, boolean isSet) {
         _warrantFrame.setThrottleCommand(FNum, Boolean.toString(isSet));
     }
-    /* from FunctionPanel */
-
-    protected void setFunctionLock(int num, boolean isLockable) {
-        _warrantFrame.setThrottleCommand("LockF" + num, Boolean.toString(isLockable));
-    }
-    /* from FunctionPanel */
 
     protected void setFunctionLock(String FMom, boolean isLockable) {
         _warrantFrame.setThrottleCommand(FMom, Boolean.toString(isLockable));
     }
-    /* from ControlPanel */
 
     protected void setButtonForward(boolean isForward) {
-        _buttonPanel.setForwardDirection(isForward);
         _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
-    }
-    /* from ButtonPanel */
-
-    protected void setIsForward(boolean isForward) {
-        _throttle.setIsForward(isForward);
-    }
-
-    /*
-     * for JUnint testing
-     */
-    protected DccThrottle getThrottle() {
-        return _throttle;
-    }
-
-    /**
-     * change the power LED displayed as appropriate and set corresponding
-     * tooltip
-     *
-     */
-    public void setPowerIcons() {
-        if (powerMgr == null) {
-            powerLight.setIcon(powerXIcon);
-            powerLight.setToolTipText(Bundle.getMessage(POWER_UNKNOWN));
-            return;
-        }
-        switch (powerMgr.getPower()) {
-            case PowerManager.ON:
-                powerLight.setIcon(powerOnIcon);
-                powerLight.setToolTipText(Bundle.getMessage("PowerOn"));
-                break;
-            case PowerManager.OFF:
-                powerLight.setIcon(powerOffIcon);
-                powerLight.setToolTipText(Bundle.getMessage("PowerOff"));
-                break;
-            default:
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText(Bundle.getMessage(POWER_UNKNOWN));
-                break;
-        }
-    }
-
-    /**
-     * A KeyAdapter that listens for the keys that work the control pad buttons
-     *
-     * @author glen
-     */
-    class ControlPadKeyListener extends KeyAdapter {
-
-        /**
-         * Description of the Method
-         *
-         * @param e Description of the Parameter
-         */
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if ((e.getKeyCode() == accelerateKey) || (e.getKeyCode() == accelerateKey1)) {
-                _controlPanel.accelerate1();
-            } else if (e.getKeyCode() == accelerateKey2) {
-                _controlPanel.accelerate10();
-            } else if ((e.getKeyCode() == decelerateKey) || (e.getKeyCode() == decelerateKey1)) {
-                _controlPanel.decelerate1();
-            } else if (e.getKeyCode() == decelerateKey2) {
-                _controlPanel.decelerate10();
-            } else if (e.getKeyCode() == forwardKey) {
-                _buttonPanel.forwardButton.doClick();
-            } else if (e.getKeyCode() == reverseKey) {
-                _buttonPanel.reverseButton.doClick();
-            } else if (e.getKeyCode() == stopKey) {
-                _buttonPanel.stop();
-            }
-        }
-    }
-
-    class ButtonFrame extends JPanel {
-
-        private JButton forwardButton;
-        private JButton reverseButton;
-        private JLabel forwardLight;
-        private JLabel reverseLight;
-        private JLabel stopLabel;
-        private JButton stopButton;
-        private int _gap;
-
-        ButtonFrame() {
-            super();
-            forwardButton = new JButton(Bundle.getMessage("ButtonForward"));
-            reverseButton = new JButton(Bundle.getMessage("ButtonReverse"));
-            initGUI();
-        }
-
-        private void initGUI() {
-            JPanel localButtonPanel = new JPanel();
-            localButtonPanel.setLayout(new BoxLayout(localButtonPanel, BoxLayout.X_AXIS));
-            add(localButtonPanel);
-
-            GridBagConstraints constraints = new GridBagConstraints();
-            constraints.anchor = GridBagConstraints.CENTER;
-            constraints.gridheight = 1;
-            constraints.gridwidth = 1;
-            constraints.ipadx = 0;
-            constraints.ipady = 0;
-            Insets insets = new Insets(2, 2, 2, 2);
-            constraints.insets = insets;
-            constraints.weightx = 1;
-            constraints.weighty = 1;
-            constraints.gridx = 0;
-            constraints.gridy = 0;
-
-            forwardLight = new JLabel();
-            forwardLight.setIcon(directionOffIcon);
-            forwardButton.addActionListener((ActionEvent e)->setIsForward(true));
-            JPanel forwardPanel = new JPanel();
-            forwardPanel.setLayout(new GridBagLayout());
-            forwardPanel.add(forwardLight, constraints);
-            constraints.gridy = 1;
-            forwardPanel.add(forwardButton, constraints);
-
-            reverseLight = new JLabel();
-            reverseLight.setIcon(directionOffIcon);
-            reverseButton.addActionListener((ActionEvent e) -> setIsForward(false));
-            JPanel reversePanel = new JPanel();
-            reversePanel.setLayout(new GridBagLayout());
-            constraints.gridy = 0;
-            reversePanel.add(reverseLight, constraints);
-            constraints.gridy = 1;
-            reversePanel.add(reverseButton, constraints);
-
-            stopLabel = new JLabel(Bundle.getMessage("Emergency"));
-            _gap = -(stopIcon.getIconWidth() + stopLabel.getPreferredSize().width) / 2;
-            stopButton = new JButton(Bundle.getMessage("EStop"));
-            stopButton.addActionListener((ActionEvent e) -> stop());
-            JPanel stopPanel = new JPanel();
-            stopPanel.setLayout(new GridBagLayout());
-            constraints.gridy = 0;
-            stopPanel.add(stopLabel, constraints);
-            constraints.gridy = 1;
-            stopPanel.add(stopButton, constraints);
-
-            localButtonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            localButtonPanel.add(forwardPanel);
-            localButtonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            localButtonPanel.add(stopPanel);
-            localButtonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            localButtonPanel.add(reversePanel);
-            localButtonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            pack();
-        }
-
-        /**
-         * Perform an emergency stop
-         */
-        public void stop() {
-            _throttle.setSpeedSetting(-0.5F);
-            _throttle.setSpeedSetting(0.0F);
-            stopLabel.setIcon(stopIcon);
-            stopLabel.setIconTextGap(_gap);
-            pack();
-        }
-
-        /**
-         * Set the GUI to match that the loco is set to forward.
-         *
-         * @param isForward True if the loco is set to forward, false otherwise.
-         */
-        public void setForwardDirection(boolean isForward) {
-            if (isForward) {
-                forwardLight.setIcon(directionOnIcon);
-                reverseLight.setIcon(directionOffIcon);
-            } else {
-                forwardLight.setIcon(directionOffIcon);
-                reverseLight.setIcon(directionOnIcon);
-            }
-            pack();
-        }
-
     }
 
     private static final Logger log = LoggerFactory.getLogger(LearnThrottleFrame.class);

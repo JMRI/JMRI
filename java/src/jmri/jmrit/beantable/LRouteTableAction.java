@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -129,7 +130,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             // not actually used due to the configDeleteColumn, setColumnToHoldButton, configureButton
             if (col == EDITCOL) {
-                return new JTextField(10).getPreferredSize().width;
+                return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
             }
             // not actually used due to the configValueColumn, setColumnToHoldButton, configureButton
             if (col == ENABLECOL) {
@@ -192,7 +193,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
-        void doDelete(Logix logix) {
+        protected void doDelete(Logix logix) {
             if (logix != null) {
                 logix.deActivateLogix();
                 // delete the Logix and all its Conditionals
@@ -215,12 +216,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         @Override
-        public Logix getBySystemName(String name) {
+        public Logix getBySystemName(@Nonnull String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public Logix getByUserName(String name) {
+        public Logix getByUserName(@Nonnull String name) {
             return _logixManager.getByUserName(name);
         }
 
@@ -249,10 +250,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             return "";
         }
 
-        // typical to get right width
+        // typical to get correct width
         @Override
         protected void configDeleteColumn(JTable table) {
-            // have the delete column hold a button
+            // have the DELETECOL = EDITCOL column hold a button
             setColumnToHoldButton(table, DELETECOL,
                     new JButton(Bundle.getMessage("ButtonEdit")));
         }
@@ -839,6 +840,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
         _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
+        
+        _addFrame.setEscapeKeyClosesWindow(true);
+        _addFrame.getRootPane().setDefaultButton(createButton);
     }
 
     /**
@@ -1258,7 +1262,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
         String uName = _userName.getText();
         // check if a Route with the same user name exists
-        if (!uName.equals("")) {
+        if (!uName.isEmpty()) {
             if (_logixManager.getByUserName(uName) != null) {
                 // Route with this user name already exists
                 showMessage("DuplicateUser");
@@ -1868,7 +1872,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
             Logix logix, String sName, String uName) {
-        if (triggerList.size() == 0) {
+        if (triggerList.isEmpty()) {
             return numConds;
         }
         String cSystemName = sName + numConds + "A";

@@ -3,6 +3,8 @@ package jmri.managers;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.SortedSet;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.IdTag;
@@ -71,6 +73,7 @@ public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
      *
      * @return Null if nothing by that name exists
      */
+    @CheckForNull
     @Override
     public IdTag getIdTag(@Nonnull String name) {
         init();
@@ -85,8 +88,9 @@ public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
         return super.getNamedBeanSet();
     }
 
+    @Nonnull
     @Override
-    protected IdTag makeBean(Manager<IdTag> manager, String systemName, String userName) {
+    protected IdTag makeBean(Manager<IdTag> manager, String systemName, String userName) throws IllegalArgumentException{
         init();
         return ((IdTagManager) manager).newIdTag(systemName, userName);
     }
@@ -145,23 +149,16 @@ public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
      */
     @Override
     @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, String userName) {
+    public IdTag newIdTag(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         init();
         return newNamedBean(systemName, userName);
     }
 
+    @CheckForNull
     @Override
     public IdTag getByTagID(@Nonnull String tagID) {
         init();
         return getBySystemName(makeSystemName(tagID));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
@@ -226,7 +223,11 @@ public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
     @Nonnull
     public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
         init();
-        return new ArrayList<>();
+        List<IdTag> out = new ArrayList<>();
+        for (Manager<IdTag> mgr: getManagerList()) {
+            out.addAll(((IdTagManager)mgr).getTagsForReporter(reporter, threshold));
+        }
+        return out;
     }
 
 }

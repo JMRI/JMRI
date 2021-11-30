@@ -1,187 +1,142 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: DecoderPro - Multi-Decoder Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>Multi-Decoder Tool</h2>Digitrax invented a <a href=
-      "#digitraxproposal">mechanism</a> for having more than one
-      decoder in locomotive, and still be able to read and write
-      them separately. It uses CV15 and CV16 in a particular way to
-      do this.
+      <h2>Multi-Decoder Tool</h2>
+      Digitrax invented a <a href="#digitraxproposal">mechanism</a> for having more than one
+      decoder in locomotive, and still be able to read and write them separately. It uses CV15 and
+      CV16 in a particular way to do this.
+      <p>CV16 is the ID of a particular decoder; if you have more than one decoder in a locomotive,
+      they should have different values in CV16.</p>
 
-      <p>CV16 is the ID of a particular decoder; if you have more
-      than one decoder in a locomotive, they should have different
-      values in CV16.</p>
+      <p>CV15 is used to unlock one decoder (and lock the others), so it can be written.</p>
 
-      <p>CV15 is used to unlock one decoder (and lock the others),
-      so it can be written.</p>
+      <p>Only decoders that have the value in CV15 equal to the value in CV16 will respond to reads
+      and writes. Since you're supposed to originally set up the two decoders with different CV16
+      values, this means you can use CV15 to select which decoder you want to talk to.</p>
 
-      <p>Only decoders that have the value in CV15 equal to the
-      value in CV16 will respond to reads and writes. Since you're
-      supposed to originally set up the two decoders with different
-      CV16 values, this means you can use CV15 to select which
-      decoder you want to talk to.</p>
+      <h2>DecoderPro's Handling of CV15 and CV16</h2>
+      Really, the DecoderPro "paned programmer" shouldn't handle CV15 and CV16 at all. They're not
+      really "configuration data", in the sense that you can freely adjust them and see what they
+      do. Rather, CV16 is a "set once before assembling the locomotive", and CV15 is an operational
+      command "which decoder can talk now".
+      <p>If a DecoderPro user did a write-all-sheets and changed either of those, future
+      programming operations would be problematic.</p>
 
-      <h2>DecoderPro's Handling of CV15 and CV16</h2>Really, the
-      DecoderPro "paned programmer" shouldn't handle CV15 and CV16
-      at all. They're not really "configuration data", in the sense
-      that you can freely adjust them and see what they do. Rather,
-      CV16 is a "set once before assembling the locomotive", and
-      CV15 is an operational command "which decoder can talk now".
+      <p>Hence, people writing decoder definitions are strongly encouraged not to include CV15 and
+      CV16 (when they are used for decoder lock) in their definitions, or to include them only as
+      "constant" CVs so the program will not write them. The user can then program those CVs using
+      the "Single CV Programmer".</p>
 
-      <p>If a DecoderPro user did a write-all-sheets and changed
-      either of those, future programming operations would be
-      problematic.</p>
-
-      <p>Hence, people writing decoder definitions are strongly
-      encouraged not to include CV15 and CV16 (when they are used
-      for decoder lock) in their definitions, or to include them
-      only as "constant" CVs so the program will not write them.
-      The user can then program those CVs using the "Single CV
-      Programmer".</p>
-
-      <h2>The Multi-Decoder Tool</h2><a href=
-      "images/MultiControl.gif"><img src="images/MultiControl.gif"
-      width="121" height="283" align="right"></a> When this feature
-      was first coming into use, a "Multi-Decoder Tool" was written
-      for JMRI (see image to right).
-
+      <h2>The Multi-Decoder Tool</h2>
+      <a href="images/MultiControl.gif"><img src="images/MultiControl.gif" width="121" height="283"
+      class="floatRight" alt="multi decoder tool"></a> When this feature was first coming into use,
+      a "Multi-Decoder Tool" was written for JMRI (see image to right).
       <p>It has several parts.</p>
 
-      <p>At the top are 8 buttons that you can click to unlock a
-      particular decoder in the locomotive. E.g. if you click "3",
-      the decoder configured with "3" in CV16 will be unlocked. If
-      possible, the program tries to verify that the decoder is
-      present and communicating; the status is shown in the middle
-      of the window ("OK" in the illustration).</p>
+      <p>At the top are 8 buttons that you can click to unlock a particular decoder in the
+      locomotive. E.g. if you click "3", the decoder configured with "3" in CV16 will be unlocked.
+      If possible, the program tries to verify that the decoder is present and communicating; the
+      status is shown in the middle of the window ("OK" in the illustration).</p>
 
-      <p>If you click the "legacy" button, all decoders with the
-      lock feature will be locked out. This is so you can write to
-      an additional decoder without the lock feature. E.g. if you
-      have one decoder with (say "2"), and one without the lock
-      feature, you can still configure them by:</p>
+      <p>If you click the "legacy" button, all decoders with the lock feature will be locked out.
+      This is so you can write to an additional decoder without the lock feature. E.g. if you have
+      one decoder with (say "2"), and one without the lock feature, you can still configure them
+      by:</p>
 
       <ol>
         <li>Click "2" - both decoders are now active.</li>
 
-        <li>Write the information for "2", which will go to
-        both.</li>
+        <li>Write the information for "2", which will go to both.</li>
 
         <li>Click "Legacy", locking out "2".</li>
 
-        <li>Write the information for the non-locking decoder,
-        overwriting what you put in it above</li>
-      </ol>Yes, that's ugly, but it can be made to work.
-
-      <p>In the center are some buttons for automated operations
-      you might find useful:</p>
+        <li>Write the information for the non-locking decoder, overwriting what you put in it
+        above</li>
+      </ol>
+      Yes, that's ugly, but it can be made to work.
+      <p>In the center are some buttons for automated operations you might find useful:</p>
 
       <ul>
-        <li>"Search" - walks through a <u>long</u> series of writes
-        and reads to determine which decoders are present. Buttons
-        for decoders that aren't present will be disabled (grayed
+        <li>"Search" - walks through a <u>long</u> series of writes and reads to determine which
+        decoders are present. Buttons for decoders that aren't present will be disabled (grayed
         out).</li>
 
-        <li>"Reset" - sometimes a decoder, even if installed by
-        itself in the locomotive, can get accidentally locked when
-        CV15 and/or CV16 is set to some spurious value. This button
-        does a bunch of reads and writes to figure out what's
-        happened and unlock the decoder.</li>
+        <li>"Reset" - sometimes a decoder, even if installed by itself in the locomotive, can get
+        accidentally locked when CV15 and/or CV16 is set to some spurious value. This button does a
+        bunch of reads and writes to figure out what's happened and unlock the decoder.</li>
 
-        <li>"Init DH163 + SoundTraxx" - If you have a DH163 or
-        similar decoder with the lock feature, plus another decoder
-        without the feature, this button works through a series of
-        operations to configure the Digitrax lock feature so you
-        can use it. (Normally you'd take the locomotive apart so as
-        to be able to load the Digitrax CV16 value).</li>
+        <li>"Init DH163 + SoundTraxx" - If you have a DH163 or similar decoder with the lock
+        feature, plus another decoder without the feature, this button works through a series of
+        operations to configure the Digitrax lock feature so you can use it. (Normally you'd take
+        the locomotive apart so as to be able to load the Digitrax CV16 value).</li>
       </ul>
-      <p>Finally, the bottom part of the page allows you to
-      control the programming mode in use.</p>
 
-      <p>Although it's possible to use this tool in "Ops mode"
-      (programming on the main), in that case it's not able to
-      confirm operations, so one can't be 100% sure that the right
-      decoder is selected.</p>
+      <p>Finally, the bottom part of the page allows you to control the programming mode in
+      use.</p>
 
-      <a name="digitraxproposal" id="digitraxproposal"></a>
-      <h2>Digitrax's Original Proposal</h2>
-      <p>DCC users sometimes want
-      to install more than one decoder in a single locomotive. One
-      common case is using separate decoders for motor control and
-      sound. Because these decoders often need to have their CVs
-      configured separately, a mechanism is needed to communicate
-      with only one at a time.</p>
+      <p>Although it's possible to use this tool in "Ops mode" (programming on the main), in that
+      case it's not able to confirm operations, so one can't be 100% sure that the right decoder is
+      selected.</p>
+
+      <h2 id="digitraxproposal">Digitrax's Original Proposal</h2>
+
+      <p>DCC users sometimes want to install more than one decoder in a single locomotive. One
+      common case is using separate decoders for motor control and sound. Because these decoders
+      often need to have their CVs configured separately, a mechanism is needed to communicate with
+      only one at a time.</p>
 
       <p>This mechanism must be able to:</p>
 
       <ol>
-        <li>Do service-mode read and write from a specific decoder,
-        with no need to disconnect other decoders
-        electrically.</li>
+        <li>Do service-mode read and write from a specific decoder, with no need to disconnect
+        other decoders electrically.</li>
 
-        <li>Discover the type of decoder(s) present inside a
-        locomotive, without disassembly, and despite multiple
-        decoders being present.</li>
+        <li>Discover the type of decoder(s) present inside a locomotive, without disassembly, and
+        despite multiple decoders being present.</li>
 
-        <li>Work with existing DCC systems without
-        modification</li>
+        <li>Work with existing DCC systems without modification</li>
       </ol>
 
-      <h3>Proposal:</h3>CV16 will carry a number from 0 to 7
-      inclusive. This is called the "ID number". This number
-      identifies a single decoder, so a unique value must be
-      assigned to each decoder in a particular locomotive. Because
-      most users will use this mechanism with decoders that provide
+      <h3>Proposal:</h3>
+      CV16 will carry a number from 0 to 7 inclusive. This is called the "ID number". This number
+      identifies a single decoder, so a unique value must be assigned to each decoder in a
+      particular locomotive. Because most users will use this mechanism with decoders that provide
       different functions, the recommended coding is:
+
       <pre>
   0: Reset value, as shipped
-  
-  1: Motor decoder
-  
-  2: Sound decoder
-  
-  3: Function-only decoder (e.g. for additional lights)
-</pre>CV15 is used to select the decoder that will respond. When
-the values in CV15 and CV16 are equal, all CVs in the decoder can
-be read or written. When the values in CV15 and CV16 are not equal,
-only CV15 can be written.
 
-      <p>Some manufacturers may want to provide a bit in a CV to
-      enable/disable this feature. If so, that should be in a CV
-      reserved for the manufacturers use, as no NMRA CV has been
+  1: Motor decoder
+
+  2: Sound decoder
+
+  3: Function-only decoder (e.g. for additional lights)
+</pre>CV15 is used to select the decoder that will respond. When the values in CV15 and CV16 are
+equal, all CVs in the decoder can be read or written. When the values in CV15 and CV16 are not
+equal, only CV15 can be written.
+      <p>Some manufacturers may want to provide a bit in a CV to enable/disable this feature. If
+      so, that should be in a CV reserved for the manufacturers use, as no NMRA CV has been
       reserved for this purpose.</p>
 
-      <p>Note that a command to reset the decoder to default CV
-      values must not be acted upon unless the CV15 and CV16 values
-      are equal. This prevents the user from accidentally resetting
-      multiple decoders at the same time, and losing the ability to
-      separately address them.</p>
+      <p>Note that a command to reset the decoder to default CV values must not be acted upon
+      unless the CV15 and CV16 values are equal. This prevents the user from accidentally resetting
+      multiple decoders at the same time, and losing the ability to separately address them.</p>
 
       <p>To configure decoders at installation:</p>
 
@@ -190,11 +145,10 @@ only CV15 can be written.
       <ol>
         <li>Connect it to the programming track all by itself</li>
 
-        <li>Write 8 to CV8 to ensure CV15 and CV16 are both
-        zero</li>
+        <li>Write 8 to CV8 to ensure CV15 and CV16 are both zero</li>
 
-        <li>If desired, read CV15 to confirm that the decoder can
-        be addressed (This is a read of 0, hence fast)</li>
+        <li>If desired, read CV15 to confirm that the decoder can be addressed (This is a read of
+        0, hence fast)</li>
 
         <li>Write CV16 to the desired ID number, e.g. 2</li>
 
@@ -203,11 +157,10 @@ only CV15 can be written.
         <li>Configure the rest of the decoder</li>
 
         <li>Disconnect it and install it in the locomotive</li>
-      </ol>Repeat in turn for each decoder to be installed
-
-      <p>Note that if the user is installing only one decoder,
-      there is no need to modify the default values of zero in CV15
-      and CV16.</p>
+      </ol>
+      Repeat in turn for each decoder to be installed
+      <p>Note that if the user is installing only one decoder, there is no need to modify the
+      default values of zero in CV15 and CV16.</p>
 
       <p>To access a decoder after installation:</p>
 
@@ -215,28 +168,27 @@ only CV15 can be written.
         <li>Write the ID of the desired decoder into CV15</li>
 
         <li>Read or write other CVs as needed</li>
-      </ol>To identify the decoder(s) present in a locomotive:
-
+      </ol>
+      To identify the decoder(s) present in a locomotive:
       <ol>
         <li>Write a 0 to CV15</li>
 
         <li>Attempt to read a 0 from CV16.</li>
 
-        <li>If no acknowledge is received, there is no decoder with
-        ID 0. If an acknowledge is received, a decoder with ID 0
-        exists.</li>
-      </ol>Repeat this process for ID 1 through 7 to check for
-      those.
-
-      <p>Because the ID values are low, a successful read is quite
-      fast. An unsuccessful read, i.e. when the decoder is not
-      present, will take some time on many existing command
-      stations, but eventually give an answer. This can be made
-      faster in the future by having command stations attempt to
-      read just the expected value, instead of 0 to 255, in the
-      absense of an acknowledge.</p>
+        <li>If no acknowledge is received, there is no decoder with ID 0. If an acknowledge is
+        received, a decoder with ID 0 exists.</li>
+      </ol>
+      Repeat this process for ID 1 through 7 to check for those.
+      <p>Because the ID values are low, a successful read is quite fast. An unsuccessful read, i.e.
+      when the decoder is not present, will take some time on many existing command stations, but
+      eventually give an answer. This can be made faster in the future by having command stations
+      attempt to read just the expected value, instead of 0 to 255, in the absense of an
+      acknowledge.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+    </div>
+    <!-- close #mainContent -->
+  </div>
+  <!-- closes #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

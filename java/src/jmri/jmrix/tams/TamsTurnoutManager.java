@@ -35,14 +35,15 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        } catch (java.lang.NumberFormatException e) {
+        } catch (NumberFormatException e) {
             log.error("failed to convert systemName {} to a turnout address", systemName);
-            return null;
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
         }
         Turnout t = new TamsTurnout(addr, getSystemPrefix(), getMemo().getTrafficController());
         t.setUserName(userName);

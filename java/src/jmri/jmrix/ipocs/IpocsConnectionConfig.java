@@ -66,7 +66,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
 
     if (getAdapter().getSystemConnectionMemo() != null &&
         !getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-      systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
+      systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
     }
   }
@@ -76,7 +76,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     public void actionPerformed(java.awt.event.ActionEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
-        systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
+        systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
   }
@@ -85,7 +85,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     public void focusLost(java.awt.event.FocusEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
-        systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
+        systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
 
@@ -154,7 +154,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     portFieldLabel.setText(Bundle.getMessage(Bundle.PORT_LABEL));
 
     if (getAdapter().getSystemConnectionMemo() != null) {
-      systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
+      systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
       NUMOPTIONS = NUMOPTIONS + 2;
     }

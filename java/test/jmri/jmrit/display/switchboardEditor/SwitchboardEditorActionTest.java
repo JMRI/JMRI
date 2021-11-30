@@ -2,7 +2,6 @@ package jmri.jmrit.display.switchboardEditor;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class SwitchboardEditorActionTest {
     @Test
     public void testCTor() {
         SwitchboardEditorAction t = new SwitchboardEditorAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

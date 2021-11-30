@@ -2,10 +2,13 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.SignalMastManager;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.Portal;
@@ -39,7 +42,7 @@ public class SignalPairTest {
         Assert.assertNotNull("Portal exists", portal);
         SignalPair sp = new SignalPair(mast, portal);
         Assert.assertNotNull("SignalPair exists", sp);
-        
+
         String msg = sp.getDiscription();
         Assert.assertNotNull("msg exists", msg);
     }
@@ -56,7 +59,7 @@ public class SignalPairTest {
         Assert.assertNotNull("CPE exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("CB exists", cb );
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
         Assert.assertNotNull("PortMgr exists", portalMgr );
         mastMgr = InstanceManager.getDefault(SignalMastManager.class);
@@ -78,6 +81,14 @@ public class SignalPairTest {
             cpe.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<Runnable> rlist = sm.getRunnables();
+            if (rlist.size() == 1 && rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                sm.deregister((ShutDownTask)rlist.get(0));
+            }
+        }
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(SignalPairTest.class);

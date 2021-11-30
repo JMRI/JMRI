@@ -1,71 +1,52 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Bachrus</title>
   <meta name="author" content="Andrew Crosland">
-  <meta name="keywords" content=
-  "Bachrus java model railroad JMRI install windows">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="Bachrus java model railroad JMRI install windows">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Hardware Support: Bachrus</h1>
 
-      <p>JMRI supports the Bachrus MTS-DCC Model train Speedometer,
-      which is an input only device, to capture speed information
-      from a reader module on a Bachrus "Saddle" running stand.</p>
+      <p>JMRI supports the Bachrus MTS-DCC Model train Speedometer, which is an input only device,
+      to capture speed information from a reader module on a Bachrus "Saddle" running stand.</p>
 
-      <a name="hardware" id="hardware"></a>
-      <h2>Supported Hardware</h2>
+      <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Bachrus MTS-DCC Model train Speedometer</h3>
 
-      <p>When the Bachrus MTS-DCC is set as a JMRI Layout
-      Connection Preference, the Speedo Console tool can be used to
-      display scale running speed for any scale from Z to O and
-      beyond.</p><a href="images/dial.jpg"><img src=
-      "images/dial.jpg" width="336" height="373" alt=
+      <p>When the Bachrus MTS-DCC is set as a JMRI Layout Connection Preference, the Speedo Console
+      tool can be used to display scale running speed for any scale from Z to O and beyond.</p>
+      <a href="images/dial.jpg"><img src="images/dial.jpg" width="336" height="373" alt=
       "Speedometer dial display"></a><br>
       Left hand side of Speedo panel
-
-      <p>When the Bachrus MTS-DCC is set as a layout connection
-      alongside a DCC hardware system the speedo utility allows
-      automated measurement of a DCC decoder equipped loco's speed
-      profile.</p><a href="images/profile.jpg"><img src=
-      "images/profile.jpg" width="543" height="373" alt=
+      <p>When the Bachrus MTS-DCC is set as a layout connection alongside a DCC hardware system the
+      speedo utility allows automated measurement of a DCC decoder equipped loco's speed
+      profile.</p>
+      <a href="images/profile.jpg"><img src="images/profile.jpg" width="543" height="373" alt=
       "Speedometer speed profile graph"></a><br>
-      Right hand side of Speedo panel <a name="documentation" id=
-      "documentation"></a>
-
-      <h2>Documentation</h2>
+      Right hand side of Speedo panel
+      <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
-      <p>Bachrus has retired as of 2018. Information on the Bachrus
-      Speedometer products stored on the WaybackMachine from the
-      <a href="https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php">Bachrus
+      <p>Bachrus has retired as of 2018. Information on the Bachrus Speedometer products stored on
+      the WaybackMachine from the <a href=
+      "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php">Bachrus
       website</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

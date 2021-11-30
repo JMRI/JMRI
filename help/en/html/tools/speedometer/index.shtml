@@ -1,70 +1,46 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Speedometer</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Speedometer</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>Speedometer</h1>
 
-      <p>The JMRI libraries contain a Speedometer tool that you can
-      use directly from the screen, or build into your own
-      applications</p>
+      <p>The JMRI libraries contain a Speedometer tool that you can use directly from the screen,
+      or build into your own applications</p>
 
-      <p>Before the tool will report the speed, you need to
-      configure it.</p>
+      <p>Before the tool will report the speed, you need to configure it.</p>
 
-      <p>To do this, enter Sensor numbers in the three fields. This
-      is a number (like "23") for the DCC address of the BDL16,
-      DS54, etc. channel that will report when the occupancy
-      changes. The simplest way to get the right number is to open
-      a "LocoNet Monitor" window, and drop a locomotive onto the
-      block you're interested in. You'll see the sensor message,
-      complete with number, in the window that looks something like
-      this:</p>
+      <p>To do this, enter Sensor numbers in the three fields. This is a number (like "23") for the
+      DCC address of the BDL16, DS54, etc. channel that will report when the occupancy changes. The
+      simplest way to get the right number is to open a "LocoNet Monitor" window, and drop a
+      locomotive onto the block you're interested in. You'll see the sensor message, complete with
+      number, in the window that looks something like this:</p>
+
       <pre>
    General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
         (BDL16 10 A2) is Lo
 </pre>The contact number, 161 in this case, is what you want.
-
-      <p>There are three Sensors so you can have a shorter interval
-      for slow speeds and a longer interval for fast speeds. The
-      timing is from Sensor 1 to Sensor 2, and from Sensor 1 to
+      <p>There are three Sensors so you can have a shorter interval for slow speeds and a longer
+      interval for fast speeds. The timing is from Sensor 1 to Sensor 2, and from Sensor 1 to
       Sensor 3.</p>
 
-      <p>You also need to select "on entrance" or "on exit" for
-      each of the Sensors. This says whether the clock will
-      start/stop when the Sensor shows the Block is first
-      "Occupied", or when it shows the Block is first
-      "Unoccupied".</p>
+      <p>You also need to select "on entrance" or "on exit" for each of the Sensors. This says
+      whether the clock will start/stop when the Sensor shows the Block is first "Occupied", or
+      when it shows the Block is first "Unoccupied".</p>
 
-      <p>You also enter the distance in <em>scale</em> feet between
-      the various points. If you're using "on entrance", measure
-      using the entrance end of the block.</p>
+      <p>You also enter the distance in <em>scale</em> feet between the various points. If you're
+      using "on entrance", measure using the entrance end of the block.</p>
 
-      <p>Finally, click the "Start" button. The three little red
-      dots along the right side of the Speedometer window will
-      start changing color to indicate the status of the selected
+      <p>Finally, click the "Start" button. The three little red dots along the right side of the
+      Speedometer window will start changing color to indicate the status of the selected
       Sensors:</p>
 
       <ul>
@@ -75,24 +51,28 @@
         <li>Green or Yellow for "Occupied"</li>
       </ul>
 
-      <p>Once you click the Start button, you can't change the
-      configuration. Just close that window and open another one.
-      You can have multiple Speedometer tool windows open if you'd
+      <p>Once you click the Start button, you can't change the configuration. Just close that
+      window and open another one. You can have multiple Speedometer tool windows open if you'd
       like.</p>
 
       <p>Also check out the JMRI Help pages on:</p>
 
       <ul>
-        <li><a href="SpeedMatch.shtml">Speed Matching</a></li>
+        <li>
+          <a href="SpeedMatch.shtml">Speed Matching</a>
+        </li>
 
-        <li>The <a href="NCE-Speedometer.shtml">NCE
-        speedometer</a></li>
+        <li>The <a href="NCE-Speedometer.shtml">NCE speedometer</a>
+        </li>
 
-        <li>The <a href=
-        "../../hardware/bachrus/index.shtml">Bachrus
-        speedometer</a></li>
-      </ul><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <li>The <a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a>
+        </li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,71 +1,50 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Translate Selection Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Layout Editor Translate">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Layout Editor Translate">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>Translate Selection</h1>
 
-      <p>The Translate Selection dialog provides for translating in 2D
-      a user-selected part of a panel created using Layout Editor.
-      Before selecting <b>Translate Selection...</b> in the Options
-      menu, an area of the panel must be "selected". To select an
-      area, press and hold down the mouse at the upper left of the
-      area, and drag the mouse to the lower right of the area. The
-      selected area is outlined by a rectangle. For icon items, the
-      upper left corner of the icon must be within the selection
-      rectangle if the icon is to be translated.</p>
+      <p>The Translate Selection dialog provides for translating in 2D a user-selected part of a
+      panel created using Layout Editor. Before selecting <strong>Translate Selection...</strong>
+      in the Options menu, an area of the panel must be "selected". To select an area, press and
+      hold down the mouse at the upper left of the area, and drag the mouse to the lower right of
+      the area. The selected area is outlined by a rectangle. For icon items, the upper left corner
+      of the icon must be within the selection rectangle if the icon is to be translated.</p>
 
-      <p>To translate your selected area in the Panel window, enter
-      the amount to translate in the <i>x</i> (horizontal) and
-      <i>y</i> (vertical) directions. The units are pixels--the
-      same units shown in the <i>x,y</i> position display in the
-      Layout Editor tool bar. For no translation in either
-      direction enter zero. For horizontal translation, enter a
-      negative number to move the selected area left that number of
-      pixels; enter a positive number to move right. For vertical
-      translation, enter a negative number to move the selected
-      area up by that number of pixels; enter a positive number to
-      move the selected area down.</p>
+      <p>To translate your selected area in the Panel window, enter the amount to translate in the
+      <em>x</em> (horizontal) and <em>y</em> (vertical) directions. The units are pixels--the same
+      units shown in the <em>x,y</em> position display in the Layout Editor tool bar. For no
+      translation in either direction enter zero. For horizontal translation, enter a negative
+      number to move the selected area left that number of pixels; enter a positive number to move
+      right. For vertical translation, enter a negative number to move the selected area up by that
+      number of pixels; enter a positive number to move the selected area down.</p>
 
-      <p>After entering the amounts to translate, click <b>Move
-      Selection</b> to move the selected area. <b>Caution:</b>
-      translating too far can move the upper left corner of an icon
-      over the edge of the panel, where it cannot be selected, and
-      may disappear forever. Fortunately, if you make this mistake,
-      you can undo a translation by immediately selecting <b>Undo
-      Translation</b> in the Options menu. <b>Undo Translation</b>
-      only works for the last <b>Translate Selection...</b>
-      performed. Remember to check results immediately after
-      translating a selection in case undoing the operation is
-      needed.</p>
+      <p>After entering the amounts to translate, click <strong>Move Selection</strong> to move the
+      selected area. <strong>Caution:</strong> translating too far can move the upper left corner
+      of an icon over the edge of the panel, where it cannot be selected, and may disappear
+      forever. Fortunately, if you make this mistake, you can undo a translation by immediately
+      selecting <strong>Undo Translation</strong> in the Options menu. <strong>Undo
+      Translation</strong> only works for the last <strong>Translate Selection...</strong>
+      performed. Remember to check results immediately after translating a selection in case
+      undoing the operation is needed.</p>
 
-      <p><b>To retain your changes, please remember to save your
-      Panel!</b></p><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p><strong>To retain your changes, please remember to save your Panel!</strong>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

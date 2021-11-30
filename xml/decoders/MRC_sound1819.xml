@@ -96,7 +96,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable CV="7" readOnly="yes" tooltip="=32 for G Gauge Steam Sound, Read Only" item="Decoder Version" default="32">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=32 for G Gauge Steam Sound, Read Only" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
          <label xml:lang="it">Versione Decoder: </label>

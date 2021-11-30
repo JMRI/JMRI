@@ -5,6 +5,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Abstract base (and partial implementation) for classes persisting the status
  * of Network port adapters.
@@ -92,7 +94,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 

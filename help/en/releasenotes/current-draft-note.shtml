@@ -21,20 +21,15 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
-                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
-                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
-                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
-                <li>Refer to MERG section of this not for changes in JMRI support for MERG hardware.</li>
-                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
+                <li></li>
             </ul>
 
-        <h4>DCC++</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li></li>
             </ul>
@@ -61,8 +56,7 @@
 
         <h4>Internal</h4>
             <ul>
-                <li>Sensor, Turnout, Light and Reporter Address ranges do not have to be fully numeric, and will be incremented using the final number in an address.<br>
-                For example, a range can be created from "My Yard 77 Sensor 1" which would increment to "My Yard 77 Sensor 2"</li>
+                <li></li>
             </ul>
 
         <h4>IPOCSMR</h4>
@@ -77,38 +71,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
-              configure these boards.</li>
-              <li>LocoNet support for "Voltage/Current Meters" has been extended to
-                  include support for multiple sources of meter information, and
-                  to include automatic discovery of LocoNet devices which support
-                  voltage and current reporting.  Each discovered device is identified
-                  by its device type and serial number.  These "friendly" identifiers
-                  appear in the "Voltage Meter" and "Current Meter" menus in the
-                  "Voltage/Current Meter" tool. Further information may be found at the
-                  <a href="../html/hardware/loconet/DigitraxMeters.shtml">
-                      Digitrax "Meters"</a> web page.</li>
-                <li>Start-up "Interrogation" of LocoNet Sensor and Turnout state
-                    has re-worked to provide better operation for LocoNet connections
-                    with large numbers of Sensors and/or Turnouts.  The JMRI
-                    interrogation mechanism now implements a minimum delay from
-                    the last Sensor Report, Turnout Report or Interrogate Query
-                    message before sending the next Interrogate Query message.</li>
-                <li>The "DS64 Configuration Tool" was updated:</li>
-                    <ul>
-                        <li>to correctly perform the "Factory Reset" operation
-                            without encountering a "Java Exception";</li>
-                        <li>to correctly perform the "Factory Reset" operation to
-                            the correct DS64 as specified in the "Unit Address" field;</li>
-                        <li>to correctly manage the values shown on the "OpSw Values"
-                            tab and maintain value coherency between the "OpSw Values" tab
-                            and the "Basic Settings" tab.</li>
-                    </ul>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
             <ul>
-                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
+                <li></li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -116,27 +84,14 @@
                 <li></li>
             </ul>
 
-        <h4>MERG </h4>
+        <h4>MERG</h4>
             <ul>
-                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
-                <li>Refer to CBUS section of this not for changes in JMRI support for CBUS.</li>
-                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Added support for creating ranges of Turnouts and Lights.<br>
-                Sensor, Turnout and Light Address ranges do not have to be fully numeric,
-                and will be incremented using the final number in an address.</li>
-                <li>Added support for changing the default quality of service and
-                retention policy for transmissions.  See the
-                <a href="http://jmri.org/jython/SetMqttOptions.py">jython/SetMqttOptions.py</a>
-                script for an example.</li>
-                <li>Fix a nasty threading bug in the MQTT Light support that can
-                cause a JMRI lockup on the first access after adding a Light.</li>
-
-                <li>Update the Paho MQTT library from version 0.4.0 to 1.2.5 (current)</li>
-                <li>Better handling of wildcards in topic subscriptions</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -154,15 +109,14 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
             </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li>Network connections: Support added for auto-reconnect.</li>
-                <li>Network connections: TCP/UDP port configuration option promoted to main configuration settings panel and no longer under Additional Connection Settings.</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -175,12 +129,9 @@
                 <li></li>
             </ul>
 
-        <h4>SPROG DCC </h4>
+        <h4>SPROG</h4>
             <ul>
-                <li>EStop for 28 Step mode is now sent correctly</li>
-		<li>Updated programming mode switcher for Pi-SPROG 3</li>
-		<li>Added mode switcher for SPROG 3 Plus</li>
-		<li>Added help content for new generation 5 hardware</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -195,16 +146,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li>The 73900 decoder definition was renamed 7x900, and updated to support decoder models:
-                  <ul>
-                    <li>73800</li>
-                    <li>73900</li>
-                    <li>76900 (V1)</li>
-                    <li>76900V7</li>
-                    <li>Piko 56126</li>
-                  </ul>
-                  Existing roster entries will suggest this replacement.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -284,7 +226,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Added a new LDH SyM v60 decoder definition
+                    in Spanish and Portuguese</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -344,7 +287,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2 Genesis OEM add new models</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -411,7 +354,7 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li>Include detail information for vetoed object deletes.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -435,13 +378,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>The Layout Editor code has been substantially restructured in this release.
-	            If you have scripts that reference the jmri.jmrit.display.layoutEditor package
-	            please check them carefully, as new classes have been created and
-	            some methods have moved.  Panel files containing Layout Editor panels
-	            that are stored (written out) by this release may not be readable
-	            by earlier releases; this release should load older files just fine.
-	        </li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -452,14 +389,19 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>The "Copy Logix" feature has been enhanced to provide more assistance
-          in copying conditionals. See the updated help files for details.</li>
-
-          <li>Fixed a couple of bugs there Logix wasn't correctly listening on
-          signal head lunar state, signal head flash lunar state, signal mast
-          lit state and signal mast held state. See PR #9059.</li>
-
           <li></li>
+        </ul>
+
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li></li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
@@ -482,10 +424,7 @@
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
-                <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
-                  panels. See OBlocks and JSON.</li>
-                <li>OBlock and associated tables can be edited like the 'standard' tables (see
-                  <a href="#TLae">OBlocks</a>).</li>
+                <li></li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -520,21 +459,13 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-          <li>Increased address validation for multiple hardware types.</li>
-          <li>Access to OBlocks in Web Server via JSON messages was added.</li>
-          <li>Occupancy Blocks, Portals and Paths used in Warrants can be edited in an optional table style
-            like that used in the 'standard' tables (Turnouts, Lights etc). The information is stored in the exact
-            same way, so you may change the UI as desired (see Preferences &gt; Display. Restart required)</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
-            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and
-                post on the JMRI Users Group for any assistance with updating.</li>
-            <li>The Manager method getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) has been
-            deprecated, please use getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting)</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -564,7 +495,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -580,19 +511,15 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-          <li>When the Switchboard pane is resized by the user, the number of rows will adjust to show the largest
-            size switch tiles (default On for new boards). If you prefer to set the number of rows in the Editor,
-            uncheck "Automatically set optimum grid" in the Options menu).</li>
-          <li>Switchboards immediately update after a change in shapes, types, connection or range. The [Update
-            Switchboard] button is still available, and occasionally required.</li>
-          <li>Switches display the user name on the switches (default On for new boards, set "Show user name on
-            switches" in the Options menu.</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Documentation update</li>
+            <li>Minor bug fixes : Modifier keys were not showing on the keyboard control preferences screen and preference apply was not done immediately for throttle list window</li>
+            <li>Removed the global preference "Hide speed step selector" as it is available per throttle. Less complexity.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -622,8 +549,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Implement data collection for CTC references for sensors, signal heads,
-            signal masts, turnouts and blocks.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -633,15 +559,9 @@
         </ul>
 
    <h3>Web Server</h3>
+        <a id="server" name="server"></a>
         <ul>
-            <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
-            <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
-              Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
-            <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
-              items control layout is selected in the Editor Options menu).</li>
-            <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
-              panels.</li>
-            <li>OBlocks access was added as a JSON Servlet to allow this.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -650,41 +570,24 @@
             <li></li>
         </ul>
 
-   <h3>Meters and MeterFrames</h3>
-        <a id="Meters" name="Meters"></a>
-        <ul>
-            <li>jmri.MultiMeter is split into jmri.Meter.</li>
-            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
-            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
-            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
-            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
-            <li>LocoNet supports discovery of the sources of voltage and current
-                data and makes them available in the "Voltage/Current Meter" tool.</li>
-        </ul>
-
-   <h3>AbstractProxyManager</h3>
-        <a id="Proxy" name="Proxy"></a>
-        <ul>
-            <li>AbstractProxyManager can now automatically create system specific managers.</li>
-            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
-			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
-			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
-			already exists. This works as long as the system specific manager doesn't need to have
-			system specific knowledge of the named beans.</li>
-            <li>This means that, for example, the user may create a Jython script that creates a Meter
-			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
-			manager is automatically created.</li>
-			<li>Once a specific connection needs to store specific data about meters, a connection
-			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
-        </ul>
-
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
-            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
-                action required, but developers need to be online the first time
-                they build using Maven.</li>
-            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
-            <li></li>
+            <li>Basic support for TypeScript has been added to the
+                webserver file system.</li>
+            <li>Users that have HighDPI scaling set to something
+                different than 100% can now select whenether or not
+                to force Java to use 100% scaling. It's set in the
+                file <code>JMRI_InitPreferences.properties</code>
+                in the JMRI system preferences directory with the
+                setting <code>sun.java2d.uiScale</code>.
+                If this value is <code>1</code>, Java forces the
+                scaling of JMRI to 100%. If this value is
+                <code>0</code>, Java uses the same scaling as the
+                system.</li>
+            <li>The setting for HighDPI scaling can be changed in
+                <i>Edit -> Preferences -> Display</i>. The checkbox
+                has the text <i>Force 100% scaling when the OS uses
+                higher scaling</i>.</li>
         </ul>
+

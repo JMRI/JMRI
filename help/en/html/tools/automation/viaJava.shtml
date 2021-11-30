@@ -1,202 +1,166 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
 
-  <title>JMRI: Layout Automation in Java</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Layout Automation in Java</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h2>JMRI: Layout Automation in Java</h2>
-      <p>The JMRI library
-      provides a very powerful set of tools for automating your
-      layout. If the tools built into <a href=
-      "../../apps/PanelPro/index.shtml">PanelPro</a> or the
-      <a href="../scripting/index.shtml">scripting capability</a>
-      aren't sufficient to do what you want, writing your own
-      control program certainly will be.</p>
 
-      <p>This page describes the JMRI Java classes that support
-      writing "automation" code in Java. That's things like
-      operating signals, running trains, and even subtle things
-      like changing decoder sound volumes when a train goes into a
-      tunnel.</p>
+      <p>The JMRI library provides a very powerful set of tools for automating your layout. If the
+      tools built into <a href="../../apps/PanelPro/index.shtml">PanelPro</a> or the <a href=
+      "../scripting/index.shtml">scripting capability</a> aren't sufficient to do what you want,
+      writing your own control program certainly will be.</p>
 
-      <p>Note that you can also write your automation code using
-      Jython as <a href="../scripting/index.shtml">JMRI
-      "scripts"</a>. For many purposes, this can be simpler because
-      it's more interactive and has better debugging support. Java
-      is really best for large and/or complex cases, or if you're
-      writing something that you want to eventually contribute to
-      JMRI itself.</p>
+      <p>This page describes the JMRI Java classes that support writing "automation" code in Java.
+      That's things like operating signals, running trains, and even subtle things like changing
+      decoder sound volumes when a train goes into a tunnel.</p>
+
+      <p>Note that you can also write your automation code using Jython as <a href=
+      "../scripting/index.shtml">JMRI "scripts"</a>. For many purposes, this can be simpler because
+      it's more interactive and has better debugging support. Java is really best for large and/or
+      complex cases, or if you're writing something that you want to eventually contribute to JMRI
+      itself.</p>
 
       <dl>
         <dt class="left">Introduction</dt>
 
         <dd class="first">
-          <p>The "Automat" class provides an easy way to write Java
-          automation for your layout using JMRI.</p>
+          <p>The "Automat" class provides an easy way to write Java automation for your layout
+          using JMRI.</p>
 
           <p>The key class is <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
-          AbstractAutomaton</a>, which provides threading support
-          to simplify custom automation code.</p>
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+          which provides threading support to simplify custom automation code.</p>
 
-          <p>Key aspect: These run in a separate thread, so they
-          can wait for something to happen while the rest of the
-          program proceeds. Effectively, each Automat is a separate
-          program running when it needs to.</p>
+          <p>Key aspect: These run in a separate thread, so they can wait for something to happen
+          while the rest of the program proceeds. Effectively, each Automat is a separate program
+          running when it needs to.</p>
 
           <p>There are several examples:</p>
 
           <ul>
-            <li>SampleAutomaton - watches a Sensor, and adjusts the
-            state of a Turnout so that it matches the Sensor's
-            state.</li>
+            <li>SampleAutomaton - watches a Sensor, and adjusts the state of a Turnout so that it
+            matches the Sensor's state.</li>
 
-            <li>SampleAutomaton2 - watches a Sensor, and adjusts
-            the momentum of a locomotive decoder using ops-mode
-            programming when the sensor state changes.</li>
+            <li>SampleAutomaton2 - watches a Sensor, and adjusts the momentum of a locomotive
+            decoder using ops-mode programming when the sensor state changes.</li>
 
-            <li>SampleAutomaton3 - runs a locomotive back and forth
-            on a piece of track by watching two sensors, reversing
-            the locomotive when they change state.</li>
+            <li>SampleAutomaton3 - runs a locomotive back and forth on a piece of track by watching
+            two sensors, reversing the locomotive when they change state.</li>
           </ul>
 
-          <p>Note that they may not do anything useful on your
-          railroad, as they have block and locomotive numbers
-          hard-coded. They're meant to be examples for your own
-          programming, not useful tools.</p>
+          <p>Note that they may not do anything useful on your railroad, as they have block and
+          locomotive numbers hard-coded. They're meant to be examples for your own programming, not
+          useful tools.</p>
         </dd>
 
         <dt class="left">Controlling Locomotives</dt>
 
         <dd>
-          <p class="example">// get the throttle instance for short
-          address 3<br>
+          <p class="example">// get the throttle instance for short address 3<br>
           throttle = getThrottle(3, false);</p>
 
-          <p>This code snippet assigns "short address 3" to the
-          "throttle" variable (the "false" selects short address;
-          long address would have been "true"). If this doesn't
-          work for some reason, you'll get a periodic "still
-          waiting for throttle" message in the Java window, and the
-          program will wait.</p>
+          <p>This code snippet assigns "short address 3" to the "throttle" variable (the "false"
+          selects short address; long address would have been "true"). If this doesn't work for
+          some reason, you'll get a periodic "still waiting for throttle" message in the Java
+          window, and the program will wait.</p>
         </dd>
 
         <dt class="left">Interacting with the user</dt>
 
         <dd>
-          <p>You can put up some message boxes directly from Java,
-          but it takes a little code to do it. To simplify it at
-          the start, I've added a "MsgFrame" helper class to the
-          JMRI library.</p>
+          <p>You can put up some message boxes directly from Java, but it takes a little code to do
+          it. To simplify it at the start, I've added a "MsgFrame" helper class to the JMRI
+          library.</p>
 
-          <p>To make a message box, you first make an object of the
-          "MsgFrame" class:</p>
+          <p>To make a message box, you first make an object of the "MsgFrame" class:</p>
 
           <p class="example">MsgFrame box = new MsgFrame();</p>
 
-          <p>(You can call it whatever you'd like, of course). That
-          line should go with the other declarations, e.g. right
-          after the "DccThrottle throttle = null;" line.</p>
+          <p>(You can call it whatever you'd like, of course). That line should go with the other
+          declarations, e.g. right after the "DccThrottle throttle = null;" line.</p>
 
-          <p>Then, inside the test routines, there are a few things
-          you can do. To show a message and wait for the user to
-          click a "Continue" button, do:</p>
+          <p>Then, inside the test routines, there are a few things you can do. To show a message
+          and wait for the user to click a "Continue" button, do:</p>
 
-          <p class="example">box.show("my message text goes here",
-          true);</p>
+          <p class="example">box.show("my message text goes here", true);</p>
 
-          <p>The 2nd argument shows the "Continue button and waits
-          if true, and just continues if false. So if you'd like to
-          show a status message while the program continues to run,
+          <p>The 2nd argument shows the "Continue button and waits if true, and just continues if
+          false. So if you'd like to show a status message while the program continues to run,
           do:</p>
 
-          <p class="example">box.show("status message text",
-          false);</p>
+          <p class="example">box.show("status message text", false);</p>
 
-          <p>If you've done that, you can change the message with
-          another "show", or you can make the box go away with:</p>
+          <p>If you've done that, you can change the message with another "show", or you can make
+          the box go away with:</p>
 
           <p class="example">box.hide();</p>
 
-          <p>Java actually has to do some work to pop the box and
-          draw it. We don't want that to delay the main test
-          program, so I've written this helper class to do all that
-          kind of work as a 2nd, lower priority. You should be able
-          to put messages up on the screen without significantly
-          slowing operation down (unless the program waits for the
-          "Continue" button to be pressed, of course). And waiting
-          for "Continue" to be pressed won't stop the operation of
-          the rest of the program.</p>
+          <p>Java actually has to do some work to pop the box and draw it. We don't want that to
+          delay the main test program, so I've written this helper class to do all that kind of
+          work as a 2nd, lower priority. You should be able to put messages up on the screen
+          without significantly slowing operation down (unless the program waits for the "Continue"
+          button to be pressed, of course). And waiting for "Continue" to be pressed won't stop the
+          operation of the rest of the program.</p>
         </dd>
 
         <dt class="left">Running Your Code</dt>
 
         <dd>
-          There are two parts to doing this: Making your Java code
-          available to JMRI, and invoking it.
+          There are two parts to doing this: Making your Java code available to JMRI, and invoking
+          it.
+          <p>The easiest way to make your code accessible is to make a .jar file and place that in
+          the "lib" directory in the JMRI program directory. Alternately, you can create a
+          "classes" directory, and compile your Java class into that. In that case, it should end
+          up in:</p>
 
-          <p>The easiest way to make your code accessible is to
-          make a .jar file and place that in the "lib" directory in
-          the JMRI program directory. Alternately, you can create a
-          "classes" directory, and compile your Java class into
-          that. In that case, it should end up in:</p>
           <pre style="font-family: monospace;">
 classes/MyCode.class
 </pre>if you've specified no code in your package, or
+
           <pre style="font-family: monospace;">
 classes/MyCode.class
 </pre>or
+
           <pre style="font-family: monospace;">
 classes/jmri/jmrit/automat/SampleAutomaton.class
 </pre>as an example of how code in a specific package gets stored.
+          <p>The easiest way to invoke your code is to use JMRI's scripting support. Open a
+          <strong>Script Output</strong> window (so you can see errors) from the
+          <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} menu, then in a
+          <strong>Script Entry</strong> window, enter:</p>
 
-          <p>The easiest way to invoke your code is to use JMRI's
-          scripting support. Open a Script Output window (so you
-          can see errors) from the Panels menu, then a Script Entry
-          window, enter:</p>
           <pre style="font-family: monospace;">
 MyCode().start()
 </pre>or
+
           <pre style="font-family: monospace;">
 import jmri.jmrit.automat
 jmri.jmrit.automat.SampleAutomaton().start()
-</pre>
-          and hit Execute. The 2nd line creates an instance of your
-          class and tells it to start running.
-
-          <p>Once you've got that working, you can put that in a
-          little script file and invoke it at startup, via a Logix,
-          or whenever you desire.</p>
+</pre>and hit Execute. The 2nd line creates an instance of your class and tells it to start
+running.
+          <p>Once you've got that working, you can put that in a little script file and invoke it
+          at startup, via a Logix, or whenever you desire.</p>
         </dd>
       </dl>
 
-      <p>Back to the <a href="index.shtml">Automation Help
-      page</a>.</p>
+      <p>Back to the <a href="index.shtml">Automation Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

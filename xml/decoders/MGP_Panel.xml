@@ -3,6 +3,7 @@
 <?transform-xslt href="http://jmri.org/xml/decoders/MGP_Panel.xsl"?>
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,12 +17,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
-  <!-- Version 2 - change mfg to match name in NMRA.xml -->
-  
+     <!-- Version 2 - change mfg to match name in NMRA.xml -->
+  <version author="Keld Polmann" version="3" lastUpdated="20210301"/>
+     <!-- Version 3 - a lot of updates for new decoder firmware. -->
+
   <decoder>
     <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels">
-      <model model="Panel" lowVersionID="1">
-			</model>
+		<model model="Panel" lowVersionID="1" productID="4"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
@@ -29,66 +31,208 @@
     <variables>
       <variable CV="2" item="Decoder Version" readOnly="yes" >
         <decVal/>
-        <label>Manufacturer Version No.</label>
-	  </variable>	  
+        <label>Software Version</label>
+        <label xml:lang="cs">Verze SW</label>
+	  </variable>
       <variable CV="3" item="Serial Number" readOnly="yes" >
 		<splitVal highCV="4" upperMask="XXXXVVVV"/>
         <label>Decoder serial number</label>
+        <label xml:lang="cs">Sériové číslo</label>
       </variable>
       <variable CV="7" item="Manufacturer" readOnly="yes" >
         <decVal/>
         <label>Manufacturer Id</label>
+        <label xml:lang="cs">ID výrobce</label>
       </variable>
       <variable CV="8" item="Developer Id" readOnly="yes" >
         <decVal/>
         <label>Developer Id</label>
+        <label xml:lang="cs">ID vývojáře</label>
       </variable>
       <variable CV="9" item="Product Id" readOnly="yes" >
         <decVal/>
         <label>Product Id</label>
+        <label xml:lang="cs">ID výrobku</label>
       </variable>
 
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable>	  
+                <label xml:lang="cs">Dlouhá adresa</label>
+	  </variable>
 
 <!--
-<group name="General">	  
+<group name="General">
 -->
 	<variable item="Interrogate at startup" CV="24" mask="VVVVVVVV">
 		<enumVal>
-			<enumChoice choice="No" value="0"/>
-			<enumChoice choice="after 2s" value="2"/>
-			<enumChoice choice="after 5s" value="5"/>
-			<enumChoice choice="after 10s" value="10"/>
-			<enumChoice choice="after 30s" value="30"/>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="after 2s" value="2">
+                            <choice>after 2s</choice>
+                            <choice xml:lang="cs">po 2 s</choice>
+                        </enumChoice>
+			<enumChoice choice="after 5s" value="5">
+                            <choice>after 5s</choice>
+                            <choice xml:lang="cs">po 5 s</choice>
+                        </enumChoice>
+			<enumChoice choice="after 10s" value="10">
+                            <choice>after 10s</choice>
+                            <choice xml:lang="cs">po 10 s</choice>
+                        </enumChoice>
+			<enumChoice choice="after 30s" value="30">
+                            <choice>after 30s</choice>
+                            <choice xml:lang="cs">po 30 s</choice>
+                        </enumChoice>
 		</enumVal>
+                <label>Interrogate at startup</label>
+                <label xml:lang="cs">Poslat stav po spuštění</label>
 	</variable>
 	<variable item="Switch message button on/off" CV="25" mask="XXXXXXXV">
 		<enumVal>
-			<enumChoice choice="normal - on" value="0"/>
-			<enumChoice choice="extra - on/off" value="1"/>
+			<enumChoice choice="normal - on" value="0">
+                            <choice>normal - on</choice>
+                            <choice xml:lang="cs">normálně - pouze Zapnuto</choice>
+                        </enumChoice>
+			<enumChoice choice="extra - on/off" value="1">
+                            <choice>extra - on/off</choice>
+                            <choice xml:lang="cs">zvlášť - Zapnuto i Vypnuto</choice>
+                        </enumChoice>
 		</enumVal>
+                <label>Switch message button on/off</label>
+                <label xml:lang="cs">Zprávy tlačítka při</label>
 	</variable>
 	<variable item="Blink at unknow state" CV="25" mask="XXXXXXVX">
 		<enumVal>
-			<enumChoice choice="No blinking" value="0"/>
-			<enumChoice choice="Blinking" value="1"/>
+			<enumChoice choice="No blinking" value="0">
+                            <choice>No blinking</choice>
+                            <choice xml:lang="cs">Neblikat</choice>
+                        </enumChoice>
+			<enumChoice choice="Blinking" value="1">
+                            <choice>Blinking</choice>
+                            <choice xml:lang="cs">Blikat</choice>
+                        </enumChoice>
 		</enumVal>
+                <label>Blink at unknow state</label>
+                <label xml:lang="cs">Blikání při neznámém stavu</label>
 	</variable>
 	<variable item="Flash LED at startup" CV="25" mask="XXXXXVXX">
 		<enumVal>
-			<enumChoice choice="No" value="0"/>
-			<enumChoice choice="Yes" value="1"/>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="Yes" value="1">
+                            <choice>Yes</choice>
+                            <choice xml:lang="cs">Ano</choice>
+                        </enumChoice>   
 		</enumVal>
+                <label>Flash LED at startup</label>
+                <label xml:lang="cs">Blikání LED při spuštění</label>
+	</variable>
+	<variable item="Use Lock" CV="25" mask="XXXXVXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="Yes" value="1">
+                            <choice>Yes</choice>
+                            <choice xml:lang="cs">Ano</choice>
+                        </enumChoice>   
+		</enumVal>
+            <label>Use Lock</label>
+            <label xml:lang="cs">Zamknout panel</label>
+	</variable>
+	<variable item="Toggle Switch without answer" CV="25" mask="XXXVXXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="Yes" value="1">
+                            <choice>Yes</choice>
+                            <choice xml:lang="cs">Ano</choice>
+                        </enumChoice>   
+		</enumVal>
+            <label>Toggle Switch without answer</label>
+            <label xml:lang="cs">Přepnout přepínač bez odpovědi</label>
+	</variable>
+	<variable item="Report Status at On" CV="25" mask="XXVXXXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="Yes" value="1">
+                            <choice>Yes</choice>
+                            <choice xml:lang="cs">Ano</choice>
+                        </enumChoice>   
+		</enumVal>
+            <label>Report Status at Power On</label>
+            <label xml:lang="cs">Poslat stav pri Zapnutí napájení</label>
+	</variable>
+	<variable item="Send Track Power On" CV="25" mask="XVXXXXXX">
+		<enumVal>
+			<enumChoice choice="No" value="0">
+                            <choice>No</choice>
+                            <choice xml:lang="cs">Ne</choice>
+                        </enumChoice>
+			<enumChoice choice="Yes" value="1">
+                            <choice>Yes</choice>
+                            <choice xml:lang="cs">Ano</choice>
+                        </enumChoice>   
+		</enumVal>
+            <label>Send Track Power On</label>
+            <label xml:lang="cs">Odeslat zprávu Napájení zapnuto</label>
 	</variable>
 	<variable item="LED Test Sequence" CV="26">
         <decVal min="0" max="64"/>
+            <label>LED Test Sequence</label>
+            <label xml:lang="cs">Sekvence testu LED</label>
 	</variable>
+	<variable item="Acoustic feedback" CV="27" mask="XXXXXVVV">
+		<enumVal>
+			<enumChoice choice="No feedback" value="0">
+                            <choice>No feedback</choice>
+                            <choice xml:lang="cs">Bez ohlasu</choice>
+                        </enumChoice>
+			<enumChoice choice="Feedback on all buttons" value="1">
+                            <choice>Feedback on all buttons</choice>
+                            <choice xml:lang="cs">Ohlas na všechna tlačítka</choice>
+                        </enumChoice>
+			<enumChoice choice="Feedback only on Combo" value="2">
+                            <choice>Feedback only on Combo</choice>
+                            <choice xml:lang="cs">Ohlas pouze na kombinace</choice>
+                        </enumChoice>
+		</enumVal>
+            <label>Acoustic feedback</label>
+            <label xml:lang="cs">Zvukový ohlas</label>
+	</variable>
+	<variable item="Acoustic feedback (0-15s)" CV="27" mask="VVVVXXXX" default="0">
+		<decVal />
+            <label>Length of tone (0-15 * 0.1 s)</label>
+            <label xml:lang="cs">Délka tónu (0–15 × 0,1 s)</label>
+	</variable>
+
+	<variable CV="86" item="Start Address Auto Reply" default="0">
+		<splitVal highCV="87" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+                <label xml:lang="cs">Počáteční adresa</label>
+	</variable>
+
+	<variable CV="88" item="Auto Reply No. Adresses" default="0">
+		<splitVal highCV="89" upperMask="XXXXXVVV"/>
+		<label>Number of Adresses</label>
+                <label xml:lang="cs">Počet adres</label>
+	 </variable>
 
 	<variable item="LED max intensity" CV="100">
         <decVal />
+            <label>LED max intensity</label>
+            <label xml:lang="cs">Max intenzita LED</label>
 	</variable>
 
 <!--
@@ -105,38 +249,40 @@ in xsl
 
 
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+
     </variables>
   </decoder>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
-  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->
+
   <pane>
     <name>General decoder info</name>
+    <name xml:lang="cs">Všeobecné informace o dekodéru</name>
     <column>
       <label>
         <text>Address to decoder AND to first signal</text>
+        <text xml:lang="cs">Adresa dekodéru A prvního návěstidla</text>
       </label>
       <display item="Short Address"/>
       <label>
         <text> </text>
       </label>
-      <display item="Decoder Version" label="Software Version"/>
+      <display item="Decoder Version" />
       <label>
         <text> </text>
       </label>
-      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <display item="Manufacturer" />
       <label>
         <text> </text>
       </label>
-      <display item="Developer Id" label="Developer Id"/>
+      <display item="Developer Id" />
       <label>
         <text> </text>
       </label>
-      <display item="Product Id" label="Product Id"/>
+      <display item="Product Id" />
       <label>
         <text> </text>
       </label>
@@ -145,35 +291,58 @@ in xsl
 
 	<pane>
 		<name>General Panel Info</name>
+                <name xml:lang="cs">Všeobecné informace o panelu</name>
 		<column>
 			<label>
 				<text> </text>
 			</label>
 			<display item="Interrogate at startup"/>
+                        <display item="Report Status at On" />
+                        <display item="Send Track Power On" />
+                        
 			<label>
 				<text> </text>
 			</label>
 			<display item="Switch message button on/off"/>
+			<display item="Toggle Switch without answer"/>
+                        
 			<label>
 				<text> </text>
 			</label>
+			<display item="LED max intensity"/>
 			<display item="Blink at unknow state"/>
-			<label>
-				<text> </text>
-			</label>
 			<display item="Flash LED at startup"/>
-			<label>
-				<text> </text>
-			</label>
 			<display item="LED Test Sequence"/>
+
 			<label>
 				<text> </text>
 			</label>
-			<display item="LED max intensity"></display>
+			<display item="Use Lock"/>
+
+                        <label>
+				<text> </text>
+			</label>
+			<display item="Acoustic feedback"/>
+			<display item="Acoustic feedback (0-15s)"/>
+
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>Auto Reply</text>
+                                <text xml:lang="cs">Automatická odpověď</text>	
+
+			</label>
+				<display item="Start Address Auto Reply"/>
+				<display item="Auto Reply No. Adresses"/>
+			<label>
+				<text> </text>
+			</label>
+
 		</column>
 	</pane>
-  
-  
+
+
   	<pane>
         <name>InputPane</name>
     </pane>
@@ -181,6 +350,18 @@ in xsl
         <name>LedPane</name>
     </pane>
   	<pane>
+        <name>LedDepPane</name>
+    </pane>
+  	<pane>
+        <name>LedItsPane</name>
+    </pane>
+  	<pane>
+        <name>LedGrpPane</name>
+    </pane>
+  	<pane>
+        <name>DirPane</name>
+    </pane>    
+    <pane>
         <name>RoutesPane</name>
     </pane>
   	<pane>

@@ -3,6 +3,7 @@
 <?transform-xslt href="http://jmri.org/xml/decoders/MGP_Servo5.xsl"?>
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,12 +18,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
-  <!-- Version 2 - change mfg to match name in NMRA.xml -->
+    <!-- Version 2 - change mfg to match name in NMRA.xml -->
+  <version author="Keld Polmann" version="3" lastUpdated="20210301"/>
+    <!-- Version 3 - a lot of updates for new decoder firmware -->
   
   <decoder>
     <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
-      <model model="Servo5" lowVersionID="1">
-			</model>
+	  <model model="Servo5" lowVersionID="1" productID="9"></model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV2MODE</mode>
@@ -55,7 +57,8 @@
 	  <variable CV="21" item="Short Address" default="1">
 		<splitVal highCV="22" upperMask="XXXXXVVV"/>
 		<label>Long Address</label>
-	  </variable>	  
+	  </variable>
+	  
 	<!--  ^ ^ ^ ^ ^ ^ STANDARD ^ ^ ^ ^ ^ ^ -->
 	<!-- * * * * * * * * * * * * * * * * * -->
 	
@@ -385,6 +388,7 @@
 	<SV type="bits" start='0'  length='1' name="Feedback type" svNumber="42" rw="1">
 	<SV type="int1" name="Switch when button is" svNumber="43" rw="1">
 	<SV type="int1" name="Send LN for Buttons" svNumber="44" rw="1" minVersion='3' advanced="1">
+	<SV type="int1" name="LocoNet is connected" svNumber="44" rw="1" minVersion='8' advanced="1">
 	-->
 	<variable item="Feedback type" CV="42" mask="XXXXXXXV">
         <enumVal>
@@ -394,17 +398,22 @@
 	</variable>
 	<variable item="Switch when button is" CV="43">
         <enumVal>
-          <enumChoice choice="pressed" value="0"/>
-          <enumChoice choice="released" value="1"/>
-          <enumChoice choice="both" value="2"/>
+          <enumChoice choice="Pressed" value="0"/>
+          <enumChoice choice="Released" value="1"/>
+          <enumChoice choice="Both" value="2"/>
         </enumVal>
 	</variable>
-	<variable item="Send LN for Buttons" CV="44">
-		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+	<variable item="Send LN for Buttons" CV="44" mask="XXXXXXXV">
+    	<enumVal>
+        <enumChoice choice="No" value="0"/>
+        <enumChoice choice="Yes" value="1"/>
+       	</enumVal>
+	</variable>
+	<variable item="LocoNet is connected" CV="44" mask="XXXXXXVX">
+     	<enumVal>
+        <enumChoice choice="No" value="0"/>
+        <enumChoice choice="Yes" value="1"/>
+       	</enumVal>
 	</variable>
 	<!--  ^ ^ ^ ^ ^ ^ Control ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
@@ -465,6 +474,13 @@
 	</variable>
 	<variable item="Lock switch 5" CV="47" mask="XXXVXXXX">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock all switches" CV="47" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>10</value></qualifier>
         <enumVal>
           <enumChoice choice="No" value="0"/>
           <enumChoice choice="Yes" value="1"/>
@@ -537,10 +553,15 @@
 
 </group>
 	-->
+	<!-- <SV type="int1" name="Delay in routes" svNumber="170" rw="1"/> -->
+    <variable CV="170" item="Delay in routes (* 0.1 sec)" >
+        <decVal/>
+        <label>Delay in routes (* 0.1 sec)</label>
+    </variable>
 	<variable item="Polarisation switch for servo 5 locked to" CV="177">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
         <enumVal>
-			<enumChoice choice="no locking, used as normal" value='0'/>
+			<enumChoice choice="No locking, used as normal" value='0'/>
 			<enumChoice choice="Servo 1" value='1'/>
 			<enumChoice choice="Servo 2" value='2'/>
 			<enumChoice choice="Servo 3" value='3'/>
@@ -565,8 +586,10 @@
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
         <enumVal>
           <enumChoice choice="Switch buttons" value="0"/>
+		  <enumChoice choice="Internal switch status" value="1"/>
           <enumChoice choice="Internal routes" value="2"/>
           <enumChoice choice="Track status" value="4"/>
+          <enumChoice choice="Switch status" value="5"/>
         </enumVal>
 	</variable>
 	<variable CV="181" item="Status start address" default="0">
@@ -578,7 +601,15 @@
 	</variable>	  
 	<variable CV="402" item="Sensor filter Succ (ms)" default="0">
 		<splitVal highCV="403" />
-	</variable>	  
+	</variable>
+
+	<variable item="Servo update" CV="414" mask="VVVVVVVV" default="255">
+        <enumVal>
+				<enumChoice choice="Always update" value='255'/>
+				<enumChoice choice="Dont update when in pos." value='0'/>
+        </enumVal>
+    </variable>
+
 	<!--  ^ ^ ^ ^ ^ ^ Special ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
 
@@ -610,6 +641,8 @@
           <enumChoice choice="Switch Thrown" value="2"/>
           <enumChoice choice="Switch Toggle" value="3"/>
           <enumChoice choice="Track Status" value="6"/>
+          <enumChoice choice="Track Status, opto X1/X3" value="15"/>
+          <enumChoice choice="Track Status, opto X1/X3 refelection" value="16"/>
         </enumVal>
 	</variable>
 	<!-- <SV type="int2" name="Address X1" svNumber="184" minValue='1' maxValue='4096' rw="1" minVersion='3'/>  -->
@@ -636,6 +669,8 @@
           <enumChoice choice="Switch Thrown" value="2"/>
           <enumChoice choice="Switch Toggle" value="3"/>
           <enumChoice choice="Track Status" value="6"/>
+          <enumChoice choice="Track Status, opto X2/X4" value="15"/>
+          <enumChoice choice="Track Status, opto X2/X4 refelection" value="16"/>
         </enumVal>
 	</variable>
 
@@ -674,13 +709,20 @@
 			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
 			<enumChoice choice="Output - Relay Sync" value='30'/>
 			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
+			<enumChoice choice="Output - Servo LocoNet controlled" value='18'/>
         </enumVal>
 	</variable>
 	<variable CV="190" item="Address X3" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="191" upperMask="XXXXVVVV"/>
-	</variable>	  
-
+	</variable>	 
+	<variable item="Active output X3" CV="191" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>12</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Active = 1" value='1'/>
+				<enumChoice choice="Active = 0" value='0'/>
+        </enumVal>
+    </variable>	
 	<variable item="Usage X4" CV="192">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
@@ -711,12 +753,20 @@
 			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
 			<enumChoice choice="Output - Relay Sync" value='30'/>
 			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
+			<enumChoice choice="Output - Servo LocoNet controlled" value='18'/>
         </enumVal>
 	</variable>
 	<variable CV="193" item="Address X4" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<splitVal highCV="194" upperMask="XXXXVVVV"/>
 	</variable>	  
+	<variable item="Active output X4" CV="194" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>12</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Active = 1" value='1'/>
+				<enumChoice choice="Active = 0" value='0'/>
+        </enumVal>
+    </variable>	
 	<!-- ^ ^ ^ ^ ^ ^ Extra HW ^ ^ ^ ^ ^ ^ ^ -->
 	<!--  * * * * * * * * * * * * * * * * * -->
 
@@ -1127,6 +1177,7 @@
       <display item="Type of buttons"/>
       <display item="Switch when button is"/>
       <display item="Send LN for Buttons"/>
+      <display item="LocoNet is connected"/>
     </column>
   </pane>
 
@@ -1142,6 +1193,7 @@
       <display item="Lock switch 3"/>
       <display item="Lock switch 4"/>
       <display item="Lock switch 5"/>
+      <display item="Lock all switches"/>
       <label>
         <text> </text>
       </label>
@@ -1158,7 +1210,7 @@
 	</pane>
 
   <pane>
-    <name>sensor and Special</name>
+    <name>Sensor and Special</name>
     <column>
       <display item="Input use"/>
       <label><text> </text></label>
@@ -1171,6 +1223,10 @@
       <display item="Sensor filter Succ (ms)"/>
       <label><text> </text></label>
       <display item="Polarisation switch for servo 5 locked to"/>
+      <label><text> </text></label>
+      <display item="Delay in routes (* 0.1 sec)"/>
+      <label><text> </text></label>
+      <display item="Servo update"/>
     </column>
   </pane>
 
@@ -1192,12 +1248,14 @@
       <display item="Usage X3"/>
       <display item="Usage X3 new" label="Usage X3"/>
       <display item="Address X3"/>
+      <display item="Active output X3" label="Active output X3"/>	  
       <label>
         <text> </text>
       </label>
       <display item="Usage X4"/>
       <display item="Usage X4 new" label="Usage X4"/>
       <display item="Address X4"/>
+      <display item="Active output X4" label="Active output X4"/>
     </column>
   </pane>
 

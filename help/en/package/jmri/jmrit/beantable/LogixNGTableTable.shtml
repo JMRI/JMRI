@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Tables Table</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng tables csv table">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: LogixNG Tables Table</h1>
+
+      <p>The LogixNG tables table contains a list of the defined LogixNG tables.</p>
+
+      <ul>
+        <li>
+          <a href="#tableContent">Table Content</a>
+        </li>
+
+        <li>
+          <a href="#selectActions">Select Actions</a>
+        </li>
+
+        <li>
+          <a href="#menuItems">Menu Items</a>
+        </li>
+
+        <li>
+          <a href="#addLogixNG">Add a LogixNG Table</a>
+        </li>
+      </ul>
+
+      <h2 id="tableContent">Table Content</h2>
+
+      <p>The LogixNG table lists all of the currently defined LogixNG tables. Each row has a
+      standard set of columns.</p>
+
+      <dl>
+        <dt>System Name</dt>
+
+        <dd>
+          The system name for the LogixNG Table. LogixNG table system names have an
+          <strong>IQT</strong> prefix normally followed by numbers. For details about the LogixNG
+          Table system name, see <a href="#addLogixNG">Add a LogixNG Table</a>. The system name
+          cannot be changed.
+        </dd>
+
+        <dt>User Name</dt>
+
+        <dd>The user name for the LogixNG Table. This is a free form field that contains a
+        meaningful name.</dd>
+
+        <dt>Comment</dt>
+
+        <dd>A free form comment field for the LogixNG</dd>
+
+        <dt>Menu</dt>
+
+        <dd>
+          The <strong>Select</strong> combo box is used to select actions for the selected LogixNG.
+          See <a href="#selectActions">Select Actions</a>
+        </dd>
+      </dl>
+
+      <h2 id="selectActions">Select Actions</h2>
+
+      <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG row.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../logixng/images/SelectActions.png"><img src=
+        "../logixng/images/SelectActions.png" alt="Select Actions" width="167" height="123"></a>
+      </div>
+
+      <dl>
+        <dt>Edit</dt>
+
+        <dd>
+          When <strong>Edit</strong> is selected, the LogixNG table editor will open. This window
+          will contain the contents of the CSV file that has been loaded. See <a href=
+          "../logixng/LogixNGTableTableEditor.shtml">LogixNG Table Editor</a> for details.
+        </dd>
+
+        <dt>Browse</dt>
+
+        <dd>
+          The <strong>Browse</strong> option opens a text window with a representation of the
+          definitions within the LogixNG table. See <a href=
+          "../logixng/LogixNGBrowser.shtml">LogixNG Browser</a> for details about the browser.
+        </dd>
+
+        <dt>Copy</dt>
+
+        <dd>The <strong>Copy</strong> action is used to create a duplicate of the current LogixNG
+        table. <strong><em>Note: This feature is not available yet.</em></strong></dd>
+
+        <dt>Delete</dt>
+
+        <dd>
+          The <strong>Delete</strong> action deletes the current LogixNG table and its content. A
+          confirmation dialog will be displayed.
+          <div style="margin-left: 2em">
+            <a href="../logixng/images/DeleteTable.png"><img src=
+            "../logixng/images/DeleteTable.png" alt="Delete LogixNG Table Confirmation" width="367"
+            height="126"></a>
+          </div>
+        </dd>
+      </dl>
+
+      <h2 id="menuItems">Menu Items</h2>
+
+      <dl>
+        <dt>Tools</dt>
+
+        <dd>The tools menu has one item: <strong>Open PickList Tables</strong>. The PickList was
+        designed for dragging names, such as sensor names, to a text field. Due to the
+        implementation of ConditionalNG edit dialogs, the drag and drop capability does not
+        function. It can still be used as a reference.</dd>
+      </dl>
+
+      <h2 id="addLogixNG">Add a LogixNG Table</h2>
+
+      <p>To create a new LogixNG Table, click on the <strong>Add...</strong> button. The
+      <strong>LogixNG Table Table</strong> window will be displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../logixng/images/AddTable.png"><img src="../logixng/images/AddTable.png" alt=
+        "Add LogixNG Table" width="608" height="256"></a>
+      </div>
+
+      <p>The system name is required. The system name for a LogixNG Table always begins with the
+      letters <strong>IQT</strong>. If the entered name does not start with <strong>IQT</strong>,
+      it will be automatically added. The typical suffix is a number. If <strong>Automatically
+      generate System Name</strong> is checked, the system name format will be
+      <strong>IQT:AUTO:nnnn</strong>. Any other format requires adding a <strong>$</strong>
+      (dollar) character between <strong>IQT</strong> and the suffix.</p>
+
+      <p>The user name is optional but recommended. A user name may be any useful text, provided
+      the new user name was not previously assigned to another LogixNG Table. Once a LogixNG Table
+      is created, its system name cannot be changed. Its user name may be changed in the LogixNG
+      Tables Table. The user name is usually used to provide a more descriptive name, for example,
+      "Signal 5 Table".</p>
+
+      <p>Use the file selector button to find and and load a CSV file. The CSV file is created by
+      using the export CSV file option in a spreadsheet program. The default location will be the
+      user files location.</p>
+
+      <p>The ability to create an internal table is not implemented yet.</p>
+
+      <p>After clicking <strong>Create</strong>, the LogixNG Table will be created and the <a href=
+      "../logixng/LogixNGTableTableEditor.shtml">Table Editor</a> window will appear.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

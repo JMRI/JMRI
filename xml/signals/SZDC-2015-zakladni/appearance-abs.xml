@@ -42,6 +42,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed map Call-on</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2021-11-03</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Fix Specific Mapping</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -83,9 +89,9 @@
   </appearances>
   
   <specificappearances>
-      <permissive>
+      <danger>
           <aspect>Stůj</aspect>
-      </permissive>
+      </danger>
       <dark>
           <aspect>Zhasnuto</aspect>
       </dark>

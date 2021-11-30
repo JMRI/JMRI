@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- Copyright (C) JMRI 2004 - 2020 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,46 +11,109 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Michael Greene mgreene@cedarlane.com" version="2" lastUpdated="20040716"/>
+  <version author="Wouter Kok" version="3" lastUpdated="20201225"/>
   <!-- These are the version 5.1 decoders -->
   <!-- The defaults in this file match the values found in decoders from the factory but not the documentation -->
   <!-- Note that these Lenz decoders only support a 15 position speed table CV67-CV81 -->
   <!-- This file was built using the Lenz 5.4 XML file as a basis -->
+  <!-- Version 3, Corection speed table to CV67-81 and Range 1-63.
+                  Vhigh (CV5) default from 255 to 10 change.
+                  Corection CV19 adres from 1-255 no direction change.
+                  Forgotten CV30 and CV60 Bit1 added.
+                  Dutch translating inserted.   -->
   <decoder>
     <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51">
       <model model="LE030" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
+        <output name="1" label="Output A|White">
+          <label xml:lang="de">Ausgang A|Weiss</label>
+          <label xml:lang="nl">Uitgang A|Wit</label>
+        </output>
+        <output name="2" label="Output B|Yellow">
+          <label xml:lang="de">Ausgang B|Gelb</label>
+          <label xml:lang="nl">Uitgang B|Geel</label>
+        </output>
         <size length="0.1.4" width="0.45" height="0.13" units="inches"/>
       </model>
       <model model="LE040" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
+        <output name="1" label="Output A|White">
+          <label xml:lang="de">Ausgang A|Weiss</label>
+          <label xml:lang="nl">Uitgang A|Wit</label>
+        </output>
+        <output name="2" label="Output B|Yellow">
+          <label xml:lang="de">Ausgang B|Gelb</label>
+          <label xml:lang="nl">Uitgang B|Geel</label>
+        </output>
         <size length="0.63" width="0.57" height="0.18" units="inches"/>
       </model>
       <model model="LE130" maxInputVolts="16V" maxMotorCurrent="1.0A" maxTotalCurrent="1.2A" numOuts="4" formFactor="HO">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
-        <output name="4" label="D - Violet"/>
+        <output name="1" label="Output A|White">
+          <label xml:lang="de">Ausgang A|Weiss</label>
+          <label xml:lang="nl">Uitgang A|Wit</label>
+        </output>
+        <output name="2" label="Output B|Yellow">
+          <label xml:lang="de">Ausgang B|Gelb</label>
+          <label xml:lang="nl">Uitgang B|Geel</label>
+        </output>
+        <output name="3" label="Output C|Green">
+          <label xml:lang="de">Ausgang C|Grün</label>
+          <label xml:lang="nl">Uitgang C|Groen</label>
+        </output>
+        <output name="4" label="Output D|Violet">
+          <label xml:lang="de">Ausgang D|Violett</label>
+          <label xml:lang="nl">Uitgang D|Violet</label>
+        </output>
         <size length="1.04" width="0.67" height="0.26" units="inches"/>
       </model>
       <model model="LE135" maxInputVolts="16V" maxMotorCurrent="1.3A" maxTotalCurrent="1.5A" numOuts="3" formFactor="HO">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
+        <output name="1" label="Output A|White">
+          <label xml:lang="de">Ausgang A|Weiss</label>
+          <label xml:lang="nl">Uitgang A|Wit</label>
+        </output>
+        <output name="2" label="Output B|Yellow">
+          <label xml:lang="de">Ausgang B|Gelb</label>
+          <label xml:lang="nl">Uitgang B|Geel</label>
+        </output>
+        <output name="3" label="Output C|Green">
+          <label xml:lang="de">Ausgang C|Grün</label>
+          <label xml:lang="nl">Uitgang C|Groen</label>
+        </output>
         <size length="1.12" width="0.83" height="0.22" units="inches"/>
       </model>
       <model model="LE230" maxInputVolts="26V" maxMotorCurrent="2.5A" nmraWarrant="yes" nmraWarrantStart="200506" maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale">
-        <output name="1" label="A - Terminal L1"/>
-        <output name="2" label="B - Terminal L2"/>
-        <output name="3" label="C - S1: Yellow"/>
-        <output name="4" label="D - S2: White"/>
-        <output name="5" label="E - S3: Black"/>
-        <output name="6" label="F - S4: Red"/>
-        <output name="7" label="G - S5: Gray"/>
-        <output name="8" label="H - S6: Orange"/>
+        <output name="1" label="Output A|Terminal L1">
+          <label xml:lang="de">Ausgang A|Klemme L1</label>
+          <label xml:lang="nl">Uitgang A|Terminal L1</label>
+        </output>
+        <output name="2" label="Output B|Terminal L2">
+          <label xml:lang="de">Ausgang B|Klemme L2</label>
+          <label xml:lang="nl">Uitgang B|Terminal L2</label>
+        </output>
+        <output name="3" label="Output C|S1: Yellow">
+          <label xml:lang="de">Ausgang C|S1: Gelb</label>
+          <label xml:lang="nl">Uitgang C|S1: Geel</label>
+        </output>
+        <output name="4" label="Output D|S2: White">
+          <label xml:lang="de">Ausgang D|S2: Weiss</label>
+          <label xml:lang="nl">Uitgang D|S2: Wit</label>
+        </output>
+        <output name="5" label="Output E|S3: Black">
+          <label xml:lang="de">Ausgang E|S3: Schwarz</label>
+          <label xml:lang="nl">Uitgang E|S3: Zwart</label>
+        </output>
+        <output name="6" label="Output F|S4: Red">
+          <label xml:lang="de">Ausgang F|S4: Ret</label>
+          <label xml:lang="nl">Uitgang F|S4: Rood</label>
+        </output>
+        <output name="7" label="Output G|S5: Gray">
+          <label xml:lang="de">Ausgang G|S5: Grau</label>
+          <label xml:lang="nl">Uitgang G|S5: Grijs</label>
+        </output>
+        <output name="8" label="Output H|S6: Orange">
+          <label xml:lang="de">Ausgang H|S6: Orange</label>
+          <label xml:lang="nl">Uitgang H|S6: Oranje</label>
+        </output>
         <size length="2.75" width="1.18" height="0.50" units="inches"/>
       </model>
     </family>
@@ -63,48 +126,57 @@
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Startspannung</label>
-        <comment>Range 1-15</comment>
-        <comment xml:lang="it">Valori 1-15</comment>
-        <comment xml:lang="de">Range 1-15</comment>
+        <label xml:lang="nl">Startspanning</label>
         <label xml:lang="cs">Rozjezdové napětí</label>
-        <comment xml:lang="cs">Meze 1-15</comment>
+        <tooltip>Range 1-15</tooltip>
+        <tooltip xml:lang="cs">Meze 1-15</tooltip>
+        <tooltip xml:lang="de">Bereich 1-15</tooltip>
+        <tooltip xml:lang="it">Valori 1-15</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-15</tooltip>
+        <comment>Range 1-15</comment>
       </variable>
       <variable item="Accel" CV="3" comment="Range 1-31" default="4">
         <decVal max="31"/>
         <label>Accel</label>
         <label xml:lang="it">Accellerazione</label>
-        <comment>Range 1-31</comment>
-        <comment xml:lang="it">Valori 1-31</comment>
         <label xml:lang="de">Accel</label>
-        <comment xml:lang="de">Range 1-31</comment>
         <label xml:lang="cs">Zrychlení</label>
-        <comment xml:lang="cs">Meze 1-31</comment>
+        <label xml:lang="nl">Acceleratie</label>
+        <tooltip>Range 1-31</tooltip>
+        <tooltip xml:lang="cs">Meze 1-31</tooltip>
+        <tooltip xml:lang="de">Bereich 1-31</tooltip>
+        <tooltip xml:lang="it">Valori 1-31</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-31</tooltip>
+        <comment>Range 1-31</comment>
       </variable>
       <variable item="Decel" CV="4" comment="Range 1-31" default="1">
         <decVal max="31"/>
         <label>Decel</label>
         <label xml:lang="it">Decellerazione</label>
-        <comment>Range 1-31</comment>
-        <comment xml:lang="it">Valori 1-31</comment>
         <label xml:lang="de">Decel</label>
-        <comment xml:lang="de">Range 1-31</comment>
         <label xml:lang="cs">Zpomalení</label>
-        <comment xml:lang="cs">Meze 1-31</comment>
+        <tooltip>Range 1-31</tooltip>
+        <tooltip xml:lang="cs">Meze 1-31</tooltip>
+        <tooltip xml:lang="de">Bereich 1-31</tooltip>
+        <tooltip xml:lang="it">Valori 1-31</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-31</tooltip>
+        <comment>Range 1-31</comment>
       </variable>
-      <variable item="Vhigh" CV="5" default="255">
+      <variable item="Vhigh" CV="5" default="10">
         <decVal max="10"/>
         <label>Vhigh</label>
         <label xml:lang="it">Vhigh</label>
         <label xml:lang="de">Vhigh</label>
         <label xml:lang="cs">Maximální napětí</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="51">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="51">
         <decVal/>
         <label>Version ID</label>
          <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="nl">Decoder versie: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
@@ -113,70 +185,229 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
         <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="nl">Fabrikanten ID: </label>
       </variable>
       <variable CV="9" comment="Range 0-15" item="Total PWM Period" default="4">
         <decVal/>
         <label>EMF frequency</label>
         <label xml:lang="it">Frequenza EMF</label>
-        <comment>Range 0-15</comment>
-        <comment xml:lang="it">Valori 1-15</comment>
         <label xml:lang="de">Total PWM Period</label>
-        <comment xml:lang="de">Range 0-15</comment>
         <label xml:lang="cs">Frekvence EMF</label>
-        <comment xml:lang="cs">Meze 0-15</comment>
+        <label xml:lang="nl">EMF-frequentie</label>
+        <tooltip>Range 1-15</tooltip>
+        <tooltip xml:lang="cs">Meze 1-15</tooltip>
+        <tooltip xml:lang="de">Bereich 1-15</tooltip>
+        <tooltip xml:lang="it">Valori 1-15</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-15</tooltip>
+        <comment>Range 0-15</comment>
       </variable>
       <!-- CV=19 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="19" item="Consist Address" default="0">
+        <decVal min="0" max="255"/>
+        <label>Consist Address</label>
+        <label xml:lang="it">Indirizzo Consist Avanzato</label>
+        <label xml:lang="fr">Addresse UM</label>
+        <label xml:lang="de">Verbundadresse</label>
+        <label xml:lang="cs">Adresa soupravy </label>
+        <label xml:lang="nl">Multitractie-adres</label>
+        <tooltip>&lt;html&gt;Stores consist address. Range 0-255.&lt;br&gt;For compatibility reasons, do not set above 127.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">&lt;html&gt; Consist. Valori 0-255.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt; Das Verbundadresse. Grenzwerte 0-255.&lt;br&gt;Aus Kompatibilitätsgründe nicht über 127 setzen.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt; adresu soupravy. Meze 0-255.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt; Het Multitractie-adres. Grenswaarden 0-255.&lt;br&gt;Van wege compatibiliteitsredenen, niet boven 127 instellen.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14/27 speed step format">
+            <choice xml:lang="cs">Režim 14/27 rychlostních kroků</choice>
+            <choice xml:lang="de">14/27 Fahrstufen Modus</choice>
+            <choice xml:lang="fr">Format 14/27 Pas de vitesse</choice>
+            <choice xml:lang="it">Formato 14/27 step</choice>
+            <choice xml:lang="nl">14/27 rijstappenmodus</choice>
+          </enumChoice>
+          <enumChoice choice="28 speed step format">
+            <choice>28 speed step format (recommended)</choice>
+            <choice xml:lang="cs">Režim 28 rychlostních kroků</choice>
+            <choice xml:lang="de">28 Fahrstufen Modus (empfohlen)</choice>
+            <choice xml:lang="fr">Format 28 Pas de vitesse (recommandé)</choice>
+            <choice xml:lang="it">Formato 28 step (raccomandato)</choice>
+            <choice xml:lang="nl">28 rijstappenmodus mode (aanbevolen)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+        <label xml:lang="cs">Rychlostních kroků</label>
+        <label xml:lang="de">Fahrstufen</label>
+        <label xml:lang="fr">Pas de vitesse</label>
+        <label xml:lang="it">Step Velocità</label>
+        <label xml:lang="nl">Rijstappen</label>
+        <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
+        <tooltip xml:lang="cs">Nastaví režim rychlostních kroků, může mít také vliv na některé efekty světel</tooltip>
+        <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
+        <tooltip xml:lang="fr">Règle les Pas de vitesse pour le moteur; peut aussi influencer certains réglages de lumières</tooltip>
+        <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
+        <tooltip xml:lang="nl">Hiermee stelt u de rijstappenmodus in en beinvloedt mogelijk bepaalde lichteffecten.</tooltip>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
-      <variable item="Back EMF control" CV="60" mask="XXXXXXXV" default="1">
+      <!-- CV30 -->
+      <variable CV="30" mask="XXXXXXXV" item="Motor Short" default="0">
+        <enumVal>
+          <enumChoice choice="Okay">
+            <choice>Okay</choice>
+            <choice xml:lang="it">OK</choice>
+            <choice xml:lang="de">Okay</choice>
+            <choice xml:lang="cs">V pořádku</choice>
+            <choice xml:lang="ca">OK</choice>
+            <choice xml:lang="nl">Oke</choice>
+          </enumChoice>
+          <enumChoice choice="Fault">
+            <choice>Fault</choice>
+            <choice xml:lang="it">Guasto</choice>
+            <choice xml:lang="de">Fehler</choice>
+            <choice xml:lang="cs">Závada</choice>
+            <choice xml:lang="ca">Error</choice>
+            <choice xml:lang="nl">Fout</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor short-circuit</label>
+        <label xml:lang="it">Corto circuito Motore</label>
+        <label xml:lang="de">Motor Kurzschluss</label>
+        <label xml:lang="cs">Zkrat motoru</label>
+        <label xml:lang="ca">Curt-Circuit al motor</label>
+        <label xml:lang="nl">Motor-kortsluiting</label>
+      </variable>
+      <variable CV="30" mask="XXXXXXVX" item="Front light Short">
+        <enumVal>
+          <enumChoice choice="Okay">
+            <choice>Okay</choice>
+            <choice xml:lang="it">OK</choice>
+            <choice xml:lang="de">Okay</choice>
+            <choice xml:lang="cs">V pořádku</choice>
+            <choice xml:lang="ca">OK</choice>
+            <choice xml:lang="nl">Oke</choice>
+          </enumChoice>
+          <enumChoice choice="Fault">
+            <choice>Fault</choice>
+            <choice xml:lang="it">Guasto</choice>
+            <choice xml:lang="de">Fehler</choice>
+            <choice xml:lang="cs">Závada</choice>
+            <choice xml:lang="ca">Error</choice>
+            <choice xml:lang="nl">Fout</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Front light short-circuit</label>
+        <label xml:lang="de">Frontlicht Kurzschluss</label>
+        <label xml:lang="nl">Koplampen voor kortsluiting</label>
+        <label xml:lang="cs">Přední světla zkrat</label>
+      </variable>
+      <variable CV="30" mask="XXXXXVXX" item="Rear light Short">
+        <enumVal>
+          <enumChoice choice="Okay">
+            <choice>Okay</choice>
+            <choice xml:lang="it">OK</choice>
+            <choice xml:lang="de">Okay</choice>
+            <choice xml:lang="cs">V pořádku</choice>
+            <choice xml:lang="ca">OK</choice>
+            <choice xml:lang="nl">Oke</choice>
+          </enumChoice>
+          <enumChoice choice="Fault">
+            <choice>Fault</choice>
+            <choice xml:lang="it">Guasto</choice>
+            <choice xml:lang="de">Fehler</choice>
+            <choice xml:lang="cs">Závada</choice>
+            <choice xml:lang="ca">Error</choice>
+            <choice xml:lang="nl">Fout</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Rear light short-circuit</label>
+        <label xml:lang="de">Rücklicht-Kurzschluss</label>
+        <label xml:lang="nl">Koplampen Achter kortsluiting</label>
+        <label xml:lang="cs">Zadní světla zkrat</label>
+      </variable>
+      <!-- CV60 -->
+      <variable CV="60" item="EMF Enable" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Back EMF control inactive">
-            <choice>Back EMF control inactive</choice>
-            <choice xml:lang="it">Controllo BEMF Inattivo</choice>
-            <choice xml:lang="de">Back EMF control inactive</choice>
-            <choice xml:lang="cs">Back EMF řízení neaktivní</choice>
+            <choice>Inactive</choice>
+            <choice xml:lang="it">Inattivo</choice>
+            <choice xml:lang="de">Inactive</choice>
+            <choice xml:lang="cs">Neaktivní</choice>
+            <choice xml:lang="nl">Inactief</choice>
           </enumChoice>
           <enumChoice choice="Back EMF control active">
-            <choice>Back EMF control active</choice>
-            <choice xml:lang="it">Controllo BEMF Attivo</choice>
-            <choice xml:lang="de">Back EMF control active</choice>
-            <choice xml:lang="cs">Back EMF řízení aktivní</choice>
+            <choice>Active</choice>
+            <choice xml:lang="it">Attivo</choice>
+            <choice xml:lang="de">Active</choice>
+            <choice xml:lang="cs">Aktivní</choice>
+            <choice xml:lang="nl">Actief</choice>
           </enumChoice>
         </enumVal>
         <label>Back EMF control</label>
         <label xml:lang="it">Controllo BEMF</label>
-        <label xml:lang="de">Back EMF control</label>
+        <label xml:lang="de">EMF-Kontrolle Zurück Meldung</label>
         <label xml:lang="cs">Back EMF řízení</label>
+        <label xml:lang="nl">EMF-controle terug melding</label>
+      </variable>
+      <variable CV="60" item="Decoder Control Active" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="Decoder error inactive">
+            <choice>Inactive</choice>
+            <choice xml:lang="it">Inattivo</choice>
+            <choice xml:lang="de">Inactive</choice>
+            <choice xml:lang="cs">Neaktivní</choice>
+            <choice xml:lang="nl">Inactief</choice>
+          </enumChoice>
+          <enumChoice choice="Decoder error active">
+            <choice>Active</choice>
+            <choice xml:lang="it">Attivo</choice>
+            <choice xml:lang="de">Active</choice>
+            <choice xml:lang="cs">Aktivní</choice>
+            <choice xml:lang="nl">Actief</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Decoder error notifications in CV30</label>
+        <label xml:lang="de">Decoder-Fehlerbenachrichtigungen in CV30</label>
+        <label xml:lang="nl">Decoder fout meldingen in CV30</label>
       </variable>
       <variable CV="60" item="DC Brake Momentum" mask="XXXXXVXX" default="0" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="it">Loco usa Tensione in Analogico</choice>
-            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
+            <choice xml:lang="de">Lok läuft unter DC-Analogspannung</choice>
             <choice xml:lang="cs">Lokomotiva používá pro řízení analogové stejnosměrné napětí</choice>
+            <choice xml:lang="nl">Loc rijd onder DC analoge spanning</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
             <choice xml:lang="it">Loco frena fino a fermarsi usando Inerzia impostata in CV4</choice>
-            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="de">Lok bremst tot stilstand mit den Wert aus CV4</choice>
             <choice xml:lang="cs">Lokomotiva při brždění do zastavení používá zpomalení nastavené v CV4</choice>
+            <choice xml:lang="nl">Loc remt tot stilstand met behulp van de ingestelde waarde uit CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
         <label xml:lang="it">Inerzia Frenata in Analogico</label>
-        <comment>Governs how loco acts in DC track block</comment>
-        <comment xml:lang="it">Controlla il comportamento della loco in un blocco Analogico</comment>
-        <label xml:lang="de">DC Brake Momentum</label>
-        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
+        <label xml:lang="de">Brems verhalten beim DC-Betrieb.</label>
         <label xml:lang="cs">DC brzdné zpomalení</label>
-        <comment xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</comment>
+        <label xml:lang="nl">Rem gedrag bij DC-betrieb.</label>
+        <tooltip>&lt;html&gt;Controls how the locomotive reacts in a DC track block.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Steuert, wie die Lokomotive in einem DC Gleisabschnitt reagiert&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">Controlla il comportamento della loco in un blocco Analogico</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Regelt hoe de loc reageert in een DC spoor sectie.&lt;br&gt;&lt;/html&gt;</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <!-- No compliant Speed Table -->
+      <variable CV="67" item="Speed Table" comment="Range 1-63">
+        <speedTableVal min="1" max="63" entries="15"/>
+        <label>                                                     Speed Table (CV67-81) (1-63)</label>
+        <label xml:lang="cs">                                                             Rychlostní tabulka (CV67-81) (1-63)</label>
+        <label xml:lang="de">                                                             Einstellbare Fahrkurve (CV67-81) (1-63)</label>
+        <label xml:lang="it">                                                             Tabella velocità (CV67-81) (1-63)</label>
+        <label xml:lang="nl">                                                             Instelbare snelheid’s tabel (CV67-81) (1-63)</label>
+      </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
@@ -188,13 +419,59 @@
       <constant item="F6 controls output 8" minOut="8" default="1"/>
     </variables>
   </decoder>
-  <pane>
+  <pane nameFmt="label">
     <name>Lenz</name>
-    <name xml:lang="de">Lenz</name>
-    <name xml:lang="cs">Lenz</name>
     <column>
-      <display item="Back EMF control"/>
-      <display item="Brake Momentum on DC"/>
+      <grid gridy="NEXT" weightx="1" ipadx="10">
+        <griditem gridx="0" gridy="0" gridwidth="1">
+          <label>
+            <text>&lt;html&gt;&lt;h2&gt;&lt;u&gt;Fault Indication&lt;/u&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Fehleranzeige&lt;/u&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            <text xml:lang="cs">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Hlášení závad&lt;/u&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Indicació d'Error&lt;/u&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h2&gt;&lt;u&gt;Fautmeldingen&lt;/u&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <display item="Decoder Control Active"/>
+        </griditem>
+        <group>
+          <qualifier>
+            <variableref>Decoder Control Active</variableref>
+            <relation>eq</relation>
+            <value>1</value>
+          </qualifier>
+          <griditem gridx="0" gridy="NEXT" gridwidth="1">
+            <label>
+              <text> </text>
+            </label>
+          </griditem>
+          <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+            <display item="Motor Short"/>
+          </griditem>
+          <griditem gridx="0" gridy="NEXT" gridwidth="1">
+            <label>
+              <text> </text>
+            </label>
+          </griditem>
+          <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+            <display item="Front light Short"/>
+          </griditem>
+          <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+            <display item="Rear light Short"/>
+          </griditem>
+          <griditem gridx="NEXT" gridy="NEXT" gridwidth="1">
+            <label>
+              <text>  </text>
+            </label>
+          </griditem>
+        </group>
+      </grid>
     </column>
   </pane>
 </decoder-config>

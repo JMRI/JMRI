@@ -68,10 +68,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      * @param username   user name value
      * @return false if the operation failed, in which case the user should have already been notified
      */
-    abstract public boolean createMast(@Nonnull
-            String sigsysname, @Nonnull
-                    String mastname, @Nonnull
-                            String username);
+    abstract public boolean createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username);
     
     /**
      * @return human-preferred name for type of signal mast, in local language

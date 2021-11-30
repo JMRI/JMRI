@@ -43,12 +43,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * When reading a file, validation is controlled heirarchically:
  * <ul>
- * <li>There's a global default
- * <li>Which can be overridden on a particular XmlFile object
- * <li>Finally, the static call to create a builder can be invoked with a
+ *   <li>There's a global default
+ *   <li>Which can be overridden on a particular XmlFile object
+ *   <li>Finally, the static call to create a builder can be invoked with a
  * validation specification.
  * </ul>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
@@ -243,13 +242,15 @@ public abstract class XmlFile {
     }
 
     /**
-     * Return a File object for a name. This is here to implement the search
-     * rule: <ol> <li>Look in user preferences directory, located by
-     * {@link jmri.util.FileUtil#getUserFilesPath()} <li>Look in current working
-     * directory (usually the JMRI distribution directory) <li>Look in program
-     * directory, located by {@link jmri.util.FileUtil#getProgramPath()}
-     * <li>Look in XML directory, located by {@link #xmlDir} <li>Check for
-     * absolute name. </ol>
+     * Get a File object for a name. This is here to implement the search
+     * rule:
+     * <ol>
+     *   <li>Look in user preferences directory, located by {@link jmri.util.FileUtil#getUserFilesPath()}
+     *   <li>Look in current working directory (usually the JMRI distribution directory)
+     *   <li>Look in program directory, located by {@link jmri.util.FileUtil#getProgramPath()}
+     *   <li>Look in XML directory, located by {@link #xmlDir}
+     *   <li>Check for absolute name.
+     * </ol>
      *
      * @param name Filename perhaps containing subdirectory information (e.g.
      *             "decoders/Mine.xml")
@@ -481,7 +482,7 @@ public abstract class XmlFile {
     }
 
     Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
-        log.trace("handling ", p);
+        log.trace("handling {}", p);
 
         // check target
         String target = p.getTarget();
@@ -696,6 +697,8 @@ public abstract class XmlFile {
 
         return builder;
     }
+
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(XmlFile.class);
+
 }

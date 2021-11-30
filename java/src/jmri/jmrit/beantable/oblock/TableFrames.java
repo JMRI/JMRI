@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
 import jmri.*;
@@ -83,7 +84,6 @@ public class TableFrames implements InternalFrameListener {
     private JmriJFrame desktopframe;
     private JDesktopPane _desktop;
     private final int maxHeight = 600;
-    private final int maxWidth = 1100;
     private JInternalFrame _blockTableFrame;
     private JInternalFrame _portalTableFrame;
     private JInternalFrame _blockPortalXRefFrame;
@@ -96,6 +96,7 @@ public class TableFrames implements InternalFrameListener {
     private JMenuItem openPortal;
     private JMenuItem openXRef;
     private JMenuItem openSignal;
+    private JMenuItem _setUnits;
 
     private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
     private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>();
@@ -279,17 +280,18 @@ public class TableFrames implements InternalFrameListener {
     private void createDesktop() {
         _desktop = new JDesktopPane();
         _desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
-        _desktop.setPreferredSize(new Dimension(1100, 600));
+        _desktop.setPreferredSize(new Dimension(_blockTableFrame.getWidth(),
+                _blockTableFrame.getHeight()+_portalTableFrame.getHeight()+100));
         _desktop.setBackground(new Color(180,180,180));
         desktopframe.setContentPane(_desktop);
 
         // placed at 0,0
         _desktop.add(_blockTableFrame);
-        _portalTableFrame.setLocation(0, 320);
+        _portalTableFrame.setLocation(0, _blockTableFrame.getHeight());
         _desktop.add(_portalTableFrame);
-        _signalTableFrame.setLocation(350, 400);
+        _signalTableFrame.setLocation(200, 420);
         _desktop.add(_signalTableFrame);
-        _blockPortalXRefFrame.setLocation(700, 20);
+        _blockPortalXRefFrame.setLocation(700, 30);
         _desktop.add(_blockPortalXRefFrame);
     }
 
@@ -311,6 +313,10 @@ public class TableFrames implements InternalFrameListener {
         if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
             importBlocksItem.setEnabled(false);
         }
+        _setUnits = new JMenuItem(Bundle.getMessage("changeUnits",
+                (_oBlockModel.isMetric() ? Bundle.getMessage("LengthInches") : Bundle.getMessage("LengthCentimeters"))));
+        _setUnits.addActionListener(event -> setUnits());
+        optionMenu.add(_setUnits);
         return optionMenu;
     }
 
@@ -340,7 +346,7 @@ public class TableFrames implements InternalFrameListener {
     /**
      * Convert a copy of your current JMRI Blocks to OBlocks and connect them with Portals and Paths.
      * Accessed from the Options menu.
-     *
+     * @throws IllegalArgumentException exception
      * @author Egbert Broerse 2019
      */
     protected void importBlocks() throws IllegalArgumentException {
@@ -431,6 +437,9 @@ public class TableFrames implements InternalFrameListener {
                     if (opa.getFromPortal() == null) {
                         opa.setFromPortal(port);
                     }
+                    for (BeanSetting bs : pa.getSettings()) {
+                        opa.addSetting(bs);
+                    }
                     if ((opa.getToPortal() == null) && (prevPortal != null)) {
                         opa.setToPortal(prevPortal);
                         // leaves ToPortal in previously (first) created OPath n-1 empty
@@ -484,6 +493,12 @@ public class TableFrames implements InternalFrameListener {
             _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
         log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
+    }
+
+    private void setUnits() {
+        _oBlockModel.changeUnits();
+        _setUnits.setText(Bundle.getMessage("changeUnits",
+                (_oBlockModel.isMetric() ? Bundle.getMessage("LengthInches") : Bundle.getMessage("LengthCentimeters"))));
     }
 
     // listen for _desktopframe closing
@@ -716,16 +731,30 @@ public class TableFrames implements InternalFrameListener {
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _oBlockTable.setRowHeight(ROW_HEIGHT);
-        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(maxWidth,
-                Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
 
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
+        int tableWidth = _oBlockTable.getPreferredSize().width;
 
+        TableColumn column = tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL);
+        tableWidth -= column.getWidth();
+        tcm.setColumnVisible(column, false);
+        column = tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL);
+        tableWidth -= column.getWidth();
+        tcm.setColumnVisible(column, false);
+        column = tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL);
+        tableWidth -= column.getWidth();
+        tcm.setColumnVisible(column, false);
+//        column = tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL);
+//        tableWidth -= column.getWidth();
+//        tcm.setColumnVisible(column, false);
+        column = tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL);
+        tableWidth -= column.getWidth();
+        tcm.setColumnVisible(column, false);
+        column = tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL);
+        tableWidth -= column.getWidth();
+        tcm.setColumnVisible(column, false);
+
+        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+                ROW_HEIGHT * Math.min(20, InstanceManager.getDefault(OBlockManager.class).getObjectCount())));
         return _oBlockTable;
     }
 
@@ -857,7 +886,8 @@ public class TableFrames implements InternalFrameListener {
         _portalTable.doLayout();
         int tableWidth = _portalTable.getPreferredSize().width;
         _portalTable.setRowHeight(ROW_HEIGHT);
-        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
+        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, 
+                ROW_HEIGHT * Math.min(20, InstanceManager.getDefault(PortalManager.class).getPortalCount())));
         return _portalTable;
     }
 
@@ -877,8 +907,9 @@ public class TableFrames implements InternalFrameListener {
         }
         _blockPortalTable.doLayout();
         _blockPortalTable.setRowHeight(ROW_HEIGHT);
-        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(maxWidth/3,
-                Math.min(TableFrames.ROW_HEIGHT * 20, maxHeight)));
+        int tableWidth = _blockPortalTable.getPreferredSize().width;
+        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+                ROW_HEIGHT * Math.min(20, InstanceManager.getDefault(PortalManager.class).getPortalCount())));
 
         return _blockPortalTable;
     }
@@ -907,8 +938,8 @@ public class TableFrames implements InternalFrameListener {
         _signalTable.doLayout();
         int tableWidth = _signalTable.getPreferredSize().width;
         _signalTable.setRowHeight(ROW_HEIGHT);
-        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth*2/3,
-                Math.min(TableFrames.ROW_HEIGHT * 8, maxHeight)));
+        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+                ROW_HEIGHT * Math.min(10, _signalTable.getRowCount())));
         return _signalTable;
     }
 

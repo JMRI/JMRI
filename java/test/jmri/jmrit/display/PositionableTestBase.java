@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 
 /**
- * Base class for tests for Positionable objects. 
+ * Base class for tests for Positionable objects.
  *
  * @author Paul Bender Copyright (C) 2017
  */
@@ -61,6 +61,7 @@ abstract public class PositionableTestBase {
         editor = null;
         p = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -153,7 +154,7 @@ abstract public class PositionableTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.deepClone();
 
-        // this next line is consistently failing (on all object types).  
+        // this next line is consistently failing (on all object types).
         // It should pass.
         //Assert.assertFalse("clone object (not content) equality", p.equals(p));
 
@@ -179,7 +180,7 @@ abstract public class PositionableTestBase {
         p.setScale(5.0D);
         Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
     }
-    
+
     @Test
     public void testGetAndSetRotationDegrees(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -212,7 +213,7 @@ abstract public class PositionableTestBase {
     }
 
     @Test
-    public void testShow() {
+    public void testShow() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");

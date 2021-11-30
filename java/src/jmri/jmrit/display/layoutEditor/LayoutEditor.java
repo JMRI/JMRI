@@ -153,6 +153,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private JCheckBoxMenuItem drawLayoutTracksLabelCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
@@ -283,10 +284,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean snapToGridOnMove = false;
     private boolean snapToGridInvert = false;
 
-    public boolean antialiasingOn = false;
-    public boolean highlightSelectedBlockFlag = false;
+    private boolean antialiasingOn = false;
+    private boolean drawLayoutTracksLabel = false;
+    private boolean highlightSelectedBlockFlag = false;
 
-    public boolean turnoutCirclesWithoutEditMode = false;
+    private boolean turnoutCirclesWithoutEditMode = false;
     private boolean tooltipsWithoutEditMode = false;
     private boolean tooltipsInEditMode = true;
 
@@ -453,6 +455,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 setAntialiasingOn(prefsAntialiasingOn);
 
+                boolean prefsDrawLayoutTracksLabel = prefsMgr.getSimplePreferenceState(windowFrameRef + ".drawLayoutTracksLabel");
+                // log.debug("{}.drawLayoutTracksLabel is {}", windowFrameRef, prefsDrawLayoutTracksLabel);
+                setDrawLayoutTracksLabel(prefsDrawLayoutTracksLabel);
+
                 boolean prefsHighlightSelectedBlockFlag
                         = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
                 // log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
@@ -474,6 +480,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
     }
 
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private void setupMenuBar() {
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -482,7 +489,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
+        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore"));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
@@ -707,7 +714,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 || (savedAnimatingLayout != isAnimating())
                 || (savedShowHelpBar != getShowHelpBar()));
 
-        targetWindowClosing(save);
+        log.trace("Temp fix to disable CI errors: save = {}", save);
+        targetWindowClosing();
     }
 
     /**
@@ -766,11 +774,43 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * The Java run times for 11 and 12 running on macOS have a bug that causes double events for
+     * JCheckBoxMenuItem when invoked by an accelerator key combination.
+     * <p>
+     * The java.version property is parsed to determine the run time version.  If the event occurs
+     * on macOS and Java 11 or 12 and a modifier key was active, true is returned.  The five affected
+     * action events will drop the event and process the second occurrence.
+     * @aparam event The action event.
+     * @return true if the event is affected, otherwise return false.
+     */
+    private boolean fixMacBugOn11(ActionEvent event) {
+        boolean result = false;
+        if (SystemType.isMacOSX()) {
+            if (event.getModifiers() != 0) {
+                // MacOSX and modifier key, test Java version
+                String version = System.getProperty("java.version");
+                if (version.startsWith("1.")) {
+                    version = version.substring(2, 3);
+                } else {
+                    int dot = version.indexOf(".");
+                    if (dot != -1) {
+                        version = version.substring(0, dot);
+                    }
+                }
+                int vers = Integer.parseInt(version);
+                result = (vers == 11 || vers == 12);
+            }
+        }
+        return result;
+     }
+
+    /**
      * Set up the Option menu.
      *
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         assert menuBar != null;
 
@@ -789,6 +829,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                editModeCheckBoxMenuItem.setSelected(!editModeCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             setAllEditable(editModeCheckBoxMenuItem.isSelected());
 
             // show/hide the help bar
@@ -994,7 +1040,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); // NOI18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected()));
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        });
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
@@ -1003,10 +1051,30 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         antialiasingOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AntialiasingOn"));
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
         antialiasingOnCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            antialiasingOn = antialiasingOnCheckBoxMenuItem.isSelected();
+            setAntialiasingOn(antialiasingOnCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
+
+        //
+        // drawLayoutTracksLabel
+        //
+        drawLayoutTracksLabelCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DrawLayoutTracksLabel"));
+        optionMenu.add(drawLayoutTracksLabelCheckBoxMenuItem);
+        drawLayoutTracksLabelCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksMnemonic")));
+        drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
+        drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(!drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+                return;
+            }
+
+            setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+            redrawPanel();
+        });
+        drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
 
         //
         // edit title
@@ -1199,6 +1267,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             drawGrid = showGridCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1211,6 +1285,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                snapToGridOnAddCheckBoxMenuItem.setSelected(!snapToGridOnAddCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1223,6 +1303,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                snapToGridOnMoveCheckBoxMenuItem.setSelected(!snapToGridOnMoveCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1316,14 +1402,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         hideTrackSegmentConstructionLinesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HideTrackConLines"));
         trackMenu.add(hideTrackSegmentConstructionLinesCheckBoxMenuItem);
         hideTrackSegmentConstructionLinesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            int show = TrackSegment.SHOWCON;
+            int show = TrackSegmentView.SHOWCON;
 
             if (hideTrackSegmentConstructionLinesCheckBoxMenuItem.isSelected()) {
-                show = TrackSegment.HIDECONALL;
+                show = TrackSegmentView.HIDECONALL;
             }
 
-            for (TrackSegment ts : getTrackSegments()) {
-                ts.hideConstructionLines(show);
+            for (TrackSegmentView tsv : getTrackSegmentViews()) {
+                tsv.hideConstructionLines(show);
             }
             redrawPanel();
         });
@@ -1748,6 +1834,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     //
     //
     //
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
@@ -2536,7 +2623,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Rotate the entire layout by 90 degrees clockwise.
      */
     public void rotateLayout90() {
-        List<Positionable> positionables = new ArrayList<>(_contents);
+        List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -2603,7 +2690,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void alignLayoutToGrid() {
         // align to grid
-        List<Positionable> positionables = new ArrayList<>(_contents);
+        List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -2732,6 +2819,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         } else {
             super.setScroll(state);
         }
+    }
+
+    /**
+     * The LE xml load uses the string version of setScroll which went directly to
+     * Editor.  The string version has been added here so that LE can set the scroll
+     * selection.
+     * @param value The new scroll value.
+     */
+    @Override
+    public void setScroll(String value) {
+        if (value != null) super.setScroll(value);
+        scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
+        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
+        scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
+        scrollVerticalMenuItem.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
     }
 
     /**
@@ -3768,6 +3870,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 if (p.doViemMenu()) {
                     setHiddenMenu(p, popup);
+                    setEditIdMenu(p, popup);
                 }
             }
         } else {
@@ -4850,7 +4953,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // create object
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.PointType.ANCHOR, this);
-        PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
+        PositionablePointView pv = new PositionablePointView(o, p, this);
         addLayoutTrack(o, pv);
 
         setDirty();
@@ -5383,7 +5486,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             case LEVEL_XING_D: {
                 try {
                     fromObject.setConnection(fromPointType, toObject, toPointType);
-                } catch (jmri.JmriException e) {
+                } catch (JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -5440,7 +5543,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     log.error("provideLayoutBlock: Failure to auto-assign for empty LayoutBlock name");
                 }
             } else {
-                log.error("provideLayoutBlock: no name given and not assigning auto block names");
+                log.debug("provideLayoutBlock: no name given and not assigning auto block names");
             }
         } else {
             // check if this Layout Block already exists
@@ -6243,7 +6346,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             case LEVEL_XING_D: {
                 try {
                     o.setConnection(type, null, HitPointType.NONE);
-                } catch (jmri.JmriException e) {
+                } catch (JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -6371,13 +6474,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         leToolBarPanel.sensorComboBox.setSelectedItem(l.getSensor());
         setNextLocation(l);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     public void putSensor(@Nonnull SensorIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SENSORS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6430,7 +6543,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void putSignal(@Nonnull SignalHeadIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     @CheckForNull
@@ -6507,7 +6625,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void putSignalMast(@Nonnull SignalMastIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     SignalMast getSignalMast(@Nonnull String name) {
@@ -6551,7 +6674,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    public void putItem(@Nonnull Positionable l) {
+    public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
         super.putItem(l);
 
         if (l instanceof SensorIcon) {
@@ -6615,7 +6738,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     void addBlockContents() {
@@ -6644,7 +6772,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6661,7 +6794,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6673,7 +6811,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());
         l.updateSize();
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6819,7 +6962,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // Invoked when window has new multi-sensor ready
     public void addMultiSensor(@Nonnull MultiSensorIcon l) {
         l.setLocation(multiLocX, multiLocY);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         leToolBarPanel.multiSensorFrame.dispose();
         leToolBarPanel.multiSensorFrame = null;
     }
@@ -7091,6 +7239,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getAntialiasingOn() {
         return antialiasingOn;
+    }
+
+    public boolean isDrawLayoutTracksLabel() {
+        return drawLayoutTracksLabel;
     }
 
     // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
@@ -7380,6 +7532,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
+    /**
+     *
+     * @param state true to set anti-aliasing flag on, else false.
+     */
+    public void setDrawLayoutTracksLabel(boolean state) {
+        if (drawLayoutTracksLabel != state) {
+            drawLayoutTracksLabel = state;
+
+            // this may not be set up yet...
+            if (drawLayoutTracksLabelCheckBoxMenuItem != null) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
+
+            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".drawLayoutTracksLabel", drawLayoutTracksLabel));
+        }
+    }
+
     // enable/disable using the "Extra" color to highlight the selected block
     public void setHighlightSelectedBlock(boolean state) {
         if (highlightSelectedBlockFlag != state) {
@@ -7394,7 +7563,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag));
 
             // thread this so it won't break the AppVeyor checks
-            jmri.util.ThreadingUtil.newThread(() -> {
+            ThreadingUtil.newThread(() -> {
                 if (highlightSelectedBlockFlag) {
                     // use the "Extra" color to highlight the selected block
                     if (!highlightBlockInComboBox(leToolBarPanel.blockIDComboBox)) {

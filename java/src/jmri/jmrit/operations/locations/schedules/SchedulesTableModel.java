@@ -254,11 +254,11 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     private void deleteSchedule(int row) {
         log.debug("Delete schedule");
-        Schedule s = sysList.get(row);
+        Schedule sch = sysList.get(row);
         if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
-                new Object[]{s.getName()}), Bundle.getMessage("DeleteSchedule?"),
+                new Object[]{sch.getName()}), Bundle.getMessage("DeleteSchedule?"),
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            scheduleManager.deregister(s);
+            scheduleManager.deregister(sch);
             OperationsXml.save();
         }
     }
@@ -336,11 +336,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         if (ltp == null) {
             return "";
         }
-        String mode = Bundle.getMessage("Sequential");
-        if (ltp.getTrack().getScheduleMode() == Track.MATCH) {
-            mode = Bundle.getMessage("Match");
-        }
-        return mode;
+        return ltp.getTrack().getScheduleModeName();
     }
 
     private void removePropertyChangeSchedules() {

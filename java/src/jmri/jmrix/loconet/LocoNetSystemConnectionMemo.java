@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
-
     /**
      * Must manually register() after construction is complete.
      * @param lt Traffic controller to be used
@@ -40,7 +39,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
         // self-registration is deferred until the command station type is set below
-                
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -76,6 +75,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
+    private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
 
     /**
@@ -121,6 +121,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
         store(p,DefaultProgrammerManager.class);
+    }
+
+    public void setLncvDevicesManager(LncvDevicesManager lncvdm) {
+        this.lncvdm = lncvdm;
     }
 
     protected boolean mTurnoutNoRetry = false;
@@ -189,6 +193,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.setLightManager(
                 getLightManager());
 
+        InstanceManager.setDefault(StringIOManager.class, getStringIOManager());
+
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
@@ -204,10 +210,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         }
 
         InstanceManager.setReporterManager(getReporterManager());
-        
+
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
+
+        setLncvDevicesManager(new jmri.jmrix.loconet.LncvDevicesManager(this));
 
         ClockControl cc = getClockControl();
 
@@ -220,6 +228,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         // This must be done after the memo is registered
         getPredefinedMeters();
+
+        // This must be done after the memo is registered
+        getThrottleStringIO();
     }
 
     public LnPowerManager getPowerManager() {
@@ -277,7 +288,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(LnSensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
@@ -285,6 +296,24 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
+    }
+
+    public LncvDevicesManager getLncvDevicesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lncvdm == null) {
+            setLncvDevicesManager(new LncvDevicesManager(this));
+            log.debug("Auto create of LncvDevicesManager for initial configuration");
+        }
+        return lncvdm;
+    }
+
+    public LnStringIOManager getStringIOManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class c) -> new LnStringIOManager(this));
     }
 
     protected LnPredefinedMeters predefinedMeters;
@@ -309,6 +338,20 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             predefinedMeters = new LnPredefinedMeters(this);
         }
         return predefinedMeters;
+    }
+
+    LnThrottleStringIO throttleStringIO;
+
+    public void getThrottleStringIO() {
+        if (getDisabled()) {
+            log.warn("Aborting getThrottleStringIO account is disabled!");
+            return;
+        }
+        if (throttleStringIO == null) {
+            throttleStringIO = new LnThrottleStringIO(this);
+            InstanceManager.getDefault(jmri.StringIOManager.class)
+                    .register(throttleStringIO);
+        }
     }
 
     @Override
@@ -342,6 +385,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     @Override
     public void dispose() {
+        if (throttleStringIO != null) {
+            throttleStringIO = null;
+        }
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
+        }
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
@@ -368,9 +417,6 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
-        }
-        if (predefinedMeters != null) {
-            predefinedMeters.dispose();
         }
         super.dispose();
     }

@@ -1,85 +1,87 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright 2016 -->
-
-  <title>JMRI: DCC++ Sensors</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: DCC++ Sensors</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
       <h1>DCC++ Sensors</h1>
-      
       Any Arduino pin can be used as a DCC++ Sensor input.
-      
       <h2>Indexed DCC++ Sensor Pin Control</h2>
 
-      <p>Each Sensor pin has an entry in the Base Station's Sensor table.  The base station stores the actual Arduino IO Pin number
-      internally, and you assign an ID value (anything from 0-32767) to the Sensor.  JMRI references the Sensor using the ID value,
-      not the Arduino pin number.</p>
-      <p>Sensor ID values do not need to be sequential.  Each Sensor's ID can be any unused value within the allowed range (0-32767).</p>
-      <p>When using analog Arduino pins as digital inputs, use the pin's digital pin number.  For example, analog pin A0 is digital pin 14</p>
-      <p>To control an Arduino IO pin using Indexed control, 
-          follow these steps.</p>
-      
+      <p>Each Sensor pin has an entry in the Base Station's Sensor table. The base station stores
+      the actual Arduino IO Pin number internally, and you assign an ID value (anything from
+      0-32767) to the Sensor. JMRI references the Sensor using the ID value, not the Arduino pin
+      number.</p>
+
+      <p>Sensor ID values do not need to be sequential. Each Sensor's ID can be any unused value
+      within the allowed range (0-32767).</p>
+
+      <p>When using analog Arduino pins as digital inputs, use the pin's digital pin number. For
+      example, analog pin A0 is digital pin 14</p>
+
+      <p>To control an Arduino IO pin using Indexed control, follow these steps.</p>
+
       <h3>1: Choose a System Name and a User Name</h3>
-      
-      <p>The Hardware Address for an Indexed Sensor is the ID value assigned in the Base Station's internal Sensor table.
-          For example, if your sensor is connected to Arduino pin 7, and that sensor is assigned ID value 13 in the 
-          Base Station, the Hardware Address for that sensor should be 13.</p>
+
+      <p>The Hardware Address for an Indexed Sensor is the ID value assigned in the Base Station's
+      internal Sensor table. For example, if your sensor is connected to Arduino pin 7, and that
+      sensor is assigned ID value 13 in the Base Station, the Hardware Address for that sensor
+      should be 13.</p>
+
       <p>The User Name can be anything you like.</p>
-      
+
       <h3>2: Add the Sensor to the JMRI Turnout Table</h3>
-      
-      <p>NOTE: Sensor configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
-          on startup.</p>
+
+      <p>NOTE: Sensor configurations stored in the Base Station's EEPROM will be automatically
+      added to the JMRI Sensor Table on startup.</p>
+
       <p>In the JMRI Sensor Table...</p>
+
       <ol>
-          <li>Click the "Add" button</li>
-          <li>Make sure "DCC++" is selected in the System Name chooser</li>
-          <li>Enter the sensor's ID value in the Hardware Address box</li>
-          <li>Enter the sensor's User Name in the User Name box</li>
-          <li>Click "OK"</li>
-          <li>Optionally click "Edit" on the new sensor's row and edit the sensor's configuration within JMRI</li>
+        <li>Click the "Add" button</li>
+
+        <li>Make sure "DCC++" is selected in the System Name chooser</li>
+
+        <li>Enter the sensor's ID value in the Hardware Address box</li>
+
+        <li>Enter the sensor's User Name in the User Name box</li>
+
+        <li>Click "OK"</li>
+
+        <li>Optionally click "Edit" on the new sensor's row and edit the sensor's configuration
+        within JMRI</li>
       </ol>
 
       <table>
-            <tbody><tr>
-                <th>Entry</th>
-                <th>Meaning</th>
-                <th>makes System Name</th>
-                <th>Mask</th>
-                <th>Equivalent</th>
-                <th>Minimum</th>
-                <th>Maximum</th>
-            </tr>
-            <tr>
-                <td>4:3</td>
-                <td>(converts to 50)</td>
-                <td>DS50</td>
-                <td>node : pin</td>
-                <td> </td>
-                <td>0</td>
-                <td> </td>
-            </tr>
+        <tbody>
+          <tr>
+            <th>Entry</th>
+            <th>Meaning</th>
+            <th>makes System Name</th>
+            <th>Mask</th>
+            <th>Equivalent</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+          </tr>
+
+          <tr>
+            <td>4:3</td>
+            <td>(converts to 50)</td>
+            <td>DS50</td>
+            <td>node : pin</td>
+            <td>
+            </td>
+            <td>0</td>
+            <td>
+            </td>
+          </tr>
         </tbody>
       </table>
       <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
@@ -87,40 +89,51 @@
       by Egbert Broerse @silverailscolo July 2017 -->
 
       <h3>3: Configure the Base Station</h3>
-      
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors &amp; Turnouts") tool to store
-      the Sensor ID and Arduino pin number in the Base Station.</p>
-      <ol>
-          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &amp; Turnouts")</li>
-          <li>Choose the "Sensors" tab</li>
-          <li>Click the "Add Sensor" button. This will add a new row to the table.</li>
-          <li>In the new row, set the "Index" to the ID value of the new output</li>
-          <li>In the new row, set the "Pin #" to the Arduino pin number of the new sensor</li>
-          <li>If the pin output needs the internal pullup resistor activated, click the "Pullup" checkbox.</li>
-          <li>Click "Save Sensors" or "Close" and answer the prompts</li>
-      </ol>
-      
-      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Sensors" you will <em>not</em> be given the
-          opportunity to write the changes to the Base Station's EEPROM.  To write to EEPROM, you must choose 
-          "Close" <em>instead</em> of "Save Sensors".</p>
-      
-      <h2>General Notes</h2>
-      
-      <h3>On Sensor IDs</h3>
-      
-      <p>Sensor IDs do not need to be sequential.  You can use any unused value
-          within the allowed range (0-32767).  Sensor IDs can be the same as Turnout or Output IDs.</p>
-      
-      <h3>On Using the JMRI "Configure Base Station" Tool</h3>
-      
-      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and Output
-      tables in your Base Station.  It is not, however, required to work with DCC++ within JMRI.  You can,
-      for example, set up your Base Station's tables using the DCC++ serial command interface, or the
-      DCC++ Controller software.  As long as the IDs assigned in the Base Station match the Hardware Address
-      assigned in JMRI's Sensor Table, all will be well.</p>
 
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool
+      to store the Sensor ID and Arduino pin number in the Base Station.</p>
+
+      <ol>
+        <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &
+        Turnouts")</li>
+
+        <li>Choose the "Sensors" tab</li>
+
+        <li>Click the "Add Sensor" button. This will add a new row to the table.</li>
+
+        <li>In the new row, set the "Index" to the ID value of the new output</li>
+
+        <li>In the new row, set the "Pin #" to the Arduino pin number of the new sensor</li>
+
+        <li>If the pin output needs the internal pullup resistor activated, click the "Pullup"
+        checkbox.</li>
+
+        <li>Click "Save Sensors" or "Close" and answer the prompts</li>
+      </ol>
+
+      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Sensors" you will
+      <em>not</em> be given the opportunity to write the changes to the Base Station's EEPROM. To
+      write to EEPROM, you must choose "Close" <em>instead</em> of "Save Sensors".</p>
+
+      <h2>General Notes</h2>
+
+      <h3>On Sensor IDs</h3>
+
+      <p>Sensor IDs do not need to be sequential. You can use any unused value within the allowed
+      range (0-32767). Sensor IDs can be the same as Turnout or Output IDs.</p>
+
+      <h3>On Using the JMRI "Configure Base Station" Tool</h3>
+
+      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and
+      Output tables in your Base Station. It is not, however, required to work with DCC++ within
+      JMRI. You can, for example, set up your Base Station's tables using the DCC++ serial command
+      interface, or the DCC++ Controller software. As long as the IDs assigned in the Base Station
+      match the Hardware Address assigned in JMRI's Sensor Table, all will be well.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

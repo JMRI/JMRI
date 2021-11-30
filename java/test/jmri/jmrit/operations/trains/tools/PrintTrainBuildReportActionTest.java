@@ -6,8 +6,8 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -53,7 +53,7 @@ public class PrintTrainBuildReportActionTest extends OperationsTestCase {
         Thread printAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                pa.actionPerformed(new ActionEvent(this, 0, null));
+                pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         printAction.setName("Test Print Action"); // NOI18N

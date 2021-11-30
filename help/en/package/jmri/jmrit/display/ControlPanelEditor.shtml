@@ -1,338 +1,278 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Control Panel Editor Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Panel Editor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>The Control Panel Editor</h1>
 
-      <p><b>Control Panel Editor</b> (CPE) is simply an alternative
-      view and controller with exactly the same content data as
-      <b><a href="PanelEditor.shtml">Panel Editor</a></b> (PE).
-      Storage and loading can be done from either editor.
-      You may change the view and control of your Panel whenever
-      and as often as you please (explained below).
-      The editor used to store the panel will
-      be the editor used at the next load of your Panel.</p>
+      <p><strong>Control Panel Editor</strong> (CPE) is simply an alternative view and controller
+      with exactly the same content data as <strong><a href="PanelEditor.shtml">Panel
+      Editor</a></strong> (PE). Storage and loading can be done from either editor. You may change
+      the view and control of your Panel whenever and as often as you please (explained below). The
+      editor used to store the panel will be the editor used at the next load of your Panel.</p>
 
-      <h3>Differences in the View between Editors</h3>Panel Editor
-      has a separate window for its editing functions. Control
-      Panel Editor does not. In Panel Editor the <b>Edit</b> menu
-      opens an edit window. In Control Panel Editor the <b>Edit</b>
-      menu adds three additional menus to the panel: <b>File</b>,
-      <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>, <b>Circuit
-      Builder</b> and <b>Draw Shapes</b>.
-
-      <h3>Changing the View between Editors</h3>In either editor,
-      when in edit mode, the last item in the <b>File</b> menu is
-      <b>Change view to "xx"</b> ("xx" being the other editor).
-      Selecting this item switches the view from one editor mode to
-      the other editor mode.
-
+      <h3>Differences in the View between Editors</h3>
+      Panel Editor has a separate window for its editing functions. Control Panel Editor does not.
+      In Panel Editor the <strong>Edit</strong> menu opens an edit window. In Control Panel Editor
+      the <strong>Edit</strong> menu adds three additional menus to the panel:
+      <strong>File</strong>, <strong>Options</strong>, <strong>Zoom</strong>, <strong>Add
+      Items</strong>, <strong>Circuit Builder</strong> and <strong>Draw Shapes</strong>.
+      <h3>Changing the View between Editors</h3>
+      In either editor, when in edit mode, the last item in the <strong>File</strong> menu is
+      <strong>Change view to "xx"</strong> ("xx" being the other editor). Selecting this item
+      switches the view from one editor mode to the other editor mode.
       <h2>Control Panel Editor Menus</h2>
       When in Edit mode, the following menus are displayed:
-
       <h3>File Menu</h3>
-      The <b>File</b> menu changes its items
-      between edit mode and operating mode. In edit mode the items
-      are the same as the items in the File menu of the Panel
-      Editor's edit window with a few additional items. They are:
-
+      The <strong>File</strong> menu changes its items between edit mode and operating mode. In
+      edit mode the items are the same as the items in the File menu of the Panel Editor's edit
+      window with a few additional items. They are:
       <ul>
-        <li><b>New Panel</b></li>
+        <li><strong>New Panel</strong>
+        </li>
 
-        <li><b>Store Panels...</b></li>
+        <li>
+          <strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store
+          Panels...</strong></em>} <span class="since">since 4.23.3</span> See <a href=
+          "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.
+        </li>
 
-        <li><b>Store Image Index</b></li>
+        <li><strong>Store Image Index</strong>
+        </li>
 
-        <li><b>Rename Panel</b></li>
+        <li><strong>Rename Panel</strong>
+        </li>
 
-        <li><b>Create/Edit Image Index</b></li>
+        <li><strong>Create/Edit Image Index</strong>
+        </li>
 
-        <li><b>Change View to Panel Editor</b></li>
+        <li><strong>Change View to Panel Editor</strong>
+        </li>
 
-        <li><b>Delete this Panel...</b></li>
+        <li><strong>Delete this Panel...</strong>
+        </li>
 
-        <li><b>Close Editor</b></li>
+        <li><strong>Close Editor</strong>
+        </li>
       </ul>
 
-      <p>In operating mode Control Panel Editor's File menu has
-      only one item: <b>Open Editor</b>.</p>
+      <p>In operating mode Control Panel Editor's File menu has only one item: <strong>Open
+      Editor</strong>.</p>
 
       <h3>Edit Menu</h3>
 
-      <p>This menu supports <b>Cut</b>, <b>Copy</b> and
-      <b>Paste</b> with the system clipboard. Cut and Copy will
-      place a copy of a selection item or group into the clipboard.
-      This feature allows copying selections from one panel to
-      different Control Editor panel.</p>
+      <p>This menu supports <strong>Cut</strong>, <strong>Copy</strong> and <strong>Paste</strong>
+      with the system clipboard. Cut and Copy will place a copy of a selection item or group into
+      the clipboard. This feature allows copying selections from one panel to different Control
+      Editor panel.</p>
 
       <p>It also has a menu items.</p>
 
       <ul>
-        <li><b>Select type...</b> - Select all items of a given
-        type, e.g. Sensors, etc</li>
+        <li><strong>Select type...</strong> - Select all items of a given type, e.g. Sensors,
+        etc</li>
 
-        <li><b>Select Level...</b> - Select all items of a given
-        display level.</li>
+        <li><strong>Select Level...</strong> - Select all items of a given display level.</li>
 
-        <li><b>Select All</b> - Select all items.</li>
+        <li><strong>Select All</strong> - Select all items.</li>
       </ul>
 
       <h3>Options Menu</h3>
-      <p>The items in this menu are similar to
-      the checkboxes in Panel Editor's edit window with a few
-      additional items and features. As with PE, CPE can globally
-      set repositioning and control attributes. However CPE
-      preserves the individual repositioning and controlling
-      attributes of items and will restore them when global
-      overriding is removed.</p>
+
+      <p>The items in this menu are similar to the checkboxes in Panel Editor's edit window with a
+      few additional items and features. As with PE, CPE can globally set repositioning and control
+      attributes. However CPE preserves the individual repositioning and controlling attributes of
+      items and will restore them when global overriding is removed.</p>
 
       <ul>
-        <li>The <b>Override individual Position &amp; Control
-        settings</b> item enables or disables the next two menu
-        items</li>
+        <li>The <strong>Override individual Position & Control settings</strong> item enables or
+        disables the next two menu items</li>
 
-        <li><b>All panel items can be repositioned</b> - globally
-        /lock/unlock all items.</li>
+        <li><strong>All panel items can be repositioned</strong> - globally /lock/unlock all
+        items.</li>
 
-        <li><b>All panel items control layout</b></li>
-      </ul>When <b>Override individual Position &amp; Control
-      settings</b> is unchecked, locking or unlocking individual
-      icon positions is done - likewise for enabling or disabling
-      an item's control of layout devices. When <b>Override
-      individual Position &amp; Control settings</b> is checked,
-      the next two menu items perform as they do in Panel Editor -
-      changing these attributes for all panel items. However, in
-      control Panel Editor the individual locking and control
-      settings for each item are remembered.
+        <li><strong>All panel items control layout</strong>
+        </li>
+      </ul>
+      When <strong>Override individual Position & Control settings</strong> is unchecked, locking
+      or unlocking individual icon positions is done - likewise for enabling or disabling an item's
+      control of layout devices. When <strong>Override individual Position & Control
+      settings</strong> is checked, the next two menu items perform as they do in Panel Editor -
+      changing these attributes for all panel items. However, in control Panel Editor the
+      individual locking and control settings for each item are remembered.
+      <p>Unchecking the <strong>Override individual Position & Control settings</strong> item will
+      return the individual item settings to their previous settings. In Panel Editor, checking
+      <strong>All panel items can be repositioned</strong> and <strong>All panel items control
+      layout</strong> will permanently set all panel items and restoration cannot be done.</p>
 
-      <p>Unchecking the <b>Override individual Position &amp;
-      Control settings</b> item will return the individual item
-      settings to their previous settings. In Panel Editor,
-      checking <b>All panel items can be repositioned</b> and
-      <b>All panel items control layout</b> will permanently set
-      all panel items and restoration cannot be done.</p>
-
-      <p>The menu also has items for setting <b>Panel
-      Scrollbars</b> and to <b>Show Tooltips</b>.</p>
+      <p>The menu also has items for setting <strong>Panel Scrollbars</strong> and to <strong>Show
+      Tooltips</strong>.</p>
 
       <h3>Zoom Menu</h3>
-      The <b>Zoom(percentage)...</b> item will
-      enlarge or reduce the panel size.
-
-      <p>The <b>Zoom to Fit</b> item will enlarge or reduce the
-      display of all panel items in the panel to fit within the
-      panel window without the use of scroll bars. This can be
-      useful if your panel design happens to be slightly larger
-      that what you can fit on the screen. Rather than using scroll
-      bars to see all items on the panel, "Zoom to Fit" will reduce
-      the display to fit the panel window. Conversely, it will
-      expand the display to fit the panel window. If you resize the
-      panel window, then you should repeat "Zoom to Fit" to resize
+      The <strong>Zoom(percentage)...</strong> item will enlarge or reduce the panel size.
+      <p>The <strong>Zoom to Fit</strong> item will enlarge or reduce the display of all panel
+      items in the panel to fit within the panel window without the use of scroll bars. This can be
+      useful if your panel design happens to be slightly larger that what you can fit on the
+      screen. Rather than using scroll bars to see all items on the panel, "Zoom to Fit" will
+      reduce the display to fit the panel window. Conversely, it will expand the display to fit the
+      panel window. If you resize the panel window, then you should repeat "Zoom to Fit" to resize
       the display to fit the new panel window dimensions.</p>
 
       <h3>Add Items Menu</h3>
-      <p>The <b>Item Palette</b> menu item opens
-      a tabbed window which allows you to add item icons to the
-      panel. Each item type has a tab in the window. Adding items
-      is done by drag and drop. Iconic items may have multiple sets
-      of icons to choose from. Icon sets may be customized and
-      added or deleted to suit the user. Details may be found at
-      <a href="ItemPalette.shtml">The Item Palette</a> help.<br>
-      Note that the Item Palette can also be opened with the
-      accelerator key, Control P. The icons are displayed on the
-      background of the last editor to call the Item Palette.
-      Once visible, use the bottom of the pane use the "Show on:"
-      combo box to slect a different background.</p>
+
+      <p>The <strong>Item Palette</strong> menu item opens a tabbed window which allows you to add
+      item icons to the panel. Each item type has a tab in the window. Adding items is done by drag
+      and drop. Iconic items may have multiple sets of icons to choose from. Icon sets may be
+      customized and added or deleted to suit the user. Details may be found at <a href=
+      "ItemPalette.shtml">The Item Palette</a> help.<br>
+      Note that the Item Palette can also be opened with the accelerator key, Control P. The icons
+      are displayed on the background of the last editor to call the Item Palette. Once visible,
+      use the bottom of the pane use the "Show on:" combo box to slect a different background.</p>
 
       <p>The Palette in Control Panel Editor does not support the
-      <b>Slip/3-Way/Scissor</b> turnout icons that are available
-      from Panel Editor.</p>
+      <strong>Slip/3-Way/Scissor</strong> turnout icons that are available from Panel Editor.</p>
 
-      <p>The <b>Occupancy Table</b> menu item opens a window where
-      occupancy block (also called track circuits), <i>OBlocks</i>
-      can be defined , along with <i>Portals</i> that join OBlocks
-      and paths <i>OPath</i> that are trackage routes which
-      traverse the OBlock. More information may be found at
-      <a href="../logix/OBlockTable.shtml">The Occupancy Block
+      <p>The <strong>Occupancy Table</strong> menu item opens a window where occupancy block (also
+      called track circuits), <em>OBlocks</em> can be defined , along with <em>Portals</em> that
+      join OBlocks and paths <em>OPath</em> that are trackage routes which traverse the OBlock.
+      More information may be found at <a href="../logix/OBlockTable.shtml">The Occupancy Block
       Tables</a>.</p>
 
-      <p>The <b>Item Table List</b> menu item opens the device
-      table list. The menu item can also be invoked with the
-      accelerator key, Control T.</p>
+      <p>The <strong>Item Table List</strong> menu item opens the device table list. The menu item
+      can also be invoked with the accelerator key, Control T.</p>
 
       <h3>Warrants</h3>
-      <p>The items under this menu are help files for
-      defining Occupancy Blocks and using them to define
-      Warrants. When two or more Occupancy Blocks are defined,
-      additional menu items for defining and using Warrants will appear.
-      These menu items are described in <a href=
-                                                   "../logix/Warrant.shtml">Warrants</a>.</p>
+
+      <p>The items under this menu are help files for defining Occupancy Blocks and using them to
+      define Warrants. When two or more Occupancy Blocks are defined, additional menu items for
+      defining and using Warrants will appear. These menu items are described in <a href=
+      "../logix/Warrant.shtml">Warrants</a>.</p>
 
       <h3>Circuit Builder</h3>
-      <p>This menu appears when two or more Occupancy Blocks are
-      defined. The items under this menu provide
-      a graphic user interface (GUI) for defining Occupancy Blocks,
-      Portals and Paths, that is, a track circuit. Descriptions of
-      the menu items are found in
-      <a href="CircuitBuilder.shtml">Circuit Builder</a>.</p>
+
+      <p>This menu appears when two or more Occupancy Blocks are defined. The items under this menu
+      provide a graphic user interface (GUI) for defining Occupancy Blocks, Portals and Paths, that
+      is, a track circuit. Descriptions of the menu items are found in <a href=
+      "CircuitBuilder.shtml">Circuit Builder</a>.</p>
 
       <h3>Draw Shapes</h3>
       This menu allows drawing of various geometric shapes.
-
       <ul>
-        <li><b>Draw Rectangle</b></li>
+        <li><strong>Draw Rectangle</strong>
+        </li>
 
-        <li><b>Draw Round Rectangle</b></li>
+        <li><strong>Draw Round Rectangle</strong>
+        </li>
 
-        <li><b>Draw Polygon</b></li>
+        <li><strong>Draw Polygon</strong>
+        </li>
 
-        <li><b>Draw Circle</b></li>
+        <li><strong>Draw Circle</strong>
+        </li>
 
-        <li><b>Draw Ellipse</b></li>
+        <li><strong>Draw Ellipse</strong>
+        </li>
 
-        <li><b>Disable Selecting Shapes</b></li>
-      </ul>With the exception of Draw Polygon, each of the draw
-      items is made with a mouse click and drag. Polygon shapes are
-      made with a sequence of mouse clicks and the polygon
-      terminated with a double click or pressing the 'Done' button.
+        <li><strong>Disable Selecting Shapes</strong>
+        </li>
+      </ul>
+      With the exception of Draw Polygon, each of the draw items is made with a mouse click and
+      drag. Polygon shapes are made with a sequence of mouse clicks and the polygon terminated with
+      a double click or pressing the 'Done' button.
+      <p>When a shape is created or edited a small pane is displayed to set shape attributes.
+      Colors can be chosen for both the outline and the fill. Also the line thickness of the
+      outline and the transparency of the fill can be set. Precise dimensions can be set with the
+      text fields at the bottom.</p>
 
-      <p>When a shape is created or edited a small pane is displayed
-      to set shape attributes. Colors can be chosen for both the
-      outline and the fill. Also the line thickness of the outline
-      and the transparency of the fill can be set. Precise
-      dimensions can be set with the text fields at the bottom.</p>
-
-      <p>Shapes can be controlled with a sensor, by entering a
-      Sensor name in the <b>Visibility/Level Control</b> text
-      field. Activating the sensor may then be used to hide or
-      change the level of the shape when in operating (not editing)
-      mode. This feature can be used to mask and unmask help
-      information to your panel or to highlight items.</p>
+      <p>Shapes can be controlled with a sensor, by entering a Sensor name in the
+      <strong>Visibility/Level Control</strong> text field. Activating the sensor may then be used
+      to hide or change the level of the shape when in operating (not editing) mode. This feature
+      can be used to mask and unmask help information to your panel or to highlight items.</p>
 
       <h2>Quick Reference for using the Mouse</h2>
-      When in edit mode, the following keystroke patterns are
-      available:
-
+      When in edit mode, the following keystroke patterns are available:
       <ul>
         <li>Click(left) - Select and Drag top item</li>
 
-        <li>Shift-Click(left) - Select and Drag item under top
-        item, i.e. 2nd item</li>
+        <li>Shift-Click(left) - Select and Drag item under top item, i.e. 2nd item</li>
 
         <li>Control-Click(left) - Select and Drag bottom item</li>
 
-        <li>Control-Shift-Click(left) - Show list of all selected
-        items, for superimposed item stacks</li>
+        <li>Control-Shift-Click(left) - Show list of all selected items, for superimposed item
+        stacks</li>
 
-        <li>Click(right) - Select and Popup item property
-        changes</li>
+        <li>Click(right) - Select and Popup item property changes</li>
 
-        <li>Shift-Click(right) - Select and Popup item property
-        changes for 2nd item</li>
+        <li>Shift-Click(right) - Select and Popup item property changes for 2nd item</li>
 
-        <li>Control-Click(right) - Select and Popup item property
-        changes for bottom item</li>
+        <li>Control-Click(right) - Select and Popup item property changes for bottom item</li>
 
-        <li>Control-Shift-Click(right) - Select and Popup item
-        property changes of selected item from stack<br>
-        Note: For Control-Shift-Click, keep holding the Control
-        and Shift keys down through the entire process of selecting
-        the item and the subsequent drag or popup on that item.
-        </li>
+        <li>Control-Shift-Click(right) - Select and Popup item property changes of selected item
+        from stack<br>
+        Note: For Control-Shift-Click, keep holding the Control and Shift keys down through the
+        entire process of selecting the item and the subsequent drag or popup on that item.</li>
       </ul>
 
       <h2>Mouse operation in Control Panel Editor</h2>
-      Control Panel Editor does not implement the rollover
-      highlighting found in Panel Editor.
-
+      Control Panel Editor does not implement the rollover highlighting found in Panel Editor.
       <h3>Selection</h3>
-      In Control Panel Editor selection is done
-      with a simple click. Items are deselected with Control click
-
-      <p>When items are stacked, Shift-click will select the
-      second-most item in the layer. Control-click will select the
-      bottom-most item in the stack. If the items are stacked over
-      a background item, Control-click will select the bottom-most
-      item above the background. Control-click over only the
-      background will select the background icon.</p>
+      In Control Panel Editor selection is done with a simple click. Items are deselected with
+      Control click
+      <p>When items are stacked, Shift-click will select the second-most item in the layer.
+      Control-click will select the bottom-most item in the stack. If the items are stacked over a
+      background item, Control-click will select the bottom-most item above the background.
+      Control-click over only the background will select the background icon.</p>
 
       <h3>Multiple Selection</h3>
-      As with Panel Editor, a selection
-      group can be made using the "selection fence" - a dotted red
-      rectangle that will select all the items completely
-      <b><i>within</i></b> the fence. If the <b>Shift</b> key is
-      held down while creating a selection fence, then all items
-      that <b><i>intersect</i></b> the dotted red rectangle are
-      selected. This can be a useful feature when items are located
-      at the top and left borders of the panel.
+      As with Panel Editor, a selection group can be made using the "selection fence" - a dotted
+      red rectangle that will select all the items completely <strong><em>within</em></strong> the
+      fence. If the <strong>Shift</strong> key is held down while creating a selection fence, then
+      all items that <strong><em>intersect</em></strong> the dotted red rectangle are selected.
+      This can be a useful feature when items are located at the top and left borders of the panel.
+      <p>Add or delete items from a selection group by holding the <strong>Control</strong> key
+      down when selecting the item.</p>
 
-      <p>Add or delete items from a selection group by holding the
-      <b>Control</b> key down when selecting the item.</p>
-
-      <h3>Dragging selections</h3>Drag selection or selection group
-      with the mouse button held down on any item in the group.
-
-      <p>A background icon (i.e. an icon at level 1) can be moved
-      by dragging it with the control key held down.</p>
+      <h3>Dragging selections</h3>
+      Drag selection or selection group with the mouse button held down on any item in the group.
+      <p>A background icon (i.e. an icon at level 1) can be moved by dragging it with the control
+      key held down.</p>
 
       <h2>Duplicating Selections in Control Panel Editor</h2>
-      Copying an item or selection group is done by
-      bringing up the popup for one of the selected items. When the
-      <b>Duplicate</b> popup menu item is clicked, a Copy of the
-      selection group is made on top of the original selections.
-      Drag this copy to wherever you wish to place the copy. The
-      original selection is now deselected and remains at its
-      original postion. The copy procedure can be repeated on the
-      newly positioned copy to continue to make more copies.
-
+      Copying an item or selection group is done by bringing up the popup for one of the selected
+      items. When the <strong>Duplicate</strong> popup menu item is clicked, a Copy of the
+      selection group is made on top of the original selections. Drag this copy to wherever you
+      wish to place the copy. The original selection is now deselected and remains at its original
+      postion. The copy procedure can be repeated on the newly positioned copy to continue to make
+      more copies.
       <h2>Item Popups in Control Panel Editor</h2>
-      Right click (meta-click on Mac or Linux) brings up the
-      popup menu for the item.
-
-      <p>Hold the <b>Control</b> key down to open the popup menu
-      for a background item.</p>
+      Right click (meta-click on Mac or Linux) brings up the popup menu for the item.
+      <p>Hold the <strong>Control</strong> key down to open the popup menu for a background
+      item.</p>
 
       <h3>Edit Text Attributes</h3>
-      The <b>Edit Text Attributes</b> popup item opens a dialog
-      to set any of the item's text attributes.
-
+      The <strong>Edit Text Attributes</strong> popup item opens a dialog to set any of the item's
+      text attributes.
       <h3>Multiple Selection Editing</h3>
-      <p>When a popup menu item is
-      invoked from an item that is a member of a selection group,
-      all of the edited values that were made in the popup are
-      applied to all members of the selection group if that value
-      is relevant to the member. For example, if the font size is
-      changed on one of the items in the selection group then the
-      font size is changed in all items in the group. If say, a
-      fast clock were included in this group, then no change would
-      be made to the clock.</p>
 
+      <p>When a popup menu item is invoked from an item that is a member of a selection group, all
+      of the edited values that were made in the popup are applied to all members of the selection
+      group if that value is relevant to the member. For example, if the font size is changed on
+      one of the items in the selection group then the font size is changed in all items in the
+      group. If say, a fast clock were included in this group, then no change would be made to the
+      clock.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

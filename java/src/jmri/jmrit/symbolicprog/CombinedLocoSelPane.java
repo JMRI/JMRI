@@ -479,7 +479,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(Integer.toString(mfgID));
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromID(Integer.toString(mfgID));
             if (mfg == null) {
                 updateForDecoderNotID(mfgID, modelID);
             } else {

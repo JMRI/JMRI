@@ -1,719 +1,647 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Java Version-Specific Features</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: Java Version-Specific Features</h1>
-      <p>This page
-      contains information about the compatibility and features of
-      various Java versions. We use this information to decide on
-      our <a href="TechRoadMap.shtml">road map</a> for future JMRI
-      versions. 
-      (For pre-Java-1.8 content, see the 
-      <a href="JVMCapabilitiesOlder.shtml">historical page</a>.)
 
-      <p>Note:  The Java community is moving from a "few big Java
-      releases, years apart" development cycle to a cycle
-      with a new release every six months, and a long-term support (LTS)
-      release every three years.  
-      (For background, see 
-      <a href="https://mreinhold.org/blog/forward-faster#Proposal">here</a>,
-      <a href="http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">here</a>,
-      <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
-      It's not yet clear what this will mean for JMRI's 
-      development and migration path. Much discussion is necessary.
-      
-      <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in
-      January 2019, and intends to release the next Long Term Support version 
-      (notionally known as both Java 11 and Java 18.9) in September of 2018.  
-      Given that some users will need to move forward for other applications
-      once Java 8 is End Of Life, 
-      at a minimum we'll have to have JMRI running under
-      both Java 8 and 
-      Java 11/18.9 by January 2019.
+      <p>This page contains information about the compatibility and features of various Java
+      versions. We use this information to decide on our <a href="TechRoadMap.shtml">road map</a>
+      for future JMRI versions. (For pre-Java-1.8 content, see the <a href=
+      "JVMCapabilitiesOlder.shtml">historical page</a>.)</p>
+
+      <p>Note: The Java community has moved from a "few big Java releases, years apart" development
+      cycle to a cycle with a new release every six months, and a long-term support (LTS) release
+      every three years. (For background, see <a href=
+      "https://mreinhold.org/blog/forward-faster#Proposal">here</a>, <a href=
+      "http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">
+      here</a>, <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
       For more information on this, see also this
-      <a href="http://www.javamagazine.mozaicreader.com/NovemberDecember2018/default/52/0/#&amp;pageSet=52&amp;page=0&amp;contentItem=0">
-        Java Magazine article from November 2018
-        </a>.
-      
-      <h2>Capabilities</h2>
-      <p>This section lists new Java
-      capabilities, and which Java version they first appeared in.
-      The "JDK" column shows the first Java Development Kit that
-      could compile the feature; the "JRE" column lists the first
-      runtime environment that could run the feature, including the
-      needed JVM and library support.
+      <a href="https://archive.org/details/JavaMagazine2018.1112/page/n52/mode/2up">
+      Java Magazine article from November 2018</a> .</p>
 
-      <table border="1">
+      <h2>Capabilities</h2>
+
+      <p>This section lists new Java capabilities, and which Java version they first appeared in.
+      The "JDK" column shows the first Java Development Kit that could compile the feature; the
+      "JRE" column lists the first runtime environment that could run the feature, including the
+      needed JVM and library support.</p>
+
+      <table style="width: 100%; padding: 10px 15px 10px 15px;" border="1">
         <tr>
           <th>Feature</th>
-
           <th>JDK</th>
-
           <th>JRE</th>
         </tr>
 
         <tr>
-          <td>HiDPI graphics support for Windows and Linux users.
-          Probably "just works" with JRE update, unless something
-          in JMRI breaks on Java 9 on Windows (Currently support
-          using very large fonts as a workaround, but it quickly
-          breaks as text overlaps widget boundaries)</td>
-
+          <td>HiDPI graphics support for Windows and Linux users. Probably "just works" with JRE
+          update, unless something in JMRI breaks on Java 9 on Windows (Currently support using
+          very large fonts as a workaround, but it quickly breaks as text overlaps widget
+          boundaries)</td>
           <td>8</td>
-
           <td>9</td>
         </tr>
 
         <tr>
-          <td>Multi-version JARs can help with migration from then on, see
-          <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
-
+          <td>
+            Multi-version JARs can help with migration from then on, see <a href=
+            "https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a>
+          </td>
           <td>9</td>
-
           <td>9</td>
         </tr>
 
         <tr>
-          <td>The Deprecated annotation can take "since" and "forRemoval" specifications, 
-                which simplifies our API migration management a lot.</td>
-
+          <td>The Deprecated annotation can take "since" and "forRemoval" specifications, which
+          simplifies our API migration management a lot.</td>
           <td>9</td>
-
           <td>8</td>
         </tr>
 
         <tr>
           <td>Java Platform Module System</td>
-
           <td>9</td>
-
           <td>9</td>
         </tr>
 
         <tr>
           <td>UTF-8 Properties files (simplifies I18N)</td>
-
           <td>9</td>
-
           <td>9</td>
         </tr>
-        
+
         <tr>
           <td>JLink - improve packaging, faster startup</td>
-
           <td>9</td>
-
           <td>9</td>
         </tr>
-        
+
         <tr>
-          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
-                More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
-                worse code) of JMRI independent.</td>
-
+          <td>
+            <a href=
+            "https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">
+            Immutable Lists, Sets and Maps</a>: More useful than it maybe sounds, because it can
+            help keep the separate parts (i.e. better and worse code) of JMRI independent.
+          </td>
           <td>9</td>
-
           <td>9</td>
         </tr>
 
         <tr>
           <td>var syntax - improves readability of code, use of generics</td>
-
-          <td>10<br>11</td>
-
+          <td>10<br>
+          11</td>
           <td>10</td>
         </tr>
 
         <tr>
           <td>Even better support for immutable collections</td>
-
           <td>10</td>
-
           <td>10</td>
         </tr>
 
         <tr>
-          <td>Improvements in Optional:  or(), ifPresentOrElse()</td>
-
+          <td>Improvements in Optional: or(), ifPresentOrElse()</td>
           <td>9</td>
-
           <td>9</td>
         </tr>
- 
+
         <tr>
           <td>More improvements in Optional: orElseThrow()</td>
-
           <td>10</td>
-
           <td>10</td>
         </tr>
- 
+
         <tr>
-          <td>Completion of Optional class:  isEmpty()</td>
-
+          <td>Completion of Optional class: isEmpty()</td>
           <td>11</td>
-
           <td>11</td>
         </tr>
- 
+
         <tr>
-          <td>Incompatible change in the MacOS X (macOS) App menu About,
-              Preferences, and (critically) Quit handling on that platform</td>
-
+          <td>Incompatible change in the MacOS X (macOS) App menu About, Preferences, and
+          (critically) Quit handling on that platform</td>
           <td>&gt; 9</td>
-
           <td>&gt; 9</td>
         </tr>
 
         <tr>
-          <td>Applescript support on MacOS X (macOS) removed from the JVM
-              (Note that Java 7 and 8 included Applescript support but disabled
-              it unless an additional JAR file enabling it was added by the
-              user).</td>
-
+          <td>Applescript support on MacOS X (macOS) removed from the JVM (Note that Java 7 and 8
+          included Applescript support but disabled it unless an additional JAR file enabling it
+          was added by the user).</td>
           <td>&gt; 9</td>
-
           <td>&gt; 9</td>
         </tr>
 
         <tr>
-          <td>Improved String <a href="http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace support</a></td>
-
-          <td>11</td>
-
-          <td>11</td>
-        </tr>
-
-        <tr>
-          <td>JMRI uses several com.sun classes that will, at some point,
-          no longer be accessible.  This was originally scheduled as part of JPMS for
-          1.9, but was later removed.  At some point, we will
-          need to migrate away from these before using a more 
-          advanced JRE or JDK.</td>
-
-          <td>&gt; >11</td>
-
-          <td>&gt; >11</td>
-
-        </tr>
-
-        <tr>
-
-          <td>The <a href="https://www.baeldung.com/jvm-zgc-garbage-collector">Z Garbage Collector</a>
-            may provide better performance because of reduced garbage collection
-            pauses.</td>
-
-          <td>11</td>
-
-          <td>11</td>
-
-        </tr>
-
-        <tr>
-
-          <td>The <a href="https://www.infoworld.com/article/2888189/red-hat-shenandoah-boosts-java-garbage-collection.html">Shenandoah garbage collector</a> might be another source of 
-            better performance.</td>
-
-          <td>12</td>
-
-          <td>12</td>
-
-        <tr>
-          <td>The Nashorn interpreter will be removed in Java 15.
-          Some adaptation will be needed to have a JavaScript interpreter, perhaps
-          <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
-          or <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino">Rhino</a>.
+          <td>
+            Improved String <a href=
+            "http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace
+            support</a>
           </td>
-
-          <td>15</td>
-
-          <td>15</td>
+          <td>11</td>
+          <td>11</td>
         </tr>
 
         <tr>
-          <td>A standard installation of GraalVM is available that can
-          <a href="https://www.graalvm.org/docs/reference-manual/languages/python/">run parts of Python 3.7</a>. 
-          Although this is "far from complete", 
-          no other project appears to be emerging
-          to include Python 3 support in i.e. Jython.
-          Having this available can let JMRI start a gentler migration.
+          <td>JMRI uses several com.sun classes that will, at some point, no longer be accessible.
+          This was originally scheduled as part of JPMS for 1.9, but was later removed. At some
+          point, we will need to migrate away from these before using a more advanced JRE or
+          JDK.</td>
+          <td>&gt; 11</td>
+          <td>&gt; 11</td>
+        </tr>
+
+        <tr>
+          <td>
+            The <a href="https://www.baeldung.com/jvm-zgc-garbage-collector">Z Garbage
+            Collector</a> may provide better performance because of reduced garbage collection
+            pauses.
           </td>
-
           <td>11</td>
-
           <td>11</td>
         </tr>
 
-      </table>(* indicates that a compatibility library is used in
-      the early version)
+        <tr>
+          <td>
+            The <a href=
+            "https://www.infoworld.com/article/2888189/red-hat-shenandoah-boosts-java-garbage-collection.html">
+            Shenandoah garbage collector</a> might be another source of better performance.
+          </td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
 
+        <tr>
+          <td>
+            A standard installation of
+            <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
+            is available that can
+            <a href="https://www.graalvm.org/reference-manual/python/">run parts of Python 3.7</a>.
+            Although this is "far from complete", no other project appears to be emerging to
+            include Python 3 support in i.e. Jython. Having this available can let JMRI start a
+            gentler migration.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            The Nashorn interpreter will be removed in Java 15. Some adaptation will be needed to
+            have a JavaScript interpreter, perhaps <a href=
+            "https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
+            or <a href="https://github.com/mozilla/rhino">Rhino</a>.
+          </td>
+          <td>15</td>
+          <td>15</td>
+        </tr>
+
+      </table>
+      (* indicates that a compatibility library is used in the early version)
       <h2>JRE availability</h2>
-      <p>This section lists the most recent
-      Java Runtime version recommended by Oracle for various operating system
-      versions. Please note that not all users of that operating
-      system will have updated to this Java version; many will be
-      using an older one. 
 
-      <p>JMRI development requires Java 8u101 or later.  8u101 contains a certificate
-      change that's needed to link to some remote Javadocs.
-      
-      <p><a href=
-      "http://www.oracle.com/technetwork/java/javase/config-417990.html">
-      Oracle's page on Java 1.7 requirements</a> says "Note:
-      As of April 8, 2014 Microsoft stopped supporting Windows XP
-      and therefore it is no longer a supported platform." Google
-      finds numerous pages that show how to install Java 1.7 on XP
-      or XP SP2. 
-      Although the corresponding 
-      <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
-      makes no mention of XP, it seems reasonable to assume the same applies.
-      JMRI's 
-      <a href="https://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
-      keeps updated information on this.
-      Several JMRI users have reported that Java 1.8_151 is the last one that 
-      can be cleanly installed and run on XP.  See
-      the
-      <a href="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java download archive page</a>
-      for links to that.</p>
+      <p>This section lists the most recent Java Runtime version recommended by Oracle for various
+      operating system versions. Please note that not all users of that operating system will have
+      updated to this Java version; many will be using an older one.</p>
 
-      <p>As of April 18, 2018, the
-      the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
-<blockquote cite="https://java.com/en/download/release_notice.jsp">
-      Public updates for Oracle Java SE 8 will remain available for individual, personal use through at least the end of 2020.  
-</blockquote>
-      
-      <P>
-      For more details, see the Java pages for:
+      <p>JMRI development requires Java 8u101 or later through January 2022. 8u101 contains a certificate change that's
+      needed to link to some remote Javadocs. After that, Java 11 will be required.</p>
+
+      <p><a href="http://www.oracle.com/technetwork/java/javase/config-417990.html">Oracle's page
+      on Java 1.7 requirements</a> says "Note: As of April 8, 2014 Microsoft stopped supporting
+      Windows XP and therefore it is no longer a supported platform." Google finds numerous pages
+      that show how to install Java 1.7 on XP or XP SP2. Although the corresponding <a href=
+      "http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a> makes
+      no mention of XP, it seems reasonable to assume the same applies. JMRI's <a href=
+      "https://jmri.org/install/WindowsNew.shtml">Windows installation page</a> keeps updated
+      information on this. Several JMRI users have reported that Java 1.8_151 is the last one that
+      can be cleanly installed and run on XP. See the <a href=
+      "https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java
+      download archive page</a> for links to that.</p>
+
+      <p>Java <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">plans
+      for end of life</a> of various versions:</p>
+
       <ul>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 (March 2014)</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9 (Sept 2017)</a> 
-                    see also the <a href="https://openjdk.java.net/projects/jdk9/">OpenJDK page</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10 (March 2018)</a></li>
-        <li><a href="https://openjdk.java.net/projects/jdk/11/">Java 11 LTS (Sept 2018)</a>
-        <li><a href="https://openjdk.java.net/projects/jdk/12/">Java 12 (March 2019)</a>
-        <li><a href="https://openjdk.java.net/projects/jdk/13/">Java 13 (Sept 2019)</a>
-        <li><a href="https://openjdk.java.net/projects/jdk/14/">Java 14 (March 2020)</a>
-        <li><a href="https://openjdk.java.net/projects/jdk/15/">Java 15 (Sept 2020)</a>
+        <li>Java 8 will <a href=
+        "https://www.oracle.com/java/technologies/java-se-support-roadmap.html">keep receiving
+        free updates through March 2022</a> for personal use. Note that Oracle is <a href=
+        "https://blogs.oracle.com/java-platform-group/end-of-public-updates-is-a-process%2c-not-an-event">
+          no longer actively maintaining Java 8</a>.
+        </li>
+
+        <li>
+          <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, made available in
+          September 2018, will be a "Long Term Support" (LTS) release. That means five years of
+          support,
+          <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through September 2023</a>.
+        </li>
+
+        <li>Java 9, 10, and 12 through 16 will not be LTS releases, and support will end shortly
+        after the following release comes out.</li>
+
+        <li>Java 17 is the current LTS release, made available in September of 2021. It is also
+        expected to get five years of support,
+        <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through September 2026</a>.</li>
       </ul>
 
-    <p>Java <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">plans for end of life</a> of various versions: <ul>
-        <li>Java 8 will <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">keep receiving updates indefinitely</a>
-            for personal use.
-            which 18-month warning expected when "indefinitely" ends.
-            Note that Oracle is 
-            <a href="https://blogs.oracle.com/java-platform-group/end-of-public-updates-is-a-process%2c-not-an-event">no longer actively maintaining Java 8</a>.
-            Commercial support for security patches ends in Spring 2020 for many organizations.
-        <li><a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, 
-        made available in September 2018, 
-        will be a "Long Term Support" (LTS) release. That means five years of 
-        support, 
-        <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">through 2023</a>.
-        <li>Java 9, 10, and 12 through 16 will not be LTS releases, and support will end
-        shortly after the following release comes out.
-        <li>Java 17 is announced as the next LTS release, expected in September of 2021.
-            It is also expected to get five years of support.
-        </ul>
-        Model railroaders may not care if they're using a Java version that's supported.
-        Some of them don't connect their layout computers to the internet; some have
-        single-purpose machines that, if messed up, they'll just reload.  But other JMRI
-        users have multi-purpose machines whose security matters; essentially all of the
-        JMRI developers are in this situation.  At least some of the developers use
-        dual-purpose machines that are required to meet various security and update
-        standards.  For those, Java 8 is going to increasing become a liability.
+      <p>For more information, see the Java pages for:</p>
 
-      <P>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit).
-          <a href="https://adoptopnjdk.net">AdoptOpenJDK</a> continues to make 32
-          and 64-bit JREs and JDKs available.
+      <ul>
+        <li>
+          <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8
+          (March 2014)</a>
+        </li>
+
+        <li>
+          <a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java
+          9 (Sept 2017)</a> see also the <a href="https://openjdk.java.net/projects/jdk9/">OpenJDK
+          page</a>
+        </li>
+
+        <li>
+          <a href=
+          "http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">
+          Java 10 (March 2018)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/11/">Java 11 LTS (Sept 2018)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/12/">Java 12 (March 2019)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/13/">Java 13 (Sept 2019)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/14/">Java 14 (March 2020)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/15/">Java 15 (Sept 2020)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/16/">Java 16 (March 2021)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 (Sept 2021)</a>
+        </li>
+
+      </ul>
+
+      Model railroaders may not care if they're using a Java version that's supported. Some of them
+      don't connect their layout computers to the internet; some have single-purpose machines that,
+      if messed up, they'll just reload. But other JMRI users have multi-purpose machines whose
+      security matters; essentially all of the JMRI developers are in this situation. At least some
+      of the developers use dual-purpose machines that are required to meet various security and
+      update standards. For those, Java 8 has increasing become a liability.
+
+      <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). <a href=
+      "https://adoptopenjdk.net/">AdoptOpenJDK</a> continues to make 32 and 64-bit JREs and JDKs
+      available. Light red indicates unable to run Java 8 or later; darker red means able to
+      run Java 8, but not Java 11.</p>
 
       <table border="1">
         <tr>
           <th>OS and platform</th>
-
           <th>Last JRE</th>
         </tr>
 
         <tr>
           <td>Linux</td>
-
-          <td>(depends, but<br>generally 11+)</td>
+          <td>(depends, but<br>
+          generally 11+)</td>
         </tr>
 
         <tr>
-          <td>Win 1!+ (64-bit)</td>
+          <td>Linux Fedora 33</td>
+          <td>11</td>
+        </tr>
 
+        <tr>
+          <td style="background-color: #FF8080">Linux Fedora 32</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>Linux Centos 7</td>
           <td>11+</td>
         </tr>
 
         <tr>
-          <td>Win 8 (32-bit)</td>
+          <td>Win 11 (64-bit)</td>
+          <td>11+</td>
+        </tr>
 
+        <tr>
+          <td style="background-color: #FF8080">Win 8 (32-bit)</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td>Win 7 (32-bit)</td>
-
+          <td style="background-color: #FF8080">Win 7 (32-bit)</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td>Win Server 2008 (32-bit)</td>
-
+          <td style="background-color: #FF8080">Win Server 2008 (32-bit)</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Web Server 2008 (32-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win Web Server 2008 (32-bit)</td>
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win 2000 (32-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win 2000 (32-bit)</td>
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Server 2003 (32-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win Server 2003 (32-bit)</td>
           <td>1.6</td>
         </tr>
 
         <tr>
           <td>Win 8 (64-bit)</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
-          <td>Win Server 2008 R2 (64-bit)</td>
-
+          <td style="background-color: #FF8080">Win Server 2008 R2 (64-bit)</td>
           <td>10</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Server 2008 (64-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win Server 2008 (64-bit)</td>
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
           <td>1.6</td>
         </tr>
 
         <tr>
           <td>Win Vista (64-bit)</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
-          <td>Windows Vista (32-bit)</td>
-
-          <td>8<br>
-          <a href=
-          "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
-          Support</a></td>
+          <td style="background-color: #FF8080">Windows Vista (32-bit)</td>
+          <td>
+            8<br>
+            <a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
+            Support</a>
+          </td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win 2003 (64-bit)</td>
-
+          <td style="background-color: #FFD0D0">Win 2003 (64-bit)</td>
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td>Windows XP</td>
-
-          <td>8<br>
-          <a href=
-          "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
-          Support</a></td>
+          <td style="background-color: #FF8080">Windows XP</td>
+          <td>
+            8<br>
+            <a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
+            Support</a>
+          </td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 98 (2nd Ed)</td>
-
+          <td style="background-color: #FFD0D0">Windows 98 (2nd Ed)</td>
           <td>1.5-11</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 98</td>
-
+          <td style="background-color: #FFD0D0">Windows 98</td>
           <td>1.4.2_14</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 95</td>
-
+          <td style="background-color: #FFD0D0">Windows 95</td>
           <td>1.3.1_20</td>
         </tr>
 
         <tr>
           <td>Mac OS X 10.10 and later</td>
-
           <td>11+</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3 Mountain Lion</td>
-
+          <td style="background-color: #FF8080">Mac OS X 10.8.3 Mountain Lion</td>
           <td>8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.7.3</td>
-
+          <td style="background-color: #FFD0D0">Mac OS X 10.7.3</td>
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.5.8</td>
-
+          <td style="background-color: #FFD0D0">Mac OS X 10.5.8</td>
           <td>1.6 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
-
+          <td style="background-color: #FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
-
+          <td style="background-color: #FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">MacOS "Classic"</td>
-
+          <td style="background-color: #FFD0D0">MacOS "Classic"</td>
           <td>1.1.8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">OS/2</td>
-
+          <td style="background-color: #FFD0D0">OS/2</td>
           <td>1.3</td>
         </tr>
       </table>
 
-      <p>See the <a href=
-      "http://java.com/en/download/manual.jsp">Java.com download
-      page for all Operating Systems</a> and<br>
-      information on <a href=
-      "https://www.java.com/en/download/help/sysreq.xml">Java
-      versions and hardware requirements</a>.</p>
+      <p>See the <a href="http://java.com/en/download/manual.jsp">Java.com download page for all
+      Operating Systems</a> and<br>
+      information on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and
+      hardware requirements</a>.</p>
 
-      <a name="sysreq" id="sysreq"></a><h2>System Requirements</h2>
+      <h2 id="sysreq">System Requirements</h2>
 
-      <p>The following combination of JMRI - Java - Platform/OS
-      versions was based on Oracle and OS developers sources. It's
-      translated to the OS install instructions (follow hyperlink
-      in OS headers):</p>
+      <p>The following combination of JMRI - Java - Platform/OS versions was based on Oracle and OS
+      developers sources. It's translated to the OS install instructions (follow hyperlink in OS
+      headers):</p>
 
       <table border="1">
         <tbody>
           <tr>
             <th>JMRI</th>
-
             <th>Java</th>
-
-            <th><a href=
-            "https://jmri.org/install/MacOSX.shtml#sysreq">OS
-            X</a></th>
-
-            <th><a href=
-            "https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
-
-            <th><a href=
-            "https://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
-
-            <th><a href=
-            "https://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
-
-            <th><a href=
-            "https://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
+            <th>
+              <a href="https://jmri.org/install/MacOSX.shtml#sysreq">OS X</a>
+            </th>
+            <th>
+              <a href="https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a>
+            </th>
+            <th>
+              <a href="https://jmri.org/install/Linux.shtml#sysreq">Oracle<br>Linux<br>(RHEL)</a>
+            </th>
+            <th>
+              <a href="https://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a>
+            </th>
+            <th>
+              <a href="https://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a>
+            </th>
           </tr>
 
           <tr>
-            <td>4.2</td>
+            <td>5.*</td>
+            <td>11</td>
+            <td>10.10</td>
+            <td>Windows Vista or later<br>64 bit only</td>
+            <td>5.5</td>
+            <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
+            <td>12.04</td>
+            <td>14.04LTS</td>
+          </tr>
+
+          <tr>
+            <td>4.*</td>
             <td>1.8</td>
-
-            <td>10.8.3+ Mountain Lion</td>
-
+            <td>10.8.3 Mountain Lion</td>
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+            <td>5.5</td>
+            <!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
-            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
-
-            <td>12.04+</td>
-
+            <td>12.04</td>
             <td>14.04LTS</td>
           </tr>
 
           <tr>
             <td>3.10.1</td>
-
             <td>1.7</td>
-
             <td>10.7.3 Lion</td>
-
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-
-            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
+            <td>5.5</td>
+            <!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>12.04</td>
-
             <td>12.04</td>
           </tr>
 
           <tr>
             <td>3.10.1</td>
-
             <td>1.6</td>
-
             <td>10.6 Snow Leopard (JVM6)</td>
-
             <td>Win2003, Win2000 (x86)</td>
-
-            <td>5.5</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
+            <td>5.5</td>
+            <!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>10.4</td>
-
             <td>N/A</td>
           </tr>
 
           <tr>
             <td>2.14.1</td>
-
             <td>1.5</td>
-
             <td>10.5.7 Leopard (JVM5)</td>
-
             <td>Vista SP1, Win2000 SP3, Win8.x (x64)</td>
-
-            <td></td>
-
+            <td>
+            </td>
             <td>9.04</td>
-
             <td>N/A</td>
           </tr>
 
           <tr>
             <td>2.8</td>
-
             <td>1.5</td>
-
             <td>10.4 Tiger</td>
-
             <td>Win98 (2nd Ed), XP, ME</td>
-
-            <td></td>
-
-            <td></td>
-
+            <td>
+            </td>
+            <td>
+            </td>
             <td>N/A</td>
           </tr>
 
           <tr>
             <td>2.2</td>
-
             <td>1.5</td>
-
             <td>10.3 Panther</td>
-
             <td>Win98, ME</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
           </tr>
 
           <tr>
-            <td></td>
-
+            <td>
+            </td>
             <td>1.3.1</td>
-
             <td>10.3 Panther</td>
-
             <td>Win95, Win98</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
           </tr>
 
           <tr>
             <td>1.6</td>
-
             <td>1.1.8</td>
-
             <td>MacOS9.1 (MRJ)</td>
-
             <td>Win95, Win98</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
-
             <td>N/A</td>
           </tr>
         </tbody>
       </table>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

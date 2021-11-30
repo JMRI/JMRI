@@ -1,20 +1,19 @@
 <!-- indexheader - This file is included at the top of the page   -->
 <!-- when the web index is displayed online.     -->
-<!-- Copyright 2008-2015 JMRI, Bob Jacobsen  See COPYING file for info -->
+<!-- Copyright 2008-2021 JMRI, Bob Jacobsen  See COPYING file for info -->
 
 <h1>JMRI&reg; Help: Table of Contents</h1>
 
 <p>
-This is the Table of Contents for JMRI's in-program help system.<p/>
+This is the Table of Contents for JMRI's in-program help system.</p>
 <p>
-In the program, you get this by selecting "Help" from any of the 
-Help menus on the windows. You'll find the Table of Contents and the
-Index on the left side of the Help window.<p/>
+In the program, you get this by selecting "Help" from any of the
+Help menus on the windows.</p>
 <p>
 The Help system <b><a href="webindex.shtml">Index</a></b>
-is also available online.<p/>
+is also available online.</p>
 <p>
-This page is generated automatically as part of the 
+This page is generated automatically as part of the
 build process. However, the underlying information must be maintained manually and is, therefore,
 not always up-to-date. For more information, see the
 <a href="https://jmri.org/help/en/html/doc/Technical/Help.shtml">Developer page on the Help system</a>.</p>

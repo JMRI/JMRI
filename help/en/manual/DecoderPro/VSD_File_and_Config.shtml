@@ -1,112 +1,131 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
 
-  <title>DecoderPro&reg; Main Window</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
-      <h1>DecoderPro&reg; Debug Menu</h1>
+    <div id="mainContent">
+      <h1>DecoderPro® Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
-      <div align="right">
-        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
+      <div class="dp-right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a>
+        </p>
       </div>
+
       <hr>
 
       <h4>VSD File and Configuration</h4>
 
-      <p><span id="product-desc">The <strong>VSD File</strong> is a 
-        ZIP archive containing all of the source audio
-        files, plus a Configuration File that tells
-        the Virtual Sound Decoder when and how to use the sound
-        files, plus a License information file license.txt</span>.
-      </p>
-      <p>An example VSD file is included with the package, 
-        more examples are available for download
-        <a href="https://github.com/JMRI/vsdecoder">on the web</a>
-        and you can make (and share!) your own.</p>
-      <p>To open a VSD File you may have to rename the file extension
-       "vsd" to "zip" first.
-      </p>
+      <p><span id="product-desc">The <strong>VSD File</strong> is a ZIP archive containing all of
+      the source audio files, plus a Configuration File that tells the Virtual Sound Decoder when
+      and how to use the sound files, plus a License information file license.txt</span>.</p>
+
+      <p>An example VSD file is included with the package, more examples are available for download
+      <a href="https://github.com/JMRI/vsdecoder">on the web</a> and you can make (and share!) your
+      own.</p>
+
+      <p>To open a VSD File you may have to rename the file extension "vsd" to "zip" first.</p>
+
+      <p>A general overview of the VSD file and its components can be found <a href=
+      "https://sourceforge.net/p/searchlight2/wiki4/VSD_File_Definition/">here</a>.</p>
 
       <h4>Configuration File</h4>
 
-      <p>The <strong>config.xml</strong> file can be created or edited using a
-       standard text editor or a
-        <a href="https://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
-        XML editor</a>.
-      </p>
+      <p>The <strong>config.xml</strong> file can be created or edited using a standard text editor
+      or a <a href="https://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">XML
+      editor</a>.</p>
+
       <p>A value in XML is described as a <strong>tag</strong>, e.g.
-        <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
-      </p>
-      <p>The following sections present some optional configuration features.
-        They are documented as tags, so you can copy and paste it into your 
-        config.xml file, if desired.
-      </p>
+      <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.</p>
+
+      <p>The following sections present important required elements and some optional elements.
+      Most are documented as tags, so you can copy and paste it into your config.xml file, if
+      desired.</p>
+
+      <h4>Required configuration elements</h4>
+
+      <p>Structure of config.xml for all locomotive types:</p>
+
+      <pre>
+      &lt;vsdecoder-config&gt;
+
+          &lt;profile name="..."&gt;
+
+              &lt;sound-event name="ENGINE" ...&gt;
+               ...
+              &lt;/sound-event&gt;
+
+              &lt;sound name="ENGINE" type="..."&gt;
+               ...
+              &lt;/sound&gt;
+
+          &lt;/profile&gt;
+
+      &lt;/vsdecoder-config&gt;
+      </pre>
+      <p>Note: the config.xml file can contain one or more profiles</p>
+
+      <p>Remarks:</p>
+
+      <p>Top-speed is the prototype maximum speed in mph.<br>
+      Driver-diameter is the diameter of the prototype driver wheel in inches.</p>
+
+      <h4>Optional configuration elements</h4>
 
       <h5>Auto-Start Engine</h5>
 
       <p>Description:<br>
-        Beside the "Auto Start Engine" option in VSD Preferences you
-        may want to use this advanced option in your config.xml.
-        Since this option is allowed per Engine, you could have
-        auto-start-engines and non-auto-start-engines side by
-        side.<br>
-        Optional. Must be declared in the tag <strong>sound
-        name="ENGINE"</strong>. Default value: "no"<br>
-        <em>Since JMRI 4.11.3</em>
-      </p>
+      Beside the "Auto Start Engine" option in VSD Preferences you may want to use this advanced
+      option in your config.xml. Since this option is allowed per Engine, you could have
+      auto-start-engines and non-auto-start-engines side by side.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"</strong>. Default value:
+      "no"<br>
+      <em>Since JMRI 4.11.3</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;auto-start&gt;yes&lt;/auto-start&gt;
       </pre>
-
-      <h5><a name="engine-startstop">
-        Engine Start and Stop by a throttle key</a>
-      </h5>
+      <h5 id="engine-startstop">Engine Start and Stop by a throttle key</h5>
 
       <p>Description:<br>
-      If desired, you may define a throttle button to start and to
-      stop the engine sound.<br>
-      Optional. Must be declared in the tag
-      <strong>sound-event name="ENGINE"</strong>.<br>
+      If desired, you may define a throttle button to start and to stop the engine sound.<br>
+      Optional. Must be declared in the tag <strong>sound-event name="ENGINE"</strong>.<br>
       <em>Since JMRI 4.11.4</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;trigger name="ENGINE_STARTSTOP" type="THROTTLE"&gt;
           &lt;event-name&gt;F4&lt;/event-name&gt;
-          &lt;target-name>ENGINE&lt;/target-name&gt;
-          &lt;action>NOTHING&lt;/action&gt;
+          &lt;target-name&gt;ENGINE&lt;/target-name&gt;
+          &lt;action&gt;NOTHING&lt;/action&gt;
       &lt;/trigger&gt;
       </pre>
-
       <p>Action "STOP_AT_ZERO":<br>
-      With the example above you can stop the engine at any speed.
-      Using the action "STOP_AT_ZERO" instead of "NOTHING" prevents
-      the engine from stopping if the speed is not zero.<br>
+      With the example above you can stop the engine at any speed. Using the action "STOP_AT_ZERO"
+      instead of "NOTHING" prevents the engine from stopping if the speed is not zero.<br>
       <em>Since JMRI 4.19.2</em></p>
 
       <h5>More throttle key functions: Brake-Key, Half-Speed-Key and Coast-Key</h5>
@@ -116,128 +135,133 @@
       Trigger name for Half-Speed: HALF_SPEED<br>
       Trigger name for Coast-Key: COAST<br>
       All these Triggers are intended for Engine type "steam1".<br>
-      Optional. Must be declared in the tag
-      <strong>sound-event name="ENGINE"</strong>.<br>
+      Optional. Must be declared in the tag <strong>sound-event name="ENGINE"</strong>.<br>
       <em>Since JMRI 4.13.3</em></p>
 
-      <p>Important note on Brake-Key and Half-speed: Please setup those keys in
-      Virtual Sound Decoder only, if your DCC decoder supports such features and
-      can be set likewise.<br>
-      Using a Brake-Key depends on the specification of your DCC decoder. Some
-      DCC decoder support a brake time, which is an optional deceleration-rate
-      and lower than the original one. I recommend to use a throttle key with
-      momentum behavior as the Brake-Key. Don't forget to set the
-      deceleration-rate (both in VSD and in your DCC decoder) to a high value,
-      e.g. 250. If you want to define a brake time in VSD, please do declare
-     (e.g.):</p>
+      <p>Important note on Brake-Key and Half-speed: Please setup those keys in Virtual Sound
+      Decoder only, if your DCC decoder supports such features and can be set likewise.<br>
+      Using a Brake-Key depends on the specification of your DCC decoder. Some DCC decoder support
+      a brake time, which is an optional deceleration-rate and lower than the original one. I
+      recommend to use a throttle key with momentum behavior as the Brake-Key. Don't forget to set
+      the deceleration-rate (both in VSD and in your DCC decoder) to a high value, e.g. 250. If you
+      want to define a brake time in VSD, please do declare (e.g.):</p>
+
       <pre>
       &lt;brake-time&gt;30&lt;/brake-time&gt;
       </pre>
-
       <h5>Acceleration-Rate and Deceleration-Rate</h5>
 
       <p>Description:<br>
-      Allows to set an acceleration-rate and a deceleration-rate for Engine type
-      "steam1". Please note that it is necessary to set the accel-/decel-rates for
-      your DCC-Decoder likewise.<br>
-      Optional. Must be declared in the tag <strong>sound name="ENGINE"
-      type="steam1"</strong>. Default value: 35 / 18<br>
+      Allows to set an acceleration-rate and a deceleration-rate for Engine type "steam1". Please
+      note that it is necessary to set the accel-/decel-rates for your DCC-Decoder likewise.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE" type="steam1"</strong>.
+      Default value: 35 / 18<br>
       <em>Since JMRI 4.13.3</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;accel-rate&gt;35&lt;/accel-rate&gt;
       &lt;decel-rate&gt;18&lt;/decel-rate&gt;
       </pre>
-
       <h5>Reference Distance</h5>
 
       <p>Description:<br>
-      It's recommended to setup this value for each sound tag.
-      The reason for this is the sound attenuation model of OpenAL.
-      Sounds with distance to listener position lower than 
-      reference-distance will not have any attenuation and the
-      volume of the Audio Source will be as defined by the gain
-      setting.<br>
-      Optional. Must be declared in the tag <strong>sound</strong>
-      previous to a gain value. Default value: 1.0<br>
+      It's recommended to setup this value for each sound tag. The reason for this is the sound
+      attenuation model of OpenAL. Sounds with distance to listener position lower than
+      reference-distance will not have any attenuation and the volume of the Audio Source will be
+      as defined by the gain setting.<br>
+      Optional. Must be declared in the tag <strong>sound</strong> previous to a gain value.
+      Default value: 1.0<br>
       <em>Since JMRI 4.11.4</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;reference-distance&gt;3.0&lt;/reference-distance&gt;
       </pre>
-
       <h5>Engine Gain</h5>
 
       <p>Description:<br>
-      This element allows to adjust the engine gain for steam1
-      and diesel3 engine types.<br>
-      For engine type steam1 the gain value must be in the 
-      range of 0.4 and 1.0.<br>
-      Optional. Must be declared in the tag
-      <strong>sound name="ENGINE"</strong>.
-      Default value: 0.8<br>
+      This element allows to adjust the engine gain for steam1 and diesel3 engine types.<br>
+      For engine type steam1 the gain value must be in the range of 0.4 and 1.0.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"</strong>. Default value:
+      0.8<br>
       <em>Since JMRI 4.11.7</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
       </pre>
+      <h5 id="dynamic-gain">Dynamic Gain</h5>
 
+      <p>Description:<br>
+      This element allows to activate an option for steam1 engine types.<br>
+      The engine volume is raised a bit when accelerating and lowered a bit when decelerating.<br>
+      Optional. The declaration should be made in the tag <strong>sound name="ENGINE"</strong>
+      right after element engine-gain.<br>
+      Default value: no<br>
+      <em>Since JMRI 4.23.6</em></p>
+
+      <p>Example:</p>
+
+      <pre>
+      &lt;dynamic-gain&gt;yes&lt;/dynamic-gain&gt;
+      </pre>
       <h5>Top Speed Reverse</h5>
 
       <p>Description:<br>
-      There are steam locomotives where the maximum speed differs between
-      forward and reverse, e.g. the German BR 38 (P8).<br>
+      There are steam locomotives where the maximum speed differs between forward and reverse, e.g.
+      the German BR 38 (P8).<br>
       You can declare a maximum speed for reverse for engine type steam1.<br>
-      Optional. Must be declared in the tag
-      <strong>sound name="ENGINE"</strong> right after top-speed.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"</strong> right after
+      top-speed.<br>
       Default value: value from "top-speed"<br>
       <em>Since JMRI 4.13.5</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;top-speed-reverse&gt;31&lt;/top-speed-reverse&gt;
       </pre>
-
       <h5>Sleep Interval</h5>
 
       <p>Description:<br>
       Depending on the speed of the computer hardware, the timing of the loop-player
       (sleep-interval) can be adjusted.<br>
-      E.g. I use 40 for my new computer and 55 for my Raspberry Pi 3 B+.
-      This may help to avoid sound-restarts.<br>
+      E.g. I use 40 for my new computer and 55 for my Raspberry Pi 3 B+. This may help to avoid
+      sound-restarts.<br>
       You can declare a sleep-interval for engine type diesel3 and steam1.<br>
       The value must be in the range of 38 and 55. The unit is milliseconds.<br>
-      Optional. Must be declared in the tag
-      <strong>sound name="ENGINE"</strong> before decel-trigger-rpms.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"</strong> before
+      decel-trigger-rpms.<br>
       Default value: 50<br>
       <em>Since JMRI 4.19.4</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;sleep-interval&gt;40&lt;/sleep-interval&gt;
       </pre>
-
-      <h5><a name="xy">Create XY coordinates output in console for a VSDecoder</a></h5>
+      <h5 id="xy">Create XY coordinates output in console for a VSDecoder</h5>
 
       <p>Description:<br>
-      Helpfull option to verify the setup of your VSDGeoData.xml file
-      (see <a href="VSD_LocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>).<br>
-      The JMRI System Console output can be copied and edited for printing a route curve.
-      I have tested this with "LibreOffice Calc" and "Gnuplot".<br>
-      Optional. Must be declared right after the
-      <code>&lt;profile&gt;</code> tag.<br>
+      Helpfull option to verify the setup of your VSDGeoData.xml file (see <a href=
+      "VSD_LocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>).<br>
+      The JMRI System Console output can be copied and edited for printing a route curve. I have
+      tested this with "LibreOffice Calc" and "Gnuplot".<br>
+      Optional. Must be declared right after the <code>&lt;profile&gt;</code> tag.<br>
       Default value: "no"<br>
       <em>Since JMRI 4.13.2</em></p>
 
       <p>Example:</p>
+
       <pre>
       &lt;create-xy-series&gt;yes&lt;/create-xy-series&gt;
       </pre>
-
       <p>Console output:<br></p>
+
       <pre>
        vsdecoder.VSDecoder      INFO  - 3(S): -1.5     1.1 [AWT-EventQueue-0]
        vsdecoder.VSDecoder      INFO  - 3(S): -1.489   1.1 [AWT-EventQueue-0]
@@ -245,11 +269,15 @@
        vsdecoder.VSDecoder      INFO  - 3(S): -1.3456  1.1 [AWT-EventQueue-0]
        ...
       </pre>
-
-      <div align="right">
-        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
-      </div><!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <div class="dp-right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

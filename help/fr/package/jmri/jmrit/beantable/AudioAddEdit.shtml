@@ -1,57 +1,46 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec  2013-10-10 -->
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
 <html lang="fr">
 <head>
- <title>
-      JMRI: Adding/Editing Audio objects
- </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta name="author" content="Matt Harris">
-    <meta name="keywords" content="JMRI help Audio Add Edit">
-
-<!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Adding/Editing Audio objects</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="Matt Harris" name="Author">
+  <meta name="keywords" content="JMRI help Audio Add Edit"><!--#include virtual="/Style" -->
 </head>
-
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
-<div id="mainContent">
+    <div id="mainContent">
+      <h1>Ajout/Modification des Objets Audio</h1>
+      Pour créer un objet audio, cliquez sur le bouton "Ajouter ..." <a href=
+      "AudioTable.shtml">Tableau Audio</a>. Cela ouvrira une petite fenêtre avec un espace pour
+      entrer un nom système et nom utilisateur pour la nouvelle mémoire, plus un bouton "Ajouter".
+      <p>Vous devez entrer un nom système unique. Le système des noms pour les objets audio ont un
+      ensemble de modèle. Ils commencent par "IAL" pour "Auditeur audio interne", "IAB" pour
+      "Tampon Audiointerne", ou "IAS" pour "Source audio interne".</p>
 
-<h1>Ajout/Modification des Objets Audio</h1>
+      <p>Il ya des fenêtres séparées pour l'ajout de chacun des différents types. <a href=
+      "AddEditAudioListener.png"><img height="202" width="164" align="right" src=
+      "AddEditAudioListener.png" border="2" alt=""></a> <a href=
+      "AddEditAudioBuffer.png"><img height="94" width="272" align="right" src=
+      "AddEditAudioBuffer.png" border="2" alt=""></a> <a href="AddEditAudioSource.png"><img height=
+      "263" width="164" align="right" src="AddEditAudioSource.png" border="2" alt=""></a></p>
 
-Pour cr&#233;er un objet audio, cliquez sur le bouton
-"Ajouter ..." 
-<a href="AudioTable.shtml"> Tableau Audio</a>.
-Cela ouvrira une petite fen&#234;tre avec un espace pour entrer 
-un nom  syst&#232;me et  nom utilisateur pour la nouvelle m&#233;moire, plus
-un bouton "Ajouter".
-<p>
-Vous devez entrer un nom  syst&#232;me unique. Le syst&#232;me des noms pour les objets audio ont
-un ensemble de mod&#232;le. Ils commencent par "IAL" pour "Auditeur audio interne", "IAB" pour
-"Tampon Audiointerne", ou "IAS" pour "Source audio interne".
+      <p>Le nom utilisateur est facultatif, mais si on leur en donne un, il doit être unique.</p>
 
-<p>
-Il ya des fen&#234;tres s&#233;par&#233;es pour l'ajout de chacun des
-diff&#233;rents types.
-<a
- href="AddEditAudioListener.png">
-<img height="202" width="164" align="right" src="AddEditAudioListener.png" border="2">
-</a>
-<a href="AddEditAudioBuffer.png"><img height="94" width="272" align="right" src="AddEditAudioBuffer.png" border="2">
-</a>
-<a href="AddEditAudioSource.png"><img height="263" width="164" align="right" src="AddEditAudioSource.png" border="2">
-</a>
-<p>
-Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tre unique.
+      <p>Retour à la page d'<a href="AudioTable.shtml">Aide Tableau Audio</a>.</p>
 
-<p>Retour &#224; la page d'<a href="AudioTable.shtml">Aide Tableau Audio</a>.</p>
-<p>
-Pour plus d'informations sur les objets audio, consultez la
-<a href="../../../../html/tools/Audio.shtml"> page d'aide audio</a>.
+      <p>Pour plus d'informations sur les objets audio, consultez la <a href=
+      "../../../../html/tools/Audio.shtml">page d'aide audio</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Traduction 2021-03-26</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
 </body>
 </html>

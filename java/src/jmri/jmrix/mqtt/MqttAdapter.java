@@ -9,6 +9,7 @@ import org.apiguardian.api.API;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
@@ -28,12 +29,18 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
-    
+
+    // 0.1 to get it to the front of the list
+    private final static String MQTT_USERNAME_OPTION = "0.1";
+
+    // 0.2 to get it to the front of the list
+    private final static String MQTT_PASSWORD_OPTION = "0.2";
+
     public boolean retained = true;  // public for script access
     public int      qosflag = 2;     // public for script access
-    
+
     /**
-     * Otherwise known as "Channel", this is prepended to the 
+     * Otherwise known as "Channel", this is prepended to the
      * topic for all JMRI inward and outward communications.
      * Typically set by preferences at startup.  Changing it
      * after startup might have no or bad effect.
@@ -49,31 +56,64 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
+
+        options.put(MQTT_USERNAME_OPTION, new Option(Bundle.getMessage("MQTT_Username"),
+                new String[]{""},  Option.Type.TEXT));
+
+        options.put(MQTT_PASSWORD_OPTION, new Option(Bundle.getMessage("MQTT_Password"),
+                new String[]{""},  Option.Type.PASSWORD));
+
         option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
-        
-        options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"), 
+        options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"),
                                             new String[]{baseTopic}, Option.Type.TEXT));
-                                            
-        options.put("10.3", new Option(Bundle.getMessage("NameTopicTurnoutSend"),    
+
+        options.put("10.3", new Option(Bundle.getMessage("NameTopicTurnoutSend"),
                 new String[]{Bundle.getMessage("TopicTurnoutSend")},  Option.Type.TEXT));
-        options.put("10.5", new Option(Bundle.getMessage("NameTopicTurnoutRcv"),     
+        options.put("10.5", new Option(Bundle.getMessage("NameTopicTurnoutRcv"),
                 new String[]{Bundle.getMessage("TopicTurnoutRcv")},  Option.Type.TEXT));
-        
-        
+
+
         options.put("11.3", new Option(Bundle.getMessage("NameTopicSensorSend"),
                                             new String[]{Bundle.getMessage("TopicSensorSend")},   Option.Type.TEXT));
         options.put("11.5", new Option(Bundle.getMessage("NameTopicSensorRcv"),
                                             new String[]{Bundle.getMessage("TopicSensorRcv")},   Option.Type.TEXT));
-                                            
-        options.put("12.3", new Option(Bundle.getMessage("NameTopicLightSend"),    
+
+        options.put("12.3", new Option(Bundle.getMessage("NameTopicLightSend"),
                                        new String[]{Bundle.getMessage("TopicLightSend")},  Option.Type.TEXT));
-        options.put("12.5", new Option(Bundle.getMessage("NameTopicLightRcv"),     
+        options.put("12.5", new Option(Bundle.getMessage("NameTopicLightRcv"),
                                        new String[]{Bundle.getMessage("TopicLightRcv")},  Option.Type.TEXT));
 
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
         options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));
         options.put("15", new Option("Signal Mast topic :", new String[]{Bundle.getMessage("TopicSignalMast")}, Option.Type.TEXT));
+        options.put("LastWillTopic", new Option(Bundle.getMessage("NameTopicLastWill"),
+                    new String[]{Bundle.getMessage("TopicLastWill")}, Option.Type.TEXT));
+        options.put("LastWillMessage", new Option(Bundle.getMessage("NameMessageLastWill"),
+                    new String[]{Bundle.getMessage("MessageLastWill")}, Option.Type.TEXT));
         allowConnectionRecovery = true;
+    }
+
+    public MqttConnectOptions getMqttConnectionOptions() {
+
+        // Setup the MQTT Connection Options
+        MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
+        mqttConnOpts.setCleanSession(true);
+        if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+            mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
+            mqttConnOpts.setPassword(getOptionState(MQTT_PASSWORD_OPTION).toCharArray());
+        }
+
+        //set Last Will
+        if (! getOptionState("LastWillTopic").isEmpty()
+                && ! getOptionState("LastWillMessage").isEmpty()) {
+            mqttConnOpts.setWill(baseTopic + getOptionState("LastWillTopic"),
+                    getOptionState("LastWillMessage").getBytes(),
+                    qosflag,
+                    true);
+        }
+
+        return mqttConnOpts;
     }
 
     @Override
@@ -90,8 +130,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void connect() throws IOException {
         log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
-        
-        
+
         try {
             if ( getOptionState(option2Name)!= null && ! getOptionState(option2Name).trim().isEmpty()) {
                 baseTopic = getOptionState(option2Name);
@@ -114,16 +153,25 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             }
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
-            
-            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), 
+
+            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(),
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
-            mqttClient.connect();
+
+            if ((getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty())
+                    || ( ! getOptionState("LastWillTopic").isEmpty()
+                    && ! getOptionState("LastWillMessage").isEmpty())) {
+                mqttClient.connect(getMqttConnectionOptions());
+            } else {
+                mqttClient.connect();
+            }
+
         } catch (MqttException ex) {
             throw new IOException("Can't create MQTT client", ex);
         }
     }
-    
+
     @Override
     @API(status=API.Status.MAINTAINED)
     public MqttSystemConnectionMemo getSystemConnectionMemo() {
@@ -189,7 +237,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public void publish(@Nonnull String topic, @Nonnull byte[] payload) {
         try {
             String fullTopic = baseTopic + topic;
-            mqttClient.publish(fullTopic, payload, 2, true);
+            mqttClient.publish(fullTopic, payload, qosflag, retained);
         } catch (MqttException ex) {
             log.error("Can't publish : ", ex);
         }
@@ -209,21 +257,44 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         return (mqttClient);
     }
 
+    private void tryToReconnect(boolean showLogMessages) {
+        if (showLogMessages) log.warn("Try to reconnect");
+        try {
+            if ( getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+                mqttClient.connect(getMqttConnectionOptions());
+            } else {
+                mqttClient.connect();
+            }
+            log.warn("Succeeded to reconnect");
+
+            mqttClient.setCallback(this);
+            Set<String> set = new HashSet<>(mqttEventListeners.keySet());
+            for (String t : set) {
+                mqttClient.subscribe(t);
+            }
+        } catch (MqttException ex) {
+            if (showLogMessages) log.error("Unable to reconnect", ex);
+            scheduleReconnectTimer(false);
+        }
+    }
+
+    private void scheduleReconnectTimer(boolean showLogMessages) {
+        jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                tryToReconnect(showLogMessages);
+            }
+        }, 500);
+    }
+
     @Override
     @API(status=API.Status.INTERNAL)
     public void connectionLost(Throwable thrwbl) {
         log.warn("Lost MQTT broker connection...");
         if (this.allowConnectionRecovery) {
-            log.info("...trying to reconnect");
-            try {
-                mqttClient.connect();
-                mqttClient.setCallback(this);
-                for (String t : mqttEventListeners.keySet()) {
-                    mqttClient.subscribe(t);
-                }
-            } catch (MqttException ex) {
-                log.error("Unable to reconnect", ex);
-            }
+            log.info("...trying to reconnect repeatedly");
+            scheduleReconnectTimer(true);
             return;
         }
         log.error("Won't reconnect");
@@ -233,18 +304,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         log.debug("Message received, topic : {}", topic);
-        
+
         boolean found = false;
-        for (Map.Entry<String,ArrayList<MqttEventListener>> e : mqttEventListeners.entrySet()) {
+        Map<String,ArrayList<MqttEventListener>> tempMap
+            = new HashMap<String,ArrayList<MqttEventListener>> (mqttEventListeners); // Avoid ConcurrentModificationException
+        for (Map.Entry<String,ArrayList<MqttEventListener>> e : tempMap.entrySet()) {
             // does key match received topic, including wildcards?
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
                 found = true;
                 e.getValue().forEach((mel) -> {
                     mel.notifyMqttMessage(topic, mm.toString());
-                });              
+                });
             }
         }
-        
+
         if (!found) {
             log.error("No one subscribed to {}", topic);
             throw new Exception("No subscriber for MQTT topic " + topic);

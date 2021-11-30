@@ -29,11 +29,14 @@ public class SprogThrottle extends AbstractThrottle {
         station = memo.getCommandStation();
 
         // cache settings.
-        this.speedSetting = 0;
+        synchronized (this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
-
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
+        
     }
 
     SprogCommandStation station = null;
@@ -158,7 +161,7 @@ public class SprogThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             // 28 step mode speed commands are 
@@ -233,12 +236,14 @@ public class SprogThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized (this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

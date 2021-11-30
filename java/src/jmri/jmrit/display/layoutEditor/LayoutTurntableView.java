@@ -21,16 +21,12 @@ import jmri.util.MathUtil;
  * MVC View component for the LayoutTurntable class.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutTurntableView extends LayoutTrackView {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
-
-    private boolean turnoutControlled = false;
-    private int lastKnownIndex = -1;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor editor;
 
     /**
@@ -39,17 +35,17 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param c            where to put it
      * @param layoutEditor what layout editor panel to put it in
      */
-    public LayoutTurntableView(@Nonnull LayoutTurntable turntable, 
-                @Nonnull Point2D c, 
+    public LayoutTurntableView(@Nonnull LayoutTurntable turntable,
+                @Nonnull Point2D c,
                 @Nonnull LayoutEditor layoutEditor) {
         super(turntable, c, layoutEditor);
         this.turntable = turntable;
-        
+
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
     }
 
     final private LayoutTurntable turntable;
-   
+
     final public LayoutTurntable getTurntable() { return turntable; }
 
     /**
@@ -89,19 +85,14 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Nonnull
     public String getBlockName() {
-        String result = null;
-        if (namedLayoutBlock != null) {
-            result = namedLayoutBlock.getName();
-        }
-        return ((result == null) ? "" : result);
+        return turntable.getBlockName();
     }
 
     /**
      * @return the layout block
      */
-    @CheckForNull
     public LayoutBlock getLayoutBlock() {
-        return (namedLayoutBlock != null) ? namedLayoutBlock.getBean() : null;
+        return turntable.getLayoutBlock();
     }
 
     /**
@@ -110,23 +101,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param newLayoutBlock the LayoutBlock to set
      */
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
-        LayoutBlock layoutBlock = getLayoutBlock();
-        if (layoutBlock != newLayoutBlock) {
-            /// block has changed, if old block exists, decrement use
-            if (layoutBlock != null) {
-                layoutBlock.decrementUse();
-            }
-            if (newLayoutBlock != null) {
-                String newName = newLayoutBlock.getUserName();
-                if ((newName != null) && !newName.isEmpty()) {
-                    namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newName, newLayoutBlock);
-                } else {
-                    namedLayoutBlock = null;
-                }
-            } else {
-                namedLayoutBlock = null;
-            }
-        }
+        turntable.setLayoutBlock(newLayoutBlock);
     }
 
     /**
@@ -135,9 +110,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param name the name of the new LayoutBlock
      */
     public void setLayoutBlockByName(@CheckForNull String name) {
-        if ((name != null) && !name.isEmpty()) {
-            setLayoutBlock(layoutEditor.provideLayoutBlock(name));
-        }
+        turntable.setLayoutBlockByName(name);
     }
 
     /*
@@ -594,7 +567,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return true if so
      */
     public boolean isTurnoutControlled() {
-        return turnoutControlled;
+        return turntable.isTurnoutControlled();
     }
 
     /**
@@ -603,7 +576,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param boo set true if so
      */
     public void setTurnoutControlled(boolean boo) {
-        turnoutControlled = boo;
+        turntable.setTurnoutControlled(boo);
     }
 
     private JPopupMenu popupMenu = null;
@@ -637,8 +610,8 @@ public class LayoutTurntableView extends LayoutTrackView {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
             turntable.rayTrackList.forEach((rt) -> {
                 TrackSegment ts = rt.getConnect();
-                TrackSegmentView tsv = layoutEditor.getTrackSegmentView(ts);
                 if (ts != null) {
+                    TrackSegmentView tsv = layoutEditor.getTrackSegmentView(ts);
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -696,7 +669,7 @@ public class LayoutTurntableView extends LayoutTrackView {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
-                        
+
                         // this shouldn't ever be null... however...
                         if (lt != null) {
                             LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -745,23 +718,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param index the index
      */
     public void setPosition(int index) {
-        if (isTurnoutControlled()) {
-            boolean found = false; // assume failure (pessimist!)
-            for (RayTrack rt : turntable.rayTrackList) {
-                if (rt.getConnectionIndex() == index) {
-                    lastKnownIndex = index;
-                    rt.setPosition();
-                    layoutEditor.redrawPanel();
-                    layoutEditor.setDirty();
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
-                        getName(), index);
-            }
-        }
+        turntable.setPosition(index);
     }
 
     /**
@@ -770,7 +727,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the turntable position
      */
     public int getPosition() {
-        return lastKnownIndex;
+        return turntable.getPosition();
     }
 
     /**
@@ -830,7 +787,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     public static class RayTrackVisuals {
 
         // public final RayTrack track;
-        
+
         // persistant instance variables
         private double rayAngle = 0.0;
 
@@ -859,7 +816,7 @@ public class LayoutTurntableView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     * 
+     *
      * This type of track has none, so this method is empty.
      */
     @Override
@@ -942,7 +899,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         log.trace("LayoutTurntable:draw2 at {}", getCoordsCenter());
-        
+
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
 
@@ -1003,7 +960,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         for (int j = 0; j < getNumberRays(); j++) {
             if (  (specificType == HitPointType.NONE)
                     || (specificType == (HitPointType.turntableTrackIndexedValue(j)))
-                ) 
+                )
             {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
@@ -1210,6 +1167,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         return true;
     }
 
-     
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableView.class);
 }

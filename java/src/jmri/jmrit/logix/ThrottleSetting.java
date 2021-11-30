@@ -109,7 +109,7 @@ public class ThrottleSetting {
         }
     }
 
-    public class CommandValue {
+    public static class CommandValue {
         ValueType _type;
         SpeedStepMode  _stepMode;
         float   _floatValue;
@@ -198,7 +198,7 @@ public class ThrottleSetting {
         _keyNum = key;
         setValue(vType, ss, f);
         setNamedBean(command, beanName);
-        _trackSpeed = 0;
+        _trackSpeed = 0.0f;
     }
 
     public ThrottleSetting(long time, Command command, int key, ValueType vType, SpeedStepMode ss, float f, String beanName, float trkSpd) {
@@ -216,7 +216,7 @@ public class ThrottleSetting {
         setCommand(cmdStr);
         setValue(value);    // must follow setCommand() 
         setNamedBean(_command, beanName);
-        _trackSpeed = 0;
+        _trackSpeed = 0.0f;
     }
 
     // pre 4.21.3
@@ -247,10 +247,10 @@ public class ThrottleSetting {
     }
 
     /**
-     * Convert old format. (former Strings for Command enums 
-     * @param cmdStr
-     * @return Command
-     * @throws JmriException
+     * Convert old format. (former Strings for Command enums)
+     * @param cmdStr old style description string
+     * @return enum Command
+     * @throws JmriException in case of a non-integer Function or Fn lock/latch value
      */
     private Command getCommandFromString(String cmdStr) throws JmriException {
         Command command;
@@ -304,7 +304,7 @@ public class ThrottleSetting {
         }
         ValueType type;
         SpeedStepMode mode = SpeedStepMode.UNKNOWN;
-        float speed = 0.0F;
+        float speed = 0.0f;
         String val = valueStr.trim().toUpperCase();
         if ("ON".equals(val) || Bundle.getMessage("StateOn").toUpperCase().equals(val)) {
             switch (command) {
@@ -387,12 +387,8 @@ public class ThrottleSetting {
                     default:
                         throw new JmriException(Bundle.getMessage("badValue", valueStr, command));
                 }
-            } catch (NumberFormatException nfe) {
-                throw new JmriException(Bundle.getMessage("badValue", valueStr, command), nfe);
-            } catch (IllegalArgumentException iae) {
-                throw new JmriException(Bundle.getMessage("badValue", valueStr, command), iae);
-            } catch (NullPointerException npe) {
-                throw new JmriException(Bundle.getMessage("badValue", valueStr, command), npe);
+            } catch (IllegalArgumentException | NullPointerException ex) { // NumberFormatException is sublass of iae
+                throw new JmriException(Bundle.getMessage("badValue", valueStr, command), ex);
             }
         }
         return new CommandValue(type, mode, speed);
@@ -416,7 +412,7 @@ public class ThrottleSetting {
         try {
             _command = getCommandFromString(cmdStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSetting {}", je.toString());
+            log.error("Cannot set command from string \"{}\" {}", cmdStr, je.toString());
         }
     }
 
@@ -440,7 +436,8 @@ public class ThrottleSetting {
         try {
             _value = getValueFromString(_command, valueStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSetting {}", je.toString());
+            log.error("Cannot set value for command {}. {}",
+                   (_command!=null?_command.toString():"null"), je.toString());
         }
     }
 
@@ -519,18 +516,9 @@ public class ThrottleSetting {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("ThrottleSetting: wait ");
-        sb.append(_time);
-        sb.append("ms then ");
-        sb.append(_command.toString());
-        sb.append(" with value ");
-        sb.append(_value.showValue());
-        sb.append(" for bean \"");
-        sb.append(getBeanDisplayName());
-        sb.append("\" at trackSpeed ");
-        sb.append(getTrackSpeed());
-        sb.append("\"");
-        return sb.toString();
+        return "ThrottleSetting: wait " + _time + "ms then " + _command.toString()
+                + " with value " + _value.showValue() + " for bean \"" + getBeanDisplayName()
+                + "\" at trackSpeed " + getTrackSpeed() + "\"";
     }
 
     private static final Logger log = LoggerFactory.getLogger(ThrottleSetting.class);

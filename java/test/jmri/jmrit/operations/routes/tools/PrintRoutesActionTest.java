@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -32,7 +32,7 @@ public class PrintRoutesActionTest extends OperationsTestCase {
         JUnitOperationsUtil.createThreeLocationRoute();
         PrintRoutesAction pra = new PrintRoutesAction(true);
         Assert.assertNotNull("exists", pra);
-        pra.actionPerformed(new ActionEvent("Test Action", 0, null));
+        pra.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.util.UtilBundle");
 

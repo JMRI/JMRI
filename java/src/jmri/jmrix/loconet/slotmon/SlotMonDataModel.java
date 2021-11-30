@@ -58,6 +58,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     /**
+     * Forces a refresh of the slots
+     */
+    public void refreshSlots() {
+        memo.getSlotManager().update();
+    }
+
+    /**
      * Return the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed, and whether the system slots
      * should be displayed.

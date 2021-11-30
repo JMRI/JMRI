@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -37,7 +37,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", ni);
         SetPhysicalLocationAction spla = new SetPhysicalLocationAction(ni);
         Assert.assertNotNull("exists", spla);
-        spla.actionPerformed(new ActionEvent("Test Action", 0, null));
+        spla.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         // confirm window exists
         JmriJFrame plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
         Assert.assertNotNull("exists", plf);
@@ -53,7 +53,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", ni);
         SetPhysicalLocationAction spla = new SetPhysicalLocationAction(ni);
         Assert.assertNotNull("exists", spla);
-        spla.actionPerformed(new ActionEvent("Test Action", 0, null));
+        spla.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         // confirm window exists
         JmriJFrame plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
         Assert.assertNotNull("exists", plf);
@@ -61,17 +61,19 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         SetPhysicalLocationFrame splf = (SetPhysicalLocationFrame)plf;
         
         // test save button
-        JemmyUtil.enterClickAndLeave(splf.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(splf.saveButton);
         
-        // should cause a popup window to appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
+        // should cause a dialog window to appear
+        JemmyUtil.pressDialogButton(splf, Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
+        
+        // wait for dialog window to disappear
+        JemmyUtil.waitFor(splf);
         
         // test close button
         JemmyUtil.enterClickAndLeave(splf.closeButton);
         
-        JUnitUtil.dispose(plf);
-
-        //log.debug("test done");
+        plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
+        Assert.assertNull("does not exist", plf);
     }
 
      //private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);

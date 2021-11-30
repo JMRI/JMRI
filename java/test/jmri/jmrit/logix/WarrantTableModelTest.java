@@ -23,6 +23,7 @@ public class WarrantTableModelTest {
         WarrantTableModel t = new WarrantTableModel(f);
         assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(f);
+        t = null;
     }
 
     @BeforeEach
@@ -33,9 +34,10 @@ public class WarrantTableModelTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WarrantTableModelTest.class);
+
 }

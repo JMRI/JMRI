@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2018.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- This file contains definitions for LogixNG                             -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:simpleType name="LogixNG_Is_IsNot_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Is"/>
+        <xs:enumeration value="IsNot"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="LogixNG_Addressing_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Direct"/>
+        <xs:enumeration value="Reference"/>
+        <xs:enumeration value="LocalVariable"/>
+        <xs:enumeration value="Formula"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="LogixNG_NamedBeanType">
+      <xs:restriction base="xs:token">
+         <xs:enumeration value="Block"/>
+         <xs:enumeration value="EntryExit"/>
+         <xs:enumeration value="Light"/>
+         <xs:enumeration value="Memory"/>
+         <xs:enumeration value="OBlock"/>
+         <xs:enumeration value="Reporter"/>
+         <xs:enumeration value="Sensor"/>
+         <xs:enumeration value="SignalHead"/>
+         <xs:enumeration value="SignalMast"/>
+         <xs:enumeration value="Turnout"/>
+         <xs:enumeration value="Warrant"/>
+       </xs:restriction>
+     </xs:simpleType>
+
+</xs:schema>
