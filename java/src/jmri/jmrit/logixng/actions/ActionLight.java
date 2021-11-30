@@ -571,8 +571,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus")),
         Intensity(INTENSITY_ID, Bundle.getMessage("LightIntensity")),
         Interval(INTERVAL_ID, Bundle.getMessage("LightInterval")),
-        Unknown(Sensor.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
-        Inconsistent(Sensor.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
+        Unknown(Light.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
+        Inconsistent(Light.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
 
         private final int _id;
         private final String _text;

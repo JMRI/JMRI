@@ -420,8 +420,8 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
         Thrown(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
         Toggle(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus")),
-        Unknown(Sensor.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
-        Inconsistent(Sensor.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
+        Unknown(Turnout.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
+        Inconsistent(Turnout.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
 
         private final int _id;
         private final String _text;
