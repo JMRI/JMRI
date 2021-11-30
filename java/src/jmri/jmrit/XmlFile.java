@@ -662,14 +662,17 @@ public abstract class XmlFile {
         return fc;
     }
 
-    @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)
+    @SuppressWarnings("deprecation") // org.jdom2.input.SAXBuilder(java.lang.String saxDriverClass, boolean validate)
+    //{@see http://www.jdom.org/docs/apidocs/org/jdom2/input/SAXBuilder.html}
+    //{@see http://www.jdom.org/docs/apidocs/org/jdom2/input/sax/XMLReaders.html#NONVALIDATING}
+    // Validate.CheckDtdThenSchema may not be available readily
     public static SAXBuilder getBuilder(Validate validate) {  // should really be a Verify enum
         SAXBuilder builder;
 
         boolean verifyDTD = (validate == Validate.CheckDtd) || (validate == Validate.CheckDtdThenSchema);
         boolean verifySchema = (validate == Validate.RequireSchema) || (validate == Validate.CheckDtdThenSchema);
 
-        // old style 
+        // old style
         builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", verifyDTD);  // argument controls DTD validation
 
         // insert local resolver for includes, schema, DTDs
