@@ -167,24 +167,24 @@ public interface SymbolTable {
     public static class VariableData {
         
         public String _name;
-        public InitialValueType _initalValueType = InitialValueType.None;
+        public InitialValueType _initialValueType = InitialValueType.None;
         public String _initialValueData;
         
         public VariableData(
                 String name,
-                InitialValueType initalValueType,
+                InitialValueType initialValueType,
                 String initialValueData) {
             
             _name = name;
-            if (initalValueType != null) {
-                _initalValueType = initalValueType;
+            if (initialValueType != null) {
+                _initialValueType = initialValueType;
             }
             _initialValueData = initialValueData;
         }
         
         public VariableData(VariableData variableData) {
             _name = variableData._name;
-            _initalValueType = variableData._initalValueType;
+            _initialValueType = variableData._initialValueType;
             _initialValueData = variableData._initialValueData;
         }
         
@@ -196,8 +196,8 @@ public interface SymbolTable {
             return _name;
         }
         
-        public InitialValueType getInitalValueType() {
-            return _initalValueType;
+        public InitialValueType getInitialValueType() {
+            return _initialValueType;
         }
         
         public String getInitialValueData() {

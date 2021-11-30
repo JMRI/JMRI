@@ -133,10 +133,10 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         _modalCheckBox = new JCheckBox(Bundle.getMessage("ShowDialog_Modal"));
         panel.add(_modalCheckBox);
         
-        _multiLineCheckBox = new JCheckBox(Bundle.getMessage("ShowDialog_MultiLine"));
+        _multiLineCheckBox = new JCheckBox(Bundle.getMessage("ShowDialog_Multiline"));
         panel.add(_multiLineCheckBox);
         
-        panel.add(new JLabel(Bundle.getMessage("ShowDialog_MultiLineHelp")));
+        panel.add(new JLabel(Bundle.getMessage("ShowDialog_MultilineHelp")));
         
         
         JPanel localVariablePanel = new JPanel();
