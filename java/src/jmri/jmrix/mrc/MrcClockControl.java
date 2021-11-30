@@ -39,7 +39,6 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     public MrcClockControl(MrcTrafficController tc, String prefix) {
         super();
         this.tc = tc;
-        this.prefix = prefix;
 
         // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
@@ -57,8 +56,6 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         internalClock.addMinuteChangeListener(minuteChangeListener);
         tc.addTrafficListener(MrcInterface.CLOCK, this);
     }
-    @SuppressWarnings("unused")
-    private String prefix = "";
     private MrcTrafficController tc = null;
 
     /* constants, variables, etc */
@@ -265,7 +262,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             return;
         }
         int newRate = (int) rate;
-        
+
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (newRate != getRate()) {
             setRate(rate);
