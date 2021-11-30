@@ -31,6 +31,7 @@
             <li>Removed obsolete RosterRecorder class;
                 function now available via scripting
             </li>
+            <li>Removed deprecated methods from Throttle panels</li>
             <li></li>
             <li></li>
             <li></li>

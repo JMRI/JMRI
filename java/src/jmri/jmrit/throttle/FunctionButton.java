@@ -324,19 +324,6 @@ public class FunctionButton extends JToggleButton {
      *
      * @param l The FunctionListener that wants notifications via the
      *          FunctionListener.notifyFunctionStateChanged.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#addFunctionListener(jmri.jmrit.throttle.FunctionListener) } instead
-     */
-    @Deprecated
-    public void setFunctionListener(FunctionListener l) {
-        addFunctionListener(l);
-    }
-
-    /**
-     * Add a listener to this button, probably some sort of keypad panel.
-     *
-     * @param l The FunctionListener that wants notifications via the
-     *          FunctionListener.notifyFunctionStateChanged.
      */
     public void addFunctionListener(FunctionListener l) {
         if (!listeners.contains(l)) {
