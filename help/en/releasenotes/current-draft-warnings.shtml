@@ -28,7 +28,9 @@
             <li>Various TrafficManagers.instance methods - use InstanceManager</li>
             <li>Throttle.getListeners() - use getPropertyChangeListeners</li>
             <li></li>
-            <li></li>
+            <li>Removed obsolete RosterRecorder class;
+                function now available via scripting
+            </li>
             <li></li>
             <li></li>
             <li></li>
