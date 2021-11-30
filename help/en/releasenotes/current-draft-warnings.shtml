@@ -16,7 +16,10 @@
             <li>Routes/Turnouts/Sensors: One form of getNextAddress</li>
             <li>Handling of preferences from before JMRI 4.0; upgrade through JMRI 4.20 instead</li>
             <li>ShutDownTask, AbstractShutDownTask - use call & run methods now</li>
-            <li></li>
+            <li>Removed JythonAutomaton, JythonAutomatonAction, JythonSiglet, JythonSigletAction
+                unused classes.  These have been made obsolete by JMRI's native scripting,
+                and haven't been used since JMRI 1.2
+            </li>
             <li></li>
             <li></li>
             <li></li>
