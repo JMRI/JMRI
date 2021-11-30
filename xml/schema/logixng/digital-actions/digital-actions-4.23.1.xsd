@@ -63,6 +63,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/log-local-variables-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/sequence-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/show-dialog-4.25.7.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/table-for-each-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/timeout-4.25.7.xsd"/>
@@ -123,6 +124,7 @@
             <xs:element name="LogLocalVariables" type="LogixNG_DigitalAction_LogLocalVariablesType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DigitalMany"       type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ShowDialog"        type="LogixNG_DigitalAction_ShowDialogType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
