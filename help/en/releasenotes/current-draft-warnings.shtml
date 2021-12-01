@@ -34,7 +34,10 @@
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
+            <li>This version no longer reads ZeroConf IPv4 and IPv6 preferences
+                written with JMRI 4.16 and before.  Please make sure to upgrade
+                to JMRI 4.20 (or later) and save your preferences before
+                updating to this version if you have configured the WiThrottle preference pane.</li>
             <li>Manager.getSystemNameList - rework with getNamedBeanSet</li>
             <li>Manager.getNamedBeanList - rework with getNamedBeanSet</li>
             <li>Manager.setPropertyChangesMuted - use setPropertyChangesSilenced</li>
@@ -42,6 +45,11 @@
             <li>Manager.getBeanByUserName - use getByUserName</li>
             <li>FileChooserUtil</li>
             <li>get/setFontFamily in SystemConsolePreferencesManager</li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
             <li></li>
         </ul>
     </li>
