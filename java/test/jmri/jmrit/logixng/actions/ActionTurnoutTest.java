@@ -149,7 +149,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionTurnout.TurnoutState.get(Turnout.UNKNOWN);
+            ActionTurnout.TurnoutState.get(100);    // The number 100 is a state that ActionTurnout.TurnoutState isn't aware of
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid turnout state".equals(ex.getMessage()));

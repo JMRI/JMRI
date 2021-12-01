@@ -34,10 +34,10 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
  * packets
  * <p>
- * Re-written by Andrew Crosland to send the next packet as soon as a reply is 
- * notified. This removes a race between the old state machine running before 
- * the traffic controller despatches a reply, missing the opportunity to send a 
- * new packet to the layout until the next JVM time slot, which can be 15ms on 
+ * Re-written by Andrew Crosland to send the next packet as soon as a reply is
+ * notified. This removes a race between the old state machine running before
+ * the traffic controller despatches a reply, missing the opportunity to send a
+ * new packet to the layout until the next JVM time slot, which can be 15ms on
  * Windows platforms.
  * <p>
  * May-17 Moved status reply handling to the slot monitor. Monitor messages from
@@ -67,23 +67,17 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private SprogTrafficController tc = null;
 
     final Object lock = new Object();
-    
-    // it's not at all clear what the following object does. It's only
-    // set, with a newly created copy of a reply, in notifyReply(SprogReply m);
-    // it's never referenced.
-    @SuppressWarnings("unused") // added april 2018; should be removed?
-    private SprogReply reply;  
-    
+
     private boolean waitingForReply = false;
     private boolean replyAvailable = false;
     private boolean sendSprogAddress = false;
     private long time, timeNow, packetDelay;
     private int lastId;
-    
+
     PowerManager powerMgr = null;
     int powerState = PowerManager.OFF;
     boolean powerChanged = false;
-    
+
     public SprogCommandStation(SprogTrafficController controller) {
         sendNow = new LinkedList<>();
         /**
@@ -123,7 +117,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * <p>
      * sendSprogMessage will block until the message can be sent. When it returns
      * we set the reply status for the message just sent.
-     * 
+     *
      * @param m       The message to be sent
      */
     protected void sendMessage(SprogMessage m) {
@@ -131,7 +125,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         lastId = m.getId();
         tc.sendSprogMessage(m, this);
     }
-    
+
     /**
      * Return contents of Queue slot i.
      *
@@ -452,7 +446,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      * The run() method will only be called (from SprogSystemConnectionMemo
      * ConfigureCommandStation()) if the connected SPROG is in Command Station mode.
-     * 
+     *
      */
     public void run() {
         log.debug("Command station slot thread starts");
@@ -470,7 +464,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                return;
             }
             log.debug("Slot thread wakes");
-            
+
             if (powerMgr == null) {
                 // Wait until power manager is available
                 powerMgr = InstanceManager.getNullableDefault(jmri.PowerManager.class);
@@ -603,10 +597,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
-            // it's not at all clear what the following line does. The "reply"
-            // variable is only set here, and never referenced.
-            reply = new SprogReply(m);
-            
             log.debug("Reply received [{}]", m.toString());
             // Log the reply and wake the slot thread
             synchronized (lock) {
@@ -630,7 +620,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Provide a count of the slots in use.
-     * 
+     *
      * @return the number of slots in use
      */
     public int getInUseCount() {
@@ -660,7 +650,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Get user name.
-     * 
+     *
      * @return the user name
      */
     @Override
@@ -673,7 +663,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Get system prefix.
-     * 
+     *
      * @return the system prefix
      */
     @Override

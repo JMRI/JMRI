@@ -116,7 +116,9 @@
       </enumChoice>
     </enumVal>
     <label>SpeedLock Feature</label>
+    <label xml:lang="cs">Vlastnost Zámek rychlosti</label>
     <tooltip>If the key is activated, you can control the sound without changing the speed of the locomotive.</tooltip>
     <tooltip xml:lang="de">Wenn Taste aktiv dann kann mit Geschwindigkeitsregler der Sound geregelt werden wobei sich die Geschwindigkeit der Lok nicht ändert.</tooltip>
+    <tooltip xml:lang="cs">Pokud je tlačítko aktivní, lze zvuk ovládat regulátorem rychlosti, přičemž rychlost zůstane konstantní.</tooltip>
   </variable>
 </variables>

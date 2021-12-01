@@ -47,7 +47,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     public NceClockControl(NceTrafficController tc, String prefix) {
         super();
         this.tc = tc;
-        this.prefix = prefix;
 
         // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
@@ -63,8 +62,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         };
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
-    @SuppressWarnings("unused")
-    private String prefix = "";
+
     private NceTrafficController tc = null;
 
     /* constants, variables, etc */

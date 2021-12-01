@@ -456,7 +456,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 locale,
                 "PrintLocalVariable",
                 localVariable._name,
-                localVariable._initalValueType.toString(),
+                localVariable._initialValueType.toString(),
                 localVariable._initialValueData));
         writer.println();
     }
@@ -555,7 +555,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         maleSocket.setCatchAbortExecution(getCatchAbortExecution());
         
         for (VariableData data : _localVariables) {
-            maleSocket.addLocalVariable(data._name, data._initalValueType, data._initialValueData);
+            maleSocket.addLocalVariable(data._name, data._initialValueType, data._initialValueData);
         }
         
         return maleSocket;

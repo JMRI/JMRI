@@ -461,56 +461,53 @@
               </ul>
             </li>
 
-            <li>
-              <a href="#CarsTools">Cars Tools</a>
-              <ul>
-                <li>
-                  <a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</a>
-                </li>
+      <li><a href="#CarsTools">Cars Tools</a>
+       <ul>
+        <li><a href="#CarsTools">Car Roster</a>
+         <uL>
+          <li>Import from file</li>
+          <li>Export to file</li>
+          <li>Delete all cars</li>
+          <li>Reset move counts all cars</li>
+          <li>Print</li>
+          <li>Preview</li>
+         </uL></li>
+        <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</a></li>
 
-                <li>
-                  <a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a>
-                </li>
+        <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
 
-                <li>
-                  <a href="#SetCars">Set Cars</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+        <li><a href="#SetCars">Set Cars</a></li>
+       </ul></li>
+     </ul>
         </li>
 
-        <li>
-          <a href="#Locomotives">Locomotives</a>
-          <ul>
-            <li>
-              <a href="#ImportLocomotives">Import Locomotives</a>
-            </li>
+    <li><a href="#Locomotives">Locomotives</a>
+     <ul>
+      <li><a href="#ImportLocomotives">Import Locomotives</a></li>
 
-            <li>
-              <a href="#LocomotivesAdd">Adding Locomotives to your Roster</a>
-              <ul>
-                <li>
-                  <a href="#LocomotiveModels">Locomotive Models</a>
-                </li>
+      <li><a href="#LocomotivesAdd">Adding Locomotives to your Roster</a>
+       <ul>
+        <li><a href="#LocomotiveModels">Locomotive Models</a></li>
 
-                <li>
-                  <a href="#LocomotiveConsists">Locomotive Consists</a>
-                </li>
-              </ul>
-            </li>
+        <li><a href="#LocomotiveConsists">Locomotive Consists</a></li>
+       </ul></li>
+      <li><a href="#LocomotiveTools">Locomotives Tools</a>
+       <ul>
+        <li><a href="#LocomotiveTools">Locomotive Roster</a>
+         <uL>
+          <li>Import from file</li>
+          <li>Export to file</li>
+          <li>Delete all locomotives</li>
+          <li>Reset move counts all locomotives</li>
+          <li>Print</li>
+          <li>Preview</li>
+         </uL></li>
+        <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
+       </ul>
+      <li><a href="#LocomotivesSet">Set Locomotive</a></li>
+     </ul></li>
 
-            <li>
-              <a href="#LocomotivesSet">Set Locomotive</a>
-            </li>
-
-            <li>
-              <a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a>
-            </li>
-          </ul>
-        </li>
-
-        <li>
+    <li>
           <a href="#Routes">Train Routes</a>
           <ul>
             <li>
@@ -883,8 +880,8 @@
       will create a <a href="#BackupRestore">backup</a> of your current configuration if you have
       one, and then loads the demo files. Restart JMRI to complete the demo load process.
       <p>The demo program also supplies a simple panel to show how the train icons work. Load the
-      panel before building the trains by selecting from the main JMRI menu, "Panels-&gt;Open
-      Panels..." a window should appear and open the "operations" directory and then open the
+      panel before building the trains by selecting from the main JMRI menu, "File-&gt;Load table
+      content and panels..." a window should appear and open the "operations" directory and then select the
       "Operations Demo Panel.xml" file.</p>
 
       <h3 id="QuickStartHelp">Quick Start Help</h3>
@@ -1150,7 +1147,8 @@
       <h3 id="PanelOptionsTrainIcons">Panel Options (Train Icons)</h3>
       If you want the OperationsPro™ to place an icon representing the train on a panel, enter the
       panel's name (NOT the panel's file path name!), otherwise leave the name blank to disable.
-      Load the panel using the main menu "Panel-&gt;Load Panels..." or use the <a href=
+      Load the panel using the main menu "File-&gt;Load table
+      content and panels..." or use the <a href=
       "../../../apps/TabbedPreferences.shtml#Startup">Open file</a> option available in JMRI:
       Preferences Pane to load the panel at startup.
       <p>The "Enable Icon SetX&amp;Y" when selected allows you to teach the OperationsPro™ where to
@@ -3377,11 +3375,13 @@
       can use the wild card "*" when entering a car number. For example if you want to find all
       cars with numbers that ended with 345, enter *345, and press find. Each time you press find,
       the next car with a road number ending with "345" will be highlighted.
+      
       <h3>Moves, Wait and Last Time Moved</h3>
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
       time moved is set by the program.
+      
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.
       The import function requires an ACSII text file, with one line for each car. The car import
@@ -3949,15 +3949,6 @@
       asterisk appended to the consist name in the <a href="#Locomotives">Locomotives</a>
       window.</p>
 
-      <h4 id="SynchronizeWithNCEConsists">Synchronize with NCE Consists</h4>
-
-      <p>If you are using NCE as your DCC command station, you can have the program synchronize
-      your consist numbers with your locomotives. The program will read all of the consists out of
-      the NCE system and then will search for matching locomotives in your operations roster. The
-      program will assign the consist name <code>nce_xxx</code> where xxx is the consist number. To
-      synchronize your Consists, select "Synchronize with NCE Consists" under the "Tools" from the
-      "Locomotives" menu.</p>
-
       <h4 id="LocomotiveIDTAG">Id Tag</h4>
       The Id Tag dropdown allows you to associate a <a href=
       "../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
@@ -3971,7 +3962,48 @@
       "OperationsEngineRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
       operations. A backup file with the last settings for all of your locomotives is also created
       each time the "Save" button is pressed.</p>
+      
+      <h3 id="LocomotiveTools">Locomotives Tools</h3>
+      The locomotives window "Tools" menu allows you to perform some useful functions to your locomotive roster.
+      <h4>Locomotive Roster</h4>
+      The "Locomotive Roster" has a sub-menu that allows you to import and export locomotives, delete locomotives, reset
+      locomotive move counts, and print or preview your locomotive roster.
+      <h4>Locomotive Roster-&gt;Import Locomotives from the JMRI Roster</h4>
+      See <a href="#ImportLocomotives">Import Locomotives from the JMRI Roster</a>.
+      <h4>Locomotive Roster-&gt;Import from file</h4>
+      See <a href="#ImportLocomotives">Importing Locomotives from a File</a>.
+      <h4>Locomotive Roster-&gt;Export to file</h4>
+      In addition to <a href="#ImportLocomotives">Import from file</a> feature described earlier, you
+      can also export your locomotives to a comma separated values file. The "Export to file" function
+      creates a file named "ExportOperationsLocomotiveRoster.csv" in the operations directory.
+      <h4>Locomotive Roster-&gt;Delete all locomotives</h4>
+      You can remove all of the locomotives in your roster by using the "Delete all locomotives" option.
+      <h4>Locomotive Roster-&gt;Reset move count all locomotives</h4>
+      <p>The "Reset move count all locomotives" will zero out all of the locomotive move counts. In normal use
+      you should never reset the locomotive move counts. The program uses the move counts to determine
+      which locomotives have difficulty finding valid destination tracks. Locomotives with low move counts
+      eventually get higher priority over locomotives with larger move counts. By servicing the lower move
+      count locomotives first, the difficult locomotive moves eventually get made by the program. Reseting locomotive
+      moves foils this algorithm. The only valid time for reseting the move counts is when you add
+      new locomotives to your roster and you don't want your new locomotives to have priority over your old locomotives.
+      However in most cases, folks do want to see the new locomotives riding the first train out of town,
+      so don't reset the locomotive moves if you want to put your new additions immediately to work!</p>
 
+      <h4>Locomotive Roster-&gt;Print and Preview</h4>
+      <p>You can also preview and print your locomotive roster. The preview and print features use the
+      same "Sort by" radio buttons as the locomotives window. One of the more useful sorts is by
+      "Location", this allows you to quickly verify your locomotive locations before or after an
+      operations session.</p>
+      
+      <h4 id="SynchronizeWithNCEConsists">Synchronize with NCE Consists</h4>
+
+      <p>If you are using NCE as your DCC command station, you can have the program synchronize
+      your consist numbers with your locomotives. The program will read all of the consists out of
+      the NCE system and then will search for matching locomotives in your operations roster. The
+      program will assign the consist name <code>nce_xxx</code> where xxx is the consist number. To
+      synchronize your Consists, select "Synchronize with NCE Consists" under the "Tools" from the
+      "Locomotives" menu.</p>
+      
       <h3 id="LocomotivesSet">Set Locomotive</h3>
 
       <p>After creating a locomotive, you can set the locomotive's location, and optionally the

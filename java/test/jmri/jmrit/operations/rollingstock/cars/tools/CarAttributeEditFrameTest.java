@@ -135,6 +135,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.LENGTH);
+        JemmyUtil.waitFor(f);
         // confirm that the right number of default lengths were loaded
         Assert.assertEquals(12, f.comboBox.getItemCount());
         // now add a new length in inches

@@ -823,7 +823,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             return;
         }
 
-        boolean facing = true;
+        // The block list for an interlocking NX still has the facing block if there are no signals.
+        boolean facing = getSource().getSourceSignal() == null ? true : false;
         for (LayoutBlock blk : routeDetails) {
             if (facing) {
                 // skip facing Block
@@ -1255,6 +1256,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             lastSeenActiveBlockObject = null;
         }
         disposed = true;
+        super.dispose();
     }
 
     @Override

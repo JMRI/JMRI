@@ -808,7 +808,6 @@ public class SpeedUtil {
             }
             if (ts.getCommand().equals(Command.NOOP)) {
                 // make map entry
-                blkTime += ts.getTime();
                 _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, blkDist, firstIdx, i));
                 if (log.isDebugEnabled()) {
                     log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms distance= {}. index {} to {}",
