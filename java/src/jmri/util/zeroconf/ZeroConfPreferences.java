@@ -63,8 +63,6 @@ public class ZeroConfPreferences extends PreferencesBean {
     public ZeroConfPreferences(Profile profile) {
         super(profile);
         Preferences localPreferences = ProfileUtils.getPreferences(null, this.getClass(), false);
-        Preferences privatePreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
-        Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
 
         // search all-profile local for IPv4 and IPv6 use control
         this.useIPv4 = localPreferences.getBoolean(USE_IP_V4, this.useIPv4);
