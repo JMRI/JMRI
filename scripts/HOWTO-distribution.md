@@ -242,9 +242,7 @@ If there were, update the master
         open https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-06-01+
 ```
 
-   <ul> <li style="list-style-type: none;">
-    For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.’
-   </li> </ul>
+For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.’
 
 ================================================================================
 ## Create the Release Branch
@@ -311,7 +309,7 @@ If you're developing any additional (post-4.25.7) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 4.25.7 release name at the top. Enter the 4.25.4 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 4.25.7 release name at the top. Enter the 4.25.6 most recent release at the bottom.  Click "OK"
 
 - Update
 
