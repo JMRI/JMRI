@@ -89,7 +89,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private static final Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
-    @SuppressWarnings("deprecation") // use of apps.gui.GuiLafPreferencesManager
     public void initialize(Profile profile) throws InitializationException {
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);

@@ -43,7 +43,6 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
 
-    @SuppressWarnings("deprecation") // apps.startup.StartupModelFactory
     public StartupActionsManager() {
         super();
         for (StartupModelFactory factory : ServiceLoader.load(StartupModelFactory.class)) {
