@@ -23,9 +23,8 @@ import jmri.managers.AbstractManager;
 public class OBlockManager extends AbstractManager<OBlock>
         implements ProvidingManager<OBlock>, InstanceManagerAutoDefault {
 
-    @SuppressWarnings("deprecation") // ConflictingSystemConnectionMemo
     public OBlockManager() {
-        super(new jmri.jmrix.ConflictingSystemConnectionMemo("O", "OBlocks")); // NOI18N
+        super(new jmri.jmrix.CaptiveSystemConnectionMemo("O", "OBlocks")); // NOI18N
     }
 
     @Override

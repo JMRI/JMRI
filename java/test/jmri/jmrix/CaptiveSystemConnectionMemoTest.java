@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright 2017
  * @author Randall Wood Copyright 2019
  */
-public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConflictingSystemConnectionMemo> {
+public class CaptiveSystemConnectionMemoTest extends SystemConnectionMemoTestBase<CaptiveSystemConnectionMemo> {
 
     @Override
     @Test
@@ -27,7 +27,7 @@ public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTes
         assertFalse(SystemConnectionMemoManager.getDefault().isSystemPrefixAvailable("i"));
         i.register();
         assertFalse(SystemConnectionMemoManager.getDefault().isSystemPrefixAvailable("i"));
-        SystemConnectionMemo c = new ConflictingSystemConnectionMemo("i", "internal");
+        SystemConnectionMemo c = new CaptiveSystemConnectionMemo("i", "internal");
         assertEquals("i", c.getSystemPrefix());
         assertEquals("internal", c.getUserName());
     }
@@ -36,7 +36,7 @@ public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTes
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new ConflictingSystemConnectionMemo("c", "conflicting");
+        scm = new CaptiveSystemConnectionMemo("c", "conflicting");
     }
 
     @AfterEach
