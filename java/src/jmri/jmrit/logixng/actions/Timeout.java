@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.actions;
 
 import java.util.*;
 
-import jmri.jmrit.logixng.util.TimerUnit;
-
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -16,16 +14,13 @@ import jmri.util.TimerUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
- * Executes a digital action delayed.
+ * Executes an action when the expression is True.
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ExecuteDelayed
-        extends AbstractDigitalAction
+public class Timeout extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private String _socketSystemName;
-    private final FemaleDigitalActionSocket _socket;
     private ProtectedTimerTask _timerTask;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private int _delay;
@@ -34,19 +29,21 @@ public class ExecuteDelayed
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
-    private boolean _resetIfAlreadyStarted;
-    
+    private String _expressionSocketSystemName;
+    private String _actionSocketSystemName;
+    private final FemaleDigitalExpressionSocket _expressionSocket;
+    private final FemaleDigitalActionSocket _actionSocket;
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
-    protected final List<SymbolTable.VariableData> _localVariables = new ArrayList<>();
-    
-    
+
     // These variables are used internally in this action
     private long _timerDelay = 0;   // Timer delay in milliseconds
     private long _timerStart = 0;   // Timer start in milliseconds
-    
-    public ExecuteDelayed(String sys, String user) {
+
+    public Timeout(String sys, String user) {
         super(sys, user);
-        _socket = InstanceManager.getDefault(DigitalActionManager.class)
+        _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, "E");
+        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
     }
     
@@ -56,7 +53,7 @@ public class ExecuteDelayed
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ExecuteDelayed copy = new ExecuteDelayed(sysName, userName);
+        Timeout copy = new Timeout(sysName, userName);
         copy.setComment(getComment());
         copy.setDelayAddressing(_stateAddressing);
         copy.setDelay(_delay);
@@ -64,23 +61,15 @@ public class ExecuteDelayed
         copy.setDelayLocalVariable(_stateLocalVariable);
         copy.setDelayReference(_stateReference);
         copy.setUnit(_unit);
-        copy.setResetIfAlreadyStarted(_resetIfAlreadyStarted);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.OTHER;
     }
-/*
-    private String getVariables(SymbolTable symbolTable) {
-        java.io.StringWriter stringWriter = new java.io.StringWriter();
-        java.io.PrintWriter writer = new java.io.PrintWriter(stringWriter);
-        symbolTable.printSymbolTable(writer);
-        return stringWriter.toString();
-    }
-*/    
+
     /**
      * Get a new timer task.
      */
@@ -92,7 +81,7 @@ public class ExecuteDelayed
             @Override
             public void execute() {
                 try {
-                    synchronized(ExecuteDelayed.this) {
+                    synchronized(Timeout.this) {
                         _timerTask = null;
                         long currentTimerTime = System.currentTimeMillis() - _timerStart;
                         if (currentTimerTime < _timerDelay) {
@@ -146,11 +135,20 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        boolean result = _expressionSocket.evaluate();
+
         synchronized(this) {
-            if (_timerTask != null) {
-                if (_resetIfAlreadyStarted) _timerTask.stopTimer();
-                else return;
+            if (result) {
+                if (_timerTask != null) {
+                    _timerTask.stopTimer();
+                    _timerTask = null;
+                }
+                return;
             }
+            
+            // Don't restart timer if it's still running
+            if (_timerTask != null) return;
+            
             _timerDelay = getNewDelay() * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
             ConditionalNG conditonalNG = getConditionalNG();
@@ -238,30 +236,14 @@ public class ExecuteDelayed
         _unit = unit;
     }
     
-    /**
-     * Get reset if timer is already started.
-     * @return true if the timer should be reset if this action is executed
-     *         while timer is ticking, false othervise
-     */
-    public boolean getResetIfAlreadyStarted() {
-        return _resetIfAlreadyStarted;
-    }
-    
-    /**
-     * Set reset if timer is already started.
-     * @param resetIfAlreadyStarted true if the timer should be reset if this
-     *                              action is executed while timer is ticking,
-     *                              false othervise
-     */
-    public void setResetIfAlreadyStarted(boolean resetIfAlreadyStarted) {
-        _resetIfAlreadyStarted = resetIfAlreadyStarted;
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _socket;
+                return _expressionSocket;
+                
+            case 1:
+                return _actionSocket;
                 
             default:
                 throw new IllegalArgumentException(
@@ -271,13 +253,15 @@ public class ExecuteDelayed
 
     @Override
     public int getChildCount() {
-        return 1;
+        return 2;
     }
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _socket) {
-            _socketSystemName = socket.getConnectedSocket().getSystemName();
+        if (socket == _expressionSocket) {
+            _expressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _actionSocket) {
+            _actionSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -285,8 +269,10 @@ public class ExecuteDelayed
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _socket) {
-            _socketSystemName = null;
+        if (socket == _expressionSocket) {
+            _expressionSocketSystemName = null;
+        } else if (socket == _actionSocket) {
+            _actionSocketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -294,7 +280,7 @@ public class ExecuteDelayed
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ExecuteDelayed_Short");
+        return Bundle.getMessage(locale, "Timeout_Short");
     }
 
     @Override
@@ -323,51 +309,81 @@ public class ExecuteDelayed
         }
         
         return Bundle.getMessage(locale,
-                "ExecuteDelayed_Long",
-                _socket.getName(),
-                delay,
-                _resetIfAlreadyStarted
-                        ? Bundle.getMessage("ExecuteDelayed_ResetRepeat")
-                        : Bundle.getMessage("ExecuteDelayed_IgnoreRepeat"));
+                "Timeout_Long",
+                _expressionSocket.getName(),
+                _actionSocket.getName(),
+                delay);
     }
 
-    public FemaleDigitalActionSocket getSocket() {
-        return _socket;
+    public FemaleDigitalExpressionSocket getExpressionSocket() {
+        return _expressionSocket;
     }
 
-    public String getSocketSystemName() {
-        return _socketSystemName;
+    public String getExpressionSocketSystemName() {
+        return _expressionSocketSystemName;
     }
 
-    public void setSocketSystemName(String systemName) {
-        _socketSystemName = systemName;
+    public void setExpressionSocketSystemName(String systemName) {
+        _expressionSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalActionSocket getActionSocket() {
+        return _actionSocket;
+    }
+
+    public String getActionSocketSystemName() {
+        return _actionSocketSystemName;
+    }
+
+    public void setActionSocketSystemName(String systemName) {
+        _actionSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if (!_socket.isConnected()
-                    || !_socket.getConnectedSocket().getSystemName()
-                            .equals(_socketSystemName)) {
+            if ( !_expressionSocket.isConnected()
+                    || !_expressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_expressionSocketSystemName)) {
                 
-                String socketSystemName = _socketSystemName;
+                String socketSystemName = _expressionSocketSystemName;
+                _expressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _expressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _expressionSocket.getConnectedSocket().setup();
+            }
+            
+            if ( !_actionSocket.isConnected()
+                    || !_actionSocket.getConnectedSocket().getSystemName()
+                            .equals(_actionSocketSystemName)) {
                 
-                _socket.disconnect();
-                
+                String socketSystemName = _actionSocketSystemName;
+                _actionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(socketSystemName);
+                    _actionSocket.disconnect();
                     if (maleSocket != null) {
-                        _socket.connect(maleSocket);
+                        _actionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog action " + socketSystemName);
+                        log.error("cannot load digital action " + socketSystemName);
                     }
                 }
             } else {
-                _socket.getConnectedSocket().setup();
+                _actionSocket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
@@ -383,17 +399,16 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_timerTask != null) {
-            _timerTask.stopTimer();
-            _timerTask = null;
-        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+        if (_timerTask != null) {
+            _timerTask.stopTimer();
+            _timerTask = null;
+        }
     }
-    
     
     
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
@@ -417,10 +432,10 @@ public class ExecuteDelayed
         
         @Override
         public void execute() throws JmriException {
-            if (_socket != null) {
+            if (_actionSocket != null) {
                 SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                 conditionalNG.setSymbolTable(newSymbolTable);
-                _socket.execute();
+                _actionSocket.execute();
                 conditionalNG.setSymbolTable(oldSymbolTable);
             }
         }
@@ -428,6 +443,6 @@ public class ExecuteDelayed
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteDelayed.class);
-    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Timeout.class);
+
 }

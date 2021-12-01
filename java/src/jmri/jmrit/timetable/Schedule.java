@@ -34,8 +34,8 @@ public class Schedule {
 
     private int _scheduleId = 0;
     private int _layoutId = 0;
-    private String _scheduleName = "New Schedule";  // NOI18N
-    private String _effDate = "Today";  // NOI18N
+    private String _scheduleName = Bundle.getMessage("NewScheduleName");  // NOI18N
+    private String _effDate = Bundle.getMessage("NewScheduleDate");  // NOI18N
     private int _startHour = 0;
     private int _duration = 24;
 

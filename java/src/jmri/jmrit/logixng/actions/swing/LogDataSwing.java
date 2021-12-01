@@ -127,6 +127,7 @@ public class LogDataSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        boolean result = true;
         for (LogData.Data data : _logDataTableModel.getDataList()) {
             if (data.getDataType() == LogData.DataType.Formula) {
                 try {
@@ -135,10 +136,11 @@ public class LogDataSwing extends AbstractDigitalActionSwing {
                     parser.parseExpression(data.getData());
                 } catch (ParserException e) {
                     errorMessages.add(e.getLocalizedMessage());
+                    result = false;
                 }
             }
         }
-        return true;
+        return result;
     }
     
     /** {@inheritDoc} */
