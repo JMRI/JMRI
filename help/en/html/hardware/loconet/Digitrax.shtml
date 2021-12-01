@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
   <meta name="keywords" content=
-  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
+  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB LocoBuffer-NG MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
   <!--#include virtual="/Style.shtml" -->
 
   <style>
@@ -185,6 +185,9 @@
 
       <ul>
         <li>
+          <a title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-NG</a>
+        </li>
+        <li>
           <a title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>
         </li>
 
@@ -220,7 +223,7 @@
       the DCS52's integrated USB interface, see <a href="DCS52.shtml">this DCS52 page</a>.</p>
 
       <p>Generally, any of these can be used with any type of computer to communicate with any type
-      of command station. Currently, the LocoBuffer-USB , PR3, and PR4 are the recommended computer
+      of command station. Currently, the LocoBuffer-NG , PR3, and PR4 are the recommended computer
       interface solutions. The LocoBuffer II and original LocoBuffer are no longer commercially
       available; their primary advantage now is that they use a traditional serial port, which may
       be the only suitable connection type available on some older computers.</p>
@@ -264,22 +267,22 @@
 
       <p><strong>Mac OS X and the MS100</strong> - Because Mac OS X can't communicate at the
       special baud rate used by the MS100, the MS100 won't work with Mac OS X. You should get a
-      LocoBuffer-USB instead.</p>
+      LocoBuffer-NG or LocoBuffer-USB instead.</p>
 
       <p><strong>Microsoft Vista and the MS100</strong> - It has been reported that Vista does not
       support the special baud rate used by the MS100. If you find that your MS100 does not work on
-      your Vista machine you should get a LocoBuffer-USB, PR3, or PR4 instead.</p>
+      your Vista machine you should get a ocoBuffer-NG, LocoBuffer-USB, PR3, or PR4 instead.</p>
       <a id="Setup"></a>
       <h2 id="ConnectingAdapter">Connecting</h2>
 
       <p>To connect your computer to a Digitrax DCC system, you need either a USB-equipped Command
       station (DCS240 or DCS52), or a computer-to-LocoNet adapter device such as a <a title=
-      "RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>, <a title=
+      "RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-NG</a>, <a title=
       "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title="Digitrax PR4 USB interface"
       href="PR4.shtml">PR4</a>, <a title="RR-CirKits Serial interface" href=
       "LocoBufferII.shtml">LocoBuffer-II</a>, <a title="Original Kit Version" href=
       "LocoBuffer.shtml">LocoBuffer</a> or <a title="Digitrax Serial interface" href=
-      "MS100.shtml">MS100</a>. The LocoBuffer-USB is a highly recommended computer-to-LocoNet
+      "MS100.shtml">MS100</a>. The LocoBuffer-NG is a highly recommended computer-to-LocoNet
       adapter. See <a href="#adapters">below</a> for more on adapters.</p>
 
       <p>Note that except for the PR3 and PR4, these are only LocoNet interfaces, not stand alone
@@ -384,7 +387,7 @@
             <li>The "Baud rate" setting. When multiple settings are available, this must be set to
             match the needs of the particular hardware adapter specified in the "System Connection"
             setting. This setting will be pre-set and unchangeable you have selected a
-            LocoBuffer-USB, PR3, PR4, or MS100 "System Connection". There are two speed choices for
+            LocoBuffer-NG, LocoBuffer-USB, PR3, PR4, or MS100 "System Connection". There are two speed choices for
             the LocoBuffer and LocoBuffer-II; select the one that corresponds to the jumper
             settings on your LocoBuffer unit. We recommend that you start with the 19,200 choice
             for the LocoBuffer or LocoBuffer-II; see the <a href=
@@ -397,7 +400,7 @@
             control" unless you later consistently get a JMRI console message about the LocoBuffer
             control leads being improperly set up, in which case you might want to try to bypass
             that by selecting "no flow control".<br>
-            This box will be blank if you've selected LocoBuffer-USB, PR3, PR4 or MS100.</li>
+            This box will be blank if you've selected LocoBuffer-NG, LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
             <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
 
@@ -855,6 +858,9 @@
       <ul>
         <li>Computer-to-LocoNet® Interface Hardware
           <ul>
+            <li>
+              <a href="LocoBufferUSB.shtml">RR-CirKits LocoBuffer-NG</a>
+            </li>
             <li>
               <a href="LocoBufferUSB.shtml">RR-CirKits LocoBuffer-USB</a>
             </li>

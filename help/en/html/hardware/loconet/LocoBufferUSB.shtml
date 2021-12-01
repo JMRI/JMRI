@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - LocoBuffer-USB to LocoNet®</title>
+  <title>JMRI Hardware Support - LocoBuffer-NG and LocoBuffer-USB to LocoNet®</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "Digitrax Chief DCS Command Station LocoBuffer USB java model railroad JMRI install windows">
+  "Digitrax Chief DCS Command Station LocoBuffer NG USB java model railroad JMRI install windows">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -15,14 +15,27 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Connecting a LocoBuffer-USB to LocoNet®</h1>
+      <h1>Hardware Support: Connecting a LocoBuffer-NG or LocoBuffer-USB to LocoNet®</h1>
       <img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140"
       alt="LocoBuffer-USB image">
-      <p>The LocoBuffer-USB provides a very reliable way to connect a computer to a LocoNet®. It is
+      <p>The LocoBuffer-NG  or LocoBuffer-USB provide a very reliable way to connect a computer to a LocoNet®.
+      They are
       produced by Dick Bronson's <a href="http://www.rr-cirkits.com">RR-CirKits</a> company, based
       in part on the original LocoBuffer design.</p>
 
       <h2>Recommended setup</h2>
+
+      <p>The recommended setup for the LocoBuffer-NG is:</p>
+
+      <ul>
+        <li>Start DecoderPro or other program and configure it for:
+          <ul>
+            <li>LocoNet LocoBuffer-NG</li>
+
+            <li>Select your port</li>
+          </ul>
+        </li>
+      </ul>
 
       <p>The recommended setup for the LocoBuffer-USB is:</p>
 
