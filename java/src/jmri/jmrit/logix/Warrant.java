@@ -2723,7 +2723,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             setStoppingBlock(block);
         }
         float availDist = getAvailableDistance(idxSpeedChange);  // distance ahead (excluding current block
-        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, currentSpeedType);    // distance needed to change speed for speedType
+        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, speedType);    // distance needed to change speed for speedType
 
         if (log.isDebugEnabled()) {
             log.debug("{}: Speed \"{}\" at block \"{}\" until speed \"{}\" at block \"{}\", availDist={}, enterDist={}",
@@ -2792,7 +2792,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         BlockSpeedInfo blkSpeedInfo = _speedUtil.getBlockSpeedInfo(_idxCurrentOrder);
 
         int cmdIdx = blkSpeedInfo.getFirstIndex();
-        int endIdx = blkSpeedInfo.getLastIndex();
+        int endIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
         float scriptSpeed;  // script throttle setting
         float modSetting;   // modified setting
         float trackSpeed;   // mm/sec track speed at modSetting

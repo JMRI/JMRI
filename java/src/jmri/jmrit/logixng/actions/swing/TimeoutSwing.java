@@ -8,22 +8,21 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ExecuteDelayed;
+import jmri.jmrit.logixng.actions.Timeout;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an ExecuteDelayed object with a Swing JPanel.
+ * Configures an Timeout object with a Swing JPanel.
  * 
- * @author Daniel Bergqvist Copyright (C) 2021
+ * @author Daniel Bergqvist Copyright 2021
  */
-public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
+public class TimeoutSwing extends AbstractDigitalActionSwing {
 
     private final JLabel _unitLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_Unit"));
     private JComboBox<TimerUnit> _unitComboBox;
-    private JCheckBox _resetIfAlreadyStarted;
     
     private JTabbedPane _tabbedPaneDelay;
     private JFormattedTextField _timerDelay;
@@ -37,11 +36,11 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof ExecuteDelayed)) {
-            throw new IllegalArgumentException("object must be an ExecuteDelayed but is a: "+object.getClass().getName());
+        if ((object != null) && !(object instanceof Timeout)) {
+            throw new IllegalArgumentException("object must be an Timeout but is a: "+object.getClass().getName());
         }
         
-        ExecuteDelayed action = (ExecuteDelayed)object;
+        Timeout action = (Timeout)object;
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -111,17 +110,13 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         unitPanel.add(_unitComboBox);
         
         panel.add(unitPanel);
-        
-        _resetIfAlreadyStarted = new JCheckBox(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted"));
-        if (action != null) _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
-        panel.add(_resetIfAlreadyStarted);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        ExecuteDelayed action = new ExecuteDelayed("IQDA1", null);
+        Timeout action = new Timeout("IQDA1", null);
         
         try {
             if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
@@ -155,7 +150,7 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ExecuteDelayed action = new ExecuteDelayed(systemName, userName);
+        Timeout action = new Timeout(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -163,16 +158,13 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (!(object instanceof ExecuteDelayed)) {
-            throw new IllegalArgumentException("object must be an ExecuteDelayed but is a: "+object.getClass().getName());
+        if (!(object instanceof Timeout)) {
+            throw new IllegalArgumentException("object must be an Timeout but is a: "+object.getClass().getName());
         }
         
-        ExecuteDelayed action = (ExecuteDelayed)object;
+        Timeout action = (Timeout)object;
         
         action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
-        action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
-        
-        
         
         try {
             if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayDirect) {
@@ -198,7 +190,7 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ExecuteDelayed_Short");
+        return Bundle.getMessage("Timeout_Short");
     }
     
     @Override

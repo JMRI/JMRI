@@ -153,7 +153,7 @@ public class DefaultSymbolTable implements SymbolTable {
                 throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
             }
             
-            switch (variable.getInitalValueType()) {
+            switch (variable.getInitialValueType()) {
                 case None:
                     break;
                     
@@ -191,7 +191,7 @@ public class DefaultSymbolTable implements SymbolTable {
                             } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
                                 data = parts[1].substring(1,parts[1].length()-1);
                             } else {
-                                // Assume inital value is a local variable
+                                // Assume initial value is a local variable
                                 data = symbolTable.getValue(parts[1]).toString();
                             }
                         }
@@ -241,8 +241,8 @@ public class DefaultSymbolTable implements SymbolTable {
                     break;
                     
                 default:
-                    log.error("definition._initalValueType has invalid value: {}", variable.getInitalValueType().name());
-                    throw new IllegalArgumentException("definition._initalValueType has invalid value: " + variable.getInitalValueType().name());
+                    log.error("definition._initialValueType has invalid value: {}", variable.getInitialValueType().name());
+                    throw new IllegalArgumentException("definition._initialValueType has invalid value: " + variable.getInitialValueType().name());
             }
             
 //            System.out.format("Add symbol: %s = %s%n", symbol.getName(), initialValue);

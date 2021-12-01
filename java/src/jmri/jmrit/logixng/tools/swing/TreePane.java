@@ -403,7 +403,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                     JLabel variableLabel = new JLabel(Bundle.getMessage(
                             "PrintLocalVariable",
                             variableData._name,
-                            variableData._initalValueType,
+                            variableData._initialValueType,
                             variableData._initialValueData));
                     variableLabel.setAlignmentX(LEFT_ALIGNMENT);
                     if (InstanceManager.getDefault(LogixNGPreferences.class).getTreeEditorHighlightRow()) {
