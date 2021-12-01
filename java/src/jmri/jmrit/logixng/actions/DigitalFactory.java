@@ -55,8 +55,10 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ShowDialog.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ShutdownComputer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, TableForEach.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Timeout.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, TriggerRoute.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class));
         return digitalActionClasses;
