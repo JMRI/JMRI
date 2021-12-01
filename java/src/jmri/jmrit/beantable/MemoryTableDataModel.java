@@ -28,7 +28,7 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
     }
 
     /**
-     * Constructor for use by preferences & messages system
+     * Constructor for use by preferences and messages system
      */
     public MemoryTableDataModel(){
         super();
