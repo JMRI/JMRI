@@ -2190,6 +2190,40 @@ public class StoreAndLoadTest {
 
 
 
+        Timeout timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(timeout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Direct);
+        timeout.setDelay(100);
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+        timeout.setDelayLocalVariable("MyVar");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Reference);
+        timeout.setDelayReference("{MyMemory}");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        timeout = new Timeout(digitalActionManager.getAutoSystemName(), null);
+        timeout.setComment("A comment");
+        timeout.setDelayAddressing(NamedBeanAddressing.Formula);
+        timeout.setDelayFormula("MyVar + 10");
+        maleSocket = digitalActionManager.registerAction(timeout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         TriggerRoute triggerRoute =
                 new TriggerRoute(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(triggerRoute);
