@@ -226,8 +226,7 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li>Added a new LDH SyM v60 decoder definition
-                    in Spanish and Portuguese</li>
+                <li></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -287,7 +286,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Genesis OEM add new models</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -395,10 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG actions Light, Sensor and Turnout can
-		      now set the states Unknown and Inconsistent.</li>
-          <li>The LogixNG action <i>Show dialog</i> has been added.</li>
-          <li>The LogixNG action <i>Timeout</i> has been added.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -520,9 +516,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Documentation update</li>
-            <li>Minor bug fixes : Modifier keys were not showing on the keyboard control preferences screen and preference apply was not done immediately for throttle list window</li>
-            <li>Removed the global preference "Hide speed step selector" as it is available per throttle. Less complexity.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -576,21 +570,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Basic support for TypeScript has been added to the
-                webserver file system.</li>
-            <li>Users that have HighDPI scaling set to something
-                different than 100% can now select whenether or not
-                to force Java to use 100% scaling. It's set in the
-                file <code>JMRI_InitPreferences.properties</code>
-                in the JMRI system preferences directory with the
-                setting <code>sun.java2d.uiScale</code>.
-                If this value is <code>1</code>, Java forces the
-                scaling of JMRI to 100%. If this value is
-                <code>0</code>, Java uses the same scaling as the
-                system.</li>
-            <li>The setting for HighDPI scaling can be changed in
-                <i>Edit -> Preferences -> Display</i>. The checkbox
-                has the text <i>Force 100% scaling when the OS uses
-                higher scaling</i>.</li>
+            <li></li>
         </ul>
 
