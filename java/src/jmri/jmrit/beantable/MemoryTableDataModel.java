@@ -26,7 +26,15 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
         super();
         setManager(mgr);
     }
-    
+
+    /**
+     * Constructor for use by preferences & messages system
+     */
+    public MemoryTableDataModel(){
+        super();
+        setManager(InstanceManager.getDefault(MemoryManager.class));
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getValue(String name) {
@@ -127,7 +135,7 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
         log.error("configureButton should not have been called");
         return null;
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(MemoryTableDataModel.class);
 
 }
