@@ -308,16 +308,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return Collections.unmodifiableSortedSet(conditionals);
     }
 
-    /**
-     *
-     * @return the default instance of the DefaultConditionalManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultConditionalManager instance() {
-        return InstanceManager.getDefault(DefaultConditionalManager.class);
-    }
-
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
