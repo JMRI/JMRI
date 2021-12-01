@@ -2676,7 +2676,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return true;
         }
         
-        if (runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING || runState == RAMP_HALT) {
+        if (/*runState == WAIT_FOR_CLEAR ||*/ runState == HALT || runState == STOP_PENDING || runState == RAMP_HALT) {
             if (log.isDebugEnabled()) {
                 log.debug("{}: Train drift into block \"{}\". runState= {}, Engineer holds train. speedSetting= {}",
                         getDisplayName(), curBlock.getDisplayName(), RUN_STATE[runState], speedSetting);
