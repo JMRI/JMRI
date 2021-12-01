@@ -179,8 +179,9 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    @SuppressWarnings("deprecation") // AbstractAutomaton objects can be waiting on _lots_ of things, so
-                                     // we need to find another way to deal with this besides Interrupt
+    @SuppressWarnings("deprecation") // Thread.stop()
+    // AbstractAutomaton objects can be waiting on _lots_ of things, so
+    // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -976,7 +977,7 @@ public class AbstractAutomaton implements Runnable {
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
             }
         };
-        boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle( 
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(
             new jmri.DccLocoAddress(address, longAddress), throttleListener, false);
 
         // check if reply is coming
@@ -1041,7 +1042,7 @@ public class AbstractAutomaton implements Runnable {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
-            
+
             /**
              * No steal or share decisions made locally
              * {@inheritDoc}

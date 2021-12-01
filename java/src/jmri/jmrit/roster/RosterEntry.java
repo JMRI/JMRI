@@ -121,14 +121,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _productID = "";
 
     /**
-     * Deprecated, use {@link #getMAXFNNUM} directly.
-     *
-     * @deprecated 4.17.1 to be removed in ??
-     */
-    @Deprecated
-    public static final int MAXFNNUM = Integer.parseInt(DEFAULT_MAXFNNUM);
-
-    /**
      * Get the highest valid Fn key number for this roster entry.
      * <dl>
      * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
