@@ -2723,7 +2723,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             setStoppingBlock(block);
         }
         float availDist = getAvailableDistance(idxSpeedChange);  // distance ahead (excluding current block
-        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, currentSpeedType);    // distance needed to change speed for speedType
+        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, speedType);    // distance needed to change speed for speedType
 
         if (log.isDebugEnabled()) {
             log.debug("{}: Speed \"{}\" at block \"{}\" until speed \"{}\" at block \"{}\", availDist={}, enterDist={}",
