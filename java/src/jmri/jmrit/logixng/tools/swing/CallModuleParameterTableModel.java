@@ -114,7 +114,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 variable._name = (String) value;
                 break;
             case COLUMN_INPUT_TYPE:
-                variable._initalValueType = (InitialValueType) value;
+                variable._initialValueType = (InitialValueType) value;
                 break;
             case COLUMN_INPUT_DATA:
                 variable._initialValueData = (String) value;
@@ -139,7 +139,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             case COLUMN_NAME:
                 return _parameterData.get(rowIndex).getName();
             case COLUMN_INPUT_TYPE:
-                return _parameterData.get(rowIndex).getInitalValueType();
+                return _parameterData.get(rowIndex).getInitialValueType();
             case COLUMN_INPUT_DATA:
                 return _parameterData.get(rowIndex).getInitialValueData();
             case COLUMN_OUTPUT_TYPE:

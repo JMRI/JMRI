@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionTurnoutType">
+    <xs:complexType name="LogixNG_DigitalAction_TimeoutType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionTurnout class.
+          Define the XML stucture for storing the contents of a Timeout class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.TimeoutXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -40,32 +40,41 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="turnout" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
-              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="ExpressionSocket" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
-              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="ActionSocket" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
-              <xs:element name="turnoutState" minOccurs="0" maxOccurs="1">
+              <xs:element name="delayAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="delay" type="xs:int" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="delayReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="delayLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="delayFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="unit" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="Closed"/>
-                    <xs:enumeration value="Thrown"/>
-                    <xs:enumeration value="Toggle"/>
-                    <xs:enumeration value="Unknown"/>
-                    <xs:enumeration value="Inconsistent"/>
+                    <xs:enumeration value="MilliSeconds"/>
+                    <xs:enumeration value="Seconds"/>
+                    <xs:enumeration value="Minutes"/>
+                    <xs:enumeration value="Hours"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-
-              <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
-
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

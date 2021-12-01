@@ -57,6 +57,8 @@
                     <xs:enumeration value="Toggle"/>
                     <xs:enumeration value="Intensity"/>
                     <xs:enumeration value="Interval"/>
+                    <xs:enumeration value="Unknown"/>
+                    <xs:enumeration value="Inconsistent"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
