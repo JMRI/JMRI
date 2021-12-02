@@ -141,12 +141,12 @@ public interface MaleSocket extends Debugable {
     /**
      * Handle an error that has happened during execution or evaluation of
      * this item.
-     * @param item     the item that had the error
-     * @param message  the error message
-     * @param e        the exception that has happened
-     * @param log      the logger
-     * @throws         JmriException if the male socket is configured to
-     *                 throw an exception
+     * @param  item           the item that had the error
+     * @param  message        the error message
+     * @param  e              the exception that has happened
+     * @param  log            the logger
+     * @throws JmriException  if the male socket is configured to
+     *                        throw an exception
      */
     public void handleError(
             Base item,
@@ -158,13 +158,13 @@ public interface MaleSocket extends Debugable {
     /**
      * Handle an error that has happened during execution or evaluation of
      * this item.
-     * @param item         the item that had the error
-     * @param message  the error message
-     * @param messageList  a list of error messages
-     * @param e            the exception that has happened
-     * @param log          the logger
-     * @throws             JmriException if the male socket is configured to
-     *                     throw an exception
+     * @param  item           the item that had the error
+     * @param  message        the error message
+     * @param  messageList    a list of error messages
+     * @param  e              the exception that has happened
+     * @param  log            the logger
+     * @throws JmriException  if the male socket is configured to
+     *                        throw an exception
      */
     public void handleError(
             Base item,
@@ -177,12 +177,12 @@ public interface MaleSocket extends Debugable {
     /**
      * Handle an error that has happened during execution or evaluation of
      * this item.
-     * @param item     the item that had the error
-     * @param message  the error message
-     * @param e        the exception that has happened
-     * @param log      the logger
-     * @throws         JmriException if the male socket is configured to
-     *                 throw an exception
+     * @param  item           the item that had the error
+     * @param  message        the error message
+     * @param  e              the exception that has happened
+     * @param  log            the logger
+     * @throws JmriException  if the male socket is configured to
+     *                        throw an exception
      */
     public void handleError(
             Base item,
