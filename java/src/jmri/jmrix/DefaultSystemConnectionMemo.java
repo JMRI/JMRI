@@ -33,10 +33,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     private String userNameAsLoaded;
     protected Map<Class<?>,Object> classObjectMap;
 
-    @SuppressWarnings("deprecation") // ConflictingSystemConnectionMemo
     protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         classObjectMap = new HashMap<>();
-        if (this instanceof ConflictingSystemConnectionMemo) {
+        if (this instanceof CaptiveSystemConnectionMemo) {
             this.prefix = prefix;
             this.userName = userName;
             return;

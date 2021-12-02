@@ -17,9 +17,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
-    @SuppressWarnings("deprecation") // ConflictingSystemConnectionMemo
     public TranspondingTagManager() {
-        super(new jmri.jmrix.ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
+        super(new jmri.jmrix.CaptiveSystemConnectionMemo("L", "LocoNet")); // NOI18N
         storeInstance();
     }
 
