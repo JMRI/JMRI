@@ -292,19 +292,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return activeAudioFactory;
     }
 
-    /**
-     * Get the current instance of this object.
-     * <p>
-     * If not existing, create a new instance.
-     *
-     * @return reference to currently active AudioManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultAudioManager instance() {
-        return InstanceManager.getDefault(DefaultAudioManager.class);
-    }
-
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }
