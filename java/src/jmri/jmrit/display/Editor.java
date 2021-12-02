@@ -3208,49 +3208,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     abstract protected void copyItem(Positionable p);
 
-    /**
-     * Get a List of the currently-existing Editor objects. The returned list is
-     * a copy made at the time of the call, so it can be manipulated as needed
-     * by the caller.
-     *
-     * @return a List of Editors
-     * @deprecated since 4.19.6; use {@link EditorManager#getAll()} instead
-     */
-    @Deprecated
-    synchronized public static List<Editor> getEditors() {
-        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
-    }
-
-    /**
-     * Get a list of currently-existing Editor objects that are specific
-     * sub-classes of Editor.
-     * <p>
-     * The returned list is a copy made at the time of the call, so it can be
-     * manipulated as needed by the caller.
-     *
-     * @param <T>  the Class the list should be limited to.
-     * @param type the Class the list should be limited to.
-     * @return a List of Editors.
-     * @deprecated since 4.19.6; use {@link EditorManager#getAll(Class)} instead
-     */
-    @Deprecated
-    synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(type));
-    }
-
-    /**
-     * Get an Editor of a particular name. If more than one exists, there's no
-     * guarantee as to which is returned.
-     *
-     * @param name the editor to get
-     * @return an Editor or null if no matching Editor could be found
-     * @deprecated since 4.19.6; use {@link EditorManager#get(String)} instead
-     */
-    @Deprecated
-    public static Editor getEditor(String name) {
-        return InstanceManager.getDefault(EditorManager.class).get(name);
-    }
-
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
