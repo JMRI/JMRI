@@ -51,7 +51,7 @@
             <li>Manager.getBeanByUserName - use getByUserName</li>
             <li>FileChooserUtil</li>
             <li>get/setFontFamily in SystemConsolePreferencesManager</li>
-            <li></li>
+            <li>throttle.FunctionPanel#changeState(..) has been replaced by #setSelected(..)</li>
             <li></li>
             <li></li>
             <li></li>
