@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 
 /**
  *
@@ -27,7 +27,7 @@ public class MockShutDownManagerTest {
         MockShutDownManager dsdm = new MockShutDownManager();
         Assert.assertEquals(0, dsdm.getCallables().size());
         Assert.assertEquals(0, dsdm.getRunnables().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
@@ -51,7 +51,7 @@ public class MockShutDownManagerTest {
         MockShutDownManager dsdm = new MockShutDownManager();
         Assert.assertEquals(0, dsdm.getCallables().size());
         Assert.assertEquals(0, dsdm.getRunnables().size());
-        ShutDownTask task = new QuietShutDownTask("task") {
+        ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
