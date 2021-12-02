@@ -43,7 +43,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Reference to the currently active AudioFactory. 
+     * Reference to the currently active AudioFactory.
      * Because of underlying (external to Java) implementation details,
      * JMRI only ever has one AudioFactory, so we make this static.
      */
@@ -114,20 +114,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         }
 
         return a;
-    }
-
-    @Override
-    @Deprecated
-    @Nonnull
-    public List<String> getSystemNameList(char subType) {
-        Set<Audio> tempSet = getNamedBeanSet();
-        List<String> out = new ArrayList<>();
-        tempSet.stream().forEach((audio) -> {
-            if (audio.getSubType() == subType) {
-                out.add(audio.getSystemName());
-            }
-        });
-        return out;
     }
 
     /** {@inheritDoc} */
