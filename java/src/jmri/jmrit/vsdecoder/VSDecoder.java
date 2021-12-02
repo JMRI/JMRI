@@ -389,7 +389,7 @@ public class VSDecoder implements PropertyChangeListener {
     public void setPosition(PhysicalLocation p) {
         // Store the actual position relative to the user's Origin locally.
         config.setPhysicalLocation(p);
-        if (create_xy_series) {   
+        if (create_xy_series) {
             log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
         }
         log.debug("( {} ). Set Position: {}", this.getAddress(), p);
@@ -594,30 +594,6 @@ public class VSDecoder implements PropertyChangeListener {
      */
     public Collection<SoundEvent> getEventList() {
         return event_list.values();
-    }
-
-    /**
-     * True if this is the default VSDecoder
-     *
-     * @return boolean true if this is the default VSDecoder
-     *
-     * @deprecated As of 4.23.3, without a replacement
-     */
-    @Deprecated // 4.23.3 
-    public boolean isDefault() {
-        return is_default;
-    }
-
-    /**
-     * Set whether this is the default VSDecoder or not
-     *
-     * @param d (boolean) True to set this as the default, False if not.
-     *
-     * @deprecated As of 4.23.3, without a replacement
-     */
-    @Deprecated // 4.23.3
-    public void setDefault(boolean d) {
-        is_default = d;
     }
 
     /**
