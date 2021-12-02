@@ -66,7 +66,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         // return a copy, not ItemPalette's map!
         return cloneMap(iconMap, null);
     }
-    
+
     public void makeIconMap() {
         _iconMap = ((ControlPanelEditor)_editor).getPortalIconMap();
         int deg = getDegrees();
@@ -116,16 +116,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         icon.scale(getScale(), this);
         icon.rotate(getDegrees(), this);
         _iconMap.put(name, icon);
-    }
-
-    /**
-     * Renamed in 4.21.5
-     * @param set true for regular, false for opposite (flipped in edit frame)
-     * @deprecated since 4.21.5 use setArrowOrientation(set)
-     */
-    @Deprecated
-    public void setArrowOrientatuon(boolean set) {
-        setArrowOrientation(set);
     }
 
     /**
@@ -297,7 +287,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return true;
     }
 
-    @Override 
+    @Override
     public void setLocation(int x, int y ) {
         ControlPanelEditor cpe = (ControlPanelEditor)_editor;
         if (cpe.getCircuitBuilder().portalIconMove(this, x, y)) {
