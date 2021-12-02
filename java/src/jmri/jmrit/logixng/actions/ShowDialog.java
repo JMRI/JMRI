@@ -24,6 +24,9 @@ import jmri.util.ThreadingUtil;
 public class ShowDialog extends AbstractDigitalAction
         implements FemaleSocketListener, PropertyChangeListener, VetoableChangeListener {
 
+    private static final ResourceBundle rbx =
+            ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
+
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
     private Set<Button> _enabledButtons = new HashSet<>();
@@ -239,14 +242,12 @@ public class ShowDialog extends AbstractDigitalAction
                 if (_enabledButtons.contains(button)) {
                     JButton jbutton = new JButton(button._text);
                     jbutton.addActionListener((ActionEvent e) -> {
-                        if (!_localVariable.isEmpty()) {
-                            newSymbolTable.setValue(_localVariable, button._value);
-                        }
                         _dialog.dispose();
 
                         synchronized(ShowDialog.this) {
                             _internalSocket.conditionalNG = conditionalNG;
                             _internalSocket.newSymbolTable = newSymbolTable;
+                            _internalSocket.value = button._value;
                             conditionalNG.execute(_internalSocket);
                         }
                     });
@@ -522,6 +523,7 @@ public class ShowDialog extends AbstractDigitalAction
 
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
+        private int value;
 
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
@@ -540,10 +542,24 @@ public class ShowDialog extends AbstractDigitalAction
         @Override
         public void execute() throws JmriException {
             if (_socket != null) {
-                SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
-                conditionalNG.setSymbolTable(newSymbolTable);
-                _socket.execute();
-                conditionalNG.setSymbolTable(oldSymbolTable);
+                MaleSocket maleSocket = (MaleSocket)ShowDialog.this.getParent();
+                try {
+                    SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+                    conditionalNG.setSymbolTable(newSymbolTable);
+                    if (!_localVariable.isEmpty()) {
+                        newSymbolTable.setValue(_localVariable, value);
+                    }
+                    _socket.execute();
+                    conditionalNG.setSymbolTable(oldSymbolTable);
+                } catch (JmriException e) {
+                    if (e.getErrors() != null) {
+                        maleSocket.handleError(ShowDialog.this, rbx.getString("ExceptionExecuteMulti"), e.getErrors(), e, log);
+                    } else {
+                        maleSocket.handleError(ShowDialog.this, Bundle.formatMessage(rbx.getString("ExceptionExecuteAction"), e.getLocalizedMessage()), e, log);
+                    }
+                } catch (RuntimeException e) {
+                    maleSocket.handleError(ShowDialog.this, Bundle.formatMessage(rbx.getString("ExceptionExecuteAction"), e.getLocalizedMessage()), e, log);
+                }
             }
         }
 

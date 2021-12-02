@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+
+import org.slf4j.Logger;
 
 /**
  * A LogixNG male socket.
@@ -134,6 +137,59 @@ public interface MaleSocket extends Debugable {
      * @param errorHandlingType the error handling type
      */
     public void setErrorHandlingType(ErrorHandlingType errorHandlingType);
+    
+    /**
+     * Handle an error that has happened during execution or evaluation of
+     * this item.
+     * @param item     the item that had the error
+     * @param message  the error message
+     * @param e        the exception that has happened
+     * @param log      the logger
+     * @throws         JmriException if the male socket is configured to
+     *                 throw an exception
+     */
+    public void handleError(
+            Base item,
+            String message,
+            JmriException e,
+            Logger log)
+            throws JmriException;
+    
+    /**
+     * Handle an error that has happened during execution or evaluation of
+     * this item.
+     * @param item         the item that had the error
+     * @param message  the error message
+     * @param messageList  a list of error messages
+     * @param e            the exception that has happened
+     * @param log          the logger
+     * @throws             JmriException if the male socket is configured to
+     *                     throw an exception
+     */
+    public void handleError(
+            Base item,
+            String message,
+            List<String> messageList,
+            JmriException e,
+            Logger log)
+            throws JmriException;
+    
+    /**
+     * Handle an error that has happened during execution or evaluation of
+     * this item.
+     * @param item     the item that had the error
+     * @param message  the error message
+     * @param e        the exception that has happened
+     * @param log      the logger
+     * @throws         JmriException if the male socket is configured to
+     *                 throw an exception
+     */
+    public void handleError(
+            Base item,
+            String message,
+            RuntimeException e,
+            Logger log)
+            throws JmriException;
     
     /**
      * Get the object that this male socket holds.
