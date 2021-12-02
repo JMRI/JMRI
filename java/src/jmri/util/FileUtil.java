@@ -574,18 +574,6 @@ public final class FileUtil {
     }
 
     /**
-     * Used to set the profile path, but now does nothing.
-     *
-     * @see #getProfilePath()
-     * @param path The path to the profile directory
-     * @deprecated since 4.17.3 without replacement
-     */
-    @Deprecated
-    static public void setProfilePath(@CheckForNull String path) {
-        // nothing to do
-    }
-
-    /**
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
