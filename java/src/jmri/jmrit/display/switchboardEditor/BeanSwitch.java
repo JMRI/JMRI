@@ -1034,17 +1034,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         /**
-         * Ctor with fixed scale of image at 100%. Original public ctor.
-         *
-         * @param filepath1 the ON image
-         * @param filepath2 the OFF image
-         */
-        @Deprecated
-        public IconSwitch(String filepath1, String filepath2) {
-            this(filepath1, filepath2, Color.GRAY);
-        }
-
-        /**
          * Ctor to draw graphic fully in Graphics.
          *
          * @param shape int to specify switch shape {@link SwitchboardEditor} constants

@@ -1016,15 +1016,6 @@ public class SwitchboardEditor extends Editor {
         border.setTitleColor(color);
     }
 
-    /**
-     * @param color the string containing a color settable using {@link jmri.util.ColorUtil#stringToColor(String)}
-     * @deprecated since 4.15.7; use {@link #setDefaultTextColor(Color)} instead
-     */
-    @Deprecated
-    public void setDefaultTextColor(String color) {
-        setDefaultTextColor(ColorUtil.stringToColor(color));
-    }
-
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
@@ -1465,24 +1456,6 @@ public class SwitchboardEditor extends Editor {
             rows = autoRows(cellProportion); // recalculate, TODO: specific proportion value for Type/Shape choice?
             rowsSpinner.setValue(rows);
         }
-    }
-
-    /**
-     * @return the number of switches displayed per row
-     * @deprecated since 4.21.2, replaced by {@link #getRows()} because that is what it holds
-     */
-    @Deprecated
-    public int getColumns() {
-        return getRows();
-    }
-
-    /**
-     * @param rws the number of switches to display per row
-     * @deprecated since 4.21.2, replaced by {@link #setRows(int)} because that is what it holds
-     */
-    @Deprecated
-    public void setColumns(int rws) {
-        setRows(rws);
     }
 
     /**
