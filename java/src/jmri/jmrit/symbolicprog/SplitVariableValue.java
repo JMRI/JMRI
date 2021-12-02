@@ -290,16 +290,7 @@ public class SplitVariableValue extends VariableValue
         return retString;
     }
 
-    @Deprecated
-    public String getSecondCvNum() {
-        String retString = "";
-        if (cvCount > 1) {
-            retString = cvList.get(1).cvName;
-        }
-        return retString;
-    }
-
-    @Override
+   @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _textField.setToolTipText(t);  // set our value
