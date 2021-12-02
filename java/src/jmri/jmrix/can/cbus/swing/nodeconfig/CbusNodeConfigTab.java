@@ -31,7 +31,7 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
         if (main != null ){
             super.initComponents(main.getMemo());
         }
-        this.setLayout(new BorderLayout() );
+        super.setLayout(new BorderLayout() );
         _activeDialogue = false;
     }
     
@@ -109,7 +109,7 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
      * Remove any update listeners for the node.
      * @param node Node to remove listeners for
      */
-    @OverridingMethodsMustInvokeSuper
+    @OverridingMethodsMustInvokeSuper // to remove Node Property Change Listener
     protected void disposeOfNode(@Nonnull CbusNode node){
         node.removePropertyChangeListener(this);
     }
@@ -144,8 +144,8 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
             "<html>" + adviceString + "<br>" + Bundle.getMessage("ContinueEditQuestion")+"</html>"
             ,Bundle.getMessage("WarningTitle") + " " + nodeOfInterest,
             JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null,
-            new String[]{("Cancel Edit"), ("Save Edit"), ("Continue Editing")},
-            ("Continue Editing")); // default choice
+            new String[]{Bundle.getMessage("CancelEdit"), Bundle.getMessage("SaveEdit"), Bundle.getMessage("ContinueEdit")},
+            Bundle.getMessage("ContinueEdit")); // default choice
         
         setActiveDialog(false);
         switch (selectedValue) {
