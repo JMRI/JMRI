@@ -207,15 +207,6 @@ public class LI100fAdapter extends XNetSerialPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    @Deprecated
-    static public LI100fAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LI100fAdapter();
-        }
-        return mInstance;
-    }
-    volatile static LI100fAdapter mInstance = null;
-
     private static final Logger log = LoggerFactory.getLogger(LI100fAdapter.class);
 
 }
