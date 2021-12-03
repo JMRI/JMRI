@@ -48,13 +48,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         rcvHandler = new RcvHandler(this);
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    @Deprecated
-    public LnOverTcpPacketizer() {
-        this(new LocoNetSystemConnectionMemo());
-    }
-
     public LnNetworkPortController networkController = null;
 
     @Override
