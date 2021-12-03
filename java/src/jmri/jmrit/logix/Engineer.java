@@ -255,7 +255,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
 
             synchronized (this) {
-                while (_ramp != null && (!_ramp.ready || _ramp.holdRamp)) {
+                while (_ramp != null && (!_ramp.isReady() || _ramp.holdRamp)) {
                     int idx = _idxCurrentCommand;
                     try {
                         if (log.isDebugEnabled())
@@ -432,7 +432,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             if (_ramp == null) {
                 _ramp = new ThrottleRamp();
                 _ramp.start();
-            } else if (!_ramp.ready) {
+            } else if (!_ramp.isReady()) {
                 // for repeated command
                 if (_ramp.duplicate(endSpeedType, endBlockIdx)) {
                     return;
@@ -444,7 +444,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
             long time = 0;
             int pause = _speedUtil.getRampTimeIncrement() + 20;
-            while (time < pause && !_ramp.ready) {
+            while (time < pause && !_ramp.isReady()) {
                 // may need a bit of time for quit() or start() to get ready
                 try {
                     wait(20);
@@ -453,12 +453,12 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 catch (InterruptedException ie) { // ignore
                 }
             }
-            if (_ramp.ready) {
+            if (_ramp.isReady()) {
                 _ramp.setParameters(endSpeedType, endBlockIdx);
                 _ramp.holdRamp = false;
                 synchronized (_rampLockObject) {
                     _rampLockObject.notifyAll(); // free wait at ThrottleRamp.run()
-                    log.debug("{}: rampSpeedTo called notify _ramp.ready= {}", _warrant.getDisplayName(), _ramp.ready);
+                    log.debug("{}: rampSpeedTo called notify _ramp.isReady()= {}", _warrant.getDisplayName(), _ramp.isReady());
                 }
             } else {
                 log.error("Can't launch ramp for speed {}! _ramp Thread.State= {}. Waited {}ms",
@@ -469,7 +469,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     protected boolean isRamping() {
-        if (_ramp == null || _ramp.ready) {
+        if (_ramp == null || _ramp.isReady()) {
             return false;
         }
         return true;
@@ -480,7 +480,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
      * speeds aspects of signals when halts or other conditions have stopped the train.
      * If rampType is true return the absolute speed of the train, i.e. 'Stop' if
      * train is not moving.
-     * @param rampType  which speed type is wanted
+     * @param rampType  which speed type is wanted, current or pending ramp to speed
      * @return speed type
      */
     protected String getSpeedType(boolean rampType) {
@@ -504,7 +504,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             if (die) {
                 _ramp.quit(true);
             } else {
-                if(!_ramp.ready) {
+                if(!_ramp.isReady()) {
                     _ramp.quit(false);
                     return true;
                 }
@@ -714,7 +714,25 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             log.debug("{}: setStop({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speed, _normalSpeed);
     }
 
-    public int getRunState() {
+    protected int getRampEndBlockIdx() {
+        if (isRamping()) {
+            return _ramp._endBlockIdx;
+        }
+        return -1;
+    }
+
+    protected Warrant.SpeedState getSpeedState() {
+        if (isRamping()) {
+            if (_ramp.isRampingUp()) {
+                return Warrant.SpeedState.RAMPING_UP;
+            } else {
+                return Warrant.SpeedState.RAMPING_DOWN;
+            }
+        }
+        return Warrant.SpeedState.STEADY_SPEED;
+    }
+    
+    protected int getRunState() {
         if (_stopPending) { //
             if (_halt) {
                 return Warrant.RAMP_HALT;
@@ -1072,7 +1090,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
          private int _endBlockIdx;   // index of block where down ramp ends.
                      // not used for up ramps or control commands.
          private boolean stop = false;    // aborts ramping
-         private boolean ready = false;   // ready for call doRamp
+         private boolean _ready = false;   // ready for call doRamp
+         private boolean _rampUp = false;
          private boolean _die = false;    // kills ramp for good
          private boolean holdRamp = false;
 
@@ -1080,8 +1099,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             setName("Ramp(" + _warrant.getTrainName() +")");
             _endBlockIdx = -1;
          }
-         boolean isReady() {
-             return ready;
+         final boolean isReady() {
+             return _ready;
+         }
+         final boolean isRampingUp() {
+             return _rampUp;
          }
 
          @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
@@ -1155,7 +1177,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         @Override
         @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
         public void run() {
-            ready = true;
+            _ready = true;
             while (!_die) {
                 synchronized (_rampLockObject) {
                     try {
@@ -1164,7 +1186,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         log.debug("As expected {}", ie);
                     }
                 }
-                ready = false;
+                _ready = false;
                 stop = false;
                 holdRamp = false;
                 if (!_die) {
@@ -1209,10 +1231,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
             CommandValue cmdVal = _currentCommand.getValue();
             long timeToSpeedCmd = getTimeToNextCommand();
+            _rampUp = endSpeed > speed;
 
             if (log.isDebugEnabled()) {
                 log.debug("RAMP {} \"{}\" speed from {}, to {}, at EndBlock \"{}\" at Cmd#{} to Cmd#{}. timeToNextCmd= {}",
-                       (endSpeed > speed ? "UP" : "DOWN"), _endSpeedType, speed, endSpeed,
+                       (_rampUp ? "UP" : "DOWN"), _endSpeedType, speed, endSpeed,
                        (_endBlockIdx>=0?_warrant.getBlockAt(_endBlockIdx).getDisplayName():"not required"),
                        _idxCurrentCommand+1, commandIndexLimit, timeToSpeedCmd);
                        // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
@@ -1222,7 +1245,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
             synchronized (this) {
                 try {
-                    if (endSpeed > speed) {
+                    if (_rampUp) {
                         // Up ramp may advance the train beyond the point where the script is interrupted.
                         // The ramp up will take time and the script may have other speed commands while
                         // ramping up. So the actual script speed may not match the endSpeed when the ramp
@@ -1396,7 +1419,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     }
                 }
             }
-            ready = true;
+            _ready = true;
             rampDone(stop, _endSpeedType);
             stop = false;
         }
