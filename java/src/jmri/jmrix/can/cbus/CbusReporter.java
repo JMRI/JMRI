@@ -24,10 +24,10 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * CBUS Reporters can accept 
+ * CBUS Reporters can accept
  * 5-byte unique Classic RFID on DDES or ACDAT OPCs,
  * CANRC522 / CANRCOM DDES OPCs.
- * 
+ *
  * @author Mark Riddoch Copyright (C) 2015
  * @author Steve Young Copyright (c) 2019, 2020
  *
@@ -37,30 +37,11 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     private final int _number;
     private final TrafficController tc; // can be removed when former constructor removed
     private final CanSystemConnectionMemo _memo;
-    
-    /**
-     * Create a new CbusReporter.
-     * @param number reporter address number.
-     * @param tco CAN Traffic controller.
-     * @param prefix system prefix.
-     * @deprecated since 4.21.3; use CbusReporter(String,memo,prefix) instead.
-     */
-    @Deprecated
-    public CbusReporter(int number, TrafficController tco, String prefix) {  // a human-readable Reporter number must be specified!
-        super(prefix + "R" + number);  // can't use prefix here, as still in construction
-        _number = number;
-        // At construction, register for messages
-        tc = tco;
-        addTc(tc);
-        _memo = null;
-        log.debug("Added new reporter {}R{}", prefix, number);
-        log.warn("Deprecated Constructor - Please use CbusReporter(String,CanSystemConnectionMemo,String) ");
-    }
-    
+
     /**
      * Create a new CbusReporter.
      * <p>
-     * 
+     *
      * @param address Reporter address, currently in String number format. No system prefix or type letter.
      * @param memo System connection.
      */
@@ -86,7 +67,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         if ( getMaintainSensor() ) {
             SensorManager sm = (SensorManager) _memo.get(SensorManager.class);
             sm.provide("+"+_number).setCommandedState( s==IdTag.SEEN ? Sensor.ACTIVE : Sensor.INACTIVE );
-        }        
+        }
     }
 
     /**
@@ -96,7 +77,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     @Override
     public void notify(IdTag id){
         if ( this.getCurrentReport()!=null && id!=null ){
-            super.notify(null); // 
+            super.notify(null); //
         }
         super.notify(id);
     }
@@ -130,7 +111,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
             }
         }
     }
-    
+
     private void ddesReport(CanReply m) {
         int least_significant_bit = m.getElement(3) & 1;
         if ( least_significant_bit ==0 ) {
@@ -147,7 +128,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         notify(tag);
         startTimeout(tag);
     }
-    
+
     // no DCC address correction to allow full 0-65535 range of tags on rolling stock
     private void canRc522Report(CanReply m){
         String tagId = String.valueOf((m.getElement(4)<<8)+ m.getElement(5));
@@ -158,7 +139,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         notify(tag);
         startTimeout(tag);
     }
-    
+
     // DCC address correction 0-10239 range
     private void canRcomReport(CanReply m) {
         int railcom_id = (m.getElement(3)>>4);
@@ -170,11 +151,11 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         return String.format("%02X", b1) + String.format("%02X", b2) + String.format("%02X", b3)
             + String.format("%02X", b4) + String.format("%02X", b5);
     }
-    
+
     /**
      * Get the Reporter Listener format type.
      * <p>
-     * Defaults to Classic RfID, 5 byte unique. 
+     * Defaults to Classic RfID, 5 byte unique.
      * @return reporter format type.
      */
     @Nonnull
@@ -182,7 +163,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         Object returnVal = getProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY);
         return (returnVal==null ? CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE : returnVal.toString());
     }
-    
+
     /**
      * Get if the Reporter should provide / update a CBUS Sensor, following Reporter Status.
      * <p>
@@ -193,7 +174,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         Boolean returnVal = (Boolean) getProperty(CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY);
         return (returnVal==null ? false : returnVal);
     }
-    
+
     // delay can be set to non-null memo when older constructor fully deprecated.
     private void startTimeout(IdTag tag){
         int delay = (_memo==null ? 2000 : ((CbusReporterManager)_memo.get(jmri.ReporterManager.class)).getTimeout() );
@@ -203,9 +184,9 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
             }
         },delay);
     }
-    
+
     private boolean disposed = false;
-    
+
     /**
      * {@inheritDoc}
      */
