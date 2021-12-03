@@ -134,7 +134,7 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
     
     /**
      * Get a Cancel Edit / Save Edit / Continue Edit Dialog.
-     * @param adviceString Extra text to display in box
+     * @param adviceString Extra text to display in box without opening / closing html tag.
      * @return true to veto, else false to proceed and continue.
      */
     protected boolean getCancelSaveEditDialog(String adviceString){
