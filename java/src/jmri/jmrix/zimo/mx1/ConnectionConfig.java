@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
-    
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -59,9 +59,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation") // until MX1 is migrated to multiple systems
+    @SuppressWarnings("deprecation")
     protected void setInstance() {
-        adapter = Mx1Adapter.instance();
+        adapter = new Mx1Adapter();
     }
 
 }
