@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Improvements to CBUS node support.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -71,8 +71,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Added connection support for the
-                RR-CirKits LocoBuffer-NG.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -395,7 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fixed some issues with minor edge cases.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -535,9 +534,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fixed a problem found in JMRI 4.25.7
-                with stopping logic.
-            </li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -573,8 +570,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Fix error after deleting a Memory
-                and suppressing messages.
-            </li>
+            <li></li>
         </ul>
 
