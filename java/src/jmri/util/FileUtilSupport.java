@@ -806,21 +806,6 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Used to set the profile path, but now does nothing.
-     *
-     * @see #getProfilePath()
-     * @param path The path to the profile directory using system-specific
-     *             separators. If null, this will cause
-     *             {@link #getProfilePath()} to provide the preferences
-     *             directory via {@link #getPreferencesPath()}.
-     * @deprecated since 4.17.3 without replacement
-     */
-    @Deprecated
-    public void setProfilePath(@CheckForNull String path) {
-        // does nothing
-    }
-
-    /**
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
