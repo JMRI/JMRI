@@ -113,7 +113,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings("deprecation")  // istream#readline
+        @SuppressWarnings("deprecation")  // InputStream#readline
         @Override
         public void run() {
 
