@@ -111,9 +111,11 @@ public class ExecuteDelayed
     }
     
     private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long delay) throws JmriException {
-        if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask(conditionalNG, symbolTable);
-        TimerUtil.schedule(_timerTask, delay);
+        synchronized(ExecuteDelayed.this) {
+            if (_timerTask != null) _timerTask.stopTimer();
+            _timerTask = getNewTimerTask(conditionalNG, symbolTable);
+            TimerUtil.schedule(_timerTask, delay);
+        }
     }
     
     private long getNewDelay() throws JmriException {
@@ -383,9 +385,11 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_timerTask != null) {
-            _timerTask.stopTimer();
-            _timerTask = null;
+        synchronized(ExecuteDelayed.this) {
+            if (_timerTask != null) {
+                _timerTask.stopTimer();
+                _timerTask = null;
+            }
         }
     }
     
