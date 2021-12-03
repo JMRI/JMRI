@@ -121,52 +121,6 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         return actions.keySet().toArray(new Class<?>[actions.size()]);
     }
 
-    /**
-     * Add an action from the list of actions.
-     *
-     * @param strClass the action class
-     * @param name the localized action name
-     * @throws ClassNotFoundException if the action class cannot be found
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    public void addAction(@Nonnull String strClass, @Nonnull String name) throws ClassNotFoundException {
-        this.prepareActionsHashMap();
-        this.actionNames = null;
-        Class<?> clazz;
-        try {
-            clazz = Class.forName(strClass);
-        } catch (ClassNotFoundException ex) {
-            log.error("Did not find class \"{}\"", strClass);
-            throw ex;
-        }
-        ActionAttributes attrs = new ActionAttributes(name, clazz);
-        actions.put(clazz, attrs);
-        this.firePropertyChange("length", null, null);
-    }
-
-    /**
-     * Remove an action from the list of actions.
-     *
-     * @param strClass the action class
-     * @throws ClassNotFoundException if the action class cannot be found
-     * @deprecated since 4.19.7 without direct replacement
-     */
-    @Deprecated
-    public void removeAction(@Nonnull String strClass) throws ClassNotFoundException {
-        this.prepareActionsHashMap();
-        this.actionNames = null;
-        Class<?> clazz;
-        try {
-            clazz = Class.forName(strClass);
-        } catch (ClassNotFoundException ex) {
-            log.error("Did not find class \"{}\"", strClass);
-            throw ex;
-        }
-        actions.remove(clazz);
-        this.firePropertyChange("length", null, null);
-    }
-
     private void prepareActionsHashMap() {
         if (this.actions == null) {
             this.actions = new HashMap<>();
