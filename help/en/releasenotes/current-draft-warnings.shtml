@@ -1,7 +1,10 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        When a warrant is stopped by a signal or by occupation of another train or warrant, or by 
+        a halt from the user, restoring the former speed is not completed properly. The ramping up 
+        is interrupted and using "resume" command only allows the train to proceed block by block.
+        This is a serious defect found only in release 4.25.7 and is be fixed in release 4.25.8.
     </li>
     <li>
     </li>

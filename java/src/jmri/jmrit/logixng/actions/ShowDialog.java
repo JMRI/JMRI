@@ -494,7 +494,12 @@ public class ShowDialog extends AbstractDigitalAction
         }
 
         public Data(DataType dataType, String data) throws ParserException {
-            _dataType = dataType;
+            if (dataType != null) {
+                _dataType = dataType;
+            } else {
+                // Sometimes data entered in a JTable is not updated correctly
+                log.warn("dataType is null");
+            }
             _data = data;
             calculateFormula();
         }
@@ -509,7 +514,15 @@ public class ShowDialog extends AbstractDigitalAction
             }
         }
 
-        public void setDataType(DataType dataType) { _dataType = dataType; }
+        public void setDataType(DataType dataType) {
+            if (dataType != null) {
+                _dataType = dataType;
+            } else {
+                // Sometimes data entered in a JTable is not updated correctly
+                log.warn("dataType is null");
+            }
+        }
+
         public DataType getDataType() { return _dataType; }
 
         public void setData(String data) { _data = data; }
