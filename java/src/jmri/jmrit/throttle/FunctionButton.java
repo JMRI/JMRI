@@ -292,19 +292,6 @@ public class FunctionButton extends JToggleButton {
     /**
      * Change the state of the function.
      * Sets internal state, setSelected, and sends to listeners.
-     *
-     * @param newState The new state. True = Is on, False = Is off.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.jmrit.throttle.FunctionButton#setSelected(boolean) } instead
-     */
-    @Deprecated
-    public void changeState(boolean newState) {
-        setSelected(newState);
-    }
-
-    /**
-     * Change the state of the function.
-     * Sets internal state, setSelected, and sends to listeners.
      * <p>
      * To update this button WITHOUT sending to layout, use setState.
      *
