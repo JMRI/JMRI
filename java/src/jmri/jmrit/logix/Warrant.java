@@ -2679,11 +2679,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // entrySpeedType is the required speed limit for this block
         String entrySpeedType = getPermissibleSpeedAt(blkOrder);
         if (_speedUtil.secondGreaterThanFirst(currentSpeedType, entrySpeedType)) {
-         // speed increases since type entrySpeedType > currentSpeedType
+            // speed increases since type entrySpeedType > currentSpeedType
             if (!_engineer.isRamping()) {
                 // Ramp has begun already in a previous block. Don't interfere.
                 restoreRunning(entrySpeedType);
             }
+            // continue to look ahead
         }
 
         if (_idxCurrentOrder == _orders.size() - 1) {
