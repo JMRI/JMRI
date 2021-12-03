@@ -561,7 +561,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     protected synchronized void setSpeedToType(String speedType) {
         float speed = getSpeedSetting();
         if (log.isDebugEnabled())  {
-            log.debug("setSpeedToType({}) speed={} scriptSpeed={}", speedType, speed, _normalSpeed);
+            log.debug("{}: setSpeedToType({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speedType, speed, _normalSpeed);
         }
         if (speedType.equals(Warrant.EStop)) {
             setStop(true);
