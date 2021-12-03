@@ -52,8 +52,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * the app, abort stopping the app, or take a custom action. Closing the
      * dialog without choosing any button is treated as aborting stopping the
      * app.
-       *
-     * @see #doClose()
+     *
      * @see #didPrompt()
      * @see #doPrompt()
      */
