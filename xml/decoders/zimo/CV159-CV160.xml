@@ -2,14 +2,15 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 Ronald Kuhn - add german translation --> 
+<!-- version 1.2 Ronald Kuhn - 1 Dec 2021 - Correction of "Choice_Ligthx.xml"-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
      <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 7 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
@@ -25,11 +26,11 @@
   </variable>
   <variable CV="160" mask="VVVVVVXX" item="Output 10 effect generated" minOut="10">
      <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 8 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>
