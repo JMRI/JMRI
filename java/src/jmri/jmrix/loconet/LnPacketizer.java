@@ -476,7 +476,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
+    @SuppressWarnings("deprecation") // Thread.stop()
     @Override
     public void dispose() {
         if (xmtThread != null) {
