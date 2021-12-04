@@ -164,7 +164,7 @@ public abstract class AbstractMRTrafficController {
         for (int i = 0; i < cnt; i++) {
             AbstractMRListener client = v.elementAt(i);
             if (notMe != client) {
-                log.debug("notify client: {}", client);
+                log.debug("notify message, client: {}", client);
                 try {
                     forwardMessage(client, m);
                 } catch (RuntimeException e) {
@@ -281,7 +281,7 @@ public abstract class AbstractMRTrafficController {
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             AbstractMRListener client = v.elementAt(i);
-            log.debug("notify client: {}", client);
+            log.debug("notify reply, client: {}", client);
             try {
                 //skip dest for now, we'll send the message to there last.
                 if (dest != client) {
@@ -296,6 +296,7 @@ public abstract class AbstractMRTrafficController {
         // this is done _second_ so monitoring can have already stored the reply
         // before a response is sent
         if (dest != null) {
+            log.debug("notify reply, dest: {}", dest);
             forwardReply(dest, r);
         }
     }

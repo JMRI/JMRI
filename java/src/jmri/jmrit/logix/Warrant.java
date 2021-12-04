@@ -2675,7 +2675,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             return true;
         }
-        
+/*        
         if (runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING || runState == RAMP_HALT) {
             if (log.isDebugEnabled()) {
                 log.debug("{}: Train drift into block \"{}\". runState= {}, Engineer holds train. speedSetting= {}",
@@ -2699,7 +2699,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
             return true;
         }
-
+*/
         if (_idxCurrentOrder == _orders.size() - 1) {
             return true;
         }
@@ -2723,7 +2723,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             setStoppingBlock(block);
         }
         float availDist = getAvailableDistance(idxSpeedChange);  // distance ahead (excluding current block
-        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, currentSpeedType);    // distance needed to change speed for speedType
+        float changeDist = getEntranceDistance(speedSetting, idxSpeedChange, speedType);    // distance needed to change speed for speedType
 
         if (log.isDebugEnabled()) {
             log.debug("{}: Speed \"{}\" at block \"{}\" until speed \"{}\" at block \"{}\", availDist={}, enterDist={}",
