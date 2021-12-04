@@ -26,7 +26,7 @@ public class ExecuteDelayed
 
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
-    private ProtectedTimerTask _timerTask;
+    private ProtectedTimerTask _defaultTimerTask;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private int _delay;
     private String _stateReference = "";
@@ -90,7 +90,7 @@ public class ExecuteDelayed
             public void execute() {
                 try {
                     synchronized(ExecuteDelayed.this) {
-                        _timerTask = null;
+                        if (!_useIndividualTimers) _defaultTimerTask = null;
                         long currentTime = System.currentTimeMillis();
                         long currentTimerTime = currentTime - timerStart;
                         if (currentTimerTime < timerDelay) {
@@ -116,9 +116,15 @@ public class ExecuteDelayed
     
     private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
         synchronized(ExecuteDelayed.this) {
-            if (_timerTask != null) _timerTask.stopTimer();
-            _timerTask = getNewTimerTask(conditionalNG, symbolTable, timerDelay, timerStart);
-            TimerUtil.schedule(_timerTask, timerDelay);
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                _defaultTimerTask.stopTimer();
+            }
+            ProtectedTimerTask timerTask =
+                    getNewTimerTask(conditionalNG, symbolTable, timerDelay, timerStart);
+            if (!_useIndividualTimers) {
+                _defaultTimerTask = timerTask;
+            }
+            TimerUtil.schedule(timerTask, timerDelay);
         }
     }
     
@@ -153,8 +159,8 @@ public class ExecuteDelayed
     @Override
     public void execute() throws JmriException {
         synchronized(this) {
-            if (_timerTask != null) {
-                if (_resetIfAlreadyStarted) _timerTask.stopTimer();
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                if (_resetIfAlreadyStarted) _defaultTimerTask.stopTimer();
                 else return;
             }
             long timerDelay = getNewDelay() * _unit.getMultiply();
@@ -410,9 +416,9 @@ public class ExecuteDelayed
     @Override
     public void unregisterListenersForThisClass() {
         synchronized(ExecuteDelayed.this) {
-            if (_timerTask != null) {
-                _timerTask.stopTimer();
-                _timerTask = null;
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                _defaultTimerTask.stopTimer();
+                _defaultTimerTask = null;
             }
         }
     }

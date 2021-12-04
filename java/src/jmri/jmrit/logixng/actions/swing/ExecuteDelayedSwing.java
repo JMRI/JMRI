@@ -118,7 +118,18 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         panel.add(_resetIfAlreadyStarted);
         
         _useIndividualTimers = new JCheckBox(Bundle.getMessage("ExecuteDelayedSwing_UseIndividualTimers"));
-        if (action != null) _useIndividualTimers.setSelected(action.getUseIndividualTimers());
+        if (action != null) {
+            _useIndividualTimers.setSelected(action.getUseIndividualTimers());
+            _resetIfAlreadyStarted.setEnabled(!action.getUseIndividualTimers());
+        }
+        _useIndividualTimers.addActionListener((evt)->{
+            if (_useIndividualTimers.isSelected()) {
+                _resetIfAlreadyStarted.setEnabled(false);
+                _resetIfAlreadyStarted.setSelected(false);
+            } else {
+                _resetIfAlreadyStarted.setEnabled(true);
+            }
+        });
         panel.add(_useIndividualTimers);
     }
     
