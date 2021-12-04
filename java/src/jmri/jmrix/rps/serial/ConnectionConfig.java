@@ -39,11 +39,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation") // updated to multi-connection though RPS hardware obsolete
     @Override
     protected void setInstance() {
         if (adapter == null ) {
-           adapter = SerialAdapter.instance();
+           adapter = new SerialAdapter();
         }
     }
 

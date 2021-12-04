@@ -116,7 +116,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * should just sleep.
      */
     @Override
-    @SuppressWarnings("deprecation") // XBeeNode.getPreferedTransmitAddress()
     protected AbstractMRMessage pollMessage() {
         if (numNodes <= 0) {
             return null;

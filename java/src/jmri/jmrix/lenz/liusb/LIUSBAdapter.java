@@ -192,15 +192,6 @@ public class LIUSBAdapter extends XNetSerialPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    @Deprecated
-    static public LIUSBAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LIUSBAdapter();
-        }
-        return mInstance;
-    }
-    static volatile LIUSBAdapter mInstance = null;
-
     private static final Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }
