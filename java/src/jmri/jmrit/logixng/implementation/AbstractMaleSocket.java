@@ -601,6 +601,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
 
         // Always throw AbortConditionalNGExecutionException exceptions
@@ -641,6 +642,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(
             Base item,
             String message,
@@ -684,6 +686,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
 
         ErrorHandlingType errorHandlingType = getErrorHandlingType();
