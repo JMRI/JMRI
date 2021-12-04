@@ -27,13 +27,16 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.25.7 4.25.8 4.25.9
+  ./scripts/update-HOWTO.sh 4.99.0 4.99.1 4.99.2
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.5
 
 - To check the script ran OK, the following should be the release you're doing now: 4.25.7
 
+- Make sure that the release.branch property in release-properties has the right value for what you want to do.  Typically, this has been a release from the `master` branch,
+and that’s assumed here. Be careful of these instructions if you’re working from
+something else.
 ================================================================================
 ## Notification
 
@@ -754,8 +757,9 @@ Some of the operations that are performed will still generate files with CRLF li
         (commit a version number increment to master)
         git checkout -b release-4.25.8
         git push github release-4.25.8
-        git checkout master
+        (commit a version number increment to master)
         git pull
+        git checkout master
 ```
 
 ================================================================================

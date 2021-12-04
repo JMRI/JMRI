@@ -2571,41 +2571,25 @@
 
 
     <!-- several steps are involved in creating a new test release
-    branch from the head of the master branch.  This target intends to manage as
-    many of them as possible -->
+    branch from the head of the ${release.branch} (often master) branch.
+    This target intends to manage as  many of those as possible.
+    ${release.branch} should be set in the release.properties file. -->
     <target name="make-test-release-branch"
-            description="Make a new test release branch in Git from the head of the master branch">
+            description="Make a new test release branch in Git from the head of the ${release.branch} branch">
 
-        <!-- Create a new branch test release branch from the front of the master
-        branch in our main repository, and push back to main repo -->
-
+        <!-- make sure on ${release.branch} branch and
+         it's up to date-->
         <exec executable="git" failifexecutionfails="true">
             <arg value="checkout"/>
-            <arg value="master"/>
+            <arg value="${release.branch}"/>
         </exec>
         <exec executable="git" failifexecutionfails="true">
             <arg value="pull"/>
         </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="checkout"/>
-            <arg value="-b"/>
-            <arg value="${branch-name}"/>
-        </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="push"/>
-            <arg value="${jmri.repository.url}"/>
-            <arg value="${branch-name}"/>
-        </exec>
 
-        <!-- return to master -->
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="checkout"/>
-            <arg value="master"/>
-        </exec>
-
-        <!-- in the master release.properties file, increment
+        <!-- in the ${release.branch} release.properties file, increment
         the release.build value in order to point to the NEW next
-        release (the one after the one we're creating now) -->
+        release (the one we're creating next) -->
         <propertyfile file="release.properties">
             <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
@@ -2623,9 +2607,41 @@
             <arg value="pull"/>
         </exec>
 
-        <echo message="new release branch ${branch-name} created"/>
+        <antcall target="-make-branch-subtarget" inheritAll="false"/>
+
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+            <arg value="${branch-name}"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="pull"/>
+        </exec>
+
+        <!-- return to ${release.branch} -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="${release.branch}"/>
+        </exec>
     </target>
 
+    <target name="-make-branch-subtarget"
+        description="run via antcall inheritAll=false to pick up new properties files">
+
+        <!-- re-read the properties files to get the updated branch name -->
+        <property file="${basedir}/release.properties"/>
+        <property file="${basedir}/project.properties"/>
+
+        <!-- Create a new branch test release branch from the front of the ${release.branch}
+        branch in our main repository, and push back to main repo -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="-b"/>
+            <arg value="${branch-name}"/>
+        </exec>
+
+        <echo message="new release branch ${branch-name} created"/>
+    </target>
     <!-- end of distribution build targets -->
 
     <!-- ============================================================================= -->
