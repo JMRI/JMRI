@@ -23,7 +23,7 @@ import org.junit.BeforeClass;
  * To override those in ant, run:<br>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  * </p>
- * 
+ *
  * @author Paul Bender Copyright 2017
  */
 
@@ -41,7 +41,6 @@ public class RunCucumberIT {
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterClass
     public static void afterTests() {
         BrowserFactory.CloseAllDriver();

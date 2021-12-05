@@ -331,6 +331,7 @@ public class JUnitUtil {
         }
     }
 
+    @SuppressWarnings("deprecation")        // Thread.stop()
     static void killThread(Thread t) {
         t.interrupt();
         try {
