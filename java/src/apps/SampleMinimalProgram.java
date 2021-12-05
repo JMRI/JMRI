@@ -97,7 +97,6 @@ public class SampleMinimalProgram {
         // and here we're up and running!
     }
 
-    @SuppressWarnings("deprecation") // SampleMinimalProgram doesn't need multi-connection support
     protected void codeConfig(String[] args) {
         jmri.jmrix.SerialPortAdapter adapter = new jmri.jmrix.lenz.li100.LI100Adapter();
 

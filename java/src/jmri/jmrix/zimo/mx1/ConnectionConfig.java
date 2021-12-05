@@ -59,7 +59,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation")
     protected void setInstance() {
         adapter = new Mx1Adapter();
     }
