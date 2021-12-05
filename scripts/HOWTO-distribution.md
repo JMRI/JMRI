@@ -457,9 +457,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.25.8+Rf50b65aa8c.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rf50b65aa8c.dmg) | 4ec7160d7bc3f86afe0367828b507ea9adf3c23638ccd402eebb36dbebcb7023
-[JMRI.4.25.8+Rf50b65aa8c.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rf50b65aa8c.exe) | fc1d2e16217ad35c84ca22b4eafa03bc83d74.25.82d0b12bccd138936206539
-[JMRI.4.25.8+Rf50b65aa8c.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rf50b65aa8c.tgz) | 5c0857a576372eb09e7fbea2b3a867a617b6d8b0f4b3bc1b9da88dbea23aef46
+[JMRI.4.25.8+Rb65094ebf2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rb65094ebf2.dmg) | 11643aa3846844d938366f969589e36738765cfb963dcfb50fc4cf2db5e1efac
+[JMRI.4.25.8+Rb65094ebf2.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rb65094ebf2.exe) | dd838c4b423ad78b34f900f06f796caddff87aae5661d5fc58c01c69ef7f1006
+[JMRI.4.25.8+Rb65094ebf2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.8/JMRI.4.25.8+Rb65094ebf2.tgz) | 86cf8b2f8e11b1b96df0ffd8b1e369fc9649a6ec6e37c8f1ac7eae51c398164a
 
 ```
 
@@ -557,8 +557,6 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 
 ====================================================================================
 
-[jmriusers@groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%204.25.8%20files%20available)
-
 
 ## Announcement and Post-release Steps
 
@@ -566,11 +564,9 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 
 Subject:
 
-   <ul> <li style="list-style-type: none;">
    "Test version 4.25.8 of JMRI/DecoderPro is available for download"
-   <br>or<br>
+    or
    "JMRI 4.22 is available for download"
-   </li></ul>
 
 Content:
 
@@ -603,6 +599,8 @@ You might want to edit it, i.e. to add
     JMRI 4.25.8 has been released. Files are available in the GitHub release section.
 
 ```
+- Commit this document and push back to github
+
 - Wait a day for complaints
 
 - If production release, mail announcement to jmri-announce@lists.sourceforge.net
