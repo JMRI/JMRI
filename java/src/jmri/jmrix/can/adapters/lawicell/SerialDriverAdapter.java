@@ -154,16 +154,6 @@ public class SerialDriverAdapter extends PortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    /**
-     * Migration method.
-     * @return valid baud values.
-     * @deprecated since 4.16
-     */
-    @Deprecated
-    public int[] validBaudValues() {
-        return validBaudNumbers();
-    }
-
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud115200"), Bundle.getMessage("Baud230400"),
             Bundle.getMessage("Baud250000"), Bundle.getMessage("Baud333333"),

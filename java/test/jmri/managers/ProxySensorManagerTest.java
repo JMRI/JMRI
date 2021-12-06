@@ -173,7 +173,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     // but they need a concrete implementation to do it, hence are here.
 
     @Test
-    @SuppressWarnings("deprecation") // getNamedBeanList, addDataListener references
     public void testAddTracking() {
         Sensor s1 = l.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -256,7 +255,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getNamedBeanList, addDataListener references
     public void testRemoveTrackingJ() {
 
         l.provideSensor("IS10");
@@ -303,7 +301,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    @SuppressWarnings("deprecation") // setDataListenerMute, addDataListener references
     public void testRemoveTrackingJMute() {
 
         l.setDataListenerMute(true);
@@ -333,7 +330,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList, getNamedBeanList references
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");

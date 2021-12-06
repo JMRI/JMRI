@@ -74,7 +74,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList getNamedBeanList references
     public void testDelete() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));

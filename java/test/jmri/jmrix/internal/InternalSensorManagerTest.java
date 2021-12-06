@@ -145,7 +145,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
@@ -181,7 +180,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testUnmodifiable() {
         l.provideSensor("IS1");
         l.provideSensor("IS2");
@@ -279,7 +277,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     public void testIncorrectGetNextValidAddress() {}
 
-    @SuppressWarnings("deprecation")
     @Test
     public void testDeprecatedGetNextValidAddress() throws JmriException {
 

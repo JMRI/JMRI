@@ -32,7 +32,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLocoNetMessages() {
         // send messages for 21, 22
         // notify the Ln that somebody else changed it...
