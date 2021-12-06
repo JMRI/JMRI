@@ -154,7 +154,7 @@ public class ExecuteDelayed
             _timerDelay = getNewDelay() * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
             ConditionalNG conditonalNG = getConditionalNG();
-            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _delay * _unit.getMultiply());
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _timerDelay);
         }
     }
     
