@@ -258,6 +258,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.DIAG_REPLY:
                 text = "DIAG: " + getValueString(1);
                 break;
+            case DCCppConstants.LOCO_STATE_REPLY:
+                text =  "Loco State Reply Cab: " + getValueInt(1);
+                text += " Slot: " + getValueInt(2);
+                text += " SpeedByte: " + getValueInt(3);
+                text += " Functions: " + getValueInt(4);
+                break;
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
         }
@@ -504,6 +510,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return(r);
             case DCCppConstants.COMM_TYPE_REPLY:
                 r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
+                return(r);
+            case DCCppConstants.LOCO_STATE_REPLY:
+                r.myRegex = DCCppConstants.LOCO_STATE_REGEX;
                 return(r);
             default:
                 return(r);
@@ -1442,6 +1451,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
     public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
     public boolean isWriteEepromReply() { return(this.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)); }
+    public boolean isLocoStateReply() { return (this.getOpCodeChar() == DCCppConstants.LOCO_STATE_REPLY); }
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
@@ -1463,7 +1473,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
-            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX))
+            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
+            (this.matches(DCCppConstants.LOCO_STATE_REGEX))
         ) {
             return(true);
         } else {

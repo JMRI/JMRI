@@ -339,6 +339,14 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testThrottleMonitors() {
+        msg = new DCCppMessage("t 1 2 3 1");
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 1, Address: 2, Speed: 3, Direction: Forward", msg.toMonitorString());
+        msg = new DCCppMessage("t 2 3 1");
+        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 2, Speed: 3, Direction: Forward", msg.toMonitorString());
+    }
+
+    @Test
     public void testGetTurnoutCommandMsgThrown() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, true);
         log.debug("turnout message = '{}'", msg);
