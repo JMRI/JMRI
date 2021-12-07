@@ -150,13 +150,17 @@
         <dd>
         </dd>
       </dl>
-      <a id="digital_action_item"></a>
-      <h3>Digital action :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_action_item">Digital action :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_item.png"><img src=
         "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Audio</h5>
 
@@ -184,6 +188,8 @@
         <li>Reset position</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Block</h5>
 
       <ul>
@@ -205,6 +211,8 @@
         a memory variable.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Clock</h5>
 
       <ul>
@@ -219,6 +227,8 @@
         <li><strong>Stop Fast Clock:</strong> Pauses the JMRI fast clock. If the fast clock is not
         running, this action has no effect.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Dispatcher</h5>
 
@@ -242,6 +252,8 @@
         option.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Enable/Disable Logix</h5>
 
       <ul>
@@ -251,6 +263,8 @@
         <li><strong>Disable:</strong> Disables the specified logix. Specify the logix to disable by
         selecting its name.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Entry/Exit</h5>
 
@@ -265,6 +279,8 @@
         for the specified Entry/Exit Pair be activated if not active or deactivated if active.
         Specify the Entry/Exit Pair to enable by selecting its name.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Light</h5>
 
@@ -289,6 +305,8 @@
         results.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Light intensity</h5>
 
       <p>The Light intensity action is an alternate method to set the Variable Light Intensity
@@ -308,6 +326,8 @@
         "images/chapter5/intensity_example.png" alt="Chapter 5 intensity example" width="432"
         height="87"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Local variable</h5>
 
@@ -336,6 +356,8 @@
         for details about tables.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory</h5>
 
       <p>Instead of specific actions, memory uses <strong>tabs</strong> to select the action.</p>
@@ -359,6 +381,8 @@
         for details about tables.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>OBlock</h5>
 
       <ul>
@@ -379,6 +403,8 @@
         current normal status. Specify the OBlock by selecting its name.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Power</h5>
 
       <ul>
@@ -386,6 +412,8 @@
 
         <li><strong>On:</strong> Turn track power on.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Reporter</h5>
 
@@ -406,12 +434,16 @@
       <p>Note:  The meaning of the reports and the state number are defined by originating
       hardware.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Route</h5>
 
       <ul>
         <li><strong>Trigger route:</strong> Triggers the specified route. Specify the route by
         selecting its name.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Script</h5>
 
@@ -421,6 +453,8 @@
 
         <li><strong>Jython command:</strong> Enter the command in the Script field</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sensor</h5>
 
@@ -433,6 +467,8 @@
 
         <li><strong>Toggle:</strong> Toggle the state of the selected sensor.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Signal head</h5>
 
@@ -453,6 +489,8 @@
         <li><strong>not held:</strong> Clears the hold on the specified signal head. Specify the
         signal head by selecting its name.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Signal mast</h5>
 
@@ -479,12 +517,16 @@
         signal mast.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Sound</h5>
 
       <p>Plays the specified sound file. Specify the sound file to play by entering its name in the
       field provided. Click the file selection button to bring up a file selection dialog to aid in
       finding the file. Navigate to your sound file, then click your sound file's name in the
       dialog and the name will be copied to the field.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Throttle</h5>
 
@@ -493,6 +535,8 @@
       expression can be used to control the loco address and the loco speed, but once JMRI has
       support for AnalogIO devices, an AnalogIO may be used to control loco address and/or loco
       speed.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Turnout</h5>
 
@@ -505,6 +549,8 @@
 
         <li><strong>Toggle:</strong> Toggle the state of the selected turnout.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Turnout, lock</h5>
 
@@ -519,6 +565,8 @@
 
         <li><strong>Toggle:</strong> Toggle the lock state for the selected turnout.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Warrant</h5>
 
@@ -558,26 +606,34 @@
 
         <li><strong>Set Train Name:</strong> Set the train Name for the selected Warrant.</li>
       </ul>
-      <a id="digital_action_common"></a>
-      <h3>Digital action :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_action_common">Digital action :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_common.png"><img src=
         "images/chapter5/digital_action_common.png" alt="Chapter 5 digital action common list"
         width="204" height="170"></a>
       </div>
-      <a id="ExecuteDelayed"></a>
-      <h5>Execute delayed</h5>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5  id="ExecuteDelayed">Execute delayed</h5>
 
       <p>Delay the execution of the following action for a specified amount of time. This is the
       same as the Logix <strong>Delayed Set ...</strong>. The main difference is that this can be
       used with any action, such as signals. The time delay units are milliseconds, seconds,
       minutes and hours.</p>
 
+      <p>See <a href="#timeout">Timeout</a> for a conditional delayed execution.</p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute_delay.png"><img src="images/chapter5/execute_delay.png"
         alt="Chapter 5 execute_delay" width="535" height="329"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>For</h5>
 
@@ -601,6 +657,8 @@
       the AfterEach action is executed. Then the process is repeated, except that the Init action
       is only executed once.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>If Then Else</h5>
 
       <p>Reads a digital child expression and if the answer is <strong>true</strong> it executes
@@ -617,17 +675,25 @@
         <strong>If Then Else</strong> action is executed..</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Many</h5>
 
       <p>The Many action executes many child actions.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Read analog and set analog</h5>
 
       <p>Read an analog child expression and execute an analog child action.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Read string and set string</h5>
 
       <p>Read a string child expression and execute a string child action.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sequence</h5>
 
@@ -653,10 +719,14 @@
         interrupted and return to the first action/expresson pair.</li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Table: For each</h5>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details on
       table actions.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Timer</h5>
 
@@ -694,8 +764,10 @@
       a Light action that toggles the light on/off. If you want different times for on and off,
       create a Timer with two sockets where the first socket turns the light on and the second
       socket turns the light off.</p>
-      <a id="digital_action_display"></a>
-      <h3>Digital action :: Display</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_action_display">Digital action :: Display</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_display.png"><img src=
@@ -703,11 +775,15 @@
         width="184" height="26"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Icon/Label on panel</h5>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
-      <a id="digital_action_loconet"></a>
-      <h3>Digital action :: LocoNet</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_action_loconet">Digital action :: LocoNet</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_loconet.png"><img src=
@@ -715,37 +791,49 @@
         width="184" height="44"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Clear loconet slots</h5>
 
       <p>This action clears the slot status in the command station if you are using LocoNet.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Update loconet slots</h5>
 
       <p>This action forces an update of the LocoNet slot status in JMRI.</p>
-      <a id="digital_action_other"></a>
-      <h3>Digital action :: Other</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_action_other">Digital action :: Other</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_other.png"><img src=
         "images/chapter5/digital_action_other.png" alt="Chapter 5 digital action other list" width=
-        "184" height="152"></a>
+        "15%" height="15%"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Call module</h5>
 
       <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for
       details.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Listen on beans</h5>
 
       <p>See <a href="chapter7.shtml#ListenOnBeans">Chapter 7 - Listen on beans</a> for
       details.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Listen on beans - Table</h5>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
-      <a id="ActionLogData"></a>
-      <h5>Log data</h5>
+
+      <h5 id="ActionLogData">Log data</h5>
 
       <p>While developing a ConditionalNG, it can be helpful to see field content, make note of the
       location within the tree, etc. Adding the <strong>Log data</strong> type in the
@@ -810,10 +898,14 @@
         "506"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Log local variables</h5>
 
       <p>See <a href="chapter8.shtml#LogLocalVariables">Chapter 8 - Debugging local variables</a>
       for details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Logix</h5>
 
@@ -822,16 +914,43 @@
       a boolean value (true/false) and then decides what to do. The action Logix was added mainly
       to support import of JMRI Logix to LogixNG.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Show dialog<span class="since">since 4.25.8</span></h5>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Shutdown</h5>
 
       <p>The ShutdownComputer action can either shutdown or restart the computer, or shutdown or
       restart JMRI.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="timeout">Timeout<span class="since">since 4.25.8</span></h5>
+
+      <p>The Timeout action is used to execute a default action if an expression is not true
+      within the specified time internval.</p>
+
+      <p>The Timeout action dialog is similar to the <a href="#ExecuteDelayed">Execute Delayed
+      </a> dialog. The <strong>Timeout</strong> configuration also requires an expression.
+      If the expression is true before the time expires, the action is not executed.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/delayed_vs_timeout.png"><img src=
+        "images/chapter5/delayed_vs_timeout.png" alt="delayed vs timeout"
+        width="35%" height="35%"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Web browser</h5>
 
       <p>The web browser action opens a web page in the web browser.</p>
-      <a id="digital_boolean_action_common"></a>
-      <h3>Digital boolean action :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_boolean_action_common">Digital boolean action :: Common</h3>
 
       <p>To make import from Logix to LogixNG easier, LogixNG has a special action, Logix, that
       works similar to a Conditional in Logix. The LogixNG Logix action has a digital expression
@@ -844,10 +963,14 @@
         "Chapter 5 digital boolean action common list" width="184" height="152"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Many</h5>
 
       <p>The Many action is used together with the Logix action to let the Logix action have more
       than one action child.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>On change</h5>
 
@@ -861,8 +984,10 @@
 
         <li>On change</li>
       </ul>
-      <a id="analog_action_item"></a>
-      <h3>Analog action :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="analog_action_item">Analog action :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/analog_action_item.png"><img src=
@@ -870,15 +995,21 @@
         "141" height="44"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Light intensity</h5>
 
       <p>Sets the intensity of the selected variable light to an analog value.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory</h5>
 
       <p>Sets a memory to an analog value.</p>
-      <a id="analog_action_common"></a>
-      <h3>Analog action :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3  id="analog_action_common">Analog action :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/analog_action_common.png"><img src=
@@ -886,11 +1017,15 @@
         "119" height="26"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Many</h5>
 
       <p>Sets the value of many analog actions.</p>
-      <a id="string_action_item"></a>
-      <h3>String action :: Item</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="string_action_item">String action :: Item</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/string_action_item.png"><img src=
@@ -898,23 +1033,31 @@
         "119" height="44"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory</h5>
 
       <p>Sets a memory to a string value.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>StringIO</h5>
 
       <p>The StringIO sets the string of a StringIO. There is currently one StringIO that can be
       used with this action: The LocoNet "LCThrottles" StringIO that sends a message to the LocoNet
       throttles.</p>
-      <a id="string_action_common"></a>
-      <h3>String action :: Common</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3  id="string_action_common">String action :: Common</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/string_action_common.png"><img src=
         "images/chapter5/string_action_common.png" alt="Chapter 5 string action common list" width=
         "119" height="26"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Many</h5>
 
