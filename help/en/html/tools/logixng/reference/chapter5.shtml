@@ -303,6 +303,11 @@
         from 0% intensity to 100% intensity. If the specified light is not a variable light, or if
         a positive integer is not entered for the number of fast clock minutes, an error message
         results.</li>
+
+        <li><strong>Unknown:</strong> Set the selected light state to unknown.</li>
+
+        <li><strong>Inconsistent:</strong> Set the selected light state to inconsistent.</li>
+
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -466,6 +471,10 @@
         <li><strong>Active:</strong> Set the selected sensor to active.</li>
 
         <li><strong>Toggle:</strong> Toggle the state of the selected sensor.</li>
+
+        <li><strong>Unknown:</strong> Set the selected sensor state to unknown.</li>
+
+        <li><strong>Inconsistent:</strong> Set the selected sensor state to inconsistent.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -548,6 +557,10 @@
         <li><strong>Thrown:</strong> Set the selected turnout thrown.</li>
 
         <li><strong>Toggle:</strong> Toggle the state of the selected turnout.</li>
+
+        <li><strong>Unknown:</strong> Set the selected turnout state to unknown.</li>
+
+        <li><strong>Inconsistent:</strong> Set the selected turnout state to inconsistent.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
