@@ -919,7 +919,7 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
-        <li>Benny Tjäder, <-- etxbct -->
+        <li>Benny Tjäder, <!-- etxbct -->
         who provided the MQTT Last Will support and a Swedish signal system.
 
         <li>Kenneth Tjøstheim, <!-- SeaU2 -->
