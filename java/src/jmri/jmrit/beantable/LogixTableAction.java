@@ -1346,6 +1346,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             return;
         }
         final Logix logix = _logixManager.getBySystemName(sName);
+        if (logix == null) throw new NullPointerException("logix is null");
 
         boolean error = false;
         StringBuilder errorMessage = new StringBuilder("<html><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
