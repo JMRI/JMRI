@@ -763,13 +763,16 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return Warrant.RUNNING;
     }
 
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
     public void stopRun(boolean abort, boolean turnOffFunctions) {
         if (abort) {
             _abort =true;
         }
 
-        notifyAll();
-        
+        synchronized (this) {
+            notifyAll();
+        }
+ 
         cancelRamp(true);
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
