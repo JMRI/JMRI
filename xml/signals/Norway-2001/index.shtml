@@ -1,24 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author: bobm $) 2019 -->
-<title>JMRI: Danish Simplified signal definition</title>
-
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	MEDIA="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	MEDIA="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Basic Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
 <h1>JMRI: Norwegian Railway Main Signaling</h1>
 
@@ -46,9 +37,15 @@ Signal Mast definitions:
     <li><a href="appearance-Main2.xml">Main, Double lamp red-Green high signal</a>
     <li><a href="appearance-Distant.xml">Distant, Double lamp flashing orange-green high signal</a>
 </ul>
+
+
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
 
