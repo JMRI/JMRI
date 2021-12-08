@@ -280,13 +280,17 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/table_for_each_listen.png"><img src=
-        "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen" width=
-        "485" height="358"></a>
+        "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen"
+        width="35%" height="35%"></a>
       </div>
 
       <p>Select the table, row or column, and then the row name or column name. The name selection
       will change based on the table and row/column selections. Select the type of item. The
       supported types are Light, Memory, Sensor and Turnout.</p>
+
+      <p>The various bean types have standard properties that are monitored such as Closed and
+      Thrown for turnouts.  If the <strong>Listen to all properties</strong> option is checked, all
+      of the properties will be monitored.</p>
 
       <h2>Tables - working with templates</h2>
 
