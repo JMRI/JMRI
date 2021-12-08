@@ -789,14 +789,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getRegisterString() {
-        if (this.isThrottleReply()) {
-            return (this.getValueString(1));
-        } else if (this.isLocoStateReply()) {
-            return (this.getValueString(2));
-        } else {
-            log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-            return ("0");
-        }
+        return String.valueOf(getRegisterInt());
     }
 
     public int getRegisterInt() {
@@ -826,6 +819,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return (0);
         }
+    }
+
+    public boolean isEStop() {
+        return getSpeedInt() == -1; 
     }
 
     public String getDirectionString() {
