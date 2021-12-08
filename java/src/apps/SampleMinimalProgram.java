@@ -97,10 +97,8 @@ public class SampleMinimalProgram {
         // and here we're up and running!
     }
 
-    @SuppressWarnings("deprecation") // SampleMinimalProgram doesn't need multi-connection support
     protected void codeConfig(String[] args) {
-        jmri.jmrix.SerialPortAdapter adapter = jmri.jmrix.lenz.li100.LI100Adapter.instance();
-        //jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.nce.serialdriver.SerialDriverAdapter.instance();
+        jmri.jmrix.SerialPortAdapter adapter = new jmri.jmrix.lenz.li100.LI100Adapter();
 
         String portName = "/dev/cu.Bluetooth-PDA-Sync";
         String baudRate = "9600";

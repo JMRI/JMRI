@@ -64,14 +64,6 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Configure the programming manager and "command station" objects
-     * @deprecated since 4.21.1
-     */
-    @Deprecated
-    public void configureCommandStation() {
-    }
-
-    /**
      * Configure the common managers for Qsi connections. This puts the common
      * manager config in one place.
      */

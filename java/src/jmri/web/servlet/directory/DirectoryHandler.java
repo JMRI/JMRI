@@ -1,6 +1,7 @@
 package jmri.web.servlet.directory;
 
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import javax.annotation.Nonnull;
 
 /**
  * @author Randall Wood Copyright 2016, 2020
@@ -16,24 +17,10 @@ public class DirectoryHandler extends ResourceHandler {
      * @param resourceBase the directory to serve, should be non-null, but
      *                     allowing null until deprecated constructor is removed
      */
-    public DirectoryHandler(String resourceBase) {
+    public DirectoryHandler(@Nonnull String resourceBase) {
         super(new DirectoryService());
         super.setDirectoriesListed(true);
         super.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
-        if (resourceBase != null) {
-            super.setResourceBase(resourceBase);
-        }
+        super.setResourceBase(resourceBase);
     }
-
-    /**
-     * Default handler constructor.
-     * 
-     * @deprecated since 4.19.7 without replacement; use
-     *             {@link #DirectoryHandler(String)} instead
-     */
-    @Deprecated
-    public DirectoryHandler() {
-        this(null);
-    }
-
 }

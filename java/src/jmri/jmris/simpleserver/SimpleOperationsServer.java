@@ -211,7 +211,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * @return an ArrayList of Attributes of the constituent pieces of the
      *         message
      */
-    // This should never have been a public method, Deprecating so we can 
+    // This should never have been a public method, Deprecating so we can
     // make it private or eliminate it later.
     //
     // Note from @pabender in Issue #8877
@@ -221,7 +221,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     // The missing piece is that there isn't any code in the JMRIClient that handles the operations
     // data. Until that is in place, parseOperationsMessage() shouldn't have been made private
     // because there isn't any other way to use the message data sent by the server.
-    @Deprecated
     public static ArrayList<Attribute> parseOperationsMessage(String message) {
         ArrayList<Attribute> contents = new ArrayList<>();
         int start;

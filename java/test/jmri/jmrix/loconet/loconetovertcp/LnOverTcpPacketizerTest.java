@@ -13,11 +13,6 @@ import org.junit.jupiter.api.*;
 
 public class LnOverTcpPacketizerTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("LnOverTcpPacketizer constructor", new LnOverTcpPacketizer());
-   }
-
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();

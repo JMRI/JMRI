@@ -54,7 +54,7 @@ public class SimpleTimebaseTest {
         SimpleTimebase p = new SimpleTimebase(memo);
         Assert.assertEquals("Time", p.getBeanType());
     }
-    
+
     @Test
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase(memo);
@@ -90,8 +90,8 @@ public class SimpleTimebaseTest {
         p.setTime(now);
         Assert.assertFalse(p.getRun());  // still
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
-        
-        p.setRun(true);       
+
+        p.setRun(true);
         Assert.assertTrue(p.getRun());
 
         p.dispose();
@@ -104,7 +104,7 @@ public class SimpleTimebaseTest {
         p.setRun(false); // prevent clock ticking during test
 
         Instant now = Instant.now();
-        
+
         p.setTime(now);
         Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
         p.dispose();
@@ -116,16 +116,16 @@ public class SimpleTimebaseTest {
         p.setRun(false); // prevent clock ticking during test
 
         Assert.assertEquals(1.0, p.getRate(), 0.01);
-        
+
         p.setRate(2.0);
-        Assert.assertEquals(2.0, p.getRate(), 0.01);        
+        Assert.assertEquals(2.0, p.getRate(), 0.01);
         Assert.assertFalse(p.getRun());  // still
-        
+
     }
-    
+
     double seenNewMinutes;
     double seenOldMinutes;
-    
+
     @Test
     public void testSetSendsUpdate() {
         SimpleTimebase p = new SimpleTimebase(memo);
@@ -145,10 +145,11 @@ public class SimpleTimebaseTest {
 
         // minutes wrap at 60
         if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
-        
+
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
     }
-    
+
+    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     @Test
     public void testTimeListener() throws TimebaseRateException {
         SimpleTimebase instance = new SimpleTimebase(memo);
@@ -209,6 +210,6 @@ public class SimpleTimebaseTest {
         public Date getTime() {
             return time;
         }
-        
+
     }
 }

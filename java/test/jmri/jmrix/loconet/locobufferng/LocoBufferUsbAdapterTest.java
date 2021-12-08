@@ -1,4 +1,4 @@
-package jmri.jmrix.nce;
+package jmri.jmrix.loconet.locobufferng;
 
 import jmri.util.JUnitUtil;
 
@@ -7,13 +7,13 @@ import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017, 2021
  */
-public class NceUSBTest {
+public class LocoBufferUsbAdapterTest {
 
     @Test
     public void testCTor() {
-        NceUSB t = new NceUSB();
+        LocoBufferNGAdapter t = new LocoBufferNGAdapter();
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +27,6 @@ public class NceUSBTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceUSBTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LocoBufferNGAdapterTest.class);
 
 }

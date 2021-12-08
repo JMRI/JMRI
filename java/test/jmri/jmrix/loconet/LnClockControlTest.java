@@ -37,6 +37,7 @@ public class LnClockControlTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")        // Date(int,int,int)
     public void testConfigureHardware() throws jmri.JmriException {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
@@ -65,6 +66,7 @@ public class LnClockControlTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")        // Date(int,int,int)
     public void testPowerBit() throws jmri.JmriException {
         // a brute-force approach to testing that the power bit follows
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();

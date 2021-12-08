@@ -44,12 +44,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     // private control members
     private boolean opened = false;
 
-    @Deprecated
-    static public NetworkDriverAdapter instance() {
-        log.error("Deprecated method instance Called", new Exception());
-        return null;
-    }
-
     private boolean mDNSConfigure = false;
 
     /*

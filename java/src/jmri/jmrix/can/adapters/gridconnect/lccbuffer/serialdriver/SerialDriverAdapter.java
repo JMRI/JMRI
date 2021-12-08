@@ -5,7 +5,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
  * <p>
- * This connects a RR-Cirkits LCCBuffer CAN adapter via a serial com 
+ * This connects a RR-Cirkits LCCBuffer CAN adapter via a serial com
  * port. Normally controlled by the SerialDriverFrame class.
  *
  * @author Andrew Crosland Copyright (C) 2008
@@ -35,17 +35,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
     @Override
     public int defaultBaudIndex() {
         return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     * Migration method
-     * @deprecated since 4.16
-     */
-    @Deprecated
-    @Override
-    public int[] validBaudValues() {
-        return validBaudNumbers();
     }
 
 }

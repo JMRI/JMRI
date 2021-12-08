@@ -50,7 +50,6 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     }
 
     @Test
-    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLoad() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
 

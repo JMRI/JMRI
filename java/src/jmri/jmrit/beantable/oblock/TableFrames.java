@@ -280,18 +280,22 @@ public class TableFrames implements InternalFrameListener {
     private void createDesktop() {
         _desktop = new JDesktopPane();
         _desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
-        _desktop.setPreferredSize(new Dimension(_blockTableFrame.getWidth(),
-                _blockTableFrame.getHeight()+_portalTableFrame.getHeight()+100));
+        int deskWidth = _blockTableFrame.getWidth();
+        int deskHeight = _blockTableFrame.getHeight();
+//        _desktop.setPreferredSize(new Dimension(deskWidth,
+//                deskHeight + _portalTableFrame.getHeight() + 100));
         _desktop.setBackground(new Color(180,180,180));
         desktopframe.setContentPane(_desktop);
+        desktopframe.setPreferredSize(new Dimension(deskWidth + 16,
+                deskHeight + _portalTableFrame.getHeight() + 64));
 
         // placed at 0,0
         _desktop.add(_blockTableFrame);
-        _portalTableFrame.setLocation(0, _blockTableFrame.getHeight());
+        _portalTableFrame.setLocation(0, deskHeight);
         _desktop.add(_portalTableFrame);
-        _signalTableFrame.setLocation(200, 420);
+        _signalTableFrame.setLocation(200, deskHeight+100);
         _desktop.add(_signalTableFrame);
-        _blockPortalXRefFrame.setLocation(700, 30);
+        _blockPortalXRefFrame.setLocation(deskWidth - _blockPortalXRefFrame.getWidth(), deskHeight);
         _desktop.add(_blockPortalXRefFrame);
     }
 
@@ -732,28 +736,18 @@ public class TableFrames implements InternalFrameListener {
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _oBlockTable.setRowHeight(ROW_HEIGHT);
 
-        int tableWidth = _oBlockTable.getPreferredSize().width;
-
         TableColumn column = tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL);
-        tableWidth -= column.getWidth();
         tcm.setColumnVisible(column, false);
         column = tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL);
-        tableWidth -= column.getWidth();
         tcm.setColumnVisible(column, false);
         column = tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL);
-        tableWidth -= column.getWidth();
         tcm.setColumnVisible(column, false);
-//        column = tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL);
-//        tableWidth -= column.getWidth();
-//        tcm.setColumnVisible(column, false);
         column = tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL);
-        tableWidth -= column.getWidth();
         tcm.setColumnVisible(column, false);
         column = tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL);
-        tableWidth -= column.getWidth();
         tcm.setColumnVisible(column, false);
 
-        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(_oBlockTable.getPreferredSize().width,
                 ROW_HEIGHT * Math.min(20, InstanceManager.getDefault(OBlockManager.class).getObjectCount())));
         return _oBlockTable;
     }
