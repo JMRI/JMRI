@@ -1119,7 +1119,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
              return _rampDown;
          }
 
-         @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
          void quit(boolean die) {
              stop = true;
 //             log.debug("{}: ThrottleRamp.quit({})", _warrant.getDisplayName(), die);
