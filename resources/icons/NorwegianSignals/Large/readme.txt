@@ -1,3 +1,2 @@
-Started with something from
-C:\Program Files (x86)\JMRI\resources\icons\largeschematics\aspects\CSD-1962
+Started with something from resources\icons\largeschematics\aspects\CSD-1962
 
