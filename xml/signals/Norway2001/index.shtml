@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: bobm $) 2019 -->
+<title>JMRI: Danish Simplified signal definition</title>
+
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	MEDIA="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	MEDIA="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: Norwegian Railway Main Signaling</h1>
+
+
+<p>
+
+
+Main3, Main2 and Distance signals found i Wiki
+As of regulations of December 4, 2001 no. 1336.
+
+Mast with Block and Distance head.
+Mast with Block head. Green-Flashing red-Green.
+Mast with Station head. Green-Red-Green.
+Mast with Station head. Green-Red.
+Mast with Distant head. Flashing Orange and Green.
+
+<br>
+</p>
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+</p>
+
+<p>
+Signal Mast definitions:
+</p>
+<ul>
+    <li><a href="appearance-Main3-2.xml">Main, Triple over double lamp green-red-green over flashing orange-green high signal</a>
+    <li><a href="appearance-Main2-2.xml">Main, Double over double lamp red-green over flashing orange-green high signal</a>
+    <li><a href="appearance-Main3.xml">Main, Triple lamp green-red-green high signal</a>
+    <li><a href="appearance-Main2.xml">Main, Double lamp red-Green high signal</a>
+    <li><a href="appearance-Distant.xml">Distant, Double lamp flashing orange-green high signal</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer.shtml" -->
+</body>
+</html>
+
