@@ -57,6 +57,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _runBlind; // Unable to use block detection, must run on et only
     private boolean _partialAllocate;// only allocate one block at a time for sharing route.
     private boolean _addTracker;    // start tracker when warrant ends normally.
+    private boolean _haltStart;     // Hold train in Origin block until Resume command
     private boolean _noRamp; // do not ramp speed changes. make immediate speed change when entering approach block.
     private boolean _nxWarrant = false;
 
@@ -89,7 +90,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     protected String _message; // last message returned from an action
     private ThrottleManager tm;
 
-    // Throttle modes
+    // Running modes
     public static final int MODE_NONE = 0;
     public static final int MODE_LEARN = 1; // Record a command list
     public static final int MODE_RUN = 2;   // Autorun, playback the command list
@@ -130,7 +131,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public enum SpeedState {
         STEADY_SPEED(AT_SPEED, "SteadySpeed"),
         RAMPING_DOWN(RAMP_DOWN, "RampingDown"),
-        RAMPING_UP(RAMP_UP, "NumData");
+        RAMPING_UP(RAMP_UP, "RampingUp");
 
         int _speedStateId;  // state id
         String _bundleKey; // key to get state display name
@@ -161,6 +162,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         super(sName, uName);
         _idxCurrentOrder = 0;
         _idxLastOrder = 0;
+        _idxProtectSignal = -1;
         _orders = new ArrayList<>();
         _runBlind = false;
         _speedUtil = new SpeedUtil();
@@ -460,6 +462,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _addTracker = set;
     }
 
+    public void setHaltStart (boolean set) {
+        _haltStart = set;
+    }
+
     public boolean getNoRamp() {
         return _noRamp;
     }
@@ -470,6 +476,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     public boolean getAddTracker() {
         return _addTracker;
+    }
+
+    public boolean getHaltStart() {
+        return _haltStart;
     }
 
     public String getTrainName() {
@@ -609,6 +619,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         switch (_runMode) {
             case Warrant.MODE_NONE:
+            case Warrant.MODE_ABORT:
                 if (getBlockOrders().isEmpty()) {
                     return Bundle.getMessage("BlankWarrant");
                 }
@@ -791,24 +802,52 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student.dispose(); // releases throttle
             _student = null;
         }
-        int oldMode = _runMode;
-        _runMode = MODE_NONE;
         _curSignalAspect = null;
         if (_engineer != null) {
             _engineer.stopRun(abort, turnOffFunctions); // releases throttle
-            // let engineer die
-            if (!Thread.currentThread().equals(_engineer)) {
-                try {   // can't join yourself if called by _engineer
-                    _engineer.join(200);
-                } catch (InterruptedException ex) {
-                    log.info("_engineer.join() interrupted. warrant {}", getDisplayName());
+            if ((!_engineer.getState().equals(Thread.State.TERMINATED))) {
+                class Killer implements Runnable {
+                    Engineer victim;
+                    boolean functionFlag;
+                    Killer (Engineer v, boolean f) {
+                        victim = v;
+                        functionFlag = f;
+                    }
+                    @Override
+                    public void run() {
+                        long time = 0;
+                        while (!victim.getState().equals(Thread.State.TERMINATED)) {
+                            try {
+                                victim.stopRun(abort, functionFlag); // releases throttle
+                                victim.join(10);
+                            } catch (InterruptedException ex) {
+                                log.info("victim.join() interrupted. warrant {}", getDisplayName());
+                            }
+                            time += 10;
+                        }
+                        victim.debugInfo();
+                        log.debug("{}: _engineer state {} after {}ms", getDisplayName(), victim.getState().toString(), time);
+                    }
                 }
-                _engineer = null;
-            }   // else can't do anything but hope this instance of _engineer terminates eventually
+                final Runnable killer = new Killer(_engineer, turnOffFunctions);
+                synchronized (killer) {
+                    Thread hit = jmri.util.ThreadingUtil.newThread(killer,
+                            getDisplayName()+" Killer");
+                    hit.start();
+                }
+            }
+            _engineer = null;
         }
         deAllocate();
 
-        if (turnOffFunctions && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
+        int oldMode = _runMode;
+        int newMode;
+        if (abort) {
+            newMode = MODE_ABORT;
+        } else {
+            newMode = MODE_NONE;
+        }
+         if (turnOffFunctions && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
             _speedUtil.stopRun(true);   // write speed profile measurements
             if (_addTracker) {
                 startTracker();
@@ -816,7 +855,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         _addTracker = false;
-        fireRunStatus("runMode", oldMode, _runMode);
+        fireRunStatus("runMode", oldMode, newMode);
+        _runMode = MODE_NONE;
         if (log.isDebugEnabled()) {
             log.debug("{}: terminated {}.", getDisplayName(), (abort ? "- aborted!" : "normally"));
         }
@@ -846,7 +886,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             LearnThrottleFrame student,
             List<ThrottleSetting> commands, boolean runBlind) {
         if (log.isDebugEnabled()) {
-            log.debug("setRunMode({}) ({}) called with _runMode= {}.",
+            log.debug("{}: setRunMode({}) ({}) called with _runMode= {}.",
                   getDisplayName(), mode, MODES[mode], MODES[_runMode]);
         }
         _message = null;
@@ -882,6 +922,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             // Delayed start is OK if block 0 is not occupied. Note can't delay start if block is dark
             if (!runBlind) {
                 int state = getBlockStateAt(0);
+                // Note: StoppingBlock set ONLY if origin block is not occupied.
                 if ((state & (Block.OCCUPIED | Block.UNDETECTED)) == 0) {
                     // continuing with no occupation of starting block
                     setStoppingBlock(getBlockAt(0));
@@ -890,7 +931,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
             }
         } else {
-            stopWarrant(true, true);
+            deAllocate();
+            return _message;
         }
         getBlockAt(0)._entryTime = System.currentTimeMillis();
         _tempRunBlind = runBlind;
@@ -932,8 +974,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (msg != null) {
-            abortWarrant(msg);
             fireRunStatus("throttleFail", null, msg);
+            abortWarrant(msg);
             return msg;
         }
         return null;
@@ -942,9 +984,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
-            String msg = Bundle.getMessage("noThrottle", getDisplayName());
-            abortWarrant(msg);
-            fireRunStatus("throttleFail", null, msg);
+            _message = Bundle.getMessage("noThrottle", getDisplayName());
+            fireRunStatus("throttleFail", null, _message);
+            abortWarrant(_message);
             return;
         }
         if (log.isDebugEnabled()) {
@@ -958,9 +1000,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-        abortWarrant(Bundle.getMessage("noThrottle",
-                (reason + " " + (address != null ? address.getNumber() : getDisplayName()))));
+        _message = Bundle.getMessage("noThrottle",
+                (reason + " " + (address != null ? address.getNumber() : getDisplayName())));
         fireRunStatus("throttleFail", null, reason);
+        abortWarrant(_message);
     }
 
     /**
@@ -1035,8 +1078,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         int runState = _engineer.getRunState();
         if (log.isDebugEnabled()) {
             log.debug("{}: controlRunTrain({})= \"{}\" for train {} runstate= {}, in block {}.",
-                    idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState],
-                    getDisplayName(), getBlockAt(_idxCurrentOrder).getDisplayName());
+                    getDisplayName(), idx, CNTRL_CMDS[idx], getTrainName(), RUN_STATE[runState],
+                    getBlockAt(_idxCurrentOrder).getDisplayName());
         }
         synchronized (this) {
             switch (idx) {
@@ -1293,6 +1336,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
             _engineer.start();
 
+            if (_haltStart) {
+                _engineer.setStop(false);
+            }
+
             if (_engineer.getRunState() == Warrant.RUNNING) {
                 setMovement(false);
             }
@@ -1424,14 +1471,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _totalAllocated = false;
         _routeSet = false;
         for (int i = 0; i < _orders.size(); i++) {
-            OBlock block = _orders.get(i).getBlock();
-            if (block.isAllocatedTo(this)) {
-                block.deAllocate(this);
-            }
+            deAllocateBlock(_orders.get(i).getBlock());
         }
-        _message = null;
-        if (log.isDebugEnabled()) {
-            log.debug("{}: deallocated Route.", getDisplayName());
+    }
+
+    protected void deAllocateBlock(OBlock block) {
+        if (block.isAllocatedTo(this)) {
+            block.deAllocate(this);
+            if (block.equals(_stoppingBlock)){
+                doStoppingBlockClear();
+            }
         }
     }
 
@@ -1472,14 +1521,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         String msg = allocateRoute(show, orders);
         if (msg != null) {
             _message = msg;
-            log.debug("setRoute: {}", msg);
+            log.debug("{}: setRoute: {}", getDisplayName(), msg);
             return _message;
         }
         BlockOrder bo = _orders.get(0);
         msg = bo.setPath(this);
         if (msg != null) {
             _message = msg;
-            log.debug("setRoute: {}", msg);
+            log.debug("{}: setRoute: {}", getDisplayName(), msg);
             return _message;
         }
         _routeSet = true;   // partially set OK
@@ -1502,7 +1551,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 msg = bo.setPath(this);
                 if (msg != null && _message == null) {
                     _message = msg;
-                    log.debug("setRoute: {}", msg);
+                    log.debug("{}: setRoute: {}", getDisplayName(), msg);
                     break; // OK. warning status is posted with _message
                 }
             }
@@ -2058,6 +2107,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             ret = true;
         }
         if (log.isDebugEnabled()) {
+            if (_protectSignal == null && signal == null) {
+                sb.append(" - sets signal \"");
+                sb.append(getBlockAt(signalIndex).getDisplayName());
+                sb.append("\"");
+            }
             log.debug(sb.toString());
         }
         return ret;
@@ -2289,10 +2343,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                        if (_idxCurrentOrder > 0) {
                            OBlock prevBlock = getBlockAt(_idxCurrentOrder - 1);
                            if ((prevBlock.getState() & OBlock.OCCUPIED) != 0 && this.equals(prevBlock.getWarrant())) {
-                               // assume nosed into block, then lost contact
-                               _idxCurrentOrder -= 1;       // set head to previous BlockOrder
-                               prevBlock.allocate(this);    // insure it is still allocated.
-                               lost = false;
+                               // assume nosed into block, then lost contact. Insure it is still allocated.
+                               if (prevBlock.allocate(this) == null) {
+                                   _idxCurrentOrder -= 1;       // set head to previous BlockOrder
+                                   lost = false;
+                                   fireRunStatus("blockChange", block, prevBlock);
+                               }
                            }
                        }
                        if (lost) {
@@ -2327,8 +2383,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     } // end goingInactive
 
     /**
-     * Deallocates all blocks prior to and including block
+     * Deallocates all blocks prior to and including block at index idx
+     * of _orders, if not needed again.
      * Comes from goingInactive, i.e. warrant has a listener on the block.
+     * @param block warrant is releasing
+     * @param idx index in BlockOrder list
      */
     private void releaseBlock(OBlock block, int idx) {
         /*
@@ -2340,11 +2399,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_partialAllocate) { // shared route
             for (int i = idx; i > -1; i--) {
                 OBlock prevBlock = getBlockAt(i);
-                if (!prevBlock.deAllocate(this)) {
-                    // not allocated to this or owned by someone else
-                    break;
-                } else if (prevBlock.equals(_stoppingBlock)){
-                    doStoppingBlockClear();
+                OBlock nextBlock = getBlockAt(_idxCurrentOrder + 1);
+                if (!prevBlock.equals(nextBlock)) {
+                    deAllocateBlock(getBlockAt(i));
                 }
                 _totalAllocated = false;
             }
@@ -2358,25 +2415,23 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                 }
                 if (!neededLater) {
-                    if (!prevBlock.deAllocate(this)) {
-                        // not allocated to this or owned by someone else
-                        break;
-                    } else if (prevBlock.equals(_stoppingBlock)){
-                        doStoppingBlockClear();
-                    }
+                    deAllocateBlock(prevBlock);
                     _totalAllocated = false;
                 } else {
                     if (prevBlock.isAllocatedTo(this)) {
-                        // must deallocate, but must listen for followers
+                        // Can't deallocate, but must listen for followers
                         // who may be occupying the block
-                        prevBlock.setValue(null);
-//                        prevBlock.releaseWarrant(this);
+                        if (_idxCurrentOrder != idx + 1) {
+                            prevBlock.setValue(null);
+                        }
+                        if (prevBlock.equals(_stoppingBlock)){
+                            doStoppingBlockClear();
+                        }
                     }
                 }
             }
         }
     }
-
 
     /**
      * Finds speed change type at entrance of a block. Called by:
@@ -2420,7 +2475,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @Override
     public void dispose() {
-        stopWarrant(false, true);
+        if (_runMode != MODE_NONE) {
+            stopWarrant(false, true);
+        }
         super.dispose();
     }
 
@@ -2709,109 +2766,74 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return true;
         }
 
-        // check for and correction of expected speeds.
+        // Check that flags and states agree with expected speed and position
         // A signal drop down can appear to be a speed violation, but only is a violation when expected
+        jmri.NamedBean signal = blkOrder.getSignal();
         if (_waitForSignal) {
-            jmri.NamedBean signal = blkOrder.getSignal();
             if (_idxProtectSignal == _idxCurrentOrder) {
-                log.info("Train {} moved past required STOP for signal \"{}\" at block \"{}\" on warrant {}!",
-                        getTrainName(), signal.getDisplayName(), curBlock.getDisplayName(), getDisplayName());
-                fireRunStatus("SignalOverrun", signal.getDisplayName(), "Stop"); // message of speed violation
-               _engineer.setSpeedToType(entrySpeedType); // immediate decrease
-                return true;
-            }
-            // 
-        } else {
-            int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
-            if (idxStop == _idxCurrentOrder) {
-                String bundleKey = null;
-                if (_waitForWarrant) {
-                    bundleKey ="warrantOverrun";
-                } else if (_waitForBlock){
-                    bundleKey ="OccupyOverrun";
-                }
-                log.info("Train {} moved past required STOP at block \"{}\"on warrant {}!",
-                        getTrainName(), curBlock.getDisplayName(), getDisplayName());
-                fireRunStatus(bundleKey, curBlock.getDisplayName(), "Stop"); // message of speed violation
-               _engineer.setSpeedToType(entrySpeedType); // immediate decrease
-               return true;
-            } else {
-                String sType = curBlock.getBlockSpeed();
-                if (entrySpeedType.equals(sType)) {
-                    log.info("Train {} moved past required block speed of \"{}\" at block \"{}\"! warrant {}",
-                            getTrainName(), sType, curBlock.getDisplayName(), getDisplayName());
-                    fireRunStatus("OccupyOverrun", curBlock.getDisplayName(), sType); // message of speed violation
-                   _engineer.setSpeedToType(entrySpeedType); // immediate decrease
-                    return true;
-                } else {
-                    jmri.NamedBean signal = blkOrder.getSignal();
-                    log.info("Train {} moved past required speed of \"{}\" for signal \"{}\" at block \"{}\" on warrant {}!",
-                            getTrainName(), entrySpeedType, signal.getDisplayName(), curBlock.getDisplayName(), getDisplayName());
+                if (signal != null) {
+                    log.info("Train {} moved past required STOP for signal \"{}\" at block \"{}\" on warrant {}!",
+                            getTrainName(), signal.getDisplayName(), curBlock.getDisplayName(), getDisplayName());
                     fireRunStatus("SignalOverrun", signal.getDisplayName(), "Stop"); // message of speed violation
                    _engineer.setSpeedToType(entrySpeedType); // immediate decrease
                     return true;
-                }
-           }
-        }
-        if (!currentSpeedType.equals(entrySpeedType) && !signalChange) {
-            if (entrySpeedType != null && !_speedUtil.secondGreaterThanFirst(entrySpeedType, currentSpeedType)) {
-                // speed increases since type entrySpeedType > currentSpeedType
-                // Ramp has begun already in a previous block, don't interfere. Otherwise ramp up.
-                if (!speedState.equals(SpeedState.RAMPING_UP)) {
-                    restoreRunning(entrySpeedType);
-                }
-                // continue, there may be blocks ahead that need a speed decrease to begin in this block
-            }
-        } else {
-
-            // layout imposed ramp downs should complete before entering the protected block
-            // user imposed ramp downs are excepted since ramp may be commanded at any time.
-            if (speedState.equals(SpeedState.RAMPING_DOWN) && runState != HALT) {
-                if (_idxCurrentOrder == _engineer.getRampEndBlockIdx()) {
-                    // speed overrun! cannot be -1 for layout imposed ramp downs
-                    // flags have been cleared if the user is forcing a ramp
-                    if (log.isDebugEnabled()) {
-                        log.debug("{}: Train overrun into block \"{}\". runState= {}, Engineer holds train. speedSetting= {}",
-                                getDisplayName(), curBlock.getDisplayName(), RUN_STATE[runState], speedSetting);
-                    }
-                    int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
-                    if (_idxProtectSignal == _idxCurrentOrder) {
-                        fireRunStatus("SignalOverrun", _protectSignal.getDisplayName(), currentSpeedType); // message of speed violation
-                    } else if (idxStop == _idxCurrentOrder) {
-                        fireRunStatus("OccupyOverrun", _stoppingBlock.getDisplayName(), _trainName); // message of speed violation
-                    } else {
-                        fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
-                    }
-                    currentSpeedType = Stop;
-                }
-
-                if (currentSpeedType.equals(Stop)) {
-                    if (speedSetting > 0) {
-                        _engineer.setSpeedToType(Stop); // immediate decrease
-                    }
-                    fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
-                    return true;
-                 }
-            }
-            if (speedState.equals(SpeedState.RAMPING_DOWN) && runState != HALT) {
-            }
-            if (runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING || runState == RAMP_HALT) {
-                if (log.isDebugEnabled()) {
-                    log.debug("{}: Train overrun into block \"{}\". runState= {}, Engineer holds train. speedSetting= {}",
-                            getDisplayName(), curBlock.getDisplayName(), RUN_STATE[runState], speedSetting);
-                }
-                int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
-                if (_idxProtectSignal == _idxCurrentOrder) {
-                    fireRunStatus("SignalOverrun", _protectSignal.getDisplayName(), entrySpeedType); // message of speed violation
-                } else if (idxStop == _idxCurrentOrder) {
-                    fireRunStatus("z", _stoppingBlock.getDisplayName(), _trainName); // message of speed violation
                 } else {
-                    fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
+                    log.error("{}: Signal null at block \"{}\" _idxProtectSignal = {}", 
+                            getDisplayName(), curBlock.getDisplayName(), _idxProtectSignal);
                 }
-//                return true;
             }
-            // Continue, look ahead for possible speed modification decrease.
         }
+        if (_idxCurrentOrder > 0) {
+            int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
+            if (idxStop == _idxCurrentOrder) {
+                String bundleKey = null;
+                String name = null;
+                if (_waitForWarrant) {
+                    bundleKey ="WarrantOverrun";
+                    Warrant w = curBlock.getWarrant();
+                    if (w != null) {
+                        name = w.getDisplayName();
+                    }
+                } else if (_waitForBlock){
+                    bundleKey ="OccupyOverrun";
+                    name = (String)curBlock.getValue();
+                }
+                if (name == null) {
+                    name = Bundle.getMessage("unknownTrain");
+                }
+                if (bundleKey != null) {
+                    fireRunStatus(bundleKey, curBlock, name); // message of speed violation
+                } else {
+                    log.error("Train \"{}\" entered stopping block \"{}\" idx={} for unknown reason on warrant {}!",
+                        getTrainName(), curBlock.getDisplayName(), idxStop, getDisplayName());
+                }
+                log.info("Train \"{}\" moved past required STOP at block \"{}\" on warrant {}!",
+                        getTrainName(), curBlock.getDisplayName(), getDisplayName());
+               _engineer.setSpeedToType(Stop); // immediate decrease
+               return true;
+            }
+        }
+        if (_idxProtectSignal == _idxCurrentOrder) {
+            if (signal != null) {
+                log.info("Train {} moved past required \"{}\" speed for signal \"{}\" at block \"{}\" on warrant {}!",
+                        getTrainName(), entrySpeedType, signal.getDisplayName(), curBlock.getDisplayName(), getDisplayName());
+                fireRunStatus("SignalOverrun", signal.getDisplayName(), entrySpeedType); // message of speed violation
+               _engineer.setSpeedToType(entrySpeedType); // immediate decrease
+                return true;
+            } else {
+                log.error("{}: Signal null at block \"{}\" _idxProtectSignal = {}", 
+                        getDisplayName(), curBlock.getDisplayName(), _idxProtectSignal);
+            }
+        }
+
+        if (_speedUtil.secondGreaterThanFirst(currentSpeedType, entrySpeedType)) {
+            // Increase speed. (entrySpeedType == null returns false)
+            // If ramp has begun already in a previous block, don't interfere. Otherwise ramp up.
+            if (!speedState.equals(SpeedState.RAMPING_UP)) {
+                restoreRunning(entrySpeedType);
+            }
+            // continue, there may be blocks ahead that need a speed decrease to begin in this block
+        } 
 
         if (_idxCurrentOrder == _orders.size() - 1) {
             return true;
@@ -2845,7 +2867,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (changeDist <= availDist) {
             // set next signal after current block for aspect speed change
-            for (int i = _idxCurrentOrder + 1; i < _orders.size() - 1; i++) {
+            for (int i = _idxCurrentOrder + 1; i < _orders.size(); i++) {
                 if (setProtectingSignal(i)) {
                    break;
                }
@@ -2857,7 +2879,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // Begin a ramp for speed change in this block. If due to a signal, watch that one
         if(_waitForSignal) {    // watch the signal requiring the speed change
             setProtectingSignal(idxSpeedChange);
-        } else {    // watch whichever is next signal
+        } else {    // watch this signal. if it's not the next signal, then user has not configured signal system correctly
             for (int i = _idxCurrentOrder + 1; i < _orders.size() - 1; i++) {
                  if (setProtectingSignal(i)) {
                     break;

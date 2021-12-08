@@ -81,6 +81,7 @@ public class WarrantFrame extends WarrantRoute {
     JCheckBox    _noRampBox = new JCheckBox();
     JCheckBox    _shareRouteBox = new JCheckBox();
     JCheckBox    _addTracker = new JCheckBox();
+    JCheckBox    _haltStartBox = new JCheckBox();
     JCheckBox    _runETOnlyBox = new JCheckBox();
     JRadioButton _invisible = new JRadioButton();
     JTextField   _statusBox = new JTextField(90);
@@ -166,6 +167,8 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setShareRoute(warrant.getShareRoute());
         _addTracker.setSelected(warrant.getAddTracker());
         _warrant.setAddTracker(warrant.getAddTracker());
+        _haltStartBox.setSelected(warrant.getHaltStart());
+        _warrant.setHaltStart(warrant.getHaltStart());
         _noRampBox.setSelected(warrant.getNoRamp());
         _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
@@ -591,6 +594,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
         panel.add(makeTextBoxPanel(_addTracker, "AddTracker", "ToolTipAddTracker"));
         panel.add(makeTextBoxPanel(_noRampBox, "NoRamping", "ToolTipNoRamping"));
+        panel.add(makeTextBoxPanel(_haltStartBox, "HaltAtStart", null));
         panel.add(makeTextBoxPanel(_runETOnlyBox, "RunETOnly", "ToolTipRunETOnly"));
 
         paramsPanel.add(panel);
@@ -1227,6 +1231,7 @@ public class WarrantFrame extends WarrantRoute {
             _warrant.setTrainName(getTrainName());
             _warrant.setShareRoute(_shareRouteBox.isSelected());
             _warrant.setAddTracker(_addTracker.isSelected());
+            _warrant.setHaltStart(_haltStartBox.isSelected());
             _warrant.setNoRamp(_noRampBox.isSelected());
         }
         if (msg == null) {
@@ -1460,10 +1465,16 @@ public class WarrantFrame extends WarrantRoute {
                                 _warrant.getTrainName(), speed, name);
                         color = Color.red;
                     } else if (property.equals("OccupyOverrun")) {
-                        String name = (String) e.getOldValue();
-                        String train = (String) e.getNewValue();
+                        String blockName = (String) e.getOldValue();
+                        OBlock occuppier = (OBlock) e.getNewValue();
                         msg = Bundle.getMessage("OccupyOverrun",
-                                _warrant.getTrainName(), train, name);
+                                _warrant.getTrainName(), blockName, occuppier);
+                        color = Color.red;
+                    } else if (property.equals("WarrantOverrun")) {
+                        String blkName = (String) e.getOldValue();
+                        OBlock warName = (OBlock) e.getNewValue();
+                        msg = Bundle.getMessage("WarrantOverrun",
+                                _warrant.getTrainName(), blkName, warName);
                         color = Color.red;
                     } else if (e.getPropertyName().equals("runMode")) {
                         int oldMode = ((Integer) e.getOldValue()).intValue();

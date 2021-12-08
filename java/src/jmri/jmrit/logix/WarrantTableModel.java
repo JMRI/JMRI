@@ -660,7 +660,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void fireCellUpdate(int row, int col) {
-        ThreadingUtil.runOnGUIEventually(()-> fireTableCellUpdated(row, col));
+        if (row < getRowCount()) {
+            ThreadingUtil.runOnGUIEventually(()-> fireTableCellUpdated(row, col));
+        }
     }
 
     private void fireTableUpdate() {
@@ -731,10 +733,15 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 setFrameStatusText(Bundle.getMessage("SignalOverrun",
                         bean.getTrainName(), speed, name), Color.red, true);
             } else if (property.equals("OccupyOverrun")) {
-                String name = (String) e.getOldValue();
-                String train = (String) e.getNewValue();
+                String blkName = (String) e.getOldValue();
+                OBlock occuppier = (OBlock) e.getNewValue();
                 setFrameStatusText(Bundle.getMessage("OccupyOverrun",
-                        bean.getTrainName(), train, name), Color.red, true);
+                        bean.getTrainName(), blkName, occuppier), Color.red, true);
+            } else if (property.equals("WarrantOverrun")) {
+                String blkName = (String) e.getOldValue();
+                OBlock warName = (OBlock) e.getNewValue();
+                setFrameStatusText(Bundle.getMessage("WarrantOverrun",
+                        bean.getTrainName(), blkName, warName), Color.red, true);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
