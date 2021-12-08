@@ -376,12 +376,6 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void testLocoStateReplies() {
-        DCCppReply l = DCCppReply.parseDCCppReply("l 12 3 456 789");
-        Assert.assertEquals("Monitor string", "Loco State Reply Cab: 12 Slot: 3 SpeedByte: 456 Functions: 789", l.toMonitorString());
-    }
-
-    @Test
     public void testTurnoutDefReplies() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 23 DCC 5 0 1");
         Assert.assertEquals("Monitor string", "Turnout Def DCC Reply: ID:23, Address:5, Index:0, DCC Address:17, Dir:THROWN", l.toMonitorString());
@@ -536,6 +530,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new DCCppReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;
