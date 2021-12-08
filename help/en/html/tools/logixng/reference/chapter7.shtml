@@ -154,6 +154,20 @@
       which beans to listen on. Any time any property of any of the named beans this action listens
       to changes, the ConditionalNG will be executed.</p>
 
+      <div style="margin-left: 2em">
+        <a href="images/chapter7/listen_on_beans_dialog.png"><img src=
+        "images/chapter7/listen_on_beans_dialog.png" alt="LogixNG listen on beans dialog"
+        width="35%" height="35%"></a>
+      </div>
+
+      <p>The <strong>Add reference</strong> button is used to add beans to the the list.  For each
+      bean select the bean type, the bean name from the drop down list and whether the standard
+      events for the selected bean should be monitored or if all of the events are monitored.</p>
+
+      <p>There are three optional fields for specifying local variables that will contain the name
+      of the bean, the event type and the new value.  For example, a sensor has a <strong>KnownState
+      </strong> event with the new value being 2 (Active) or 4 (Inactive).</p>
+
       <p>Example:</p>
 
       <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's expressions and wants
@@ -161,7 +175,7 @@
       expressions and IT2 and IT5 are indirect accessed.</p>
 
       <p>Each turnout that is directly addressed in an expression will have the ConditionalNG
-      listen to automaticly, so IT1, IT3 and IT4 will be listend to. But in order to listen on
+      listen to automatically, so IT1, IT3 and IT4 will be listend to. But in order to listen on
       turnouts IT2 and IT5, the <strong>Listen on beans</strong> action needs to be used.</p>
 
       <p>The <strong>Listen on beans</strong> action can be placed anythere in the ConditionalNG
