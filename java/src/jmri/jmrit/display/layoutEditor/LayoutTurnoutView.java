@@ -258,9 +258,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     private int version = 1;
 
-    public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
-    public LinkType linkType = LinkType.NO_LINK;
-
     private final boolean useBlockSpeed = false;
 
     // temporary reference to the Editor that will eventually be part of View
@@ -1721,7 +1718,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
             // Rotate if there are no track connections
 //            if ((getConnectA() == null) && (getConnectB() == null)
 //                    && (getConnectC() == null)
-//                    && (getConnectD() == null)) 
+//                    && (getConnectD() == null))
             {
                 JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate_",
                         String.format("%.1f", getRotationDEG())) + "...");
@@ -1791,17 +1788,17 @@ public class LayoutTurnoutView extends LayoutTrackView {
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(turnout,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == LinkType.NO_LINK) {
+                        } else if (getLinkType() == LinkType.NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(turnout,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == LinkType.THROAT_TO_THROAT) {
-                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu(turnout, linkedTurnoutName,
+                        } else if (getLinkType() == LinkType.THROAT_TO_THROAT) {
+                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu(turnout, getLinkedTurnoutName(),
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == LinkType.FIRST_3_WAY) {
-                            tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
+                        } else if (getLinkType() == LinkType.FIRST_3_WAY) {
+                            tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), getLinkedTurnoutName(),
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == LinkType.SECOND_3_WAY) {
-                            tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
+                        } else if (getLinkType() == LinkType.SECOND_3_WAY) {
+                            tools.setSignalsAt3WayTurnoutFromMenu(getLinkedTurnoutName(), getTurnoutName(),
                                     letbp.signalIconEditor, letbp.signalFrame);
                         }
                     }
@@ -1809,7 +1806,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
                 if (layoutEditor.getLETools().addLayoutTurnoutSignalHeadInfoToMenu(
-                        getTurnoutName(), linkedTurnoutName, jm)) {
+                        getTurnoutName(), getLinkedTurnoutName(), jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
