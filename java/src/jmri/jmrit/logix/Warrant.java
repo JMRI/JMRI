@@ -2835,6 +2835,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             // continue, there may be blocks ahead that need a speed decrease to begin in this block
         } 
 
+
         if (_idxCurrentOrder == _orders.size() - 1) {
             return true;
         }
