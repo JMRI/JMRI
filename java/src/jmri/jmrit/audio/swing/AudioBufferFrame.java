@@ -81,7 +81,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     @Override
-    @SuppressWarnings("UnnecessaryBoxing")
     public void layoutFrame() {
         super.layoutFrame();
         JPanel p;
@@ -187,7 +186,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      * Populate the Edit Buffer frame with default values.
      */
     @Override
-    @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
             sysName.setText(PREFIX + nextCounter()); // NOI18N
