@@ -580,7 +580,10 @@
                 and following PRs with the
                 <a href="https://github.com/JMRI/JMRI/issues?q=label%3A%22Java+11%22">Java 11 label</a>.
             </li>
-            <li>
+            <li>Personal and development builds after this release will
+                be called 4.99.1plus instead of the prior convention of
+                calling them 4.99.2ish.  This should only affect JMRI
+                developers.
             </li>
             <li>
             </li>
