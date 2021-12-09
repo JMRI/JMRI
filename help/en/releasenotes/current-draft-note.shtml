@@ -394,7 +394,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The LogixNG function hex2dec() has been added.
+          It converts a hexadecimal number to a decimal number.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
