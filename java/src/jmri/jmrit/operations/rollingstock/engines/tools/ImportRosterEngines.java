@@ -2,7 +2,9 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,6 +17,8 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
+import jmri.util.JmriJFrame;
 
 /**
  * Import engines from the jmri Roster
@@ -29,31 +33,34 @@ public class ImportRosterEngines extends Thread {
     private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
     private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
 
-    javax.swing.JLabel textEngine = new javax.swing.JLabel();
-    javax.swing.JLabel textId = new javax.swing.JLabel();
+    JLabel textEngine = new JLabel(Bundle.getMessage("AddEngine"));
+    JLabel textId = new JLabel();
 
-    // we use a thread so the status frame will work!
+    // we use a thread so the status frame will update!
     @Override
     public void run() {
 
         // create a status frame
+        JmriJFrame fstatus = new JmriJFrame(Bundle.getMessage("TitleImportEngines"));
+        fstatus.setSize(Control.panelWidth500, Control.panelHeight100);
         JPanel ps = new JPanel();
-        jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("TitleImportEngines"));
-        fstatus.setLocationRelativeTo(null);
-        fstatus.setSize(200, 100);
-
         ps.add(textEngine);
         ps.add(textId);
         fstatus.getContentPane().add(ps);
-        textEngine.setText(Bundle.getMessage("AddEngine"));
-        textEngine.setVisible(true);
-        textId.setVisible(true);
         fstatus.setVisible(true);
+
+        // create dialog with roster group comboBox
+        RosterGroupComboBox comboBox = new RosterGroupComboBox();
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        JOptionPane.showMessageDialog(null, comboBox, rb.getString("SelectRosterGroup"), JOptionPane.QUESTION_MESSAGE);
+        String groupName = comboBox.getSelectedItem();
+        log.debug("User selected roster group: {}", groupName);
 
         // Now get engines from the JMRI roster
         int enginesAdded = 0;
 
-        List<RosterEntry> engines = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> engines = Roster.getDefault().getEntriesMatchingCriteria(null, null, null, null, null, null,
+                null, groupName, null, null, null);
 
         for (RosterEntry re : engines) {
             // add engines that have a road name and number
