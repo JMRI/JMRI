@@ -246,7 +246,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
                 super.propertyChange(e);
             }
-            
+
             @Override
             public void dispose(){
                 InstanceManager.getDefault(SensorManager.class).removePropertyChangeListener(this);
@@ -566,6 +566,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     private void initializeEditInformation() {
         sectionList.clear();
+        sequence.clear();
+        action.clear();
+        direction.clear();
+        alternate.clear();
+        safe.clear();
+        sensorStopAllocation.clear();
+
         curSection = null;
         curSectionDirection = 0;
         curSequenceNum = 0;
@@ -2322,7 +2329,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             super();
             addPcl();
         }
-        
+
         final void addPcl(){
             sectionManager.addPropertyChangeListener(this);
         }
@@ -2484,7 +2491,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     break;
             }
         }
-        
+
         public void dispose(){
             sectionManager.removePropertyChangeListener(this);
         }
@@ -2526,7 +2533,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             super();
             addPcl();
         }
-        
+
         final void addPcl(){
             sectionManager.addPropertyChangeListener(this);
         }
@@ -2627,7 +2634,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 deleteAction(row);
             }
         }
-        
+
         public void dispose(){
             sectionManager.removePropertyChangeListener(this);
         }
