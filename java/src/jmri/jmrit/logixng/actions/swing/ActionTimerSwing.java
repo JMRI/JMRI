@@ -41,7 +41,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
             names[ActionTimer.NUM_STATIC_EXPRESSIONS + i] = _timerSocketNames[i].getText();
         }
-        return AbstractDigitalAction.getNewSocketName(names);
+        return action.getNewSocketName(names);
     }
     
     @Override
