@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2021</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kenneth</firstname><surname>Tjøstheim</surname></personname>
+
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2021-11-08</date>
+        <authorinitials>KT</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>
+  </revhistory>
+  
+  <aspecttable>Norway2001</aspecttable>
+
+  <name>Distant 2-lamp Signal</name>
+  
+  <description>This uses a single head with flashing yellow and green</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Expect Stop</aspectname>
+      <show>flashyellow</show>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/2dist-23.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/23.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Expect Diverging</aspectname>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/2dist-24.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/24.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Expect Clear</aspectname>
+      <show>flashgreen</show>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/2dist-25.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/25.gif</imagelink>
+    </appearance>        
+    <appearance>
+      <aspectname>Off</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/2dist-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/unlit.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+    <danger>
+      <aspect>Off</aspect>
+    </danger>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
+    <held>
+      <aspect>Off</aspect>
+    </held>
+	<dark>
+      <aspect>Off</aspect>
+    </dark>
+  </specificappearances>
+  
+  <aspectMappings>
+   <aspectMapping>
+     <advancedAspect>BlockStop</advancedAspect>
+     <ourAspect>Expect Stop</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Expect Stop</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Diverging</advancedAspect>
+     <ourAspect>Expect Diverging</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Expect Clear</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Off</advancedAspect>
+     <ourAspect>Expect Stop</ourAspect>
+   </aspectMapping>
+ 
+
+  <aspectMapping>
+     <advancedAspect>Clear Expect Stop</advancedAspect>
+     <ourAspect>Expect Clear</ourAspect>
+   </aspectMapping>
+  <aspectMapping>
+     <advancedAspect>Clear Expect Diverging</advancedAspect>
+     <ourAspect>Expect Clear</ourAspect>
+   </aspectMapping>
+  <aspectMapping>
+     <advancedAspect>Clear Expect Clear</advancedAspect>
+     <ourAspect>Expect Clear</ourAspect>
+   </aspectMapping>
+
+
+  <aspectMapping>
+     <advancedAspect>Diverging Expect Stop</advancedAspect>
+     <ourAspect>Expect Diverging</ourAspect>
+   </aspectMapping>
+  <aspectMapping>
+     <advancedAspect>Diverging Expect Diverging</advancedAspect>
+     <ourAspect>Expect Diverging</ourAspect>
+   </aspectMapping>
+  <aspectMapping>
+     <advancedAspect>Diverging Expect Clear</advancedAspect>
+     <ourAspect>Expect Diverging</ourAspect>
+   </aspectMapping>
+
+
+  </aspectMappings>
+
+</appearancetable>  
