@@ -394,8 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG function hex2dec() has been added.
-          It converts a hexadecimal number to a decimal number.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -475,9 +474,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>A
-                    <a href="http://jmri.org/xml/signals/Norway-2001">Norway 2001</a>
-                    system was added.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
