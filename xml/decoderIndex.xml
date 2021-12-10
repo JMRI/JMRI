@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.25.7ish+jake+20211130T2217Z+R6d7fb5405b on Tue Nov 30 17:17:51 EST 2021-->
-  <decoderIndex version="1072">
+  <!--Written by JMRI version 4.25.9ish+jake+20211210T1817Z+R457b298687 on Fri Dec 10 13:18:47 EST 2021-->
+  <decoderIndex version="1074">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8568,7 +8568,7 @@
         </model>
       </family>
       <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_Essential_Sound_Unit.xml">
-        <model model="Essential Sound Unit" numOuts="4" productID="16777363">
+        <model model="Essential Sound Unit" numOuts="4" productID="16777363,16777419">
           <output name="1" label="Front|Light">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -8961,10 +8961,10 @@
         </model>
       </family>
       <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilot5.xml">
-        <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
+        <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600,33554636">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokPilot 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
+        <model model="LokPilot 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602,33554638">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
         <model model="LokPilot 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
@@ -9055,13 +9055,13 @@
           <!-- suppress unused item -->
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
+        <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609,33554639">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
+        <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610,33554640">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406">
+        <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406,16777425">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -9084,7 +9084,7 @@
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407">
+        <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407,16777426">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -9187,10 +9187,10 @@
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+        <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601,33554637">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+        <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608,33554643">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">

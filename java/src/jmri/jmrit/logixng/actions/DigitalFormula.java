@@ -58,6 +58,11 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
     }
     
     @Override
+    protected String getPreferredSocketPrefix() {
+        return "E";
+    }
+    
+    @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
