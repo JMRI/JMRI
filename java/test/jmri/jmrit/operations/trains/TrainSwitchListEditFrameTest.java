@@ -6,13 +6,17 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainSwitchListEditFrame.TrainSwitchListCommentFrame;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -42,6 +46,8 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         ThreadingUtil.runOnGUI(() -> {
             f.initComponents();
         });
+        
+        JUnitOperationsUtil.loadFiveLocations();
 
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         List<Location> locations = lmanager.getLocationsByNameList();
@@ -53,7 +59,6 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         }
         // now clear all locations
         JemmyUtil.enterClickAndLeave(f.clearButton);
-
         JemmyUtil.enterClickAndLeave(f.saveButton);
 
         for (int i = 0; i < locations.size(); i++) {
@@ -95,8 +100,43 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
         // Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testAddComment() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // check defaults
+        Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
+        Assert.assertTrue("Real Time", Setup.isSwitchListRealTime());
+        
+        JUnitOperationsUtil.loadFiveLocations();
 
-    // private final static Logger log =
-    // LoggerFactory.getLogger(TrainSwitchListEditFrameTest.class);
+        TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
+        f.initComponents();
+        
+        JFrameOperator jfo = new JFrameOperator(f);
+        JemmyUtil.pressButton(jfo, Bundle.getMessage("Add"));
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locA = lmanager.getLocationByName("Test Loc A");
+        Assert.assertNotNull("Confirm exists", locA);
+        
+        JmriJFrame cf = JmriJFrame.getFrame(locA.getName());
+        Assert.assertNotNull("comment frame", cf);
+        
+        JFrameOperator jfoC = new JFrameOperator(cf);
+        TrainSwitchListCommentFrame tscf = (TrainSwitchListCommentFrame)cf;
+        tscf.commentTextArea.setText("Test Comment for Loc A");
+        JemmyUtil.pressButton(jfoC, Bundle.getMessage("ButtonSave"));
+        
+        Assert.assertEquals("Confirm comment", "Test Comment for Loc A", locA.getSwitchListComment());
+        
+        // close comment window
+        JemmyUtil.pressButton(jfoC, Bundle.getMessage("ButtonCancel"));
+        cf = JmriJFrame.getFrame(locA.getName());
+        Assert.assertNull("comment frame", cf);       
+        
+        JUnitUtil.dispose(f);
+    }
 
 }

@@ -31,6 +31,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-block-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-clock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-conditional-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-dispatcher-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-entryexit-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-light-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-local-variable-4.23.1.xsd"/>
@@ -39,6 +40,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-oblock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-power-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reference-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reporter-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalhead-4.23.1.xsd"/>
@@ -77,6 +79,7 @@
             <xs:element name="ExpressionBlock"    type="LogixNG_DigitalExpression_ExpressionBlock" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionClock"    type="LogixNG_DigitalExpression_ExpressionClockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionConditional"  type="LogixNG_DigitalExpression_ExpressionConditionalType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionDispatcher"  type="LogixNG_DigitalExpression_ExpressionDispatcherType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionEntryExit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionLight"    type="LogixNG_DigitalExpression_ExpressionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionLocalVariable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
@@ -85,6 +88,7 @@
             <xs:element name="ExpressionOBlock"   type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionPower"    type="LogixNG_DigitalExpression_ExpressionPowerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionReference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionReporter" type="LogixNG_DigitalExpression_ExpressionReporterType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionScript"   type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSensor"   type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExpressionSignalHead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />

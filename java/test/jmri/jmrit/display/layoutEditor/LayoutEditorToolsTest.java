@@ -658,12 +658,14 @@ public class LayoutEditorToolsTest {
             EditorFrameOperator operator = new EditorFrameOperator(layoutEditor);
             operator.closeFrameWithConfirmations();
             JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator.clearEditorFrameOperatorThreads();
         }
+
         InstanceManager.getDefault(LayoutBlockManager.class).dispose();
         InstanceManager.getDefault(SignalHeadManager.class).dispose();
         InstanceManager.getDefault(TurnoutManager.class).dispose();
         InstanceManager.getDefault(SensorManager.class).dispose();
-        
+
         let = null;
         layoutEditor = null;
         layoutBlocks = null;

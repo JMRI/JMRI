@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TimerUtil;
@@ -34,6 +35,10 @@ public class ExecuteDelayed
     private ExpressionNode _stateExpressionNode;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private boolean _resetIfAlreadyStarted;
+    
+    private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
+    protected final List<SymbolTable.VariableData> _localVariables = new ArrayList<>();
+    
     
     // These variables are used internally in this action
     private long _timerDelay = 0;   // Timer delay in milliseconds
@@ -68,17 +73,21 @@ public class ExecuteDelayed
     public Category getCategory() {
         return Category.COMMON;
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
+/*
+    private String getVariables(SymbolTable symbolTable) {
+        java.io.StringWriter stringWriter = new java.io.StringWriter();
+        java.io.PrintWriter writer = new java.io.PrintWriter(stringWriter);
+        symbolTable.printSymbolTable(writer);
+        return stringWriter.toString();
     }
-    
+*/    
     /**
      * Get a new timer task.
      */
-    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG) {
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable) throws JmriException {
+
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
+        
         return new ProtectedTimerTask() {
             @Override
             public void execute() {
@@ -87,21 +96,23 @@ public class ExecuteDelayed
                         _timerTask = null;
                         long currentTimerTime = System.currentTimeMillis() - _timerStart;
                         if (currentTimerTime < _timerDelay) {
-                            scheduleTimer(conditionalNG, _timerDelay - currentTimerTime);
+                            scheduleTimer(conditionalNG, symbolTable, _timerDelay - currentTimerTime);
                         } else {
-                            conditionalNG.execute(_socket);
+                            _internalSocket.conditionalNG = conditionalNG;
+                            _internalSocket.newSymbolTable = newSymbolTable;
+                            conditionalNG.execute(_internalSocket);
                         }
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException | JmriException e) {
                     log.error("Exception thrown", e);
                 }
             }
         };
     }
     
-    private void scheduleTimer(ConditionalNG conditionalNG, long delay) {
+    private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long delay) throws JmriException {
         if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask(conditionalNG);
+        _timerTask = getNewTimerTask(conditionalNG, symbolTable);
         TimerUtil.schedule(_timerTask, delay);
     }
     
@@ -142,7 +153,8 @@ public class ExecuteDelayed
             }
             _timerDelay = getNewDelay() * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
-            scheduleTimer(getConditionalNG(), _delay * _unit.getMultiply());
+            ConditionalNG conditonalNG = getConditionalNG();
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), _timerDelay);
         }
     }
     
@@ -380,6 +392,39 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+    }
+    
+    
+    
+    private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
+        
+        private ConditionalNG conditionalNG;
+        private SymbolTable newSymbolTable;
+        
+        public InternalFemaleSocket() {
+            super(null, new FemaleSocketListener(){
+                @Override
+                public void connected(FemaleSocket socket) {
+                    // Do nothing
+                }
+
+                @Override
+                public void disconnected(FemaleSocket socket) {
+                    // Do nothing
+                }
+            }, "A");
+        }
+        
+        @Override
+        public void execute() throws JmriException {
+            if (_socket != null) {
+                SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+                conditionalNG.setSymbolTable(newSymbolTable);
+                _socket.execute();
+                conditionalNG.setSymbolTable(oldSymbolTable);
+            }
+        }
+        
     }
     
     

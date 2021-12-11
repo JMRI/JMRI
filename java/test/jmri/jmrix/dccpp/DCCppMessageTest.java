@@ -377,6 +377,31 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testTurnoutAddCommands() { /* test turnout add commands (new in DCC++EX 3.1.7) */
+        msg = new DCCppMessage("T 23 DCC 5 0");
+        Assert.assertEquals("Monitor string", "Add Turnout DCC: ID:23, Address:5, Subaddr:0", msg.toMonitorString());
+        msg = new DCCppMessage("T 24 SERVO 100 410 205 2");
+        Assert.assertEquals("Monitor string", "Add Turnout Servo: ID:24, Pin:100, ThrownPos:410, ClosedPos:205, Profile:2"
+                , msg.toMonitorString());
+        msg = new DCCppMessage("T 25 VPIN 50");
+        Assert.assertEquals("Monitor string", "Add Turnout Vpin: ID:25, Pin:50", msg.toMonitorString());
+        msg = new DCCppMessage("T 23 DCC 5 T");
+        Assert.assertEquals("Monitor string", "Unmatched Turnout Cmd: T 23 DCC 5 T", msg.toMonitorString());
+    }
+
+    @Test
+    public void testDiagAndControlCommands() { /* test diagnostic and control commands (new in DCC++EX 3.1.7) */
+        msg = new DCCppMessage("D EXRAIL ON");
+        Assert.assertEquals("Monitor string", "Diag Cmd: 'D EXRAIL ON'",       msg.toMonitorString());
+        msg = new DCCppMessage("/START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/START 1224 4'",  msg.toMonitorString());
+        msg = new DCCppMessage("/ START 1224 4");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/ START 1224 4'", msg.toMonitorString());
+        msg = new DCCppMessage("/PAUSE");
+        Assert.assertEquals("Monitor string", "Control Cmd: '/PAUSE'",         msg.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteDirectCVMsg() {
         msg = DCCppMessage.makeWriteDirectCVMsg(29, 12, 1, 2);
         log.debug("write cv message = '{}'", msg);

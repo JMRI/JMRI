@@ -287,6 +287,64 @@ public class JUnitUtil {
     }
 
     /**
+     * Silently remove any AbstractTurnout threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearTurnoutThreads(){
+        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+    }
+
+    /**
+     * Silently remove any DefaultRoute threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearRouteThreads(){
+        removeMatchingThreads("setRoute"); // must stay consistent with DefaultRoute
+    }
+
+    /**
+     * Silently remove any blockboss/Simple Signal Logic threads that are still running.
+     * A bit expensive, so only used when needed.
+     */
+    public static void clearBlockBossLogicThreads(){
+        removeMatchingThreads("BlockBossLogic");
+    }
+
+    /**
+     * Utility to remove any threads with a matchiing name
+     */
+    public static void removeMatchingThreads(String nameContains) {
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }
+        Thread[] list = new Thread[main.activeCount()+2];  // space on end
+        int max = main.enumerate(list);
+
+        for (int i = 0; i<max; i++) {
+            Thread t = list[i];
+            if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
+                continue;
+            }
+            String name = t.getName();
+            if (name.contains(nameContains)) {
+                killThread(t);
+            }
+        }
+    }
+
+    static void killThread(Thread t) {
+        t.interrupt();
+        try {
+            t.join(100); // give it a bit of time to end
+            if (t.getState() != Thread.State.TERMINATED) {
+                t.stop(); // yes, we know it's deprecated, but it's the only option for Jemmy threads
+                log.warn("   Thread {} did not terminate", t.getName());
+            }
+        } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
+            log.error("While interrupting thread {}:", t.getName(), e);
+        }
+    }
+
+    /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.
      */
@@ -294,9 +352,6 @@ public class JUnitUtil {
 
         // check that no LogixNG threads is still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
-
-        // check for hanging shutdown tasks
-        checkShutDownManager();
 
         // checking time?
         if (checkTestDuration) {
@@ -350,6 +405,9 @@ public class JUnitUtil {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
+
+        // check for hanging shutdown tasks - after test for ERROR so it can complain
+        checkShutDownManager();
 
         // Optionally, handle any threads left running
         if (checkRemnantThreads || killRemnantThreads) {
@@ -903,55 +961,55 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m1, jmri.Manager.LOGIXNGS);
         }
         InstanceManager.setDefault(LogixNG_Manager.class, m1);
-        
+
         ConditionalNG_Manager m2 = new DefaultConditionalNGManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m2, jmri.Manager.LOGIXNG_CONDITIONALNGS);
         }
         InstanceManager.setDefault(ConditionalNG_Manager.class, m2);
-        
+
         AnalogActionManager m3 = new DefaultAnalogActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m3, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
         }
         InstanceManager.setDefault(AnalogActionManager.class, m3);
-        
+
         AnalogExpressionManager m4 = new DefaultAnalogExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m4, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
         }
         InstanceManager.setDefault(AnalogExpressionManager.class, m4);
-        
+
         DigitalActionManager m5 = new DefaultDigitalActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m5, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
         InstanceManager.setDefault(DigitalActionManager.class, m5);
-        
+
         DigitalBooleanActionManager m6 = new DefaultDigitalBooleanActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m6, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
         InstanceManager.setDefault(DigitalBooleanActionManager.class, m6);
-        
+
         DigitalExpressionManager m7 = new DefaultDigitalExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m7, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
         }
         InstanceManager.setDefault(DigitalExpressionManager.class, m7);
-        
+
         StringActionManager m8 = new DefaultStringActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m8, jmri.Manager.LOGIXNG_STRING_ACTIONS);
         }
         InstanceManager.setDefault(StringActionManager.class, m8);
-        
+
         StringExpressionManager m9 = new DefaultStringExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
-        
+
         if (activate) m1.activateAllLogixNGs(false, false);
     }
 
@@ -1430,7 +1488,9 @@ public class JUnitUtil {
         "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
         "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
         "Basic L&F File Loading Thread",
-        "dns.close in ZeroConfServiceManager#stopAll"
+        "dns.close in ZeroConfServiceManager#stopAll",
+        "Common-Cleaner",
+        "Batik CleanerThread"  // XML
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1449,7 +1509,6 @@ public class JUnitUtil {
 
         for (int i = 0; i<max; i++) {
             Thread t = list[i];
-            Thread.State topState = t.getState();
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
                 threadsSeen.remove(t);  // don't want to prevent gc
                 continue;
@@ -1459,27 +1518,32 @@ public class JUnitUtil {
             ThreadGroup g = t.getThreadGroup();
             String group = (g != null) ?  g.getName() : "<null group>";
 
-            if (! (threadNames.contains(name)
+            if (! (
+                    threadNames.contains(name)
                  || group.equals("system")
                  || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                  || name.startsWith("RMI TCP Accept")
                  || name.startsWith("AWT-EventQueue")
                  || name.startsWith("Aqua L&F")
+                 || name.startsWith("junit-jupiter-")  // JUnit
                  || name.startsWith("Image Fetcher ")
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
-                 || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
-                 || name.startsWith("SocketListener(")
-                 || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
+                 || group.contains("FailOnTimeoutGroup") // JUnit timeouts
+                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                         ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
+                    )
                 )) {
 
                         if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
                             continue;
                         }
+
+                        // This thread we have to deal with.
                         boolean kill = true;
                         String action = "Interrupt";
                         if (!killRemnantThreads) {
@@ -1493,23 +1557,27 @@ public class JUnitUtil {
 
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            Exception ex = new Exception("traceback of numbered thread");
-                            ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                            StackTraceElement[] traces = Thread.getAllStackTraces().get(t);
+                            if (traces == null) continue;  // thread went away, maybe terminated in parallel
+                            if (traces.length >7 && traces[7].getClassName().contains("org.netbeans.jemmy") ) {
+                                // empirically. jemmy leaves anonymous threads
+                                log.warn("Jemmy remnant thread running {}.{} [{}.{}]",
+                                        traces[7].getClassName(),
+                                        traces[7].getMethodName(),
+                                       traces[7].getFileName(),
+                                       traces[7].getLineNumber()
+                                    );
+                            } else {
+                                // anonymous thread that should be displayed
+                                Exception ex = new Exception("traceback of numbered thread");
+                                ex.setStackTrace(traces);
+                                log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                            }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                         }
                         if (kill) {
-                            System.err.println(topState+" "+t.getState());
-                            try {
-                                if (t.getState() != Thread.State.TERMINATED) {  // might have transitioned during above (logging slow)
-                                    t.interrupt();
-                                    t.join(2000);
-                                }
-                                if (t.getState() != Thread.State.TERMINATED) log.warn("   Thread {} did not terminate", name);
-                            } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
-                                log.error("While interrupting thread {}", name, e);
-                            }
+                            killThread(t);
                         } else {
                             threadsSeen.add(t);
                         }
@@ -1539,6 +1607,7 @@ public class JUnitUtil {
                             }
                             e.dispose();
                         }));
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     /* GraphicsEnvironment utility methods */

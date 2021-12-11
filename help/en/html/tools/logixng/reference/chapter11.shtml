@@ -249,13 +249,13 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/table_for_each.png"><img src=
-        "images/chapter11/table_for_each.png" alt="LogixNG table for each" width="485" height=
-        "380"></a>
+        "images/chapter11/table_for_each.png" alt="LogixNG table for each" width="45%" height=
+        "45%"></a>
       </div>
 
       <p>Select the table, row or column, and then the row name or column name. The name selection
       will change based on the table and row/column selections. Enter the name of a local
-      variable.</p>
+      variable.  The table, row and column names can also refer to local variables or references.</p>
 
       <p>After the action has been created, add another action to the new A1 do handle the current
       cell item.</p>

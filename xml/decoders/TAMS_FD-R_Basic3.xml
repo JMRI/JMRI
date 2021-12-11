@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1" author="Pierre Billon" lastUpdated="20211002"/>
+  <!-- 1 Creation
+    Based on FD-R basic 2 latest definition
+  -->
+  <decoder>
+    <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH">
+      <model model="FD-R Basic 3" numOuts="19" numFns="58" productID="FD-R-B3">
+      <output name="1" label="F0f|Front light" maxcurrent="300mA"/>
+      <output name="2" label="F0r|Rear light" maxcurrent="300mA"/>
+      <output name="3" label="AUX 3" maxcurrent="100mA"/>
+      <output name="4" label="AUX 4" maxcurrent="100mA"/>
+      <output name="5" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="6" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="7" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="8" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="9" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="10" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="11" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="12" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="13" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="14" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="15" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="16" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="17" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="18" label="|"/> <!-- Empty function, placeholder for shunting mode as output 19    -->
+      <output name="19" label="Shunting mode"/>
+        <size length="13" width="9.5" height="3.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Calls to std NMRA templates (not in original LD-G-32.xml file)    -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- Consist address (consist direction bit 7 not supported) -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+    <!-- Definitions for Tams-Elektronik function mapping according to RCN-227 -->
+    <xi:include href="http://jmri.org/xml/decoders/rail_community/rcn277mapping.xml"/>
+    <!-- Definitions for Tams-Elektronik function mapping preclusion according to RCN-227 -->
+    <xi:include href="http://jmri.org/xml/decoders/rail_community/rcn277preclusion.xml"/>
+    <!-- Analog options -->
+    <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+    <variable CV="65" mask="XXXXXXXV" item="Analog Control option 1" default="0">
+      <enumVal>
+        <enumChoice choice="Off" value="0">
+          <choice>Change of polarity (d.c. layouts)</choice>
+          <choice xml:lang="de">Polaritätswechsel (Gleichstromanlagen)</choice>
+          <choice xml:lang="nl">Polariteitwissel (gelijkstroombanen)</choice>
+        </enumChoice>
+        <enumChoice choice="On negative DC" value="1">
+          <choice>Overvoltage impulse (a.c. layouts)</choice>
+          <choice xml:lang="de">Überspannungsimpuls (Wechselstromanlagen)</choice>
+          <choice xml:lang="nl">Overspanningimpuls (wisselstroombanen)</choice>
+        </enumChoice>
+      </enumVal>
+      <label>Analog mode</label>
+      <label xml:lang="de">Analogmodus</label>
+      <label xml:lang="nl">Analoge mode</label>
+      <tooltip>Procedure triggering a change of direction in analog mode</tooltip>
+      <tooltip xml:lang="de">Verfahren, das einen Richtungswechsel auslöst in Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Methode die de rijrichting omkeringt in analoge mode</tooltip>
+    </variable>
+    <!-- Definitions for Railcom/Motorola Panel -->
+    <variable item="Enable RailCom" CV="29" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Enable RailCom</label>
+    <label xml:lang="fr">RailCom</label>
+    <label xml:lang="de">RailCom</label>
+    <label xml:lang="it">Abilita RailCom</label>
+    </variable>
+    <variable item="Feedback on canal 1" CV="28" mask="XXXXXXXV" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Feedback on canal 1</label>
+    <label xml:lang="fr">Feedback sur canal 1</label>
+    <label xml:lang="de">Kanal 1</label>
+    </variable>
+    <variable item="Feedback on canal 2" CV="28" mask="XXXXXXVX" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Feedback on canal 2</label>
+    <label xml:lang="fr">Feedback sur canal 2</label>
+    <label xml:lang="de">Kanal 2</label>
+    </variable>
+    <variable item="Dynamic canal assignment" CV="28" mask="XXXXXVXX" default="0">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+      <qualifier>
+      <variableref>Feedback on canal 1</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Dynamic canal assignment</label>
+    <label xml:lang="fr">Canal feedback dynamique</label>
+    <label xml:lang="de">Anwendung dynamischer Kanal 1</label>
+    </variable>
+    <variable item="Enable RailCom QOS (Quality Of Service)" CV="10" mask="XXXXXXXV" default="1">
+      <qualifier>
+      <variableref>Enable RailCom</variableref>
+      <relation>eq</relation>
+      <value>1</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Enable RailCom QOS (Quality Of Service)</label>
+    <label xml:lang="fr">Récupération de la qualité de réception Railcom</label>
+    <label xml:lang="de">Dynamische RailCom-Informationen (Empfangsstatistik)</label>
+    </variable>
+    <!-- Function settings - LightsPane-->
+    <xi:include href="http://jmri.org/xml/decoders/tams/functioneffects.xml"/>
+
+    <!-- Timeout - Advanced Group 1 Option 1-->
+    <variable CV="11" item="Advanced Group 1 Option 1" comment="Range 2-255" default="16">
+      <decVal min="2" max="255"/>
+      <label>Packet Time Out</label>
+      <label xml:lang="de">Packet Time Out</label>
+      <label xml:lang="nl">Packet Time Out</label>
+      <tooltip>&lt;html&gt;Time period between the failure of the digital signal and the&lt;br&gt;
+                           change to the alternative operation (analogue operation).&lt;br&gt;&lt;br&gt;
+                           Increasing the input value by "1" extends the time period by 10 ms.&lt;br&gt;
+                           (Range: 2-255, Default: 16) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Zeitdauer zwischen dem Ausfall des Digitalsignals und dem&lt;br&gt;
+                                         Wechsel in den alternativen Betrieb (Analogbetrieb).&lt;br&gt;&lt;br&gt;
+                                         Die Erhöhung des Eingabewertes um "1" verlängert die&lt;br&gt;
+                                         Zeitdauer um 10 ms.&lt;br&gt;
+                                         (Bereich: 2-255, voreingestellt: 16) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Tijdspanne tussen het uitvallen van het digitale signaal en de&lt;br&gt;
+                                         omschakeling naar de alternatieve werking (analoge werking).&lt;br&gt;&lt;br&gt;
+                                         Door de invoerwaarde met "1" te verhogen, wordt de tijdsduur&lt;br&gt;
+                                         met 10 ms verlengd.
+                                         (Bereik: 2-255, standaardinstelling: 16) &lt;/html&gt;</tooltip>
+      <comment>Range 2-255</comment>
+    </variable>
+    <!-- Decoder lock  Advanced Group 1 Option 2 & 3-->
+    <variable CV="15" item="Advanced Group 1 Option 2" default="3" tooltip="Set this to match value below and decoder will unlock">
+        <decVal/>
+        <label>Decoder Lock ID number</label>
+        <label xml:lang="de">Decoder Lock Wert</label>
+        <label xml:lang="ca">Bloqueig decoder per ID</label>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+    </variable>
+    <variable CV="16" item="Advanced Group 1 Option 3" default="3" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+        <decVal/>
+        <label>Preset Lock ID number</label>
+        <label xml:lang="de">Decoder-Typ Lock Wert</label>
+        <label xml:lang="ca">ID locomotora per tipus</label>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion, etc.</tooltip>
+    </variable>
+
+    <!-- Indexes  Advanced Group 2 Option 1 & 2-->
+    <variable CV="31" item="Advanced Group 2 Option 1" comment="Range 0-255" default="0">
+      <decVal min="0" max="255"/>
+      <label>Index for higher CV paged CV31</label>
+      <label xml:lang="de">Index für höhere CV-Pages CV31</label>
+      <label xml:lang="nl">Index voor hogere CV-pages CV31</label>
+      <tooltip>&lt;html&gt;Function mapping&lt;br&gt;
+                           If different values are entered in CV 31 and/or 32 the function mapping for&lt;br&gt;
+                           the function outputs and special functions cannot be changed.&lt;br&gt;
+                           (Range: 0-255, Default: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Function mapping&lt;br&gt;
+                                         Bei Eingabe abweichender Werte in CV 31 und/oder 32 ist keine Änderung des&lt;br&gt;
+                                         Function Mapping für die Funktionsausgänge und Sonderfunktionen möglich.&lt;br&gt;
+                                         (Bereich: 0-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Functie mapping&lt;br&gt;
+                                         Als in CV 31 en/of 32 verschillende waarden worden ingevoerd, kan de functiemapping&lt;br&gt;
+                                         voor de functie-uitgangen en speciale functies niet worden gewijzigd.&lt;br&gt;
+                                         (Bereik: 0-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+      <comment>Range 0-255</comment>
+    </variable>
+    <variable CV="32" item="Advanced Group 2 Option 2" comment="Range 0-255" default="42">
+      <decVal min="0" max="255"/>
+      <label>Index for higher CV paged CV32</label>
+      <label xml:lang="de">Index für höhere CV-Pages CV32</label>
+      <label xml:lang="nl">Index voor hogere CV-pages CV32</label>
+      <tooltip>&lt;html&gt;Function mapping&lt;br&gt;
+                           If different values are entered in CV 31 and/or 32 the function mapping for&lt;br&gt;
+                           the function outputs and special functions cannot be changed.&lt;br&gt;
+                           (Range: 0-255, Default: 42) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Function mapping&lt;br&gt;
+                                         Bei Eingabe abweichender Werte in CV 31 und/oder 32 ist keine Änderung des&lt;br&gt;
+                                         Function Mapping für die Funktionsausgänge und Sonderfunktionen möglich.&lt;br&gt;
+                                         (Bereich: 0-255, voreingestellt: 42) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Functie mapping&lt;br&gt;
+                                         Als in CV 31 en/of 32 verschillende waarden worden ingevoerd, kan de functiemapping&lt;br&gt;
+                                         voor de functie-uitgangen en speciale functies niet worden gewijzigd.&lt;br&gt;
+                                         (Bereik: 0-255, standaardinstelling: 42) &lt;/html&gt;</tooltip>
+      <comment>Range 0-255</comment>
+    </variable>
+    <!-- Mapping type read only  Advanced Group 2 Option 3-->
+    <variable CV="96" item="Advanced Group 2 Option 3" readOnly="yes" default="2">
+      <decVal/>
+      <label>Method for function assignment</label>
+      <label xml:lang="de">Methode zur Funktions- zuordnung</label>
+      <tooltip>&lt;html&gt;Defines the method for assigning the functions:&lt;br&gt;
+                           2 = Function assignment via CVs 257 to 512 in the bank selected by CV 31 = 0 and CV 32 = 42&lt;br&gt;
+                           with CVs per function according to RailCommunity standard RCN227 section 2 &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Legt die Methode für die Funktionszuordnung fest:&lt;br&gt;
+                                         2 = Funktionszuordnung über die CVs 257 bis 512 in der durch CV 31 = 0 und CV 32 = 42 ausgewählten Bank&lt;br&gt;
+                                         mit CVs je Funktion entsprechend RailCommunity Norm RCN227 Abschnitt 2 &lt;/html&gt;</tooltip>
+    </variable>
+
+    <!-- Protocols  Advanced Group 2 Option 11,12,13-->
+    <variable item="Advanced Group 2 Option 11" CV="12" mask="XXXXXXXV" default="1" readOnly="yes" >
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>DC Analog</label>
+    </variable>
+    <variable item="Advanced Group 2 Option 12" CV="12" mask="XXXXXVXX" default="1" readOnly="yes" >
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>DCC</label>
+    </variable>
+    <variable item="Advanced Group 2 Option 13" CV="12" mask="XXVXXXXX" default="1" readOnly="yes" >
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      <label>Motorola</label>
+    </variable>
+
+    <!-- Input switching   -->
+    <variable CV="62" mask="XXXXXXXV" item="Switching input to F1" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F1</label>
+      <label xml:lang="de">Schalteingang zu F1</label>
+      <label xml:lang="nl">Schakelingang toe F1</label>
+    </variable>
+    <variable CV="62" mask="XXXXXXVX" item="Switching input to F2" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F2</label>
+      <label xml:lang="de">Schalteingang zu F2</label>
+      <label xml:lang="nl">Schakelingang toe F2</label>
+    </variable>
+    <variable CV="62" mask="XXXXXVXX" item="Switching input to F3" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F3</label>
+      <label xml:lang="de">Schalteingang zu F3</label>
+      <label xml:lang="nl">Schakelingang toe F3</label>
+    </variable>
+    <variable CV="62" mask="XXXXVXXX" item="Switching input to F4" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F4</label>
+      <label xml:lang="de">Schalteingang zu F4</label>
+      <label xml:lang="nl">Schakelingang toe F4</label>
+    </variable>
+    <variable CV="62" mask="XXXVXXXX" item="Switching input to F5" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F5</label>
+      <label xml:lang="de">Schalteingang zu F5</label>
+      <label xml:lang="nl">Schakelingang toe F5</label>
+    </variable>
+    <variable CV="62" mask="XXVXXXXX" item="Switching input to F6" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F6</label>
+      <label xml:lang="de">Schalteingang zu F6</label>
+      <label xml:lang="nl">Schakelingang toe F6</label>
+    </variable>
+    <variable CV="62" mask="XVXXXXXX" item="Switching input to F7" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F7</label>
+      <label xml:lang="de">Schalteingang zu F7</label>
+      <label xml:lang="nl">Schakelingang toe F7</label>
+    </variable>
+    <variable CV="62" mask="VXXXXXXX" item="Switching input to F8" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Switching input to F8</label>
+      <label xml:lang="de">Schalteingang zu F8</label>
+      <label xml:lang="nl">Schakelingang toe F8</label>
+    </variable>
+    <variable CV="97" item="Switch-on time input" comment="Range 1-255" default="0">
+      <decVal min="0" max="255"/>
+      <label>Minimum switch-on time of the switching input</label>
+      <label xml:lang="de">Mindesteinschaltdauer des Schalteingangs</label>
+      <label xml:lang="nl">Minimale inschakeltijd van de schakelingang</label>
+      <tooltip>&lt;html&gt;Time period for which the input remains at least on after it has been&lt;br&gt;
+                           connected to ground. Increasing the input value by "1" extends the time&lt;br&gt;
+                           period by 0.1 sec.&lt;br&gt;
+                           (Range: 1-255, Default: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Zeitdauer, für die der Eingang mindestens eingeschaltet bleibt,&lt;br&gt;
+                                         nachdem er mit Masse verbunden war. Die Erhöhung des Eingabewertes&lt;br&gt;
+                                         um "1" verlängert die Zeitdauer um 0,1 Sek.&lt;br&gt;
+                                         (Bereich: 1-255, voreingestellt: 0) &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="nl">&lt;html&gt;Tijdstip waarop de ingang in ieder geval aanblijft nadat deze&lt;br&gt;
+                                         met de massa is verbonden. Door de invoerwaarde met "1" te&lt;br&gt;
+                                         verhogen, wordt de tijdsduur met 0,1 sec. verlengd.&lt;br&gt;
+                                         (Bereik: 1-255, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+      <comment>Range 1-255</comment>
+    </variable>
+
+  </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <!-- Pane function mapping preclusion according to RCN-227 -->
+  <xi:include href="http://jmri.org/xml/decoders/rail_community/Pane_preclusion.xml"/>
+  <!-- RailComconfiguration   -->
+  <pane>
+    <column>
+      <display item="Enable RailCom" label="RailCom"/>
+      <label>
+        <text> </text>
+      </label>
+    <display item="Feedback on canal 1"/>
+      <label>
+        <text> </text>
+      </label>
+    <display item="Feedback on canal 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dynamic canal assignment"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Enable RailCom QOS (Quality Of Service)"/>
+          <label>
+            <text> </text>
+          </label>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>RailCom</name>
+  </pane>
+  <!-- RailCom configuration   -->
+  <!-- Input Switching -->
+  <pane nameFmt="label">
+    <name>Input switching</name>
+    <name xml:lang="de">Schalteingang</name>
+    <column>
+      <row>
+        <separator/>
+        <column>
+          <separator/>
+          <grid gridy="NEXT" weightx="1" ipadx="10"> <!-- Inputs -->
+            <griditem gridx="0" gridy="0" gridwidth="10">
+              <label>
+                <text>   </text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="4" anchor="LINE_START">
+              <label>
+                <text>Inputs</text>
+                <text xml:lang="de">Eingang</text>
+                <text xml:lang="nl">Ingang</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="8">
+              <label>
+                <text>Assignment of the functions to the switching input</text>
+                <text xml:lang="de">Zuordnung der Funktionen zum Schalteingang</text>
+                <text xml:lang="nl">Toewijzing van de functies aan de schakelingang</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="1">
+              <label>
+                <text>F1</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F2</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F3</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F4</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F5</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F6</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F7</text>
+              </label>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <label>
+                <text>F8</text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="1">
+              <display item="Switching input to F1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+              <display item="Switching input to F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1">
+              <label>
+                <text> </text>
+              </label>
+            </griditem>
+            <griditem gridx="1" gridy="NEXT" gridwidth="7">
+              <display item="Switch-on time input"/>
+            </griditem>
+            <griditem gridx="9" gridy="NEXT" gridwidth="1" anchor="LINE_START">
+              <label>
+                <text>    </text>
+              </label>
+            </griditem>
+          </grid>
+          <separator/>
+        </column>
+      </row>
+    </column>
+  </pane>
+</decoder-config>

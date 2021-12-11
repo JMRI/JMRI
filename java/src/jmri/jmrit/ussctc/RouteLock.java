@@ -89,7 +89,7 @@ public class RouteLock implements Lock {
      * @return True if lock is clear and operation permitted
      */
     @Override
-    public boolean isLockClear() {
+    public boolean isLockClear(LockLogger lockLogger) {
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
@@ -116,5 +116,13 @@ public class RouteLock implements Lock {
     boolean isSignalClear(@Nonnull NamedBeanHandle<SignalHead> handle) {
         return handle.getBean().getState() != SignalHead.RED;
     }
+
+    @Override
+    public String toString() {
+        String retval = isLockClear(debugLockLogger) ? "clear " : "locked";
+        retval = retval+debugLockLogger.memory.getValue();
+        return retval;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteLock.class);
 }

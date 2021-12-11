@@ -351,11 +351,6 @@ public class AbstractFemaleSocketTest {
         }
 
         @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported");
         }
@@ -437,6 +432,12 @@ public class AbstractFemaleSocketTest {
 
         @Override
         public ArrayList<String> getListenerRefs() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void getListenerRefsIncludingChildren(List<String> list) {
             throw new UnsupportedOperationException("Not supported");
         }
 

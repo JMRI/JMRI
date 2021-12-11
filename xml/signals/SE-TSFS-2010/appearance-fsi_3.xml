@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2011</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Benny</firstname>
+        <surname>Tjader</surname>
+      </personname>
+      <email>etxbct@gmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2021-09-05</date>
+      <authorinitials>BCT</authorinitials>
+      <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>SE TSFS 2010</aspecttable>
+  <name>Single three aspect distant signal</name>
+  <reference>See wikipedia <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish railway signaling</a>
+  for english information.</reference>
+  <description>Single distant signal to indicate what next main signal is showing.
+  No points or main dwarf signal allowed between single distance signal and next main signal.</description>
+
+  <appearances>
+    <appearance>
+      <aspectname>Not used</aspectname>
+      <show>dark</show>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi-dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi-dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi-dark.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Dark.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Dark.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Fsi0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Expect Stop</aspectname>
+      <show>flashgreen</show>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi0.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Fsi0.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Fsi0.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Fsi0.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Expect 80</aspectname>
+      <show>flashlunar</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi1.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Fsi1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Fsi1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Fsi1.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Expect 40</aspectname>
+      <show>flashgreen</show>
+      <show>flashgreen</show>
+      <delay>5</delay>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/Fsi_three_aspect/Fsi2.gif</imagelink>
+      <imagelink type="mod59">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod59/Fsi1.gif</imagelink>
+      <imagelink type="mod68">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod68/Fsi1.gif</imagelink>
+      <imagelink type="mod85">../../../resources/icons/smallschematics/aspects/SE-TSFS-2010/mod85/Fsi1.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Expect Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Expect Stop</aspect>
+    </permissive>
+    <held>
+      <aspect>Expect Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not used</aspect>
+    </dark>
+   </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Lit</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect Stop</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh0</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh0</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect 40</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40</advancedAspect>
+      <ourAspect>Expect 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40 Caution</advancedAspect>
+      <ourAspect>Expect 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 40 Short Entry Route</advancedAspect>
+      <ourAspect>Expect 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Expect 80</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Caution</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect Stop</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect 40</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear 80 Expect 80</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh1</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 Stop</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 40</advancedAspect>
+      <ourAspect>Expect 40</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1 80</advancedAspect>
+      <ourAspect>Expect 80</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh2</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh2</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Sh3</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh3</advancedAspect>
+      <ourAspect>Expect Stop</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

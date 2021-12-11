@@ -25,6 +25,7 @@
       <label>
         <text>           See the manual chapter 3.5</text>
         <text xml:lang="de">                           Bitte Kapitel 3.5 im Handbuch beachten.</text>
+        <text xml:lang="cs">                           Viz příručka kapitola 3.5</text>
       </label>
       <label>
         <text>   </text>
@@ -32,18 +33,22 @@
       <label>
         <text>   </text>
         <text xml:lang="de">    Zum Setzen der Zweitadresse zunächst den gewünschten Wert</text>
+        <text xml:lang="cs">    Chcete-li nastavit druhou adresu, nejprve požadovanou hodnotu</text>
       </label>
       <label>
         <text>   </text>
         <text xml:lang="de">    in der "Erweiterten Adresse" im  Reiter "Basis" setzen.</text>
+        <text xml:lang="cs">    nastavte v "Rozšířená adresa" v kartě "Základní".</text>
       </label>
       <label>
         <text>   </text>
         <text xml:lang="de">    Danach den Wert aus CV#17 im Feld "zweite Erweiterte Adresse, Teil 1"</text>
+        <text xml:lang="cs">    Potom hodnotu z CV17 v poli "dDruhá rozšířená adresa, část 1"</text>
       </label>
       <label>
         <text>   </text>
         <text xml:lang="de">    und den Wert aus CV#18 im Feld "zweite Erweiterte Adresse, Teil 2" eintragen.</text>
+        <text xml:lang="cs">    a do pole "druhá rozšířená adresa, část 2" zadejte hodnotu z CV18.</text>
       </label>
     <separator/>
       <label>
@@ -56,6 +61,7 @@
         <text>           Description                       Output wire or operation</text>
         <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
         <text xml:lang="de">      Funktion                     Ausgang bzw. Funktion</text>
+        <text xml:lang="cs">           Popis                             Výstupní vodič nebo operace</text>
       </label>
       <label>
         <text> </text>
@@ -69,16 +75,19 @@
             <text>                              Front  </text>
             <text xml:lang="it">                                          Frontale </text>
             <text xml:lang="de">                              Lvor  </text>
+            <text xml:lang="cs">                              Přední  </text>
           </label>
           <label>
             <text>                                           Light  </text>
             <text xml:lang="it">                                           Luci   </text>
             <text xml:lang="de">                                      </text>
+            <text xml:lang="cs">                              světlo  </text>
           </label>
           <label>
             <text>                                           White  </text>
             <text xml:lang="it">                                           Bianco   </text>
             <text xml:lang="de">                              Weiß   </text>
+            <text xml:lang="cs">                                           Bílá  </text>
           </label>
           <label>
             <text> </text>
@@ -105,14 +114,17 @@
           <label>
             <text> Rear </text>
             <text xml:lang="de"> Lrück </text>
+            <text xml:lang="cs"> Zadní </text>
           </label>
           <label>
             <text> Light </text>
             <text xml:lang="de">       </text>
+            <text xml:lang="cs"> světlo </text>
           </label>
           <label>
             <text>Yellow </text>
             <text xml:lang="de"> Gelb </text>
+            <text xml:lang="cs">Žlutá </text>
           </label>
           <label>
             <text> </text>
@@ -167,6 +179,7 @@
           <label>
             <text>  FO 1  </text>
             <text xml:lang="de"> FA1 </text>
+            <text xml:lang="cs">  FV 1  </text>
           </label>
           <label>
             <text>       </text>
@@ -174,6 +187,7 @@
           <label>
             <text> Green </text>
             <text xml:lang="de"> Grün </text>
+            <text xml:lang="cs"> Zelená </text>
           </label>
           <label>
             <text> </text>
@@ -228,6 +242,7 @@
           <label>
             <text> FO 2 </text>
             <text xml:lang="de"> FA2 </text>
+            <text xml:lang="cs"> FV 2 </text>
           </label>
           <label>
             <text>    </text>
@@ -235,6 +250,7 @@
           <label>
             <text>Brown </text>
             <text xml:lang="de"> Braun </text>
+            <text xml:lang="cs">Hnědá </text>
           </label>
           <label>
             <text> </text>
@@ -289,6 +305,7 @@
           <label>
             <text> FO 3  </text>
             <text xml:lang="de"> FA3 </text>
+            <text xml:lang="cs"> FV 3  </text>
           </label>
           <label>
             <text>    </text>
@@ -296,6 +313,7 @@
           <label>
             <text> Grey </text>
             <text xml:lang="de">      </text>
+            <text xml:lang="cs"> Šedá </text>
           </label>
           <label>
             <text> </text>
@@ -350,6 +368,7 @@
           <label>
             <text> FO 4</text>
             <text xml:lang="de"> FA4 </text>
+            <text xml:lang="cs"> FV 4 </text>
           </label>
           <label>
             <text>    </text>
@@ -357,6 +376,7 @@
           <label>
             <text>Orange</text>
             <text xml:lang="de">        </text>
+            <text xml:lang="cs">Oranžová</text>
           </label>
           <label>
             <text> </text>
@@ -416,6 +436,7 @@
           <label>
             <text> FO 5</text>
             <text xml:lang="de"> FA5 </text>
+            <text xml:lang="cs"> FV 5</text>
           </label>
           <label>
             <text>    </text>
@@ -423,6 +444,7 @@
           <label>
             <text>Orange</text>
             <text xml:lang="de">        </text>
+            <text xml:lang="cs">Oranžová</text>
           </label>
           <label>
             <text> </text>
@@ -482,6 +504,7 @@
           <label>
             <text> FO 6</text>
             <text xml:lang="de"> FA6 </text>
+            <text xml:lang="cs"> FV 6</text>
           </label>
           <label>
             <text>    </text>
@@ -489,6 +512,7 @@
           <label>
             <text>Orange</text>
             <text xml:lang="de">        </text>
+            <text xml:lang="cs">Oranžová</text>
           </label>
           <label>
             <text> </text>

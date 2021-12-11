@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -44,7 +45,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static public final int COMMENTCOL = 2;
     static public final int STATECOL = 3;
     static public final int SENSORCOL = 4;
-    static public final int EDIT_COL = 5;   // Edit / Edit Paths button
+    static public final int EDIT_COL = 5;   // Paths button
     static public final int DELETE_COL = 6;
     static public final int LENGTHCOL = 7;
     static public final int UNITSCOL = 8;
@@ -55,7 +56,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static public final int WARRANTCOL = 13;
     static public final int ERR_SENSORCOL = 14;
     static public final int CURVECOL = 15;
-    static public final int NUMCOLS = 16;
+    static public final int VALUE = 16;
+    static public final int NUMCOLS = 17;
 
     static String ZEROS = "000000000";      // 9 bits contain the OBlock state info
 
@@ -66,7 +68,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     private float _tempLen = 0.0f;      // mm for length col of tempRow
     TableFrames _parent;
     private final boolean _tabbed; // updated from prefs (restart required)
-
+    private boolean _isMetric = false;
     public OBlockTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
@@ -127,6 +129,19 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public void clickOn(OBlock t) {
+    }
+
+    protected boolean isMetric() {
+        return _isMetric;
+    }
+
+    protected void changeUnits() {
+        _isMetric = !_isMetric;
+        SortedSet<OBlock> oblockList = _manager.getNamedBeanSet();
+        for (OBlock block : oblockList) {
+           block.setMetricUnits(_isMetric);
+        }
+        fireTableDataChanged();
     }
 
     /**
@@ -342,6 +357,18 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     }
                 }
                 return tempRow[col];
+            case VALUE:
+                if (b != null) {
+                    Object obj = b.getValue();
+                    if (obj != null) {
+                        return obj;
+                    } else if ((b.getState() & OBlock.OCCUPIED) != 0) {
+                        return Bundle.getMessage("BlockUnknown");
+                    } else {
+                        return null;
+                    }
+                }
+                return tempRow[col];
             case EDIT_COL:
                 if (b != null) {
                     if (_tabbed) {
@@ -369,6 +396,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (!_tabbed && (super.getRowCount() == row)) { // editing tempRow
             switch (col) {
                 case SYSNAMECOL:
+                    if (!_manager.isValidSystemNameFormat((String) value)) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNameOBlock"),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                     OBlock block = _manager.createNewOBlock((String) value, tempRow[USERNAMECOL]);
                     if (block == null) { // an OBlock with the same systemName or userName already exists
                         block = _manager.getOBlock(tempRow[USERNAMECOL]);
@@ -507,8 +539,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 block.setComment((String) value);
                 fireTableRowsUpdated(row, row);
                 return;
-            case STATECOL:
-                return;     //  STATECOL is not editable
             case SENSORCOL:
                 if (!block.setSensor((String) value)) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
@@ -589,23 +619,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 block.setPermissiveWorking((Boolean) value); // compare to REPORT_CURRENTCOL
                 fireTableRowsUpdated(row, row);
                 return;
-            case WARRANTCOL:
-                Warrant warrant = block .getWarrant();
-                jmri.jmrit.logix.WarrantManager mgr = InstanceManager
-                            .getDefault(jmri.jmrit.logix.WarrantManager.class);
-                Warrant newWarrant = mgr.getWarrant((String)value);
-                if (warrant != null && !warrant.equals(newWarrant)) {
-                    block.deAllocate(warrant);
-                    if (newWarrant != null) {
-                        String msg = block.allocate(newWarrant);
-                        if (msg != null) {
-                            JOptionPane.showMessageDialog(null, msg,
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
-                        }                    
-                    }
-                }
-                fireTableRowsUpdated(row, row);
-                return;
             case SPEEDCOL:
                 block.setBlockSpeedName((String) value);
                 fireTableRowsUpdated(row, row);
@@ -645,11 +658,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case LENGTHCOL:
                 return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
-                return " "; // make each unique yet without a label
+                return Bundle.getMessage("UnitsCol");
             case EDIT_COL:
-                return "  ";
+                return Bundle.getMessage("MenuPaths");
             case DELETE_COL:
-                return "   ";
+                return Bundle.getMessage("ColumnDelete");
             case ERR_SENSORCOL:
                 return Bundle.getMessage("ErrorSensorCol");
             case REPORTERCOL:
@@ -660,6 +673,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return Bundle.getMessage("PermissionCol");
             case WARRANTCOL:
                 return Bundle.getMessage("WarrantCol");
+            case VALUE:
+                return Bundle.getMessage("ValueCol");
             case SPEEDCOL:
                 return Bundle.getMessage("SpeedCol");
             default:
@@ -723,16 +738,17 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case ERR_SENSORCOL:
             case REPORTERCOL:
             case WARRANTCOL:
-                return new JTextField(10).getPreferredSize().width;
+                return new JTextField(12).getPreferredSize().width;
+            case VALUE:
             case CURVECOL:
             case REPORT_CURRENTCOL:
             case PERMISSIONCOL:
             case SPEEDCOL:
-                return new JTextField(8).getPreferredSize().width;
+                return new JTextField(10).getPreferredSize().width;
             case LENGTHCOL:
-                return new JTextField(5).getPreferredSize().width;
+                return new JTextField(6).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(4).getPreferredSize().width;
+                return new JTextField(5).getPreferredSize().width;
             case EDIT_COL:
                 return new JButton(Bundle.getMessage("ButtonEditPath")).getPreferredSize().width+4;
             case DELETE_COL:
@@ -746,10 +762,22 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (super.getRowCount() == row) {
-            return true; // the new entry/bottom row is editable in all cells
+        switch (col) {
+            case SYSNAMECOL:
+                if (super.getRowCount() == row) {
+                    return true; // the new entry/bottom row is editable in all cells
+                } else {
+                    return false;
+                }
+            case STATECOL:
+            case WARRANTCOL:
+            case VALUE:
+                return false;
+            default:
+                // fall through
+                break;
         }
-        return (col != SYSNAMECOL && col != STATECOL);
+        return true;
     }
 
     //*********************** combo box cell editors *********************************/
@@ -865,6 +893,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static JComboBox<String> getSpeedEditorBox(int row) {
         // create dummy comboBox, override in extended classes for each bean
         JComboBox<String> editCombo = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+        // item to reset speed notch to default, i.e. continue at current speed requirement.
+        javax.swing.DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>)editCombo.getModel();
+        model.addElement("");
         editCombo.putClientProperty("JComponent.sizeVariant", "small");
         editCombo.putClientProperty("JComboBox.buttonType", "square");
         return editCombo;
@@ -888,13 +919,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         super.propertyChange(e);
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
+        if (property.equals("length") || property.equals("UserName") || property.equals("state")) {
+            _parent.updateOBlockTablesMenu();
+            fireTableDataChanged();
+        }
         _parent.getPortalXRefTableModel().propertyChange(e);
         _parent.getSignalTableModel().propertyChange(e);
         _parent.getPortalTableModel().propertyChange(e);
 
-        if (property.equals("length") || property.equals("UserName")) {
-            _parent.updateOBlockTablesMenu();
-        }
     }
 
     protected String getClassName() {

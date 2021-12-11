@@ -259,25 +259,32 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < carList.size(); index++) {
-            Car c = carList.get(index);
-            if (c != null) {
-                String[] number = c.getNumber().split(TrainCommon.HYPHEN);
+            Car car = carList.get(index);
+            if (car != null) {
+                String[] number = car.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
-                if (roadNumber.startsWith("*")) {
+                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
+                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
+                    if (car.getNumber().contains(rN)) {
+                        _roadNumber = roadNumber;
+                        _index = index + 1;
+                        return index;
+                    }
+                } else if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
-                    if (c.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
+                    if (car.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
                 } else if (roadNumber.endsWith("*")) {
                     String rN = roadNumber.substring(0, roadNumber.length() - 1);
-                    if (c.getNumber().startsWith(rN)) {
+                    if (car.getNumber().startsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
-                } else if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
+                } else if (car.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
                     _roadNumber = roadNumber;
                     _index = index + 1;
                     return index;

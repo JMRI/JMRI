@@ -41,7 +41,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionLight.LightState.get(Light.UNKNOWN);
+            ActionLight.LightState.get(100);    // The number 100 is a state that ActionLight.LightState isn't aware of
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));
@@ -484,11 +484,6 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
-    }
-    
-    @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
     }
     
     @Test

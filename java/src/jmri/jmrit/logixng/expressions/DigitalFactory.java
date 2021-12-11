@@ -24,6 +24,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionBlock.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionClock.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionConditional.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionDispatcher.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionEntryExit.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLight.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLocalVariable.class));
@@ -31,6 +32,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionOBlock.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionPower.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReference.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReporter.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionScript.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensor.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalHead.class));

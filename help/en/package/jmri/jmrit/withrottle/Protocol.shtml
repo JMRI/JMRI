@@ -200,7 +200,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
       the labels for the different turnout states. For example:</p>
 
       <pre class="code">
-PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4]\[Unknown}|{1]\[Inconsistent}|{8
 </pre>
       <p>This string contains an array with two elements, which provide the labels to use for each
       turnout state (except for Unknown):</p>
@@ -224,9 +224,6 @@ PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
           <td>The corresponding value for the turnout state</td>
         </tr>
       </table>
-
-      <p class="note">There is also a third value, Unknown, represented with the value 1, that is
-      not explicitly given a caption in the reply.</p>
 
       <p>The second string appears when you have turnouts defined in JMRI, and contains the array
       of defined turnouts, and will look something like this:</p>
@@ -265,11 +262,11 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
       <h3 id="RouteList">Route List</h3>
 
       <p>Like for turnouts, JMRI will reply with zero, one or two strings. The first string is
-      likewise a list of labels for the route values. Again, Unknown (1) is not explicitly listed.
+      likewise a list of labels for the route values.
       For example:</p>
 
       <pre class="code">
-PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
+PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8
 </pre>
       <p>The second string contains an array of defined routes. For example:</p>
 

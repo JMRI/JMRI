@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
@@ -89,6 +90,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextArea commentTextArea = new JTextArea(2, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    JColorChooser commentColorChooser = new JColorChooser();
 
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
@@ -138,7 +140,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null) {
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
-            commentTextArea.setText(_location.getComment());
+            commentTextArea.setText(TrainCommon.getTextColorString(_location.getComment()));
             divisionComboBox.setSelectedItem(_location.getDivision());
             yardModel.initTable(yardTable, location);
             spurModel.initTable(spurTable, location);
@@ -223,9 +225,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pC.setLayout(new GridBagLayout());
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         addItem(pC, commentScroller, 0, 0);
+        if (_location != null) {
+            addItem(pC, OperationsPanel.getColorChooserPanel(_location.getComment(), commentColorChooser), 2, 0);
+        } else {
+            addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
+        }
 
-        // adjust text area width based on window size
-        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
+        // adjust text area width based on window size less color chooser
+        Dimension d = new Dimension(getPreferredSize().width - 100, getPreferredSize().height);
+        adjustTextAreaColumnWidth(commentScroller, commentTextArea, d);
 
         JPanel readerPanel = new JPanel();
         readerPanel.setVisible(false);
@@ -307,9 +315,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
     }
 
     private void loadToolMenu() {
@@ -325,12 +331,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
-        toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(false, _location));
-        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
     }
 
     // frames
@@ -491,7 +497,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             stagingTable.getCellEditor().stopCellEditing();
         }
         _location.setName(locationNameTextField.getText());
-        _location.setComment(commentTextArea.getText());
+        _location.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
         _location.setDivision((Division) divisionComboBox.getSelectedItem());
         if (Setup.isRfidEnabled() && readerSelector != null) {
             _location.setReporter(readerSelector.getSelectedItem());

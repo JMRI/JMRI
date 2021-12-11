@@ -85,7 +85,9 @@ public class TrainBuilder extends TrainBuilderBase {
         addEngines(); // 1st, 2nd and 3rd engine swaps in a train's route
         showTrainCarTypes(); // show car types that this train will service
         showTrainLoadNames(); // show load names that this train will service
-        loadRemoveAndListCars(); // remove unwanted cars and list available cars by location
+        loadCarList(); // remove unwanted cars
+        adjustCarsInStaging(); // adjust for cars on one staging track
+        listCarsByLocation(); // list available cars by location
         sortCarsOnFifoLifoTracks(); // sort cars on FIFO or LIFO tracks
         addCabooseOrFredToTrain(); // do all caboose and FRED changes in the train's route
         removeCaboosesAndCarsWithFred(); // done assigning cabooses and cars with FRED, remove the rest
@@ -99,6 +101,10 @@ public class TrainBuilder extends TrainBuilderBase {
         showCarsNotRoutable(); // list cars that couldn't be routed
 
         // done building
+        if (_warnings > 0) {
+            addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
+                    new Object[] { _train.getName(), _warnings }));
+        }
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTime"),
                 new Object[] { _train.getName(), new Date().getTime() - _startTime.getTime() }));
 
@@ -114,6 +120,8 @@ public class TrainBuilder extends TrainBuilderBase {
 
         // operations automations use wait for train built to create custom manifests
         // and switch lists
+        _train.setPrinted(false);
+        _train.setSwitchListStatus(Train.UNKNOWN);
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
         _train.setBuilt(true);
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon
@@ -855,7 +863,9 @@ public class TrainBuilder extends TrainBuilderBase {
             showAndInitializeTrainRoute();
             getAndRemoveEnginesFromList();
             addEngines();
-            loadRemoveAndListCars();
+            loadCarList();
+            adjustCarsInStaging();
+            listCarsByLocation();
             addCabooseOrFredToTrain();
             removeCaboosesAndCarsWithFred();
             saveCarFinalDestinations(); // save final destination and schedule id
@@ -1873,7 +1883,7 @@ public class TrainBuilder extends TrainBuilderBase {
             return false; // the only false return
         }
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
-                new Object[] { car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
+                new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getDestinationTrackName() }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried by train
@@ -2493,6 +2503,17 @@ public class TrainBuilder extends TrainBuilderBase {
             throw new BuildFailedException(ex);
         }
         new TrainCsvManifest(_train);
+    }
+
+    private void showWarningMessage() {
+        if (trainManager.isBuildMessagesEnabled() && _warnings > 0) {
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("buildCheckReport"),
+                            new Object[] { _train.getName(), _train.getDescription() }),
+                    MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
+                            new Object[] { _train.getName(), _warnings }),
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void buildFailed(BuildFailedException e) {

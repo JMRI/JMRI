@@ -3,6 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -156,6 +157,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     }
 
     public void load(Car car) {
+        setTitle(Bundle.getMessage("TitleCarEdit"));
         super.load(car);
 
         passengerCheckBox.setSelected(car.isPassenger());
@@ -189,8 +191,6 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         colorComboBox.setSelectedItem(car.getColor());
         groupComboBox.setSelectedItem(car.getKernelName());
-        
-        setTitle(Bundle.getMessage("TitleCarEdit"));
     }
 
     @Override
@@ -278,7 +278,7 @@ public class CarEditFrame extends RollingStockEditFrame {
             try {
                 String carWeight = CarManager.calculateCarWeight(length);
                 weightTextField.setText(carWeight); // car weight in ounces.
-                int tons = (int) (Double.parseDouble(carWeight) * Setup.getScaleTonRatio());
+                int tons = (int) (NumberFormat.getNumberInstance().parse(carWeight).doubleValue() * Setup.getScaleTonRatio());
                 // adjust weight for caboose
                 if (cabooseCheckBox.isSelected() || passengerCheckBox.isSelected()) {
                     tons = (int) (Double.parseDouble(length) * .9); // .9 tons/foot
@@ -286,6 +286,9 @@ public class CarEditFrame extends RollingStockEditFrame {
                 weightTonsTextField.setText(Integer.toString(tons));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("carLengthMustBe"), Bundle
+                        .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
                         .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
             }
         }

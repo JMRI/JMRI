@@ -124,6 +124,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
     }
 
     public void load(Engine engine) {
+        setTitle(Bundle.getMessage("TitleEngineEdit"));
+        
         if (!engineModels.containsName(engine.getModel())) {
             String msg = MessageFormat.format(Bundle.getMessage("modelNameNotExist"),
                     new Object[] { engine.getModel() });
@@ -141,8 +143,6 @@ public class EngineEditFrame extends RollingStockEditFrame {
         bUnitCheckBox.setSelected(engine.isBunit());
         hpTextField.setText(engine.getHp());
         groupComboBox.setSelectedItem(engine.getConsistName());
-
-        setTitle(Bundle.getMessage("TitleEngineEdit"));
     }
 
     // combo boxes

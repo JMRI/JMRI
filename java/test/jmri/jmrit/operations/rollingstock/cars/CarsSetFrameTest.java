@@ -167,6 +167,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // pressing "Save" when car has destination and train will cause dialog box to appear
         Assert.assertNotNull("car has destination", c3.getDestination());
         Assert.assertNotNull("car has destination track", c3.getDestinationTrack());

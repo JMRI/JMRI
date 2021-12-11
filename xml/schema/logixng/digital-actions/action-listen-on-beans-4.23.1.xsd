@@ -49,12 +49,17 @@
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
                           <xs:element name="type" type="LogixNG_NamedBeanType" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="all" type="yesNoType" minOccurs="0" maxOccurs="1"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
+
+              <xs:element name="localVariableNamedBean" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="localVariableEvent" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="localVariableNewValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

@@ -30,12 +30,12 @@ public class DCCppMenu extends JMenu {
             setText(rb.getString("MenuDCC++"));
         }
 
-        add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction());
         if (memo != null) {
+            add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction(rb.getString("DCCppMonFrameTitle"), memo));
             add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
+            add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), memo));
         }
         add(new jmri.jmrit.swing.meter.MeterAction());
-        add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), null));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.dccpp.dccppovertcp.ServerAction(rb.getString("MenuItemDCCppOverTCPServer")));
     }

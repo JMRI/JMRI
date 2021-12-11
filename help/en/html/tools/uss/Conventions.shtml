@@ -14,30 +14,60 @@
       <h2>JMRI: USS CTC Tools Recommendations</h2>
 
       <p>This page discussions some conventions that might be useful when setting up a CTC panel
-      using the USS CTC tools. Basically, this is how we did the examples, and it might be a
+      using the USS CTC tools. Basically, this is how we set up the device user names in
+      <a href="https:jmri.org/jython/ctc">the example</a>. It might be a
       helpful approach for you to organize all the needed info.</p>
 
-      <p>User names for devices:</p>
+      <p>
+      The key organizing principle is the station or column number.  These run from
+      1 to the number of columns on the machine.  They appear as N in the examples below.</p>
 
-      <p>The indicators on the panel are driven by Turnouts named things like "CTC 31 N" or "CTC 31
-      R" for a turnout lever, or "CTC 32 R", "CTC 32 C" or "CTC 32 L" for a signal lever.</p>
+      <h3>On-Layout Items</h3>
+      <dl>
+        <dt>Track circuit sensors
+        <dd>These are named with "TC" as an abbreviation for Track Circuit, followed by station number N,
+            and then a user reasonable name:  "TC Sta 1 Left Approach"; "TC Sta 2 Main"
+        <dt>Turnouts
+        <dd>There is only one Turnout per station in USS CTC systems, so these are named by
+            station number:  "Sta 1 Layout TO"
+        <dt>Signals
+        <dd>
+      </dl>
 
-      <p>The Sensors that are connected to switch inputs on the panel use the same names, though
-      the center one on a signal (i.e. "CTC 32 C") is often omitted.</p>
+      <h3>CTC Lever Controls</h3>
+        Each position of a CTC lever has a sensor to detect how it's set,
+        and a turnout that drives the lamp on that position. To reduce the number of
+        names, we give the same name to those.
+      <dl>
+        <dt>Turnout Levers
+        <dd>Station name, then TO to indicate the lever type, the turnout number, then a letter
+            N for Normal or R for Reversed:
+            "Sta 1 TO 1 N", "Sta 2 TO 3 R"
+        <dt>Signal Levers
+        <dd>Station name, then SI to indicate the lever type, the signal number, then a letter
+            R for Right, C for Center or L for Left:
+            "Sta 1 SI 2 C", "Sta 2 SI 4 R"
+        <dt>Code Button
+        <dd>The code button is a sensor named for the station number: "Sta 2 Code"
+        <dt>Code Lamp
+        <dd>The code lamp is a Turnout named for the station number, same as the code button:
+            "Sta 2 Code"
+      </dl>
 
-      <p>Occupancy detector Sensors are labelled as "Track Circuits", i.e. "TC 12". The
-      corresponding lamp on the panel is driven by a Turnout of the same name, "TC 12".</p>
+      <h3>CTC Machine Track Diagram</h3>
+      <dl>
+        <dt>Track Occupancy Indicators
+        <dd>Because these don't necessarily have a one-to-one relationship with the
+            sensors on the layout (a track diagram might combine several layout track
+            circuits into one on the panel), they are named slightly differently:
+            "Sta 1 Left Approach TC"
+      </dl>
+        Some people will want to display the actual state of turnouts, track circuit sensors
+        and signals on their track diagram.  They can do that by putting up icons for the
+        layout objects; no additional names are necessary, because there are no more items.
 
-      <p>The code button and code light are called "Code Button 32" and "Code Lamp 32"
-      respectively.</p>
 
-      <p>Maintainer call turnouts and sensors are labelled as e.g. "MC 88".</p>
-
-      <p>The real turnout on the layout is known as "CTC 3 Turnout".</p>
-
-      <p>Signals are around an OS section are known by the section number and location: "CTC 4 main
-      upper", "CTC 4 main lower", "CTC 4 main single", "CTC 4 siding". 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

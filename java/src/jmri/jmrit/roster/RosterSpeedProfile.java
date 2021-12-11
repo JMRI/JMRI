@@ -237,6 +237,86 @@ public class RosterSpeedProfile {
         ss.setForwardSpeed(forward);
     }
 
+    /**
+     * Merge raw throttleSetting value with an existing profile SpeedStep if 
+     * key for the throttleSetting is within the speedIncrement of the SpeedStep.
+     * @param throttleSetting raw throttle setting value
+     * @param speed track speed
+     * @param speedIncrement throttle's speed step increment.
+     */
+    public void setForwardSpeed(float throttleSetting, float speed, float speedIncrement) {
+        if (throttleSetting> 0.0f) {
+            _hasForwardSpeeds = true;
+        } else {
+            return;
+        }
+        int key;
+        Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
+        if (entry != null) {    // close keys. i.e. resolve to same throttle step
+            float value = entry.getValue().getForwardSpeed();
+            speed = (speed + value) / 2;
+            key = entry.getKey();
+        } else {    // nothing close. make new entry
+            key = Math.round(throttleSetting * 1000);
+        }
+        if (!speeds.containsKey(key)) {
+            speeds.put(key, new SpeedStep());
+        }
+        SpeedStep ss = speeds.get(key);
+        ss.setForwardSpeed(speed);
+    }
+
+    private Entry<Integer, SpeedStep>  findEquivalentEntry (float throttleSetting, float speedIncrement) {
+        // search through table until end for an entry is found whose key / 1000
+        // is within the speedIncrement of the throttleSetting
+        // Note there may be zero values interspersed in the tree
+        Entry<Integer, SpeedStep> entry = speeds.firstEntry();
+        if (entry == null) {
+            return null;
+        }
+        int key = entry.getKey();
+        while (entry != null) {
+            entry = speeds.higherEntry(key);
+            if (entry != null) {
+                float speed = entry.getKey();
+                if (Math.abs(speed/1000.0f - throttleSetting) <= speedIncrement) {
+                    return entry;
+                }
+                key = entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Merge raw throttleSetting value with an existing profile SpeedStep if 
+     * key for the throttleSetting is within the speedIncrement of the SpeedStep.
+     * @param throttleSetting raw throttle setting value
+     * @param speed track speed
+     * @param speedIncrement throttle's speed step increment.
+     */
+    public void setReverseSpeed(float throttleSetting, float speed, float speedIncrement) {
+        if (throttleSetting> 0.0f) {
+            _hasReverseSpeeds = true;
+        } else {
+            return;
+        }
+        int key;
+        Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
+        if (entry != null) {    // close keys. i.e. resolve to same throttle step
+            float value = entry.getValue().getForwardSpeed();
+            speed = (speed + value) / 2;
+            key = entry.getKey();
+        } else {    // nothing close. make new entry
+            key = Math.round(throttleSetting * 1000);
+        }
+        if (!speeds.containsKey(key)) {
+            speeds.put(key, new SpeedStep());
+        }
+        SpeedStep ss = speeds.get(key);
+        ss.setReverseSpeed(speed);
+    }
+
     public void setReverseSpeed(float speedStep, float reverse) {
         if (reverse > 0.0f) {
             _hasReverseSpeeds = true;
@@ -307,7 +387,8 @@ public class RosterSpeedProfile {
             return higher * iSpeedStep / highStep;
         }
         if (nothingHigher) {
-            return lower * (1.0f + (iSpeedStep - lowStep) / (1000.0f - lowStep));
+//            return lower * (1.0f + (iSpeedStep - lowStep) / (1000.0f - lowStep));
+            return lower + (iSpeedStep - lowStep) * lower / lowStep;
         }
 
         float valperstep = (higher - lower) / (highStep - lowStep);

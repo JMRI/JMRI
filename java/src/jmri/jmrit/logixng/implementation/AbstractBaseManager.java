@@ -58,15 +58,48 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     
     /** {@inheritDoc} */
     @Override
+//    @OverridingMethodsMustInvokeSuper
+    public final void deleteBean(@Nonnull E n, @Nonnull String property) throws PropertyVetoException {
+        this.deleteBean((MaleSocket)n, property);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     @OverridingMethodsMustInvokeSuper
-    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
+//    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
     public void deleteBean(@Nonnull MaleSocket socket, @Nonnull String property) throws PropertyVetoException {
+        for (int i=0; i < socket.getChildCount(); i++) {
+            FemaleSocket child = socket.getChild(i);
+            if (child.isConnected()) {
+                MaleSocket maleSocket = child.getConnectedSocket();
+                maleSocket.getManager().deleteBean(maleSocket, property);
+            }
+        }
+        
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, socket);
         if (property.equals("DoDelete")) { // NOI18N
             deregister(castBean(socket));
             socket.dispose();
         }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void deregister(@Nonnull E s) {
+        // A LogixNG action or expression is contained in one or more male
+        // sockets. A male socket might be contained in another male socket.
+        // In some cases, it seems that the male socket used in this call is
+        // not the male socket that's registered in the manager. To resolve
+        // this, we search for the registered bean with the system name and
+        // then deregister the bean we have found.
+        E bean = getBySystemName(s.getSystemName());
+        if (bean == null) {
+            // This should never happen.
+            throw new IllegalArgumentException(s.getSystemName() + " is not registered in manager");
+        }
+        super.deregister(bean);
     }
     
     /**

@@ -135,6 +135,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.LENGTH);
+        JemmyUtil.waitFor(f);
         // confirm that the right number of default lengths were loaded
         Assert.assertEquals(12, f.comboBox.getItemCount());
         // now add a new length in inches
@@ -160,8 +161,8 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -186,8 +187,8 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -202,7 +203,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Length") }),
                 Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -219,10 +220,10 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Length") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
 
@@ -237,10 +238,10 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Length") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
@@ -260,8 +261,8 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // the following should cause two dialog windows to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyLocations"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyTrains"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ModifyLocations"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ModifyTrains"), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
 
         // new type should appear at start of list
@@ -274,6 +275,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
         // did the replace work?
         Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
 
@@ -284,10 +286,10 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Type") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 
@@ -320,7 +322,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // now try to add a new type name with the reserved characters
         f.addTextBox.setText("Test & Test");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Type") }),
                 Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -328,7 +330,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("TEST" + CarLoad.SPLIT_CHAR + "TEST");
         // the following should cause dialog window to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Type") }),
                 Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
@@ -369,19 +371,19 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         // enter a road name that has a reserved character
         f.addTextBox.setText("A.B");
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
 
-        JemmyUtil.pressDialogButton(
+        JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") }),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
 

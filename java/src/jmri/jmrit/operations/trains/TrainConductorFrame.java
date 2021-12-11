@@ -43,6 +43,4 @@ public class TrainConductorFrame extends OperationsFrame {
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
-
-//   private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class);
 }

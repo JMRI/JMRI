@@ -344,13 +344,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    private String getNewAspect() throws JmriException {
+    private String getNewAspect(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_aspectAddressing) {
             case Direct:
@@ -358,10 +352,10 @@ public class ActionSignalMast extends AbstractDigitalAction
 
             case Reference:
                 return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _aspectReference);
+                        conditionalNG.getSymbolTable(), _aspectReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_aspectLocalVariable), false);
 
@@ -369,7 +363,7 @@ public class ActionSignalMast extends AbstractDigitalAction
                 return _aspectExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _aspectExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                        conditionalNG.getSymbolTable()), false)
                         : "";
 
             default:
@@ -461,12 +455,14 @@ public class ActionSignalMast extends AbstractDigitalAction
 
         OperationType operation = getOperation();
 
+        final ConditionalNG conditionalNG = getConditionalNG();
+
         AtomicReference<JmriException> ref = new AtomicReference<>();
         jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
             try {
                 switch (operation) {
                     case Aspect:
-                        String newAspect = getNewAspect();
+                        String newAspect = getNewAspect(conditionalNG);
                         if (!newAspect.isEmpty()) {
                             signalMast.setAspect(newAspect);
                         }

@@ -100,7 +100,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertFalse("Train status", train2.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 
     /**
@@ -162,7 +161,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertFalse("Train status", train2.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
     @Test
@@ -199,8 +197,41 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
-        
+    }
+    
+    /**
+     * Test warning message.
+     */
+    @Test
+    public void testWarningMessage() {
 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+        
+        // cause 1 warning message
+        Setup.setCarRoutingEnabled(false);
+        
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+
+        // should cause warning dialog to appear
+        Thread build = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new TrainBuilder().build(train2);
+            }
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
+
+        // dialog "Build report for train (SFF) has 1 warnings"
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildWarningMsg"),
+                new Object[]{train2.getName(), 1}), Bundle.getMessage("ButtonOK"));
     }
     
     /**
@@ -293,8 +324,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
-        
-
     }
     
     /**
@@ -392,8 +421,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
-        
-
     }
     
     /**
@@ -483,8 +510,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Track assignment", null, c3.getTrack());
         Assert.assertEquals("Track assignment", null, c4.getTrack());
         Assert.assertEquals("Track assignment", null, c11.getTrack());
-        
-
     }
     
     /**
@@ -577,8 +602,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, e3.getTrain());
         Assert.assertEquals("Train assignment", null, e4.getTrain());
-        
-
     }
     
     /**
@@ -672,11 +695,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", train2, e3.getTrain());
         Assert.assertEquals("Train assignment", train2, e4.getTrain());
-        
-
     }
 
-    // Ensure minimal setup for log4J
     @Override
     @Before
     public void setUp() {

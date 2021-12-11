@@ -54,7 +54,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Table: For each column of row \"\" in table \"\" set variable \"\" and execute action A1 ::: Use default%n" +
+                "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "   ! A1%n" +
                 "      MyAction ::: Use default%n");
     }
@@ -65,7 +65,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Table: For each column of row \"\" in table \"\" set variable \"\" and execute action A1 ::: Use default%n" +
+                "         Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "            ! A1%n" +
                 "               MyAction ::: Use default%n");
     }
@@ -210,16 +210,11 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testDescription() {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each column of row \"\" in table \"\" set variable \"\" and execute action A1", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
     
     @Test
@@ -236,7 +231,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                         .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         
         _tableForEach.setTable(csvTable);
-        _tableForEach.setTableRowOrColumn(TableRowOrColumn.Column);
+        _tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         _tableForEach.setRowOrColumnName("1");
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);
@@ -365,11 +360,6 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
 
         @Override
         public Category getCategory() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public boolean isExternal() {
             throw new UnsupportedOperationException("Not supported");
         }
 

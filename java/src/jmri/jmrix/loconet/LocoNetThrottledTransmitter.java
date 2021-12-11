@@ -169,9 +169,10 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
                     }
                     controller.sendLocoNetMessage(m.getMessage());
                     // and go round again
-                } catch (Exception e) {
-                    // just report error and continue
-                    log.error("Exception in ServiceThread: ", e);
+                } catch (InterruptedException e) {
+                    // request to terminate
+                    this.interrupt();
+                    break;
                 }
             }
             running = false;

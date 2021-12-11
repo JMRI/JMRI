@@ -72,24 +72,24 @@ public interface Module extends Base, NamedBean {
      */
     public static class ParameterData extends VariableData {
         
-        public ReturnValueType _returnValueType;
+        public ReturnValueType _returnValueType = ReturnValueType.None;
         public String _returnValueData;
         
         public ParameterData(
                 String name,
-                InitialValueType initalValueType,
+                InitialValueType initialValueType,
                 String initialValueData,
                 ReturnValueType returnValueType,
                 String returnValueData) {
             
-            super(name, initalValueType, initialValueData);
+            super(name, initialValueType, initialValueData);
             
             _returnValueType = returnValueType;
             _returnValueData = returnValueData;
         }
         
         public ParameterData(ParameterData data) {
-            super(data._name, data._initalValueType, data._initialValueData);
+            super(data._name, data._initialValueType, data._initialValueData);
             _returnValueType = data._returnValueType;
             _returnValueData = data._returnValueData;
         }

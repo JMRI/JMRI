@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
+import java.util.LinkedHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +54,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private final int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV + 1];
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
-    private static final long keepAliveTimeoutValue = 30000; // Interval 
+    private static final long keepAliveTimeoutValue = 30000; // Interval
+    //keep track of recreation command, including state, for each turnout and output 
+    private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();  
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -138,19 +140,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
-                    @Override
-                    public void run() {
-                        // If the timer times out, send a request for status
-                        DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                            .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
-                    }
-                };
+                @Override
+                public void run() {
+                    // If the timer times out, send a request for status
+                    DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+                    .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                }
+            };
         } else {
             keepAliveTimer.cancel();
         }
         jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
-    
+
 
     // base class methods for the DCCppSimulatorPortController interface
 
@@ -293,18 +295,37 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.TURNOUT_CMD:
-                if (msg.isTurnoutAddMessage()) {
+                if (msg.isTurnoutAddMessage() 
+                        || msg.isTurnoutAddDCCMessage() 
+                        || msg.isTurnoutAddServoMessage()
+                        || msg.isTurnoutAddVpinMessage()) {
                     log.debug("Add Turnout Message");
+                    s = "H" + msg.toString().substring(1) + " 0"; //T reply is H, init to closed 
+                    turnouts.put(msg.getTOIDInt(), s); 
                     r = "O";
                 } else if (msg.isTurnoutDeleteMessage()) {
                     log.debug("Delete Turnout Message");
+                    turnouts.remove(msg.getTOIDInt());
                     r = "O";
                 } else if (msg.isListTurnoutsMessage()) {
                     log.debug("List Turnouts Message");
-                    r = "H 1 27 3 1"; //TODO: do this for real
+                    generateTurnoutListReply();
+                    break;
+                } else if (msg.isTurnoutCmdMessage()) {
+                    log.debug("Turnout Command Message");
+                    s = turnouts.get(msg.getTOIDInt()); //retrieve the stored turnout def
+                    if (s != null) {
+                        s = s.substring(0, s.length()-1) + msg.getTOStateInt(); //replace the last char with new state
+                        turnouts.put(msg.getTOIDInt(), s); //update the stored turnout                     
+                        r = "H " + msg.getTOIDString() + " " + msg.getTOStateInt();
+                    } else {
+                        log.warn("Unknown turnout ID '{}'", msg.getTOIDInt());
+                        r = "X";
+                    }
+
                 } else {
-                    log.debug("TURNOUT_CMD detected");
-                    r = "H" + msg.getTOIDString() + " " + msg.getTOStateInt();
+                    log.debug("Unknown TURNOUT_CMD detected");
+                    r = "X";
                 }
                 reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = '{}'", reply);
@@ -313,19 +334,33 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.OUTPUT_CMD:
                 if (msg.isOutputCmdMessage()) {
                     log.debug("Output Command Message: '{}'", msg);
-                    r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
-                    log.debug("Reply String: '{}'", r);
-                    reply = DCCppReply.parseDCCppReply(r);
-                    log.debug("Reply generated = {}", reply.toString());
-                } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
-                    log.debug("Output Add/Delete Message");
+                    s = turnouts.get(msg.getOutputIDInt()); //retrieve the stored turnout def
+                    if (s != null) {
+                        s = s.substring(0, s.length()-1) + (msg.getOutputStateBool() ? "1" : "0"); //replace the last char with new state
+                        turnouts.put(msg.getOutputIDInt(), s); //update the stored turnout                     
+                        r = "Y " + msg.getOutputIDInt() + " " + (msg.getOutputStateBool() ? "1" : "0");
+                        reply = DCCppReply.parseDCCppReply(r);
+                        log.debug("Reply generated = {}", reply.toString());
+                    } else {
+                        log.warn("Unknown output ID '{}'", msg.getOutputIDInt());
+                        r = "X";
+                    }
+                } else if (msg.isOutputAddMessage()) {
+                    log.debug("Output Add Message");
+                    s = "Y" + msg.toString().substring(1) + " 0"; //Z reply is Y, init to closed 
+                    turnouts.put(msg.getOutputIDInt(), s); 
                     r = "O";
+                } else if (msg.isOutputDeleteMessage()) {
+                    log.debug("Output Delete Message");
+                    turnouts.remove(msg.getOutputIDInt());
+                    r = "O";                    
                 } else if (msg.isListOutputsMessage()) {
                     log.debug("Output List Message");
-                    r = "Y 1 2 3 4"; // Totally fake, but the right number of arguments.
+                    generateTurnoutListReply();
+                    break;
                 } else {
-                    log.error("Invalid Output Command: {}", msg.toString());
-                    r = "Y 1 2";
+                    log.error("Unknown Output Command: '{}'", msg.toString());
+                    r = "X";
                 }
                 reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = '{}'", reply);
@@ -536,12 +571,34 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.0.2 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.1.7 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("H 1 1"); //TODO: generate the actual turnout state list
-        writeReply(r);
+        generateTurnoutStatesReply();
+    }
 
-        // Generate the other messages too...
+    /* Send list of creation command with states for all defined turnouts and outputs */
+    private void generateTurnoutListReply() {
+        if (!turnouts.isEmpty()) { 
+            turnouts.forEach((key, value) -> { //send back the full create string for each
+                DCCppReply r = new DCCppReply(value);
+                writeReply(r);
+            });
+        } else {
+            writeReply(new DCCppReply("X No Turnouts Defined"));            
+        }
+    }
+
+    /* Send list of turnout states */
+    private void generateTurnoutStatesReply() {
+        if (!turnouts.isEmpty()) { 
+            turnouts.forEach((key, value) -> { 
+                String s = value.substring(0,2) + key + value.substring(value.length()-2); //command char + id + state
+                DCCppReply r = new DCCppReply(s);
+                writeReply(r);
+            });
+        } else {
+            writeReply(new DCCppReply("X No Turnouts Defined"));            
+        }
     }
 
     /* 'c' current request message gets multiple reply messages */
@@ -606,7 +663,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             char1 = readByteProtected(inpipe);
             if ((char1 & 0xFF) == '<') {
                 found_start = true;
-                log.debug("Found starting < ");
+                log.trace("Found starting < ");
                 break; // A bit redundant with setting the loop condition true (false)
             } else {
                 // drop next character before repeating
@@ -617,11 +674,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
             char1 = readByteProtected(inpipe);
             if (char1 == '>') {
-                log.debug("msg found > ");
+                log.trace("msg found > ");
                 // Don't store the >
                 break;
             } else {
-                log.debug("msg read byte {}", char1);
+                log.trace("msg read byte {}", char1);
                 char c = (char) (char1 & 0x00FF);
                 s.append(c);
             }

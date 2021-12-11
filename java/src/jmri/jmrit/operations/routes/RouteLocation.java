@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -331,6 +330,10 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         return _wait;
     }
 
+    /**
+     * Sets the formated departure time from this location
+     * @param time format hours:minutes
+     */
     public void setDepartureTime(String time) {
         String old = _departureTime;
         _departureTime = time;
@@ -424,15 +427,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public int getTrainIconY() {
         return _trainIconY;
     }
-    
- 
-//    public void setTrainIconRangeX(int x) {
-//        int old = _trainIconRangeX;
-//        _trainIconRangeX = x;
-//        if (old != x) {
-//            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
-//        }
-//    }
 
     /**
      * Gets the X range for detecting the manual movement of a train icon.
@@ -441,15 +435,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public int getTrainIconRangeX() {
         return getLocation().getTrainIconRangeX();
     }
-
-
-//    public void setTrainIconRangeY(int y) {
-//        int old = _trainIconRangeY;
-//        _trainIconRangeY = y;
-//        if (old != y) {
-//            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
-//        }
-//    }
 
     /**
      * Gets the Y range for detecting the manual movement of a train icon.
@@ -500,7 +485,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
      *
      * @param e Consist XML element
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public RouteLocation(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -609,7 +593,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         }
         
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
     }
 

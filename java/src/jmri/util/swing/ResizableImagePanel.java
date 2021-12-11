@@ -147,7 +147,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     /**
      * Read pixel image and handle exif information if it exists in the file.
-     * 
+     *
      * @param file the image file
      * @return the image
      * @throws IOException in case of an I/O error
@@ -156,24 +156,24 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         ThumbnailParameterBuilder builder = new ThumbnailParameterBuilder();
         builder.scale(1.0);
         ThumbnailParameter param = builder.build();
-        
+
         FileImageSource fileImageSource = new FileImageSource(file);
         fileImageSource.setThumbnailParameter(param);
 
         BufferedImage img = fileImageSource.read();
-        
+
         // Perform the image filters
         for (ImageFilter filter : param.getImageFilters()) {
             img = filter.apply(img);
         }
-        
+
         return img;
     }
 
   /**
    * Read vector image
    * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
-   * 
+   *
    * @param uri The path to the SVG file to read.
    * @return A Document instance that represents the SVG file.
    * @throws IOException The file could not be read.
@@ -202,7 +202,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
         log.debug("Image path is now : {}", _imagePath);
         if (_imagePath != null) {
-            try {                
+            try {
                 File imf = new File(_imagePath);
                 if ( _imagePath.toUpperCase().endsWith(".SVG") ) {
                     svgImage = createSVGDocument(imf.toURI().toString());
@@ -351,8 +351,8 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         } else if (svgImage != null) {
             MyTranscoder transcoder = new MyTranscoder();
             TranscodingHints hints = new TranscodingHints();
-            hints.put(ImageTranscoder.KEY_WIDTH, new Float(getSize().getWidth()) );
-            hints.put(ImageTranscoder.KEY_HEIGHT, new Float(getSize().getHeight()) );
+            hints.put(ImageTranscoder.KEY_WIDTH, (float) getSize().getWidth());
+            hints.put(ImageTranscoder.KEY_HEIGHT, (float) getSize().getHeight());
             transcoder.setTranscodingHints(hints);
             try {
                 transcoder.transcode(new TranscoderInput(svgImage), null);
@@ -362,7 +362,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
             scaledImage = transcoder.getImage();
         }
     }
-    
+
     private static class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override

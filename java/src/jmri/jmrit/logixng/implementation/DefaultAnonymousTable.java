@@ -170,7 +170,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
             return rowNumber;
         }
         // If here, the row is not found
-        return -1;
+        throw new RowNotFoundException(rowName);
     }
 
     /**
@@ -181,16 +181,16 @@ public class DefaultAnonymousTable implements AnonymousTable {
         Integer columnNumber = columnNames.get(columnName);
         if (columnNumber == null) {
             try {
-                int row = Integer.parseInt(columnName);
-                if (row >= 0 && row <= _numRows) return row;
+                int column = Integer.parseInt(columnName);
+                if (column >= 0 && column <= _numColumns) return column;
             } catch (NumberFormatException e) {
                 // Do nothing
             }
         } else {
             return columnNumber;
         }
-        // If here, the row is not found
-        return -1;
+        // If here, the column is not found
+        throw new ColumnNotFoundException(columnName);
     }
 
     @Override

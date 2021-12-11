@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -794,6 +796,16 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setMultipleChoiceOption(String strClass, String choice, int value) {
+
+        // LogixNG bug fix:
+        // The class 'strClass' must have a default constructor. Otherwise,
+        // an error is logged to the log. Early versions of LogixNG used
+        // AbstractLogixNGTableAction and ??? as strClass, which didn't work.
+        // Now, LogixNG uses the class jmri.jmrit.logixng.LogixNG_UserPreferences
+        // for this purpose.
+        if ("jmri.jmrit.beantable.AbstractLogixNGTableAction".equals(strClass)) return;
+        if ("jmri.jmrit.logixng.tools.swing.TreeEditor".equals(strClass)) return;
+
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -1056,6 +1068,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
+    @SuppressFBWarnings(value = "DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS",
+            justification = "needs to copy the items of the hashmap windowDetails")
     private void saveWindowDetails() {
         this.setChangeMade(false);
         if (this.allowSave) {
@@ -1063,7 +1077,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
                 // Copy the entries before iterate over them since
                 // ConcurrentModificationException may happen otherwise
-                for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
+                Set<Entry<String, WindowLocations>> entries = new HashSet<>(windowDetails.entrySet());
+                for (Entry<String, WindowLocations> entry : entries) {
                     Element window = new Element("window");
                     window.setAttribute(CLASS, entry.getKey());
                     if (entry.getValue().getSaveLocation()) {

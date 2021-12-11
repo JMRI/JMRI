@@ -95,12 +95,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         return _object.getCategory();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public final boolean isExternal() {
-        return _object.isExternal();
-    }
-
     @Override
     public final FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _object.getChild(index);
@@ -462,7 +456,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 locale,
                 "PrintLocalVariable",
                 localVariable._name,
-                localVariable._initalValueType.toString(),
+                localVariable._initialValueType.toString(),
                 localVariable._initialValueData));
         writer.println();
     }
@@ -561,7 +555,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         maleSocket.setCatchAbortExecution(getCatchAbortExecution());
         
         for (VariableData data : _localVariables) {
-            maleSocket.addLocalVariable(data._name, data._initalValueType, data._initialValueData);
+            maleSocket.addLocalVariable(data._name, data._initialValueType, data._initialValueData);
         }
         
         return maleSocket;
@@ -607,6 +601,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
 
         // Always throw AbortConditionalNGExecutionException exceptions
@@ -647,6 +642,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(
             Base item,
             String message,
@@ -690,6 +686,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    @Override
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
 
         ErrorHandlingType errorHandlingType = getErrorHandlingType();
@@ -726,6 +723,21 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             default:
                 throw e;
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).getListenerRefsIncludingChildren(list);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
+        return getObject().toString();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMaleSocket.class);

@@ -171,16 +171,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.unregisterListeners();
         
-        // Disconnect the expressionSensor and replace it with a True expression
-        // since we always want the result "true" for this test.
-        ifThenElse.getChild(0).disconnect();
-        True expressionTrue = new True("IQDE322", null);
-        MaleSocket maleSocketTrue =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTrue);
-        ifThenElse.getChild(0).connect(maleSocketTrue);
-        
-//        actionScript.setScript(_scriptText);
-        
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Activate the sensor. This should not execute the conditional.
@@ -293,7 +283,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         ifThenElse.getChild(1).connect(maleSocket2);
         
         // Set sensor to active to ensure the script returns true
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor.setState(Sensor.ACTIVE);
         // Ensure the sensor is active
         Assert.assertTrue( InstanceManager.getDefault(SensorManager.class).provideSensor("IS1").getState() == Sensor.ACTIVE );
@@ -312,6 +301,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
+        logixNG = null;
+        conditionalNG = null;
+        ifThenElse = null;
+        expressionScript = null;
+        sensor = null;
     }
     
 }

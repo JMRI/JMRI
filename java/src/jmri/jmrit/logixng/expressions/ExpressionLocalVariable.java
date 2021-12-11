@@ -195,12 +195,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getString(Object o) {
         if (o != null) {
             return o.toString();
@@ -490,7 +484,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory && (_memoryHandle != null)) {
-                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+                _memoryHandle.getBean().removePropertyChangeListener("value", this);
             }
             _listenersAreRegistered = false;
         }

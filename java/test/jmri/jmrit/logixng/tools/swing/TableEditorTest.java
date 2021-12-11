@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  * Test TableEditor
- * 
+ *
  * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class TableEditorTest {
@@ -22,7 +22,7 @@ public class TableEditorTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         InstanceManager.getDefault(NamedTableManager.class).newInternalTable("IQT1", null, 2, 3);
         TableEditor b = new TableEditor(null, "IQT1");
         Assert.assertNotNull("exists", b);
@@ -41,6 +41,7 @@ public class TableEditorTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
