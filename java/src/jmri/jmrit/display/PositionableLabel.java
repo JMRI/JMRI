@@ -975,14 +975,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
         g2d.drawImage(icon.getImage(), AffineTransform.getTranslateInstance(hOffset, vOffset + 1), this);
 
-        if (false) {    //TODO: dead-strip this; the string is now drawn in paintComponent
-            g2d.setFont(getFont());
-            hOffset = Math.max((width - textWidth) / 2, 0);
-            vOffset = Math.max((height - textHeight) / 2, 0) + getFontMetrics(getFont()).getAscent();
-            g2d.setColor(getForeground());
-            g2d.drawString(text, hOffset, vOffset);
-        }
-
         icon = new NamedIcon(bufIm);
         g2d.dispose();
         icon.setURL(url);
@@ -1184,7 +1176,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                     g2d.transform(AffineTransform.getQuadrantRotateInstance(1));
                     g2d.translate(0, -getSize().getWidth());
                     break;
-                case 0: 
+                case 0:
                     // routine value (not initialized) for no change
                     break;
                 default:
