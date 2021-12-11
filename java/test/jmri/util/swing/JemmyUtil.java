@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.*;
 
+import org.junit.Assert;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -47,14 +48,20 @@ public class JemmyUtil {
     }
     
     static public void enterClickAndLeaveThreadSafe(JButton comp) {
+        // test can hang if button isn't enabled
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return comp.isEnabled();
+        }, "wait for button to be enabled");
+        
         Thread t = new Thread(() -> {
             JButtonOperator jbo = new JButtonOperator(comp);
             jbo.push();
         });
         t.start();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return t.getState().equals(Thread.State.TERMINATED);
-        }, "wait for dialog window to appear");
+        
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return t.getState().equals(Thread.State.WAITING);
+//        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {
@@ -129,10 +136,16 @@ public class JemmyUtil {
     }
     
     static public void waitFor(JmriJFrame f) {
+        int count = 3;
         f.requestFocus();
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return f.isActive();
-        }, "wait for frame to be active");
+        while (!f.isActive() && count > 0) {
+            jmri.util.JUnitUtil.waitFor(() -> {
+                return f.isActive();
+            });
+            count--;
+            f.requestFocus();
+        }
+        Assert.assertTrue("frame should be active", f.isActive());
     }
 
 }

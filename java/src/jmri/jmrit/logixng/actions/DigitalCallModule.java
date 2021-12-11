@@ -41,7 +41,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         for (ParameterData data : _parameterData) {
             copy.addParameter(
                     data.getName(),
-                    data.getInitalValueType(),
+                    data.getInitialValueType(),
                     data.getInitialValueData(),
                     data.getReturnValueType(),
                     data.getReturnValueData());
@@ -108,12 +108,6 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
     /**
      * Return the symbols
      * @param symbolTable the symbol table

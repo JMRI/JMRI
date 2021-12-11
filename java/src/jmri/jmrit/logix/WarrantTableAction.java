@@ -74,7 +74,7 @@ public class WarrantTableAction extends AbstractAction {
     @Override
     @InvokeOnGuiThread
     public void actionPerformed(ActionEvent e) {
-        WarrantTableFrame.getDefault();
+        WarrantTableFrame.getDefault().setVisible(true);
     }
 
     /**
@@ -182,9 +182,7 @@ public class WarrantTableAction extends AbstractAction {
 
     @InvokeOnGuiThread
     protected void makeNXFrame() {
-        if (warrantFrameRunning()) {
-            return;
-        }
+        closeWarrantFrame();
         if (_nxFrame == null) {
             _nxFrame = new NXFrame();
         }
@@ -193,29 +191,20 @@ public class WarrantTableAction extends AbstractAction {
         _nxFrame.toFront();
     }
 
-    protected void closeWarrantFrame() {
+    @InvokeOnGuiThread
+    protected boolean closeWarrantFrame() {
         if (_openFrame != null) {
+            if (!_openFrame.askClose()) {
+                return false;
+            }
             _openFrame.close();
-            _openFrame.dispose();
             _openFrame = null;
         }
-    }
-
-    // check if edited warrant is running test
-    private boolean warrantFrameRunning() {
-        if (_openFrame != null) {
-            if (_openFrame.isRunning()) {
-                _openFrame.toFront();
-                return true;
-            } else {
-                closeWarrantFrame();
-            }
-        }
-        return false;
+        return true;
     }
 
     protected void makeWarrantFrame(Warrant startW, Warrant endW) {
-        if (warrantFrameRunning()) {
+        if (!closeWarrantFrame()) {
             return;
         }
         closeNXFrame();
@@ -225,7 +214,7 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     protected void editWarrantFrame(Warrant w) {
-        if (warrantFrameRunning()) {
+        if (!closeWarrantFrame()) {
             return;
         }
         closeNXFrame();
@@ -401,10 +390,6 @@ public class WarrantTableAction extends AbstractAction {
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
         class myListener extends java.awt.event.WindowAdapter implements ActionListener {
 
-            /*  java.awt.Window _w;
-             myListener(java.awt.Window w) {
-                 _w = w;
-             }  */
             @Override
             public void actionPerformed(ActionEvent e) {
                 _errorDialog.dispose();

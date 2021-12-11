@@ -201,6 +201,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 }
             };
             thr = new Thread(r);
+            thr.setName("Turnout "+getDisplayName()+" setCommandedStateAtInterval");
             thr.start();
         } else {
             log.debug("nextWait has passed");
@@ -390,7 +391,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         throw new IllegalArgumentException("Unexpected mode: " + mode);
     }
 
-    /** 
+    /**
      * On change, fires Property Change "feedbackchange".
      * {@inheritDoc}
      */
@@ -444,7 +445,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    /** 
+    /**
      * On change, fires Property Change "inverted".
      * {@inheritDoc}
      */
@@ -492,9 +493,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Turnouts that are locked should only respond to JMRI commands to change
      * state.
-     * We simulate a locked turnout by monitoring the known state (turnout 
+     * We simulate a locked turnout by monitoring the known state (turnout
      * feedback is required) and if we detect that the known state has
-     * changed, 
+     * changed,
      * negate it by forcing the turnout to return to the commanded
      * state.
      * Turnouts that have local buttons can also be locked if their
@@ -582,7 +583,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return false;
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Not implemented in AbstractTurnout.
      */
     @Override
@@ -644,8 +645,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _decoderName;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      * On change, fires Property Change "decoderNameChange".
      */
     @Override
@@ -682,8 +683,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return myTurnoutOperation;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      * Fires Property Change "TurnoutOperationState".
      */
     @Override
@@ -779,7 +780,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    /** 
+    /**
      * On change, fires Property Change "TurnoutFeedbackFirstSensorChange".
      * @param s the Handle for First Feedback Sensor
      */
@@ -833,7 +834,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    /** 
+    /**
      * On change, fires Property Change "TurnoutFeedbackSecondSensorChange".
      * @param s the Handle for Second Feedback Sensor
      */
@@ -1076,8 +1077,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _divergeSpeed;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      * On change, fires Property Change "TurnoutDivergingSpeedChange".
      */
     @Override

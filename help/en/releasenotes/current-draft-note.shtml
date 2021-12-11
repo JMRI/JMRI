@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Added support for Last Will and Testament (LWT)</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -394,10 +394,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add a Reporter Action which can be used to copy reports to memory variables or local
-          variables.</li>
-          <li>Add a Reporter Expression which can compare reports to strings, memory variables or
-          local variables.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -507,9 +504,7 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Improve the
-                <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py </a>
-                sample script</li>
+                <li></li>
             </ul>
 
    <h3>Switchboard Editor</h3>

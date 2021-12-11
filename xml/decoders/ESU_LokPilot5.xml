@@ -23,13 +23,15 @@
     <!-- ver4 disable Reset to Defaults -->
     <version author="Dave Heap" version="4" lastUpdated="20200818"/>
     <!-- ver5 replace "LokPilot 5 micro DCC Next18" with "LokPilot 5 Micro Next18 DCC" (probably transcription error) -->
-    <version author="Dave Heap" version="4" lastUpdated="20200924"/>
+    <version author="Dave Heap" version="5" lastUpdated="20200924"/>
+    <!-- ver6 add some new productIDs -->
+    <version author="Dave Heap" version="6" lastUpdated="20211203"/>
     <decoder>
         <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
+            <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600,33554636">
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
-            <model model="LokPilot 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
+            <model model="LokPilot 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602,33554638">
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
             <model model="LokPilot 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
@@ -82,13 +84,13 @@
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
+            <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609,33554639">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
-            <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
+            <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610,33554640">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
-            <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406">
+            <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406,16777425">
                 <output name="1,37" label="|"/> <!-- suppress unused item -->
                 <output name="1,38" label="|"/> <!-- suppress unused item -->
                 <output name="1,39" label="|"/> <!-- suppress unused item -->
@@ -101,7 +103,7 @@
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407">
+            <model model="LokPilot 5 Fx DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777407,16777426">
                 <output name="1,37" label="|"/> <!-- suppress unused item -->
                 <output name="1,38" label="|"/> <!-- suppress unused item -->
                 <output name="1,39" label="|"/> <!-- suppress unused item -->
@@ -160,10 +162,10 @@
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+            <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601,33554637">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+            <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608,33554643">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">

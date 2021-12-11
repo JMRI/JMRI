@@ -73,13 +73,13 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     // package-level access for testing
     static boolean unexpectedFatalSeen = false;
-    static String  unexpectedFatalContent = null;  
+    static String  unexpectedFatalContent = null;
     static boolean unexpectedErrorSeen = false;
-    static String  unexpectedErrorContent = null;  
+    static String  unexpectedErrorContent = null;
     static boolean unexpectedWarnSeen = false;
-    static String  unexpectedWarnContent = null;  
+    static String  unexpectedWarnContent = null;
     static boolean unexpectedInfoSeen = false;
-    static String  unexpectedInfoContent = null;  
+    static String  unexpectedInfoContent = null;
 
     public static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
@@ -120,7 +120,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     public static void resetUnexpectedMessageFlags(Level severity) {
-        // cases statements are organized to flow 
+        // cases statements are organized to flow
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;
@@ -169,7 +169,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * do common local processing of event, then pass up to super class
-     * 
+     *
      * @param l the event to process
      */
     void superappend(LoggingEvent l) {
@@ -342,11 +342,50 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
+     * Check that the next queued message was of Warn severity, and has a
+     * specific message. White space is ignored.
+     * <p>
+     * Invokes a JUnit Assert if the message doesn't match.
+     *
+     * @param msg the message to assert exists
+     */
+    public static void assertWarnMessageStartsWith(String msg) {
+        if (list.isEmpty()) {
+            Assert.fail("No message present: " + msg);
+            return;
+        }
+
+        LoggingEvent evt = list.remove(0);
+
+        // next piece of code appears three times, should be refactored away during Log4J 2 migration
+        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
+            if (list.isEmpty()) {
+                Assert.fail("Only debug/info messages present: " + msg);
+                return;
+            }
+            evt = list.remove(0);
+        }
+
+        // check the remaining message, if any
+        if (evt.getLevel() != Level.WARN) {
+            Assert.fail("Level mismatch when looking for ERROR message: \"" +
+                    msg +
+                    "\" found \"" +
+                    (String) evt.getMessage() +
+                    "\"");
+        }
+
+        if (!compareStartsWith(evt, msg)) {
+            Assert.fail("Looking for WARN message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+        }
+    }
+
+    /**
      * If there's a next matching message of specific severity, just ignore it.
      * Not an error if not present; mismatch is an error. Skips messages of
      * lower severity while looking for the specific one. White space is
      * ignored.
-     * 
+     *
      * @param level the level at which to suppress the message
      * @param msg   the message to suppress
      */
@@ -395,7 +434,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * Not an error if not present; mismatch is an error. Skips messages of
      * lower severity while looking for the specific one. White space is
      * ignored.
-     * 
+     *
      * @param level the level at which to suppress the message
      * @param msg   the message to suppress
      */
@@ -468,7 +507,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     public static void suppressWarnMessage(String msg) {
         suppressMessage(Level.WARN, msg);
     }
-    
+
     /**
      * If there's a next matching message of Warn severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
@@ -484,7 +523,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * yet. White space is ignored. All messages before the requested one are
      * dropped; it the requested message hasn't been issued, this means that the
      * message queue is cleared.
-     * 
+     *
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further
      *         checks of level, etc
@@ -510,7 +549,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * White space is ignored. All messages before the matching one are dropped;
      * it a matching message hasn't been issued, this means that the message
      * queue is cleared.
-     * 
+     *
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further
      *         checks of level, etc
@@ -605,7 +644,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * Compare two message strings, handling nulls and ignoring whitespace.
-     * 
+     *
      * @param e1 the event
      * @param s2 the string to compare e1 to
      * @return true if message in e1 equals s2; false otherwise
@@ -624,7 +663,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * Compare two message strings, handling nulls and ignoring whitespace.
-     * 
+     *
      * @param e1 the event
      * @param s2 the string to compare e1 to
      * @return true if message in e1 starts with s2; false otherwise

@@ -233,12 +233,6 @@ public class ExpressionLight extends AbstractDigitalExpression
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_stateAddressing) {
@@ -317,7 +311,7 @@ public class ExpressionLight extends AbstractDigitalExpression
             checkLightState = LightState.valueOf(getNewState());
         }
 
-        LightState currentLightState = LightState.get(light.getCommandedState());
+        LightState currentLightState = LightState.get(light.getKnownState());
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentLightState == checkLightState;
         } else {

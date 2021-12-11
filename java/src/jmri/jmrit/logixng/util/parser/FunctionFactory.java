@@ -23,4 +23,17 @@ public interface FunctionFactory {
      */
     public Set<Function> getFunctions();
     
+    /**
+     * Get a set of classes that implements the Constant interface.
+     * 
+     * @return a set of constants
+     */
+    public Set<Constant> getConstants();
+    
+    /**
+     * Get the description of the constants in Markdown format
+     * @return the description of the constants
+     */
+    public String getConstantDescription();
+    
 }

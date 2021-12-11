@@ -5,18 +5,17 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.beans.PropertyVetoException;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-
 
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
@@ -129,7 +128,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected void deleteBean(NamedTable bean) {
-        InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(bean);
+        try {
+            InstanceManager.getDefault(NamedTableManager.class).deleteBean(bean, "DoDelete");
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+        }
     }
 
     @Override
@@ -140,11 +144,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     @Override
     protected String getBeanText(NamedTable bean) {
         int maxColumnWidth = 0;
-        int columnWidth[] = new int[bean.numColumns()];
-        String[][] cells = new String[bean.numRows()][];
-        for (int row=0; row < bean.numRows(); row++) {
-            cells[row] = new String[bean.numColumns()];
-            for (int col=0; col < bean.numColumns(); col++) {
+        int columnWidth[] = new int[bean.numColumns()+1];
+        String[][] cells = new String[bean.numRows()+1][];
+        for (int row=0; row <= bean.numRows(); row++) {
+            cells[row] = new String[bean.numColumns()+1];
+            for (int col=0; col <= bean.numColumns(); col++) {
                 Object value = bean.getCell(row, col);
                 cells[row][col] = value != null ? value.toString() : "<null>";
                 columnWidth[col] = Math.max(columnWidth[col], cells[row][col].length());
@@ -158,24 +162,24 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         String columnPadding = String.format("%"+Integer.toString(maxColumnWidth)+"s", "");
         StringBuilder sb = new StringBuilder();
         sb.append("+");
-        for (int col=0; col < bean.numColumns(); col++) {
+        for (int col=0; col <= bean.numColumns(); col++) {
             sb.append(columnLine.substring(0,columnWidth[col]+2));
             sb.append("+");
-            if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+            if (col == bean.numColumns()) sb.append(String.format("%n"));
         }
-        for (int row=0; row < bean.numRows(); row++) {
+        for (int row=0; row <= bean.numRows(); row++) {
             sb.append("|");
-            for (int col=0; col < bean.numColumns(); col++) {
+            for (int col=0; col <= bean.numColumns(); col++) {
                 sb.append(" ");
                 sb.append((cells[row][col]+columnPadding).substring(0,columnWidth[col]));
                 sb.append(" |");
-                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+                if (col == bean.numColumns()) sb.append(String.format("%n"));
             }
             sb.append("+");
-            for (int col=0; col < bean.numColumns(); col++) {
+            for (int col=0; col <= bean.numColumns(); col++) {
                 sb.append(columnLine.substring(0,columnWidth[col]+2));
                 sb.append("+");
-                if (col+1 == bean.numColumns()) sb.append(String.format("%n"));
+                if (col == bean.numColumns()) sb.append(String.format("%n"));
             }
         }
         return sb.toString();
@@ -336,6 +340,17 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             autoSystemName();
         });
         return panel5;
+    }
+
+    @Override
+    protected void getListenerRefsIncludingChildren(NamedTable table, java.util.List<String> list) {
+        // Do nothing
+    }
+
+    @Override
+    protected boolean hasChildren(NamedTable table) {
+        // Tables doesn't have children
+        return false;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableAction.class);

@@ -626,7 +626,10 @@ public class SlotManagerTest {
         Assert.assertEquals("initial status", -999, status);
 
         // check that SI write happened
-        Assert.assertEquals("two messages sent", 2, lnis.outbound.size());
+        JUnitUtil.waitFor(() -> {
+            return 2 == lnis.outbound.size();
+        }, "two messages sent");
+
         Assert.assertEquals("write SI message",
                 "EF 0E 7C 6B 00 00 00 00 00 0F 02 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -642,7 +645,10 @@ public class SlotManagerTest {
         Assert.assertTrue("started short timer", startedShortTimer);
         Assert.assertFalse("didn't start long timer", startedLongTimer);
         jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
-        Assert.assertEquals("still two messages sent", 2, lnis.outbound.size());
+
+        JUnitUtil.waitFor(() -> {
+            return 2 == lnis.outbound.size();
+        }, "still two messages sent");
 
         // completion received back (DCS240 sequence) to SI write
         log.debug("send E7 reply back");
@@ -678,7 +684,10 @@ public class SlotManagerTest {
         log.debug("checking..");
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", 55, value);
-        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        JUnitUtil.waitFor(() -> {
+            return 3 == lnis.outbound.size();
+        }, "three messages sent");
 
         log.debug(".... end testReadThroughFacade ...");
     }
@@ -1252,7 +1261,7 @@ public class SlotManagerTest {
 
         }
     }
-    
+
     @Test
     public void testSetCommon() {
         // Set slot 5 common, request slot 5

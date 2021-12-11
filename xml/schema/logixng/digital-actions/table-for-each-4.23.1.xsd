@@ -43,7 +43,17 @@
 
               <xs:element name="localVariable" type="xs:string" />
               <xs:element name="table" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="tableAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="rowOrColumnAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="rowOrColumnName" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="tableRowOrColumn" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>

@@ -23,7 +23,7 @@ public class TrafficLockTest {
 
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(! lock.isLockClear());
+        Assert.assertTrue(! lock.isLockClear(Lock.signalLockLogger));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TrafficLockTest {
 
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(lock.isLockClear());
+        Assert.assertTrue(lock.isLockClear(Lock.signalLockLogger));
     }
 
 

@@ -304,11 +304,12 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // try to set car to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         // get response message
         String status = car.setLocation(loc2, testSpur);
         Assert.assertFalse(status.equals(Track.OKAY));
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[] { status }),
                 Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
@@ -390,7 +391,6 @@ public class CarEditFrameTest extends OperationsTestCase {
         // need to push the "No" button in the dialog window to close
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                 new Object[] { Bundle.getMessage("Caboose") }), Bundle.getMessage("ButtonNo"));
-        
         JemmyUtil.waitFor(f);
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
@@ -638,7 +638,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(car.isCaboose());
         Assert.assertFalse(car2.isCaboose());
 
@@ -648,7 +648,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(car.isCaboose());
         Assert.assertTrue(car2.isCaboose());
 
@@ -756,7 +756,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        // dialog, make all Boxcar Caboose?
+        // dialog, make all Boxcar hazardous?
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
@@ -943,6 +943,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
         // now answer yes to add road
@@ -967,6 +968,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
         JUnitUtil.dispose(f);
@@ -1007,6 +1009,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
         // now answer yes to add type
@@ -1031,6 +1034,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
         JUnitUtil.dispose(f);
@@ -1071,6 +1075,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
         // now answer yes to add length
@@ -1095,6 +1100,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
         JUnitUtil.dispose(f);
@@ -1135,6 +1141,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         // now answer yes to add owner
@@ -1159,6 +1166,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         JUnitUtil.dispose(f);
@@ -1199,6 +1207,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
         // now answer yes to add color
@@ -1223,6 +1232,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
         JUnitUtil.dispose(f);
@@ -1263,6 +1273,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         // now answer yes to add load
@@ -1287,6 +1298,7 @@ public class CarEditFrameTest extends OperationsTestCase {
             // do nothing
         }
 
+        JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         JUnitUtil.dispose(f);

@@ -307,12 +307,6 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewState() throws JmriException {
 
         switch (_stateAddressing) {
@@ -430,7 +424,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == LightState.Toggle) {
-                if (light.getCommandedState() == Turnout.CLOSED) {
+                if (light.getKnownState() == Turnout.CLOSED) {
                     light.setCommandedState(Turnout.THROWN);
                 } else {
                     light.setCommandedState(Turnout.CLOSED);
@@ -576,7 +570,9 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         On(Light.ON, Bundle.getMessage("StateOn")),
         Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus")),
         Intensity(INTENSITY_ID, Bundle.getMessage("LightIntensity")),
-        Interval(INTERVAL_ID, Bundle.getMessage("LightInterval"));
+        Interval(INTERVAL_ID, Bundle.getMessage("LightInterval")),
+        Unknown(Light.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
+        Inconsistent(Light.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
 
         private final int _id;
         private final String _text;
@@ -588,6 +584,12 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 
         static public LightState get(int id) {
             switch (id) {
+                case Light.UNKNOWN:
+                    return Unknown;
+
+                case Light.INCONSISTENT:
+                    return Inconsistent;
+
                 case Light.OFF:
                     return Off;
 

@@ -50,12 +50,6 @@ public class ShutdownComputer extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() {
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             switch (_operation) {

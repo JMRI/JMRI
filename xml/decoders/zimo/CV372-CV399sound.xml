@@ -385,7 +385,7 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
-    <label xml:lang="cs">Blikání světel pri zvuko kontroleru</label>
+    <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
   </variable>
 
   <variable item="Maximum Volume" CV="395" default="0">

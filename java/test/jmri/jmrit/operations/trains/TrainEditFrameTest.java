@@ -462,7 +462,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(train);
 
         TrainEditFrame trainEditFrame = new TrainEditFrame(train);
-        trainEditFrame.setTitle("Test Edit Train Frame");
+        JemmyUtil.waitFor(trainEditFrame);
 
         JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
         // clear no route dialog box

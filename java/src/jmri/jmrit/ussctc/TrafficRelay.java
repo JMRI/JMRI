@@ -5,7 +5,7 @@ import jmri.*;
 /**
  * Models a traffic relay.
  * <p>
- * A traffic relay has three states, representing a section of track is 
+ * A traffic relay has three states, representing a section of track is
  * allocated to traffic in one direction, the other, or neither.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
@@ -41,13 +41,13 @@ public class TrafficRelay implements Lock {
     SignalHeadSection farSignal;
     CodeGroupThreeBits direction;
     BeanSetting[] beans;
-    
+
     /**
      * Test for new condition
      * @return True if lock is clear and operation permitted
      */
     @Override
-    public boolean isLockClear() {
+    public boolean isLockClear(LockLogger lockLogger) {
         if (beans != null) {
             // if route doesn't match, permitted
             for (BeanSetting bean : beans) {
@@ -65,5 +65,5 @@ public class TrafficRelay implements Lock {
         lockLogger.setStatus(this, "");
         return true;
     }
-    
+
 }

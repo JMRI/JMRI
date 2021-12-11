@@ -196,7 +196,7 @@ public class RecursiveModuleTest {
         conditionalNG.getChild(0).connect(manySocket);
         
         ActionListenOnBeans listenOnBeans = new ActionListenOnBeans("IQDA2", null);
-        listenOnBeans.addReference(new NamedBeanReference("IMN", NamedBeanType.Memory));
+        listenOnBeans.addReference(new NamedBeanReference("IMN", NamedBeanType.Memory, false));
 //        listenOnBeans.addReference("Turnoaut:IT1");
 //        listenOnBeans.addReference("Turnout:IT1xx");
 //        listenOnBeans.addReference("senSorIS1");
@@ -249,6 +249,7 @@ public class RecursiveModuleTest {
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

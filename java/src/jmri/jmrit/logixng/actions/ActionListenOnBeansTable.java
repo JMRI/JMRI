@@ -21,6 +21,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
     private boolean _includeCellsWithoutHeader = false;
+    private boolean _listenOnAllProperties = false;
     private final List<Map.Entry<NamedBean, String>> _namedBeansEntries = new ArrayList<>();
 
     public ActionListenOnBeansTable(String sys, String user)
@@ -127,6 +128,14 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         if (rowOrColumnName == null) throw new IllegalArgumentException("Row/column name is null");
         _rowOrColumnName = rowOrColumnName;
     }
+
+    public boolean getListenOnAllProperties() {
+        return _listenOnAllProperties;
+    }
+
+    public void setListenOnAllProperties(boolean listenOnAllProperties) {
+        _listenOnAllProperties = listenOnAllProperties;
+    }
     
     /**
      * Set whenever to include cells that doesn't have a header.
@@ -170,12 +179,6 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     @Override
     public Category getCategory() {
         return Category.OTHER;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
     }
 
     /** {@inheritDoc} */
@@ -277,7 +280,12 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
                         new HashMap.SimpleEntry<>(namedBean, _namedBeanType.getPropertyName());
 
                 _namedBeansEntries.add(namedBeanEntry);
-                namedBean.addPropertyChangeListener(_namedBeanType.getPropertyName(), this);
+                if (!_listenOnAllProperties
+                        && (_namedBeanType.getPropertyName() != null)) {
+                    namedBean.addPropertyChangeListener(_namedBeanType.getPropertyName(), this);
+                } else {
+                    namedBean.addPropertyChangeListener(this);
+                }
             } else {
                 log.warn("The named bean \"{}\" cannot be found in the manager for {}", item, _namedBeanType.toString());
             }
@@ -291,6 +299,12 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         if (!_listenersAreRegistered) return;
 
         for (Map.Entry<NamedBean, String> namedBeanEntry : _namedBeansEntries) {
+            if (!_listenOnAllProperties
+                    && (namedBeanEntry.getValue() != null)) {
+                namedBeanEntry.getKey().removePropertyChangeListener(namedBeanEntry.getValue(), this);
+            } else {
+                namedBeanEntry.getKey().removePropertyChangeListener(this);
+            }
             namedBeanEntry.getKey().removePropertyChangeListener(namedBeanEntry.getValue(), this);
         }
         _listenersAreRegistered = false;
@@ -299,6 +313,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+//        System.out.format("Table: Property: %s, Bean: %s, Listen: %b%n", evt.getPropertyName(), ((NamedBean)evt.getSource()).getDisplayName(), _listenOnAllProperties);
         getConditionalNG().execute();
     }
 

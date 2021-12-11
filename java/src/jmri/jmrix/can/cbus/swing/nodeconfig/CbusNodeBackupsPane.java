@@ -6,14 +6,15 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.TableCellRenderer;
+
 import jmri.jmrix.can.cbus.node.*;
-import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

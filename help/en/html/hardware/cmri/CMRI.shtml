@@ -331,7 +331,7 @@
       lines and 48 output lines.</p>
 
       <p>Software is generally available for microcontrollers to emulate SMINIs and SUSICs of any
-      size. See the <a href="../arduino/index.shtml#CMRI">Emulating a CMRI node</a> help page for
+      size. See <a href="../arduino/index.shtml#CMRI">Emulating a CMRI node</a> for
       more information.</p>
 
       <p>The CPNODE (cpNode) is a standalone serial node which provides 16 to 144 input and output
@@ -380,6 +380,12 @@
 
         <li>Model Railroad Control Systems (MRCS) CPMEGA</li>
       </ul>
+      
+      <p>Note: Some C/MRI output boards can be configured in whole or in part as either ‘current sinking’
+      or ‘current sourcing’, and you will have to keep track of that to successfully use the outputs. Note
+      also that Current Sinking Outputs are not compatible with the inputs, and will thus cause errors in the
+      CMRI wraparound test available in JMRI.
+      </p>
 
       <h3 id="L164">Limitations</h3>
 
@@ -429,7 +435,7 @@
       <p>To create a CMRInet network connection, open the Preferences window. Click on
       <strong>Connections</strong> in the left selection box.</p>
 
-      <p class="noted">As of Release 4.21.2, problems have been reported in some circumstances
+      <p class="important">As of Release 4.21.2, problems have been reported in some circumstances
       using the Network Interface to C/MRI. If you have any issues using this capability, please
       post them to the <a href="https://groups.io/g/jmriusers" target="_blank">JMRI User Group</a>
       on groups.io.</p>
@@ -489,7 +495,7 @@
       connection and the configuration of each node.</p>
 
       <p>Each node has a unique node address in the range of 0 to 127. Two nodes on the same C/MRI
-      system connection may not have the same node number. However, nodes on different connections
+      system connection to JMRI may not have the same node number. However, nodes on different connections
       may have the same node address since each connection describes a totally separate CMRInet
       network.</p>
 
@@ -530,6 +536,16 @@
       <p>Any existing C/MRI nodes will be displayed by node address. The serial connection name is
       displayed with additional configuration information for the node. Clicking on any of the
       column titles will sort the rows in alphanumeric order.</p>
+      
+      <p>JMRI assigns numbers sequentially beginning at 1 to input lines and separately to output lines.
+      It does not matter how many input or output "cards" any node has, how many bits are on each card, 
+      or whether you have attached sensors to every input line or turnouts or lights to every output line
+      - if the configuration says there are 24 input lines and 48 output lines, that's how many JMRI
+      will assume when it sends a transmission to or receives a transmission from your C/MRI node (in this
+      example, it will send C/MRI messages with 6 bytes of data and expect to receive 3 bytes of data).  
+      See <a href="L391">below</a> for how to assign and name JMRI sensors, lights, and turnouts to use 
+      the desired C/MRI bit.
+      </p>
 
       <p><img alt="" src="images/nodeconfigurationmanager.png" width="1030" height="630">
       </p>

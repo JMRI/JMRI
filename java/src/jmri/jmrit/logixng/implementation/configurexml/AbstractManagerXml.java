@@ -122,7 +122,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
             try {
                 entry.getKey().load(entry.getValue(), ms);
             } catch (RuntimeException ex) {
-                log.error("Error storing maleSocket: {}", ex, ex);
+                log.error("Error loading maleSocket: {}", ex, ex);
             }
 
             m = ms.getObject();

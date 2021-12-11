@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -1956,8 +1955,13 @@ public class Track extends PropertyChangeSupport {
         // okay
         if (!car.getScheduleItemId().equals(NONE)) {
             ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
-            if (si != null && checkScheduleItem(si, car).equals(OKAY)) {
-                return OKAY;
+            if (si != null) {
+                String status = checkScheduleItem(si, car);
+                if (status.equals(OKAY)) {
+                    return OKAY;
+                }
+                log.debug("Car ({}) with schedule id ({}) failed check, status: {}", car.toString(),
+                        car.getScheduleItemId(), status);
             }
         }
         // search schedule for a match
@@ -1989,19 +1993,22 @@ public class Track extends PropertyChangeSupport {
     }
 
     private String checkScheduleItem(ScheduleItem si, Car car) {
-        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+        // if car is already assigned to this schedule item allow it to be dropped off
+        // on the wrong day (car arrived late)
+        if (!car.getScheduleItemId().equals(si.getId()) &&
+                !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
                 !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
                         .equals(si.getSetoutTrainScheduleId())) {
-            TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+            TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
                     .getScheduleById(si.getSetoutTrainScheduleId());
-            if (sch != null) {
+            if (trainSch != null) {
                 return SCHEDULE +
                         " (" +
                         getScheduleName() +
                         ") " +
                         Bundle.getMessage("requestCarOnly") +
                         " (" +
-                        sch.getName() +
+                        trainSch.getName() +
                         ")";
             }
         }
@@ -2538,12 +2545,11 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with
-     * the detailed DTD in operations-config.xml
+     * the detailed DTD in operations-location.dtd.
      *
      * @param e        Consist XML element
      * @param location The Location loading this track.
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;
@@ -2598,7 +2604,7 @@ public class Track extends PropertyChangeSupport {
         }
         // old way of reading track comment, see comments below for new format
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
@@ -2861,7 +2867,6 @@ public class Track extends PropertyChangeSupport {
                 log.warn("Not able to find reader: {} for location ({})", a.getValue(), getName());
             }
         }
-
     }
 
     /**

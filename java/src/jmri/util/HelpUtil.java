@@ -2,8 +2,7 @@ package jmri.util;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -139,8 +138,16 @@ public class HelpUtil {
         }
 
         // Open a local help file by default or a failure of jmri.org or the local JMRI web server.
-        String fileName = FileUtil.getProgramPath().replace("\\",
-                "/") + "help/" + localeStr + "/local/stub/" + ref + ".html";
+        String fileName = "";
+        try {
+            fileName = HelpUtil.createStubFile(ref, localeStr);
+        } catch (IOException iox) {
+            log.error("Unable to create the stub file for \"{}\" ", ref);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_StubFile", ref),
+                    Bundle.getMessage("HelpStub_Title"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         File f = new File(fileName);
         if (!f.exists()) {
             log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
@@ -160,6 +167,36 @@ public class HelpUtil {
 
         url = "file://" + fileName;
         jmri.util.HelpUtil.showWebPage(ref, url);
+    }
+
+    public static String createStubFile(String helpKey, String locale) throws IOException {
+        String stubLocation = FileUtil.getPreferencesPath() + "jmrihelp/";
+        FileUtil.createDirectory(stubLocation);
+        log.debug("---- stub location: {}", stubLocation);
+
+        StringBuilder sb = new StringBuilder(FileUtil.getProgramPath());
+        sb.append("help/");
+        sb.append(locale);
+        sb.append("/local/");
+        String htmlLocation = sb.toString();
+        log.debug("---- html location: {}", htmlLocation);
+
+        String template = FileUtil.readFile(new File(htmlLocation + "stub_template.html"));
+        String expandedHelpKey = helpKey.replace(".", "/");
+        int pos = expandedHelpKey.indexOf('_');
+        if (pos == -1) {
+            expandedHelpKey = expandedHelpKey + ".shtml";
+        } else {
+            expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
+                    + "#" + expandedHelpKey.substring(pos+1);
+        }
+        String contents = template.replace("<!--HELP_KEY-->", htmlLocation + "index.html#" + helpKey);
+        contents = contents.replace("<!--URL_HELP_KEY-->", expandedHelpKey);
+
+        PrintWriter printWriter = new PrintWriter(stubLocation + "stub.html");
+        printWriter.print(contents);
+        printWriter.close();
+        return stubLocation + "stub.html";
     }
 
     public static void openWindowsFile(File file) throws JmriException {

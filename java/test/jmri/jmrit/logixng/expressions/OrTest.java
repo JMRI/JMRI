@@ -302,11 +302,6 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }
     
-    @Test
-    public void testIsExternal() {
-        Assert.assertFalse("is external", _base.isExternal());
-    }
-    
     // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
     @Test
     public void testConnected_getExpressionSystemName() throws SocketAlreadyConnectedException {

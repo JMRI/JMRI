@@ -17,86 +17,113 @@
       <h1>Advanced Throttle Control</h1>
 
       <h2>Keyboard Control of the Standard Throttle</h2>
-      You can operate your JMRI Throttle from the keyboard in addition to using a mouse.
-      <div style="margin-left: 40px;">
-        Throttles in current Window : Alt + left/right<br>
-        Throttle Windows : Shift + left/right<br>
-      </div>
-      <br>
-      You can operate the Throttle using your keyboard (the Control Panel in the Throttle Window
-      has to be selected):<br>
+      You can operate your JMRI Throttle from the keyboard in addition to using a mouse.<br><br>
+      Throttles keyboard shorcuts can be edited in the Keyboard controls pane of the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>.<br>
 
+      <h3>Default controls</h3>
       <h4>Speed</h4>
-
       <dl style="margin-left: 40px;">
-        <dt>Numeric Keypad +</dt>
-
-        <dd>Increase Speed</dd>
-
-        <dt>Numeric Keypad -</dt>
-
-        <dd>Decrease Speed</dd>
-
-        <dt>Left Arrow</dt>
-
-        <dd>Increase Speed</dd>
-
-        <dt>Right Arrow</dt>
-
-        <dd>Decrease Speed</dd>
-
-        <dt>Page Up</dt>
-
-        <dd>Big Increase Speed (approximately 10% for each press of the key)</dd>
-
-        <dt>Page Down</dt>
-
-        <dd>Big Decrease Speed (approximately 10% for each press of the key)</dd>
-
-        <dt>Numeric Pad *</dt>
-
-        <dd>Idle (set speed to 0, any speed momentum is enabled)</dd>
-
-        <dt>Numeric Pad /</dt>
-
-        <dd>Emergency Stop! (instantly halts the locomotive)</dd>
+        <dt>Increase Speed</dt>
+          <dd>Numeric keypad +</dd>
+          <dd>Left arrow</dd>
+        <dt>Decrease Speed</dt>
+          <dd>Numeric keypad -</dd>
+          <dd>Right arrow</dd>
+          <br>
+        <dt>Increase Speed by multiplicator (5 as a default (customisable in the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>))</dt>
+            <dd>Page up</dd>
+            <dd>Ctrl + Left arrow</dd>
+        <dt>Decrease Speed by multiplicator (5 as a default (customisable in the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>))</dt>
+            <dd>Page down</dd>
+            <dd>Ctrl + Right arrow</dd>
+            <br>
+        <dt>Idle Speed</dt>
+          <dd>Numeric keypad *</dd>
+          <dd>Space</dd>
+          <br>
+        <dt>Stop Speed</dt>
+          <dd>Numeric keypad /</dd>
+          <dd>Escape</dd>
       </dl>
 
       <h4>Direction</h4>
-
       <dl style="margin-left: 40px;">
-        <dt>Up Arrow</dt>
-
-        <dd>Reverse</dd>
-
-        <dt>Down Arrow</dt>
-
-        <dd>Forward</dd>
+        <dt>Forward</dt>
+          <dd>Up arrow</dd>
+        <dt>Reverse</dt>
+          <dd>Down arrow</dd>
+          <br>
+        <dt>Switch direction</dt>
+          <dd>Not defined in defaults, but customisable in the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>.</dd>
       </dl>
 
       <h4>Functions</h4>
+      <dl style="margin-left: 40px;">
+        <dt>F0</dt>
+          <dd>Numeric keypad 0</dd>
+          <br>
+        <dt>F1 &#x2192; F9 (n)</dt>
+          <dd>Fn</dd>
+          <dd>Numeric keypad n</dd>
+          <br>
+        <dt>
+        <dt>F10 &#x2192; F19 (n)</dt>
+          <dd>Fn (if exist on keyboard)</dd>
+          <dd>Shift + Numeric keypad (n-10)  (Shift+2 for F12 for instance)</dd>
+          <dd>Shift + F(n-10) (Shift+F3 for F13 for instance)</dd>
+          <br>
+        <dt>
+          <dt>F20 &#x2192; F28 (n)</dt>
+            <dd>Fn (if exist on keyboard)</dd>
+            <dd>Ctrl + Numeric keypad (n-20)  (Ctrl+5 for F25 for instance)</dd>
+            <dd>Ctrl + F(n-20) (Ctrl+F8 for F28 for instance)</dd>
+            <br>
+          <dt>
+      </dl>
+
+      <h4>Throttle windows controls</h4>
+      <dl style="margin-left: 40px;">
+        <dt>Next throttle window</dt>
+          <dd>Insert</dd>
+        <dt>Previous throttle window</dt>
+          <dd>Delete</dd>
+          <br>
+        <dt>Next throttle frame</dt>
+          <dd>End of line</dd>
+        <dt>Previous throttle frame</dt>
+          <dd>Start of line</dd>
+          <br>
+        <dt>Next running throttle frame</dt>
+          <dd>Ctrl + End of line</dd>
+        <dt>Previous running throttle frame</dt>
+          <dd>Ctrl + Start of line</dd>
+          <br>
+        <dt>Focus next throttle internal window</dt>
+          <dd>K</dd>
+        <dt>Focus previous throttle internal window</dt>
+          <dd>L</dd>
+          <br>
+        <dt>Focus control panel</dt>
+          <dd>C</dd>
+        <dt>Focus function panel</dt>
+          <dd>F</dd>
+        <dt>Focus address panel</dt>
+          <dd>A</dd>
+          <br>
+        <dt>
+      </dl>
 
       <dl style="margin-left: 40px;">
-        <dt>Numeric Keypad 0 - 9</dt>
 
-        <dd>Functions 0 to 9</dd>
-
-        <dt>Numeric Keypad .</dt>
-
-        <dd>Function 10</dd>
-
-        <dt>F11 - F24</dt>
-
-        <dd>Function 11 to Function 24</dd>
       </dl>
 
       <h2>Custom Throttle with Jynstruments</h2>
-      <a href="../scripting/Jynstruments.shtml">Jynstruments</a> are powerful tools for creating
-      custom JMRI Throttles. There's <a href="../scripting/Jynstruments.shtml">much more
+      <a href="../scripting/Jynstruments.shtml">Jynstruments</a> are powerful tools for
+      customizing JMRI Throttles. There's <a href="../scripting/Jynstruments.shtml">much more
       information</a> on creating and customizing them on a <a href=
       "../scripting/Jynstruments.shtml">separate page</a>. Here, we focus on using the customized
-      Throttles.
-      <p><a href="https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
+      throttle control.
+      <p><a href="https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">
       Jynstruments</a> provided below are for controlling already assigned Throttles, the Throttle
       pane you will control has to be set up before. Then it's only a matter of drag'n dropping a
       folder on the <a href="ThrottleToolBar.shtml">Throttle Window <span style=
@@ -107,9 +134,9 @@
       content.</span>
       </p>
 
-      <h3>USB Joypad (USBControl.jyn)</h3>
-      There is a Jynstrument named USBControl.jyn to be dropped on a Throttle Window toolbar to get
-      control of that Window with a joypad. See the .py files for default button settings, and
+      <h3>USB device (USBThrottle.jyn)</h3>
+      There is a Jynstrument named USBThrottle.jyn to be dropped on a Throttle Window toolbar to get
+      control of that Window with a HID device (joypad, RailDriver ...). See the .py files for default button settings, and
       possible customizations.
       <p>Particularly you might want to define a "driver" file for your own device, start from
       default.py, copy it, rename it with the name of the device as seen by JMRI without any space
@@ -117,10 +144,6 @@
       JMRI Jinput USB Input Control window</a> (accessible from Debug menu) to get your Components
       names and value,</p>
 
-      <p><span style="font-style: italic;">Note that a classic Jython file exists to take control
-      of a Throttle Window with a USB device, this one is more complex but easier to use
-      (imho).</span>
-      </p>
 
       <h4>Default controls:</h4>
 
@@ -157,6 +180,12 @@
       <span style="font-style: italic;">Note that joypads buttons layout, and even sticks events
       differ from one manufacturer to another, hence you should customize a driver.py for your own
       hardware.</span>
+
+      <h3>DCCThrottle (DCCThrottle.jyn)</h3>
+      This one will listen for DCC throttle events for a specific DCC address and forward them to the
+      current active throttle inside this JMRI throttle window.
+
+
       <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>
       There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle Window toolbar
       to get control of that Window with a Nintendo Wiimote device. <span style=

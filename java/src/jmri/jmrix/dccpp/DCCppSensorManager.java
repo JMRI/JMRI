@@ -100,7 +100,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             if (null == getBySystemName(s)) {
                 // The sensor doesn't exist.  We need to create a 
                 // new sensor, and forward this message to it.
-                ((DCCppSensor) provideSensor(s)).initmessage(l);
+                DCCppSensor sn = (DCCppSensor) provideSensor(s);
+                sn.initmessage(l);
             } else {
                 // The sensor exists.  We need to forward this 
                 // message to it.

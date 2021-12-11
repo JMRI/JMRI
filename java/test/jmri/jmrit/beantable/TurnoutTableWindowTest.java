@@ -1,7 +1,10 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
@@ -44,19 +47,25 @@ public class TurnoutTableWindowTest {
         Assert.assertNotNull("AR selected", jcbo.getSelectedObjects());
 
         // Find the Show Feedback information checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowFeedbackInfo"));
+        JLabelOperator jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowFeedbackInfo"));
+        JCheckBox jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("FBbox selected", jcbo.getSelectedObjects());
 
         // Find the Show Lock information checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowLockInfo"));
+        jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowLockInfo"));
+        jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("LKbox selected", jcbo.getSelectedObjects());
 
         // Find the Show Turnout Speed details checkbox
-        jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("ShowTurnoutSpeedDetails"));
+        jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowTurnoutSpeedDetails"));
+        jcb = (JCheckBox) jlo.getLabelFor();
+        jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
         Assert.assertNotNull("TSbox selected", jcbo.getSelectedObjects());
@@ -70,7 +79,7 @@ public class TurnoutTableWindowTest {
         JFrameOperator afo = new JFrameOperator(Bundle.getMessage("TitleAddTurnout"));
 
         // Find hardware address field
-        JLabelOperator jlo = new JLabelOperator(afo,Bundle.getMessage("LabelHardwareAddress"));
+        jlo = new JLabelOperator(afo,Bundle.getMessage("LabelHardwareAddress"));
         JTextField hwAddressField = (JTextField) jlo.getLabelFor();
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 

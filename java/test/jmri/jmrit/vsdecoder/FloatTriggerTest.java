@@ -93,32 +93,32 @@ public class FloatTriggerTest {
             }
         });
         PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-                new Float(1.0f),
-                new Float(2.0f));
+                1.0f,
+                2.0f);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.LT);
         e = new PropertyChangeEvent(this, "test event",
-                new Float(2.0f),
-                new Float(1.0f));
+                2.0f,
+                1.0f);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.GTE);
         e = new PropertyChangeEvent(this, "test event",
-                new Float(2.0f),
-                new Float(0.5f));
+                2.0f,
+                0.5f);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.LTE);
         e = new PropertyChangeEvent(this, "test event",
-                new Float(2.0f),
-                new Float(0.5f));
+                2.0f,
+                0.5f);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.EQ);
         e = new PropertyChangeEvent(this, "test event",
-                new Float(2.0f),
-                new Float(0.5f));
+                2.0f,
+                0.5f);
         uut.propertyChange(e);
     }
 

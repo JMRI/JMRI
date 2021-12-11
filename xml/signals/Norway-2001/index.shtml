@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Norwegian Railway Main Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+<h1>JMRI: Norwegian Railway Main Signaling</h1>
+
+
+<p>
+As of regulations of December 4, 2001 no. 1336.
+</p>
+<p>
+See also the
+<a href="https://en.wikipedia.org/wiki/Norwegian_railway_signaling">Wikipedia explanation</a>.
+</p>
+
+<p>
+See the
+<a href="aspects.xml">aspect page</a>.
+</p>
+
+<p>
+Signal Mast definitions:
+</p>
+<ul>
+    <li><a href="appearance-Main3-2.xml">Main, Triple over double lamp green-red-green over flashing orange-green high signal</a>
+    <li><a href="appearance-Main2-2.xml">Main, Double over double lamp red-green over flashing orange-green high signal</a>
+    <li><a href="appearance-Main3.xml">Main, Triple lamp green-red-green high signal</a>
+    <li><a href="appearance-Main2.xml">Main, Double lamp red-Green high signal</a>
+    <li><a href="appearance-Distant.xml">Distant, Double lamp flashing orange-green high signal</a>
+</ul>
+
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
+

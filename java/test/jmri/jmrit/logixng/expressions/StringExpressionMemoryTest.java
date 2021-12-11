@@ -315,11 +315,6 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     }
     
     @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() {
         Assert.assertEquals("Memory as string value", _base.getShortDescription());
     }

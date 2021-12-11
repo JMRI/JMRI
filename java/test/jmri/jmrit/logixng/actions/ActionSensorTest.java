@@ -41,7 +41,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         boolean hasThrown = false;
         try {
-            ActionSensor.SensorState.get(Sensor.UNKNOWN);
+            ActionSensor.SensorState.get(100);      // The number 100 is a state that ActionSensor.SensorState isn't aware of
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "invalid sensor state".equals(ex.getMessage()));
@@ -483,11 +483,6 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
-    }
-    
-    @Test
-    public void testIsExternal() {
-        Assert.assertTrue("is external", _base.isExternal());
     }
     
     @Test

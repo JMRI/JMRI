@@ -103,6 +103,7 @@ public class BusyGlassPane extends JComponent {
             inDrag = false;
         }
 
+        @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
         private void redispatchMouseEvent(MouseEvent e) {
             boolean inButton = false;
             Point glassPanePoint = e.getPoint();
@@ -145,21 +146,21 @@ public class BusyGlassPane extends JComponent {
                         glassPanePoint,
                         component);
                 parentFrame.setCursor(Cursor.getDefaultCursor());
-                
+
                 component.dispatchEvent(new MouseEvent(component,
                         eventID,
                         e.getWhen(),
-                        
-                        // The Java8 Javadoc 
+
+                        // The Java8 Javadoc
                         //  https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseEvent.html#MouseEvent-java.awt.Component-int-long-int-int-int-int-boolean-
                         // says the following should reference
                         // getModifiersEx()
                         // but that makes it impossible to cancel
                         // ReadAll, WriteAll etc in DecoderPro.
                         // When it fails, getModifier is 0x10 BUTTON1_MASK
-                        // and 
+                        // and
                         // getModifierEx is 0x400 BUTTON1_DOWN_MASK
-                        
+
                         e.getModifiers(),
                         componentPoint.x,
                         componentPoint.y,

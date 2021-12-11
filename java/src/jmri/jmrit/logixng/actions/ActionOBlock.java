@@ -298,12 +298,6 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private String getNewOperation() throws JmriException {
 
         switch (_operationAddressing) {
@@ -328,7 +322,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         }
     }
 
-    private String getNewData() throws JmriException {
+    private String getNewData(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_dataAddressing) {
             case Direct:
@@ -336,10 +330,10 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
 
             case Reference:
                 return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
+                        conditionalNG.getSymbolTable(), _dataReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
@@ -347,7 +341,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
                 return _operationExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                        conditionalNG.getSymbolTable()), false)
                         : null;
 
             default:
@@ -411,13 +405,15 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         // Variables used in lambda must be effectively final
         DirectOperation theOper = oper;
 
+        final ConditionalNG conditionalNG = getConditionalNG();
+
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (theOper) {
                 case Deallocate:
                     oblock.deAllocate(null);
                     break;
                 case SetValue:
-                    oblock.setValue(getNewData());
+                    oblock.setValue(getNewData(conditionalNG));
                     break;
                 case SetError:
                     oblock.setError(true);

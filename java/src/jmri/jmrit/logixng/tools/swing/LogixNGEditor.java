@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
@@ -22,7 +23,6 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -212,7 +212,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             conditionalTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(conditionalTableScrollPane);
 
-            _showStartupThreadsCheckBox = new JCheckBox("Show startup thread");
+            _showStartupThreadsCheckBox = new JCheckBox(Bundle.getMessage("ShowStartupThreadCheckBox"));
             contentPane.add(_showStartupThreadsCheckBox);
             _showStartupThreadsCheckBox.addActionListener((evt) -> {
                 _conditionalNGTableModel.setShowStartupThreads(
@@ -1059,8 +1059,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    protected String getClassName() {
-        return LogixNGEditor.class.getName();
+    private String getClassName() {
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 
@@ -1192,13 +1194,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         private final ConditionalNG _conditionalNG;
         private final int _row;
-        MaleSocket _maleSocket;
         boolean _hasDeleted = false;
 
         public DeleteBeanWorker(ConditionalNG conditionalNG, int row) {
             _conditionalNG = conditionalNG;
             _row = row;
-            _maleSocket = _conditionalNG.getFemaleSocket().getConnectedSocket();
         }
 
         public int getDisplayDeleteMsg() {
@@ -1209,25 +1209,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse", boo);
         }
 
-        private void findAllChilds(FemaleSocket femaleSocket, List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
-            if (!femaleSocket.isConnected()) return;
-            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
-            sockets.add(new HashMap.SimpleEntry<>(femaleSocket, maleSocket));
-            for (int i=0; i < maleSocket.getChildCount(); i++) {
-                findAllChilds(maleSocket.getChild(i), sockets);
-            }
-        }
-
-        public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
+        public void doDelete() {
             try {
-                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                    FemaleSocket femaleSocket = entry.getKey();
-                    femaleSocket.disconnect();
-
-                    MaleSocket maleSocket = entry.getValue();
-                    maleSocket.getManager().deleteBean(maleSocket, "DoDelete");
-                }
-                _curLogixNG.deleteConditionalNG(_curLogixNG.getConditionalNG(_row));
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "DoDelete");  // NOI18N
                 _conditionalNGTableModel.fireTableRowsDeleted(_row, _row);
                 _numConditionalNGs--;
@@ -1246,98 +1229,80 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public Void doInBackground() {
             _conditionalNG.getFemaleSocket().unregisterListeners();
 
-            List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
-
-            findAllChilds(_conditionalNG.getFemaleSocket(), sockets);
-
             StringBuilder message = new StringBuilder();
             try {
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "CanDelete");  // NOI18N
-                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                    entry.getValue().getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
-                }
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                     log.warn(e.getMessage());
-                    message.append(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("VetoDeleteBean", ((NamedBean)_maleSocket.getObject()).getBeanType(), ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                    message.append(Bundle.getMessage("VetoDeleteBean", _conditionalNG.getBeanType(), _conditionalNG.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
-                            jmri.jmrit.logixng.tools.swing.Bundle.getMessage("WarningTitle"),
+                            Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
                 message.append(e.getMessage());
             }
-            int count = _maleSocket == null ? 0 : _maleSocket.getListenerRefs().size();
-            log.debug("Delete with {}", count);
+            List<String> listenerRefs = new ArrayList<>();
+            _conditionalNG.getListenerRefsIncludingChildren(listenerRefs);
+            int listenerRefsCount = listenerRefs.size();
+            log.debug("Delete with {}", listenerRefsCount);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
-                doDelete(sockets);
+                doDelete();
             } else {
                 final JDialog dialog = new JDialog();
-                dialog.setTitle(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("WarningTitle"));
+                dialog.setTitle(Bundle.getMessage("WarningTitle"));
                 dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-                if (count > 0) { // warn of listeners attached before delete
 
-                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                    JLabel question = new JLabel(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt, ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                if (listenerRefsCount > 0) { // warn of listeners attached before delete
+                    String prompt = _conditionalNG.getFemaleSocket().isConnected()
+                            ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    JLabel question = new JLabel(Bundle.getMessage(prompt, _conditionalNG.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
 
-                    ArrayList<String> listenerRefs = new ArrayList<>();
-
-                    for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
-                        listenerRefs.addAll(entry.getValue().getListenerRefs());
+                    ArrayList<String> listeners = new ArrayList<>();
+                    for (String listenerRef : listenerRefs) {
+                        if (!listeners.contains(listenerRef)) {
+                            listeners.add(listenerRef);
+                        }
                     }
 
-                    if (listenerRefs.size() > 0) {
-                        ArrayList<String> listeners = new ArrayList<>();
-                        for (int i = 0; i < listenerRefs.size(); i++) {
-                            if (!listeners.contains(listenerRefs.get(i))) {
-                                listeners.add(listenerRefs.get(i));
-                            }
-                        }
-
-                        message.append("<br>");
-                        message.append(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ReminderInUse", count));
-                        message.append("<ul>");
-                        for (int i = 0; i < listeners.size(); i++) {
-                            message.append("<li>");
-                            message.append(listeners.get(i));
-                            message.append("</li>");
-                        }
-                        message.append("</ul>");
-
-                        JEditorPane pane = new JEditorPane();
-                        pane.setContentType("text/html");
-                        pane.setText("<html>" + message.toString() + "</html>");
-                        pane.setEditable(false);
-                        JScrollPane jScrollPane = new JScrollPane(pane);
-                        container.add(jScrollPane);
+                    message.append("<br>");
+                    message.append(Bundle.getMessage("ReminderInUse", listenerRefsCount));
+                    message.append("<ul>");
+                    for (String listener : listeners) {
+                        message.append("<li>");
+                        message.append(listener);
+                        message.append("</li>");
                     }
+                    message.append("</ul>");
+
+                    JEditorPane pane = new JEditorPane();
+                    pane.setContentType("text/html");
+                    pane.setText("<html>" + message.toString() + "</html>");
+                    pane.setEditable(false);
+                    JScrollPane jScrollPane = new JScrollPane(pane);
+                    container.add(jScrollPane);
                 } else {
-                    String prompt;
-                    String msg;
-                    if (_maleSocket == null) {
-                        prompt = "DeletePrompt";
-                        msg = jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt, _conditionalNG.getDisplayName());
-                    } else {
-                        prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                        msg = MessageFormat.format(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt),
-                                new Object[]{_maleSocket.getSystemName()});
-                    }
+                    String prompt = _conditionalNG.getFemaleSocket().isConnected()
+                            ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    String msg = MessageFormat.format(
+                            Bundle.getMessage(prompt), _conditionalNG.getSystemName());
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                 }
 
-                final JCheckBox remember = new JCheckBox(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("MessageRememberSetting"));
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonYes"));
-                JButton noButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonNo"));
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -1354,7 +1319,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     if (remember.isSelected()) {
                         setDisplayDeleteMsg(0x02);
                     }
-                    doDelete(sockets);
+                    doDelete();
                     dialog.dispose();
                 });
                 container.add(remember);
@@ -1362,6 +1327,14 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
+                
+                dialog.getRootPane().setDefaultButton(noButton);
+                noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
+                dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
+                        dialog.setVisible(false);
+                        dialog.dispose(); }, 
+                    KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
                 dialog.setModal(true);
                 dialog.setVisible(true);
