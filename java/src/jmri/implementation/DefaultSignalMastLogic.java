@@ -1482,17 +1482,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             firePropertyChange("sensors", null, this.destination);
         }
 
-        @SuppressWarnings("unused") // not used now, preserved for later use
-        void removeSensor(NamedBeanHandle<Sensor> sen) {
-            for (NamedBeanSetting nbh : userSetSensors) {
-                if (nbh.getBean().equals(sen.getBean())) {
-                    sen.getBean().removePropertyChangeListener(propertySensorListener);
-                    userSetSensors.remove(nbh);
-                    firePropertyChange("sensors", null, this.destination);
-                    return;
-                }
-            }
-        }
+// not used now, preserved for later use
+//         void removeSensor(NamedBeanHandle<Sensor> sen) {
+//             for (NamedBeanSetting nbh : userSetSensors) {
+//                 if (nbh.getBean().equals(sen.getBean())) {
+//                     sen.getBean().removePropertyChangeListener(propertySensorListener);
+//                     userSetSensors.remove(nbh);
+//                     firePropertyChange("sensors", null, this.destination);
+//                     return;
+//                 }
+//             }
+//         }
 
         void removeSensor(Sensor sen) {
             for (NamedBeanSetting nbh : userSetSensors) {
