@@ -375,7 +375,7 @@ public class Ash1_1Algorithm implements Calculator {
     }
 
     int gps3() {// GPS Position Solver
-        double xik, yik, zik, rik;// Inputs (global variables)
+        double xik, yik, zik;// Inputs (global variables)
         double xjk, yjk, zjk;//     sat. position, range:
         double Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz; //        xi, yi, zi, ri
         double Ci, Cj, Cx, Cy, Cz; // xj, yj, zj, rj
