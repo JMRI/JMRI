@@ -30,6 +30,7 @@ public class ConvertFunctions implements FunctionFactory {
         functionClasses.add(new IntFunction());
         functionClasses.add(new FloatFunction());
         functionClasses.add(new StrFunction());
+        functionClasses.add(new Hex2DecFunction());
         return functionClasses;
     }
 
@@ -159,6 +160,45 @@ public class ConvertFunctions implements FunctionFactory {
         @Override
         public String getDescription() {
             return Bundle.getMessage("Convert.str_Descr");
+        }
+        
+    }
+    
+    public static class Hex2DecFunction implements Function {
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
+        }
+        
+        @Override
+        public String getName() {
+            return "hex2dec";
+        }
+        
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
+            if (parameterList.size() != 1) {
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+            }
+            Object o = parameterList.get(0).calculate(symbolTable);
+            if (o != null) {
+                return Long.parseLong(o.toString(), 16);
+            } else {
+                throw new NullPointerException("value is null");
+            }
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.hex2dec");
         }
         
     }
