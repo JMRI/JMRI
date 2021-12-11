@@ -361,10 +361,6 @@
         <li>if (antecedent state changes) then (do "on change" actions)</li>
       </ul>
 
-      <p> Note that the state of any antecedent is considered to have changed when a Logix is first enabled. This
-      means that any "do on change" actions will be executed when a Logix is first enabled, including those tha
-      t  are enabled when JMRI is started</p>
-
       <h3 id="editconditional">The Edit Conditional Window</h3>
 
       <p>The Edit Conditional window is where logical expressions are set up and where actions are
