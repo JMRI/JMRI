@@ -80,6 +80,10 @@ public class ExecuteDelayed
 */    
     /**
      * Get a new timer task.
+     * @param conditionalNG  the ConditionalNG
+     * @param symbolTable    the symbol table
+     * @param timerDelay     the time the timer should wait
+     * @param timerStart     the time when the timer was started
      */
     private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
 
