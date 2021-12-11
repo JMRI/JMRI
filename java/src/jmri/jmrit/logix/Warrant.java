@@ -2675,29 +2675,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             return true;
         }
-        
-        if (runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING || runState == RAMP_HALT) {
-            if (log.isDebugEnabled()) {
-                log.debug("{}: Train drift into block \"{}\". runState= {}, Engineer holds train. speedSetting= {}",
-                        getDisplayName(), curBlock.getDisplayName(), RUN_STATE[runState], speedSetting);
-            }
-            int idxStop = getIndexOfBlock(_stoppingBlock, _idxCurrentOrder);
-            if (_idxProtectSignal == _idxCurrentOrder) {
-                fireRunStatus("SignalOverrun", _protectSignal.getDisplayName(), currentSpeedType); // message of speed violation
-            } else if (idxStop == _idxCurrentOrder) {
-                fireRunStatus("OccupyOverrun", _stoppingBlock.getDisplayName(), _trainName); // message of speed violation
-            } else {
-                fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
-            }
-            currentSpeedType = Stop;
-        }
 
-        if (currentSpeedType.equals(Stop)) {
-            if (speedSetting > 0) {
-                _engineer.setSpeedToType(Stop); // immediate decrease
+        // entrySpeedType is the required speed limit for this block
+        String entrySpeedType = getPermissibleSpeedAt(blkOrder);
+        if (_speedUtil.secondGreaterThanFirst(currentSpeedType, entrySpeedType)) {
+            // speed increases since type entrySpeedType > currentSpeedType
+            if (!_engineer.isRamping()) {
+                // Ramp has begun already in a previous block. Don't interfere.
+                restoreRunning(entrySpeedType);
             }
-            fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
-            return true;
+            // continue to look ahead
         }
 
         if (_idxCurrentOrder == _orders.size() - 1) {

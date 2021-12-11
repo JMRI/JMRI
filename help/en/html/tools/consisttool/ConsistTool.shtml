@@ -300,6 +300,38 @@
       drop-down box next to the current Consist's ID:</p>
       <img src="images/ConsistTool-SelectConsist.png" alt="Select a Consist" height="83" width=
       "353"> <!--#include virtual="/Footer.shtml" -->
+
+
+      <h2 id="track">Keeping Track of Consists</h2>
+
+        If you'd like, you can track your consists in a new column in the DecoderPro
+        listing. To do this, you create the column, then manually enter the
+        consist information (There is no automatic population of this column
+        DecoderPro can't keep track of all the various methods of consisting;
+        we want to avoid user confusion when automatic updates show invalid info)
+        <p>
+        To do this:
+        <ol>
+        <li>Select a locomotive
+        <li>Under the Action menu, select Labels and Media
+        <li>On that window, select Roster Media
+        <li>In the lower half of the window, enter "Consist Info" over the three dots (…)
+            in the Name column, and your value over the three dots in the Value column.
+        <li>Hit Return, and then click “Save to Roster”
+        <li>Close the window.
+        <li>The first time you do this, quit and restart JMRI (it would be nice if this
+            wasn’t necessary, but right now it often is)
+        <li>On the main roster, right-click or ctrl-click on the heading in any column.
+            Select your new Consist Info entry to put a checkmark next to it.
+            A new column should appear titled Consist Info and showing the value you
+            entered on that locomotive.
+            Ctrl-drag on the heading to move the column to where you want it.
+        <li>Now that it’s set up, you can click on a cell in that column to enter the
+            your value for any locomotive. DecoderPro will keep the info from one
+            run to another in the roster.
+        </ol>
+
+
     </div>
     <!-- closes #mainContent-->
   </div>
