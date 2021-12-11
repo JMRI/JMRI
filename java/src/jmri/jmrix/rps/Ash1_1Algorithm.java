@@ -375,13 +375,10 @@ public class Ash1_1Algorithm implements Calculator {
     }
 
     int gps3() {// GPS Position Solver
-        @SuppressWarnings("unused")
-        double xij, yij, zij, rij, xik, yik, zik, rik;// Inputs (global variables)
-        @SuppressWarnings("unused")
-        double xjk, yjk, zjk, rjk;//     sat. position, range:
+        double xik, yik, zik, rik;// Inputs (global variables)
+        double xjk, yjk, zjk;//     sat. position, range:
         double Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz; //        xi, yi, zi, ri
-        @SuppressWarnings("unused")
-        double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz; // xj, yj, zj, rj
+        double Ci, Cj, Cx, Cy, Cz; // xj, yj, zj, rj
         double x1, y1, z1, x2, y2, z2, e1, e2; // xk, yk, zk, rk
 
         xik = xi - xk;
