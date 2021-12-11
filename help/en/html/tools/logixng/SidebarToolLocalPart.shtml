@@ -1,7 +1,7 @@
 <!-- SidebarToolLocalPart.shtml -->
 <!-- This is the local part sidebar definition for html/tools/logixng pages -->
 
-        <dt class="dtheader">LogixNG</dt>
+        <dt class="dtheader"><a href="/help/en/html/tools/logixng/LogixNG.shtml">LogixNG</a></dt>
         <dd>LogixNG: The Next Generation
           <ul>
             <li><em style="padding-left: 1em;">Home Pages</em>
