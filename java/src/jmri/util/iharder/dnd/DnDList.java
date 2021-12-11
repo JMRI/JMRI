@@ -22,8 +22,7 @@ public class DnDList<E>
         java.awt.dnd.DragSourceListener,
         java.awt.dnd.DragGestureListener {
 
-    @SuppressWarnings("unused") // FIXME: Is this really unused? I don't see it used anywhere here, but perhaps it should be.
-    private java.awt.dnd.DropTarget dropTarget = null;
+    private java.awt.dnd.DropTarget _dropTarget = null;
     private java.awt.dnd.DragSource dragSource = null;
 
     private int sourceIndex = -1;
@@ -77,7 +76,7 @@ public class DnDList<E>
     }   // end constructor
 
     private void initComponents() {
-        dropTarget = new java.awt.dnd.DropTarget(this, this);
+        _dropTarget = new java.awt.dnd.DropTarget(this, this);
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer(this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents
