@@ -16,60 +16,74 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JMRI: LogixNG Documentation</h1>
+      <h1>JMRI: LogixNG:  The Next Generation of Layout Automation</h1>
 
       <h2>Introduction to LogixNG</h2>
 
-      <p>For those who have used Logix, it's important to note that LogixNG is similar, but
-      different.</p>
+      <p>LogixNG (Logix "Next Generation") is a modular layout automation tool developed for JMRI in 2021.  It is 
+      similar to, but a complete rethinking of, <a href="../Logix.shtml">Logix</a>.  It is designed to be  
+      easily testable, highly maintable and readily expandible.  Key concepts of LogixNG are:</p>
+      
+      <dl>
+      <dt>Actions and Expressions</dt>
 
-      <p>The main building blocks in LogixNG are actions and expressions. An action does something,
-      for example throwing a turnout, set a signal or run a script. An expression asks a question,
+      <dd>The main building blocks in LogixNG are <em>actions</em> and <em>expressions</em>. An action does something,
+      for example throwing a turnout, setting a signal, or running a script. An expression asks a question,
       for example if turnout LT2 is closed, if sensor IS255 is active, or does an expression script
-      return true or false.</p>
+      return true or false.
+      
+      <br><br>The actions and expressions are organized as trees; each tree is a <strong>ConditionalNG</strong>.
+      A LogixNG is comprised of one or more ConditionalNGs. Although Logix does not have the "tree" concept, 
+      there is a similarity: In LogixNG, a <em>ConditionalNG</em> serves the same purpose as a <em>
+      Conditional</em> in Logix.  An <em>expression</em> in LogixNG is similar to a <em>conditional variable</em>
+      in Logix, and an <em>action</em> in LogixNG is similar to a <em>conditional action</em> in Logix.
+      
+      <br><br>In LogixNG, an action or expression may have other actions and/or expressions as 
+      children, which allows the user to build a complex structure with simple building blocks.
 
-      <p>The actions and expressions are organized in trees, each tree is a ConditionalNG. The
-      ConditionalNGs are organized in LogixNGs.</p>
-
-      <p>An action or expression may have other actions and/or expressions as children, which
-      allows the user to build a complex structure with simple building blocks.</p>
-
-      <p>For example, one common root of the tree is the <strong>If Then Else</strong> action. It
+      <br><br>For example, one common root of the tree is the <strong>If Then Else</strong> action. It
       has one child expression and two child actions. It evaluates the expression and if the
       expression is <strong>true</strong>, the <strong><em>then</em></strong> child action is
       executed. If the expression is <strong>false</strong>, the <strong><em>else</em></strong>
-      child action is executed.</p>
+      child action is executed.
+      </dd>
+      
+      <dt>Modules</dt>
 
-      <p>LogixNG, short for Logix Next Generation, is a complete rethink of the concepts used by
-      Logix. It's modular, which means it's easy to extend LogixNG with new functionality and it's
-      easy to test each part of LogixNG.</p>
-
-      <p>LogixNG have building blocks that are similar to Logix. A <em>LogixNG</em> is the same as
-      a <em>Logix</em>. A <em>ConditionalNG</em> is the same as a <em>Conditional</em>. An
-      <em>expression</em> in LogixNG is similar to a <em>conditional variable</em> in Logix and an
-      <em>action</em> in LogixNG is similar to a <em>conditional action</em> in Logix.</p>
-
-      <p>Like the Logix indirect memory reference using @memoryname, LogixNG has references. A
-      reference is an indirect pointer to an item on the layout. For example, if the memory IM1 has
-      the value "IT1", the reference {IM1} points to the turnout IT1. This means that if an action
-      has the command "set turnout {IM1} to thrown", it means that LogixNG reads the memory IM1,
-      which in this example has the value IT1, and then sets the turnout IT1 to thrown.</p>
-
-      <p>LogixNG adds <strong>tables</strong> to JMRI. A table is similar to Memory but has one or
-      two dimensions. Each row and each column in the table may be given a name, which means that a
-      single cell in the table can be referred to with the row name and the column name. Tables are
-      in particular intended to be used together with references, to make it easy to setup complex
-      configurations. A table can be created in a spreadsheet software like Microsoft Excel or
-      LibreOffice Calc and then exported as an CSV file and imported to JMRI.</p>
-
-      <p>The LogixNG <strong>Module</strong> is essentially a ConditionalNG, but there are
+      <dd>The LogixNG <strong>Module</strong> is essentially a ConditionalNG, but there are
       different types with specific capabilities. This makes it possible to combine common
       expressions and actions. Modules can accept parameters and return results. When combined with
       <strong>references</strong> and <strong>tables</strong>, modules make it possible to create
       templates/subroutines/etc., that can be called from ConditionalNGs with the appropriate
-      variables.</p>
+      variables.</dd>
+      
+      <dt>Tables</dt>
 
-      <h2>LogixNG Components</h2>
+      <dd>LogixNG adds the <strong>LogixNG Tables</strong> concept to JMRI. A LogixNG Table is similar to
+      <a href="../Memory.sthml">Memory</a> but has one or
+      two dimensions. Each row and each column in the table may be given a name, which means that a
+      single cell in the table can be referred to with the row name and the column name. Tables are
+      in particular intended to be used together with references, to make it easy to setup complex
+      configurations. A table can be created in spreadsheet software like Microsoft Excel or
+      LibreOffice Calc and then exported as a CSV file and imported to JMRI.</dd>
+      
+      <dt>References</dt>
+
+      <dd>Like the Logix indirect memory reference using @memoryname, LogixNG has references. A
+      reference is an indirect pointer to an item on the layout. For example, if the memory IM1 has
+      the value "IT1", the reference {IM1} points to the turnout IT1. This means that if an action
+      has the command "set turnout {IM1} to thrown", it means that LogixNG reads the memory IM1,
+      which in this example has the value IT1, and then sets the turnout IT1 to thrown.</dd>     
+      
+      <dt>Error Handling</dt>
+
+      <dd>LogixNG provides error handling and debugging tools to help you in creating sophisticated layout
+      automation logic.  This includes the ability to stop or abort individual LogixNGs, log errors, and "throw"
+      an exception for further analysis.  See <a href="ErrorHandling.shtml">Error Handling</a></dd>
+      
+      </dl>
+      
+      <h2>LogixNG Tool Components</h2>
 
       <p>The LogixNG tool has three main components. They are accessed via the main PanelPro
       <strong>Tools ⇒ Tables ⇒ LogixNG</strong> menu path like other JMRI table items. The three
@@ -144,7 +158,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
-        "LogixNG Preferences" width="25%" height="25%"></a>
+        "LogixNG Preferences" width="298" height="225"></a>
       </div>
 
       <dl>
@@ -232,9 +246,9 @@
         "LogixNG sample table" width="257" height="140"></a>
       </div>
 
-      <p>Each turnout has a ConditionalNG that is triggered when the toggle sensor is Active. A
-      module is called to check the lock state and toggle the turnout. A variable is passed to the
-      module that has the row number.</p>
+      <p>Each turnout has a ConditionalNG that is triggered when the toggle sensor changes state. A
+      If the sensor goes Active, a module is called to check the lock state and toggle the turnout. 
+      A variable is passed to the module that has the row number.</p>
 
       <div style="margin-left: 2em">
         <a href="images/sample_logixng.png"><img src="images/sample_logixng.png" alt=
