@@ -179,7 +179,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             if (e != null) {
                 String[] number = e.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
-                if (roadNumber.startsWith("*")) {
+                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
+                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
+                    if (e.getNumber().contains(rN)) {
+                        _roadNumber = roadNumber;
+                        _index = index + 1;
+                        return index;
+                    }
+                } else if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
                     if (e.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
                         _roadNumber = roadNumber;
