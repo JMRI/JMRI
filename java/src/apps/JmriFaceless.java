@@ -4,9 +4,9 @@ package apps;
  * Application for running JMRI server functions without a graphical interface.
  * Goal is to run on very light hardware, such as a Raspberry Pi, without
  * requiring the overhead associated with display functions. Needs an existing
- * JMRI configuration file passed as parm to program, or it will use the default
- * of JmriFacelessConfig3.xml Copied from apps.gui3.demo3.Demo3, then removed
- * all ui-related elements NOTE: JMRI "server" functions based on ui components
+ * JMRI profile ID passed to program, e.g. 
+ *   <pre><code>JmriFaceless --profile=RPi.3d3f1dfc</code></pre>
+ * NOTE: JMRI "server" functions based on ui components
  * (such as JmriJFrames) may need to be modified to check isHeadless() and
  * adjust their behavior as needed.
  * <br>

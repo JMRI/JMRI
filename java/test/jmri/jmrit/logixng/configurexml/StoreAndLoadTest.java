@@ -1818,6 +1818,7 @@ public class StoreAndLoadTest {
         executeDelayed.setDelayAddressing(NamedBeanAddressing.Direct);
         executeDelayed.setDelay(100);
         executeDelayed.setResetIfAlreadyStarted(true);
+        executeDelayed.setUseIndividualTimers(false);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1826,6 +1827,7 @@ public class StoreAndLoadTest {
         executeDelayed.setDelayAddressing(NamedBeanAddressing.LocalVariable);
         executeDelayed.setDelayLocalVariable("MyVar");
         executeDelayed.setResetIfAlreadyStarted(true);
+        executeDelayed.setUseIndividualTimers(true);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

@@ -15,7 +15,7 @@
 <!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
 <!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
 <!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
-<!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Correction of "Choice_Ligthx.xml"-->
+<!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -993,7 +993,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Front light effect generated</label>
@@ -1013,7 +1013,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Rear light effect generated</label>
@@ -1033,7 +1033,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 1 effect generated</label>
@@ -1053,7 +1053,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 2 effect generated</label>
@@ -1073,7 +1073,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 3 effect generated</label>
@@ -1093,7 +1093,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 4 effect generated</label>
@@ -1113,7 +1113,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 5 effect generated</label>
@@ -1133,7 +1133,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 6 effect generated</label>
@@ -1411,10 +1411,8 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Jingle Sound CV Write</label>
     <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
-    <label xml:lang="cs">Zvuk znělky při zápisu CV</label>
     <tooltip>The writing of values is confirmed by a jingle.</tooltip>
     <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
-    <tooltip xml:lang="cs">Zápis hodnot do CV je potvrzen znělkou.</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Read Locked" mask="XXVXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1422,10 +1420,8 @@
     <!--label xml:lang="it">Blocco programmazione in modo Servizio</label-->
     <!--label xml:lang="cs">Zámek programování v servisním režimu</label-->
     <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
-    <label xml:lang="cs">Čtení v Servisním režimu programování Zamčeno</label>
     <tooltip>Read CV's in "Service mode" locked</tooltip>
     <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
-    <tooltip xml:lang="cs">Čtení CV v Servisním režimu je zamčeno</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1435,17 +1431,15 @@
     <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
     <tooltip>Programming lock only in "Service mode"</tooltip>
     <tooltip xml:lang="de">Programmiersperre nur im „Service mode“</tooltip>
-    <tooltip xml:lang="cs">Programování v Servisním režimu je zamčeno</tooltip>
   </variable>
   <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Software Update Locked</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
-    <label xml:lang="cs">Softwarové aktualizace zamčeny</label>
+    <label xml:lang="cs">Zámek softwarových aktualizací</label>
     <label xml:lang="de">Updatesperre</label>
     <tooltip>Lock the software update</tooltip>
     <tooltip xml:lang="de">Sperre des Software-Updates</tooltip>
-    <tooltip xml:lang="cs">Zámek softwarových aktualizací</tooltip>
   </variable>
   <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
