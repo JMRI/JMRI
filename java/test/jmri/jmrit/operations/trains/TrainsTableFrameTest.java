@@ -23,7 +23,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -32,8 +31,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(10)
 public class TrainsTableFrameTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(3); // first, plus three retries
 
     @Test
     public void testCTor() {

@@ -8,7 +8,6 @@ import java.io.File;
 import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
@@ -29,8 +28,6 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     private EditorFrameOperator jfo;
-
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @BeforeEach
     @Override

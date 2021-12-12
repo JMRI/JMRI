@@ -18,7 +18,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.NamedBeanComparator;
 import jmri.util.PropertyChangeListenerScaffold;
 import jmri.util.ThreadingUtil;
-import jmri.util.junit.rules.RetryRule;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -26,8 +25,6 @@ import jmri.util.junit.rules.RetryRule;
  * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
-
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries of tests
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
     protected PropertyChangeListenerScaffold l;
@@ -81,13 +78,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mInactive.setExtended(true);
 
         // check states
-        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
+        Assert.assertEquals(Sensor.UNKNOWN, t.getKnownState());
 
         ti.sendMessage(mActive);
-        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.ACTIVE,t.getKnownState());
 
         ti.sendMessage(mInactive);
-        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, t.getKnownState());
 
     }
 
@@ -115,13 +112,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mStateInactive.setExtended(true);
 
         // check states
-        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
+        Assert.assertEquals(Sensor.UNKNOWN, t.getKnownState());
 
         ti.sendMessage(mStateActive);
-        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.ACTIVE,t.getKnownState());
 
         ti.sendMessage(mStateInactive);
-        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, t.getKnownState());
     }
 
     @Test
@@ -136,10 +133,10 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mActive.setExtended(true);
 
         // check states
-        Assert.assertEquals(s.getKnownState(), Sensor.UNKNOWN);
+        Assert.assertEquals(Sensor.UNKNOWN, s.getKnownState());
 
         ti.sendMessage(mActive);
-        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.ACTIVE,s.getKnownState());
 
         JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
@@ -147,7 +144,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // local flip
         s.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.ACTIVE,s.getKnownState());
 
         JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
