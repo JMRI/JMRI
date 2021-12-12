@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+        <choice xml:lang="it">Fumo per loco a Vapore dipendente da velocità o Carico</choice>
+        <choice xml:lang="cs">Kouř parní lokomotivy závisí na rychlosti nebo zátěži</choice>
+        <choice xml:lang="de">Geschwindigkeits- oder lastabhängige Raucherzeugung (Dampflok)</choice>
+      </enumChoice>
+      <enumChoice choice="Servo Power Management">
+        <choice>Servo Power Management</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+        <choice xml:lang="it">Fumo per loco diesel dipendente da operazioni</choice>
+        <choice xml:lang="cs">Kouř spalovacího motoru závisí na provozu</choice>
+        <choice xml:lang="de">Geschwindigkeits- oder lastabhängige Raucherzeugung (Diesellok)</choice>
+      </enumChoice>
+</enumChoiceGroup>
