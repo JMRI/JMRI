@@ -24,6 +24,7 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
     private final JLabel _unitLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_Unit"));
     private JComboBox<TimerUnit> _unitComboBox;
     private JCheckBox _resetIfAlreadyStarted;
+    private JCheckBox _useIndividualTimers;
     
     private JTabbedPane _tabbedPaneDelay;
     private JFormattedTextField _timerDelay;
@@ -115,6 +116,21 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         _resetIfAlreadyStarted = new JCheckBox(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted"));
         if (action != null) _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
         panel.add(_resetIfAlreadyStarted);
+        
+        _useIndividualTimers = new JCheckBox(Bundle.getMessage("ExecuteDelayedSwing_UseIndividualTimers"));
+        if (action != null) {
+            _useIndividualTimers.setSelected(action.getUseIndividualTimers());
+            _resetIfAlreadyStarted.setEnabled(!action.getUseIndividualTimers());
+        }
+        _useIndividualTimers.addActionListener((evt)->{
+            if (_useIndividualTimers.isSelected()) {
+                _resetIfAlreadyStarted.setEnabled(false);
+                _resetIfAlreadyStarted.setSelected(false);
+            } else {
+                _resetIfAlreadyStarted.setEnabled(true);
+            }
+        });
+        panel.add(_useIndividualTimers);
     }
     
     /** {@inheritDoc} */
@@ -171,6 +187,7 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         
         action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
         action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
+        action.setUseIndividualTimers(_useIndividualTimers.isSelected());
         
         
         

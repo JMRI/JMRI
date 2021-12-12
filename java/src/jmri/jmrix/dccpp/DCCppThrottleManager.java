@@ -136,6 +136,8 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         if (r.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
             log.debug("MaxNumSlots reply received: {}", r);
             tc.getCommandStation().setCommandStationMaxNumSlots(r);
+        } else {
+            log.debug("some other reply received: {}", r);
         }
     }
 
