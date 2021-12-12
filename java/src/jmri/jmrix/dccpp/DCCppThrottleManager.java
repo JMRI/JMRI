@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import java.util.EnumSet;
 import java.util.HashMap;
 
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
@@ -25,7 +26,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
 
     protected DCCppTrafficController tc;
-
+    
     /**
      * Constructor.
      * @param memo the memo for the connection this tm will use
@@ -136,8 +137,19 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         if (r.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
             log.debug("MaxNumSlots reply received: {}", r);
             tc.getCommandStation().setCommandStationMaxNumSlots(r);
+        // handle loco state reply by finding the proper throttle and asking it to update itself
+        } else if (r.getElement(0) == DCCppConstants.LOCO_STATE_REPLY){
+            log.debug("LocoState reply received: {}", r);
+            int cab = r.getCabInt();
+            DccLocoAddress locoAddress = new DccLocoAddress(cab, !canBeShortAddress(cab));            
+            if (throttles.containsKey(locoAddress)) {
+                DCCppThrottle throttle = throttles.get(locoAddress);
+                if (log.isDebugEnabled()) log.debug("Passing locostate to throttle {}", throttle.getLocoAddress());
+                throttle.handleLocoState(r);
+            }                
+            
         } else {
-            log.debug("some other reply received: {}", r);
+            log.trace("ignoring reply: {}", r);
         }
     }
 

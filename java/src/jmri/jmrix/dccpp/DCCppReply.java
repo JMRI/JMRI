@@ -853,7 +853,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (false);
         }
     }
-
+    
+    public boolean getIsForward() {
+        return getDirectionBool();
+    }
+    
     // ------------------------------------------------------
     // Helper methods for Turnout Replies
 
