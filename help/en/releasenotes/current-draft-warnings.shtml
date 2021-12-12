@@ -11,7 +11,6 @@
         are removed in this release.  These include:
         <ul>
             <li>apps.JmriPlugin</li>
-            <li></li>
             <li>apps/startup/StartupActionFactory</li>
             <li>Routes/Turnouts/Sensors: One form of getNextAddress</li>
             <li>Handling of preferences from before JMRI 4.0; upgrade through JMRI 4.20 instead</li>
@@ -20,26 +19,13 @@
                 unused classes.  These have been made obsolete by JMRI's native scripting,
                 and haven't been used since JMRI 1.2
             </li>
-            <li></li>
-            <li></li>
-            <li></li>
             <li>SSL (BlockBossLogic) - change to start/stop calls</li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
             <li>Various TrafficManagers.instance methods - use InstanceManager</li>
             <li>Throttle.getListeners() - use getPropertyChangeListeners</li>
-            <li></li>
             <li>Removed obsolete RosterRecorder class;
                 function now available via scripting
             </li>
             <li>Removed deprecated methods from Throttle panels</li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
             <li>This version no longer reads ZeroConf IPv4 and IPv6 preferences
                 written with JMRI 4.16 and before.  Please make sure to upgrade
                 to JMRI 4.20 (or later) and save your preferences before
@@ -57,6 +43,30 @@
             <li></li>
             <li></li>
             <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
         </ul>
     </li>
     <li>The PowerManager now only fires events with the id "power".  Before this
@@ -64,7 +74,24 @@
         your code is looking for the right form.
     </li>
     <li>
-        DCC4pc now has multi-system capability
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
     </li>
     <li>
     </li>
