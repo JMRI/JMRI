@@ -22,7 +22,6 @@ public class DnDList<E>
         java.awt.dnd.DragSourceListener,
         java.awt.dnd.DragGestureListener {
 
-    private java.awt.dnd.DropTarget _dropTarget = null;
     private java.awt.dnd.DragSource dragSource = null;
 
     private int sourceIndex = -1;
@@ -76,7 +75,6 @@ public class DnDList<E>
     }   // end constructor
 
     private void initComponents() {
-        _dropTarget = new java.awt.dnd.DropTarget(this, this);
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer(this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents
