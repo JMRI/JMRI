@@ -316,13 +316,13 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         Reporter otherReporter = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
         Assert.assertNotEquals("Reporters are different", otherReporter, expressionReporter.getReporter().getBean());
         expressionReporter.setReporter(otherReporter);
-        Assert.assertEquals("Memorys are equal", otherReporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getReporter().getBean());
         
         NamedBeanHandle<Reporter> otherReporterHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherReporter.getDisplayName(), otherReporter);
         expressionReporter.removeReporter();
-        Assert.assertNull("Memory is null", expressionReporter.getReporter());
+        Assert.assertNull("Reporter is null", expressionReporter.getReporter());
         expressionReporter.setReporter(otherReporterHandle);
         Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getReporter().getBean());
         Assert.assertEquals("ReporterHandles are equal", otherReporterHandle, expressionReporter.getReporter());
@@ -333,73 +333,73 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IM11");
-        Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
-        NamedBeanHandle<Memory> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory12.getDisplayName(), memory12);
-        Memory memory13 = InstanceManager.getDefault(MemoryManager.class).provide("IM13");
-        Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IM14");
-        memory14.setUserName("Some user name");
+        Reporter reporter11 = InstanceManager.getDefault(ReporterManager.class).provide("IR11");
+        Reporter reporter12 = InstanceManager.getDefault(ReporterManager.class).provide("IR12");
+        NamedBeanHandle<Reporter> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(reporter12.getDisplayName(), reporter12);
+        Reporter reporter13 = InstanceManager.getDefault(ReporterManager.class).provide("IR13");
+        Reporter reporter14 = InstanceManager.getDefault(ReporterManager.class).provide("IR14");
+        reporter14.setUserName("Some user name");
         
-        expressionReporter.removeMemory();
-        Assert.assertNull("memory handle is null", expressionReporter.getMemory());
+        expressionReporter.removeReporter();
+        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
         
-        expressionReporter.setMemory(memory11);
-        Assert.assertTrue("memory is correct", memory11 == expressionReporter.getMemory().getBean());
+        expressionReporter.setReporter(reporter11);
+        Assert.assertTrue("reporter is correct", reporter11 == expressionReporter.getReporter().getBean());
         
-        expressionReporter.removeMemory();
-        Assert.assertNull("memory handle is null", expressionReporter.getMemory());
+        expressionReporter.removeReporter();
+        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
         
-        expressionReporter.setMemory(memoryHandle12);
-        Assert.assertTrue("memory handle is correct", memoryHandle12 == expressionReporter.getMemory());
+        expressionReporter.setReporter(memoryHandle12);
+        Assert.assertTrue("reporter handle is correct", memoryHandle12 == expressionReporter.getReporter());
         
-        expressionReporter.setMemory("A non existent memory");
-        Assert.assertNull("memory handle is null", expressionReporter.getMemory());
-        JUnitAppender.assertWarnMessage("memory \"A non existent memory\" is not found");
+        expressionReporter.setReporter("A non existent reporter");
+        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
+        JUnitAppender.assertWarnMessage("reporter \"A non existent reporter\" is not found");
         
-        expressionReporter.setMemory(memory13.getSystemName());
-        Assert.assertTrue("memory is correct", memory13 == expressionReporter.getMemory().getBean());
+        expressionReporter.setReporter(reporter13.getSystemName());
+        Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getReporter().getBean());
         
-        String userName = memory14.getUserName();
-        Assert.assertNotNull("memory is not null", userName);
-        expressionReporter.setMemory(userName);
-        Assert.assertTrue("memory is correct", memory14 == expressionReporter.getMemory().getBean());
+        String userName = reporter14.getUserName();
+        Assert.assertNotNull("reporter is not null", userName);
+        expressionReporter.setReporter(userName);
+        Assert.assertTrue("reporter is correct", reporter14 == expressionReporter.getReporter().getBean());
     }
     
     @Test
-    public void testSetMemoryException() {
-        // Test setMemory() when listeners are registered
+    public void testSetReporterException() {
+        // Test setReporter() when listeners are registered
         Assert.assertNotNull("Reporter is not null", reporter);
         Assert.assertNotNull("Reporter is not null", expressionReporter.getReporter());
         expressionReporter.registerListeners();
         boolean thrown = false;
         try {
-            expressionReporter.setMemory("A memory");
+            expressionReporter.setReporter("A memory");
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
         
         thrown = false;
         try {
-            Memory memory99 = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
-            NamedBeanHandle<Memory> memoryHandle99 =
-                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory99.getDisplayName(), memory99);
-            expressionReporter.setMemory(memoryHandle99);
+            Reporter reporter99 = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
+            NamedBeanHandle<Reporter> reporterHandle99 =
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(reporter99.getDisplayName(), reporter99);
+            expressionReporter.setReporter(reporterHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
         
         thrown = false;
         try {
-            expressionReporter.setMemory((Memory)null);
+            expressionReporter.setReporter((Reporter)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
     }
     
     @Test
@@ -412,7 +412,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         
         // Get some other memory for later use
         Reporter otherReporter = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
-        Assert.assertNotNull("Memory is not null", otherReporter);
+        Assert.assertNotNull("Reporter is not null", otherReporter);
         Assert.assertNotEquals("Reporter is not equal", reporter, otherReporter);
         
         // Test vetoableChange() for some other propery
