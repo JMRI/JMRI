@@ -1524,7 +1524,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         updateStatusFromRead = true;
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadTimeRequest() {
         if (!waitingForCmdRead) {
@@ -1537,7 +1536,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         updateTimeFromRead = true;
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadRatioRequest() {
         if (!waitingForCmdRead) {
@@ -1550,7 +1548,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         updateRatioFromRead = true;
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadFormatRequest() {
         if (!waitingForCmdRead) {
@@ -1563,7 +1560,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         updateFormatFromRead = true;
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadStatusRequest() {
         if (!waitingForCmdRead) {

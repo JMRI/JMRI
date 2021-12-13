@@ -20,18 +20,17 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
 
     /** {@inheritDoc} */
     @Override
-    protected SignalMastAddPane getOTT() { return new MatrixSignalMastAddPane(); }    
-    
+    protected SignalMastAddPane getOTT() { return new MatrixSignalMastAddPane(); }
+
     @Test
-    @SuppressWarnings("unused") // it1 etc. are indirectly used as NamedBeans IT1 etc.
     public void testSetMastOK() {
         MatrixSignalMast s1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user name");
-        Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
-        Turnout it3 = InstanceManager.turnoutManagerInstance().provideTurnout("IT3");
-        Turnout it4 = InstanceManager.turnoutManagerInstance().provideTurnout("IT4");
-        Turnout it5 = InstanceManager.turnoutManagerInstance().provideTurnout("IT5");
-        Turnout it6 = InstanceManager.turnoutManagerInstance().provideTurnout("IT666");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT3");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT4");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT5");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT666");
         // s1.setBitNum(6); // defaults to 6
         s1.setOutput("output1", "IT1");
         s1.setOutput("output2", "IT2");
@@ -41,9 +40,9 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
         s1.setOutput("output6", "IT666");
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
-        
+
         Assert.assertTrue(vp.canHandleMast(s1));
-        
+
         vp.setMast(null);
         vp.setMast(s1);
 
@@ -64,25 +63,24 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
         TurnoutSignalMast m1 = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)", "user name");
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
-        
+
         Assert.assertFalse(vp.canHandleMast(m1));
-        
+
         vp.setMast(null);
-                
+
         vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$tsm:basic:one-searchlight($1) jmri.implementation.TurnoutSignalMast");
     }
 
     @Test
-    @SuppressWarnings("unused") // it1 etc. are indirectly used as NamedBeans IT1 etc.
     public void testEditAndDisableViaGui() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         // create a mast
-        Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
-        Turnout it3 = InstanceManager.turnoutManagerInstance().provideTurnout("IT3");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
+        InstanceManager.turnoutManagerInstance().provideTurnout("IT3");
 
         MatrixSignalMast mast = new MatrixSignalMast("IF$xsm:basic:one-low($0002)-3t", "user name 2"){
             { setLastRef(3); } // reset references - this leads to $0003 below, just in case anybody else has created one
