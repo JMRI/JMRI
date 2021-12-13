@@ -71,7 +71,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
-    private static final boolean limitPasswordToNumericCharacters = false;
+    static  boolean limitPasswordToNumericCharacters = false; // not final to allow override by script
     private LocoNetSystemConnectionMemo memo;
     private Integer numUr92;
     private javax.swing.Timer swingTmrIplQuery;
