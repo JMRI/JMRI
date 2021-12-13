@@ -207,7 +207,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
         // Clear flag
         atomicBoolean.set(false);
-        // Set the memory
+        // Set the report
         reporter.setReport("New value");
         
         // Disable the conditionalNG
@@ -219,20 +219,20 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Set the memory. This should not execute the conditional.
+        // Set the report. This should not execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Set the memory. This should not execute the conditional.
+        // Set the report. This should not execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
-        // Set the memory. This should execute the conditional.
+        // Set the report. This should execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The action should now be executed so the atomic boolean should be true
