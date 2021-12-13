@@ -50,6 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 4.99.1
+; - Updated "-CleanUp" so that another set of old files are removed,
+;   before installation (to allow restructuring of directory):
+;        jython\*
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.1
 ; - Remove Tools start menu items
 ; - Add support for Open JDK 8 Registry Keys
@@ -500,6 +505,10 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- users not to modify
     RMDir /R "$OUTDIR\lib"
 
+    ; -- Recursively delete jython example files as of 4.99.1 to allow 
+    ; -- for newly structured directories to be installed
+    RMDir /R "$OUTDIR\jython"
+
     ; -- Delete old USB library files
     Delete "$OUTDIR\ch.ntb.usb.jar"
 
@@ -609,6 +618,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
+        
 
     ; -- If the current install Start Menu folder exists, remove any
     ; --        predictably-named JMRI-related contents.
