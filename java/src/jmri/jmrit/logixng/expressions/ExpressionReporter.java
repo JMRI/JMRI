@@ -382,7 +382,7 @@ public class ExpressionReporter extends AbstractDigitalExpression
                 break;
 
             default:
-                obj = null;
+                throw new IllegalArgumentException("_reporterValue has unknown value: "+_reporterValue.name());
         }
         String reporterValue = getString(obj);
         String otherValue = null;
@@ -550,7 +550,7 @@ public class ExpressionReporter extends AbstractDigitalExpression
                     break;
 
                 case State:
-                    _reporterHandle.getBean().addPropertyChangeListener("value", this);
+                    // No property change event is sent when state is changed for reports
                     break;
 
                 default:
@@ -569,7 +569,6 @@ public class ExpressionReporter extends AbstractDigitalExpression
         if (_listenersAreRegistered) {
             _reporterHandle.getBean().removePropertyChangeListener("currentReport", this);
             _reporterHandle.getBean().removePropertyChangeListener("lastReport", this);
-            _reporterHandle.getBean().removePropertyChangeListener("value", this);
             if (_listenToMemory && (_memoryHandle != null)) {
                 _memoryHandle.getBean().removePropertyChangeListener("value", this);
             }

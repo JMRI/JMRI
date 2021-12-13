@@ -4,12 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
-import jmri.Memory;
-import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.Reporter;
@@ -46,6 +45,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
     private ExpressionReporter expressionReporter;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
+    private AtomicLong atomicCounter;
     private Reporter reporter;
     
     
@@ -307,6 +307,216 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
         conditionalNG.setEnabled(true);
         Assert.assertTrue("The expression returns true",atomicBoolean.get());
+
+
+        long counter;
+        expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.Equal);
+        expressionReporter.setConstantValue("A report");
+        expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.CurrentReport);
+        // Clear flag
+        atomicBoolean.set(false);
+        atomicCounter.set(0);
+        counter = 0;
+        // Clear report
+        reporter.setReport(null);
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport(null);
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should execute the conditional.
+        reporter.setReport("A report");
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport(null);
+        // The action should now not be executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+
+
+        expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.IsNull);
+        expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.CurrentReport);
+        // Clear flag
+        atomicBoolean.set(false);
+        atomicCounter.set(0);
+        counter = 0;
+        // Clear report
+        reporter.setReport(null);
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport("Some report");
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should execute the conditional.
+        reporter.setReport(null);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The action should now not be executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+
+        reporter.setReport("Some other report");
+
+
+        expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.Equal);
+        expressionReporter.setConstantValue("A report");
+        expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.LastReport);
+        // Clear flag
+        atomicBoolean.set(false);
+        atomicCounter.set(0);
+        counter = 0;
+        // Clear report
+        reporter.setReport(null);
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport("Some report");
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should execute the conditional.
+        reporter.setReport("A report");
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport(null);
+        // The action should now not be executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+
+
+        expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.IsNull);
+        expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.LastReport);
+        // Clear flag
+        atomicBoolean.set(false);
+        atomicCounter.set(0);
+        counter = 0;
+        // Clear report
+        reporter.setReport(null);
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport("Some report");
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the report. This should not execute the conditional.
+        reporter.setReport(null);
+        // The action should now not be executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Set the report. This should not execute the conditional.
+        reporter.setReport("A report");
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+
+
+        expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.Equal);
+        expressionReporter.setConstantValue(Integer.toString(jmri.DigitalIO.ON));
+        expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.State);
+        // Clear flag
+        atomicBoolean.set(false);
+        atomicCounter.set(0);
+        counter = 0;
+        // Set state UNKNOWN
+        reporter.setState(NamedBean.UNKNOWN);
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set state ON. This should not execute the conditional.
+        reporter.setState(jmri.DigitalIO.ON);
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set state UNKNOWN. This should not execute the conditional.
+        reporter.setState(NamedBean.UNKNOWN);
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        // Set state ON. This should execute the conditional.
+        reporter.setState(NamedBean.INCONSISTENT);
+        reporter.setState(jmri.DigitalIO.ON);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        // setState() doesn't give a property change event so we need to call conditionalNG.execute()
+        conditionalNG.execute();
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Set state UNKNOWN. This should not execute the conditional.
+        reporter.setState(NamedBean.UNKNOWN);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
     }
     
     @Test
@@ -481,7 +691,8 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         _baseMaleSocket = maleSocket2;
         
         atomicBoolean = new AtomicBoolean(false);
-        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        atomicCounter = new AtomicLong(0);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true, atomicCounter);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
