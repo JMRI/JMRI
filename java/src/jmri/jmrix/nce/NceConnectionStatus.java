@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionStatus;
  * Only invokes the EPROM read when the interface experiences a timeout.
  * <p>
  * Checks revision of NCE CS by reading the 3 byte revision. Sends a warning
- * message NCE EPROM found & preferences are not correct for revision selected.
+ * message NCE EPROM found and preferences are not correct for revision selected.
  * <p>
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *
