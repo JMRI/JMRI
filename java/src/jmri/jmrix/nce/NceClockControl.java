@@ -454,7 +454,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueClock1224(boolean mode) {
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
@@ -507,7 +506,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings({"deprecation", "unused"}) // Date.getHours, getMinutes, getSeconds
+    @SuppressWarnings({"deprecation"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
@@ -519,7 +518,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (now);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getNceTime() {
         double nceTime = 0;

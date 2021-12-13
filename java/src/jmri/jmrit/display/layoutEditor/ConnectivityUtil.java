@@ -1307,7 +1307,6 @@ final public class ConnectivityUtil {
             @CheckForNull TrackSegment currentTrackSegment,
             int currentNodeState) {
         // initialize
-        //@SuppressWarnings("unused")
         //LayoutEditor.HitPointType prevTrackType = currentNodeType;
         LayoutTrack prevTrack = currentNode;
         TrackSegment nextTrackSegment = currentTrackSegment;

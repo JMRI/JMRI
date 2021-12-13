@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.ConnectionStatus;
 
-@SuppressWarnings("unused")
 /**
  * Continuously checks and confirms that the communication link to the NCE
  * Command Station is operational by reading the revision number of the EPROM.
