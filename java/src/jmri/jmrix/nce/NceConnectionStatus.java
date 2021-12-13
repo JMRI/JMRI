@@ -17,7 +17,7 @@ import jmri.jmrix.ConnectionStatus;
  * message NCE EPROM found & preferences are not correct for revision selected.
  * <p>
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
- * 
+ *
  * Confirms connection to PowerCab by issuing dummy loco command.
  *
  * @author Daniel Boudreau (C) 2007, 2010, 2012, 2021
@@ -50,21 +50,23 @@ public class NceConnectionStatus implements NceListener {
     private int epromState = INIT_STATE; // EPROM state
     private boolean epromChecked = false;
 
-    // Our current knowledge of NCE Command Station EPROMs
+    // Our current knowledge of NCE Command Station EPROMs.
+    // The ones we don't use (hence haven't really confirmed) are
+    // commented out to preserve the value, but indicate we don't use them.
     private static final int VV_1999 = 4; // Revision of Apr 1999 EPROM VV.MM.mm = 4.0.1
-    private static final int MM_1999 = 0;
-    private static final int mm_1999 = 1;
+    // private static final int MM_1999 = 0;
+    // private static final int mm_1999 = 1;
 
     private static final int VV_2004 = 6; // Revision of Dec 2004 EPROM VV.MM.mm = 6.0.0
     private static final int MM_2004 = 0;
-    private static final int mm_2004 = 0;
+    // private static final int mm_2004 = 0;
 
     private static final int VV_2007 = 6; // Revision of Mar 2007 EPROM VV.MM.mm = 6.2.0
     private static final int MM_2007 = 2;
     private static final int mm_2007 = 0;
 
-    private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
-    private static final int mm_2008 = 2; // Revision of 2008 EPROM VV.MM.mm = 6.2.2
+    // private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
+    // private static final int mm_2008 = 2; // Revision of 2008 EPROM VV.MM.mm = 6.2.2
     private static final int mm_2021 = 3; // Revision of 2021 EPROM VV.MM.mm = 6.2.3
 
     private static final int VV_2012 = 7; // Revision 2012 EPROM VV.MM.mm = 7.2.0
@@ -88,18 +90,18 @@ public class NceConnectionStatus implements NceListener {
     private static final int mm_USB_V6_SB3 = 1; // SB3
     private static final int mm_USB_V6_PH = 2; // PH-Pro or PH-10
     // Future releases by NCE (Not used by JMRI yet!)
-    private static final int mm_USB_V6_ALL = 3; // All systems, not currently used
-    private static final int mm_USB_V6_PC161 = 4; // Future use, PowerCab 1.61, not currently used
-    private static final int mm_USB_V6_SB161 = 5; // Future use, SB3 1.61, not currently used
+    // private static final int mm_USB_V6_ALL = 3; // All systems, not currently used
+    // private static final int mm_USB_V6_PC161 = 4; // Future use, PowerCab 1.61, not currently used
+    // private static final int mm_USB_V6_SB161 = 5; // Future use, SB3 1.61, not currently used
     // V7 flavors
     private static final int mm_USB_V7_PC_128_A = 0; // PowerCab with 1.28c
     private static final int mm_USB_V7_SB5_165_A = 1; // SB5 with 1.65
     private static final int mm_USB_V7_SB5_165_B = 2; // SB5 with 1.65
-    private static final int mm_USB_V7_PC_165 = 3; // PowerCab with 1.65
+    // private static final int mm_USB_V7_PC_165 = 3; // PowerCab with 1.65
     private static final int mm_USB_V7_PC_128_B = 4; // PowerCab with 1.28c
     private static final int mm_USB_V7_SB3 = 5; // SB3 with 1.28c
     private static final int mm_USB_V7_PH = 6; // PowerPro with 3.1.2007
-    private static final int mm_USB_V7_ALL = 7; // All systems
+    // private static final int mm_USB_V7_ALL = 7; // All systems
 
     private NceTrafficController tc = null;
 
@@ -326,7 +328,7 @@ public class NceConnectionStatus implements NceListener {
 
     /**
      * EPROM version check is only done once at startup
-     * 
+     *
      * @param VV Major version number
      * @param MM Middle version number
      * @param mm Minor version number
