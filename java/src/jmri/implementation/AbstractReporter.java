@@ -45,7 +45,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
      * Provide a general method for updating the report.
      */
     @Override
-    public void setReport(Object r) {
+    public final void setReport(Object r) {
         if (r == _currentReport) {
             return;
         }
