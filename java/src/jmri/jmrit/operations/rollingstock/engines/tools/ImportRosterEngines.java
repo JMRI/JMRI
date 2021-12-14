@@ -68,15 +68,19 @@ public class ImportRosterEngines extends Thread {
                 log.error("Roster Id: {} doesn't have a road name and road number", re.getId());
                 continue;
             }
-            String road = re.getRoadName();
+            String road = re.getRoadName().trim();
             if (road.length() > Control.max_len_string_attibute) {
                 road = road.substring(0, Control.max_len_string_attibute);
             }
-            textId.setText(road + " " + re.getRoadNumber());
-            Engine engine = manager.getByRoadAndNumber(road, re.getRoadNumber());
+            String number = re.getRoadNumber().trim();
+            if (number.length() > Control.max_len_string_road_number) {
+                number = number.substring(0, Control.max_len_string_road_number);
+            }
+            textId.setText(road + " " + number);
+            Engine engine = manager.getByRoadAndNumber(road, number);
             if (engine == null) {
-                engine = manager.newRS(road, re.getRoadNumber());
-                String model = re.getModel();
+                engine = manager.newRS(road, number);
+                String model = re.getModel().trim();
                 if (model.length() > Control.max_len_string_attibute) {
                     model = model.substring(0, Control.max_len_string_attibute);
                 }
@@ -96,7 +100,7 @@ public class ImportRosterEngines extends Thread {
                 if (engine.getHp().equals(Engine.NONE)) {
                     engine.setHp(defaultEngineHp);
                 }
-                String owner = re.getOwner();
+                String owner = re.getOwner().trim();
                 if (owner.length() > Control.max_len_string_attibute) {
                     owner = owner.substring(0, Control.max_len_string_attibute);
                 }

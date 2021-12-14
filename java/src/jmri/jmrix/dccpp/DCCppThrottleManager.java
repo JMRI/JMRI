@@ -144,7 +144,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
             DccLocoAddress locoAddress = new DccLocoAddress(cab, !canBeShortAddress(cab));            
             if (throttles.containsKey(locoAddress)) {
                 DCCppThrottle throttle = throttles.get(locoAddress);
-                if (log.isDebugEnabled()) log.debug("Passing locostate to throttle {}", throttle.getLocoAddress());
+                if (log.isDebugEnabled()) log.debug("Passing locoState to throttle {}", throttle.getLocoAddress());
                 throttle.handleLocoState(r);
             }                
             

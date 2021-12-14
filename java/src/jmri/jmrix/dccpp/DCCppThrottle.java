@@ -258,10 +258,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle {} - received message '{}'", getDccAddress(), l);
+            log.trace("Throttle {} - received message '{}'", getDccAddress(), l);
         }
         if (requestState == THROTTLEIDLE) {
-            log.debug("Current throttle status is THROTTLEIDLE");
+            log.trace("Current throttle status is THROTTLEIDLE");
             // We haven't sent anything, but we might be told someone else 
             // has taken over this address
             // For now, do nothing.
@@ -293,7 +293,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         int cab = r.getCabInt();
         //insure this message belongs to this throttle (really shouldn't happen)        
         if (this.address != cab) {
-            log.error("throttle {} called for cab {}", this.address, cab);
+            log.error("throttle {} incorrectly called for cab {}", this.address, cab);
             return;
         }
 
@@ -305,7 +305,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             if (log.isDebugEnabled()) log.debug("changing forward from {} to {} for {}", this.getIsForward(), newForward, cab);
             super.setIsForward(newForward);
         }
-        if (Math.abs(this.getSpeedSetting() - newSpeedSetting) > 0.0001) { //deal with possible float precision errors
+        if (Math.abs(this.getSpeedSetting() - newSpeedSetting) > 0.0001) { //avoid possible float precision errors
             if (log.isDebugEnabled()) log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, cab);
             super.setSpeedSetting(newSpeedSetting);
         }
@@ -313,6 +313,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         for (int i = 0; i <= 28; i++) {
             boolean newState = (newFunctionsString.charAt(i)=='1');
             if (this.getFunction(i) != newState) {
+                log.debug(r.toMonitorString());
                 if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, cab);                
 //                super.setFunction(i,newState);
             }
@@ -395,7 +396,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             requestState = msg.getState();
             tc.sendDCCppMessage(msg.getMsg(), this);
         } else {
-            log.debug("message queue empty");
+            log.trace("message queue empty");
             // if the queue is empty, set the state to idle.
             requestState = THROTTLEIDLE;
         }
