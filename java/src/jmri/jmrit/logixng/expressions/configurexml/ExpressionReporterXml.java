@@ -34,7 +34,7 @@ public class ExpressionReporterXml extends jmri.managers.configurexml.AbstractNa
 
         storeCommon(p, element);
 
-        NamedBeanHandle reporter = p.getReporter();
+        var reporter = p.getReporter();
         if (reporter != null) {
             element.addContent(new Element("reporter").addContent(reporter.getName()));
         }

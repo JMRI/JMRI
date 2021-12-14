@@ -534,7 +534,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                 ""
             }
         ) {
-            var types = new Class<?> [] {
+            Class<?>[] types = new Class<?> [] {
                 java.lang.String.class
             };
 
@@ -676,7 +676,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                 ""
             }
         ) {
-            var types = new Class<?> [] {
+            Class<?>[] types = new Class<?> [] {
                 java.lang.String.class
             };
 

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen Copyright 2007
  */
+@SuppressWarnings("unchecked")
 public class StationTest {
 
     @Test

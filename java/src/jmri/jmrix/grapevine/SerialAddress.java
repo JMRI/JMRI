@@ -206,7 +206,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getNodeFromSystemName: {}", systemName);
             return null;
         }
@@ -240,7 +240,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getBitFromSystemName: {} prefix: {}", systemName, prefix, new Exception("traceback"));
             return 0;
         }
@@ -276,7 +276,7 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("illegal system name format in getNodeAddressFromSystemName: {}", systemName);
             return -1;
         }
@@ -309,7 +309,7 @@ public class SerialAddress {
      * @throws IllegalArgumentException if name is not valid
      * @see Manager#validateSystemNameFormat(java.lang.String, java.util.Locale)
      */
-    static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+    static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         name = manager.validateSystemNamePrefix(name, locale);
         Pattern pattern;
         switch (manager.typeLetter()) {
@@ -496,7 +496,7 @@ public class SerialAddress {
                 log.debug("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
-        } else { 
+        } else {
             assert type == 'S'; // see earlier decoding
             // sort on subtype
             String subtype = matcher.group(4);
@@ -542,9 +542,9 @@ public class SerialAddress {
      * @param systemName system name to validate.
      * @param type bean type, S, T or L.
      * @param tc system connection traffic controller.
-     * @return 'true' if system name has a valid meaning in current configuration, 
+     * @return 'true' if system name has a valid meaning in current configuration,
      *                else returns 'false'.
-     * 
+     *
      */
     public static boolean validSystemNameConfig(String systemName, char type, SerialTrafficController tc) {
         String prefix = tc.getSystemConnectionMemo().getSystemPrefix();

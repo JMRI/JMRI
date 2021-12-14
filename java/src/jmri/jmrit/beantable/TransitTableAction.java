@@ -2480,7 +2480,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     safe.set(row, val); // use checkbox to show Safe
                     break;
                 case STOPALLOCATING_SENSOR:
-                    JComboBox<?> cb = (JComboBox) value;
+                    JComboBox<?> cb = (JComboBox<?>) value;
                     if (cb.getSelectedIndex() < 0) {
                         sensorStopAllocation.set(row, "");
                     } else {

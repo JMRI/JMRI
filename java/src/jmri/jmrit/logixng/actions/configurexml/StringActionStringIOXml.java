@@ -14,7 +14,7 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
 
     public StringActionStringIOXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a StringActionStringIO
      *
@@ -28,14 +28,14 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
         Element element = new Element("StringActionStringIO");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getStringIO();
+        var memory = p.getStringIO();
         if (memory != null) {
             element.addContent(new Element("stringIO").addContent(memory.getName()));
         }
-        
+
         return element;
     }
 
@@ -57,6 +57,6 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
         InstanceManager.getDefault(StringActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIOXml.class);
 }

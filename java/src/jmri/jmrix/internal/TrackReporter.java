@@ -14,7 +14,7 @@ import jmri.CollectingReporter;
  */
 public class TrackReporter extends AbstractReporter implements CollectingReporter {
 
-    private Deque collection = null;
+    private Deque<Object> collection = null;
 
     public TrackReporter(String systemName) {
         super(systemName);
@@ -45,7 +45,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
         // notify
         firePropertyChange("currentReport", old, _currentReport);
     }
-            
+
     @Override
     public int getState() {
        return state;
@@ -62,7 +62,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
      * @return the collection of elements associated with this reporter.
      */
     @Override
-    public java.util.Collection getCollection(){
+    public java.util.Collection<Object> getCollection(){
        return(collection);
     }
 

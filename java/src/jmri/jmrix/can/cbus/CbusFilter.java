@@ -22,10 +22,10 @@ public class CbusFilter {
     private int _evMax = 0;
     private int _ndMin = 0;
     private int _ndMax = 0;
-    
+
     public static final int CFMAXCATS =CbusFilterType.values().length;
     public static final int CFMAX_NODES = 100;
-    
+
     /**
      * Creates a new instance of CbusFilter
      * @param filterFrame The Instance Frame
@@ -38,7 +38,7 @@ public class CbusFilter {
             _boolean_hash_map.put(i,false);
         }
     }
-    
+
     /**
      * Filter CanMessage or CanReply.
      *
@@ -50,14 +50,14 @@ public class CbusFilter {
             int _toReturn = singleFilter.action(test,this);
             if (_toReturn>-1){
                 return _toReturn;
-            } 
+            }
             else if (_toReturn==-2){ // Extended or RTR CAN Frame, No OPC's to filter.
                 break;
             }
         }
         return -1;
     }
-    
+
     /**
      * Get position in Node List for a given Node Number
      * @param node Node Number
@@ -65,14 +65,14 @@ public class CbusFilter {
      * @return ID used in main Boolean filter list / CbusFilterPanel ID
      */
     private static int positionInNodeList(int node, @Nonnull HashMap<Integer,Integer> nodes){
-        for (java.util.Map.Entry o : nodes.entrySet()) {
+        for (var o : nodes.entrySet()) {
             if (o.getValue().equals(node)) {
                 return (int) o.getKey();
             }
         }
         return -1;
     }
-    
+
     /**
      * Get the main Filter Frame.
      * @return CbusFilterFrame instance
@@ -80,7 +80,7 @@ public class CbusFilter {
     protected CbusFilterFrame getCbusFilterFrame() {
         return _filterFrame;
     }
-    
+
     /**
      * Get Map of Filters.
      * @return Map of Boolean values.
@@ -88,7 +88,7 @@ public class CbusFilter {
     protected final HashMap<Integer,Boolean> getActiveFilters(){
         return _boolean_hash_map;
     }
-    
+
     /**
      * Get Map of Nodes.
      * @return Map of Node Numbers.
@@ -96,18 +96,18 @@ public class CbusFilter {
     protected final HashMap<Integer,Integer> getNodes() {
         return _nodes_hashmap;
     }
-    
+
     /**
      * Perform Node checks for a given node number.
      * If a new Node Number is found, is added to the main Node List
      * and a new filter created.
-     * 
+     *
      * @param node Node Number
      * @param cf CbusFilter instance
      * @return Filter number which failed, else -1
      */
     protected static int checknode(int node,@Nonnull CbusFilter cf) {
-        
+
         if (!cf.getNodes().containsValue(node)){
             cf.getNodes().put(cf.getNodes().size()+ CFMAXCATS,node);
             // log.info("added new node {} to position {}",node,positionInNodeList(node,cf.getNodes()));
@@ -115,18 +115,18 @@ public class CbusFilter {
                 cf.getCbusFilterFrame().addNode(node,(positionInNodeList(node,cf.getNodes())));
             }
         }
-        
-        if ( cf.getActiveFilters().get(CbusFilterType.CFNODE.ordinal())){ 
-            return CbusFilterType.CFNODE.ordinal(); 
+
+        if ( cf.getActiveFilters().get(CbusFilterType.CFNODE.ordinal())){
+            return CbusFilterType.CFNODE.ordinal();
         } else {
             incrementCount(CbusFilterType.CFNODE.ordinal(),cf); }
         if ( cf.getActiveFilters().get(positionInNodeList(node,cf.getNodes())) ){
             return positionInNodeList(node,cf.getNodes());
-        } else { 
+        } else {
             incrementCount(positionInNodeList(node,cf.getNodes()),cf); }
         return -1;
     }
-    
+
     /**
      * Increment Filter count for a given filter ID.
      * @param filternum Filter ID
@@ -140,7 +140,7 @@ public class CbusFilter {
             });
         }
     }
-    
+
     /**
      * Set a single Filter to pass or filter.
      * @param id Filter ID
@@ -149,10 +149,10 @@ public class CbusFilter {
     public void setFilter(int id, boolean trueorfalse) {
         _boolean_hash_map.put(id, trueorfalse);
     }
-    
+
     /**
      * Set the event or node min and max values.
-     * 
+     *
      * @param filter CFEVENTMIN, CFEVENTMAX, CFNODEMIN or CFNODEMAX
      * @param val min or max value
      */
@@ -174,7 +174,7 @@ public class CbusFilter {
                 break;
         }
     }
-    
+
     /**
      * Get Minimum Event Number.
      * @return Minimum Event
@@ -182,7 +182,7 @@ public class CbusFilter {
     public int getEvMin() {
         return _evMin;
     }
-    
+
     /**
      * Get Maximum Event Number.
      * @return Maximum Event
@@ -190,7 +190,7 @@ public class CbusFilter {
     public int getEvMax() {
         return _evMax;
     }
-    
+
     /**
      * Get Minimum Node Number.
      * @return Minimum Node
@@ -198,7 +198,7 @@ public class CbusFilter {
     public int getNdMin() {
         return _ndMin;
     }
-    
+
     /**
      * Get Maximum Node Number.
      * @return Maximum Node
@@ -206,7 +206,7 @@ public class CbusFilter {
     public int getNdMax() {
         return _ndMax;
     }
-    
+
     /**
      * Get optimum HashMap Size.
      * @param reqdCapacity Required finite capacity
@@ -215,6 +215,6 @@ public class CbusFilter {
     public static final int getHMapSize(int reqdCapacity){
         return ((reqdCapacity*4+2)/3);
     }
-    
+
     // private final static Logger log = LoggerFactory.getLogger(CbusFilter.class);
 }
