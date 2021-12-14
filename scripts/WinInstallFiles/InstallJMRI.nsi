@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 4.99.1
+; - Updated "-CleanUp" so that old files are removed before installation 
+; - to allow restructuring of jython directory
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.1
 ; - Remove Tools start menu items
 ; - Add support for Open JDK 8 Registry Keys
@@ -508,6 +512,14 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
  
+    ; -- Delete certain jython files that have been moved, as of JMRI 4.99.1
+    ; -- [List will increase as files are moved]
+    Delete "$OUTDIR\jython\SetMqttOptions.py"
+    Delete "$OUTDIR\jython\SetMqttParser.py"
+    Delete "$OUTDIR\jython\SetMqttPrefix.py"
+    Delete "$OUTDIR\jython\ReceiveMqttMessage.py"
+    Delete "$OUTDIR\jython\SendMqttMessage.py"
+
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
@@ -609,6 +621,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
+        
 
     ; -- If the current install Start Menu folder exists, remove any
     ; --        predictably-named JMRI-related contents.
