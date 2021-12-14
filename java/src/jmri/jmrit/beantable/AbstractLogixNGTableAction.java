@@ -486,22 +486,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
                 // This may or may not work. It's not tested yet.
                 // Disable for now.
-                if (1==0) {
-                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                    // Create bean
-                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                    panel5.add(create);
-                    create.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-    //                    copyLogixNGPressed(e);
-                    });
-                    addLogixNGFrame.pack();
-                    addLogixNGFrame.setVisible(true);
-                    _autoSystemName.setSelected(false);
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                    });
-                }
+//                 if (1==0) {
+//                     JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+//                     // Create bean
+//                     JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+//                     panel5.add(create);
+//                     create.addActionListener((ActionEvent e) -> {
+//                         JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//     //                    copyLogixNGPressed(e);
+//                     });
+//                     addLogixNGFrame.pack();
+//                     addLogixNGFrame.setVisible(true);
+//                     _autoSystemName.setSelected(false);
+//                     InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+//                         _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+//                     });
+//                 }
+
                 _inCopyMode = false;
             }
         };
@@ -823,7 +824,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        
+
         if (x == null) return;  // This should never happen
 
         StringBuilder message = new StringBuilder();
@@ -929,7 +930,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
             dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                     dialog.setVisible(false);
-                    dialog.dispose(); }, 
+                    dialog.dispose(); },
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
             dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -937,7 +938,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             dialog.setVisible(true);
         }
     }
-    
+
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
