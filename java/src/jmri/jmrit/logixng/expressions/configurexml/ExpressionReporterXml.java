@@ -47,7 +47,7 @@ public class ExpressionReporterXml extends jmri.managers.configurexml.AbstractNa
 
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }

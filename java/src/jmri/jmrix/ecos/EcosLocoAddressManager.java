@@ -62,7 +62,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
         loadEcosData();
         try {
             if (InstanceManager.getNullableDefault(ListedTableFrame.class) == null) {
-                new ListedTableFrame();
+                new ListedTableFrame<jmri.Turnout>();
             }
             InstanceManager.getDefault(ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction", "ECoS Loco Database", false);
         } catch (HeadlessException he) {
