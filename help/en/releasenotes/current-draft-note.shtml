@@ -467,7 +467,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
         </ul>
 
     <h3>Signals</h3>
