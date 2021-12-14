@@ -15,6 +15,8 @@
     <div id="mainContent" class="no-sidebar">
       <h1>LogixNG Reference - Chapter 7</h1>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2>References</h2>
 
       <p>The following discussion refers to {name}. This can be either a JMRI memory variable or a
@@ -118,8 +120,10 @@
       variables</a>.</p>
 
       <p>Tables are described in <a href="chapter11.shtml">Chapter 11 - Tables</a>.</p>
-      <a id="indirect_accessing"></a>
-      <h2>Indirect adressing of NamedBeans</h2>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="indirect_accessing">Indirect adressing of NamedBeans</h2>
 
       <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
 
@@ -140,8 +144,10 @@
 
       <p>Since LogixNG fully supports string manipulation and calculations of both integers and
       floating point values, where are plenty of possibilities here.</p>
-      <a id="ListenOnBeans"></a>
-      <h3>Listen on beans</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="ListenOnBeans">Listen on beans</h3>
 
       <p>There is one major drawback with this. Since LogixNG doesn't know in advance which
       NamedBeans (turnouts, sensors, etc.) will be accessed indirectly, it's not possible for
@@ -157,7 +163,7 @@
       <div style="margin-left: 2em">
         <a href="images/chapter7/listen_on_beans_dialog.png"><img src=
         "images/chapter7/listen_on_beans_dialog.png" alt="LogixNG listen on beans dialog"
-        width="35%" height="35%"></a>
+        width="612" height="495"></a>
       </div>
 
       <p>The <strong>Add reference</strong> button is used to add beans to the the list.  For each

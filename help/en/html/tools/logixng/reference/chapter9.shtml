@@ -29,6 +29,8 @@
       IT3, ..., IT10 to thrown. You can then use the <strong>For</strong> action to iterate from 1
       to 10 and to set each of these turnouts to thrown.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>The Formula expressions</h3>
 
       <p>There are three expressions for formula: Analog Formula, Digital Formula and String
@@ -40,6 +42,8 @@
       a child E1 to which an expression Sensor is connected, you can use the result of the
       expression Sensor in the formula by the identifier E1 which points to the female socket and
       its connected expression.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>Operators</h3>
 
@@ -179,6 +183,8 @@
         "500"></a>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>Functions</h3>
 
       <p>Formula supports functions, like sin(x) and random(). Some functions takes one or several
@@ -200,6 +206,8 @@
       <p>For JMRI developers: The functions are defined in the package
       <em>jmri.jmrit.logixng.util.parser.functions</em> and each module has its own Java class.
       Each function is its own class that implements the <em>Function</em> interface.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Function Lists</h4>
       <ul>
@@ -247,6 +255,8 @@
         </li>
       </ul>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Documentation of the functions</h4>
 
       <p>To make it easier to use the functions, each function has some documentation.</p>
@@ -285,6 +295,8 @@
         <a href="images/chapter9/function_4.png"><img src="images/chapter9/function_4.png" alt=
         "Chapter 9 random functions" width="500" height="621"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>Advanced: Add new function with Jython</h3>
 
@@ -348,6 +360,8 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
         </pre>
       </div>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Calculate the function</h4>
 
       <p>The function <strong>calculate</strong> takes a number of arguments as a
@@ -362,6 +376,8 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
 
       <p>We then do the calculation, which in this case multiplies the first argument with 3.4 and
       then returns the value.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Important!</h4>
 
