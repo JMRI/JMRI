@@ -137,7 +137,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         if (enter) {
             idTag.setProperty("entryexit", "enter");
             if (!entrySet.contains(idTag)) {
-                entrySet.add((TranspondingTag) idTag);
+                entrySet.add(idTag);
             }
         } else {
             idTag.setProperty("entryexit", "exits");

@@ -67,7 +67,7 @@ public class CbusFilter {
     private static int positionInNodeList(int node, @Nonnull HashMap<Integer,Integer> nodes){
         for (var o : nodes.entrySet()) {
             if (o.getValue().equals(node)) {
-                return (int) o.getKey();
+                return o.getKey();
             }
         }
         return -1;
