@@ -55,6 +55,9 @@ public class ShowDialog extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ShowDialog copy = new ShowDialog(sysName, userName);
         copy.setComment(getComment());
+        for (Button button : _enabledButtons) {
+            copy.getEnabledButtons().add(button);
+        }
         copy.setLocalVariable(_localVariable);
         copy.setModal(_modal);
         copy.setMultiLine(_multiLine);
