@@ -2383,7 +2383,6 @@ public class Section extends AbstractNamedBean {
         return null;
     }
 
-    @SuppressWarnings("unused") // not used now, preserved for later use
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "was previously marked with @SuppressWarnings, reason unknown")
     private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {
