@@ -69,7 +69,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         ServiceLoader<PreferencesManager> sl = ServiceLoader.load(PreferencesManager.class);
         for (PreferencesManager pp : sl) {
             InstanceManager.store(pp, PreferencesManager.class);
-            for (Class provided : pp.getProvides()) { // use raw class so next line can compile
+            for (Class<?> provided : pp.getProvides()) { // use raw class so next line can compile
                 InstanceManager.store(provided.cast(pp), provided);
             }
         }

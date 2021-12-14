@@ -270,12 +270,12 @@ public class FrmIL extends javax.swing.JFrame {
                 ""
             }
         ) {
-            Class[] types = new Class [] {
+            var types = new Class<?> [] {
                 java.lang.String.class
             };
 
             @Override
-            public Class getColumnClass(int columnIndex) {
+            public Class<?> getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });

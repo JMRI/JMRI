@@ -59,7 +59,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (getDisabled()) {
             return null;
         }
-        return (RpsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> { return new RpsSensorManager(this); });
+        return (RpsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new RpsSensorManager(this); });
     }
 
     /**
@@ -69,7 +69,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (getDisabled()) {
             return null;
         }
-        return (RpsReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class c) -> { return new RpsReporterManager(this); });
+        return (RpsReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class<?> c) -> { return new RpsReporterManager(this); });
     }
 
     /**
@@ -123,7 +123,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(getSystemPrefix() + type))) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
