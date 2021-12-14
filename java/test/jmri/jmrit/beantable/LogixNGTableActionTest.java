@@ -17,31 +17,23 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
 
-/*
+/**
 * Tests for the LogixNGTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
+@Timeout(10) // 10 second timeout for methods in this test class.
 public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
     static final ResourceBundle rbxLogixNGSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
@@ -85,7 +77,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -134,7 +126,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
@@ -165,7 +157,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testLogixNGBrowser() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.browserPressed("IQ101");  // NOI18N
 
@@ -180,7 +172,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixNGTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
         Assert.assertNotNull(logixNGFrame);
 
@@ -194,7 +186,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testAddLogixNGAutoName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -220,7 +212,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testAddLogixNG() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -250,7 +242,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testDeleteLogixNG() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -276,7 +268,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testDeleteLogixNGWithConditionalNG() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
         InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
@@ -312,7 +304,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testDeleteLogixNGWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
         ConditionalNG conditionalNG_102 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
@@ -362,7 +354,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testDeleteLogixNGWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
             throw new UnsupportedOperationException("Not supported");
@@ -489,7 +481,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
 
         // * Add a LogixNG
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N

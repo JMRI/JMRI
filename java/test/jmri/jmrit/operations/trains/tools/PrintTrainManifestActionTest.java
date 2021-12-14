@@ -17,7 +17,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -25,8 +24,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(20)
 public class PrintTrainManifestActionTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @Test
     public void testCTor() {

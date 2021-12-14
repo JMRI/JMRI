@@ -18,7 +18,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -28,8 +27,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(10)
 public class CarEditFrameTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testClearRoadNumber() {
