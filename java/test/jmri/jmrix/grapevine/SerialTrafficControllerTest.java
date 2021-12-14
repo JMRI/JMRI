@@ -313,26 +313,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
-        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
-    }
-
-    @SuppressWarnings("unused")
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i={} reply={}", i, rcvdReply);
-        }
-        if (i == 0) {
-            log.warn("waitForReply saw an immediate return; is threading right?");
-        }
-        return i < 100;
+        Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'
     }
 
     // internal class to simulate a Listener
@@ -443,6 +424,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

@@ -136,13 +136,10 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         log.error("message received: {}", m);
     }
 
-    // TODO: Why does this if statement contain a direct false? FIXME!
     @Override
     public void reply(NceReply r) {
-        if (false && log.isDebugEnabled()) {
-            log.debug("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
+        log.trace("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
 
-        }
         if (waiting <= 0) {
             log.error(Bundle.getMessage("LogReplyEnexpected"));
             return;
@@ -457,7 +454,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueClock1224(boolean mode) {
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
@@ -510,7 +506,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings({"deprecation", "unused"}) // Date.getHours, getMinutes, getSeconds
+    @SuppressWarnings({"deprecation"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
@@ -522,7 +518,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (now);
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getNceTime() {
         double nceTime = 0;
@@ -535,7 +530,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (nceTime);
     }
 
-    @SuppressWarnings({"deprecation", "unused"}) // Date.getHours, getMinutes, getSeconds
+    @SuppressWarnings({"deprecation"}) // Date.getHours, getMinutes, getSeconds
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();
@@ -543,9 +538,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         int ss = now.getSeconds();
         int mm = now.getMinutes();
         int hh = now.getHours();
-        if (false && log.isDebugEnabled()) {
-            log.debug("getIntTime: {}:{}:{}.{}", hh, mm, ss, ms);
-        }
+        log.trace("getIntTime: {}:{}:{}.{}", hh, mm, ss, ms);
         return ((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
 

@@ -6855,17 +6855,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             System.getProperty("user.dir"),
                             File.separator,
                             File.separator));
-            if (false) {
-                // TODO: Discuss with jmri-developers
-                // this filter will allow any images supported by the current
-                // operating system. This may not be desirable because it will
-                // allow images that may not be supported by operating systems
-                // other than the current one.
-                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
-            } else {
-                // TODO: discuss with jmri-developers - support png image files?
-                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
-            }
+
+            inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
         }
         inputFileChooser.rescanCurrentDirectory();
 

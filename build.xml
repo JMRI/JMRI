@@ -894,7 +894,7 @@
     </macrodef>
 
     <target name="warnings"
-            description="compile source with ECJ warning generation on, omitting tests"
+            description="compile source with extra ECJ warnings on, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
@@ -907,7 +907,7 @@
     </target>
 
     <target name="warnings-check"
-            description="compile source with ECJ warning generation on and fail if any warnings, omitting tests"
+            description="compile source with CI ECJ warnings on and fail if any warnings, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
@@ -920,7 +920,7 @@
     </target>
 
     <target name="tests-warnings"
-            description="compile test sources with ECJ warning generation on"
+            description="compile test sources with extra ECJ warnings on"
             depends="warnings">
         <ecj-compile
                 javac.source="${test}"
@@ -936,7 +936,7 @@
     </target>
 
     <target name="tests-warnings-check"
-            description="compile test sources with ECJ warning generation on and fail if any warnings"
+            description="compile test sources with CI ECJ warnings on and fail if any warnings"
             depends="warnings-check">
         <ecj-compile
                 javac.source="${test}"

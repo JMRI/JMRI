@@ -108,7 +108,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 //        jmri.util.JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
 //        Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
 //        Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
-//        Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
+//        Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );
 //    }
 /*     public void testSerialOutput() { */
     /*         SerialTrafficController c = new SerialTrafficController(); */
@@ -131,24 +131,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     /*         Assert.assertEquals("byte 4 lo nibble", 0x60, m.getElement(7) );       */
     /*         Assert.assertEquals("byte 4 hi nibble", 0x70, m.getElement(8) );       */
     /*     } */
-    @SuppressWarnings("unused")
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i={} reply={}", i, rcvdReply);
-        }
-        if (i == 0) {
-            log.warn("waitForReply saw an immediate return; is threading right?");
-        }
-        return i < 100;
-    }
 
     // internal class to simulate a Listener
     class SerialListenerScaffold implements SerialListener {
@@ -250,6 +232,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);
 
 }

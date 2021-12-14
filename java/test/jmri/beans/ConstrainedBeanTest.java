@@ -194,40 +194,35 @@ public class ConstrainedBeanTest {
         assertThat(veto).isFalse();
     }
 
-    private class ConstrainedBeanImpl extends ConstrainedBean {
+    // for test purposes
+    public static class ConstrainedBeanImpl extends ConstrainedBean {
 
         public ConstrainedBeanImpl() {
         }
         String s;
         List<String> l = new ArrayList<>();
 
-        @SuppressWarnings("unused")
-        public String getProperty() {
+         public String getProperty() {
             return s;
         }
 
-        @SuppressWarnings("unused")
         public void setProperty(String property) {
             s = property;
         }
 
-        @SuppressWarnings("unused")
         public String[] getIndexed() {
             return l.toArray(new String[l.size()]);
         }
 
-        @SuppressWarnings("unused")
         public String getIndexed(int index) {
             return l.get(index);
         }
 
-        @SuppressWarnings("unused")
         public void setIndexed(String[] indexed) {
             l.clear();
             l.addAll(Arrays.asList(indexed));
         }
 
-        @SuppressWarnings("unused")
         public void setIndexed(int index, String indexed) {
             if (index < l.size()) {
                 l.set(index, indexed);
