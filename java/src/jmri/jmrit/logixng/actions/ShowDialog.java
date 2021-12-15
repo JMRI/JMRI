@@ -15,6 +15,7 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
+import jmri.util.TypeConversionUtil;
 
 /**
  * This action show a dialog.
@@ -30,7 +31,8 @@ public class ShowDialog extends AbstractDigitalAction
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
     private Set<Button> _enabledButtons = new HashSet<>();
-    private String _localVariable = "";
+    private String _localVariableForSelectedButton = "";
+    private String _localVariableForInputString = "";
     private boolean _modal = true;
     private boolean _multiLine = false;
     private FormatType _formatType = FormatType.OnlyText;
@@ -58,7 +60,8 @@ public class ShowDialog extends AbstractDigitalAction
         for (Button button : _enabledButtons) {
             copy.getEnabledButtons().add(button);
         }
-        copy.setLocalVariable(_localVariable);
+        copy.setLocalVariableForSelectedButton(_localVariableForSelectedButton);
+        copy.setLocalVariableForInputString(_localVariableForInputString);
         copy.setModal(_modal);
         copy.setMultiLine(_multiLine);
         copy.setFormat(_format);
@@ -93,12 +96,20 @@ public class ShowDialog extends AbstractDigitalAction
         return _multiLine;
     }
 
-    public void setLocalVariable(String localVariable) {
-        _localVariable = localVariable;
+    public void setLocalVariableForSelectedButton(String localVariable) {
+        _localVariableForSelectedButton = localVariable;
     }
 
-    public String getLocalVariable() {
-        return _localVariable;
+    public String getLocalVariableForSelectedButton() {
+        return _localVariableForSelectedButton;
+    }
+
+    public void setLocalVariableForInputString(String localVariableForInputString) {
+        _localVariableForInputString = localVariableForInputString;
+    }
+
+    public String getLocalVariableForInputString() {
+        return _localVariableForInputString;
     }
 
     public void setFormatType(FormatType formatType) {
@@ -238,6 +249,16 @@ public class ShowDialog extends AbstractDigitalAction
 
             panel.add(new JLabel(strMultiLine));
 
+            JTextField textField = new JTextField(20);
+            if (!_localVariableForInputString.isEmpty()) {
+                Object currentValue = newSymbolTable.getValue(_localVariableForInputString);
+                if (currentValue != null) {
+                    String strValue = TypeConversionUtil.convertToString(currentValue, false);
+                    textField.setText(strValue);
+                }
+                panel.add(textField);
+            }
+
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());
 
@@ -250,7 +271,8 @@ public class ShowDialog extends AbstractDigitalAction
                         synchronized(ShowDialog.this) {
                             _internalSocket.conditionalNG = conditionalNG;
                             _internalSocket.newSymbolTable = newSymbolTable;
-                            _internalSocket.value = button._value;
+                            _internalSocket.selectedButton = button._value;
+                            _internalSocket.inputValue = textField.getText();
                             conditionalNG.execute(_internalSocket);
                         }
                     });
@@ -539,7 +561,8 @@ public class ShowDialog extends AbstractDigitalAction
 
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
-        private int value;
+        private int selectedButton;
+        private String inputValue;
 
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
@@ -562,8 +585,11 @@ public class ShowDialog extends AbstractDigitalAction
                 try {
                     SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                     conditionalNG.setSymbolTable(newSymbolTable);
-                    if (!_localVariable.isEmpty()) {
-                        newSymbolTable.setValue(_localVariable, value);
+                    if (!_localVariableForSelectedButton.isEmpty()) {
+                        newSymbolTable.setValue(_localVariableForSelectedButton, selectedButton);
+                    }
+                    if (!_localVariableForInputString.isEmpty()) {
+                        newSymbolTable.setValue(_localVariableForInputString, inputValue);
                     }
                     _socket.execute();
                     conditionalNG.setSymbolTable(oldSymbolTable);

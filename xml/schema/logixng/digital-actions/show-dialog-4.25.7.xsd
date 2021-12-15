@@ -79,7 +79,11 @@
 
 			  <xs:element name="format" type="xs:string" minOccurs="1" maxOccurs="1"/>
 
+              <!-- Keep this one for backwards compability with JMRI 4.26 -->
 			  <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+			  <xs:element name="localVariableForSelectedButton" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			  <xs:element name="localVariableForInputString" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
 			  <xs:element name="modal" type="yesNoType" minOccurs="1" maxOccurs="1"/>
 			  <xs:element name="multiLine" type="yesNoType" minOccurs="1" maxOccurs="1"/>

@@ -2052,7 +2052,7 @@ public class StoreAndLoadTest {
         showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
         showDialog.setComment("A comment");
         showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
-        showDialog.setLocalVariable("myVar");
+        showDialog.setLocalVariableForSelectedButton("myVar");
         showDialog.setModal(true);
         showDialog.setMultiLine(true);
         showDialog.setFormat("Some text");

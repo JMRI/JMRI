@@ -64,7 +64,8 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(new Element("formatType").addContent(p.getFormatType().name()));
         element.addContent(new Element("format").addContent(p.getFormat()));
         
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("localVariableForSelectedButton").addContent(p.getLocalVariableForSelectedButton()));
+        element.addContent(new Element("localVariableForInputString").addContent(p.getLocalVariableForInputString()));
         element.addContent(new Element("modal").addContent(p.getModal() ? "yes" : "no"));
         element.addContent(new Element("multiLine").addContent(p.getMultiLine() ? "yes" : "no"));
         
@@ -112,8 +113,17 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         elem = shared.getChild("format");  // NOI18N
         h.setFormat((elem != null) ? elem.getValue() : "");
         
+        elem = shared.getChild("localVariableForSelectedButton");  // NOI18N
+        h.setLocalVariableForSelectedButton((elem != null) ? elem.getValue() : "");
+        
+        // Keep for backwards compability with 4.26. Changed in 4.99.1 / 5.0
         elem = shared.getChild("localVariable");  // NOI18N
-        h.setLocalVariable((elem != null) ? elem.getValue() : "");
+        if (elem != null) {
+            h.setLocalVariableForSelectedButton(elem.getValue());
+        }
+        
+        elem = shared.getChild("localVariableForInputString");  // NOI18N
+        h.setLocalVariableForInputString((elem != null) ? elem.getValue() : "");
         
         elem = shared.getChild("modal");  // NOI18N
         h.setModal((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N
