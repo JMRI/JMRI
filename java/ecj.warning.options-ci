@@ -6,11 +6,16 @@
 # warnings:        java/ecj.warning.options
 # warnings-check:  java/ecj.warning.options-ci
 #
-# The two files should be the same _except_ for warn vs err at start of certain lines
-# in the java/ecj.warning.options file; java/ecj.warning.options-ci should be all -err
+# The two files should be the same _except_ for + vs - at start of certain lines
+# in the java/ecj.warning.options file
 #
 # for compiling the test directory, the java/ecj.warning.options-test
 # and the java/ecj.warning.options-test-ci file overrides parts of this
+#
+# For more information, see
+#   https://www.ibm.com/docs/en/wdfrhcw/1.4.0?topic=code-using-batch-compiler
+#   https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-using_batch_compiler.htm&anchor=warn
+#
 
 #
 # Group (macro) checks - we accept the group, then adjust specific subitems
@@ -20,21 +25,22 @@
 -err:-fieldHiding
   # thousands of places where parameters are named for members
 -err:-localHiding
+-err:+maskedCatchBlocks
 -err:+typeHiding
 
 -err:-allJavadoc
 -err:-javadoc
-
 -err:+invalidJavadoc
 -err:+invalidJavadocTag
 -err:+invalidJavadocTagDep
 -err:+invalidJavadocTagNotVisible
-
   # not all of our code has Javadoc comments
 -err:-missingJavadocTags
 -err:+missingJavadocTagsMethod
 -err:+missingJavadocTagsOverriding
+  # not all of our code has Javadoc comments
 -err:-missingJavadocComments
+  # not all of our code has Javadoc comments
 -err:-missingJavadocCommentsOverriding
 
 -err:+static-access
@@ -45,9 +51,13 @@
 -err:+unused
   # This tags valid "new jmri.util.WaitHandler(this);" constructs
 -err:-unusedAllocation
+  # cases of the `catch (FooException ex)` and then not using `ex`
+-err:-unusedExceptionParam
+  # allow unused imports as a convenience
 -err:-unusedImport
 -err:+unusedLabel
 -err:+unusedLocal
+  # our APIs routinely have "may need in future" parameters
 -err:-unusedParam
 -err:+unusedParamImplementing
 -err:+unusedParamIncludeDoc
@@ -61,8 +71,6 @@
   # 480 cases of the form List<FileMeta> files = new LinkedList<FileMeta>();
 -err:-unusedTypeArgs
 -err:+unusedTypeParameter
-  # cases of the `catch (FooException ex)` and then not using `ex`
--err:-unusedExceptionParam
 
 #
 # Individual Checks
@@ -88,9 +96,8 @@
 -err:+includeAssertNull
 -err:+inheritNullAnnot
 -err:+intfAnnotation
--err:+intfRedundant
 -err:+intfNonInherited
--err:+maskedCatchBlocks
+-err:+intfRedundant
 -err:+noEffectAssign
 -err:+nonnullNotRepeated
 -err:+null
@@ -103,7 +110,6 @@
 -err:+pkgDefaultMethod
 -err:+semicolon
 -err:+specialParamHiding
--err:+suppress
 -err:+switchDefault
 -err:+unavoidableGenericProblems
 -err:+unchecked
@@ -151,31 +157,36 @@
   # We often seem to _prefer_ the terminal else instead of bottom return
 -err:-unnecessaryElse
 
-
 #
 # Checks we plan to eventually put in place, but would be burdensome now
 #
 
-  # 208 cases; the common "if (debugFlag)" metaphor is flagged by these
--err:-deadCode
+  # 211 cases; the common "if (debugFlag)" metaphor is flagged by these
 -err:-allDeadCode
+-err:+deadCode
 
   # missing synch in synchronized method override
   # 24 outstanding items
 -err:-syncOverride
 
   # raw type instead of parameterized type
-  # 190 outstanding items (some likely to be in APIs)
+  # 9 outstanding items (associated with PickList)
 -warn:-raw
-
-  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings
-  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
--warn:-warningToken
 
   # 1270 "Empty block should be documented"
 -err:-emptyBlock
 
+  # 291 cases of "Potential Resource Leak: '<unassigned Closeable value>' may not be closed"
+-err:-resource
 
+
+
+  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings
+  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
+-warn:-warningToken
+  # occasionally turn off @SuppressWarnings to see if there are occurrences to fix
+  #   Currently 370 cases
+-err:+suppress
 
 
 
