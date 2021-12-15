@@ -1,29 +1,41 @@
-# These are the CI (fussy) settings used for the warnings-ci and tests-warnings-ci Ant targets
-# See the java/ecj.warning.options file for those used during development ant operations
-# The two files should be the same _except_ for warn vs err at start of lines with + signs
+# Control files for the warnings and tests-warnings Ant targets
+#
+# "warnings-check" will fail if anything is flagged; "warnings" will print and continue
+# so that a developer can work on several issues at once.
+#
+# warnings:        java/ecj.warning.options
+# warnings-check:  java/ecj.warning.options-ci
+#
+# The two files should be the same _except_ for warn vs err at start of certain lines
+# in the java/ecj.warning.options file; java/ecj.warning.options-ci should be all -err
+#
+# for compiling the test directory, the java/ecj.warning.options-test
+# and the java/ecj.warning.options-test-ci file overrides parts of this
 
-# Group (macro) checks - these need to be sorted out
+#
+# Group (macro) checks - we accept the group, then adjust specific subitems
+#
 -err:+hiding
-  # about 200 cases of memebers hiding superclass members
+  # 195 cases of members hiding superclass members
 -err:-fieldHiding
-  # very large number of cases of parameters named for locals
+  # thousands of places where parameters are named for members
 -err:-localHiding
 -err:+typeHiding
 
--warn:-allJavadoc
--warn:-javadoc
+-err:-allJavadoc
+-err:-javadoc
 
 -err:+invalidJavadoc
 -err:+invalidJavadocTag
 -err:+invalidJavadocTagDep
 -err:+invalidJavadocTagNotVisible
 
--warn:-missingJavadocTags
+  # not all of our code has Javadoc comments
+-err:-missingJavadocTags
 -err:+missingJavadocTagsMethod
 -err:+missingJavadocTagsOverriding
-
--warn:-missingJavadocComments
--warn:-missingJavadocCommentsOverriding
+-err:-missingJavadocComments
+-err:-missingJavadocCommentsOverriding
 
 -err:+static-access
   # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
@@ -41,27 +53,30 @@
 -err:+unusedParamIncludeDoc
 -err:+unusedParamOverriding
 -err:+unusedPrivate
+  # This tags a "throws" clause that's not yet thrown by the specific implementation
 -err:-unusedThrown
 -err:+unusedThrownIncludeDocComment
 -err:+unusedThrownExemptExceptionThrowable
 -err:+unusedThrownWhenOverriding
-  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>();
+  # 480 cases of the form List<FileMeta> files = new LinkedList<FileMeta>();
 -err:-unusedTypeArgs
 -err:+unusedTypeParameter
-
+  # cases of the `catch (FooException ex)` and then not using `ex`
 -err:-unusedExceptionParam
 
--err:+allDeprecation
--err:+dep-ann
--err:+deprecation
+#
+# Individual Checks
+#
 
-# Checks we choose to enforce
+-err:+allDeprecation
 -err:+allOver-ann
 -err:+assertIdentifier
 -err:+charConcat
 -err:+conditionAssign
 -err:+constructorName
 -err:+compareIdentical
+-err:+dep-ann
+-err:+deprecation
 -err:+discouraged
 -err:+enumIdentifier
 -err:+enumSwitch
@@ -73,9 +88,7 @@
 -err:+includeAssertNull
 -err:+inheritNullAnnot
 -err:+intfAnnotation
-  # redundant super-interfaces
 -err:+intfRedundant
-
 -err:+intfNonInherited
 -err:+maskedCatchBlocks
 -err:+noEffectAssign
@@ -97,55 +110,72 @@
 -err:+uselessTypeCheck
 -err:+varargsCast
 
-
+#
 # Checks we choose not to enforce as our common style
--warn:-boxing
--warn:-nls
--warn:-paramAssign
+#
+
+  # no real cost to using implicit boxing/unboxing, and it's just easier
+-err:-boxing
+
+  # non-NLS string literals (mostly missing // $ NON-NLS)
+-err:-nls
+
+  # many of these in the code, and "final" for parameters is a matter of style
+-err:-paramAssign
+
+  # JMRI doesn't anticipate use of Java serialization
 -warn:-serial
--warn:-super
--warn:-syntheticAccess
--warn:-unqualifiedField
--warn:-unqualified-field-access
--warn:-unusedArgument
 
+  # maybe a good idea, but too expensive now
+-err:-super
 
-#
-# Checks we're warning on, working to reduce, but not enforcing
-#
+  # many of these aleady in the code, and the value is not clear
+-err:-syntheticAccess
 
+  # we don't require "this." in every variable access to reduce verbosity
+-err:-unqualifiedField
+-err:-unqualified-field-access
 
+  # our APIs routinely have "may need in future" parameters
+-err:-unusedArgument
 
-# Checks we will eventually put in place, but would be burdensome now
-
-    # 14 outstanding items
--warn:-deadCode
--err:-deadCode
--err:-allDeadCode
--warn:-allDeadCode
-
-    # 22 outstanding items
--warn:-syncOverride
-
-    # 159 outstanding items
--warn:-raw
-
-    # this tags some FindBugs labels?  But still useful to run occasionally
--warn:-warningToken
-
-
-# Checks still to be characterized
-
--warn:-all-static-method
--warn:-emptyBlock
+  # missing enum switch cases even when default case is present; `default` can be convenient,
+  # but is a risk if additional members are added to the enum
+-err:-enumSwitchPedantic
 
   # flags methods that can be made static because they don't access data member
-  # but that just seems distracting somehow
--warn:-static-method
+  # but that just seems distracting somehow because then you have to change access
+-err:-all-static-method
+-err:-static-method
 
   # We often seem to _prefer_ the terminal else instead of bottom return
--warn:-unnecessaryElse
+-err:-unnecessaryElse
 
-#-warn:-tasks(<task1>|...|<taskN>)
+
+#
+# Checks we plan to eventually put in place, but would be burdensome now
+#
+
+  # 208 cases; the common "if (debugFlag)" metaphor is flagged by these
+-err:-deadCode
+-err:-allDeadCode
+
+  # missing synch in synchronized method override
+  # 24 outstanding items
+-err:-syncOverride
+
+  # raw type instead of parameterized type
+  # 190 outstanding items (some likely to be in APIs)
+-warn:-raw
+
+  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings
+  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
+-warn:-warningToken
+
+  # 1270 "Empty block should be documented"
+-err:-emptyBlock
+
+
+
 
 

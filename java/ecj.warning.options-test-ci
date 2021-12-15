@@ -1,13 +1,15 @@
-# addendum to ecj.warnings.options for checking the tests source code
+# addendum for checking the java/tests source code
 #
-# We relax certain requirements for the test code; this handles that
+# We (temporarily) relax certain requirements for the test code; this handles that
 
--err:-dep-ann
--err:-deprecation
--err:-allDeprecation
+# Allowing un-annotated deprecations
+-warn:-dep-ann
+-warn:-deprecation
+-warn:-allDeprecation
 
--err:-allOver-ann
--err:-over-ann
+# 178 missing @Override annotations
+-warn:-allOver-ann
+-warn:-over-ann
 
-  # We allocate objects to test that code can run OK
--warn:-unusedAllocation
+# 200 generic raw types
+-warn:-raw

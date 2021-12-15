@@ -1,16 +1,24 @@
-# These are the normal settings used for the warnings and tests-warnings Ant targets
-# See the java/ecj.warning.options-ci file for those used during CI operations
-# The two files should be the same _except_ for warn vs err at start of lines with + signs
-
-# for compiling the test directory, the java/ecj.warning.options-test file overrides this
+# Control files for the warnings and tests-warnings Ant targets
+#
+# "warnings-check" will fail if anything is flagged; "warnings" will print and continue
+# so that a developer can work on several issues at once.
+#
+# warnings:        java/ecj.warning.options
+# warnings-check:  java/ecj.warning.options-ci
+#
+# The two files should be the same _except_ for warn vs err at start of certain lines
+# in the java/ecj.warning.options file; java/ecj.warning.options-ci should be all -err
+#
+# for compiling the test directory, the java/ecj.warning.options-test
+# and the java/ecj.warning.options-test-ci file overrides parts of this
 
 #
-# Group (macro) checks - some still need to be sorted out
+# Group (macro) checks - we accept the group, then adjust specific subitems
 #
 -warn:+hiding
-  # about 200 cases of members hiding superclass members
+  # 195 cases of members hiding superclass members
 -warn:-fieldHiding
-  # very large number of places where parameters are named for members
+  # thousands of places where parameters are named for members
 -warn:-localHiding
 -warn:+typeHiding
 
@@ -22,10 +30,10 @@
 -warn:+invalidJavadocTagDep
 -warn:+invalidJavadocTagNotVisible
 
+  # not all of our code has Javadoc comments
 -warn:-missingJavadocTags
 -warn:+missingJavadocTagsMethod
 -warn:+missingJavadocTagsOverriding
-
 -warn:-missingJavadocComments
 -warn:-missingJavadocCommentsOverriding
 
@@ -45,18 +53,19 @@
 -err:+unusedParamIncludeDoc
 -err:+unusedParamOverriding
 -err:+unusedPrivate
+  # This tags a "throws" clause that's not yet thrown by the specific implementation
 -err:-unusedThrown
 -err:+unusedThrownIncludeDocComment
 -err:+unusedThrownExemptExceptionThrowable
 -err:+unusedThrownWhenOverriding
-  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>();
+  # 480 cases of the form List<FileMeta> files = new LinkedList<FileMeta>();
 -err:-unusedTypeArgs
 -err:+unusedTypeParameter
-
+  # cases of the `catch (FooException ex)` and then not using `ex`
 -err:-unusedExceptionParam
 
 #
-# Checks we choose to enforce
+# Individual Checks
 #
 
 -warn:+allDeprecation
@@ -79,9 +88,7 @@
 -warn:+includeAssertNull
 -warn:+inheritNullAnnot
 -warn:+intfAnnotation
-  # redundant super-interfaces
 -warn:+intfRedundant
-
 -warn:+intfNonInherited
 -warn:+maskedCatchBlocks
 -warn:+noEffectAssign
@@ -132,50 +139,43 @@
   # our APIs routinely have "may need in future" parameters
 -warn:-unusedArgument
 
-  # missing enum switch cases even when default case is present; `default` can be convenient
+  # missing enum switch cases even when default case is present; `default` can be convenient,
+  # but is a risk if additional members are added to the enum
 -warn:-enumSwitchPedantic
 
+  # flags methods that can be made static because they don't access data member
+  # but that just seems distracting somehow because then you have to change access
+-warn:-all-static-method
+-warn:-static-method
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
+-warn:-unnecessaryElse
+
 
 #
-# Checks we're warning on, working to reduce, but not enforcing
+# Checks we plan to eventually put in place, but would be burdensome now
 #
 
-
-#
-# Checks we will eventually put in place, but would be burdensome now
-#
-
-  # the common "if (debugFlag)" metaphor is flagged by these
+  # 208 cases; the common "if (debugFlag)" metaphor is flagged by these
 -warn:-deadCode
 -warn:-allDeadCode
 
   # missing synch in synchronized method override
-  # 22 outstanding items
+  # 24 outstanding items
 -warn:-syncOverride
 
   # raw type instead of parameterized type
-  # 159 outstanding items (some likely to be in APIs)
+  # 9 outstanding items (associated with PickList)
 -warn:-raw
 
   # this tags some NetBeans and FindBugs tokens in @SuppressWarnings
   # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
 -warn:-warningToken
 
-
-#
-# Checks still to be characterized
-#
-
--warn:-all-static-method
+  # 1270 "Empty block should be documented"
 -warn:-emptyBlock
 
-  # flags methods that can be made static because they don't access data member
-  # but that just seems distracting somehow
--warn:-static-method
 
-  # We often seem to _prefer_ the terminal else instead of bottom return
--warn:-unnecessaryElse
 
-#-warn:-tasks(<task1>|...|<taskN>)
 
 
