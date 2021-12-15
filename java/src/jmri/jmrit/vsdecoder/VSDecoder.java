@@ -437,7 +437,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * @param evt (PropertyChangeEvent) event to respond to
      */
-    @SuppressWarnings("cast")
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
