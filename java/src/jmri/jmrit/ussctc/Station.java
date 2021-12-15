@@ -115,7 +115,6 @@ public class Station<To extends Enum<To>, From extends Enum<From>> {
     /**
      * Tell the sections that code information has arrived in the field
      */
-    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void codeValueDelivered() {
         log.debug("Station - start codeValueDelivered");
         // clear the code light
@@ -156,7 +155,6 @@ public class Station<To extends Enum<To>, From extends Enum<From>> {
      * Gather layout status and turn on code lamp.
      *  Rest of action is on indicationComplete
      */
-    @SuppressWarnings("unchecked") // we store multiple enum types for codeValueDelivered
     public void indicationComplete() {
         log.debug("Station - start indicationComplete");
 

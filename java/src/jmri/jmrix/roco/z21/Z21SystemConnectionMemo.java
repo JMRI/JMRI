@@ -131,7 +131,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
     /**
      * Provide manager by class.
      */
-    @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {

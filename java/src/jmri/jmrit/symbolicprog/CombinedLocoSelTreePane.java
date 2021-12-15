@@ -650,7 +650,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
 
         @Override
-        @SuppressWarnings("unchecked") // required because super.breadthFirstEnumeration not fully typed
         public Enumeration<TreeNode> breadthFirstEnumeration() { // JDK 9 typing
             return super.breadthFirstEnumeration();
         }

@@ -276,7 +276,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final List<Section> sectionList = new ArrayList<>();
     private final List<Integer> direction = new ArrayList<>();
     private final List<Integer> sequence = new ArrayList<>();
-    @SuppressWarnings("unchecked")
     private final List<List<TransitSectionAction>> action = new ArrayList<>();
     private final List<Boolean> alternate = new ArrayList<>();
     private final List<Boolean> safe = new ArrayList<>();

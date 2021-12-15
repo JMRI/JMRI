@@ -34,9 +34,6 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         return _internalMap.containsKey(key);
     }
 
-    // Map.containsValue() requires that the parameter is of type Object
-    // The SuppressWarnings is because l.contains(value) expects a value of type V
-    @SuppressWarnings({"unchecked", "element-type-mismatch"})
     @Override
     public boolean containsValue(Object value) {
         for (List<V> l : _internalMap.values()) {

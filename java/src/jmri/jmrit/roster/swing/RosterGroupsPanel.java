@@ -229,7 +229,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         return newWindowMenuItemAction;
     }
 
-    @SuppressWarnings("unchecked")
     private void setSelectionToGroup(String group) {
         _tree.removeTreeSelectionListener(_TSL);
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
@@ -524,7 +523,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             if (p != null) {
                 TreePath g = new TreePath(_model.getPathToRoot(_groups));
                 // drag onto existing user defined group, but not onto current selection
-                if (g.isDescendant(p) && !p.isDescendant(g) 
+                if (g.isDescendant(p) && !p.isDescendant(g)
                     && ( (c instanceof JTree) && !p.isDescendant(((JTree)c).getSelectionPath()))
                     ) {
                     try {
