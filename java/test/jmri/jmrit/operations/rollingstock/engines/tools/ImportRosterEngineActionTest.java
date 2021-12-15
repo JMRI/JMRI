@@ -21,7 +21,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -30,8 +29,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(20)
 public class ImportRosterEngineActionTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
     
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 

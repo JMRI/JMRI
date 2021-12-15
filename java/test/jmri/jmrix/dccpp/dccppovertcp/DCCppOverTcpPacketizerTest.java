@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
-import jmri.util.junit.rules.RetryRule;
 
 /**
  * <p>
@@ -12,8 +11,6 @@ import jmri.util.junit.rules.RetryRule;
  * @author Paul Bender Copyright (C) 2009
  */
 public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerTest {
-
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     @Override
