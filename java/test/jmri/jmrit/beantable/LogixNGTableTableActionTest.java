@@ -13,32 +13,24 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
 
 
-/*
+/**
 * Tests for the NamedTableTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
+@Timeout(10)
 public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTable> {
 
     static final ResourceBundle rbxNamedTableSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
