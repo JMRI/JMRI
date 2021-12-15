@@ -28,8 +28,10 @@ public class ShowDialog extends AbstractDigitalAction
     private static final ResourceBundle rbx =
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
 
-    private String _socketSystemName;
-    private final FemaleDigitalActionSocket _socket;
+    private String _validateSocketSystemName;
+    private final FemaleDigitalExpressionSocket _validateSocket;
+    private String _executeSocketSystemName;
+    private final FemaleDigitalActionSocket _executeSocket;
     private Set<Button> _enabledButtons = new HashSet<>();
     private String _localVariableForSelectedButton = "";
     private String _localVariableForInputString = "";
@@ -45,8 +47,10 @@ public class ShowDialog extends AbstractDigitalAction
     public ShowDialog(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        _socket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A");
+        _validateSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("ShowDialog_SocketValidate"));
+        _executeSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("ShowDialog_SocketExecute"));
     }
 
     @Override
@@ -266,8 +270,6 @@ public class ShowDialog extends AbstractDigitalAction
                 if (_enabledButtons.contains(button)) {
                     JButton jbutton = new JButton(button._text);
                     jbutton.addActionListener((ActionEvent e) -> {
-                        _dialog.dispose();
-
                         synchronized(ShowDialog.this) {
                             _internalSocket.conditionalNG = conditionalNG;
                             _internalSocket.newSymbolTable = newSymbolTable;
@@ -291,7 +293,10 @@ public class ShowDialog extends AbstractDigitalAction
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _socket;
+                return _validateSocket;
+                
+            case 1:
+                return _executeSocket;
                 
             default:
                 throw new IllegalArgumentException(
@@ -301,13 +306,15 @@ public class ShowDialog extends AbstractDigitalAction
 
     @Override
     public int getChildCount() {
-        return 1;
+        return 2;
     }
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _socket) {
-            _socketSystemName = socket.getConnectedSocket().getSystemName();
+        if (socket == _validateSocket) {
+            _validateSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _executeSocket) {
+            _executeSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -315,8 +322,10 @@ public class ShowDialog extends AbstractDigitalAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _socket) {
-            _socketSystemName = null;
+        if (socket == _validateSocket) {
+            _validateSocketSystemName = null;
+        } else if (socket == _executeSocket) {
+            _executeSocketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -346,43 +355,78 @@ public class ShowDialog extends AbstractDigitalAction
         return Bundle.getMessage(locale, bundleKey, _format);
     }
 
-    public FemaleDigitalActionSocket getSocket() {
-        return _socket;
+    public FemaleDigitalExpressionSocket getValidateSocket() {
+        return _validateSocket;
     }
 
-    public String getSocketSystemName() {
-        return _socketSystemName;
+    public String getValidateSocketSystemName() {
+        return _validateSocketSystemName;
     }
 
-    public void setSocketSystemName(String systemName) {
-        _socketSystemName = systemName;
+    public void setValidateSocketSystemName(String systemName) {
+        _validateSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalActionSocket getExecuteSocket() {
+        return _executeSocket;
+    }
+
+    public String getExecuteSocketSystemName() {
+        return _executeSocketSystemName;
+    }
+
+    public void setExecuteSocketSystemName(String systemName) {
+        _executeSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if (!_socket.isConnected()
-                    || !_socket.getConnectedSocket().getSystemName()
-                            .equals(_socketSystemName)) {
+            if (!_validateSocket.isConnected()
+                    || !_validateSocket.getConnectedSocket().getSystemName()
+                            .equals(_validateSocketSystemName)) {
+
+                String socketSystemName = _validateSocketSystemName;
+
+                _validateSocket.disconnect();
+
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _validateSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _validateSocket.getConnectedSocket().setup();
+            }
+
+            if (!_executeSocket.isConnected()
+                    || !_executeSocket.getConnectedSocket().getSystemName()
+                            .equals(_executeSocketSystemName)) {
                 
-                String socketSystemName = _socketSystemName;
+                String socketSystemName = _executeSocketSystemName;
                 
-                _socket.disconnect();
+                _executeSocket.disconnect();
                 
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
-                        _socket.connect(maleSocket);
+                        _executeSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog action " + socketSystemName);
+                        log.error("cannot load digital action " + socketSystemName);
                     }
                 }
             } else {
-                _socket.getConnectedSocket().setup();
+                _executeSocket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
@@ -580,7 +624,7 @@ public class ShowDialog extends AbstractDigitalAction
 
         @Override
         public void execute() throws JmriException {
-            if (_socket != null) {
+            if (_executeSocket != null) {
                 MaleSocket maleSocket = (MaleSocket)ShowDialog.this.getParent();
                 try {
                     SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
@@ -591,7 +635,14 @@ public class ShowDialog extends AbstractDigitalAction
                     if (!_localVariableForInputString.isEmpty()) {
                         newSymbolTable.setValue(_localVariableForInputString, inputValue);
                     }
-                    _socket.execute();
+                    boolean result = true;
+                    if (_validateSocket.isConnected()) {
+                        result = _validateSocket.evaluate();
+                    }
+                    if (result) {
+                        _dialog.dispose();
+                        _executeSocket.execute();
+                    }
                     conditionalNG.setSymbolTable(oldSymbolTable);
                 } catch (JmriException e) {
                     if (e.getErrors() != null) {
