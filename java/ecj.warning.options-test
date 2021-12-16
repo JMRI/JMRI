@@ -31,4 +31,4 @@
 -err:-over-ann
 
 # 200 generic raw types
--warn:-raw
+-err:-raw

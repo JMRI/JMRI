@@ -111,6 +111,7 @@
 -err:+nullUncheckedConversion
 -err:+over-ann
 -err:+pkgDefaultMethod
+-err:+raw
 -err:+semicolon
 -err:+specialParamHiding
 -err:+switchDefault
@@ -171,10 +172,6 @@
   # missing synch in synchronized method override
   # 24 outstanding items
 -err:-syncOverride
-
-  # raw type instead of parameterized type
-  # 9 outstanding items (associated with PickList)
--warn:-raw
 
   # 1270 "Empty block should be documented"
 -err:-emptyBlock
