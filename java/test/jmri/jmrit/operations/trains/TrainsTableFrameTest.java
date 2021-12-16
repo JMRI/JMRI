@@ -43,7 +43,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testTrainsTableFrame() {
+    public void testCheckboxes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.loadTrains();
@@ -51,8 +51,6 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         TrainsTableFrame ttf = new TrainsTableFrame();
         ttf.setSize(1200, Control.panelHeight600); // show entire table
-
-        JemmyUtil.enterClickAndLeave(ttf.saveButton);
 
         Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, ttf.getSortBy());
         Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
@@ -78,12 +76,16 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
         Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
-        // create the TrainEditFrame
-        JemmyUtil.enterClickAndLeave(ttf.addButton);
+        JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testSwitchListFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // confirm panel creation
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
-        Assert.assertNotNull("train edit frame", tef);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // create the TrainSwichListEditFrame
         JemmyUtil.enterClickAndLeave(ttf.switchListsButton);
@@ -93,8 +95,27 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
-        JUnitUtil.dispose(tef);
         JUnitUtil.dispose(tsle);
+        JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testAddTrain() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
+
+        // create the TrainEditFrame
+        JemmyUtil.enterClickAndLeave(ttf.addButton);
+
+        // confirm panel creation
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
+        Assert.assertNotNull("train edit frame", tef);
+
+        // kill panels
+        JUnitUtil.dispose(tef);
         JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
