@@ -106,7 +106,7 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     public DefaultProgrammerManager getProgrammerManager() {
-        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class<?> c) -> {
             return generateDefaultProgrammerManagerForConnection();
         });
     }

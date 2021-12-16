@@ -8223,7 +8223,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             return;
         }
 
-        List theList = null;
+        List<?> theList = null;
 
         if (nb instanceof Sensor) {
             theList = sensorList;

@@ -71,7 +71,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         if (getDisabled()) {
             return null;
         }
-        return (Dcc4PcReporterManager) classObjectMap.computeIfAbsent((ReporterManager.class), (Class c) ->
+        return (Dcc4PcReporterManager) classObjectMap.computeIfAbsent((ReporterManager.class), (Class<?> c) ->
             new Dcc4PcReporterManager(getDcc4PcTrafficController(), this));
     }
 
@@ -80,7 +80,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
             return null;
         }
         return (Dcc4PcSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,
-                (Class c) -> new Dcc4PcSensorManager(getDcc4PcTrafficController(), this));
+                (Class<?> c) -> new Dcc4PcSensorManager(getDcc4PcTrafficController(), this));
     }
 
     @Override

@@ -104,6 +104,36 @@ public final class InstanceManager {
         getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
     }
 
+
+    /**
+     * Store an object of a particular type for later retrieval via
+     * {@link #getDefault} or {@link #getList}.
+     *<p>
+     * {@link #store} is preferred to this method because it does type
+     * checking at compile time.  In (rare) cases that's not possible,
+     * and run-time checking is required.
+     *
+     * @param <T>  The type of the class
+     * @param item The object of type T to be stored
+     * @param type The class Object for the item's type. This will be used as
+     *             the key to retrieve the object later.
+     */
+    public static <T> void storeUnchecked(@Nonnull Object item, @Nonnull Class<T> type) {
+        log.debug("Store item of type {}", type.getName());
+        if (item == null) {
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not store null value of type {}", type.getName());
+            throw npe;
+        }
+        List<T> l = getList(type);
+        try {
+            l.add(type.cast(item));
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
+        } catch (ClassCastException ex) {
+            log.error("Attempt to do unchecked store with invalid type {}", type, ex);
+        }
+    }
+
     /**
      * Retrieve a list of all objects of type T that were registered with
      * {@link #store}.
@@ -412,7 +442,7 @@ public final class InstanceManager {
     /**
      * Check if a default has been set for the given type.
      * <p>
-     * As a side-effect, then (a) ensures that the list for the given 
+     * As a side-effect, then (a) ensures that the list for the given
      * type exists, though it may be empty, and (b) if it had to create
      * the list, a PropertyChangeEvent is fired to denote that.
      *
@@ -429,7 +459,7 @@ public final class InstanceManager {
     /**
      * Check if a particular type has been initialized without
      * triggering an automatic initialization. The existence or
-     * non-existence of the corresponding list is not changed, and 
+     * non-existence of the corresponding list is not changed, and
      * no PropertyChangeEvent is fired.
      *
      * @param <T>  The type of the class
@@ -773,10 +803,10 @@ public final class InstanceManager {
     public void clearAll() {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
-        
+
         // reset the instance manager, so future calls will invoke the new one
         LazyInstanceManager.resetInstanceManager();
-        
+
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach(this::clear);
         managerLists.keySet().forEach(type -> {

@@ -11224,7 +11224,7 @@ final public class LayoutEditorTools {
      * @param position   Which of the four points is being changed
      */
     <T extends LayoutTurnout> void setTurnoutSensor(T trackItem, Sensor newSensor, Sensor currSensor,
-            BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
+            BeanDetails<? extends NamedBean> beanDetail, LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
@@ -11739,7 +11739,7 @@ final public class LayoutEditorTools {
      * @param coords     The track componennt coordinates
      * @param position   Which of the four points is being changed
      */
-    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails beanDetail,
+    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails<? extends NamedBean> beanDetail,
             LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {

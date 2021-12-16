@@ -25,14 +25,14 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     private int moduleAddress=-1; // User assigned address associated with this reporter's module.
     private int port; // module port (0-7) associated with this reporter.
 
-    private ArrayList<RailCom> idTags;
+    private ArrayList<Object> idTags;
 
-    /**  
+    /**
      * Create a new Z21CanReporter.
      *
      * @param systemName the system name of the new reporter.
      * @param userName the user name of the new reporter.
-     * @param memo an instance of Z21SystemConnectionMemo this reporter 
+     * @param memo an instance of Z21SystemConnectionMemo this reporter
      *             is associated with.
      *
      */
@@ -40,7 +40,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         super(systemName,userName);
         _memo = memo;
         _memo.getTrafficController().addz21Listener(this);
-        //Address format passed is in the form of moduleAddress:pin 
+        //Address format passed is in the form of moduleAddress:pin
         try {
             setIdentifiersFromSystemName(systemName);
         } catch (NumberFormatException ex) {
@@ -108,7 +108,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             if(log.isDebugEnabled()){
                log.debug("after message, new list size {}",idTags.size());
                int i = 0;
-               for(RailCom id:idTags){
+               for(Object id:idTags){
                   log.debug("{}: {}",i++,id);
                }
             }
@@ -119,7 +119,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         return (address == moduleAddress || netId == networkID) &&  msgPort == port;
     }
     /*
-     * private method to get and update a railcom tag based on the value 
+     * private method to get and update a railcom tag based on the value
      * bytes from the message.
      */
     private RailCom getRailComTagFromValue(Z21Reply msg,int value){
@@ -141,7 +141,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                 tag.setOrientation(0);
           }
           return tag;
-       } 
+       }
        return null; // address in the message indicates end of list.
     }
 
@@ -157,8 +157,8 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     /**
      * {@inheritDoc}
      */
-    @Override 
-    public java.util.Collection getCollection(){
+    @Override
+    public java.util.Collection<Object> getCollection(){
         return idTags;
     }
 

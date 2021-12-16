@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts between java types, for example String to Double and double to boolean.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public final class TypeConversionUtil {
-    
+
     /**
      * Is this object an integer number?
      * <P>
@@ -43,7 +43,7 @@ public final class TypeConversionUtil {
                 || (object instanceof Integer)
                 || (object instanceof Long);
     }
-    
+
     /**
      * Is this object an integer or a floating point number?
      * <P>
@@ -70,7 +70,7 @@ public final class TypeConversionUtil {
                 || (object instanceof Float)
                 || (object instanceof Double);
     }
-    
+
     /**
      * Is this object a String?
      * @param object the object to check
@@ -79,8 +79,8 @@ public final class TypeConversionUtil {
     public static boolean isString(Object object) {
         return object instanceof String;
     }
-    
-    
+
+
     private static boolean convertStringToBoolean(@Nonnull String str, boolean do_i18n) {
         // try to parse the string as a number
         try {
@@ -107,7 +107,7 @@ public final class TypeConversionUtil {
 //            System.err.format("The string: '%s', result: %b%n", str, !str.isEmpty());
         return !str.isEmpty();
     }
-    
+
     /**
      * Convert a value to a boolean.
      * <P>
@@ -124,7 +124,7 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString().
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the boolean value
@@ -133,21 +133,21 @@ public final class TypeConversionUtil {
         if (value == null) {
             return false;
         }
-        
+
         if (value instanceof Map) {
-            Map map = ((Map)value);
+            var map = ((Map<?,?>)value);
             return !map.isEmpty();
         }
-        
+
         if (value instanceof Collection) {
-            Collection collection = ((Collection)value);
+            var collection = ((Collection<?>)value);
             return !collection.isEmpty();
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
             double number = ((Number)value).doubleValue();
             return ! ((-0.5 < number) && (number < 0.5));
@@ -158,7 +158,7 @@ public final class TypeConversionUtil {
             return convertStringToBoolean(value.toString(), do_i18n);
         }
     }
-    
+
     private static long convertStringToLong(@Nonnull String str) {
         String patternString = "(\\-?\\d+)";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
@@ -175,7 +175,7 @@ public final class TypeConversionUtil {
             return 0;
         }
     }
-    
+
     /**
      * Convert a value to a long.
      * <P>
@@ -189,7 +189,7 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString() before doing the conversion.
-     * 
+     *
      * @param value the value to convert
      * @return the long value
      */
@@ -198,11 +198,11 @@ public final class TypeConversionUtil {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0;
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
             return ((Number)value).longValue();
@@ -213,7 +213,7 @@ public final class TypeConversionUtil {
             return convertStringToLong(value.toString());
         }
     }
-    
+
     private static double convertStringToDouble(@Nonnull String str, boolean do_i18n) {
         String patternString = "(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
@@ -230,7 +230,7 @@ public final class TypeConversionUtil {
             return 0.0d;
         }
     }
-    
+
     /**
      * Convert a value to a double.
      * <P>
@@ -245,7 +245,7 @@ public final class TypeConversionUtil {
      * <P>
      * For objects that implement the Reportable interface, the value is fetched
      * from the method toReportString() before doing the conversion.
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the double value
@@ -255,11 +255,11 @@ public final class TypeConversionUtil {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0.0d;
         }
-        
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
             return ((Number)value).doubleValue();
@@ -267,7 +267,7 @@ public final class TypeConversionUtil {
             return ((Boolean)value) ? 1 : 0;
         } else {
             if (value == null) return 0.0;
-            
+
             if (do_i18n) {
                 // try to parse the string as a number
                 try {
@@ -281,10 +281,10 @@ public final class TypeConversionUtil {
             return convertStringToDouble(value.toString(), do_i18n);
         }
     }
-    
+
     /**
      * Convert a value to a String.
-     * 
+     *
      * @param value the value to convert
      * @param do_i18n true if internationalization should be done, false otherwise
      * @return the String value
@@ -294,19 +294,19 @@ public final class TypeConversionUtil {
         if (value == null) {
             return "";
         }
-        
+
         if (value instanceof Reportable) {
             return ((Reportable)value).toReportString();
         }
-        
+
         if (value instanceof Number) {
             if (do_i18n) {
                 return IntlUtilities.valueOf(((Number)value).doubleValue());
             }
         }
-        
+
         return value.toString();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(TypeConversionUtil.class);
 }

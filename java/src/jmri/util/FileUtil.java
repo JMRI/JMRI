@@ -1136,7 +1136,7 @@ public final class FileUtil {
      * PropertyChangeEvents for properties that are Profile-specific use a
      * Property to enclose both the Profile and the value of the property.
      */
-    public static class Property implements Map.Entry {
+    public static class Property implements Map.Entry<Profile, String> {
 
         private final Profile key;
         private final String value;
@@ -1158,7 +1158,7 @@ public final class FileUtil {
         }
 
         @Override
-        public Object setValue(Object value) {
+        public String setValue(String value) {
             throw new UnsupportedOperationException("Immutable by design");
         }
 

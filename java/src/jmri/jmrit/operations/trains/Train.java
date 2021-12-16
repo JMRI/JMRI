@@ -3218,7 +3218,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /*
      * The train icon is moved to route location (rl) for this train
      */
-    @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
         // create train icon if at departure, if program has been restarted, or removed
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {

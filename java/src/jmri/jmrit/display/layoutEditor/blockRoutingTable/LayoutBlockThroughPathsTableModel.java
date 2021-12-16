@@ -136,7 +136,7 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
     public void dispose() {
     }
 
-    public jmri.Manager getManager() {
+    public jmri.Manager<LayoutBlock> getManager() {
         return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
     }
 

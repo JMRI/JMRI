@@ -33,7 +33,7 @@ public class Dcc4PcMenu extends JMenu {
         }
 
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            new jmri.jmrit.beantable.ListedTableFrame();
+            new jmri.jmrit.beantable.ListedTableFrame<jmri.Turnout>();
         }
     }
 
