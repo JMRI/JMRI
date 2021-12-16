@@ -1,7 +1,9 @@
 package jmri.jmrit.logixng;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,6 +17,7 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.JUnitUtil;
 
 // import org.apache.log4j.Level;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
@@ -35,7 +38,29 @@ import org.junit.Assert;
 public class ActionsAndExpressionsTest {
     
     private boolean errorsFound = false;
+    private final Set<String> languages = new HashSet<>();
+    private final Set<Locale> locales = new HashSet<>();
     
+    
+    @Test
+    private void getLocales() throws IOException {
+        Path path = FileSystems.getDefault().getPath("java/src/jmri/jmrit/logixng/");
+        
+        Files.walk(path)
+                .filter(Files::isRegularFile)
+                .filter(p -> p.getFileName().toString().endsWith(".properties"))
+                .filter(p -> p.getFileName().toString().contains("_"))
+                .forEach(p -> {
+                    String file = p.getFileName().toString();
+                    languages.add(file.substring(file.indexOf("_")+1, file.length()-".properties".length()));
+                });
+        
+        for (String lang : languages) {
+//            System.out.format("Language: '%s'%n", lang);
+            locales.add(new Locale(lang));
+        }
+        
+    }
     
     private void checkFolder(Path path, String packageName, Map<Category, List<Class<? extends Base>>> registeredClasses, String[] classesToIgnore) {
         
@@ -109,6 +134,17 @@ public class ActionsAndExpressionsTest {
                 Class<?> configClass = Class.forName(fullConfigName);
                 configureSwing = (SwingConfiguratorInterface)configClass.getDeclaredConstructor().newInstance();
                 configureSwing.getConfigPanel(new JPanel());
+                
+                // Test all locales. This mainly tests that the female socket
+                // names are valid for each locale, for example that the name
+                // doesn't contain any spaces.
+                Locale defaultLocale = Locale.getDefault();
+                for (Locale locale : locales) {
+                    Locale.setDefault(locale);
+                    configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
+                }
+                Locale.setDefault(defaultLocale);
+                
                 MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
                 MaleSocket lastMaleSocket = socket;
                 Base base = socket;
@@ -253,7 +289,7 @@ public class ActionsAndExpressionsTest {
     
     // The minimal setup for log4J
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -261,6 +297,9 @@ public class ActionsAndExpressionsTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        // Get the list of languages LogixNG has been translated to
+        getLocales();
         
         // Temporary let the error messages from this test be shown to the user
 //        JUnitAppender.end();
