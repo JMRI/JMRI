@@ -1,5 +1,7 @@
 package jmri.jmrit.picker;
 
+import jmri.NamedBean;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +31,9 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
     private int ROW_HEIGHT;
 
-    PickListModel[] _models;
+    @SuppressWarnings("raw")
+    PickListModel<NamedBean>[] _models;
+
     JTabbedPane _tabPane;
 
     JPanel _addPanel;
@@ -38,9 +42,10 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     JTextField _userNametext;
     jmri.jmrit.picker.PickFrame _pickTables; // Opened from LogixTableAction
 
-    public PickPanel(PickListModel[] models) {
+    @SuppressWarnings("unchecked") // cast as part of generic array ctor
+    public PickPanel(PickListModel<?>[] models) {
         _tabPane = new JTabbedPane();
-        _models = new PickListModel[models.length];
+        _models = (PickListModel<NamedBean>[]) new Object[models.length]; // generic array construction
         System.arraycopy(models, 0, _models, 0, models.length);
         for (int i = 0; i < models.length; i++) {
             JTable table = models[i].makePickTable();
@@ -91,16 +96,15 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         return p;
     }
 
-    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     void addToTable() {
         String sysname = _sysNametext.getText();
         if (sysname != null && sysname.length() > 1) {
-            PickListModel model = _models[_tabPane.getSelectedIndex()];
+            var model = _models[_tabPane.getSelectedIndex()];
             String uname = _userNametext.getText();
             if (uname != null && uname.trim().length() == 0) {
                 uname = null;
             }
-            jmri.NamedBean bean = null;
+            NamedBean bean = null;
             try {
                 bean = model.addBean(sysname, uname);
             } catch (IllegalArgumentException ex) {
@@ -121,7 +125,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        PickListModel model = _models[_tabPane.getSelectedIndex()];
+        var model = _models[_tabPane.getSelectedIndex()];
         if (model.canAddBean()) {
             _cantAddPanel.setVisible(false);
             _addPanel.setVisible(true);

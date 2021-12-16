@@ -729,7 +729,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             JPanel panel = new JPanel();
             panel.add(blurb);
             content.add(panel);
-            PickListModel[] models = {PickListModel.oBlockPickModelInstance()};
+
+            PickListModel<?>[] models = {PickListModel.oBlockPickModelInstance()};
             content.add(new PickPanel(models));
 
             _pickFrame.setContentPane(content);
