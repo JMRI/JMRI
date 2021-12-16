@@ -45,7 +45,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     @SuppressWarnings("unchecked") // cast as part of generic array ctor
     public PickPanel(PickListModel<?>[] models) {
         _tabPane = new JTabbedPane();
-        _models = (PickListModel<NamedBean>[]) new Object[models.length]; // generic array construction
+        _models = (PickListModel<NamedBean>[]) new PickListModel[models.length]; // generic array construction
         System.arraycopy(models, 0, _models, 0, models.length);
         for (int i = 0; i < models.length; i++) {
             JTable table = models[i].makePickTable();
