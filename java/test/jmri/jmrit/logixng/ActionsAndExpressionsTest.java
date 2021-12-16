@@ -37,6 +37,8 @@ import org.junit.Assert;
  */
 public class ActionsAndExpressionsTest {
     
+    private static final Locale DEFAULT_LOCALE = Locale.getDefault();
+    
     private boolean errorsFound = false;
     private final Set<String> languages = new HashSet<>();
     private final Set<Locale> locales = new HashSet<>();
@@ -135,16 +137,6 @@ public class ActionsAndExpressionsTest {
                 configureSwing = (SwingConfiguratorInterface)configClass.getDeclaredConstructor().newInstance();
                 configureSwing.getConfigPanel(new JPanel());
                 
-                // Test all locales. This mainly tests that the female socket
-                // names are valid for each locale, for example that the name
-                // doesn't contain any spaces.
-                Locale defaultLocale = Locale.getDefault();
-                for (Locale locale : locales) {
-                    Locale.setDefault(locale);
-                    configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
-                }
-                Locale.setDefault(defaultLocale);
-                
                 MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
                 MaleSocket lastMaleSocket = socket;
                 Base base = socket;
@@ -160,6 +152,15 @@ public class ActionsAndExpressionsTest {
 //                        configureSwing.getManager().getMaleSocketClass().getName(),
 //                        socket.getClass().getName());
                 Assert.assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(lastMaleSocket.getClass()));
+                
+                // Test all locales. This mainly tests that the female socket
+                // names are valid for each locale, for example that the name
+                // doesn't contain any spaces.
+                for (Locale locale : locales) {
+                    Locale.setDefault(locale);
+                    configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
+                }
+                Locale.setDefault(DEFAULT_LOCALE);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
 //            if (configureSwing == null) {
