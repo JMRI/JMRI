@@ -79,7 +79,7 @@
 
       <dl>
         <dt>None</dt>
-        <dd>Generic type which will change based on its content</dd>
+        <dd>The initial value will be <code>null</code>.</dd>
 
         <dt>Integer</dt>
         <dd>A whole number such as 123</dd>
@@ -111,6 +111,10 @@
         <dd>Use the value from a formula</dd>
 
       </dl>
+
+      <p>Note:  The type of a variable can change based on the last assignment.  For example, a
+      local variable with the name <code>index</code> defined as integer would change to string if
+      "XVZ" was assigned to <code>index</code>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
