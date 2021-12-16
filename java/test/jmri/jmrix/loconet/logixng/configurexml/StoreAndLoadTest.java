@@ -342,6 +342,7 @@ public class StoreAndLoadTest {
 
     @AfterEach
     public void tearDown() {
+        // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
 
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");

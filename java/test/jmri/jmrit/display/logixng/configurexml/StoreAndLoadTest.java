@@ -305,6 +305,7 @@ public class StoreAndLoadTest {
 
     @AfterEach
     public void tearDown() {
+        // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
