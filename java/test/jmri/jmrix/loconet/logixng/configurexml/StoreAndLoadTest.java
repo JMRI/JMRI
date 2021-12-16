@@ -21,7 +21,10 @@ import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.util.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -38,10 +41,9 @@ public class StoreAndLoadTest {
     private LocoNetSystemConnectionMemo memo1;
     private LocoNetSystemConnectionMemo memo2;
 
-
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -303,7 +305,7 @@ public class StoreAndLoadTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -338,7 +340,7 @@ public class StoreAndLoadTest {
         jmri.InstanceManager.store(memo2, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
 
