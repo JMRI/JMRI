@@ -152,27 +152,11 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         URL path;
         XmlFile xf;
 
-        // First check to see if the bean is in the user directory
+        // First check to see if the bean is in the user directory resources/signals/, then xml/signals
         path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "resources", "xml");
         log.debug("load from {}", path);
         if (path != null) {
             xf = new AspectFile();
-            try {
-                log.debug(" successful");
-                Element root = xf.rootFromURL(path);
-                DefaultSignalSystem s = new DefaultSignalSystem(name);
-                loadBean(s, root);
-                return s;
-            } catch (IOException | JDOMException e) {
-                log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
-            }
-        }
-
-        // If the file doesn't exist or fails the load above then try the default system directory
-        path = FileUtil.findURL("xml/signals/" + name + "/aspects.xml", FileUtil.Location.INSTALLED);
-        log.debug("attempt load from {}", path);
-        xf = new AspectFile();
-        if (path != null) {
             try {
                 log.debug(" successful");
                 Element root = xf.rootFromURL(path);
