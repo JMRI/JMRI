@@ -17,7 +17,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
     public ExpressionMemoryXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -31,33 +31,33 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         Element element = new Element("ExpressionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
+        var memory = p.getMemory();
         if (memory != null) {
             element.addContent(new Element("memory").addContent(memory.getName()));
         }
-        NamedBeanHandle otherMemory = p.getOtherMemory();
+        var otherMemory = p.getOtherMemory();
         if (otherMemory != null) {
             element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
         }
-        
+
         String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
-        
+
         element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
         element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
-        
+
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
         element.addContent(new Element("regEx").addContent(p.getRegEx()));
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
@@ -115,6 +115,6 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutXml.class);
 }

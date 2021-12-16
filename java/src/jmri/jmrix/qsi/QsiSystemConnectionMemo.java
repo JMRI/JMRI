@@ -76,7 +76,7 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     public DefaultProgrammerManager getProgrammerManager() {
-        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class c) -> new DefaultProgrammerManager(new QsiProgrammer(this),this));
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class<?> c) -> new DefaultProgrammerManager(new QsiProgrammer(this),this));
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {

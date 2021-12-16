@@ -96,21 +96,21 @@ public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         if (getDisabled()) {
             return null;
         }
-        return (AcelaTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> new AcelaTurnoutManager(this));
+        return (AcelaTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class<?> c) -> new AcelaTurnoutManager(this));
     }
 
     public AcelaSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        return (AcelaSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> new AcelaSensorManager(this));
+        return (AcelaSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class<?> c) -> new AcelaSensorManager(this));
     }
 
     public AcelaLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        return (AcelaLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class c) -> new AcelaLightManager(this));
+        return (AcelaLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class<?> c) -> new AcelaLightManager(this));
     }
 
     @Override

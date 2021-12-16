@@ -1852,7 +1852,7 @@
                  use="true"
                  failonerror="true"
                  failonwarning="true"
-                 source="8"
+                 source="11"
                  windowtitle="JMRI API"
             >
 
@@ -1953,7 +1953,7 @@
                  use="true"
                  failonerror="true"
                  failonwarning="false"
-                 source="8"
+                 source="11"
                  windowtitle="JMRI API"
             > <!-- failonwarning="false"  because always warns on cyclic redundancy with JDK11 -->
 

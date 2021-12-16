@@ -669,7 +669,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
     public static String getRuleEnabledString() { return Bundle.getMessage("TLE_RuleEnabled"); }
 
-    public TrafficLockingData.TRLSwitch getSwitchAllignment(javax.swing.JComboBox userText, javax.swing.JComboBox alignment) {
+    public TrafficLockingData.TRLSwitch getSwitchAllignment(javax.swing.JComboBox<String> userText, javax.swing.JComboBox<String> alignment) {
         TrafficLockingData.TRLSwitch trlSwitch = null;
         int osNumberSelectedIndex = userText.getSelectedIndex();
         if (osNumberSelectedIndex > 0) {

@@ -111,7 +111,7 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
      * @param reversedInput Sensor name for reversed (right) side of switch on panel
      * @param station Station to which this Section belongs
      */
-    public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station station) {
+    public TurnoutSection(String layoutTO, String normalIndicator, String reversedIndicator, String normalInput, String reversedInput, Station<CodeGroupTwoBits, CodeGroupTwoBits> station) {
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         this.station = station;
 
@@ -127,9 +127,9 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         field.addLocks(locks);
     }
 
-    Station station;
+    Station<CodeGroupTwoBits, CodeGroupTwoBits> station;
     @Override
-    public Station getStation() { return station; }
+    public Station<CodeGroupTwoBits, CodeGroupTwoBits> getStation() { return station; }
     @Override
     public String getName() { return "TO for "+field.hLayoutTO.getBean().getDisplayName(); }
 

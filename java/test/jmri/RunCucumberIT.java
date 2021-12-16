@@ -6,7 +6,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.web.BrowserFactory;
 
 import org.junit.runner.RunWith;
-
+import org.junit.Assume;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -36,6 +36,7 @@ public class RunCucumberIT {
 
     @BeforeClass
     public static void beforeTests() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
