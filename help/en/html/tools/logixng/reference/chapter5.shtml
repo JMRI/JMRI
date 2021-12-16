@@ -637,6 +637,11 @@
       <p>The <strong>Digital Formula</strong> action provides the ability to create formulas that
       are not directly related to other items, such as sensors, which use the Formula tab.</p>
 
+      <p>The formula action is in particular useful when working with local variables. You can for
+      example increase a local variable by the formula <code>index++</code> or make some
+      calculations, like <code>turnout = name.substring(2)</code> which removes the first two
+      characters from the string.</p>
+
       <p>The dialog for creating a Digital Formula consists of a single text field.</p>
 
       <div style="margin-left: 2em;">
@@ -966,7 +971,7 @@
 
       <h4 id="showDialog">Show dialog<span class="since">since 4.25.8</span></h4>
 
-      <p>The <strong>Show dialog</strong> action displays a window that can be used provide
+      <p>The <strong>Show dialog</strong> action displays a window that can be used to provide
       notification of an event that has occurred or needs to be handled.  It can also be used to
       request whether an action should be performed by the LogixNG.</p>
 

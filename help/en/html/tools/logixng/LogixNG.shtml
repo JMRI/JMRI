@@ -21,7 +21,7 @@
       <h2>Introduction to LogixNG</h2>
 
       <p>LogixNG (Logix "Next Generation") is a modular layout automation tool developed for JMRI in
-      2021.  It is similar to, but a complete rethinking of, <a href="../Logix.shtml">Logix</a>.  It
+      2018 - 2021.  It is similar to, but a complete rethinking of, <a href="../Logix.shtml">Logix</a>.  It
       is designed to be easily testable, highly maintainable and readily expandable.  Key concepts
       of LogixNG are:</p>
 
