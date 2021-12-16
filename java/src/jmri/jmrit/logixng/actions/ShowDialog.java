@@ -230,6 +230,12 @@ public class ShowDialog extends AbstractDigitalAction
         if (_multiLine) strMultiLine = "<html>" + str + "</html>";
         else strMultiLine = str;
 
+        Object value = null;
+        if (!_localVariableForInputString.isEmpty()) {
+           value = newSymbolTable.getValue(_localVariableForInputString);
+        }
+        final Object currentValue = value;
+
         ThreadingUtil.runOnGUIEventually(() -> {
 
             if (_dialog != null) _dialog.dispose();
@@ -255,7 +261,6 @@ public class ShowDialog extends AbstractDigitalAction
 
             JTextField textField = new JTextField(20);
             if (!_localVariableForInputString.isEmpty()) {
-                Object currentValue = newSymbolTable.getValue(_localVariableForInputString);
                 if (currentValue != null) {
                     String strValue = TypeConversionUtil.convertToString(currentValue, false);
                     textField.setText(strValue);
