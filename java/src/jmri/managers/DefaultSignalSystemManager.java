@@ -89,7 +89,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         // first locate the signal system directory
         // and get names of systems
         File signalDir = null;
-        //First get the default pre-configured signalling systems
+        // First get the default pre-configured signalling systems
         try {
             signalDir = new File(FileUtil.findURL("xml/signals", FileUtil.Location.INSTALLED).toURI());
         } catch (URISyntaxException | NullPointerException ex) {
@@ -110,7 +110,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 }
             }
         }
-        //Now get the user defined systems.
+        // Now get the user defined systems.
         try {
             URL dir = FileUtil.findURL("signals", FileUtil.Location.USER, "resources", "xml");
             if (dir == null) {
@@ -134,8 +134,9 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                     if (file.isDirectory()) {
                         // check that there's an aspects.xml file
                         File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                        log.trace("checking for {}");
                         if ((aspects.exists()) && (!retval.contains(file.getName()))) {
-                            log.debug("found system: {}", file.getName());
+                            log.debug("found user system: {}", file.getName());
                             retval.add(file.getName());
                         }
                     }
@@ -152,11 +153,12 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         XmlFile xf;
 
         // First check to see if the bean is in the user directory
-        path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "xml", "resources");
+        path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "resources", "xml");
         log.debug("load from {}", path);
         if (path != null) {
             xf = new AspectFile();
             try {
+                log.debug(" successful");
                 Element root = xf.rootFromURL(path);
                 DefaultSignalSystem s = new DefaultSignalSystem(name);
                 loadBean(s, root);
@@ -168,10 +170,11 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
 
         // If the file doesn't exist or fails the load above then try the default system directory
         path = FileUtil.findURL("xml/signals/" + name + "/aspects.xml", FileUtil.Location.INSTALLED);
-        log.debug("load from {}", path);
+        log.debug("attempt load from {}", path);
         xf = new AspectFile();
         if (path != null) {
             try {
+                log.debug(" successful");
                 Element root = xf.rootFromURL(path);
                 DefaultSignalSystem s = new DefaultSignalSystem(name);
                 loadBean(s, root);
