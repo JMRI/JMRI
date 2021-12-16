@@ -477,7 +477,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Allow user-modified signal systems to provide
+                    their own copy of an existing aspects.xml file.</li>
             </ul>
 
         <h4>Signal Heads</h4>
