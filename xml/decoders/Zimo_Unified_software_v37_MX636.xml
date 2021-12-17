@@ -182,6 +182,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
       </variable>  
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes">
         <decVal/>

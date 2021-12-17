@@ -37,8 +37,14 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             case ASSIGN_MULTIPLY:
             case ASSIGN_DIVIDE:
             case ASSIGN_MODULO:
+            case ASSIGN_AND:
+            case ASSIGN_OR:
+            case ASSIGN_XOR:
+            case ASSIGN_SHIFT_LEFT:
+            case ASSIGN_SHIFT_RIGHT:
+            case ASSIGN_UNSIGNED_SHIFT_RIGHT:
                 if (_leftSide == null) {
-                    throw new IllegalArgumentException("leftSide must not be null for operators *, / and %");
+                    throw new IllegalArgumentException("leftSide must not be null for operators *, /, %, <<, >>, >>>");
                 }
                 break;
                 
@@ -143,6 +149,84 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
     }
     
     
+    private Object and(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() & ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
+    private Object or(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() | ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
+    private Object xor(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() ^ ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
+    private Object shiftLeft(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() << ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
+    private Object shiftRight(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() >> ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
+    private Object unsignedShiftRight(Object left, Object right) throws CalculateException {
+        if (TypeConversionUtil.isIntegerNumber(left)) {
+            if (TypeConversionUtil.isIntegerNumber(right)) {
+                return ((Number)left).longValue() >>> ((Number)right).longValue();
+            } else {
+                throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", right));
+            }
+        } else {
+            throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
+        }
+    }
+    
+    
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         
@@ -189,6 +273,24 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                     case ASSIGN_MODULO:
                         result = modulo(left, right);
                         break;
+                    case ASSIGN_AND:
+                        result = and(left, right);
+                        break;
+                    case ASSIGN_OR:
+                        result = or(left, right);
+                        break;
+                    case ASSIGN_XOR:
+                        result = xor(left, right);
+                        break;
+                    case ASSIGN_SHIFT_LEFT:
+                        result = shiftLeft(left, right);
+                        break;
+                    case ASSIGN_SHIFT_RIGHT:
+                        result = shiftRight(left, right);
+                        break;
+                    case ASSIGN_UNSIGNED_SHIFT_RIGHT:
+                        result = unsignedShiftRight(left, right);
+                        break;
                     default:
                         throw new CalculateException("Unknown arithmetic operator: "+_tokenType.name());
                 }
@@ -223,6 +325,54 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                 
             case MODULO:
                 operStr = "%";
+                break;
+                
+            case ASSIGN:
+                operStr = "=";
+                break;
+                
+            case ASSIGN_ADD:
+                operStr = "+=";
+                break;
+                
+            case ASSIGN_SUBTRACKT:
+                operStr = "-=";
+                break;
+                
+            case ASSIGN_MULTIPLY:
+                operStr = "*=";
+                break;
+                
+            case ASSIGN_DIVIDE:
+                operStr = "/=";
+                break;
+                
+            case ASSIGN_MODULO:
+                operStr = "%=";
+                break;
+                
+            case ASSIGN_AND:
+                operStr = "&=";
+                break;
+                
+            case ASSIGN_OR:
+                operStr = "|=";
+                break;
+                
+            case ASSIGN_XOR:
+                operStr = "^=";
+                break;
+                
+            case ASSIGN_SHIFT_LEFT:
+                operStr = "<<=";
+                break;
+                
+            case ASSIGN_SHIFT_RIGHT:
+                operStr = ">>=";
+                break;
+                
+            case ASSIGN_UNSIGNED_SHIFT_RIGHT:
+                operStr = ">>>=";
                 break;
                 
             default:

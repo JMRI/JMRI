@@ -29,7 +29,7 @@ import org.w3c.dom.Document;
  * <p>
  *
  * @author glen Copyright (C) 2002
- * @author Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007, 2021
  * @author Ken Cameron Copyright (C) 2008
  * @author Lionel Jeanson 2009-2021
  */
@@ -46,36 +46,36 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JButton idleButton;
     private JPanel buttonPanel;
     private JPanel topButtonPanel;
-    
+
     private Document forwardButtonSvgIcon;
     private Document forwardSelectedButtonSvgIcon;
     private Document forwardRollButtonSvgIcon;
     private ImageIcon forwardButtonImageIcon;
     private ImageIcon forwardSelectedButtonImageIcon;
-    private ImageIcon forwardRollButtonImageIcon;    
-    
+    private ImageIcon forwardRollButtonImageIcon;
+
     private Document reverseButtonSvgIcon;
     private Document reverseSelectedButtonSvgIcon;
     private Document reverseRollButtonSvgIcon;
     private ImageIcon reverseButtonImageIcon;
     private ImageIcon reverseSelectedButtonImageIcon;
-    private ImageIcon reverseRollButtonImageIcon;    
-        
+    private ImageIcon reverseRollButtonImageIcon;
+
     private Document idleButtonSvgIcon;
     private Document idleSelectedButtonSvgIcon;
     private Document idleRollButtonSvgIcon;
     private ImageIcon idleButtonImageIcon;
     private ImageIcon idleSelectedButtonImageIcon;
-    private ImageIcon idleRollButtonImageIcon;    
-    
+    private ImageIcon idleRollButtonImageIcon;
+
     private Document stopButtonSvgIcon;
     private Document stopSelectedButtonSvgIcon;
     private Document stopRollButtonSvgIcon;
     private ImageIcon stopButtonImageIcon;
     private ImageIcon stopSelectedButtonImageIcon;
-    private ImageIcon stopRollButtonImageIcon;    
-    
-    
+    private ImageIcon stopRollButtonImageIcon;
+
+
     private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
 
     private JPopupMenu popupMenu;
@@ -83,7 +83,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JPanel speedControlPanel;
     private JPanel spinnerPanel;
     private JPanel sliderPanel;
-    private JPanel speedSliderContinuousPanel;    
+    private JPanel speedSliderContinuousPanel;
 
     private AddressPanel addressPanel; //for access to roster entry
     /* Constants for speed selection method */
@@ -94,7 +94,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     final public static int DEFAULT_BUTTON_SIZE = 24;
     private static final String LONGEST_SS_STRING="999";
     private static final int FONT_SIZE_MIN=12;
-    private static final int FONT_INCREMENT = 2;    
+    private static final int FONT_INCREMENT = 2;
 
     private int _displaySlider = SLIDERDISPLAY;
 
@@ -211,7 +211,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public boolean isEnabled() {
         return speedControllerEnable;
     }
-    
+
     /**
      * Set the GUI to match that the loco is set to forward.
      *
@@ -230,7 +230,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             internalAdjust = false;
         }
     }
-    
+
     private void paintSpeedSliderDecorations(JSlider slider, Boolean paint) {
         slider.setPaintTicks(paint);
         slider.setPaintLabels(paint);
@@ -276,7 +276,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(maxSpeed / 2, new JLabel("50%"));
         labelTable.put(maxSpeed, new JLabel("100%"));
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
-        speedSlider.setLabelTable(labelTable);        
+        speedSlider.setLabelTable(labelTable);
         paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
 
         if (speedSliderContinuous != null) {
@@ -367,7 +367,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 break;
             default:
                 jmri.util.LoggingUtil.warnOnce(log, "Unexpected displaySlider = {}", displaySlider);
-                break;    
+                break;
         }
         sliderPanel.setVisible(true);
         speedSlider.setEnabled(speedControllerEnable);
@@ -391,6 +391,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
+     * Provide direct access to speed slider for
+     * scripting.
+     * @return the speed slider
+     */
+    public JSlider getSpeedSlider() {
+        return speedSlider;
+    }
+
+    /**
      * Set real-time tracking of speed slider, or not
      *
      * @param track boolean value, true to track, false to set speed on unclick
@@ -401,13 +410,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     /**
      * Get status of real-time speed slider tracking
-     * 
+     *
      * @return true if slider is tracking.
      */
     public boolean getTrackSlider() {
         return trackSlider;
     }
-    
+
     /**
      * Set hiding speed step selector (or not)
      *
@@ -420,12 +429,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     /**
      * Get status of hiding  speed step selector
-     * 
+     *
      * @return true if speed step selector is hiden.
      */
     public boolean getHideSpeedStep() {
         return hideSpeedStep;
-    }    
+    }
 
     /**
      * Set the GUI to match that the loco speed.
@@ -453,7 +462,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
         stopButton.setSelected((speed == -1 ));
-        idleButton.setSelected((speed == 0 ));       
+        idleButton.setSelected((speed == 0 ));
         internalAdjust = false;
     }
 
@@ -496,7 +505,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             buttonPanel.add(reverseButton, constraints);
             constraints.gridx = 3;
             buttonPanel.add(forwardButton, constraints);
-            
+
             constraints.gridheight = 1;
             constraints.gridwidth = 1;
             constraints.gridx = 2;
@@ -505,7 +514,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             constraints.gridy = 1;
             buttonPanel.add(stopButton, constraints);
         } else {
-            constraints.fill = GridBagConstraints.NONE;                           
+            constraints.fill = GridBagConstraints.NONE;
             constraints.gridy = 1;
             buttonPanel.add(forwardButton, constraints);
             constraints.gridy = 2;
@@ -517,10 +526,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
     }
 
-    private void resizeButtons() {       
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
+    private void resizeButtons() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         int w = buttonPanel.getWidth();
-        int h = buttonPanel.getHeight();        
+        int h = buttonPanel.getHeight();
         if ((buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0)
                 || !(preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) ){
             w = DEFAULT_BUTTON_SIZE * 5;
@@ -557,7 +566,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             reverseButton.setRolloverIcon(scaleTo(reverseRollButtonImageIcon, (int)f));
         }
-        
+
         f = Math.min( Math.floorDiv(w,5), h/2 );
         if (idleButtonSvgIcon!=null) {
             idleButton.setIcon(scaleTo(idleButtonSvgIcon, f));
@@ -589,12 +598,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             stopButton.setRolloverIcon(scaleTo(stopRollButtonImageIcon, (int)f));
         }
-    }                    
-    
+    }
+
     private ImageIcon scaleTo(ImageIcon imic, int s ) {
         return new ImageIcon(imic.getImage().getScaledInstance(s, s, Image.SCALE_SMOOTH));
     }
-         
+
     private ImageIcon scaleTo(Document svgImage, Float f ) {
         MyTranscoder transcoder = new MyTranscoder();
         TranscodingHints hints = new TranscodingHints();
@@ -608,7 +617,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             log.debug("Exception while transposing : {}", ex.getMessage());
         }
         return new ImageIcon(transcoder.getImage());
-    }    
+    }
 
     private void layoutSliderPanel() {
         sliderPanel.setLayout(new GridBagLayout());
@@ -636,7 +645,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             button.setBorderPainted(false);
             button.setContentAreaFilled(false);
             button.setText(null);
-            button.setRolloverEnabled(true);            
+            button.setRolloverEnabled(true);
         } else {
             button.setBorder((new JButton()).getBorder());
             button.setBorderPainted(true);
@@ -644,8 +653,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             button.setText(Bundle.getMessage(message));
             button.setIcon(null);
             button.setSelectedIcon(null);
-            button.setRolloverIcon(null);            
-            button.setRolloverEnabled(false);            
+            button.setRolloverIcon(null);
+            button.setRolloverEnabled(false);
         }
     }
 
@@ -653,10 +662,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Create, initialize and place GUI components.
      */
     private void initGUI() {
-        mainPanel = new JPanel(new BorderLayout());        
+        mainPanel = new JPanel(new BorderLayout());
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        
+
         JPanel speedPanel = new JPanel();
         speedPanel.setLayout(new BorderLayout());
         speedPanel.setOpaque(false);
@@ -664,15 +673,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         topButtonPanel = new JPanel();
         topButtonPanel.setLayout(new GridBagLayout());
-        speedPanel.add(topButtonPanel, BorderLayout.NORTH);        
-        
+        speedPanel.add(topButtonPanel, BorderLayout.NORTH);
+
         speedControlPanel = new JPanel();
         speedControlPanel.setLayout(new BoxLayout(speedControlPanel, BoxLayout.X_AXIS));
         speedControlPanel.setOpaque(false);
         speedPanel.add(speedControlPanel, BorderLayout.CENTER);
         sliderPanel = new JPanel();
         sliderPanel.setOpaque(false);
-        
+
         speedSlider = new JSlider(0, intSpeedSteps);
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
@@ -701,11 +710,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                InstanceManager.getDefault(ThrottleFrameManager.class).getCurrentThrottleFrame().getRootPane().requestFocusInWindow();
             }
         });
-        
+
         for ( int i : new ArrayList<>(Arrays.asList(
                 KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9,
                 KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD1, KeyEvent.VK_NUMPAD2, KeyEvent.VK_NUMPAD3, KeyEvent.VK_NUMPAD4, KeyEvent.VK_NUMPAD5, KeyEvent.VK_NUMPAD6, KeyEvent.VK_NUMPAD7, KeyEvent.VK_NUMPAD8, KeyEvent.VK_NUMPAD9,
-                KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN, 
+                KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN,
                 KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE
         ))) {
             speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(i, 0, true), "doNothing");
@@ -761,7 +770,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             reverseRollButtonSvgIcon = null;
             reverseRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckRoll64.png"));
         }
-                
+
         layoutSliderPanel();
         speedControlPanel.add(sliderPanel);
         speedSlider.setOrientation(JSlider.VERTICAL);
@@ -889,7 +898,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
               throttle.setSpeedStepMode(s);
             }
         });
-        
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -960,7 +969,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             idleRollButtonSvgIcon = null;
             idleRollButtonImageIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopRoll64.png"));
         }
-               
+
         stopButton.addActionListener((ActionEvent e) -> {
             stop();
         });
@@ -983,7 +992,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         changeOrientation();
                     }
                 });
-        
+
         speedPanel.addComponentListener(
                 new ComponentAdapter() {
                     @Override
@@ -1001,10 +1010,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
     }
-    
+
   /**
    * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
-   * 
+   *
    * @param uri The path to the SVG file to read.
    * @return A Document instance that represents the SVG file.
    * @throws IOException The file could not be read.
@@ -1013,7 +1022,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
       String parser = XMLResourceDescriptor.getXMLParserClassName();
       SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory( parser );
       return factory.createDocument( uri );
-    }    
+    }
 
     /**
      * Perform an emergency stop.
@@ -1039,7 +1048,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * The user has resized the Frame. Possibly change from Horizontal to
      * Vertical layout.
      */
-    private void changeOrientation() {       
+    private void changeOrientation() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         if (mainPanel.getWidth() > mainPanel.getHeight()) {
             speedSlider.setOrientation(JSlider.HORIZONTAL);
@@ -1100,21 +1109,21 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 }
             }
             // fit horizontally
-            int fieldWidth = speedControlPanel.getSize().width; 
+            int fieldWidth = speedControlPanel.getSize().width;
             int stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
             while ((stringWidth > fieldWidth) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) { // component has shrunk horizontally
                 fontSize -= FONT_INCREMENT;
                 Font f = new Font("", Font.PLAIN, fontSize);
                 speedSpinner.setFont(f);
                 stringWidth = speedSpinner.getFontMetrics(speedSpinner.getFont()).stringWidth(LONGEST_SS_STRING) + 24 ;
-            }            
+            }
             speedSpinner.setMinimumSize(new Dimension(stringWidth,stringHeight)); //not sure why this helps here, required
         }
     }
 
     /**
      * Intended for throttle scripting
-     * 
+     *
      * @param fwd direction: true for forward; false for reverse.
      */
     public void setForwardDirection(boolean fwd) {
@@ -1165,7 +1174,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        
+
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
              speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
              speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSliderContinuous));
@@ -1173,22 +1182,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             speedSlider.setUI((new JSlider()).getUI());
             speedSliderContinuous.setUI((new JSlider()).getUI());
-            speedSpinner.setFont(new JSpinner().getFont());            
+            speedSpinner.setFont(new JSpinner().getFont());
         }
         paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
-        hideSpeedStep = ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
-        speedStepBox.setVisible(! hideSpeedStep);
-        
+
         setupButton(stopButton, preferences, "ButtonEStop");
         setupButton(idleButton, preferences, "ButtonIdle");
         setupButton(forwardButton, preferences, "ButtonForward");
-        setupButton(reverseButton, preferences, "ButtonReverse");                
+        setupButton(reverseButton, preferences, "ButtonReverse");
         buttonPanel.removeAll();
         layoutButtonPanel();
         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             changeOrientation(); // force buttons resizing
-        }        
+        }
     }
 
     /**
@@ -1205,7 +1212,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         public void mouseClicked(MouseEvent e) {
             checkTrigger(e);
         }
-        
+
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
@@ -1225,7 +1232,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         public void mouseReleased(MouseEvent e) {
             checkTrigger( e);
         }
-        
+
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
                 initPopupMenu();
@@ -1233,19 +1240,19 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
     }
-    
+
     private void initPopupMenu() {
-        if (popupMenu == null) {               
+        if (popupMenu == null) {
             JMenuItem propertiesMenuItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
             propertiesMenuItem.addActionListener((ActionEvent e) -> {
                 if (propertyEditor == null) {
-                    propertyEditor = new ControlPanelPropertyEditor(this);                    
+                    propertyEditor = new ControlPanelPropertyEditor(this);
                 }
                 propertyEditor.setLocation(MouseInfo.getPointerInfo().getLocation());
                 propertyEditor.resetProperties();
                 propertyEditor.setVisible(true);
             });
-            popupMenu = new JPopupMenu();        
+            popupMenu = new JPopupMenu();
             popupMenu.add(propertiesMenuItem);
         }
     }
@@ -1283,7 +1290,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         internalAdjust = true;
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
@@ -1322,11 +1328,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             try {
                 setHideSpeedStep ( hssAtt.getBooleanValue() );
             } catch (org.jdom2.DataConversionException ex) {
-                setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+                setHideSpeedStep ( false );
             }
         } else {
-            setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
-        }        
+            setHideSpeedStep ( false );
+        }
         if ((prevShuntingFn == null) && (e.getAttribute("switchSliderOnFunction") != null)) {
             setSwitchSliderFunction(e.getAttribute("switchSliderOnFunction").getValue());
         }
@@ -1369,11 +1375,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             setSwitchSliderFunction(switchSliderFunction); // reset slider
         }
-        
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());
-        }        
+        }
     }
 
     @Override
@@ -1386,7 +1391,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
-        log.debug("control panel received consist throttle");        
+        log.debug("control panel received consist throttle");
         notifyAddressThrottleFound(throttle);
     }
 
@@ -1397,8 +1402,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
             try {
-                // this uses reflection because the user is allowed to name a 
-                // throttle function that triggers this action. 
+                // this uses reflection because the user is allowed to name a
+                // throttle function that triggers this action.
                 java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
 
                 Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
@@ -1447,7 +1452,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             //not required here, do nothing
         }
     }
-   
+
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

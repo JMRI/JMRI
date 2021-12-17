@@ -307,7 +307,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == TurnoutState.Toggle) {
-                if (turnout.getCommandedState() == Turnout.CLOSED) {
+                if (turnout.getKnownState() == Turnout.CLOSED) {
                     turnout.setCommandedState(Turnout.THROWN);
                 } else {
                     turnout.setCommandedState(Turnout.CLOSED);
@@ -419,7 +419,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public enum TurnoutState {
         Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
         Thrown(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        Toggle(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus"));
+        Toggle(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus")),
+        Unknown(Turnout.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
+        Inconsistent(Turnout.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
 
         private final int _id;
         private final String _text;
@@ -431,6 +433,12 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
         static public TurnoutState get(int id) {
             switch (id) {
+                case Turnout.UNKNOWN:
+                    return Unknown;
+
+                case Turnout.INCONSISTENT:
+                    return Inconsistent;
+
                 case Turnout.CLOSED:
                     return Closed;
 

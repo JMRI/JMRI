@@ -268,7 +268,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - support for direct USB device usage
 - from https://github.com/usb4java/usb4java/releases/tag/usb4java-1.3.0
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
-
+- lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
 ## For unit tests & development work only:
 
@@ -285,9 +285,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
-##### jemmy-22-00c9f753cd0a.jar
-- Built from rev 22 repo after changeset 22:00c9f753cd0a; see http://hg.openjdk.java.net/code-tools/jemmy/v2/rev/00c9f753cd0a
-- See also http://hg.openjdk.java.net/code-tools/jemmy/v2/
+##### jemmy-2.3.1.1-RELEASE125.jar
+- Sept 13, 2021
+- From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
 ##### junit-4.12.jar
 - version 4.12

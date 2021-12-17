@@ -53,8 +53,8 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Track track = loc.addTrack("NI Interchange", Track.INTERCHANGE);
         
         TrackDestinationEditFrame tdef = new TrackDestinationEditFrame();
-        tdef.initComponents(track);       
-        Assert.assertNotNull("exists",tdef);
+        tdef.initComponents(track);
+        JemmyUtil.waitFor(tdef);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tdef.checkDestinationsButton);       
         // the save should have opened a dialog window

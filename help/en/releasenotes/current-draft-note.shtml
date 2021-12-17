@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>new throttles now default to Forward instead of Reverse</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -336,7 +336,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>added new decoder definitions for Firmware v40.x</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -388,7 +388,16 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>A single Logix can now be exported to LogixNG.
+		  Open Tools -> Tables -> Logix and select <i>Export
+		  to LogixNG</i> for the Logix you want to export.</li>
+        </ul>
+
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>A single Logix can be imported to LogixNG. Se
+		  the section <i>Logix</i> for more information.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -400,10 +409,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improved Show Schedules by Car Type and Load</li>
-            <li>Enhancement, added text color options to switch list and track comments.</li>
-            <li>Improved displayed comments for Yardmaster.</li>
-            <li>Improved displayed comments for Yardmaster by Track tool.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -513,8 +519,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Several bug fix on function panel (related to xml store/load)</li>
-            <li>Moved the keyboard shortcut implementation from KeyListeners to Input and Action Maps, should work better</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -568,9 +573,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Keith Usher provided a new
-                <a href="http://jmri.org/resources/icons/mediumschematics/searchlights/">mediumschematics serachlights icon set</a>
-                at resources/icons/mediumschematics/searchlights/
-            </li>
+            <li></li>
         </ul>
 

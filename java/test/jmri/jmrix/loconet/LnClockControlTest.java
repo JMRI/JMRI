@@ -21,17 +21,17 @@ public class LnClockControlTest {
 
         LnClockControl t = new LnClockControl(c);
         Assert.assertNotNull("exists",t);
-        
+
         c.dispose();
     }
-    
+
     @Test
     public void testCtorTwoArg() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
- 
+
         LnClockControl t = new LnClockControl(slotmanager, lnis, null);
- 
+
         Assert.assertNotNull("exists",t);
         slotmanager.dispose();
     }
@@ -51,19 +51,19 @@ public class LnClockControlTest {
         lnis.outbound.removeAllElements();
 
         LnClockControl t = new LnClockControl(c);
-        
+
         // configure, hence write
         Date testDate = new Date(2018, 12, 1);  // deprecated, but OK for test
         t.initializeHardwareClock(1.0, testDate, false);
-        
+
         // expect two messages
         Assert.assertEquals("sent", 2, lnis.outbound.size());
         Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 07 68 01 00 00 00 00", lnis.outbound.get(0).toString());
-        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());     
-        
+        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());
+
         c.dispose();
     }
-    
+
     @Test
     public void testPowerBit() throws jmri.JmriException {
         // a brute-force approach to testing that the power bit follows
@@ -78,18 +78,18 @@ public class LnClockControlTest {
         c.getPowerManager().setPower(jmri.PowerManager.OFF);
         c.getPowerManager().message(lnis.outbound.get(0));
         lnis.outbound.removeAllElements();
-                
+
         LnClockControl t = new LnClockControl(c);
-        
+
         // configure, hence write
         Date testDate = new Date(2018, 12, 1);  // deprecated, but OK for test
         t.initializeHardwareClock(1.0, testDate, false);
-        
+
         // expect two messages
         Assert.assertEquals("sent", 2, lnis.outbound.size());
         Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 06 68 01 00 00 00 00", lnis.outbound.get(0).toString());
-        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());     
-        
+        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());
+
         c.dispose();
     }
 
@@ -100,6 +100,8 @@ public class LnClockControlTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
         JUnitUtil.tearDown();
     }
 

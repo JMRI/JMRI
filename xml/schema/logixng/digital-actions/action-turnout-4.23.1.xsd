@@ -55,6 +55,8 @@
                     <xs:enumeration value="Closed"/>
                     <xs:enumeration value="Thrown"/>
                     <xs:enumeration value="Toggle"/>
+                    <xs:enumeration value="Unknown"/>
+                    <xs:enumeration value="Inconsistent"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

@@ -23,6 +23,7 @@ public class SharingThrottleTest {
     private ThrottleFrame panel = null;
     private ThrottleOperator to = null;
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testSetAndReleaseWithShare() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -38,13 +39,14 @@ public class SharingThrottleTest {
 
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
         to.getQueueTool().waitEmpty(100);  //pause
-        
+
         Assert.assertEquals("address set", new DccLocoAddress(42, false),
                 to.getAddressValue());
 
         to.pushReleaseButton();
     }
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testSetAndRefuseShare() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -64,6 +66,7 @@ public class SharingThrottleTest {
         Assert.assertTrue("set button enabled", to.setButtonEnabled());
     }
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testRefuseOneShareOne() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -85,7 +88,7 @@ public class SharingThrottleTest {
 
         /* Removing bellow test, focus issue on address text field for the bellow typeAddressValue
          * testing for addressFieldEnabled above is already good enough
-        
+
         to.typeAddressValue(45);
         to.getQueueTool().waitEmpty(100);  //pause
 

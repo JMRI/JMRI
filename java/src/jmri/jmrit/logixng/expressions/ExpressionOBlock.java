@@ -264,8 +264,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     public boolean evaluate() throws JmriException {
         OBlock oblock;
 
-//        System.out.format("ExpressionOBlock.execute: %s%n", getLongDescription());
-
         switch (_addressing) {
             case Direct:
                 oblock = _oblockHandle != null ? _oblockHandle.getBean() : null;
@@ -298,8 +296,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-//        System.out.format("ExpressionOBlock.execute: oblock: %s%n", oblock);
-
         if (oblock == null) {
 //            log.warn("oblock is null");
             return false;
@@ -313,10 +309,11 @@ public class ExpressionOBlock extends AbstractDigitalExpression
             checkOBlockState = OBlock.OBlockStatus.valueOf(getNewState());
         }
 
+        int result = checkOBlockState.getStatus() & oblock.getState();
         if (_is_IsNot == Is_IsNot_Enum.Is) {
-            return oblock.getState() == checkOBlockState.getStatus();
+            return result != 0;
         } else {
-            return oblock.getState() != checkOBlockState.getStatus();
+            return result == 0;
         }
     }
 

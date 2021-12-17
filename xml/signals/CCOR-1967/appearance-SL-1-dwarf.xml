@@ -73,6 +73,12 @@
         <authorinitials>MKZ</authorinitials>
         <revremark>fix imagelink directory</revremark>
     </revision>
+        <revision>
+        <revnumber>2.1</revnumber>
+        <date>2021-11-10</date>
+        <authorinitials>MKZ</authorinitials>
+        <revremark>fix imagelink for Held aspect</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>CCOR-1967</aspecttable>
@@ -134,7 +140,7 @@
     </permissive>
     <held>
       <aspect>Stop</aspect>
-      <imagelink>preference:resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240A-held.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CCOR-1967/SL-1-dwarf/rule-240A-held.gif</imagelink>
     </held>
   </specificappearances>
 

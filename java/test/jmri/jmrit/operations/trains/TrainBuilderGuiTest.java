@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
-
-import org.junit.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -19,8 +16,13 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
+
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -28,10 +30,6 @@ import jmri.util.swing.JemmyUtil;
  * @author Dan Boudreau Copyright (C) 2009
  */
 public class TrainBuilderGuiTest extends OperationsTestCase {
-
-    // allow 2 retries of intermittent tests
-    @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(2);
 
     private TrainManager tmanager;
     private LocationManager lmanager;
@@ -41,10 +39,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt for which track in staging a train should depart on.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testStagingPromptFrom() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         Setup.setStagingPromptFromEnabled(true);
 
@@ -63,13 +61,13 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), Bundle.getMessage("ButtonOK"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
 
@@ -87,13 +85,13 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build2.setName("Build Train 2"); // NOI18N
         build2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), "Cancel");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
 
@@ -105,10 +103,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test prompt selecting which track to use in staging.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testStagingPromptTo() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         Setup.setStagingPromptToEnabled(true);
         
@@ -124,13 +122,13 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), Bundle.getMessage("ButtonOK"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
 
@@ -148,13 +146,13 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build2.setName("Build Train 2"); // NOI18N
         build2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), "Cancel");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
 
@@ -163,10 +161,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessage() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         // enable build failure messages
         tmanager.setBuildMessagesEnabled(true);
@@ -185,14 +183,14 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         
@@ -202,10 +200,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test warning message.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testWarningMessage() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
@@ -225,7 +223,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -237,10 +235,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     /**
      * Test failure message when cars in staging are stuck there.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessageStagingA() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
@@ -284,7 +282,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -300,14 +298,14 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             e.printStackTrace();
         }
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         
@@ -330,10 +328,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when cars in staging are stuck there.
      * Release cars and engines by train reset.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessageStagingB() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
@@ -371,41 +369,38 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         RouteLocation rlSouthendStaging = route.getRouteLocationBySequenceNumber(3);
         rlSouthendStaging.setDropAllowed(false);       
 
+        Thread t1 = new Thread(() -> {
+            // dialog "remove cars from staging" or continue by pressing "OK", press OK.
+            JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+        });
+        t1.setName("Build Train 2 Dialog 1 Thread");
+        t1.start();
+        
+        Thread t2 = new Thread(() -> {
+            // prompt asks if cars are to be released from train by reset, press Yes.
+            JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
+        });
+        t2.setName("Build Train 2 Dialog 2 Thread");
+        t2.start();
+        
         // should cause failure dialog to appear
-        Thread build = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new TrainBuilder().build(train2);
-            }
+        Thread build = new Thread(() -> {
+            new TrainBuilder().build(train2);
         });
         build.setName("Build Train 2"); // NOI18N
         build.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        // dialog "remove cars from staging" or continue by pressing "OK"
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
-        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Build Train 2 Dialog 1 Thread did not close"); // dialog "remove cars from staging" or continue by pressing "OK"
         
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.WAITING);
-        },"wait for prompt");
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        }, "Build Train 2 Dialog 2 Thread did not close"); // asks if cars are to be released from train by reset
         
-        // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return build.getState().equals(Thread.State.TERMINATED);
+        JUnitUtil.waitFor(() -> {
+            return !build.isAlive();
         }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
@@ -427,10 +422,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when cars in staging are stuck there.
      * Remove stuck cars from staging.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessageStagingC() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
 
@@ -471,7 +466,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -487,14 +482,14 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             e.printStackTrace();
         }
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         
@@ -516,10 +511,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when build fails, release engines
      * by reset. No cars in staging for this test.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessageStagingD() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
@@ -568,7 +563,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -584,14 +579,14 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             e.printStackTrace();
         }
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         
@@ -608,10 +603,10 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
      * Test failure message when build fails, Don't release engines
      * by reset. No cars in staging for this test.
      */
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testBuildFailedMessageStagingE() {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
@@ -660,7 +655,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         build.setName("Build Train 2"); // NOI18N
         build.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -676,14 +671,14 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             e.printStackTrace();
         }
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
         
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
         }, "wait for build to complete");
         
@@ -698,7 +693,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
 

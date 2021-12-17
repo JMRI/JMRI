@@ -446,11 +446,33 @@ public class ActionMemory extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String memoryName;
-        if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getBean().getDisplayName();
-        } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        String namedBean;
+
+        switch (_addressing) {
+            case Direct:
+                String memoryName;
+                if (_memoryHandle != null) {
+                    memoryName = _memoryHandle.getBean().getDisplayName();
+                } else {
+                    memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", memoryName);
+                break;
+
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
+
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
         String copyToMemoryName;
@@ -462,17 +484,17 @@ public class ActionMemory extends AbstractDigitalAction
 
         switch (_memoryOperation) {
             case SetToNull:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Null", memoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Null", namedBean);
             case SetToString:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Value", memoryName, _otherConstantValue);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Value", namedBean, _otherConstantValue);
             case CopyTableCellToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", memoryName, convertTableReference(_otherTableCell, false));
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyTableCellToMemory", namedBean, convertTableReference(_otherTableCell, false));
             case CopyVariableToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", memoryName, _otherLocalVariable);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", namedBean, _otherLocalVariable);
             case CopyMemoryToMemory:
-                return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", memoryName, copyToMemoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", namedBean, copyToMemoryName);
             case CalculateFormula:
-                return Bundle.getMessage(locale, "ActionMemory_Long_Formula", memoryName, _otherFormula);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Formula", namedBean, _otherFormula);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
         }
@@ -500,7 +522,7 @@ public class ActionMemory extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory && (_otherMemoryHandle != null)) {
-                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+                _otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
             }
             _listenersAreRegistered = false;
         }

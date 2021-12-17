@@ -16,7 +16,7 @@ public class DieselSoundTest {
     public void testCTor() {
         DieselSound t = new DieselSound("test");
         Assert.assertNotNull("exists",t);
-    
+
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
@@ -28,6 +28,8 @@ public class DieselSoundTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

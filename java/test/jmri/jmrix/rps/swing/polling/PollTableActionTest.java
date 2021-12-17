@@ -42,6 +42,7 @@ public class PollTableActionTest {
     @AfterEach
     public void tearDown() {
         memo = null;
+        jmri.util.JUnitUtil.clearShutDownManager();
         jmri.util.JUnitUtil.tearDown();
     }
 }

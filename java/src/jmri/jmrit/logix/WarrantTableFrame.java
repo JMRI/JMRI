@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -49,14 +51,15 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
-    static final String ramp = Bundle.getMessage("Ramp");
-    static final String halt = Bundle.getMessage("Halt");
+    static final String ramp = Bundle.getMessage("Halt");
+    static final String halt = Bundle.getMessage("Stop");
     static final String stop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
+    static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
-    static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort,
-                                        (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
+    static final String retry = Bundle.getMessage("MoveToNext");
+    static final String[] controls = {" ", ramp, resume, halt, speedup, retry, stop, abort,
+                            (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
 
@@ -84,7 +87,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             }
             return newInstance;
         });
-        instance.setVisible(true);
+        if (jmri.util.ThreadingUtil.isGUIThread()) {
+            instance.setVisible(true);
+        }
         return instance;
     }
 
@@ -155,8 +160,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
-
-
+        table.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int lastIndex = table.getRowCount()-1;
+                table.changeSelection(lastIndex, 0,false,false);
+            }
+        });
         _tablePane = new JScrollPane(table);
 
         JLabel title = new JLabel(Bundle.getMessage("ShowWarrants"));
@@ -167,7 +177,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setBackground(Color.white);
         _status.setFont(_status.getFont().deriveFont(Font.BOLD));
         _status.setEditable(false);
-        setStatusText(BLANK.substring(0, 90), null, false);
+        _status.setText(BLANK.substring(0, 90));
 
         JButton nxButton = new JButton(Bundle.getMessage("CreateNXWarrant"));
         nxButton.addActionListener(new ActionListener() {
@@ -244,11 +254,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
 
         pack();
-    }
-
-    protected void scrollTable() {
-        JScrollBar bar = _tablePane.getVerticalScrollBar();
-        bar.setValue(bar.getMaximum());
     }
 
     private void haltAllAction() {
@@ -415,7 +420,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
-        w.deAllocate();
         String msg = _model.checkAddressInUse(w);
         if (msg == null) {
             msg = w.checkforTrackers();
@@ -425,6 +429,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             msg = w.setRoute(false, null);
             if (msg == null) {
                 msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
+            }
+            if (msg != null) {
+                w.deAllocate();
             }
         }
         if (msg != null) {
@@ -479,8 +486,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setForeground(c);
         _status.setText(msg);
         if (save && msg != null && msg.length() > 0) {
-            WarrantTableAction.getDefault().writetoLog(msg);
+            if (WarrantPreferences.getDefault().getTrace()) {
+                log.info(msg);
+            }
             _statusHistory.add(msg);
+            WarrantTableAction.getDefault().writetoLog(msg);
             while (_statusHistory.size() > _maxHistorySize) {
                 _statusHistory.remove(0);
             }

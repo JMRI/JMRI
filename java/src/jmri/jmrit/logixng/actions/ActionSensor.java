@@ -307,7 +307,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == SensorState.Toggle) {
-                if (sensor.getCommandedState() == Sensor.INACTIVE) {
+                if (sensor.getKnownState() == Sensor.INACTIVE) {
                     sensor.setCommandedState(Sensor.ACTIVE);
                 } else {
                     sensor.setCommandedState(Sensor.INACTIVE);
@@ -419,7 +419,9 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     public enum SensorState {
         Inactive(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
         Active(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
-        Toggle(TOGGLE_ID, Bundle.getMessage("SensorToggleStatus"));
+        Toggle(TOGGLE_ID, Bundle.getMessage("SensorToggleStatus")),
+        Unknown(Sensor.UNKNOWN, Bundle.getMessage("BeanStateUnknown")),
+        Inconsistent(Sensor.INCONSISTENT, Bundle.getMessage("BeanStateInconsistent"));
 
         private final int _id;
         private final String _text;
@@ -431,6 +433,12 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 
         static public SensorState get(int id) {
             switch (id) {
+                case Sensor.UNKNOWN:
+                    return Unknown;
+
+                case Sensor.INCONSISTENT:
+                    return Inconsistent;
+
                 case Sensor.INACTIVE:
                     return Inactive;
 

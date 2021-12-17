@@ -22,6 +22,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.WindowOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -121,7 +122,8 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train 111 occupies first block ");
 
-        pressButton(jfo, Bundle.getMessage("ARun"));    // start play back
+//        (new JRadioButtonOperator(jfo,"ARun")).push();    // start play back
+        frame.runTrain();
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         assertThat(sensor).withFailMessage("Sensor not null").isNotNull();
@@ -227,6 +229,7 @@ public class LearnWarrantTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("Engineer(");
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             List<ShutDownTask> list = new ArrayList<>();
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);

@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>Norway2001</name>
+  <date>2021</date>
+  <reference>Main 3-light, 2-lights and distance 2-light signals found in Wiki, Norwegian railway signaling.
+https://jernbane.net/norge/Trykk401/401_Vb.html</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kenneth</firstname><surname>Tjøstheim</surname></personname>
+        <email>kennethtjost@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2021-11-08</date>
+        <authorinitials>KT</authorinitials>
+        <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+
+
+
+  <aspects>
+
+
+
+    <aspect>
+      <name>Off</name>
+      <indication>Proceed at Caution</indication>
+      <description>Dark signal.</description>
+      <comment>3 and 2 lamp signal</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 248</rule>
+      <indication>Stop before the mast</indication>
+      <description>Red, Signal 20b, 3 and 2 lamp</description>
+      <comment>Station enter, exit</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+    <aspect>
+      <name>BlockStop</name>
+      <rule>Rule 247</rule>
+      <indication>Stop 20 meter before the mast</indication>
+      <description>Flashing red, Signal 20A, 3 lamp</description>
+      <comment>Block signal and Station area enter</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging</name>
+      <rule>Rule 247</rule>
+      <indication>Proceed on Diverging route</indication>
+      <description>One green, Signal 21, 3 and 2 lamp</description>
+      <comment>Station area enter, station enter, exit and block signal</comment>
+      <speed>Diverging</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 247</rule>
+      <indication>Proceed, Signal 22, no diverging</indication>
+      <description>2 x green, 3 lamp</description>
+      <comment>Station area enter, station enter, exit and block signal</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>22</dccAspect>
+    </aspect>
+
+
+
+
+
+    <aspect>
+      <name>Clear Expect Stop</name>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <description>2 Green over flashing orange, 3 lamp over 2 lamp signal 23</description>
+      <comment>Block signal and Station area enter</comment>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear Expect Clear</name>
+      <indication>Proceed, expect clear at next signal</indication>
+      <description>2xGreen over flashing green, 3 lamp over 2 lamp Signal 24</description>
+      <comment>3 lamp over 2 lamp. signal</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear Expect Diverging</name>
+      <indication>Proceed, expect diverging at next signal</indication>
+      <description>2xGreen over flashing orenge and green, 3 lamp over 2 lamp Signal 24</description>
+      <comment>3 lamp over 2 lamp. signal</comment>
+      <speed>Medium</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+
+
+    <aspect>
+      <name>Diverging Expect Stop</name>
+      <indication>Proceed over diverging, expect stop at next signal</indication>
+      <description>1 Green over flashing orange, 3 lamp over 2 lamp signal 23</description>
+      <comment>3 lamp over 2 lamp. signal</comment>
+      <speed>Diverging</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Expect Clear</name>
+      <indication>Proceed over diverging, expect clear at next signal</indication>
+      <description>1 Green over flashing green, 3 lamp over 2 lamp signal 25</description>
+      <comment>3 lamp over 2 lamp. signal</comment>
+      <speed>Diverging</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Expect Diverging</name>
+      <indication>Proceed over diverging, preparing to diverge at next signal</indication>
+      <description>1 Green over flashing orange and green, 3 lamp over 2 lamp signal 24</description>
+      <comment>3 lamp over 2 lamp. signal</comment>
+      <speed>Diverging</speed>
+      <speed2>Diverging</speed2>
+      <route>Diverging</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+
+
+
+
+    <aspect>
+      <name>Expect Stop</name>
+      <indication>Proceed: be prepared to find the next signal displaying Stop aspect</indication>
+      <description>Orange flashing, Signal 23</description>
+      <comment>Distant Signal</comment>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Expect Diverging</name>
+      <indication>Proceed: be prepared to find the next signal displaying Proceed Diverging aspect</indication>
+      <description>Green and orange flashing, Signal 24</description>
+      <comment>Distant Signal</comment>
+      <speed>Medium</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>24</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Expect Clear</name>
+      <indication>Proceed: be prepared to find the next signal displaying Clear aspect</indication>
+      <description>Green flashing, Signal 25</description>
+      <comment>Distant Signal</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+
+
+    
+ 
+
+
+  </aspects>
+
+  <imagetypes>
+    <imagetype type="large"/>
+    <imagetype type="aspects"/>
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-Main3-2.xml"/>
+    <appearancefile href="appearance-Main2-2.xml"/>
+    <appearancefile href="appearance-Main3.xml"/>
+    <appearancefile href="appearance-Main2.xml"/>
+    <appearancefile href="appearance-Distance.xml"/>
+  </appearancefiles>
+</aspecttable>
+  

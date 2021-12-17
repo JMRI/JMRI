@@ -10,9 +10,12 @@ import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -413,8 +416,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
-            _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
-            repaint();
+            ThreadingUtil.runOnLayoutEventually(() -> {
+                _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
+                repaint();
+            });
         }
         if ((block.getState() & OBlock.OUT_OF_SERVICE) != 0) {
             setControlling(false);

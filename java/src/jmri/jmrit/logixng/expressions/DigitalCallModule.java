@@ -41,7 +41,7 @@ public class DigitalCallModule extends AbstractDigitalExpression implements Veto
         for (ParameterData data : _parameterData) {
             copy.addParameter(
                     data.getName(),
-                    data.getInitalValueType(),
+                    data.getInitialValueType(),
                     data.getInitialValueData(),
                     data.getReturnValueType(),
                     data.getReturnValueData());

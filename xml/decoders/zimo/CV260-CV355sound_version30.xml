@@ -1069,60 +1069,79 @@
       </enumChoice>
       <enumChoice choice="F1 on=Fade" value="101">
         <choice>F1 Off</choice>
+        <choice xml:lang="cs">F1 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F2 on=Fade">
         <choice>F2 Off</choice>
+        <choice xml:lang="cs">F2 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F3 on=Fade">
         <choice>F3 Off</choice>
+        <choice xml:lang="cs">F3 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F4 on=Fade">
         <choice>F4 Off</choice>
+        <choice xml:lang="cs">F4 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F5 on=Fade">
         <choice>F5 Off</choice>
+        <choice xml:lang="cs">F5 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F6 on=Fade">
         <choice>F6 Off</choice>
+        <choice xml:lang="cs">F6 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F7 on=Fade">
         <choice>F7 Off</choice>
+        <choice xml:lang="cs">F7 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F8 on=Fade">
         <choice>F8 Off</choice>
+        <choice xml:lang="cs">F8 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F9 on=Fade">
         <choice>F9 Off</choice>
+        <choice xml:lang="cs">F9 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F10 on=Fade">
         <choice>F10 Off</choice>
+        <choice xml:lang="cs">F10 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F11 on=Fade">
         <choice>F11 Off</choice>
+        <choice xml:lang="cs">F11 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F12 on=Fade">
         <choice>F12 Off</choice>
+        <choice xml:lang="cs">F12 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F13 on=Fade">
         <choice>F13 Off</choice>
+        <choice xml:lang="cs">F13 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F14 on=Fade">
         <choice>F14 Off</choice>
+        <choice xml:lang="cs">F14 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F15 on=Fade">
         <choice>F15 Off</choice>
+        <choice xml:lang="cs">F15 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F16 on=Fade">
         <choice>F16 Off</choice>
+        <choice xml:lang="cs">F16 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F17 on=Fade">
         <choice>F17 Off</choice>
+        <choice xml:lang="cs">F17 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F18 on=Fade">
         <choice>F18 Off</choice>
+        <choice xml:lang="cs">F18 Vypnout</choice>
       </enumChoice>
       <enumChoice choice="F19 on=Fade">
         <choice>F19 Off</choice>
+        <choice xml:lang="cs">F19 Vypnout</choice>
       </enumChoice>
     </enumVal>
     <label>Mute key</label>
@@ -1131,6 +1150,7 @@
     <label xml:lang="cs">Klávesa ztlumit</label>
     <tooltip>Defines key to fade in and out driving sounds</tooltip>
     <tooltip xml:lang="de">Alle Geräusche Aus-/Einblenden</tooltip>
+    <tooltip xml:lang="cs">Definuje klávesu pro zesilování a zeslabování jízdních zvuků</tooltip>
   </variable>
   <variable item="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
@@ -1572,9 +1592,10 @@
     </enumVal>
     <label>Solo change momentum</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
+    <label xml:lang="cs">Strojová jízda hybnost</label>
     <tooltip>CV348 bit 1</tooltip>
     <tooltip xml:lang="de">reduziert CV #3, CV #4 (bit 1)</tooltip>
-    <label xml:lang="cs">Strojová jízda hybnost</label>
+    <tooltip xml:lang="cs">snižuje CV3, CV4 (bit 1)</tooltip>
   </variable>
   <variable item="Solo change idle only" CV="348" default="0" mask="XXXXXVXX">
     <enumVal>
@@ -1613,15 +1634,19 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Second exhaust Fan and -steam</label>
     <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
+    <label xml:lang="cs">Druhý výfukový ventilátor a -pára</label>
     <tooltip>CV348 bit 3</tooltip>
     <tooltip xml:lang="de">Mit CV348 Bit3=1 wird der 2. Rauch-Venti und die Heizung auf dem jeweils höheren Ausgang deaktiviert.</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit3=1 deaktivuje druhý kouřový ventilátor a topení na vyšší výkon.</tooltip>
   </variable>
   <variable item="Brake squel suppressed" CV="348" default="0" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake squel can be suppressed with switch-over key</label>
     <label xml:lang="de">Bremsenquietschen mit Lokfahrtaste unterdrücken</label>
+    <label xml:lang="cs">Skřípění brzd lze potlačit přepínacím tlačítkem</label>
     <tooltip>CV348 bit 4</tooltip>
     <tooltip xml:lang="de">Wenn CV348 Bit4=1 und Lokfahrtaste eingeschalten, Bremsenquietschen unterdrücken</tooltip>
+    <tooltip xml:lang="cs">Pokud je CV348 Bit4=1 je zapnuté tlačítko pohonu lokomotivy, potlačí skřípění brzd.</tooltip>
   </variable>
 </variables>
 

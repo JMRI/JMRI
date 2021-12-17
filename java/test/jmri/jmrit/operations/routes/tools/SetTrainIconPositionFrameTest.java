@@ -55,7 +55,8 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
 
         // error dialog should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
+        
         // confirm train icon defaults for location and route
         Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
         Assert.assertNotNull(loc);

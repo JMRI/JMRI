@@ -404,20 +404,7 @@ public class PreviewDialog extends JDialog {
     static int CHUNK = 500000;
 
     private long availableMemory() {
-        long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<>();
-        try {
-            while (true) {
-                memoryTest.add(new byte[CHUNK]);
-                total += CHUNK;
-            }
-        } catch (OutOfMemoryError me) {
-            for (int i = memoryTest.size() - 1; i >= 0; i--) { // safe direction to remove
-                memoryTest.remove(i);
-            }
-            log.debug("availableMemory= {}", total);
-        }
-        return total;
+        return Runtime.getRuntime().freeMemory()/2;
     }
 
     @Override

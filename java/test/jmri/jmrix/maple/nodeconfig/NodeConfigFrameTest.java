@@ -27,7 +27,7 @@ public class NodeConfigFrameTest {
 
     @Test
     public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame(memo);
         // for now, just makes sure there isn't an exception.
         t.initComponents();
@@ -36,7 +36,7 @@ public class NodeConfigFrameTest {
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame(memo);
         t.initComponents();
         Assert.assertEquals("title", "Configure Maple Nodes", t.getTitle());
@@ -55,6 +55,7 @@ public class NodeConfigFrameTest {
     public void tearDown() {
 
         memo.dispose();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

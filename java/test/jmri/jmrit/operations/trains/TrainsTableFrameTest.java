@@ -19,11 +19,11 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -32,8 +32,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(10)
 public class TrainsTableFrameTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(3); // first, plus three retries
 
     @Test
     public void testCTor() {
@@ -45,59 +43,80 @@ public class TrainsTableFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testTrainsTableFrame() {
+    public void testCheckboxes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.loadTrains();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
-        TrainsTableFrame f = new TrainsTableFrame();
-        f.setLocation(10, 20);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
-
-        Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, f.getSortBy());
+        Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, ttf.getSortBy());
         Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
         Assert.assertFalse("Build Report", tmanager.isBuildReportEnabled());
         Assert.assertFalse("Print Review", tmanager.isPrintPreviewEnabled());
 
-        JemmyUtil.enterClickAndLeave(f.showTime);
-        JemmyUtil.enterClickAndLeave(f.showAllBox);
-        JemmyUtil.enterClickAndLeave(f.buildMsgBox);
-        JemmyUtil.enterClickAndLeave(f.buildReportBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(ttf.showTime);
+        JemmyUtil.enterClickAndLeave(ttf.showAllBox);
+        JemmyUtil.enterClickAndLeave(ttf.buildMsgBox);
+        JemmyUtil.enterClickAndLeave(ttf.buildReportBox);
+        JemmyUtil.enterClickAndLeave(ttf.saveButton);
 
         Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
         Assert.assertFalse("Print Review 2", tmanager.isPrintPreviewEnabled());
 
-        JemmyUtil.enterClickAndLeave(f.showId);
-        JemmyUtil.enterClickAndLeave(f.buildMsgBox);
-        JemmyUtil.enterClickAndLeave(f.printPreviewBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(ttf.showId);
+        JemmyUtil.enterClickAndLeave(ttf.buildMsgBox);
+        JemmyUtil.enterClickAndLeave(ttf.printPreviewBox);
+        JemmyUtil.enterClickAndLeave(ttf.saveButton);
 
         Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
         Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
-        // create the TrainEditFrame
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testSwitchListFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // confirm panel creation
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
-        Assert.assertNotNull("train edit frame", tef);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // create the TrainSwichListEditFrame
-        JemmyUtil.enterClickAndLeave(f.switchListsButton);
+        JemmyUtil.enterClickAndLeave(ttf.switchListsButton);
 
         // confirm panel creation
         JmriJFrame tsle = JmriJFrame.getFrame(Bundle.getMessage("TitleSwitchLists"));
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
-        JUnitUtil.dispose(tef);
         JUnitUtil.dispose(tsle);
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testAddTrain() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
+
+        // create the TrainEditFrame
+        JemmyUtil.enterClickAndLeave(ttf.addButton);
+
+        // confirm panel creation
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
+        Assert.assertNotNull("train edit frame", tef);
+
+        // kill panels
+        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -109,11 +128,12 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
-        TrainsTableFrame tef = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
-        Assert.assertNotNull(tef);
+        TrainsTableFrame ttf = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
+        Assert.assertNotNull(ttf);
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // Find new table window
-        JFrameOperator jfo = new JFrameOperator(tef);
+        JFrameOperator jfo = new JFrameOperator(ttf);
 
         // Open train edit window
         JTableOperator tbl = new JTableOperator(jfo);
@@ -125,7 +145,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assert.assertNotNull(et);
 
         // kill panels
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
         // should have disposed the edit train window
         et = JmriJFrame.getFrame("Edit Train");
         Assert.assertNull(et);
@@ -148,22 +168,23 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
-        TrainsTableFrame tef = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
-        Assert.assertNotNull(tef);
+        TrainsTableFrame ttf = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
+        Assert.assertNotNull(ttf);
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // Find new table window
-        JFrameOperator jfo = new JFrameOperator(tef);
+        JFrameOperator jfo = new JFrameOperator(ttf);
 
         // Open train edit window
         JTableOperator tbl = new JTableOperator(jfo);
         tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Build")));
         Assert.assertFalse("build deselected", train0.isBuildEnabled());
 
-        JemmyUtil.enterClickAndLeave(tef.showAllBox);
-        Assert.assertEquals("table size", 4, tef.trainsTable.getRowCount());
+        JemmyUtil.enterClickAndLeave(ttf.showAllBox);
+        Assert.assertEquals("table size", 4, ttf.trainsTable.getRowCount());
 
         // kill panels
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
     }
 
     @Test
@@ -208,11 +229,12 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
-        TrainsTableFrame tef = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
-        Assert.assertNotNull(tef);
+        TrainsTableFrame ttf = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
+        Assert.assertNotNull(ttf);
+        ttf.setSize(1400, Control.panelHeight600); // show entire table
 
         // Find new table window by name
-        JFrameOperator jfo = new JFrameOperator(tef);
+        JFrameOperator jfo = new JFrameOperator(ttf);
 
         // build train 0
         JTableOperator tbl = new JTableOperator(jfo);
@@ -229,12 +251,14 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // a popup warning that the train doesn't have a route should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[] { train1.getName(), train1.getDescription() }), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(ttf);
 
         // try to move train 2, error not built
         JemmyUtil.clickOnCellThreadSafe(tbl, 2, Bundle.getMessage("Action"));
 
         // a popup warning that the train isn't built should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotPerformAction"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(ttf);
 
         // test action button "Move"
         tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Action"))); // move button
@@ -248,12 +272,13 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // a popup warning that Manifest hasn't been printed should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train0.getName() }), Bundle.getMessage("ButtonYes"));
-
+        JemmyUtil.waitFor(ttf);
+        
         Assert.assertEquals("terminate train", "", train0.getCurrentLocationName());
         Assert.assertFalse("train build status", train0.isBuilt());
 
         // kill panels
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
     }
 
     @Test
@@ -272,11 +297,12 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
-        TrainsTableFrame tef = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
-        Assert.assertNotNull(tef);
+        TrainsTableFrame ttf = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
+        Assert.assertNotNull(ttf);
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // Find new table window
-        JFrameOperator jfo = new JFrameOperator(tef);
+        JFrameOperator jfo = new JFrameOperator(ttf);
 
         // build train 0
         JTableOperator tbl = new JTableOperator(jfo);
@@ -302,7 +328,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // kill panels
         jfoc.dispose();
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
     }
 
     /**
@@ -332,10 +358,11 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
-        TrainsTableFrame tef = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
-        Assert.assertNotNull(tef);
+        TrainsTableFrame ttf = (TrainsTableFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleTrainsTable"));
+        Assert.assertNotNull(ttf);
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
-        JFrameOperator jfo = new JFrameOperator(tef);
+        JFrameOperator jfo = new JFrameOperator(ttf);
 
         // build train
         JTableOperator tbl = new JTableOperator(jfo);
@@ -368,10 +395,11 @@ public class TrainsTableFrameTest extends OperationsTestCase {
 
         // a popup warning can't reset train should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("CanNotResetTrain"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(ttf);
         Assert.assertTrue("train build status", train.isBuilt());
 
         // kill panels
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
     }
 
     @Test
@@ -382,8 +410,10 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Train train0 = tmanager.getTrainByName("Test_Train 0");
         Assert.assertNotNull(train0);
 
-        TrainsTableFrame tef = new TrainsTableFrame();
-        JFrameOperator jfo = new JFrameOperator(tef);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
+        
+        JFrameOperator jfo = new JFrameOperator(ttf);
         JTableOperator tbl = new JTableOperator(jfo);
         Assert.assertEquals("column not found", -1, tbl.findColumn(Bundle.getMessage("Built")));
         Assert.assertEquals("column not found", -1, tbl.findColumn(Bundle.getMessage("Load")));
@@ -414,7 +444,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("column found", 8, tbl.findColumn(Bundle.getMessage("Owner")));
 
         // kill panels
-        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(ttf);
     }
 
     @Test
@@ -422,16 +452,24 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.loadTrains();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
-        TrainsTableFrame f = new TrainsTableFrame();
-        f.setLocation(10, 20);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
+        
+        // confirm default
+        Assert.assertTrue(ttf.moveRB.isSelected());
 
-        JemmyUtil.enterClickAndLeave(f.resetRB);
-        JemmyUtil.enterClickAndLeave(f.terminateRB);
-        JemmyUtil.enterClickAndLeave(f.conductorRB);
-        JemmyUtil.enterClickAndLeave(f.moveRB);
+        JemmyUtil.enterClickAndLeave(ttf.resetRB);
+        Assert.assertEquals(TrainsTableFrame.RESET, tmanager.getTrainsFrameTrainAction());
+        JemmyUtil.enterClickAndLeave(ttf.terminateRB);
+        Assert.assertEquals(TrainsTableFrame.TERMINATE, tmanager.getTrainsFrameTrainAction());
+        JemmyUtil.enterClickAndLeave(ttf.conductorRB);
+        Assert.assertEquals(TrainsTableFrame.CONDUCTOR, tmanager.getTrainsFrameTrainAction());
+        JemmyUtil.enterClickAndLeave(ttf.moveRB);
+        Assert.assertEquals(TrainsTableFrame.MOVE, tmanager.getTrainsFrameTrainAction());
 
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -445,8 +483,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // increase test coverage
         tmanager.setRowColorsManual(false);
 
-        TrainsTableFrame f = new TrainsTableFrame();
-        f.setLocation(10, 20);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // confirm defaults
         for (Train train : tmanager.getTrainsByNameList()) {
@@ -458,7 +496,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // must disable build failure messages or thread lock
         tmanager.setBuildMessagesEnabled(false);
 
-        JemmyUtil.enterClickAndLeave(f.buildButton);
+        JemmyUtil.enterClickAndLeave(ttf.buildButton);
 
         // need to wait for builds to complete
         Thread build = JUnitUtil.getThreadByName("Build Trains");
@@ -477,7 +515,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             Assert.assertTrue(train.isBuildFailed());
         }
 
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
@@ -492,14 +530,15 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         tmanager.setRowColorsManual(false);
 
         TrainsTableFrame ttf = new TrainsTableFrame();
-        ttf.setLocation(10, 20);
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
+        // All trains use route D, fix so they all build
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Test Route D");
         Assert.assertNotNull(route);
         Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("Test_Location 1");
         route.addLocation(location);
 
-        // confirm defaults
+        // confirm defaults and load train route
         for (Train train : tmanager.getTrainsByNameList()) {
             Assert.assertFalse(train.isBuilt());
             Assert.assertTrue(train.isBuildEnabled());
@@ -507,7 +546,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             train.setRoute(route);
         }
 
-        // must disable build failure messages or thread lock
+        // Shouldn't have a build failure, but just in case
         tmanager.setBuildMessagesEnabled(false);
 
         JemmyUtil.enterClickAndLeave(ttf.buildButton);
@@ -574,8 +613,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.loadTrains();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
-        TrainsTableFrame f = new TrainsTableFrame();
-        f.setLocation(10, 20);
+        TrainsTableFrame ttf = new TrainsTableFrame();
+        ttf.setSize(1200, Control.panelHeight600); // show entire table
 
         // confirm defaults
         for (Train train : tmanager.getTrainsByNameList()) {
@@ -584,13 +623,9 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             Assert.assertFalse(train.isBuildFailed());
         }
 
-        JemmyUtil.enterClickAndLeave(f.terminateButton);
+        JemmyUtil.enterClickAndLeave(ttf.terminateButton);
 
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-
-    // private final static Logger log =
-    // LoggerFactory.getLogger(TrainsTableFrameTest.class);
-
 }

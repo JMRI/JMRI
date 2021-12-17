@@ -83,7 +83,7 @@ public class SpurEditFrameTest extends OperationsTestCase {
                 new Object[]{Bundle
                         .getMessage("add")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(f);
         // kill all frames
         JUnitUtil.dispose(f);
     }
