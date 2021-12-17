@@ -1,10 +1,11 @@
 package jmri.jmrit.picker;
 
-import jmri.NamedBean;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
@@ -17,8 +18,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.NamedBean;
 
 /**
  * Tabbed Container for holding pick list tables
@@ -32,7 +33,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     private int ROW_HEIGHT;
 
     @SuppressWarnings("raw")
-    PickListModel<NamedBean>[] _models;
+    List<PickListModel<NamedBean>> _models;
 
     JTabbedPane _tabPane;
 
@@ -45,9 +46,9 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     @SuppressWarnings("unchecked") // cast as part of generic array ctor
     public PickPanel(PickListModel<?>[] models) {
         _tabPane = new JTabbedPane();
-        _models = (PickListModel<NamedBean>[]) new PickListModel[models.length]; // generic array construction
-        System.arraycopy(models, 0, _models, 0, models.length);
+        _models = new ArrayList<>();
         for (int i = 0; i < models.length; i++) {
+            _models.add((PickListModel<NamedBean>)models[i]);
             JTable table = models[i].makePickTable();
             JPanel p = new JPanel();
             p.setLayout(new BorderLayout(5, 5));
@@ -99,7 +100,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     void addToTable() {
         String sysname = _sysNametext.getText();
         if (sysname != null && sysname.length() > 1) {
-            var model = _models[_tabPane.getSelectedIndex()];
+            var model = _models.get(_tabPane.getSelectedIndex());
             String uname = _userNametext.getText();
             if (uname != null && uname.trim().length() == 0) {
                 uname = null;
@@ -125,7 +126,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        var model = _models[_tabPane.getSelectedIndex()];
+        var model = _models.get(_tabPane.getSelectedIndex());
         if (model.canAddBean()) {
             _cantAddPanel.setVisible(false);
             _addPanel.setVisible(true);
@@ -143,5 +144,5 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PickPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PickPanel.class);
 }
