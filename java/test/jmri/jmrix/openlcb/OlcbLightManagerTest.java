@@ -27,12 +27,12 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public String getSystemName(int i) {
         throw new UnsupportedOperationException("olcb lights need 2 addresses");
     }
-    
+
     @Override
     public String getASystemNameWithNoPrefix() {
         return "x0102030405060701;x0102030405060702";
     }
-    
+
     public String getSystemName(int on, int off) {
         return "MLx010203040506070" + on +";x010203040506070" + off;
     }
@@ -41,7 +41,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testCtor() {
         Assert.assertNotNull("exists", l);
     }
-    
+
     @Override
     @Test
     public void testProvideName() {
@@ -72,7 +72,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
-    
+
     @Override
     @Test
     public void testSingleObject() {
@@ -87,7 +87,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // check
         Assert.assertEquals("same new ", t1, t2);
     }
-    
+
     @Override
     @Test
     public void testLightPutGet() {
@@ -98,7 +98,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
     }
-    
+
     @Override
     @Test
     public void testRename() {
@@ -118,7 +118,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
-    
+
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
@@ -141,6 +141,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @BeforeAll
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -162,7 +163,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
                 return connection;
             }
         });
-    
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 

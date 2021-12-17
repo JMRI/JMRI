@@ -864,10 +864,13 @@
 
     <target name="single-test-coveragecheck" depends="test-single-coverage, coveragecheck" description="Generate Test Coverage check from a single test" />
 
+    <!-- ============================================================================= -->
+    <!-- Compile-time check targets                                                    -->
+    <!-- ============================================================================= -->
+
     <!-- The java/ecj.warning.options and java/ecj.warning.options-ci files defines which warnings are on and off -->
-    <!-- By default, we set them explicitly, so that new ones will show up -->
-    <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
-    <!--                                        -->
+    <!-- We set the options explicitly so it's clear what we're looking for -->
+    <!-- See java/ecj.warnings.options-ci for more information -->
     <macrodef name="ecj-compile">
         <attribute name="javac.source"/>
         <attribute name="javac.target" default="${target}"/>
@@ -893,21 +896,8 @@
         </sequential>
     </macrodef>
 
-    <target name="warnings"
-            description="compile source with extra ECJ warnings on, omitting tests"
-            depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile
-                javac.source="${source}"
-                javac.deprecation="on"
-            >
-            <javac-options>
-                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-            </javac-options>
-        </ecj-compile>
-    </target>
-
     <target name="warnings-check"
-            description="compile source with CI ECJ warnings on and fail if any warnings, omitting tests"
+            description="compile source with CI ECJ warnings on"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
@@ -919,24 +909,22 @@
         </ecj-compile>
     </target>
 
-    <target name="tests-warnings"
-            description="compile test sources with extra ECJ warnings on"
-            depends="warnings">
+    <target name="warnings"
+            description="compile source with extra ECJ warnings on"
+            depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
-                javac.source="${test}"
-                javac.target="${testtarget}"
-                javac.classpath="test.class.path"
-                javac.deprecation="off"
+                javac.source="${source}"
+                javac.deprecation="on"
             >
             <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
                 <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
             </javac-options>
         </ecj-compile>
     </target>
 
     <target name="tests-warnings-check"
-            description="compile test sources with CI ECJ warnings on and fail if any warnings"
+            description="compile source &amp; tests with CI ECJ warnings on"
             depends="warnings-check">
         <ecj-compile
                 javac.source="${test}"
@@ -946,12 +934,30 @@
             >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
             </javac-options>
         </ecj-compile>
     </target>
 
+    <target name="tests-warnings"
+            description="compile source &amp; tests with extra ECJ warnings on"
+            depends="warnings">
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            >
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
     <!-- end of program build targets -->
+
 
     <!-- ============================================================================= -->
     <!-- Application startup targets                                                   -->

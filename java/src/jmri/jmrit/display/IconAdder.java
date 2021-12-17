@@ -60,7 +60,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     HashMap<String, JToggleButton> _iconMap;
     ArrayList<String> _iconOrderList;
     private JScrollPane _pickTablePane;
-    private PickListModel _pickListModel;
+
+    private PickListModel<NamedBean> _pickListModel;
+
     CatalogTreeNode _defaultIcons;      // current set of icons user has selected
     JPanel _iconPanel;
     private JPanel _buttonPanel;
@@ -317,8 +319,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      *
      * @param tableModel the model from which the table is created
      */
-    public void setPickList(PickListModel tableModel) {
-        _pickListModel = tableModel;
+    @SuppressWarnings("unchecked")  //  cast PickListModel<? extends NamedBean> to PickListModel<NamedBean>
+    public void setPickList(PickListModel<? extends NamedBean> tableModel) {
+        _pickListModel = (PickListModel<NamedBean>) tableModel;
         _table = new JTable(tableModel);
         _pickListModel.makeSorter(_table);
 
@@ -345,7 +348,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
-    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
         row = _table.convertRowIndexToView(row);
@@ -521,7 +523,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNameText = new JTextField();
             _sysNameText.setPreferredSize(
                     new Dimension(150, _sysNameText.getPreferredSize().height + 2));
-            
+
             String tooltip = _pickListModel.getManager().getEntryToolTip();
             if (tooltip!=null) {
                 StringBuilder sb = new StringBuilder();
@@ -533,7 +535,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 sb.append(_pickListModel.getManager().getEntryToolTip());
                 tooltip = sb.toString();
             }
-            
+
             _sysNameText.setToolTipText(Bundle.getMessage("newBeanBySysNameTip",
                 _pickListModel.getManager().getBeanTypeHandled(false),
                 _pickListModel.getManager().getMemo().getUserName(),

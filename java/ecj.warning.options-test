@@ -1,13 +1,34 @@
-# addendum to ecj.warnings.options for checking the tests source code
+# Control files for the warnings and tests-warnings Ant targets
 #
-# We relax certain requirements for the test code; this handles that
+# "warnings-check" does the absolutely required checks;
+# "warnings" adds some extra checks we're trying to drive out of existance.
+# "warnings-tests-check" and "warnings-tests" are similar for the tests/ directory
+#
+# warnings-check:               java/ecj.warning.options-ci
+# warnings adds                 java/ecj.warning.options
+# tests-warnings-check adds:    java/ecj.warning.options-test-ci
+# tests-warnings adds:          java/ecj.warning.options-test
+#
+#
+# For more information, see
+#   https://www.ibm.com/docs/en/wdfrhcw/1.4.0?topic=code-using-batch-compiler
+#   https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-using_batch_compiler.htm&anchor=warn
+#   http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm
+#
 
--warn:-dep-ann
--warn:-deprecation
--warn:-allDeprecation
+#
+# Case counts here are as of 12/15/2021
+#
 
--warn:-allOver-ann
--warn:-over-ann
 
-  # We allocate objects to test that code can run OK
--warn:-unusedAllocation
+# Allowing 56 un-annotated deprecations
+-err:-dep-ann
+-err:-deprecation
+-err:-allDeprecation
+
+# 178 missing @Override annotations
+-err:-allOver-ann
+-err:-over-ann
+
+# 200 generic raw types
+-err:-raw
