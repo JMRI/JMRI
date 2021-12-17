@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
             </ul>
 
         <h4>DCC4pc</h4>

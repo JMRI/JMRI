@@ -957,9 +957,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public int getTOStateInt() {
         // Will return 1 (true - thrown) or 0 (false - closed)
-        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) { // turnout
-                                                                       // list
-                                                                       // response
+        if (this.isTurnoutDefReply() || this.isTurnoutDefDCCReply()) { // turnout list response
             return (this.getValueInt(4));
         } else if (this.isTurnoutDefServoReply()) { // servo turnout
             return (this.getValueInt(6));
