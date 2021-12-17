@@ -61,8 +61,8 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return 'F';
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      * @param name to search, by UserName then SystemName.
      */
     @CheckForNull
@@ -89,7 +89,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         // first locate the signal system directory
         // and get names of systems
         File signalDir = null;
-        //First get the default pre-configured signalling systems
+        // First get the default pre-configured signalling systems
         try {
             signalDir = new File(FileUtil.findURL("xml/signals", FileUtil.Location.INSTALLED).toURI());
         } catch (URISyntaxException | NullPointerException ex) {
@@ -110,7 +110,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 }
             }
         }
-        //Now get the user defined systems.
+        // Now get the user defined systems.
         try {
             URL dir = FileUtil.findURL("signals", FileUtil.Location.USER, "resources", "xml");
             if (dir == null) {
@@ -134,8 +134,9 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                     if (file.isDirectory()) {
                         // check that there's an aspects.xml file
                         File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                        log.trace("checking for {}");
                         if ((aspects.exists()) && (!retval.contains(file.getName()))) {
-                            log.debug("found system: {}", file.getName());
+                            log.debug("found user system: {}", file.getName());
                             retval.add(file.getName());
                         }
                     }
@@ -148,12 +149,16 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     @Nonnull
     protected SignalSystem makeBean(String name) throws IllegalArgumentException {
 
-        //First check to see if the bean is in the default system directory
-        URL path = FileUtil.findURL("xml/signals/" + name + "/aspects.xml", FileUtil.Location.INSTALLED);
+        URL path;
+        XmlFile xf;
+
+        // First check to see if the bean is in the user directory resources/signals/, then xml/signals
+        path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "resources", "xml");
         log.debug("load from {}", path);
-        XmlFile xf = new AspectFile();
         if (path != null) {
+            xf = new AspectFile();
             try {
+                log.debug(" successful");
                 Element root = xf.rootFromURL(path);
                 DefaultSignalSystem s = new DefaultSignalSystem(name);
                 loadBean(s, root);
@@ -163,20 +168,6 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
             }
         }
 
-        //if the file doesn't exist or fails the load from the default location then try the user directory
-        path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "xml", "resources");
-        log.debug("load from {}", path);
-        if (path != null) {
-            xf = new AspectFile();
-            try {
-                Element root = xf.rootFromURL(path);
-                DefaultSignalSystem s = new DefaultSignalSystem(name);
-                loadBean(s, root);
-                return s;
-            } catch (IOException | JDOMException e) {
-                log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
-            }
-        }
         throw new IllegalArgumentException("Unable to parse aspect file "+path);
     }
 
@@ -186,7 +177,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         // set user name from system name element
         s.setUserName(root.getChild("name").getText());
 
-        // find all aspects, include them by name, 
+        // find all aspects, include them by name,
         // add all other sub-elements as key/value pairs
         for (int i = 0; i < l.size(); i++) {
             String name = l.get(i).getChild("name").getText();
@@ -215,10 +206,10 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 try {
                     Class<?> cl;
                     Constructor<?> ctor;
-                    
+
                     // create key string
                     String key = e.getChild("key").getText();
-                    
+
                     // check for non-String key.  Warn&proceed if found.
                     // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
                     // constructed from Strings, similar to the value code below.
@@ -227,11 +218,11 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                         || e.getChild("key").getAttributeValue("class").isEmpty()
                         || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
                         )) {
-                        
-                        log.warn("SignalSystem {} property key of invalid non-String type {} not supported", 
+
+                        log.warn("SignalSystem {} property key of invalid non-String type {} not supported",
                             s.getSystemName(), e.getChild("key").getAttributeValue("class"));
                     }
-                    
+
                     // create value object
                     Object value = null;
                     if (e.getChild("value") != null) {
@@ -242,7 +233,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
 
                     // store
                     s.setProperty(key, value);
-                } catch (ClassNotFoundException 
+                } catch (ClassNotFoundException
                             | NoSuchMethodException | InstantiationException
                             | IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
                     log.error("Error loading properties", ex);
