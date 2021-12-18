@@ -18,7 +18,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -28,8 +27,6 @@ import jmri.util.swing.JemmyUtil;
  */
 @Timeout(10)
 public class CarEditFrameTest extends OperationsTestCase {
-
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testClearRoadNumber() {
@@ -976,7 +973,7 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testAddNewCarType() {
+    public void testAddNewCarTypeYes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
@@ -997,52 +994,46 @@ public class CarEditFrameTest extends OperationsTestCase {
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
-
-        try {
-            load.join();
-        } catch (InterruptedException e) {
-            // do nothing
-        }
-
-        JemmyUtil.waitFor(f);
-        Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
-
-        // now answer yes to add type
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
-        });
-        load2.setName("load edit frame"); // NOI18N
-        load2.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonYes"));
-
-        try {
-            load2.join();
-        } catch (InterruptedException e) {
-            // do nothing
-        }
 
         JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testAddNewCarTypeNo() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData(); // load cars
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
+        c1.setTypeName("TEST_TYPE");
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        // should cause add type dialog to appear
+        Thread load = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                f.load(c1);
+            }
+        });
+        load.setName("load edit frame"); // NOI18N
+        load.start();
+
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
+
+        JemmyUtil.waitFor(f);
+        Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
+
+        JUnitUtil.dispose(f);
     }
 
     @Test
-    public void testAddNewCarLength() {
+    public void testAddNewCarLengthNo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
@@ -1063,48 +1054,42 @@ public class CarEditFrameTest extends OperationsTestCase {
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));
-
-        try {
-            load.join();
-        } catch (InterruptedException e) {
-            // do nothing
-        }
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));        
 
         JemmyUtil.waitFor(f);
         Assert.assertFalse(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
-        // now answer yes to add length
-        Thread load2 = new Thread(new Runnable() {
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testAddNewCarLengthYes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData(); // load cars
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
+        c1.setLength("123");
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        // should cause add length dialog to appear
+        Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
                 f.load(c1);
             }
         });
-        load2.setName("load edit frame"); // NOI18N
-        load2.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        load.setName("load edit frame"); // NOI18N
+        load.start();
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonYes"));
-
-        try {
-            load2.join();
-        } catch (InterruptedException e) {
-            // do nothing
-        }
 
         JemmyUtil.waitFor(f);
         Assert.assertTrue(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
         JUnitUtil.dispose(f);
-
     }
 
     @Test

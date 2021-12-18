@@ -27,6 +27,8 @@ public class ConvertFunctions implements FunctionFactory {
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
+        functionClasses.add(new IsIntFunction());
+        functionClasses.add(new IsFloatFunction());
         functionClasses.add(new IntFunction());
         functionClasses.add(new FloatFunction());
         functionClasses.add(new StrFunction());
@@ -46,6 +48,95 @@ public class ConvertFunctions implements FunctionFactory {
     }
     
     
+    
+    public static class IsIntFunction implements Function {
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
+        }
+        
+        @Override
+        public String getName() {
+            return "isInt";
+        }
+        
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
+            if (parameterList.size() != 1) {
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+            }
+            try {
+                TypeConversionUtil.convertToLong(
+                        parameterList.get(0).calculate(symbolTable),
+                        true, true);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.isInt");
+        }
+        
+    }
+    
+    public static class IsFloatFunction implements Function {
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new ConvertFunctions().getConstantDescription();
+        }
+        
+        @Override
+        public String getName() {
+            return "isFloat";
+        }
+        
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
+            try {
+                switch (parameterList.size()) {
+                    case 1:
+                        TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(symbolTable), false, true, true);
+                        break;
+                    case 2:
+                        boolean do_i18n = TypeConversionUtil.convertToBoolean(
+                                parameterList.get(0).calculate(symbolTable), false);
+                        TypeConversionUtil.convertToDouble(
+                                parameterList.get(0).calculate(symbolTable), do_i18n, true, true);
+                        break;
+                    default:
+                        throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.isFloat");
+        }
+        
+    }
     
     public static class IntFunction implements Function {
         

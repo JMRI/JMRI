@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
-import jmri.util.junit.rules.RetryRule;
-
 /**
  * Test simple functioning of ThrottlesPreferencesWindow
  *
@@ -15,9 +13,6 @@ import jmri.util.junit.rules.RetryRule;
  */
 public class ThrottlesPreferencesWindowTest {
 
-    public RetryRule retryRule = new RetryRule(2);  // allow 2 retries
-                                                    // because of possible IndexOutOfBoundsException
-                                                    // in Swing during tearDown
     @Test
     public void testCtor() {
         try {
@@ -25,7 +20,7 @@ public class ThrottlesPreferencesWindowTest {
             ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
             Assert.assertNotNull("exists", w);
         } catch (IndexOutOfBoundsException e) {
-            Assert.fail("IndexOutOfBoundsException, fail to retry\n"+e);
+            Assert.fail("IndexOutOfBoundsException\n"+e);
         }
     }
 

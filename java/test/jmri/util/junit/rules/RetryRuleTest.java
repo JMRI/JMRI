@@ -4,7 +4,8 @@ import jmri.util.*;
 import org.junit.*;
 
 /**
- * Test the RetryRule
+ * Test the RetryRule.
+ * <p>Note RetryRule only works with JUnit4 Tests.
  * @author Bob Jacobsen Copyright 2018
  */
 public class RetryRuleTest {

@@ -343,7 +343,7 @@ and attach jvisualvm to the AllTest class when it appears. When that's done, put
 ================================================================================
 ## Put Files Out For Checking
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm visible on web.
 
 - Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%204.25.9%20files%20available) with a subject line
 
@@ -460,9 +460,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.25.9+Rb65094ebf2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+Rb65094ebf2.dmg) | 11643aa3846844d938366f969589e36738765cfb963dcfb50fc4cf2db5e1efac
-[JMRI.4.25.9+Rb65094ebf2.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+Rb65094ebf2.exe) | dd838c4b423ad78b34f900f06f796caddff87aae5661d5fc58c01c69ef7f1006
-[JMRI.4.25.9+Rb65094ebf2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+Rb65094ebf2.tgz) | 86cf8b2f8e11b1b96df0ffd8b1e369fc9649a6ec6e37c8f1ac7eae51c398164a
+[JMRI.4.25.9+R13dba79b7c.dmg](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+R13dba79b7c.dmg) | 1c332ec31b27f7a673b53c16503211a72c2f55ea198de4183c68e0fbf7804a8b
+[JMRI.4.25.9+R13dba79b7c.exe](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+R13dba79b7c.exe) | 66e7a443995ce67ab0da796942b82e110e7ca31f4f78a4a11b7d15ba3f1eb2a8
+[JMRI.4.25.9+R13dba79b7c.tgz](https://github.com/JMRI/JMRI/releases/download/v4.25.9/JMRI.4.25.9+R13dba79b7c.tgz) | 25696528e2f589b38b9a976abb7750149220d065161023aa5f4cc3ea03fd1458
 
 ```
 

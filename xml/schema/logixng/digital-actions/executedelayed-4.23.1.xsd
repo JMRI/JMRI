@@ -68,6 +68,7 @@
               </xs:element>
 
               <xs:element name="resetIfAlreadyStarted" type="yesNoType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="useIndividualTimers" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

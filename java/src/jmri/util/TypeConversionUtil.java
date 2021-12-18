@@ -159,8 +159,9 @@ public final class TypeConversionUtil {
         }
     }
 
-    private static long convertStringToLong(@Nonnull String str) {
-        String patternString = "(\\-?\\d+)";
+    private static long convertStringToLong(@Nonnull String str, boolean checkAll, boolean throwOnError) {
+        String patternString = "^(\\-?\\d+)";
+        if (checkAll) patternString += "$";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(str);
         // Only look at the beginning of the string
@@ -172,6 +173,10 @@ public final class TypeConversionUtil {
             return number;
         } else {
             log.warn("the string \"{}\" cannot be converted to a number", str);
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the string \"%s\" cannot be converted to a number", str));
+            }
             return 0;
         }
     }
@@ -194,6 +199,31 @@ public final class TypeConversionUtil {
      * @return the long value
      */
     public static long convertToLong(@CheckForNull Object value) {
+        return convertToLong(value, false, false);
+    }
+
+    /**
+     * Convert a value to a long.
+     * <P>
+     * Rules:
+     * null is converted to 0
+     * empty string is converted to 0
+     * empty collection is converted to 0
+     * an instance of the interface Number is converted to the number
+     * a string that can be parsed as a number is converted to that number.
+     * a string that doesn't start with a digit is converted to 0
+     * <P>
+     * For objects that implement the Reportable interface, the value is fetched
+     * from the method toReportString() before doing the conversion.
+     *
+     * @param value the value to convert
+     * @param checkAll true if the whole string should be checked, false otherwise
+     * @param throwOnError true if a NumberFormatException should be thrown on error, false otherwise
+     * @return the long value
+     * @throws NumberFormatException on error if throwOnError is true
+     */
+    public static long convertToLong(@CheckForNull Object value, boolean checkAll, boolean throwOnError)
+            throws NumberFormatException {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0;
@@ -205,17 +235,34 @@ public final class TypeConversionUtil {
 
         if (value instanceof Number) {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
+            if (!(value instanceof Byte) && !(value instanceof Short) && !(value instanceof Integer) && !(value instanceof Long)) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to an integer"));
+                }
+            }
             return ((Number)value).longValue();
         } else if (value instanceof Boolean) {
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the boolean value \"%b\" cannot be converted to an integer", ((Boolean)value)));
+            }
             return ((Boolean)value) ? 1 : 0;
         } else {
-            if (value == null) return 0;
-            return convertStringToLong(value.toString());
+            if (value == null) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to an integer"));
+                }
+                return 0;
+            }
+            return convertStringToLong(value.toString(), throwOnError, checkAll);
         }
     }
 
-    private static double convertStringToDouble(@Nonnull String str, boolean do_i18n) {
-        String patternString = "(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
+    private static double convertStringToDouble(@Nonnull String str, boolean checkAll, boolean throwOnError) {
+        String patternString = "^(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
+        if (checkAll) patternString += "$";
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(str);
         // Only look at the beginning of the string
@@ -227,6 +274,10 @@ public final class TypeConversionUtil {
             return number;
         } else {
             log.warn("the string \"{}\" cannot be converted to a number", str);
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the string \"%s\" cannot be converted to a number", str));
+            }
             return 0.0d;
         }
     }
@@ -251,6 +302,32 @@ public final class TypeConversionUtil {
      * @return the double value
      */
     public static double convertToDouble(@CheckForNull Object value, boolean do_i18n) {
+        return convertToDouble(value, do_i18n, false, false);
+    }
+
+    /**
+     * Convert a value to a double.
+     * <P>
+     * Rules:
+     * null is converted to 0
+     * empty string is converted to 0
+     * empty collection is converted to 0
+     * an instance of the interface Number is converted to the number
+     * a string that can be parsed as a number is converted to that number.
+     * if a string starts with a number AND do_i18n is false, it's converted to that number
+     * a string that doesn't start with a digit is converted to 0
+     * <P>
+     * For objects that implement the Reportable interface, the value is fetched
+     * from the method toReportString() before doing the conversion.
+     *
+     * @param value the value to convert
+     * @param do_i18n true if internationalization should be done, false otherwise
+     * @param checkAll true if the whole string should be checked, false otherwise
+     * @param throwOnError true if a NumberFormatException should be thrown on error, false otherwise
+     * @return the double value
+     * @throws NumberFormatException on error if throwOnError is true
+     */
+    public static double convertToDouble(@CheckForNull Object value, boolean do_i18n, boolean checkAll, boolean throwOnError) {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0.0d;
@@ -264,9 +341,19 @@ public final class TypeConversionUtil {
 //            System.err.format("Number: %1.5f%n", ((Number)value).doubleValue());
             return ((Number)value).doubleValue();
         } else if (value instanceof Boolean) {
+            if (throwOnError) {
+                throw new NumberFormatException(
+                        String.format("the boolean value \"%b\" cannot be converted to a number", ((Boolean)value)));
+            }
             return ((Boolean)value) ? 1 : 0;
         } else {
-            if (value == null) return 0.0;
+            if (value == null) {
+                if (throwOnError) {
+                    throw new NumberFormatException(
+                            String.format("the null value cannot be converted to a number"));
+                }
+                return 0.0;
+            }
 
             if (do_i18n) {
                 // try to parse the string as a number
@@ -278,7 +365,7 @@ public final class TypeConversionUtil {
                     log.debug("The string '{}' cannot be parsed as a number", value);
                 }
             }
-            return convertStringToDouble(value.toString(), do_i18n);
+            return convertStringToDouble(value.toString(), throwOnError, checkAll);
         }
     }
 

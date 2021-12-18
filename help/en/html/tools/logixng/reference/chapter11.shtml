@@ -195,6 +195,8 @@
       is loaded, a reference to the table will be used to load the CSV file into memory. The CSV
       file should be located in the user files location along with the PanelPro data file.</p>
 
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3>Using comments in the table</h3>
 
       <p>It's useful to be able to add comments in the table, especially for large tables.
@@ -203,6 +205,8 @@
       comment on a row, leave the first column on that row empty. And if you want to add a comment
       on a column, leave the first row on that column empty. If the first cell on a row or column
       is empty, the action "Table: For each" will skip that row or column entirely.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>The CSV File</h3>
 
@@ -226,10 +230,14 @@
       <p>If a reference contains a backslash, it will take some more time to evaluate it than if it
       doesn't contain any backslash. So if it's possible to not use these special characters in
       references or names of beans, it's recommended.</p>
-      <a id="TableActions"></a>
-      <h3>Table Actions</h3>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="TableActions">Table Actions</h3>
 
       <p>There are two LogixNG actions for working with tables</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Table: For each</h5>
 
@@ -249,8 +257,8 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/table_for_each.png"><img src=
-        "images/chapter11/table_for_each.png" alt="LogixNG table for each" width="45%" height=
-        "45%"></a>
+        "images/chapter11/table_for_each.png" alt="LogixNG table for each"
+        width="760" height="354"></a>
       </div>
 
       <p>Select the table, row or column, and then the row name or column name. The name selection
@@ -259,6 +267,8 @@
 
       <p>After the action has been created, add another action to the new A1 do handle the current
       cell item.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Listen on beans - Table</h5>
 
@@ -280,13 +290,19 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/table_for_each_listen.png"><img src=
-        "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen" width=
-        "485" height="358"></a>
+        "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen"
+        width="485" height="391"></a>
       </div>
 
       <p>Select the table, row or column, and then the row name or column name. The name selection
       will change based on the table and row/column selections. Select the type of item. The
       supported types are Light, Memory, Sensor and Turnout.</p>
+
+      <p>The various bean types have standard properties that are monitored such as Closed and
+      Thrown for turnouts.  If the <strong>Listen to all properties</strong> option is checked, all
+      of the properties will be monitored.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Tables - working with templates</h2>
 
