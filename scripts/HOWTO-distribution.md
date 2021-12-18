@@ -181,7 +181,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 ```
         cd ../website
         cd releasenotes
-        git checkout j11master
+        git checkout master
         git pull
         cp jmri4.99.1.shtml jmri4.99.2.shtml
         $EDITOR jmri4.99.2.shtml
