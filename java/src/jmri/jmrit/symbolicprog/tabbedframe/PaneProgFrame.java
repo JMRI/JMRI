@@ -151,7 +151,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuSaveNoDots"));
         menuItem.addActionListener(e -> {
                 storeFile();
-                System.err.println("STORED");
             }
 
         );
