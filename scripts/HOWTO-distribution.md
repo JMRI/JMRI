@@ -335,7 +335,7 @@ If you're developing any additional (post-4.99.1) changes that you want in the J
 ```
         ant realclean tests
         unset JMRI_OPTIONS
-        ant alltest
+        ant headlesstest
 ```
 
 
