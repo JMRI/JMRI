@@ -54,7 +54,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     JPanel tempPane; // passed around during construction
 
     boolean _opsMode;
-    
+
     boolean maxFnNumDirty = false;
     String maxFnNumOld = "";
     String maxFnNumNew = "";
@@ -148,12 +148,15 @@ abstract public class PaneProgFrame extends JmriJFrame
         resetMenu.setEnabled(false);
 
         // Add a save item
-        fileMenu.add(new AbstractAction(Bundle.getMessage("MenuSave")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        var menuItem = new JMenuItem(Bundle.getMessage("MenuSaveNoDots"));
+        menuItem.addActionListener(e -> {
                 storeFile();
+                System.err.println("STORED");
             }
-        });
+
+        );
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.KeyEvent.META_DOWN_MASK));
+        fileMenu.add(menuItem);
 
         JMenu printSubMenu = new JMenu(Bundle.getMessage("MenuPrint"));
         printSubMenu.add(new PrintAction(Bundle.getMessage("MenuPrintAll"), this, false));
@@ -189,12 +192,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         ButtonGroup SpeedTableNumbersGroup = new ButtonGroup();
         UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
         Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
-        
+
         SpeedTableNumbers speedTableNumbersSelection =
                 speedTableNumbersSelectionObj != null
                 ? SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString())
                 : null;
-        
+
         for (SpeedTableNumbers speedTableNumbers : SpeedTableNumbers.values()) {
             JRadioButtonMenuItem rbMenuItem = new JRadioButtonMenuItem(speedTableNumbers.toString());
             rbMenuItem.addActionListener((ActionEvent event) -> {
@@ -321,7 +324,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             bottom.add(temp);
             temp.add(modePane);
         }
-        
+
         // add space for (programming) status message
         bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
         progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -329,7 +332,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     // ================== Search section ==================
-    
+
     // create and add the Search GUI
     void setSearchGui(JPanel bottom) {
         // search field
@@ -338,7 +341,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         searchBar.configureKeyModifiers(this);
         bottom.add(searchBar);
     }
-    
+
     jmri.util.swing.SearchBar searchBar;
     static class SearchPair {
         WatchingLabel label;
@@ -348,28 +351,28 @@ abstract public class PaneProgFrame extends JmriJFrame
             this.tab = tab;
         }
     }
-    
+
     ArrayList<SearchPair> searchTargetList;
     int nextSearchTarget = 0;
-    
+
     // Load the array of search targets
     protected void loadSearchTargets() {
         if (searchTargetList != null) return;
-        
+
         searchTargetList = new ArrayList<>();
-        
+
         for (JPanel p : getPaneList()) {
             for (Component c : p.getComponents()) {
                 loadJPanel(c, p);
             }
         }
-        
+
         // add the panes themselves
         for (JPanel tab : getPaneList()) {
             searchTargetList.add( new SearchPair( null, tab ));
-        }        
+        }
     }
-    
+
     // Recursive load of possible search targets
     protected void loadJPanel(Component c, JPanel tab) {
         if (c instanceof JPanel) {
@@ -382,12 +385,12 @@ abstract public class PaneProgFrame extends JmriJFrame
             searchTargetList.add( new SearchPair( (WatchingLabel)c, tab));
         }
     }
-   
+
     // Search didn't find anything at all
     protected void searchDidNotFind() {
-         java.awt.Toolkit.getDefaultToolkit().beep(); 
+         java.awt.Toolkit.getDefaultToolkit().beep();
     }
-    
+
     // Search succeeded, go to the result
     protected void searchGoesTo(SearchPair result) {
         tabPane.setSelectedComponent(result.tab);
@@ -397,7 +400,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.trace("search result set to tab {}", result.tab);
         }
     }
-    
+
     // Check a single case to see if it's search match
     // @return true for matched
     private boolean checkSearchTarget(int index, String target) {
@@ -421,20 +424,20 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         return result;
     }
-    
+
     // Invoked by forward search operation
     private Runnable searchForwardTask = new Runnable() {
         public void run() {
             log.trace("start forward");
             loadSearchTargets();
             String target = searchBar.getSearchString();
-            
+
             nextSearchTarget++;
             if (nextSearchTarget < 0 ) nextSearchTarget = 0;
             if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = 0;
-            
+
             int startingSearchTarget = nextSearchTarget;
-            
+
             while (nextSearchTarget < searchTargetList.size()) {
                 if ( checkSearchTarget(nextSearchTarget, target)) {
                     // hit!
@@ -443,7 +446,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
                 nextSearchTarget++;
             }
-            
+
             // end reached, wrap
             nextSearchTarget = 0;
             while (nextSearchTarget < startingSearchTarget) {
@@ -455,23 +458,23 @@ abstract public class PaneProgFrame extends JmriJFrame
                 nextSearchTarget++;
             }
             // not found
-            searchDidNotFind();            
+            searchDidNotFind();
         }
     };
-    
+
     // Invoked by backward search operation
     private Runnable searchBackwardTask = new Runnable() {
         public void run() {
             log.trace("start backward");
             loadSearchTargets();
             String target = searchBar.getSearchString();
-            
+
             nextSearchTarget--;
             if (nextSearchTarget < 0 ) nextSearchTarget = searchTargetList.size()-1;
             if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = searchTargetList.size()-1;
-            
+
             int startingSearchTarget = nextSearchTarget;
-            
+
             while (nextSearchTarget > 0) {
                 if ( checkSearchTarget(nextSearchTarget, target)) {
                     // hit!
@@ -480,7 +483,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
                 nextSearchTarget--;
             }
-            
+
             // start reached, wrap
             nextSearchTarget = searchTargetList.size()-1;
             while (nextSearchTarget > startingSearchTarget) {
@@ -505,7 +508,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     };
 
     // =================== End of search section ==================
-    
+
     public List<JPanel> getPaneList() {
         return paneList;
     }
@@ -693,11 +696,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         tempPane.add(bottom, BorderLayout.SOUTH);
 
         // now that programmer is configured, set the programming GUI
-        setProgrammingGui(bottom);        
+        setProgrammingGui(bottom);
 
         // add the search GUI
         setSearchGui(bottom);
-        
+
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time
@@ -1054,7 +1057,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 return; // without doing anything
             }
         }
-        if(maxFnNumDirty && !maxFnNumOld.equals("")){ 
+        if(maxFnNumDirty && !maxFnNumOld.equals("")){
             _rosterEntry.setMaxFnNum(maxFnNumOld);
         }
         // Check for a "<new loco>" roster entry; if found, remove it
