@@ -42,6 +42,11 @@ public class OlcbLightTest {
 
     OlcbTestInterface t;
 
+    @BeforeAll
+    static public void checkSeparate() {
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

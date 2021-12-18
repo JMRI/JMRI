@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * @author Paul Bender Copyright (C) 2017
  */
 public class OlcbConfigurationManagerTest {
-        
+
     private static OlcbSystemConnectionMemo scm;
 
     @Test
@@ -30,7 +30,7 @@ public class OlcbConfigurationManagerTest {
     public void testConfigureManagers() {
         OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         // this tet verifies this does not throw an exception
-        t.configureManagers(); 
+        t.configureManagers();
     }
 
     @Test
@@ -63,6 +63,7 @@ public class OlcbConfigurationManagerTest {
     @BeforeAll
     public static void preClassInit() {
         JUnitUtil.setUp();
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         scm = new OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
@@ -70,11 +71,13 @@ public class OlcbConfigurationManagerTest {
 
     @AfterAll
     public static void postClassTearDown() {
-        if(scm != null && scm.getInterface() !=null ) {
-            scm.getTrafficController().terminateThreads();
-            scm.getInterface().dispose();
+        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false ) {
+            if (scm != null && scm.getInterface() !=null ) {
+                scm.getTrafficController().terminateThreads();
+                scm.getInterface().dispose();
+            }
+            scm = null;
         }
-        scm = null;
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

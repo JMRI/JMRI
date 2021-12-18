@@ -26,7 +26,7 @@ import jmri.util.ThreadingUtil;
 public class OlcbTurnoutTest {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
-    protected PropertyChangeListenerScaffold l; 
+    protected PropertyChangeListenerScaffold l;
 
     @Test
     public void testIncomingChange() {
@@ -53,7 +53,7 @@ public class OlcbTurnoutTest {
         Assert.assertEquals(s.getCommandedState(), Turnout.UNKNOWN);
 
         t.sendMessage(mActive);
-      
+
         JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertEquals(s.getCommandedState(), Turnout.THROWN);
@@ -360,14 +360,14 @@ public class OlcbTurnoutTest {
 
         // test by putting into a tree set, then extracting and checking order
         TreeSet<Turnout> set = new TreeSet<>(new NamedBeanComparator<>());
-        
+
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
-        
+
         Iterator<Turnout> it = set.iterator();
-        
+
         Assert.assertEquals("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MT1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
@@ -375,6 +375,11 @@ public class OlcbTurnoutTest {
     }
 
     private OlcbTestInterface t;
+
+    @BeforeAll
+    static public void checkSeparate() {
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    }
 
     @BeforeEach
     public void setUp() {

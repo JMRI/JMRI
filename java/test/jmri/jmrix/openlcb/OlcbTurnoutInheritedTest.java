@@ -19,12 +19,13 @@ import org.junit.jupiter.api.*;
 public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     OlcbTestInterface tif;
     int baselineListeners;
-    protected PropertyChangeListenerScaffold l; 
+    protected PropertyChangeListenerScaffold l;
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         tif = new OlcbTestInterface();
         tif.waitForStartup();
         baselineListeners = tif.iface.numMessageListeners();
@@ -36,10 +37,12 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
 
     @AfterEach
     public void tearDown() {
-        tif.dispose();
+        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
+            tif.dispose();
+            tif = null;
+        }
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
     @Override

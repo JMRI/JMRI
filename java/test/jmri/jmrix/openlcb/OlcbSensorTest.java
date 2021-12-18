@@ -46,7 +46,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void checkInactiveMsgSent() {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
     }
-    
+
     @org.junit.jupiter.api.Disabled("Test requires further setup")
     @jmri.util.junit.annotations.ToDo("Check checkActiveMsgSent() producing correct result")
     @Test
@@ -58,7 +58,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     @Override
     public void testCommandSentInactive() {}
-    
+
     @Override
     public void checkStatusRequestMsgSent() {
         ti.flush();
@@ -407,6 +407,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         l = new PropertyChangeListenerScaffold();
         // load dummy TrafficController
         ti = new OlcbTestInterface();
@@ -418,10 +419,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @AfterEach
     @Override
     public void tearDown() {
-        t.dispose();
-        l.resetPropertyChanged();
-        l = null;
-        ti.dispose();
+        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
+            t.dispose();
+            t = null;
+            l.resetPropertyChanged();
+            l = null;
+            ti.dispose();
+            ti = null;
+        }
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

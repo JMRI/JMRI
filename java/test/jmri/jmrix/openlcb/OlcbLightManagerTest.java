@@ -143,6 +143,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @BeforeAll
     @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
@@ -169,6 +170,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @AfterAll
     public static void postClassTearDown() {
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

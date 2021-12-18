@@ -101,6 +101,11 @@ public class OlcbSensorManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
 
+    @BeforeAll
+    static public void checkSeparate() {
+        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
