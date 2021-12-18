@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 28 November 2021 Ronald Kuhn - CVs for firmware v40 and above-->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Railcom voltage signal</label>
+    <label xml:lang="de">Railcom-Spannungsmeldung</label>
+  </variable>
+  <variable CV="109" item="Function F0F option 4" mask="XXVVVXXX">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front additional 3 function off</label>
+    <label xml:lang="de">Lvor zusätzlich 3 aus</label>
+  </variable>
+  <variable CV="110" item="Function F0R option 4" mask="XXVVVXXX">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear additional 3 function off</label>
+    <label xml:lang="de">Lrück zusätzlich 3 aus</label>
+  </variable>
+  <variable CV="178" item="Analog Vstart" default="0">
+    <decVal min="0" max="255"/>
+    <label>Analog Vstart</label>
+    <label xml:lang="de">Anfahrspannung Analog</label>
+  </variable>
+  <variable CV="179" item="Analog Vhigh" default="0">
+    <decVal min="0" max="255"/>
+    <label>Analog Vhigh</label>
+    <label xml:lang="de">Geschwindigkeit Analog</label>
+  </variable>
+  <variable CV="273" item="Delayed start after blow-off time" default="0">
+    <decVal min="0" max="255"/>
+    <label>Delayed start after blow-off time</label>
+    <label xml:lang="it">Ritardo partenza dopo Scarico Vapore</label>
+    <label xml:lang="de">Entwässerungs-Anfahrverzögerung</label>
+    <label xml:lang="cs">Zpoždění rozjezdu po otevření odvodňovacího ventilu</label>
+    <tooltip>0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1</tooltip>
+    <tooltip xml:lang="de">0 = keine Verzögerung, 1 = Entwässern per Fahrregler, 2+ = Anfahrverzögerung in Zehntel-sec, INC=1, Angleichung des Anfahrens im Traktionsbetrieb</tooltip>
+  </variable>
+  <variable CV="274" item="Blow-off schedule" default="30">
+    <decVal min="0" max="255"/>
+    <label>Blow-off schedule</label>
+    <label xml:lang="it">Pianificazione Scarico Vapore</label>
+    <label xml:lang="de">Entwässerung-Stillstandzeit</label>
+    <label xml:lang="cs">Časový rozvrh odvodňovacího ventilu</label>
+    <tooltip>Blow-off suppressed by shunting, 10ths of seconds, INC=10</tooltip>
+    <tooltip xml:lang="de">Stillstandzeit im Rangierbetrieb, INC=10</tooltip>
+  </variable>
+  <variable CV="310" item="On/off key for engine and random sound" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
+    <enumVal>
+      <enumChoice choice="No key assigned">
+        <choice>F0</choice>
+        <choice xml:lang="de">keine Taste</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="Always On" value="255">
+        <choice>Always On</choice>
+        <choice xml:lang="it">Sempre On</choice>
+        <choice xml:lang="de">immer an</choice>
+        <choice xml:lang="cs">Vždy zapnuto</choice>
+      </enumChoice>
+    </enumVal>
+    <label>On/off key for engine and random sound</label>
+    <label xml:lang="it">Tasto On-Off per Motore e suoni casuali</label>
+    <label xml:lang="de">Sound Ein/Aus-Taste, Anfahrverzögerung ein/aus</label>
+    <label xml:lang="cs">Klávesa pro zapnutí/vypnutí náhodných zvuků motoru</label>
+    <tooltip>Defines the key that turns the engine and random sounds on or off</tooltip>
+    <tooltip xml:lang="de">Ein/Ausschalt-Taste für Fahrgeräusche und Zufalls-Geräusche sowie Anfahrverzögerung definieren</tooltip>
+  </variable>
+  <variable CV="351" item="Smoke Fan Speed at Steady Speed" default="27" tooltip="8 to 63">
+    <decVal min="8" max="63"/>
+    <label>Smoke Fan Speed at Steady Speed</label>
+    <label xml:lang="it">Velocità ventole fumo a velocità costante</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei konst. Fahrt</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při ustálené rychlosti</label>
+  </variable>
+  <variable CV="352" item="Smoke Fan Speed at Startup and Acceleration" default="128" tooltip="25 to 170">
+    <decVal min="25" max="170"/>
+    <label>Smoke Fan Speed at Startup and Acceleration</label>
+    <label xml:lang="it">Velocità ventole fumo in partenza e accellerazione</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei Beschleunigung</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při rozjezdu</label>
+  </variable>
+  <variable CV="393" item="Slower Steam Strokes" mask="XVXXXXXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Slower Steam Strokes</label>
+    <label xml:lang="de">Langsamere Dampfschläge</label>
+  </variable>
+</variables>

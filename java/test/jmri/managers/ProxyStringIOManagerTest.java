@@ -7,10 +7,9 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalStringIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxyStringIOManager.
@@ -127,7 +126,7 @@ public class ProxyStringIOManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -135,7 +134,7 @@ public class ProxyStringIOManagerTest {
         jmri.InstanceManager.setStringIOManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

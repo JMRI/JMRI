@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
+<!-- version 1.2 - Ronald Kuhn - add options for #273, #274, #310 for Non-Sound-Decoder -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Zimo Specific</name>
   <name xml:lang="it">Specifiche Zimo</name>
@@ -15,6 +16,9 @@
     <label>
       <text> </text>
     </label>
+    <display item="Delayed start after blow-off time"/>
+    <display item="Blow-off schedule"/>
+    <display item="On/off key for engine and random sound"/>
     <label>
       <text> </text>
     </label>

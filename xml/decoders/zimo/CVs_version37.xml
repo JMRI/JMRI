@@ -4,6 +4,7 @@
 <!-- version 1.1  10 Mar 2021  Nigel Cliffe - minor change to menu called for CV309 to improve visual appearance in panes -->
 <!-- version 1.2  21 Mar 2021  Delete exclusion from CV349 for decoder MX617 -->
 <!-- version 1.3  08 Apr 2021..(Nigel Cliffe) Delete exclusion from CV349 for decoder MX616 -->
+<!-- version 1.4  29 Nov 2021  (Ronald Kuhn) Correction of bitmask for #109 & #110 and "Choice_LigthX.xml"-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="22" item="Auto Consist" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -30,7 +31,7 @@
       <tooltip xml:lang="de">Taste zum Umschalten zwischen Hauptadresse und Consistadresse.</tooltip>
       <tooltip xml:lang="cs">Tlačítko které přepíná mezi výchozí adresou a adresou soupravy.</tooltip>
   </variable>
-  <variable CV="109" item="Function F0F option 3" mask="XXVVVVVV">
+  <variable CV="109" item="Function F0F option 3" mask="XXXXXVVV">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
@@ -79,7 +80,7 @@
     <label xml:lang="de">Lvor zusätzlich 2 aus</label>
     <label xml:lang="cs">Vypnutí funkčních výstupů 2 vpřed lokomotivy</label>
   </variable>
-  <variable CV="110" item="Function F0R option 3" mask="XXVVVVVV">
+  <variable CV="110" item="Function F0R option 3" mask="XXXXXVVV">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
@@ -166,11 +167,11 @@
   </variable>
   <variable CV="159" item="Output 9 effect generated" mask="VVVVVVXX" minOut="9">
      <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 7 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
@@ -186,11 +187,11 @@
   </variable>
   <variable CV="160" item="Output 10 effect generated" mask="VVVVVVXX" minOut="10">
      <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 8 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>

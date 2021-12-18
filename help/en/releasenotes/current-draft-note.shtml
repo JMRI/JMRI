@@ -338,7 +338,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>added new decoder definitions for Firmware v40.x</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -390,13 +390,16 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>A single Logix can now be exported to LogixNG.
+		  Open Tools -> Tables -> Logix and select <i>Export
+		  to LogixNG</i> for the Logix you want to export.</li>
         </ul>
 
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>A single Logix can be imported to LogixNG. Se
+		  the section <i>Logix</i> for more information.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -476,7 +479,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Allow user-modified signal systems to provide
+                    their own copy of an existing aspects.xml file.</li>
             </ul>
 
         <h4>Signal Heads</h4>

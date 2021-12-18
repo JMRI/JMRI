@@ -16,32 +16,24 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
 
 
-/*
+/**
 * Tests for the LogixNGModuleTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
+@Timeout(10) // 10 second timeout for methods in this test class.
 public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module> {
 
     static final ResourceBundle rbxLogixNGSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
@@ -104,7 +96,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
         // Menu AutoCreate
         JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
-        Assert.assertEquals(findMenuItem.getText(), "Close window");
+        Assert.assertEquals( "Close window", findMenuItem.getText());
         new JMenuItemOperator(findMenuItem).doClick();
 /*
         // Test that we can open the LogixNGEdtior window twice
@@ -710,7 +702,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @Test
     public void testDeleteModule() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
 
         moduleTable.actionPerformed(null); // show table
         JFrame moduleFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
@@ -736,7 +728,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @Test
     public void testDeleteModuleWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -780,7 +772,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @Test
     public void testDeleteModuleWithTwoDigitalActions() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -838,7 +830,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @Test
     public void testDeleteModuleWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
 
         PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
             // Do nothing
