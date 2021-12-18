@@ -41,7 +41,8 @@ public class TreeEditor extends TreeViewer {
     public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
 
 
-    // There should only be one clipboard editor open at any time so this is static
+    // There should only be one clipboard editor open at any time so this is static.
+    // This field must only be accessed on the GUI thread.
     private static ClipboardEditor _clipboardEditor = null;
 
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
