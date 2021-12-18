@@ -41,7 +41,26 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="Socket" minOccurs="1" maxOccurs="1">
+              <!-- Keep this one for backwards compability with JMRI 4.26. Remove for 5.2 -->
+              <xs:element name="Socket" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="ValidateSocket" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="ExecuteSocket" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -79,7 +98,11 @@
 
 			  <xs:element name="format" type="xs:string" minOccurs="1" maxOccurs="1"/>
 
+              <!-- Keep this one for backwards compability with JMRI 4.26. Remove for 5.2 -->
 			  <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+			  <xs:element name="localVariableForSelectedButton" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			  <xs:element name="localVariableForInputString" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
 			  <xs:element name="modal" type="yesNoType" minOccurs="1" maxOccurs="1"/>
 			  <xs:element name="multiLine" type="yesNoType" minOccurs="1" maxOccurs="1"/>
