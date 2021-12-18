@@ -995,11 +995,12 @@
 
         <dt>Modal</dt>
         <dd>A dialog can be <strong>modal</strong> or non-modal.  Modal means that the dialog window
-        remains above any other window until it is closed.</dd>
+        remains above any other window and the user cannot do anything in any other JMRI window
+        until it is closed.</dd>
 
         <dt>Multiline</dt>
         <dd>The multiline option enables the ability to have multiple lines displayed by the dialog.
-        </dd>
+        To get a new line, use the HTML <strong>&lt;br&gt;</strong> tag.</dd>
 
         <dt>Selected button</dt>
         <dd>If a predefined local variable is supplied, the selected button number is copied to the
