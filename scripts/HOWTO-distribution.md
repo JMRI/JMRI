@@ -225,7 +225,7 @@ If there were, update the j11master
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri4.27-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri4.99-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
         git commit -m"start for 4.99.2 release note" help/en/releasenotes/*.shtml
         git push github
@@ -754,8 +754,8 @@ Some of the operations that are performed will still generate files with CRLF li
         git checkout master
         git pull
         (commit a version number increment to master)
-        git checkout -b release-4.99.2
-        git push github release-4.99.2
+        git checkout -b release-4.99.1
+        git push github release-4.99.1
         git checkout master
 ```
 
