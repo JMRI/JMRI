@@ -1700,6 +1700,13 @@ public class TreeEditor extends TreeViewer {
                                 log.error("item cannot be connected", ex);
                             }
                             ThreadingUtil.runOnGUIEventually(() -> {
+                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                    // Remove the listener if it is already
+                                    // added so we don't end up with duplicate
+                                    // listeners.
+                                    b.removePropertyChangeListener(_treePane);
+                                    b.addPropertyChangeListener(_treePane);
+                                });
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                             });
