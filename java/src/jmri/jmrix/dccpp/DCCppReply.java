@@ -671,17 +671,32 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     /*
      * Some notes on DCC++ messages and responses...
      *
-     * Messages that have responses expected: t : <T REGISTER SPEED DIRECTION> f
-     * : (none) a : (none) T : <H ID THROW> w : (none) b : (none) W : <r
-     * CALLBACKNUM|CALLBACKSUB|CV CV_Value> B : <r CALLBACKNUM
-     * CALLBACKSUB|CV|Bit CV_Bit_Value> R : <r CALLBACKNUM|CALLBACKSUB|CV
-     * CV_Value> 1 : <p1> 0 : <p0> c : <a CURRENT> s : Series of status
-     * messages... <p[0,1]> Power state <T ...>Throttle responses from all
-     * registers <iDCC++ ... > Base station version and build date <H ID ADDR
-     * INDEX THROW> All turnout states.
+     * Messages that have responses expected: 
+     * t : <T REGISTER SPEED DIRECTION>
+     * f : (none)
+     * a : (none)
+     * T : <H ID THROW>
+     * w : (none)
+     * b : (none)
+     * W : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * B : <r CALLBACKNUM CALLBACKSUB|CV|Bit CV_Bit_Value>
+     * R : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * 1 : <p1>
+     * 0 : <p0>
+     * c : <a CURRENT>
+     * s : Series of status messages...
+     *     <p[0,1]>  Power state
+     *     <T ...>Throttle responses from all registers
+     *     <iDCC++ ... > Base station version and build date
+     *     <H ID ADDR INDEX THROW> All turnout states.
      *
-     * Unsolicited Replies | <Q snum [0,1]> Sensor reply. Debug messages: M :
-     * (none) P : (none) f : <f MEM> L : <M ... data ... >
+     * Unsolicited Replies
+     *  | <Q snum [0,1]> Sensor reply.
+     *  Debug messages:
+     *  M : (none) 
+     *  P : (none) 
+     *  f : <f MEM> 
+     *  L : <M ... data ... >
      */
 
     // -------------------------------------------------------------------
