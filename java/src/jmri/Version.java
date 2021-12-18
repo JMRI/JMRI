@@ -13,10 +13,10 @@ import java.util.ResourceBundle;
  * with time, perhaps followed by a couple of modifier characters. As a special
  * case, this is omitted for Production Releases.
  * <li>m, called the modifier, is a string that further describes the build. A
- * common modifier is "ish" which denotes an unofficial build.
+ * common modifier is "plus" which denotes an unofficial build.
  * </ul>
  * Hence you expect to see JMRI versions called things like "4.7.2", "4.6",
- * "4.7.3ish", "4.7.2-pjc", "4.7.2ish-pjc".
+ * "4.7.3plus", "4.7.2-pjc", "4.7.2plus-pjc".
  * <p>
  * The version string shown by a JMRI program or used to label a download comes
  * in two forms, depending on whether it was built by an "official" process or
@@ -30,11 +30,11 @@ import java.util.ResourceBundle;
  * property.
  * </ul>
  * <dt>Unofficial<dd>
- * Unofficial releases are marked by "ish" after the version number, and
+ * Unofficial releases are marked by "plus" after the version number, and
  * inclusion of the building user's ID.
  * <ul>
  * <li>If the revision number e.g. 123abc (git hash) is available in
- * release.revision_id, then "4.1.1ish+(user)+(date)+R123abc". Note the "R".
+ * release.revision_id, then "4.1.1plus+(user)+(date)+R123abc". Note the "R".
  * <li>Else "4.1.1+(user)+(date)", where the date comes from the
  * release.build_date property.
  * </ul>
@@ -44,7 +44,7 @@ import java.util.ResourceBundle;
  * <p>
  * Generally, JMRI updates its version string in the code repository right
  * <b>after</b> a release. Between formal release 1.2.3 and 1.2.4, the string
- * will be 1.2.4ish.
+ * will be 1.2.3plus.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -92,7 +92,7 @@ public class Version {
      * Descriptor for non-official build. Included in {@link #name()}, but not
      * in {@link #getCanonicalVersion()}.
      */
-    static final public String NON_OFFICIAL = "ish"; // NOI18N
+    static final public String NON_OFFICIAL = "plus"; // NOI18N
 
     /**
      * The user who built this versionBundle, as determined by the build
