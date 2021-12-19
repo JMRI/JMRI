@@ -461,9 +461,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.1+Rb65094ebf2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.dmg) | 11643aa3846844d938366f969589e36738765cfb963dcfb50fc4cf2db5e1efac
-[JMRI.4.99.1+Rb65094ebf2.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.exe) | dd838c4b423ad78b34f900f06f796caddff87aae5661d5fc58c01c69ef7f1006
-[JMRI.4.99.1+Rb65094ebf2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.tgz) | 86cf8b2f8e11b1b96df0ffd8b1e369fc9649a6ec6e37c8f1ac7eae51c398164a
+[JMRI.4.99.1+Rf3d7151af8.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.dmg) | 8b23919296ab511cca7b4220e6d578ac387936dfe93d420113b41c533920be39
+[JMRI.4.99.1+Rf3d7151af8.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.exe) | eed2981cb418b3b6a57c84f4b1ed676fabbd3b21995043bf2c2a0c8ca38e946b
+[JMRI.4.99.1+Rf3d7151af8.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.tgz) | 4e02ad171199e2498237d920cca90477849e1253b0775cbec930b937a6991449
+
 
 ```
 
