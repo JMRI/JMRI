@@ -148,10 +148,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         resetMenu.setEnabled(false);
 
         // Add a save item
-        var menuItem = new JMenuItem(Bundle.getMessage("MenuSaveNoDots"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuSaveNoDots"));
         menuItem.addActionListener(e -> {
                 storeFile();
-                System.err.println("STORED");
             }
 
         );
