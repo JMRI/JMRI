@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.26.2
+; - Update Java-install message URL
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.1
 ; - Remove Tools start menu items
 ; - Add support for Open JDK 8 Registry Keys
@@ -316,7 +319,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.26.1"                    ; Installer version
+!define INST_VER  "0.1.26.2"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -350,7 +353,7 @@ SetCompressor /SOLID /FINAL lzma
 ; -------------------------------------------------------------------------
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
-!define JRE_URL     "https://java.com/winoffline_installer/"
+!define JRE_URL     "https://jmri.org/java"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -490,7 +493,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
-    ; -- Recursively delete classes folder, which historically contained 
+    ; -- Recursively delete classes folder, which historically contained
     ; -- individual .properties and .classes patch files
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
@@ -507,7 +510,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
- 
+
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
