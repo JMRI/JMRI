@@ -154,7 +154,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     private void setRegex() {
         switch (myMessage.charAt(0)) {
             case DCCppConstants.THROTTLE_CMD:
-                myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
+                if ((match(toString(), DCCppConstants.THROTTLE_CMD_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
+                } else if ((match(toString(), DCCppConstants.THROTTLE_V3_CMD_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.THROTTLE_V3_CMD_REGEX;
+                }
                 break;
             case DCCppConstants.FUNCTION_CMD:
                 myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
@@ -307,12 +311,21 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
         switch (getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
-                text = "Throttle Cmd: ";
-                text += "Register: " + getRegisterString();
-                text += ", Address: " + getAddressString();
-                text += ", Speed: " + getSpeedString();
-                text += ", Direction: " + getDirectionString();
-                break;
+                if (isThrottleMessage()) {
+                    text = "Throttle Cmd: ";
+                    text += "Register: " + getRegisterString();
+                    text += ", Address: " + getAddressString();
+                    text += ", Speed: " + getSpeedString();
+                    text += ", Direction: " + getDirectionString();
+                } else if (isThrottleV3Message()) {
+                    text = "ThrottleV3 Cmd: ";
+                    text += "Address: " + getAddressString();
+                    text += ", Speed: " + getSpeedString();
+                    text += ", Direction: " + getDirectionString();
+                } else {
+                    text = "Invalid syntax: '" + toString() + "'";                                        
+                }
+                break;                 
             case DCCppConstants.FUNCTION_CMD:
                 text = "Function Cmd: ";
                 text += "Address: " + getFuncAddressString();
@@ -693,7 +706,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     // Identity Methods
     public boolean isThrottleMessage() {
-        return (this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD);
+        return (this.match(DCCppConstants.THROTTLE_CMD_REGEX) != null);
+    }
+
+    public boolean isThrottleV3Message() {
+        return (this.match(DCCppConstants.THROTTLE_V3_CMD_REGEX) != null);
     }
 
     public boolean isAccessoryMessage() {
@@ -1039,6 +1056,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public String getAddressString() {
         if (this.isThrottleMessage()) {
             return (getValueString(2));
+        } else if (this.isThrottleV3Message()) {
+            return (getValueString(1));
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return ("0");
@@ -1048,6 +1067,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public int getAddressInt() {
         if (this.isThrottleMessage()) {
             return (getValueInt(2));
+        } else if (this.isThrottleV3Message()) {
+            return (getValueInt(1));
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return (0);
@@ -1057,6 +1078,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public String getSpeedString() {
         if (this.isThrottleMessage()) {
             return (getValueString(3));
+        } else if (this.isThrottleV3Message()) {
+            return (getValueString(2));
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return ("0");
@@ -1066,6 +1089,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public int getSpeedInt() {
         if (this.isThrottleMessage()) {
             return (getValueInt(3));
+        } else if (this.isThrottleV3Message()) {
+                return (getValueInt(2));
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return (0);
@@ -1073,7 +1098,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getDirectionString() {
-        if (this.isThrottleMessage()) {
+        if (this.isThrottleMessage() || this.isThrottleV3Message()) {
             return (this.getDirectionInt() == 1 ? "Forward" : "Reverse");
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
@@ -1084,6 +1109,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public int getDirectionInt() {
         if (this.isThrottleMessage()) {
             return (getValueInt(4));
+        } else if (this.isThrottleV3Message()) {
+            return (getValueInt(3));
         } else {
             log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
             return (0);

@@ -32,7 +32,8 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
     private ShowDialogTableModel _showDialogTableModel;
     private JCheckBox _modalCheckBox;
     private JCheckBox _multiLineCheckBox;
-    private JTextField _localVariable;
+    private JTextField _localVariableForSelectedButton;
+    private JTextField _localVariableForInputString;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -139,17 +140,24 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         panel.add(new JLabel(Bundle.getMessage("ShowDialog_MultilineHelp")));
         
         
-        JPanel localVariablePanel = new JPanel();
-        _localVariable = new JTextField(20);
-        localVariablePanel.add(new JLabel(Bundle.getMessage("ShowDialog_LocalVariable")));
-        localVariablePanel.add(_localVariable);
-        panel.add(localVariablePanel);
+        JPanel localVariableForSelectedButtonPanel = new JPanel();
+        _localVariableForSelectedButton = new JTextField(20);
+        localVariableForSelectedButtonPanel.add(new JLabel(Bundle.getMessage("ShowDialog_LocalVariableForSelectedButton")));
+        localVariableForSelectedButtonPanel.add(_localVariableForSelectedButton);
+        panel.add(localVariableForSelectedButtonPanel);
+        
+        JPanel localVariableForInputStringPanel = new JPanel();
+        _localVariableForInputString = new JTextField(20);
+        localVariableForInputStringPanel.add(new JLabel(Bundle.getMessage("ShowDialog_LocalVariableForInputString")));
+        localVariableForInputStringPanel.add(_localVariableForInputString);
+        panel.add(localVariableForInputStringPanel);
         
         
         if (showDialog != null) {
             _modalCheckBox.setSelected(showDialog.getModal());
             _multiLineCheckBox.setSelected(showDialog.getMultiLine());
-            _localVariable.setText(showDialog.getLocalVariable());
+            _localVariableForSelectedButton.setText(showDialog.getLocalVariableForSelectedButton());
+            _localVariableForInputString.setText(showDialog.getLocalVariableForInputString());
             _formatType.setSelectedItem(showDialog.getFormatType());
             _format.setText(showDialog.getFormat());
         }
@@ -210,7 +218,8 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         }
         
         
-        showDialog.setLocalVariable(_localVariable.getText());
+        showDialog.setLocalVariableForSelectedButton(_localVariableForSelectedButton.getText());
+        showDialog.setLocalVariableForInputString(_localVariableForInputString.getText());
         
         showDialog.setFormatType(_formatType.getItemAt(_formatType.getSelectedIndex()));
         showDialog.setFormat(_format.getText());
