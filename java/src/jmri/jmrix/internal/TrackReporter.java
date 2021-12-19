@@ -18,32 +18,12 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
 
     public TrackReporter(String systemName) {
         super(systemName);
-        collection = new ArrayDeque<Object>();
+        collection = new ArrayDeque<>();
     }
 
     public TrackReporter(String systemName, String userName) {
         super(systemName, userName);
-        collection = new ArrayDeque<Object>();
-    }
-
-    /**
-     * Provide a general method for updating the report.
-     */
-    @Override
-    public void setReport(Object r) {
-        if (r == _currentReport) {
-            return;
-        }
-        Object old = _currentReport;
-        Object oldLast = _lastReport;
-        _currentReport = r;
-        if (r != null) {
-            _lastReport = r;
-            // notify
-            firePropertyChange("lastReport", oldLast, _lastReport);
-        }
-        // notify
-        firePropertyChange("currentReport", old, _currentReport);
+        collection = new ArrayDeque<>();
     }
 
     @Override

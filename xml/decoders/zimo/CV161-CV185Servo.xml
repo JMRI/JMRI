@@ -6,15 +6,16 @@
                  - Add "it" translation- Enzo Fortuna ( fortuna.enzo@gmail.com )
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
+<!-- version 1.3 - Ronald Kuhn - exclusion for MX615 and MX616 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
+  <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="194,195">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
     <label>Servo Protocol</label>
     <label xml:lang="it">Protocollo Servo</label>
     <label xml:lang="cs">Protokol serva</label>
     <label xml:lang="de">Servo Protokoll</label>
   </variable>
-  <variable item="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0">
+  <variable item="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0" exclude="194,195">
     <enumVal>
       <enumChoice choice="Only Active for movement" value="0">
         <choice>Only Active for movement</choice>
@@ -34,7 +35,7 @@
     <label xml:lang="cs">Řídící signál serva</label>
     <label xml:lang="de">Servo Steuersignal</label>
   </variable>
-  <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0">
+  <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0" exclude="194,195">
     <enumVal>
       <enumChoice choice="Moves to centre in dual key if both Fn's off">
         <choice>Moves to centre in dual key if both Fn's off</choice>
@@ -54,56 +55,56 @@
     <label xml:lang="cs">Středová poloha serva</label>
     <label xml:lang="de">Servo Mittelstellung</label>
   </variable>
-  <variable item="Servo 1 Left Stop" CV="162" default="49">
+  <variable item="Servo 1 Left Stop" CV="162" default="49" exclude="194,195">
     <decVal/>
     <label>Servo 1 Left Stop</label>
     <label xml:lang="it">Servo 1 Stop Sinistro</label>
     <label xml:lang="cs">Koncová poloha vlevo servo 1</label>
     <label xml:lang="de">Endstellung links</label>
   </variable>
-  <variable item="Servo 1 Right Stop" CV="163" default="205">
+  <variable item="Servo 1 Right Stop" CV="163" default="205" exclude="194,195">
     <decVal/>
     <label>Servo 1 Right Stop</label>
     <label xml:lang="it">Servo 1 Stop Destro</label>
     <label xml:lang="cs">Koncová poloha vpravo servo 1</label>
     <label xml:lang="de">Endstellung rechts</label>
   </variable>
-  <variable item="Servo 1 Centre" CV="164" default="127">
+  <variable item="Servo 1 Centre" CV="164" default="127" exclude="194,195">
     <decVal/>
     <label>Servo 1 Centre</label>
     <label xml:lang="it">Servo 1 Centro</label>
     <label xml:lang="cs">Středová poloha servo 1</label>
     <label xml:lang="de">Mittelstellung</label>
   </variable>
-  <variable item="Servo 1 Rotation Speed" CV="165" default="30">
+  <variable item="Servo 1 Rotation Speed" CV="165" default="30" exclude="194,195">
     <decVal/>
     <label>Servo 1 Rotation Speed</label>
     <label xml:lang="it">Servo 1 Velocità rotazione</label>
     <label xml:lang="cs">Rychlost přestavování servo 1</label>
     <label xml:lang="de">Umlaufzeit</label>
   </variable>
-  <variable item="Servo 2 Left Stop" CV="166" default="49">
+  <variable item="Servo 2 Left Stop" CV="166" default="49" exclude="194,195">
     <decVal/>
     <label>Servo 2 Left Stop</label>
     <label xml:lang="it">Servo 2 Stop Sinistro</label>
     <label xml:lang="cs">Koncová poloha vlevo servo 2</label>
     <label xml:lang="de">Endstellung links</label>
   </variable>
-  <variable item="Servo 2 Right Stop" CV="167" default="205">
+  <variable item="Servo 2 Right Stop" CV="167" default="205" exclude="194,195">
     <decVal/>
     <label>Servo 2 Right Stop</label>
     <label xml:lang="it">Servo 2 Stop Destro</label>
     <label xml:lang="cs">Koncová poloha vpravo servo 2</label>
     <label xml:lang="de">Endstellung rechts</label>
   </variable>
-  <variable item="Servo 2 Centre" CV="168" default="127">
+  <variable item="Servo 2 Centre" CV="168" default="127" exclude="194,195">
     <decVal/>
     <label>Servo 2 Centre</label>
     <label xml:lang="it">Servo 2 Centro</label>
     <label xml:lang="cs">Středová poloha servo 2</label>
     <label xml:lang="de">Mittelstellung</label>
   </variable>
-  <variable item="Servo 2 Rotation Speed" CV="169" default="30">
+  <variable item="Servo 2 Rotation Speed" CV="169" default="30" exclude="194,195">
     <decVal/>
     <label>Servo 2 Rotation Speed</label>
     <label xml:lang="it">Servo 2 Velocità rotazione</label>
@@ -166,14 +167,14 @@
     <label xml:lang="cs">Rychlost přestavování servo 4</label>
     <label xml:lang="de">Umlaufzeit</label>
   </variable>
-  <variable item="Servo 1 Function Allocation" CV="181" default="0">
+  <variable item="Servo 1 Function Allocation" CV="181" default="0" exclude="194,195">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
     <label>Servo 1 Function Allocation</label>
     <label xml:lang="it">Servo 1 allocaz.Funzioni</label>
     <label xml:lang="cs">Přiřazení funkcí servo 1</label>
     <label xml:lang="de">Funktionszuordnung</label>
   </variable>
-  <variable item="Servo 2 Function Allocation" CV="182" default="0">
+  <variable item="Servo 2 Function Allocation" CV="182" default="0" exclude="194,195">
     <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
     <label>Servo 2 Function Allocation</label>
     <label xml:lang="it">Servo 2 allocaz.Funzioni</label>

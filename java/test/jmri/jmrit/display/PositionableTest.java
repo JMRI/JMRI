@@ -2,9 +2,8 @@ package jmri.jmrit.display;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Test;
 
 /**
  * Test Positionable

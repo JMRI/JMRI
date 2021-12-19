@@ -181,7 +181,7 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 ```
         cd ../website
         cd releasenotes
-        git checkout j11master
+        git checkout master
         git pull
         cp jmri4.99.1.shtml jmri4.99.2.shtml
         $EDITOR jmri4.99.2.shtml
@@ -225,7 +225,7 @@ If there were, update the j11master
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri4.27-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri4.99-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
         git commit -m"start for 4.99.2 release note" help/en/releasenotes/*.shtml
         git push github
@@ -335,7 +335,7 @@ If you're developing any additional (post-4.99.1) changes that you want in the J
 ```
         ant realclean tests
         unset JMRI_OPTIONS
-        ant alltest
+        ant headlesstest
 ```
 
 
@@ -344,7 +344,7 @@ and attach jvisualvm to the AllTest class when it appears. When that's done, put
 ================================================================================
 ## Put Files Out For Checking
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm visible on web.
 
 - Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%204.99.1%20files%20available) with a subject line
 
@@ -461,9 +461,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.1+Rb65094ebf2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.dmg) | 11643aa3846844d938366f969589e36738765cfb963dcfb50fc4cf2db5e1efac
-[JMRI.4.99.1+Rb65094ebf2.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.exe) | dd838c4b423ad78b34f900f06f796caddff87aae5661d5fc58c01c69ef7f1006
-[JMRI.4.99.1+Rb65094ebf2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rb65094ebf2.tgz) | 86cf8b2f8e11b1b96df0ffd8b1e369fc9649a6ec6e37c8f1ac7eae51c398164a
+[JMRI.4.99.1+Rf3d7151af8.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.dmg) | 8b23919296ab511cca7b4220e6d578ac387936dfe93d420113b41c533920be39
+[JMRI.4.99.1+Rf3d7151af8.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.exe) | eed2981cb418b3b6a57c84f4b1ed676fabbd3b21995043bf2c2a0c8ca38e946b
+[JMRI.4.99.1+Rf3d7151af8.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.1/JMRI.4.99.1+Rf3d7151af8.tgz) | 4e02ad171199e2498237d920cca90477849e1253b0775cbec930b937a6991449
+
 
 ```
 
@@ -754,8 +755,8 @@ Some of the operations that are performed will still generate files with CRLF li
         git checkout master
         git pull
         (commit a version number increment to master)
-        git checkout -b release-4.99.2
-        git push github release-4.99.2
+        git checkout -b release-4.99.1
+        git push github release-4.99.1
         git checkout master
 ```
 

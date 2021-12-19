@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An SCWarrant is a warrant that is controlled by the signals on a layout. 
+ * An SCWarrant is a warrant that is controlled by the signals on a layout.
  * It will not run unless you have your layout fully covered with sensors and
  * signals.
- * 
+ *
  * @author  Karl Johan Lisby Copyright (C) 2016
  */
 public class SCWarrant extends Warrant {
@@ -27,7 +27,7 @@ public class SCWarrant extends Warrant {
     private boolean forward = true;
     private final boolean _allowShallowAllocation = false;
     private DccThrottle _throttle = null;
-    
+
     /**
      * Create an object with no route defined.
      * <p>
@@ -46,7 +46,7 @@ public class SCWarrant extends Warrant {
     public long getTimeToPlatform() {
         return timeToPlatform;
     }
-    
+
     public void setTimeToPlatform(long TTP) {
         timeToPlatform = TTP;
     }
@@ -54,11 +54,11 @@ public class SCWarrant extends Warrant {
     public void setForward(boolean set) {
         forward = set;
     }
-    
+
     public boolean getForward() {
         return forward;
     }
-    
+
     public void setSpeedFactor(float factor) {
         if (factor > 1.0) {
             speedFactor = 1.0f;
@@ -68,11 +68,11 @@ public class SCWarrant extends Warrant {
             speedFactor = factor;
         }
     }
-    
+
     public float getSpeedFactor() {
         return speedFactor;
     }
-    
+
     float _maxBlockLength = 0;
     float getMaxBlockLength() {
         return _maxBlockLength;
@@ -86,7 +86,7 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
+
     private String allocateStartBlock() {
         BlockOrder bo = getBlockOrderAt(0);
         OBlock block = bo.getBlock();
@@ -150,7 +150,7 @@ public class SCWarrant extends Warrant {
         }
         return true;
     }
-    
+
     /**
      * Callback from acquireThrottle() when the throttle has become available.sync
      */
@@ -169,7 +169,7 @@ public class SCWarrant extends Warrant {
             return;
         }
         log.debug("{} notifyThrottleFound address= {} _runMode= {}",_trainName,throttle.getLocoAddress(),_runMode);
-        
+
         startupWarrant();
 
         firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
@@ -222,9 +222,11 @@ public class SCWarrant extends Warrant {
         allocateBlocksAndSetTurnouts(0);
         setTrainDirection();
         SCTrainRunner thread = new SCTrainRunner(this);
-        jmri.util.ThreadingUtil.newThread(thread).start();
+        Thread t = jmri.util.ThreadingUtil.newThread(thread);
+        t.setName("SCTrainRunner");
+        t.start();
     }
-    
+
     /**
      * Wait until there is a train in the start block.
      * @return true if block not UNOCCUPIED
@@ -249,7 +251,7 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
+
     /**
      * Set this train to run backwards or forwards as specified in the command list.
      */
@@ -301,7 +303,7 @@ public class SCWarrant extends Warrant {
             _nextSignal.addPropertyChangeListener(this);
         }
     }
-    
+
     /**
      * Are we still in the start block?
      * @return true if still in start block
@@ -309,7 +311,7 @@ public class SCWarrant extends Warrant {
     boolean inStartBlock() {
         return (getCurrentOrderIndex() == 0);
     }
-    
+
     /**
      * Are we close to the destination block?
      * @return true if close
@@ -359,9 +361,9 @@ public class SCWarrant extends Warrant {
             _throttle.setSpeedSetting(speedFactor*speed_f);
         }
     }
-    
+
      /**
-     * Do what the title says. But make sure not to set the turnouts if already done, since that 
+     * Do what the title says. But make sure not to set the turnouts if already done, since that
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
      * @param startIndex Allocate starting with this index
      */
@@ -407,7 +409,7 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
+
     /**
      * Block in the route going active.
      * Make sure to allocate the rest of the route, update our present location and then tell
@@ -418,7 +420,7 @@ public class SCWarrant extends Warrant {
     protected void goingActive(OBlock block) {
         int activeIdx = getIndexOfBlock(block, getCurrentOrderIndex());
         log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
-                    + ", getCurrentOrderIndex()= {}" 
+                    + ", getCurrentOrderIndex()= {}"
                     + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,getCurrentOrderIndex(),getDisplayName(),_runMode,(_throttle==null));
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
@@ -454,7 +456,7 @@ public class SCWarrant extends Warrant {
     }
 
     /**
-     * Block in the route is going Inactive. 
+     * Block in the route is going Inactive.
      * Release the blocks that we have left.
      * Check if current block has been left (i.e. we have left our route) and stop the train in that case.
      */
@@ -528,7 +530,7 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NN_NAKED_NOTIFY"}, 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NN_NAKED_NOTIFY"},
             justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null. NotifyAll passing event, not state.")
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -587,8 +589,8 @@ public class SCWarrant extends Warrant {
             }
         }
     }
-    
-    
+
+
     /**
      * Make sure to free up additional resources for a running SCWarrant.
      */
@@ -601,7 +603,7 @@ public class SCWarrant extends Warrant {
         super.stopWarrant(abort, false);
         _message = null;
     }
-    
+
     /*******************************************************************************************************************************
      * The waiting for event must happen in a separate thread.
      * Therefore the main code of runSignalControlledTrain is put in this class.
@@ -613,7 +615,7 @@ public class SCWarrant extends Warrant {
         SCTrainRunner(SCWarrant warrant) {
             _warrant = warrant;
         }
-        
+
         /**
          * When not using shallow allocation, warrants will have to wait until the entire route
          * is free and allocated to that particular warrant, before strting to run the train.
@@ -763,7 +765,7 @@ public class SCWarrant extends Warrant {
                     _throttle.setSpeedSetting(speedFactor*SPEED_TO_PLATFORM);
                 }
                 while ((getBlockAt(orders.size()-2).getState()&Block.OCCUPIED)==Block.OCCUPIED && getBlockAt(orders.size()-2).isAllocatedTo(_warrant)) {
-                    log.debug(" runSignalControlledTrain entering wait. Block {}" 
+                    log.debug(" runSignalControlledTrain entering wait. Block {}"
                               +"   free: {}   allocated to this warrant: {}",
                               _warrant._trainName,getBlockAt(orders.size()-2).getDisplayName(),getBlockAt(orders.size()-2).isFree(),getBlockAt(orders.size()-2).isAllocatedTo(_warrant));
                     try {
@@ -820,7 +822,7 @@ public class SCWarrant extends Warrant {
         }
 
     }
-    
+
     /* What super does currently is fine. But FindBug reports EQ_DOESNT_OVERRIDE_EQUALS
      * FindBug wants us to duplicate and override anyway
      */
@@ -836,9 +838,9 @@ public class SCWarrant extends Warrant {
     public int hashCode() {
         return super.hashCode();
     }
-    
+
     /**
-     * 
+     *
      */
     private static final Logger log = LoggerFactory.getLogger(SCWarrant.class);
 }

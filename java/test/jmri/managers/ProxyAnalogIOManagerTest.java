@@ -6,10 +6,9 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -88,7 +87,7 @@ public class ProxyAnalogIOManagerTest {
 
     @Test
     public void testInstanceManagerIntegration() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
 
         Assert.assertTrue(InstanceManager.getDefault(AnalogIOManager.class) instanceof ProxyAnalogIOManager);
@@ -223,17 +222,18 @@ public class ProxyAnalogIOManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
-        jmri.InstanceManager.setAnalogIOManager(l);
 
+        InstanceManager.setAnalogIOManager(l);
+        
         JUnitUtil.initInternalLightManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // kill timebase created by variable light
         var timebase = InstanceManager.getNullableDefault(jmri.Timebase.class);
@@ -428,7 +428,7 @@ public class ProxyAnalogIOManagerTest {
             extends AbstractManager<SomeDevice> implements SomeDeviceManager {
 
         public SomeDeviceManagerImplementation() {
-            super(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
         @Override
@@ -457,7 +457,7 @@ public class ProxyAnalogIOManagerTest {
     private static class MyAnalogIOManager extends AbstractAnalogIOManager {
 
         public MyAnalogIOManager() {
-            super(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
     }
