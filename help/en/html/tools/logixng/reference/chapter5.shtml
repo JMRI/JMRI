@@ -983,25 +983,64 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_dialog.png"><img src=
-        "images/chapter5/show_dialog_dialog.png" alt="Chapter 5 show dialog"
-        width="596" height="615"></a>
+        "images/chapter5/show_dialog_dialog.png" alt="Chapter 5 show dialog dialog"
+        width="600" height="475"></a  >
       </div>
 
-      <p>One or more buttons can be included in the dialog.  At least one button must be selected.</p>
+      <p>Additional Features:</p>
 
-      <p>A dialog can be <strong>modal</strong> or non-modal.  Modal means that the dialog window
-      remains above any other window until it is closed.</p>
+      <dl>
+        <dt>Buttons</dt>
+        <dd>One or more buttons can be included in the dialog.  At least one button must be selected.</dd>
 
-      <p>The multiline option enables the ability to have multiple lines displayed by the dialog.</p>
+        <dt>Modal</dt>
+        <dd>A dialog can be <strong>modal</strong> or non-modal.  Modal means that the dialog window
+        remains above any other window and the user cannot do anything in any other JMRI window
+        until it is closed.</dd>
 
-      <p>If a predefined local variable is supplied, the selected button number is copied to the
-      local variable.  The button numbers are shown next to the button text in the button selection
-      section.</p>
+        <dt>Multiline</dt>
+        <dd>The multiline option enables the ability to have multiple lines displayed by the dialog.
+        To get a new line, use the HTML <strong>&lt;br&gt;</strong> tag.</dd>
+
+        <dt>Selected button</dt>
+        <dd>If a predefined local variable is supplied, the selected button number is copied to the
+        local variable.  The button numbers are shown next to the button text in the button
+        selection section.</dd>
+
+        <dt>Input string<span class="since">since 4.99.1</span></dt>
+        <dd>If a predefined local variable is supplied, a text input field is included. The current
+        value of the variable will be displayed in the text input field.  When the dialog is closed
+        using one of the buttons, the value in the input field will be copied to the local
+        variable.</dd>
+      </dl>
 
       <p class="noted">Note:  When the dialog is displayed, the rest of the conditional continues
       to run.  In the first example, the A3 action will execute while the dialog is displayed.</p>
 
-      <p>Sample dialogs:</p>
+      <p>After the dialog action has been created, two new rows are added.  These are both optional
+      and can be left empty.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_validate_execute.png"><img src=
+        "images/chapter5/show_dialog_validate_execute.png" alt="Chapter 5 show dialog validate execute"
+        width="280" height="86"></a>
+      </div>
+
+      <dl>
+        <dt>Validate</dt>
+        <dd>The <strong>Validate</strong> expression can be used to check for valid input when using
+        an input local variable.  If the expression is false, the dialog will remain open until the
+        expression is true.  The close button on the window can be used to bypass validation and
+        execution.  If the expression is true or no expression was defined, the Execute action will
+        run.</dd>
+
+        <dt>Execute</dt>
+        <dd>The <strong>Execute</strong> action is run when the validation expression is true or if
+        one was not defined.  A common use is handling a multiple button dialog that has the
+        selected button local variable.</dd>
+      </dl>
+
+      <h5>Sample dialog with button checking</h5>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_yes_no.png"><img src=
@@ -1015,6 +1054,8 @@
         width="581" height="380"></a>
       </div>
 
+      <h5>Sample multiline dialog with string.format</h5>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/show_dialog_multiline.png"><img src=
         "images/chapter5/show_dialog_multiline.png" alt="Chapter 5 show dialog multiline"
@@ -1025,6 +1066,20 @@
         <a href="images/chapter5/show_dialog_ml_sample"><img src=
         "images/chapter5/show_dialog_ml_sample.png" alt="Chapter 5 show dialog multiline sample"
         width="500" height="300"></a>
+      </div>
+
+      <h5>Sample input dialog with validation using a digital formula</h5>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_input_sample.png"><img src=
+        "images/chapter5/show_dialog_input_sample.png" alt="Chapter 5 show dialog input sample"
+        width="323" height="129"></a>
+      </div>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/show_dialog_input_code"><img src=
+        "images/chapter5/show_dialog_input_code.png" alt="Chapter 5 show dialog iniput code"
+        width="596" height="300"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
