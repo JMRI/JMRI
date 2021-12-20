@@ -218,7 +218,7 @@
       operating system versions. Please note that not all users of that operating system will have
       updated to this Java version; many will be using an older one.</p>
 
-      <p>Java installers are now available from mlutiple sources.  Our
+      <p>Java installers are now available from multiple sources.  Our
         <a href="/java/index.shtml">Java installer page</a> lists a number of them.
 
       <p>JMRI development requires Java 8u101 or later through January 2022. 8u101 contains a certificate change that's
