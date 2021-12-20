@@ -171,7 +171,7 @@
 # Checks we plan to eventually put in place, but would be burdensome now
 #
 
-  # missing synch in synchronized method override
+  # missing synch in synchronized method override (enforced in tests-warnings)
   # 24 outstanding items
 -err:-syncOverride
 

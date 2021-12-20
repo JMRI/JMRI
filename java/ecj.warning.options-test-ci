@@ -20,8 +20,10 @@
 # Case counts here are as of 12/15/2021
 #
 
-# Allow 14 missing synch in synchronized method override
+# Enforce missing synch in synchronized method override
 -err:+syncOverride
+
+
 
 # Allowing 55 un-annotated deprecations
 -err:-dep-ann
