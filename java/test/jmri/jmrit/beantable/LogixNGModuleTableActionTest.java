@@ -57,8 +57,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         Assert.assertEquals("LogixNG Table Action class description", Bundle.getMessage("TitleLogixNGModuleTable"), a.getClassDescription());  // NOI18N
     }
 
-    @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -548,8 +547,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 */
 
-    @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     public void testEditModule() throws JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

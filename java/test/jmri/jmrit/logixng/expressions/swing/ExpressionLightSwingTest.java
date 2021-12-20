@@ -44,7 +44,6 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         Assert.assertNotNull("exists",panel);
     }
 
-    @org.junit.Ignore("Fails in Java 11 testing")
     @Test
     public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
