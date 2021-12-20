@@ -120,7 +120,6 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
-        <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.7.jar"/>
         <pathelement location="${libdir}/jdom2-2.0.6.jar"/>

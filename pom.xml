@@ -1487,13 +1487,6 @@
             <artifactId>spotbugs-annotations</artifactId>
             <version>3.1.7</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>com.digi.xbee</groupId>
             <artifactId>xbee-java-library</artifactId>

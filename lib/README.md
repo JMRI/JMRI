@@ -274,10 +274,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl.jar
-- version Xerces-J 2.11.0
-- from http://www.apache.org/dist/xerces/j/
-
 ##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
 - usb4java version 1.3.0
 - support for direct USB device usage
