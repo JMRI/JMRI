@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  */
 public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
-   
+
     @Test
     public void testGetCanid(){
         Assert.assertEquals("default canid value",120,((TrafficController)tc).getCanid());
@@ -24,11 +24,11 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
         ((TrafficController)tc).setCanId(240);
         Assert.assertEquals("canid value after set",240,((TrafficController)tc).getCanid());
     }
- 
+
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp(); 
+        jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new TrafficController(){
            @Override
@@ -60,9 +60,9 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
            @Override
            public void sendCanMessage(CanMessage m, CanListener l) {}
            @Override
-           public void addCanListener(CanListener l) {}
+           public synchronized void addCanListener(CanListener l) {}
            @Override
-           public void removeCanListener(CanListener l) {}
+           public synchronized void removeCanListener(CanListener l) {}
 
         };
     }
@@ -73,7 +73,7 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
- 
+
     }
 
 }

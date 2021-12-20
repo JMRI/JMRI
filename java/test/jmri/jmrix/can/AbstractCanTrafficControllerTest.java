@@ -12,11 +12,11 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  */
 public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
-    
+
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp(); 
+        jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new AbstractCanTrafficController(){
            @Override
@@ -48,9 +48,9 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
            @Override
            public void sendCanMessage(CanMessage m, CanListener l) {}
            @Override
-           public void addCanListener(CanListener l) {}
+           public synchronized void addCanListener(CanListener l) {}
            @Override
-           public void removeCanListener(CanListener l) {}
+           public synchronized void removeCanListener(CanListener l) {}
 
         };
     }
@@ -61,7 +61,7 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
- 
+
     }
 
 }
