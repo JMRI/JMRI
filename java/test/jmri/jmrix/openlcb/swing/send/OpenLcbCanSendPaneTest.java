@@ -55,6 +55,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         JUnitUtil.resetProfileManager();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();

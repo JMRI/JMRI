@@ -25,6 +25,7 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         tif = new OlcbTestInterface();
         tif.waitForStartup();

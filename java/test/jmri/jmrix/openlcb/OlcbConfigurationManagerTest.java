@@ -63,6 +63,7 @@ public class OlcbConfigurationManagerTest {
     @BeforeAll
     public static void preClassInit() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         scm = new OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();

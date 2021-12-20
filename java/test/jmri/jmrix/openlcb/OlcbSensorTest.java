@@ -408,6 +408,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+       // this test is run separately because it leaves a lot of threads behind
         l = new PropertyChangeListenerScaffold();
         // load dummy TrafficController
         ti = new OlcbTestInterface();

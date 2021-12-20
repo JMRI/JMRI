@@ -61,6 +61,7 @@ public class OlcbSignalMastXmlTest {
     @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
+       // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
