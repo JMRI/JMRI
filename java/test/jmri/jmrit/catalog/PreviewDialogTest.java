@@ -31,8 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PreviewDialogTest {
 
-    @org.junit.Ignore("Fails in Java 11 testing")
-    //@Test
+    @Test
     public void testCTor(@TempDir File folder) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("PreviewDialog test frame");
@@ -43,8 +42,8 @@ public class PreviewDialogTest {
         jf.dispose();
     }
 
-    @org.junit.Ignore("Fails in Java 11 testing")
-    //@Test
+
+    @Test
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         long time = System.currentTimeMillis();
