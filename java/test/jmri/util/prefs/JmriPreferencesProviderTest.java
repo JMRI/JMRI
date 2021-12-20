@@ -108,11 +108,9 @@ public class JmriPreferencesProviderTest {
     @Test
     @SuppressWarnings("deprecated") // Package.getPackage()
     public void testFindCNBForPackage() {
-        // in Java 11, this would be better as:
-        // ClassLoader cl = getClass().getClassLoader();
-        // assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
-        // assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
-        assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(Package.getPackage("jmri.util")));
+        ClassLoader cl = getClass().getClassLoader();
+        assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
+        assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
     }
 
     /**

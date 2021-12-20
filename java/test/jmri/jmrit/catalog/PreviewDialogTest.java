@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PreviewDialogTest {
 
-    //@org.junit.Ignore("Fails in Java 11 testing")
     @Test
     public void testCTor(@TempDir File folder) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
