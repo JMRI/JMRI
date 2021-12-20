@@ -1516,10 +1516,6 @@ public class JUnitUtil {
                             action = "Found";
                             kill = false;
                         }
-                        if (name.toUpperCase().startsWith("OLCB") || name.toUpperCase().startsWith("OPENLCB")) { // ugly special case
-                            action = "Skipping";
-                            kill = false;
-                        }
 
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
