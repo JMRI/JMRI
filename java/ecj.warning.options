@@ -21,32 +21,3 @@
 #
 
 
-#
-# Checks we plan to eventually put in place, but would be burdensome now
-#
-
-  # 211 cases; the common "if (debugFlag)" metaphor is flagged by these
--err:-allDeadCode
--err:+deadCode
-
-  # missing synch in synchronized method override
-  # 24 outstanding items
--err:-syncOverride
-
-  # 1270 "Empty block should be documented"
--err:-emptyBlock
-
-  # 291 cases of "Potential Resource Leak: '<unassigned Closeable value>' may not be closed"
--err:-resource
-
-
-
-  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings
-  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
--warn:-warningToken
-  # occasionally turn off @SuppressWarnings to see if there are occurrences to fix
-  #   Currently 370 cases
--err:+suppress
-
-
-

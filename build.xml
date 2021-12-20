@@ -934,7 +934,6 @@
             >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
-                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
             </javac-options>
         </ecj-compile>
@@ -951,6 +950,7 @@
             >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
             </javac-options>
         </ecj-compile>

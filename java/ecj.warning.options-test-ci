@@ -20,15 +20,17 @@
 # Case counts here are as of 12/15/2021
 #
 
+# Allow 14 missing synch in synchronized method override
+-err:+syncOverride
 
-# Allowing 56 un-annotated deprecations
+# Allowing 55 un-annotated deprecations
 -err:-dep-ann
 -err:-deprecation
 -err:-allDeprecation
 
-# 178 missing @Override annotations
+# 176 missing @Override annotations
 -err:-allOver-ann
 -err:-over-ann
 
-# 200 generic raw types
+# 179 generic raw types
 -err:-raw
