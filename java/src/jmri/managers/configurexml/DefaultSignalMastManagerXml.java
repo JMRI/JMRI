@@ -110,7 +110,7 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
                             | IllegalAccessException | java.lang.reflect.InvocationTargetException
                             | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
@@ -120,6 +120,7 @@ public class DefaultSignalMastManagerXml
 
         loadSignalMastClass(shared, "turnoutsignalmast");
         loadSignalMastClass(shared, "virtualsignalmast");
+        loadSignalMastClass(shared, "mqttsignalmast");
         loadSignalMastClass(shared, "matrixsignalmast");
         loadSignalMastClass(shared, "dccsignalmast");
         loadSignalMastClass(shared, "olcbsignalmast");
