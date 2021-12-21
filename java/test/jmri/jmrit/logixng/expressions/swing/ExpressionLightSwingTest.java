@@ -75,6 +75,9 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
         Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
         Assert.assertEquals(ExpressionLight.LightState.Off, expression.getBeanState());
+        
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        jfo.dispose();
     }
 
     @Test

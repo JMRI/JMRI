@@ -84,6 +84,9 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
 
         Assert.assertEquals("IS1", expression.getSensor().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
+        
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        jfo.dispose();
     }
 
     // The minimal setup for log4J

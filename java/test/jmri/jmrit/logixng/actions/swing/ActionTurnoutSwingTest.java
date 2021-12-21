@@ -71,6 +71,9 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
 
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
+        
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        jfo.dispose();
     }
 
     // The minimal setup for log4J

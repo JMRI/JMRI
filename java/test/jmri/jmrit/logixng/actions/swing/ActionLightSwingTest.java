@@ -80,6 +80,9 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
 
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
+        
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        jfo.dispose();
     }
 
     // The minimal setup for log4J

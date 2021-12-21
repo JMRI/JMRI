@@ -69,6 +69,9 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
 
         Assert.assertEquals("IS1", action.getSensor().getBean().getSystemName());
         Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
+        
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        jfo.dispose();
     }
 
     // The minimal setup for log4J
