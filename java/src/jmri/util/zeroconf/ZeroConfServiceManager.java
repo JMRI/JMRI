@@ -88,7 +88,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * objects is static. All access <strong>must</strong> be through
      * {@link #getDNSes() } to ensure this is populated correctly.
      */
-    protected static final HashMap<InetAddress, JmDNS> JMDNS_SERVICES = new HashMap<>();
+    static final HashMap<InetAddress, JmDNS> JMDNS_SERVICES = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceManager.class);
     // class data objects
     protected final HashMap<String, ZeroConfService> services = new HashMap<>();
@@ -470,7 +470,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * <li>Repeat process with NodeIdentity#networkIdentity() as input if above never
      * yields a usable host name</li>
      * </ol>
-     * 
+     *
      * @param string String to convert to host name
      * @return An RFC 1123 compliant host name
      */

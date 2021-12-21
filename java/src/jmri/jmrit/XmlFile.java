@@ -614,7 +614,7 @@ public abstract class XmlFile {
         defaultDtdLocation = v;
     }
 
-    static public String defaultDtdLocation = "/xml/DTD/";
+    static String defaultDtdLocation = "/xml/DTD/";
 
     /**
      * Get the location for DTDs in this XML document.

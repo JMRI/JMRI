@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young (c) 2018 2019
  * @see CbusSlotMonitorPane
- * 
+ *
  */
 public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -38,30 +38,30 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
 
     public static int CS_TIMEOUT = 2000; // command station timeout for estop and track messages
     private static final int MAX_LINES = 5000;
-    
+
     // column order needs to match list in column tooltips
-    static public final int SESSION_ID_COLUMN = 0; 
+    static public final int SESSION_ID_COLUMN = 0;
     static public final int LOCO_ID_COLUMN = 1;
     static public final int ESTOP_COLUMN = 2;
     static public final int LOCO_ID_LONG_COLUMN = 3;
-    static public final int LOCO_COMMANDED_SPEED_COLUMN = 4;    
+    static public final int LOCO_COMMANDED_SPEED_COLUMN = 4;
     static public final int LOCO_DIRECTION_COLUMN = 5;
     static public final int FUNCTION_LIST = 6;
     static public final int SPEED_STEP_COLUMN = 7;
     static public final int LOCO_CONSIST_COLUMN = 8;
     static public final int FLAGS_COLUMN = 9;
-    
+
     static public final int MAX_COLUMN = 10;
-    
-    static protected final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
-    
+
+    static final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
+
     /**
      * Create a New CbusSlotMonitorDataModel.
      * Public access for user scripting.
      * @param memo CAN System Connection to monitor.
      */
     public CbusSlotMonitorDataModel(CanSystemConnectionMemo memo) {
-        
+
         _mainArray = new ArrayList<>();
 
         // connect to the CanInterface
@@ -69,15 +69,15 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         addTc(tc);
         tablefeedback = new TextAreaFIFO(MAX_LINES);
         tablefeedback.setEditable ( false );
-        
+
     }
-    
+
     protected TextAreaFIFO tablefeedback(){
         return tablefeedback;
     }
 
     // order needs to match column list top of tabledatamodel
-    static protected final String[] CBUSSLOTMONTOOLTIPS = {
+    static final String[] CBUSSLOTMONTOOLTIPS = {
         ("Session ID"),
         null, // loco id
         null, // estop
@@ -90,7 +90,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         null // flags
 
     }; // Length = number of items in array should (at least) match number of columns
-    
+
     /**
      * Return the number of rows to be displayed.
      */
@@ -136,7 +136,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return "unknown"; // NOI18N
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -161,7 +161,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return null;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -195,7 +195,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return _mainArray.get(row).getConsistId();
             case FLAGS_COLUMN:
                 return _mainArray.get(row).getFlagString();
-            case LOCO_DIRECTION_COLUMN: 
+            case LOCO_DIRECTION_COLUMN:
                 return _mainArray.get(row).getDirection();
             case LOCO_COMMANDED_SPEED_COLUMN:
                 return _mainArray.get(row).getCommandedSpeed();
@@ -210,7 +210,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return null;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -254,27 +254,27 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 break;
         }
     }
-    
+
     private void updateGui(int row,int col) {
         ThreadingUtil.runOnGUI( ()->{
-            fireTableCellUpdated(row, col); 
+            fireTableCellUpdated(row, col);
         });
-        
+
     }
 
     private int createnewrow(int locoid, Boolean islong){
-        
+
         DccLocoAddress addr = new DccLocoAddress(locoid,islong );
         CbusSlotMonitorSession newSession = new CbusSlotMonitorSession(addr);
-        
+
         _mainArray.add(newSession);
-        
+
         ThreadingUtil.runOnGUI( ()->{
             fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
         });
         return getRowCount()-1;
     }
-    
+
     // returning the row number not the session
     // so that any updates go through the table model
     // and are updated in the GUI
@@ -286,7 +286,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         }
         return createnewrow(addr.getNumber(),addr.isLongAddress());
     }
-    
+
     private int getrowfromsession(int sessionid){
         for (int i = 0; i < getRowCount(); i++) {
             if (sessionid==_mainArray.get(i).getSessionId() )  {
@@ -303,7 +303,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         // should receive a PLOC response with loco id etc.
         return -1;
     }
-    
+
     /**
      * @param m outgoing CanMessage
      */
@@ -486,12 +486,12 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 break;
         }
     }
-    
+
     // ploc sent from a command station to a throttle
     private void processploc(boolean messagein, int session, DccLocoAddress addr,
         int speeddir, int fa, int fb, int fc) {
         // log.debug( Bundle.getMessage("CBUS_CMND_BR") + Bundle.getMessage("CNFO_PLOC",session,locoid));
-        
+
         int row = provideTableRow(addr);
         setValueAt(session, row, SESSION_ID_COLUMN);
         setValueAt(speeddir, row, LOCO_COMMANDED_SPEED_COLUMN);
@@ -500,7 +500,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         processdfun( messagein, session, 3, fc);
 
     }
-    
+
     // kloc sent from throttle to command station to release loco, which will continue at current speed
     private void processkloc(boolean messagein, int session) {
         int row=getrowfromsession(session);
@@ -513,9 +513,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         log.debug("{} {}",messagedir,Bundle.getMessage("CNFO_KLOC",session));
         if ( row > -1 ) {
             setValueAt(0, row, SESSION_ID_COLUMN); // Session restored by sending QLOC if v4 firmware
-            
+
             // version 4 fw maintains version number, so to check this request session details from command station
-            // if this is sent with the v3 firmware then a popup error comes up from cbus throttlemanager when 
+            // if this is sent with the v3 firmware then a popup error comes up from cbus throttlemanager when
             // errStr is populated in the switch error clauses in canreply.
             // check if version 4
             if ( ( cmndstat_fw > 3 ) && ( _mainArray.get(row).getCommandedSpeed() > 0 )) {
@@ -527,17 +527,17 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 m.setElement(1, session);
                 tc.sendCanMessage(m, null);
             }
-        }        
-    }    
+        }
+    }
 
     // rloc sent from throttle to command station to get loco
     private void processrloc(boolean messagein, DccLocoAddress addr ) {
-        
+
         int row = provideTableRow(addr);
         log.debug("new table row {}",row);
 
     }
-    
+
     // gloc sent from throttle to command station to get loco
     private void processgloc(boolean messagein, DccLocoAddress addr, int flags) {
         int row = provideTableRow(addr);
@@ -564,7 +564,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         flagstring.append(addr);
         addToLog(1,flagstring.toString());
     }
-    
+
     // stmod sent from throttle to cmmnd station if speed steps not 128 / set service mode / sound mode
     private void processstmod(boolean messagein, int session, int flags) {
         int row=getrowfromsession(session);
@@ -574,23 +574,23 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 messagedir=( Bundle.getMessage("CBUS_IN_CAB"));
             } else { // jmri throttle
                 messagedir=( Bundle.getMessage("CBUS_OUT_CMD"));
-            }            
-            
+            }
+
             boolean sm0 = ((flags ) & 1) != 0;
             boolean sm1 = ((flags >> 1 ) & 1) != 0;
             boolean servicemode = ((flags >> 2 ) & 1) != 0;
             boolean soundmode = ((flags >> 3 ) & 1) != 0;
-            
+
             String speedstep="";
             if ((!sm0) && (!sm1)){
                 speedstep="128";
             }
             else if ((!sm0) && (sm1)){
                 speedstep="14";
-            }        
+            }
             else if ((sm0) && (!sm1)){
                 speedstep="28I";
-            }        
+            }
             else if ((sm0) && (sm1)){
                 speedstep="28";
             }
@@ -599,14 +599,14 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    // DKEEP sent as keepalive from throttle to command station 
+    // DKEEP sent as keepalive from throttle to command station
     private void processdkeep(boolean messagein, int session) {
         int row=getrowfromsession(session);
         if ( row < 0 ) {
             log.debug("Requesting loco details for session {}.",session );
         }
     }
-    
+
     // DSPD sent from throttle to command station , speed / direction
     private void processdspd(boolean messagein, int session, int speeddir) {
         // log.warn("processing dspd");
@@ -621,11 +621,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         // log.debug("processing dflg session {} flag int {}",session,flags);
         int row=getrowfromsession(session);
         if ( row>-1 ) {
-            
+
             _mainArray.get(row).setFlags(flags);
             updateGui(row,SPEED_STEP_COLUMN);
             updateGui(row,FLAGS_COLUMN);
-        }            
+        }
     }
 
     // DFNON Sent by a cab to turn on a specific loco function, alternative method to DFUN
@@ -636,7 +636,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             _mainArray.get(row).setFunction(function,trueorfalse);
             updateGui(row,FUNCTION_LIST);
         }
-    }    
+    }
 
     // DFUN Sent by a cab to trigger loco function
     // also used to process function responses from PLOC
@@ -690,21 +690,21 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             updateGui(row,FUNCTION_LIST);
         }
     }
-    
+
     // ERR sent by command station
     private void processerr(boolean messagein, int one, int two, int errnum) {
         // log.warn("processing err");
         int rcvdIntAddr = (one & 0x3f) * 256 + two;
         // boolean rcvdIsLong = (one & 0xc0) != 0;
         // DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
-        
+
         StringBuilder buf = new StringBuilder();
         if (messagein){ // external throttle
             buf.append( Bundle.getMessage("CBUS_CMND_BR"));
         } else { // jmri throttle
             buf.append( Bundle.getMessage("CBUS_OUT_CMD"));
         }
-        
+
         switch (errnum) {
             case 1:
                 buf.append(Bundle.getMessage("ERR_LOCO_STACK_FULL"));
@@ -745,17 +745,17 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         _context = buf.toString();
         addToLog(1,_context);
     }
-    
+
     // PCON sent by throttle to add to consist
     // also used to process remove from consist KCON
     private void processpcon(boolean messagein, int session, int consist){
         log.debug("processing pcon");
         int row=getrowfromsession(session);
         if ( row>-1 ) {
-            
+
             int consistaddr = (consist & 0x7f);
             setValueAt(consistaddr, row, LOCO_CONSIST_COLUMN);
-            
+
             StringBuilder buf = new StringBuilder();
             buf.append( Bundle.getMessage("CNFO_PCON",session,consistaddr));
             if ((consist & 0x80) == 0x80){
@@ -766,20 +766,20 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             addToLog(1,buf.toString() );
         }
     }
-    
+
     private void processestop(boolean messagein){
         addToLog(1,"Command station acknowledges estop");
         clearEStopTask();
     }
-    
+
     private void processrton(boolean messagein){
         setPowerTask();
     }
-    
+
     private void processrtof(boolean messagein){
-        setPowerTask(); 
+        setPowerTask();
     }
-    
+
     private void processton(boolean messagein){
         clearPowerTask();
         log.debug("Track on confirmed from command station.");
@@ -789,7 +789,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         clearPowerTask();
         log.debug("Track off confirmed from command station.");
     }
-    
+
     public void sendcbusestop(){
         log.info("Sending Command Station e-stop");
         CanMessage m = new CanMessage(tc.getCanid());
@@ -797,20 +797,20 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         m.setElement(0, CbusConstants.CBUS_RESTP);
         tc.sendCanMessage(m, null);
-        
+
         // start a timer to monitor if timeout, ie if command station doesn't respond
         setEstopTask();
     }
-    
+
     private TimerTask eStopTask;
-    
+
     private void clearEStopTask() {
         if (eStopTask != null ) {
             eStopTask.cancel();
             eStopTask = null;
         }
     }
-    
+
     private void setEstopTask() {
         eStopTask = new TimerTask() {
             @Override
@@ -822,16 +822,16 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         };
         TimerUtil.schedule(eStopTask, ( CS_TIMEOUT ) );
     }
-    
+
     private TimerTask powerTask;
-    
+
     private void clearPowerTask() {
         if (powerTask != null ) {
             powerTask.cancel();
             powerTask = null;
         }
     }
-    
+
     private void setPowerTask() {
         powerTask = new TimerTask() {
             @Override
@@ -842,15 +842,15 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             }
         };
         TimerUtil.schedule(powerTask, ( CS_TIMEOUT ) );
-    }    
-    
+    }
+
     /**
      * Add to Slot Monitor Console Log
      * @param cbuserror int
      * @param cbustext String console message
      */
     public void addToLog(int cbuserror, String cbustext){
-        ThreadingUtil.runOnGUI( ()->{ 
+        ThreadingUtil.runOnGUI( ()->{
             tablefeedback.append( "\n"+cbustext);
         });
     }
@@ -860,11 +860,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     public void dispose() {
         tc.removeCanListener(this);
-        
+
         // stop timers if running
         clearEStopTask();
         clearPowerTask();
-        
+
         tablefeedback.dispose();
 
     }

@@ -1667,7 +1667,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * ************ Icon editors for adding content ***********
      */
-    static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
+    static final String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light",
         "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
 

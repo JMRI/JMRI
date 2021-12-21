@@ -154,7 +154,7 @@ public class Sound {
     /** {@inheritDoc} */
     @Override
     @SuppressWarnings("deprecation") // Object.finalize
-    public void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         try {
             if (!streaming) {
                 clipRef.updateAndGet(clip -> {

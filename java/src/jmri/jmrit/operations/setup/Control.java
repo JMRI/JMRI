@@ -42,13 +42,13 @@ public class Control {
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
-    // Car and Engine attribute maximum string length 
+    // Car and Engine attribute maximum string length
     public static int max_len_string_attibute = 12;
 
-    // Car and Engine number maximum string length 
+    // Car and Engine number maximum string length
     public static int max_len_string_road_number = 10;
-    
-    // Car and Engine number maximum string length when printing  
+
+    // Car and Engine number maximum string length when printing
     public static int max_len_string_print_road_number = 6;
 
     // Location name maximum string length
@@ -74,15 +74,16 @@ public class Control {
 
     // Route name maximum string length
     public static int max_len_string_route_name = 25;
-    
+
     // Automation name maximum string length
     public static int max_len_string_automation_name = 25;
-    
+
     public static int reportFontSize = 10;
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // allow access for testing
     public static String reportFontName = ""; // use default
-    
+
     public static int excelWaitTime = 120; // in seconds
-    
+
     public static boolean disablePrintingIfCustom = false;
 
     // must synchronize changes with operation-config.dtd
@@ -126,7 +127,7 @@ public class Control {
         // print control
         e.addContent(values = new Element(Xml.PRINT_OPTIONS));
         values.setAttribute(Xml.DISABLE_PRINT_IF_CUSTOM, disablePrintingIfCustom ? Xml.TRUE : Xml.FALSE);
-        
+
         return e;
     }
 
@@ -200,7 +201,7 @@ public class Control {
             if ((a = eReports.getAttribute(Xml.FONT_NAME)) != null) {
                 reportFontName = a.getValue();
             }
-        }   
+        }
         Element eActions = eControl.getChild(Xml.ACTIONS);
         if (eActions != null) {
             Attribute a;
@@ -220,6 +221,6 @@ public class Control {
             }
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(Control.class);
 }
