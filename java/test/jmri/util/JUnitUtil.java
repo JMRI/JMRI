@@ -1372,7 +1372,7 @@ public class JUnitUtil {
                         log.warn(message, getTestClassName());
                     }
                 } else {
-                    String message += callerStr + "Cleaning up frame \"{}\" (a {}) in {}.";
+                    String message = callerStr + "Cleaning up frame \"{}\" (a {}) in {}.";
                     if (error) {
                         log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
                     } else if (warn) {
