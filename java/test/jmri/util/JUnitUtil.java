@@ -1343,21 +1343,36 @@ public class JUnitUtil {
      *
      * @param warn  log a warning for each window if true
      * @param error log an error (failing the test) for each window if true
+     */
+    public static void resetWindows(boolean warn, boolean error) {
+        resetWindows(warn, error, null);
+    }
+
+    /**
+     * Dispose of any disposable windows. This should only be used if there is
+     * no ability to actually close windows opened by a test using
+     * {@link #dispose(java.awt.Window)} or
+     * {@link #disposeFrame(java.lang.String, boolean, boolean)}, since this may
+     * mask other side effects that should be dealt with explicitly.
+     *
+     * @param warn  log a warning for each window if true
+     * @param error log an error (failing the test) for each window if true
      * @param caller the caller that made the call
      */
     public static void resetWindows(boolean warn, boolean error, String caller) {
+        String callerStr = caller != null ? caller + ": " : "";
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
-                    String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
+                    String message = callerStr + "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
                     if (error) {
                         log.error(message, getTestClassName());
                     } else if (warn) {
                         log.warn(message, getTestClassName());
                     }
                 } else {
-                    String message = caller + ": Cleaning up frame \"{}\" (a {}) in {}.";
+                    String message += callerStr + "Cleaning up frame \"{}\" (a {}) in {}.";
                     if (error) {
                         log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
                     } else if (warn) {
@@ -1370,14 +1385,14 @@ public class JUnitUtil {
         for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
-                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
+                    String message = callerStr + "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
                     if (error) {
                         log.error(message, getTestClassName());
                     } else if (warn) {
                         log.warn(message, getTestClassName());
                     }
                 } else {
-                    String message = "Cleaning up window \"{}\" (a {}) in {}.";
+                    String message = callerStr + "Cleaning up window \"{}\" (a {}) in {}.";
                     if (error) {
                         log.error(message, window.getName(), window.getClass(), getTestClassName());
                     } else if (warn) {
