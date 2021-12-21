@@ -921,6 +921,23 @@
                             </rules>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>enforce-banned-dependencies</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                    <!--this is to check we do not have the xml-apis included since JRE provides it already-->
+                                        <exclude>xml-apis:xml-apis</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -1463,6 +1480,12 @@
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
             <version>${openlcb.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -1652,6 +1675,10 @@
                 <exclusion>
                     <artifactId>fop</artifactId>
                     <groupId>fop</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
