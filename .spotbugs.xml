@@ -3,7 +3,7 @@
     <!-- The following section is used to suppress notifications about
           specific bugs and categories that we don't think are
           worth the effort -->
-         
+
     <!-- what follows should be kept in sync with .spotbugs-check.xml -->
 
     <!-- This is used to suppress notifications about
@@ -19,7 +19,7 @@
         <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
         <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
      </Match>
-     
+
      <Match>
        <!-- Design issue -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
@@ -46,14 +46,7 @@
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
 
-     <Match>
-       <!-- JMRI code is often written to trust weird from other classes,
-            so the question of "malicious" is complicated. The rules in
-            this category should be restored in small batches  -->
-       <Bug category="MALICIOUS_CODE" />
-     </Match>
-
-    <!-- items we're unlikely to restore -->
+     <!-- items we're unlikely to restore -->
 
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->
