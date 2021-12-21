@@ -28,7 +28,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetShortAddress() {
-        // tests setting the address from the input.  
+        // tests setting the address from the input.
         // Does not include the prefix.
         Assert.assertTrue("Continue after address", controller.sort("S1"));
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
@@ -36,7 +36,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetLongAddress() {
-        // tests setting the address from the input.  
+        // tests setting the address from the input.
         // Does not include the prefix.
         Assert.assertTrue("Continue after address", controller.sort("L1234"));
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
@@ -82,7 +82,7 @@ public class MultiThrottleControllerTest {
     public void testSetFunction() {
         jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
         // before notifying the throttle is found, set a function on
-        // which runs a couple of additional lines of code in 
+        // which runs a couple of additional lines of code in
         // sendAllFunctionStates.
         t.setF6(true);
         controller.notifyThrottleFound(t);
@@ -204,13 +204,13 @@ public class MultiThrottleControllerTest {
     public void testVelocityChangeSequence() {
         jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null) {
             @Override
-            public void setSpeedSetting(float s) {
+            public synchronized void setSpeedSetting(float s) {
                 // override so we can send property changes in sequence.
             }
         };
         controller.notifyThrottleFound(t);
         cis.reset();
-        // withrottle may actually sends more than one speed change when 
+        // withrottle may actually sends more than one speed change when
         // moving the slider.
         Assert.assertTrue("Continue after velocity", controller.sort("V7"));
         Assert.assertTrue("Continue after velocity", controller.sort("V15"));

@@ -79,6 +79,7 @@
 # Individual Checks
 #
 
+-err:-allDeadCode
 -err:+allDeprecation
 -err:+allOver-ann
 -err:+assertIdentifier
@@ -86,6 +87,7 @@
 -err:+conditionAssign
 -err:+constructorName
 -err:+compareIdentical
+-err:+deadCode
 -err:+dep-ann
 -err:+deprecation
 -err:+discouraged
@@ -115,6 +117,7 @@
 -err:+semicolon
 -err:+specialParamHiding
 -err:+switchDefault
+-err:+syncOverride
 -err:+unavoidableGenericProblems
 -err:+unchecked
 -err:+uselessTypeCheck
@@ -163,13 +166,12 @@
 
 #
 # Checks we plan to eventually put in place, but would be burdensome now
+
+#
+# Checks we plan to eventually put in place, but would be burdensome now
 #
 
-  # 211 cases; the common "if (debugFlag)" metaphor is flagged by these
--err:-allDeadCode
--err:+deadCode
-
-  # missing synch in synchronized method override
+  # missing synch in synchronized method override (enforced in tests-warnings)
   # 24 outstanding items
 -err:-syncOverride
 
@@ -187,6 +189,4 @@
   # occasionally turn off @SuppressWarnings to see if there are occurrences to fix
   #   Currently 370 cases
 -err:+suppress
-
-
 
