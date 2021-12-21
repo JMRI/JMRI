@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
@@ -10,6 +13,7 @@ import jmri.LightManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
+import jmri.jmrit.logixng.tools.swing.TreeEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
@@ -25,7 +29,11 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Daniel Bergqvist 2018
  */
-public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
+public class ActionLightSwingTest
+        extends SwingConfiguratorInterfaceTestBase
+        implements PropertyChangeListener {
+
+    private AtomicBoolean propertyChanged = new AtomicBoolean();
 
     @Test
     public void testCtor() {
@@ -70,10 +78,17 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         });
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
+        treeEditor.addPropertyChangeListener(this);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(l1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
+        propertyChanged.set(false);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
+        
+        // Wait for the dialog to be closed
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return propertyChanged.get();}));
 
         JUnitUtil.waitFor(() -> {return action.getLight() != null;});
         JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getBeanState();});
@@ -81,8 +96,12 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
         
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         jfo.dispose();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        propertyChanged.set(true);
     }
 
     // The minimal setup for log4J

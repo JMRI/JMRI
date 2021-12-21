@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
@@ -25,7 +28,11 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Daniel Bergqvist 2018
  */
-public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
+public class ActionTurnoutSwingTest
+        extends SwingConfiguratorInterfaceTestBase
+        implements PropertyChangeListener {
+
+    private AtomicBoolean propertyChanged = new AtomicBoolean();
 
     @Test
     public void testCtor() {
@@ -61,10 +68,17 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         conditionalNG.getChild(0).connect(maleSocket);
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
+        treeEditor.addPropertyChangeListener(this);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(t1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionTurnout.TurnoutState.Closed);
+        propertyChanged.set(false);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
+        
+        // Wait for the dialog to be closed
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return propertyChanged.get();}));
 
         JUnitUtil.waitFor(() -> {return action.getTurnout() != null;});
         JUnitUtil.waitFor(() -> {return ActionTurnout.TurnoutState.Closed == action.getBeanState();});
@@ -72,8 +86,12 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
         
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         jfo.dispose();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        propertyChanged.set(true);
     }
 
     // The minimal setup for log4J

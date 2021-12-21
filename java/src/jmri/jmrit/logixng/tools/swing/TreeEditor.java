@@ -2,6 +2,8 @@ package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
 import jmri.*;
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
@@ -32,13 +35,16 @@ import org.apache.commons.lang3.mutable.MutableObject;
  *
  * @author Daniel Bergqvist 2020
  */
-public class TreeEditor extends TreeViewer {
+public class TreeEditor extends TreeViewer implements PropertyChangeProvider {
 
     // Enums used to configure TreeEditor
     public enum EnableClipboard { EnableClipboard, DisableClipboard }
     public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy }
     public enum EnableRootPopup { EnableRootPopup, DisableRootPopup }
     public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
+
+    // Used by tests to know when a dialog has completed
+    public static final String PROPERTY_DIALOG_COMPLETED = "DialogCompleted";
 
 
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
@@ -88,6 +94,8 @@ public class TreeEditor extends TreeViewer {
     private final boolean _disableRootRemoveCutCopy;
     private final boolean _disableRootPopup;
     private final boolean _enableExecuteEvaluate;
+
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Construct a TreeEditor.
@@ -521,6 +529,8 @@ public class TreeEditor extends TreeViewer {
                             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                                 prefMgr.setCheckboxPreferenceState(_systemNameAuto, _autoSystemName.isSelected());
                             });
+
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                         setPopupMenuLock(false);
                     } else {
@@ -619,6 +629,8 @@ public class TreeEditor extends TreeViewer {
                             if (_treePane._femaleRootSocket.isActive()) {
                                 _treePane._femaleRootSocket.registerListeners();
                             }
+
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                         setPopupMenuLock(false);
                     } else {
@@ -908,6 +920,8 @@ public class TreeEditor extends TreeViewer {
                                 l.treeNodesChanged(tme);
                             }
                             _treePane._tree.updateUI();
+
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                         setPopupMenuLock(false);
                     });
@@ -1094,6 +1108,7 @@ public class TreeEditor extends TreeViewer {
                                 l.treeNodesChanged(tme);
                             }
                             _treePane._tree.updateUI();
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                         setPopupMenuLock(false);
                     });
@@ -1628,6 +1643,7 @@ public class TreeEditor extends TreeViewer {
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
+                                pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                             });
                         });
                    } else {
@@ -1701,6 +1717,7 @@ public class TreeEditor extends TreeViewer {
                             ThreadingUtil.runOnGUIEventually(() -> {
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
+                                pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                             });
                         });
                     } else {
@@ -1719,6 +1736,7 @@ public class TreeEditor extends TreeViewer {
                             _treePane._femaleRootSocket.unregisterListeners();
                             _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                             _treePane._femaleRootSocket.registerListeners();
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                     });
                     break;
@@ -1734,6 +1752,7 @@ public class TreeEditor extends TreeViewer {
                             _treePane._femaleRootSocket.unregisterListeners();
                             _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                             _treePane._femaleRootSocket.registerListeners();
+                            pcs.firePropertyChange(PROPERTY_DIALOG_COMPLETED, 0, 1);
                         });
                     });
                     break;
@@ -1994,6 +2013,44 @@ public class TreeEditor extends TreeViewer {
             }
             _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
 

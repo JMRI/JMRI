@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
@@ -11,6 +14,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
+import jmri.jmrit.logixng.tools.swing.TreeEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -25,7 +29,11 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
+public class ExpressionLightSwingTest
+        extends SwingConfiguratorInterfaceTestBase
+        implements PropertyChangeListener {
+
+    private AtomicBoolean propertyChanged = new AtomicBoolean();
 
     @Test
     public void testCtor() {
@@ -64,19 +72,25 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         action.getChild(0).connect(maleSocket);
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
+        treeEditor.addPropertyChangeListener(this);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(l1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.Off);
 
+        propertyChanged.set(false);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
+        
+        // Wait for the dialog to be closed
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return propertyChanged.get();}));
 
         JUnitUtil.waitFor(() -> {return expression.getLight() != null;});
 
         Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
         Assert.assertEquals(ExpressionLight.LightState.Off, expression.getBeanState());
         
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         jfo.dispose();
     }
 
@@ -88,6 +102,11 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
             null != new ExpressionLightSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new ExpressionLightSwing().getConfigPanel(new ExpressionLight("IQDE1", null), new JPanel()));
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        propertyChanged.set(true);
     }
 
     // The minimal setup for log4J

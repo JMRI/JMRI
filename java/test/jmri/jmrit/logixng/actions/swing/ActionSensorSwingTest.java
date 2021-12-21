@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
@@ -10,6 +13,7 @@ import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
+import jmri.jmrit.logixng.tools.swing.TreeEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -24,7 +28,11 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Daniel Bergqvist 2018
  */
-public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
+public class ActionSensorSwingTest
+        extends SwingConfiguratorInterfaceTestBase
+        implements PropertyChangeListener {
+
+    private AtomicBoolean propertyChanged = new AtomicBoolean();
 
     @Test
     public void testCtor() {
@@ -60,18 +68,29 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         conditionalNG.getChild(0).connect(maleSocket);
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
+        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
+        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
+        treeEditor.addPropertyChangeListener(this);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(s1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Inactive);
+        propertyChanged.set(false);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
+        
+        // Wait for the dialog to be closed
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return propertyChanged.get();}));
 
         JUnitUtil.waitFor(() -> {return action.getSensor() != null;});
 
         Assert.assertEquals("IS1", action.getSensor().getBean().getSystemName());
         Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
         
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         jfo.dispose();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        propertyChanged.set(true);
     }
 
     // The minimal setup for log4J
