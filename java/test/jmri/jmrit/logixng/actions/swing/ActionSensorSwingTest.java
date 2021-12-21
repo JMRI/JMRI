@@ -32,7 +32,7 @@ public class ActionSensorSwingTest
         extends SwingConfiguratorInterfaceTestBase
         implements PropertyChangeListener {
 
-    private AtomicBoolean propertyChanged = new AtomicBoolean();
+    private final AtomicBoolean propertyChanged = new AtomicBoolean();
 
     @Test
     public void testCtor() {

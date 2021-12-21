@@ -74,12 +74,6 @@ public class TreeViewer extends JmriJFrame {
         _rootVisible = rootVisible;
     }
 
-    @Override
-    public void dispose() {
-        _treePane.dispose();
-        super.dispose();
-    }
-
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
