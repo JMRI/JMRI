@@ -231,7 +231,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, true, "setUpLoggingAndCommonProperties");
 
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
@@ -350,6 +350,15 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
+        tearDown(false);
+    }
+
+    /**
+     * Teardown from tests.This should be the last line in the {@code @After}
+     * annotated method.
+     * @param showWindowsToDispose true if to show which windows are left behind
+     */
+    public static void tearDown(boolean showWindowsToDispose) {
 
         // check that no LogixNG threads is still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -396,7 +405,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, showWindowsToDispose, "tearDown");
 
         // Check final status of logging in the test just completed
         JUnitAppender.end();
@@ -1334,8 +1343,9 @@ public class JUnitUtil {
      *
      * @param warn  log a warning for each window if true
      * @param error log an error (failing the test) for each window if true
+     * @param caller the caller that made the call
      */
-    public static void resetWindows(boolean warn, boolean error) {
+    public static void resetWindows(boolean warn, boolean error, String caller) {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
@@ -1347,7 +1357,7 @@ public class JUnitUtil {
                         log.warn(message, getTestClassName());
                     }
                 } else {
-                    String message = "Cleaning up frame \"{}\" (a {}) in {}.";
+                    String message = caller + ": Cleaning up frame \"{}\" (a {}) in {}.";
                     if (error) {
                         log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
                     } else if (warn) {
