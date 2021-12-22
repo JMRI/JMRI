@@ -53,11 +53,6 @@
      </Match>
 
      <Match>
-        <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
-        <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
-     </Match>
-
-     <Match>
        <!-- Design issue -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
      </Match>
