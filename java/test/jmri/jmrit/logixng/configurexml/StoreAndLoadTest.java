@@ -2052,7 +2052,7 @@ public class StoreAndLoadTest {
         showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
         showDialog.setComment("A comment");
         showDialog.getEnabledButtons().add(ShowDialog.Button.Ok);
-        showDialog.setLocalVariable("myVar");
+        showDialog.setLocalVariableForSelectedButton("myVar");
         showDialog.setModal(true);
         showDialog.setMultiLine(true);
         showDialog.setFormat("Some text");
@@ -2061,9 +2061,13 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(showDialog);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        Or orTemp = new Or(digitalExpressionManager.getAutoSystemName(), null);
+        MaleSocket maleSocketOr = digitalExpressionManager.registerExpression(orTemp);
+        showDialog.getValidateSocket().connect(maleSocketOr);
+
         LogLocalVariables logLocalVariablesTemp = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocketLogLocalVariables = digitalActionManager.registerAction(logLocalVariablesTemp);
-        showDialog.getChild(0).connect(maleSocketLogLocalVariables);
+        showDialog.getExecuteSocket().connect(maleSocketLogLocalVariables);
 
         showDialog = new ShowDialog(digitalActionManager.getAutoSystemName(), null);
         showDialog.setComment("A comment");

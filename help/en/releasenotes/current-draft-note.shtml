@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT SignalMasts are available</li>
             </ul>
 
         <h4>MRC</h4>
@@ -467,7 +467,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -477,7 +477,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Allow user-modified signal systems to provide
+                    their own copy of an existing aspects.xml file.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -487,7 +488,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT masts are available</li>
             </ul>
 
     	<h4>Signal Groups</h4>
