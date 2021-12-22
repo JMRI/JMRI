@@ -7,9 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
@@ -57,7 +55,7 @@ public class ActionLightSwingTest
     ActionLight action = null;
 
     @Test
-    public void testDialogUseExistingLight() {
+    public void testDialogUseExistingLight() throws Throwable {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -95,7 +93,17 @@ public class ActionLightSwingTest
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
         
-        ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
+        try {
+            ThreadingUtil.runOnGUIWithJmriException(() -> {
+                try {
+                    treeEditor.dispose();
+                } catch (Exception e) {
+                    throw new JmriException(e);
+                }
+            });
+        } catch (JmriException e) {
+            throw e.getCause();
+        }
 
         Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
     }
