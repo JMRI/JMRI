@@ -530,6 +530,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new DCCppReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;
