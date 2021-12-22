@@ -67,7 +67,7 @@ public class ActionLightSwingTest
             try {
                 jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
                         .createLogixNG("A logixNG with an empty conditionlNG");
-                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC789", null);
 
                 action = new ActionLight("IQDA1", null);
                 MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
@@ -77,8 +77,8 @@ public class ActionLightSwingTest
             }
         });
 
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
+        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC789", "Edit ! ", 0);
+        TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC789", true, true);
         treeEditor.addPropertyChangeListener(this);
 
         new JComboBoxOperator(jdo, 0).setSelectedItem(l1);
