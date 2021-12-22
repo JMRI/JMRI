@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT SignalMasts are available</li>
             </ul>
 
         <h4>MRC</h4>
@@ -467,7 +467,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -488,7 +488,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Native MQTT masts are available</li>
             </ul>
 
     	<h4>Signal Groups</h4>
