@@ -327,7 +327,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
                 server.stop();
             } catch (Exception ex) {
                 // Error without stack trace
-                log.warn("Error shutting down WebServer: {}", ex);
+                log.warn("Error shutting down WebServer", ex);
                 // Full stack trace
                 log.debug("Details follow: ", ex);
             }
