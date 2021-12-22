@@ -414,6 +414,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * @param maxValid highest Board ID number allowed for the given device type
      * @throws jmri.JmriException when the board address is invalid
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     void setAddress(int maxValid) throws jmri.JmriException {
         try {
             address = (Integer.parseInt(addrField.getText()) - 1);
@@ -465,6 +467,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * Provide a mechanism to write several OpSw values in a sequence. The
      * sequence is defined by the {@link #nextState(int)} method.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="I18N of log message")
     public void writeAll() {
         // check the address
         try {

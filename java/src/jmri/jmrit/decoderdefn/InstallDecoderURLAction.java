@@ -74,6 +74,8 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     void copyAndInstall(URL from, JPanel who) {
         log.debug("[{}]", from.getFile());
 
