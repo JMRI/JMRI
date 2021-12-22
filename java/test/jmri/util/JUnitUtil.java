@@ -1353,10 +1353,12 @@ public class JUnitUtil {
      * @return true if there is frames that are still displayable, false otherwise
      */
     public static boolean hasOpenFrames() {
-        for (Frame frame : Frame.getFrames()) {
-            if (frame.isDisplayable()) return true;
-        }
-        return false;
+        return ThreadingUtil.runOnGUIwithReturn(() -> {
+            for (Frame frame : Frame.getFrames()) {
+                if (frame.isDisplayable()) return true;
+            }
+            return false;
+        });
     }
 
     /**
