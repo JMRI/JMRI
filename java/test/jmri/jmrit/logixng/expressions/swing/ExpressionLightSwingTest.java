@@ -126,6 +126,7 @@ public class ExpressionLightSwingTest
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
         JUnitUtil.tearDown(true);
     }
 
