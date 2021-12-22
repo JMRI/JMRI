@@ -46,6 +46,11 @@
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
 
+    <!-- Suppress SLF4J bug which has many false positives due to ?: operator -->
+     <Match>
+        <Bug pattern="SLF4J_UNKNOWN_ARRAY" />
+     </Match>
+
     <!-- Very high-frequency "malicious code" warnings can't yet be checked -->
     <!-- but we keep some others to improve code robustness and containment -->
      <Match>

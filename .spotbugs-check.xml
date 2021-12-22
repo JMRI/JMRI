@@ -9,7 +9,6 @@
         <Or>
             <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST" />
             <Bug pattern="SLF4J_PLACE_HOLDER_MISMATCH" />
-            <Bug pattern="SLF4J_UNKNOWN_ARRAY" />
         </Or>
      </Match>
 
@@ -82,6 +81,11 @@
             Suppressed for now to focus attention on
             other high-priority items.  -->
        <Bug pattern="DM_DEFAULT_ENCODING" />
+     </Match>
+
+    <!-- Suppress SLF4J bug which has many false positives due to ?: operator -->
+     <Match>
+        <Bug pattern="SLF4J_UNKNOWN_ARRAY" />
      </Match>
 
     <!-- Very high-frequency "malicious code" warnings can't yet be checked -->
