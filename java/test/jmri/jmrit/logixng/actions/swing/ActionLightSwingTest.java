@@ -107,9 +107,6 @@ public class ActionLightSwingTest
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        log.error("");
-        log.error("----------------------------------------------------");
-        log.error("ActionLightSwingTest setUp");
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -123,10 +120,7 @@ public class ActionLightSwingTest
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
-        JUnitUtil.tearDown();
-        log.error("ActionLightSwingTest tearDown");
-        log.error("----------------------------------------------------");
-        log.error("");
+        JUnitUtil.tearDown(true);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwingTest.class);
