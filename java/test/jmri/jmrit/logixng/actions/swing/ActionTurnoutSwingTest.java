@@ -14,8 +14,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.jmrit.logixng.tools.swing.TreeEditor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -69,7 +69,6 @@ public class ActionTurnoutSwingTest
         conditionalNG.getChild(0).connect(maleSocket);
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
         treeEditor.addPropertyChangeListener(this);
 
@@ -87,7 +86,7 @@ public class ActionTurnoutSwingTest
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
         
-        jfo.dispose();
+        ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
     }
 
     @Override

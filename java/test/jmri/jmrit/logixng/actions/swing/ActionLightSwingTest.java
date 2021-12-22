@@ -78,7 +78,6 @@ public class ActionLightSwingTest
         });
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
         treeEditor.addPropertyChangeListener(this);
 
@@ -96,7 +95,7 @@ public class ActionLightSwingTest
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
         
-        jfo.dispose();
+        ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
     }
 
     @Override

@@ -94,7 +94,6 @@ public class ExpressionTurnoutSwingTest
         });
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
         treeEditor.addPropertyChangeListener(this);
 
@@ -112,7 +111,7 @@ public class ExpressionTurnoutSwingTest
         Assert.assertEquals("IT1", expression.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ExpressionTurnout.TurnoutState.Closed, expression.getBeanState());
         
-        jfo.dispose();
+        ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
     }
 
     @Override

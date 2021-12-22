@@ -16,6 +16,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.jmrit.logixng.tools.swing.TreeEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -82,7 +83,6 @@ public class ExpressionSensorSwingTest
         action.getChild(0).connect(maleSocket);
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
-        JFrameOperator jfo = new JFrameOperator("Edit ConditionalNG IQC1");
         TreeEditor treeEditor = (TreeEditor)JFrameOperator.findJFrame("Edit ConditionalNG IQC1", true, true);
         treeEditor.addPropertyChangeListener(this);
 
@@ -100,7 +100,7 @@ public class ExpressionSensorSwingTest
         Assert.assertEquals("IS1", expression.getSensor().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
         
-        jfo.dispose();
+        ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
     }
 
     @Override
