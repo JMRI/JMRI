@@ -112,6 +112,8 @@ public class ExpressionTurnoutSwingTest
         Assert.assertEquals(ExpressionTurnout.TurnoutState.Closed, expression.getBeanState());
         
         ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
+
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
     }
 
     @Override

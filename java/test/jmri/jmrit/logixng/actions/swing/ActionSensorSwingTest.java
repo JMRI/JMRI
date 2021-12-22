@@ -86,6 +86,8 @@ public class ActionSensorSwingTest
         Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
         
         ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
+
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
     }
 
     @Override

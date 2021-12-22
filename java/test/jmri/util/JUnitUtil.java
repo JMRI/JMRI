@@ -1349,6 +1349,17 @@ public class JUnitUtil {
     }
 
     /**
+     * Is there still open frames?
+     * @return true if there is frames that are still displayable, false otherwise
+     */
+    public static boolean hasOpenFrames() {
+        for (Frame frame : Frame.getFrames()) {
+            if (frame.isDisplayable()) return true;
+        }
+        return false;
+    }
+
+    /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
      * {@link #dispose(java.awt.Window)} or

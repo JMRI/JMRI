@@ -101,6 +101,8 @@ public class ExpressionSensorSwingTest
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
         
         ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
+
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
     }
 
     @Override

@@ -96,6 +96,8 @@ public class ActionLightSwingTest
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
         
         ThreadingUtil.runOnGUI(() -> { treeEditor.dispose(); });
+
+        Assert.assertTrue(JUnitUtil.waitFor(() -> {return !JUnitUtil.hasOpenFrames();}));
     }
 
     @Override
